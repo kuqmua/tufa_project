@@ -269,8 +269,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let thiserror_error_token_stream = proc_macro_common::thiserror_error_token_stream();
     let error_occurence_error_occurence_token_stream =
         proc_macro_common::error_occurence_lib_error_occurence_token_stream();
-    let error_value_snake_case_token_stream =
-        proc_macro_common::error_value_snake_case_token_stream();
+    let error_snake_case_token_stream = <naming_constants::Error as naming_constants::Naming>::snake_case_token_stream();
     let app_state_name_token_stream = {
         let value = format!(
             "{}_{}",
@@ -870,7 +869,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote! {
             #serde_json_to_string_upper_camel_case_token_stream {
-                #serde_json_to_string_snake_case_token_stream: #error_value_snake_case_token_stream,
+                #serde_json_to_string_snake_case_token_stream: #error_snake_case_token_stream,
                 #field_code_occurence_new_27b49c75_24b2_4480_ac4d_62a1f75f5646_token_stream,
             }
         }
@@ -1105,7 +1104,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote! {
             BindQuery {
-                bind_query: #error_value_snake_case_token_stream.into_serialize_deserialize_version(),
+                bind_query: #error_snake_case_token_stream.into_serialize_deserialize_version(),
                 #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
             }
         }
@@ -1349,7 +1348,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote! {
             #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream {
-                #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream: #error_value_snake_case_token_stream,
+                #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream: #error_snake_case_token_stream,
                 #field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream,
             }
         }
@@ -1477,7 +1476,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote! {
             #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream {
-                #primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream: #error_value_snake_case_token_stream,
+                #primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream: #error_snake_case_token_stream,
                 #field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream,
             }
         }
@@ -1693,7 +1692,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
             quote::quote! {
                 #expected_type_upper_camel_case_token_stream {
-                    #expected_type_snake_case_token_stream: #error_value_snake_case_token_stream,
+                    #expected_type_snake_case_token_stream: #error_snake_case_token_stream,
                     #field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream
                 }
             },
@@ -1768,7 +1767,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
             quote::quote! {
                 #failed_to_get_response_text_upper_camel_case_token_stream {
-                    #reqwest_snake_case_token_stream: #error_value_snake_case_token_stream,
+                    #reqwest_snake_case_token_stream: #error_snake_case_token_stream,
                     #status_code_snake_case_token_stream,
                     #headers_snake_case_token_stream,
                     #field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream
@@ -1807,7 +1806,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
             quote::quote! {
                 #deserialize_response_upper_camel_case_token_stream {
-                    #serde_snake_case_token_stream: #error_value_snake_case_token_stream,
+                    #serde_snake_case_token_stream: #error_snake_case_token_stream,
                     #status_code_snake_case_token_stream,
                     #headers_snake_case_token_stream,
                     #response_text_snake_case_token_stream,
@@ -1835,7 +1834,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
             quote::quote! {
                 #reqwest_upper_camel_case_token_stream {
-                    #reqwest_snake_case_token_stream: #error_value_snake_case_token_stream,
+                    #reqwest_snake_case_token_stream: #error_snake_case_token_stream,
                     #field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream,
                 }
             },
@@ -2293,9 +2292,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 Ok(value) => {
                                                     elements.push(value);
                                                 },
-                                                Err(#error_value_snake_case_token_stream) => {
+                                                Err(#error_snake_case_token_stream) => {
                                                     return Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
-                                                        #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_value_snake_case_token_stream,
+                                                        #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case_token_stream,
                                                         #field_code_occurence_new_46d303bf_4267_4eb4_a98d_22193db9d220_token_stream
                                                     });
                                                 }
@@ -2774,13 +2773,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote! {
                             match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value,
-                                Err(#error_value_snake_case_token_stream) => {
-                                    let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-                                        #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+                                Err(#error_snake_case_token_stream) => {
+                                    let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+                                        #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
                                         #field_code_occurence_new_91c61a45_6c97_47cc_ac96_65bdcfec0494_token_stream,
                                     };
                                     #eprintln_error_token_stream
-                                    return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+                                    return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
                                 }
                             }
                         }
@@ -2907,9 +2906,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //                 println!("{value:#?}");
             //                 value
             //             },
-            //             Err(#error_value_snake_case_token_stream) => panic!(
+            //             Err(#error_snake_case_token_stream) => panic!(
             //                 "{}",
-            //                 #error_value_snake_case_token_stream
+            //                 #error_snake_case_token_stream
             //             ),//todo remove panic maybe?
             //         };
             //     };
@@ -3250,13 +3249,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                 #primary_key_inner_type_token_stream(value)
     //                             )
     //                         ),
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
     //                             #eprintln_error_token_stream
-    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                         }
     //                     },
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         #from_log_and_return_error_token_stream
     //                     }
     //                 }
@@ -3283,13 +3282,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 quote::quote! {
     //                     match #operation_payload_upper_camel_case_token_stream::try_from(value) {
     //                         Ok(value) => value,
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-    //                                 #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+    //                                 #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
     //                                 #field_code_occurence_new_db0d95a8_8dcc_4228_80ec_e5dce2003333_token_stream,
     //                             };
     //                             #eprintln_error_token_stream
-    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                         }
     //                     }
     //                 }
@@ -3311,8 +3310,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
     //                     {
     //                         Ok(value) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             return #error_value_snake_case_token_stream;//todo convert into return enum mannually
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             return #error_snake_case_token_stream;//todo convert into return enum mannually
     //                         }
     //                     },
     //                 };
@@ -3349,7 +3348,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &quote::quote! {
     //                 let #payload_snake_case_token_stream = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case_token_stream(#parameters_snake_case_token_stream.#payload_snake_case_token_stream)) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
     //                     }
     //                 };
@@ -3362,7 +3361,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
     //                     match #primary_key_inner_type_token_stream::try_from(value) {
     //                         Ok(value) => Ok(value),
-    //                         Err(#error_value_snake_case_token_stream) => Err(
+    //                         Err(#error_snake_case_token_stream) => Err(
     //                             #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
     //                         )
     //                     }
@@ -3405,9 +3404,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         println!("{value:#?}");
     //                         value
     //                     },
-    //                     Err(#error_value_snake_case_token_stream) => panic!(
+    //                     Err(#error_snake_case_token_stream) => panic!(
     //                         "{}",
-    //                         #error_value_snake_case_token_stream
+    //                         #error_snake_case_token_stream
     //                     )
     //                 };
     //             };
@@ -3682,9 +3681,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                             >>()
     //                                         {
     //                                             Ok(value) => Some(value),
-    //                                             Err(#error_value_snake_case_token_stream) => {
+    //                                             Err(#error_snake_case_token_stream) => {
     //                                                 return Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
-    //                                                     #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                                                     #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case_token_stream,
     //                                                     #field_code_occurence_new_ed55593d_d353_440c_8145_c1c712bc5ace_token_stream,
     //                                                 });
     //                                             }
@@ -3820,9 +3819,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                             value
     //                         };
     //                         if !#not_unique_primary_keys_name_token_stream.is_empty() {
-    //                             let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
+    //                             let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
     //                             #eprintln_error_token_stream
-    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                         }
     //                     }
     //                 };
@@ -3889,12 +3888,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                 #where_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(element)
     //                                             ).collect()
     //                                         };
-    //                                         let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_field_vec_vec_upper_camel_token_stream {
+    //                                         let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_field_vec_vec_upper_camel_token_stream {
     //                                             #not_unique_field_vec_snake_case_token_stream,
     //                                             #field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream,
     //                                         };
     //                                         #eprintln_error_token_stream
-    //                                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                                     }
     //                                 }
     //                             }
@@ -3984,7 +3983,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                 },
     //                                             }
     //                                         },
-    //                                         Err(#error_value_snake_case_token_stream) => {
+    //                                         Err(#error_snake_case_token_stream) => {
     //                                             return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
     //                                         },
     //                                     }
@@ -4059,7 +4058,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                     &mut increment
     //                                 ) {
     //                                     Ok(value) => value,
-    //                                     Err(#error_value_snake_case_token_stream) => {
+    //                                     Err(#error_snake_case_token_stream) => {
     //                                         return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
     //                                     },
     //                                 };
@@ -4079,7 +4078,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                     &mut increment
     //                                 ) {
     //                                     Ok(value) => value,
-    //                                     Err(#error_value_snake_case_token_stream) => {
+    //                                     Err(#error_snake_case_token_stream) => {
     //                                         return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
     //                                     },
     //                                 };
@@ -4163,7 +4162,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         .await
     //                         {
     //                             Ok(value) => value,
-    //                             Err(#error_value_snake_case_token_stream) => {
+    //                             Err(#error_snake_case_token_stream) => {
     //                                 #from_log_and_return_error_token_stream;
     //                             }
     //                         }
@@ -4172,7 +4171,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                             Ok(value) => {
     //                                 vec_values.push(value);
     //                             }
-    //                             Err(#error_value_snake_case_token_stream) => {
+    //                             Err(#error_snake_case_token_stream) => {
     //                                 #from_log_and_return_error_token_stream;
     //                             }
     //                         }
@@ -4202,13 +4201,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
     //                 match #operation_payload_upper_camel_case_token_stream::try_from(value) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
-    //                         let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                     Err(#error_snake_case_token_stream) => {
+    //                         let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
     //                             #field_code_occurence_new_1d57484c_3c67_4f5f_81a6_ec8efc9c6896_token_stream,
     //                         };
     //                         #eprintln_error_token_stream
-    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                     }
     //                 }
     //             }
@@ -4229,8 +4228,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
     //                     {
     //                         Ok(value) => #operation_payload_from_or_try_from_token_stream,
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             return #error_value_snake_case_token_stream;//todo convert into return enum mannually
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             return #error_snake_case_token_stream;//todo convert into return enum mannually
     //                         }
     //                     },
     //                 };
@@ -4269,7 +4268,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     &#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case_token_stream(#parameters_snake_case_token_stream.#payload_snake_case_token_stream)
     //                 ) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
     //                     }
     //                 };
@@ -4326,9 +4325,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         println!("{value:#?}");
     //                         value
     //                     },
-    //                     Err(#error_value_snake_case_token_stream) => panic!(
+    //                     Err(#error_snake_case_token_stream) => panic!(
     //                         "{}",
-    //                         #error_value_snake_case_token_stream
+    //                         #error_snake_case_token_stream
     //                     )
     //                 };
     //             };
@@ -4679,11 +4678,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 match #binded_query_name_token_stream.fetch_one(#pg_connection_token_stream.as_mut()).await {
     //                     Ok(row) => match #wrapper_vec_column_upper_camel_case_token_stream(#select_snake_case_token_stream).#options_try_from_sqlx_row_name_token_stream(&row) {
     //                         Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(value),
-    //                         Err(#error_value_snake_case_token_stream) => {
+    //                         Err(#error_snake_case_token_stream) => {
     //                             #from_log_and_return_error_token_stream
     //                         },
     //                     },
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         #from_log_and_return_error_token_stream
     //                     },
     //                 }
@@ -4721,17 +4720,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     {
     //                         Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
     //                             Ok(value) => value,
-    //                             Err(#error_value_snake_case_token_stream) => {
-    //                                 let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-    //                                     #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                             Err(#error_snake_case_token_stream) => {
+    //                                 let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+    //                                     #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
     //                                     #field_code_occurence_new_cd714ff2_3a40_4e0d_8930_e43d2f69ffc0_token_stream,
     //                                 };
     //                                 #eprintln_error_token_stream
-    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                             }
     //                         },
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             return #error_value_snake_case_token_stream;//todo convert into return enum mannually
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             return #error_snake_case_token_stream;//todo convert into return enum mannually
     //                         }
     //                     },
     //                 };
@@ -4792,13 +4791,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     ) {
     //                         Ok(value) => match #serde_json_to_string_token_stream(&value) {
     //                             Ok(value) => value,
-    //                             Err(#error_value_snake_case_token_stream) => {
+    //                             Err(#error_snake_case_token_stream) => {
     //                                 return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
     //                             }
     //                         },
-    //                         Err(#error_value_snake_case_token_stream) => {
+    //                         Err(#error_snake_case_token_stream) => {
     //                             return Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_payload_with_serialize_deserialize_try_from_operation_payload_upper_camel_case_token_stream {
-    //                                 #operation_payload_with_serialize_deserialize_try_from_operation_payload_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                                 #operation_payload_with_serialize_deserialize_try_from_operation_payload_snake_case_token_stream: #error_snake_case_token_stream,
     //                                 #field_code_occurence_new_40fe4f4a_ae46_496d_8c69_cdb3f41e2755_token_stream
     //                             });
     //                         }
@@ -4839,7 +4838,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 .await
     //                 {
     //                     Ok(value) => println!("{value:#?}"),
-    //                     Err(#error_value_snake_case_token_stream) => panic!("{}", #error_value_snake_case_token_stream)
+    //                     Err(#error_snake_case_token_stream) => panic!("{}", #error_snake_case_token_stream)
     //                 };
     //             };
     //             proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
@@ -4858,7 +4857,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 .await
     //                 {
     //                     Ok(value) => panic!("{value:#?}"),
-    //                     Err(#error_value_snake_case_token_stream) => println!("{}", #error_value_snake_case_token_stream)
+    //                     Err(#error_snake_case_token_stream) => println!("{}", #error_snake_case_token_stream)
     //                 };
     //             };
     //             proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
@@ -5253,7 +5252,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                     >>()
     //                                 {
     //                                     Ok(value) => Ok(Self(value)),
-    //                                     Err(#error_value_snake_case_token_stream) => Err(Self::Error::#from_snake_case_token_stream(#error_value_snake_case_token_stream)),
+    //                                     Err(#error_snake_case_token_stream) => Err(Self::Error::#from_snake_case_token_stream(#error_snake_case_token_stream)),
     //                                 }
     //                             }
     //                         }
@@ -5518,9 +5517,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         #not_unique_primary_keys_name_token_stream
     //                     };
     //                     if let false = #not_unique_primary_keys_name_token_stream.is_empty() {
-    //                         let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
+    //                         let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
     //                         #eprintln_error_token_stream
-    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                     }
     //                 }
     //                 #generate_postgres_transaction_token_stream
@@ -5546,13 +5545,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
     //                  match #operation_payload_upper_camel_case_token_stream::try_from(value) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
-    //                         let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                     Err(#error_snake_case_token_stream) => {
+    //                         let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
     //                             #field_code_occurence_new_04274f8d_c9a4_41d1_9bdc_39432371c33f_token_stream,
     //                         };
     //                         #eprintln_error_token_stream
-    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                     }
     //                 }
     //             },
@@ -5573,8 +5572,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
     //                     {
     //                         Ok(value) => #operation_payload_from_or_try_from_token_stream,
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             return #error_value_snake_case_token_stream;//todo convert into return enum mannually
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             return #error_snake_case_token_stream;//todo convert into return enum mannually
     //                         }
     //                     },
     //                 };
@@ -5655,7 +5654,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 .await
     //                 {
     //                     Ok(value) => println!("{value:#?}"),
-    //                     Err(#error_value_snake_case_token_stream) => panic!("{}", #error_value_snake_case_token_stream)
+    //                     Err(#error_snake_case_token_stream) => panic!("{}", #error_snake_case_token_stream)
     //                 }
     //             };
     //             proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
@@ -6047,7 +6046,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                     Ok(_) => {
     //                                         query.push_str(&format!(#handle_token_stream));//add dot_space for all elements except last
     //                                     },
-    //                                     Err(#error_value_snake_case_token_stream) => {
+    //                                     Err(#error_snake_case_token_stream) => {
     //                                         return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
     //                                     },
     //                                 }
@@ -6067,7 +6066,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                             Ok(_) => {
     //                                 query.push_str(&format!(#query_part_token_stream));
     //                             },
-    //                             Err(#error_value_snake_case_token_stream) => {
+    //                             Err(#error_snake_case_token_stream) => {
     //                                 return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
     //                             },
     //                         }
@@ -6147,13 +6146,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                 #primary_key_inner_type_token_stream(value)
     //                             )
     //                         ),
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
     //                             #eprintln_error_token_stream
-    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                         }
     //                     },
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         #from_log_and_return_error_token_stream;
     //                     }
     //                 }
@@ -6179,13 +6178,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
     //                 match #operation_payload_upper_camel_case_token_stream::try_from(value) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
-    //                         let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                     Err(#error_snake_case_token_stream) => {
+    //                         let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
     //                             #field_code_occurence_new_112d570b_90ed_44d6_a8bf_d855372006cb_token_stream,
     //                         };
     //                         #eprintln_error_token_stream
-    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                     }
     //                 }
     //             },
@@ -6206,8 +6205,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
     //                     {
     //                         Ok(value) => #operation_payload_from_or_try_from_token_stream,
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             return #error_value_snake_case_token_stream;//todo convert into return enum mannually
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             return #error_snake_case_token_stream;//todo convert into return enum mannually
     //                         }
     //                     },
     //                 };
@@ -6246,7 +6245,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     #parameters_snake_case_token_stream.#payload_snake_case_token_stream
     //                 )) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
     //                     }
     //                 };
@@ -6259,7 +6258,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
     //                     match #primary_key_inner_type_token_stream::try_from(value) {
     //                         Ok(value) => Ok(value),
-    //                         Err(#error_value_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream )
+    //                         Err(#error_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream )
     //                     }
     //                 }
     //             },
@@ -6302,7 +6301,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         println!("{value:#?}");
     //                         value
     //                     },
-    //                     Err(#error_value_snake_case_token_stream) => panic!("{}", #error_value_snake_case_token_stream)
+    //                     Err(#error_snake_case_token_stream) => panic!("{}", #error_snake_case_token_stream)
     //                 };
     //             };
     //             proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
@@ -6724,9 +6723,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                             #not_unique_primary_keys_name_token_stream
     //                         };
     //                         if let false = #not_unique_primary_keys_name_token_stream.is_empty() {
-    //                             let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
+    //                             let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
     //                             #eprintln_error_token_stream
-    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                         }
     //                     };
     //                     quote::quote! {
@@ -6802,9 +6801,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                 #not_unique_primary_keys_name_token_stream
     //                             };
     //                             if let false = #not_unique_primary_keys_name_token_stream.is_empty() {
-    //                                 let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
+    //                                 let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
     //                                 #eprintln_error_token_stream
-    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                             }
     //                         }
     //                     };
@@ -6872,12 +6871,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                     .map(|element|#where_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(element))
     //                                                     .collect()
     //                                             };
-    //                                             let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_field_vec_vec_upper_camel_token_stream {
+    //                                             let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_field_vec_vec_upper_camel_token_stream {
     //                                                 #not_unique_field_vec_snake_case_token_stream,
     //                                                 #field_code_occurence_new_a4cd6c7d_3d82_4ee7_84f0_ca63ddb894e1_token_stream,
     //                                             };
     //                                             #eprintln_error_token_stream
-    //                                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                                         }
     //                                     }
     //                                 },
@@ -6921,7 +6920,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                 },
     //                                             }
     //                                         },
-    //                                         Err(#error_value_snake_case_token_stream) => {
+    //                                         Err(#error_snake_case_token_stream) => {
     //                                             return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
     //                                         },
     //                                     }
@@ -6960,7 +6959,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                 Ok(_) => {
     //                                                     additional_parameters.push_str(&format!("${increment},"));
     //                                                 }
-    //                                                 Err(#error_value_snake_case_token_stream) => {
+    //                                                 Err(#error_snake_case_token_stream) => {
     //                                                     return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
     //                                                 }
     //                                             }
@@ -7040,10 +7039,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         .await
     //                         {
     //                             Ok(value) => value,
-    //                             Err(#error_value_snake_case_token_stream) => {
-    //                                 let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                             Err(#error_snake_case_token_stream) => {
+    //                                 let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                                 #eprintln_error_token_stream
-    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                             }
     //                         }
     //                     } {
@@ -7058,10 +7057,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                     ),
     //                                 );
     //                             }
-    //                             Err(#error_value_snake_case_token_stream) => {
-    //                                 let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
+    //                             Err(#error_snake_case_token_stream) => {
+    //                                 let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
     //                                 #eprintln_error_token_stream
-    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                                 return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                             }
     //                         }
     //                     }
@@ -7100,13 +7099,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
     //                 match #operation_payload_upper_camel_case_token_stream::try_from(value) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
-    //                         let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                     Err(#error_snake_case_token_stream) => {
+    //                         let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
     //                             #field_code_occurence_new_39b5c2be_b5d4_4d33_b3e9_152543c33dca_token_stream,
     //                         };
     //                         #eprintln_error_token_stream
-    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                     }
     //                 }
     //             },
@@ -7127,8 +7126,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
     //                     {
     //                         Ok(value) => #operation_payload_from_or_try_from_token_stream,
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             return #error_value_snake_case_token_stream;//todo convert into return enum mannually
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             return #error_snake_case_token_stream;//todo convert into return enum mannually
     //                         }
     //                     },
     //                 };
@@ -7222,7 +7221,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     //     })
     //                     //     .collect();
     //                     // println!("{vec_cat_id:#?}");
-    //                     Err(#error_value_snake_case_token_stream) => panic!("{}", #error_value_snake_case_token_stream)
+    //                     Err(#error_snake_case_token_stream) => panic!("{}", #error_snake_case_token_stream)
     //                 }
     //             };
     //             proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
@@ -7394,8 +7393,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                 quote::quote!{
     //                                     match #primary_key_inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
     //                                         Ok(value) => Ok(Self{ #primary_key_field_ident: value }),
-    //                                         Err(#error_value_snake_case_token_stream) => Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
-    //                                             #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                                         Err(#error_snake_case_token_stream) => Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
+    //                                             #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case_token_stream,
     //                                             #field_code_occurence_new_66343753_b4dc_4b64_b7a6_3f206033a0b1_token_stream
     //                                         })
     //                                     }
@@ -7532,13 +7531,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                 #primary_key_inner_type_token_stream(value)
     //                             )
     //                         ),
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
     //                             #eprintln_error_token_stream
-    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                             return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                         }
     //                     },
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         #from_log_and_return_error_token_stream;
     //                     }
     //                 }
@@ -7564,13 +7563,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
     //                 match #operation_payload_upper_camel_case_token_stream::try_from(value) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
-    //                         let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+    //                     Err(#error_snake_case_token_stream) => {
+    //                         let #error_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+    //                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
     //                             #field_code_occurence_new_32b2a167_ab66_4ee6_8e59_3839fa83d830_token_stream,
     //                         };
     //                         #eprintln_error_token_stream
-    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+    //                         return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream);
     //                     }
     //                 }
     //             },
@@ -7591,8 +7590,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
     //                     {
     //                         Ok(value) => #operation_payload_from_or_try_from_token_stream,
-    //                         Err(#error_value_snake_case_token_stream) => {
-    //                             return #error_value_snake_case_token_stream;//todo convert into return enum mannually
+    //                         Err(#error_snake_case_token_stream) => {
+    //                             return #error_snake_case_token_stream;//todo convert into return enum mannually
     //                         }
     //                     },
     //                 };
@@ -7632,7 +7631,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     &#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case_token_stream(#parameters_snake_case_token_stream.#payload_snake_case_token_stream)
     //                 ) {
     //                     Ok(value) => value,
-    //                     Err(#error_value_snake_case_token_stream) => {
+    //                     Err(#error_snake_case_token_stream) => {
     //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
     //                     }
     //                 };
@@ -7645,7 +7644,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
     //                     match #primary_key_inner_type_token_stream::try_from(value) {
     //                         Ok(value) => Ok(value),
-    //                         Err(#error_value_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream )
+    //                         Err(#error_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream )
     //                     }
     //                 }
     //             },
@@ -7676,7 +7675,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 .await
     //                 {
     //                     Ok(value) => println!("{value:#?}"),
-    //                     Err(#error_value_snake_case_token_stream) => panic!("{}", #error_value_snake_case_token_stream)
+    //                     Err(#error_snake_case_token_stream) => panic!("{}", #error_snake_case_token_stream)
     //                 }
     //             };
     //             proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
@@ -7758,8 +7757,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 .enable_all()
     //                 .build()
     //             {
-    //                 Err(#error_value_snake_case_token_stream) => {
-    //                     panic!("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {:#?}", #error_value_snake_case_token_stream)
+    //                 Err(#error_snake_case_token_stream) => {
+    //                     panic!("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {:#?}", #error_snake_case_token_stream)
     //                 }
     //                 Ok(runtime) => {
     //                     runtime.block_on(find_out_if_it_works());
@@ -8178,7 +8177,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //         let desirable_status_code_case_token_stream = quote::quote! {
 //             match serde_json::#from_str_snake_case_token_stream::<#desirable_enum_name>(&response_text) {
 //                 Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
 //                 }
 //             }
@@ -8209,7 +8208,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //                     else if status_code == #http_status_code_token_stream {
 //                         match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
 //                             Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
-//                             Err(#error_value_snake_case_token_stream) => {
+//                             Err(#error_snake_case_token_stream) => {
 //                                 return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
 //                             }
 //                         }
@@ -8242,7 +8241,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //                             Ok(value) => {
 //                                 vec_values.push(value);
 //                             }
-//                             Err(#error_value_snake_case_token_stream) => {
+//                             Err(#error_snake_case_token_stream) => {
 //                                 vec_errors.push(
 //                                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream(e)
 //                                 );
@@ -8269,7 +8268,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //         > {
 //             let #payload_snake_case_token_stream = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case_token_stream(#parameters_snake_case_token_stream.#payload_snake_case_token_stream)) {
 //                 Ok(value) => value,
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
 //                 }
 //             };
@@ -8285,7 +8284,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //                 .send();
 //             let response = match future.await {
 //                 Ok(response) => response,
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_initialization_token_stream);
 //                 }
 //             };
@@ -8293,14 +8292,14 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //             let headers = response.headers().clone();
 //             let response_text = match response.text().await {
 //                 Ok(response_text) => response_text,
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
 //                 }
 //             };
 //             let variants = #(#status_code_enums_try_from)*;
 //             match #desirable_type_token_stream::try_from(variants) {
 //                 Ok(value) => #primary_key_inner_type_from_or_try_from_token_stream,
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#expected_type_initialization_token_stream);
 //                 }
 //             }
@@ -8483,7 +8482,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //         let desirable_status_code_case_token_stream = quote::quote! {
 //             match serde_json::#from_str_snake_case_token_stream::<#desirable_enum_name>(&response_text) {
 //                 Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
 //                 }
 //             }
@@ -8514,7 +8513,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //                     else if status_code == #http_status_code_token_stream {
 //                         match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
 //                             Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
-//                             Err(#error_value_snake_case_token_stream) => {
+//                             Err(#error_snake_case_token_stream) => {
 //                                 return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
 //                             }
 //                         }
@@ -8547,7 +8546,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //                 .send();
 //             let response = match future.await {
 //                 Ok(response) => response,
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_initialization_token_stream);
 //                 }
 //             };
@@ -8555,14 +8554,14 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 //             let headers = response.headers().clone();
 //             let response_text = match response.text().await {
 //                 Ok(response_text) => response_text,
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
 //                 }
 //             };
 //             let variants = #(#status_code_enums_try_from)*;
 //             match #desirable_type_token_stream::try_from(variants) {
 //                 Ok(value) => #ok_value_handle_token_stream,
-//                 Err(#error_value_snake_case_token_stream) => {
+//                 Err(#error_snake_case_token_stream) => {
 //                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#expected_type_initialization_token_stream);
 //                 },
 //             }
@@ -8740,8 +8739,8 @@ enum OperationHttpMethod {
 //                 .enable_all()
 //                 .build()
 //             {
-//                 Err(#error_value_snake_case_token_stream) => {
-//                     panic!("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {:#?}", #error_value_snake_case_token_stream)
+//                 Err(#error_snake_case_token_stream) => {
+//                     panic!("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {:#?}", #error_snake_case_token_stream)
 //                 }
 //                 Ok(runtime) => {
 //                     async fn test() {
