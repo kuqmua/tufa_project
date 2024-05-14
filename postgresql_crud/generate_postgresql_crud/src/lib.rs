@@ -1405,21 +1405,42 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         ]
     );
-    let json_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-        proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-        <naming_constants::Json as naming_constants::Naming>::upper_camel_case_stringified(),
-        &code_occurence_field,
-        vec![
-            (
-                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                <naming_constants::Json as naming_constants::Naming>::snake_case_stringified(),
-                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &["axum","extract","rejection","JsonRejection"],
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ),
-            )
-        ]
-    );
+    let (json_syn_variant, json_syn_variant_initialization_token_stream) = {
+        let json_upper_camel_case_token_stream = <naming_constants::Json as naming_constants::Naming>::upper_camel_case_token_stream();
+        let json_snake_case_token_stream = <naming_constants::Json as naming_constants::Naming>::snake_case_token_stream();
+        let field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+                <naming_constants::Json as naming_constants::Naming>::upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        <naming_constants::Json as naming_constants::Naming>::snake_case_stringified(),
+                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &["axum","extract","rejection","JsonRejection"],
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ),
+                    )
+                ]
+            ),
+            quote::quote! {
+                #json_upper_camel_case_token_stream {
+                    #json_snake_case_token_stream: error,
+                    #field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream,
+                }
+            }
+        )
+    };
+    //
+
+    //
     let primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream = quote::quote! {primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client};
     //todo maybe first convert to type what can be primary key ?
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream = quote::quote! {
@@ -2537,12 +2558,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 let parameters_logic_token_stream = {
-                    let field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
                     quote::quote! {
                         let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                             #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
@@ -2550,10 +2565,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             ) {
                                 Ok(axum::Json(value)) => #operation_payload_upper_camel_case_token_stream::from(value),
                                 Err(error) => {
-                                    let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
-                                        json: error,
-                                        #field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream,
-                                    };
+                                    let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#json_syn_variant_initialization_token_stream;
                                     eprintln!("{error}");
                                     return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                         status_code: axum::http::StatusCode::CREATED,
