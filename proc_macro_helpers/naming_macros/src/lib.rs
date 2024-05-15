@@ -6,6 +6,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
     .expect("failed to convert tokens input into valid json string[][] pattern")
     .into_iter()
     .map(|element| {
+        //todo check of elements contains only Aa-Zz symbols
         let prefix_upper_camel_case = "_upper_camel_case";
         let prefix_snake_case = "_snake_case";
         let prefix_stringified = "_stringified";
