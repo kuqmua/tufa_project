@@ -1153,24 +1153,39 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let rollback_upper_camel_case_stringified = <naming_constants::Rollback as naming_constants::Naming>::upper_camel_case_stringified();
     let rollback_snake_case_stringified = <naming_constants::Rollback as naming_constants::Naming>::snake_case_stringified();
     let rollback_error_name_token_stream = quote::quote! {rollback_error};
-    let query_and_rollback_failed_syn_variant =
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            &format!("{query_upper_camel_case_stringified}And{rollback_upper_camel_case_stringified}Failed"),
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    &format!("{query_snake_case_stringified}_error"),
-                    sqlx_error_syn_punctuated_punctuated.clone(),
-                ),
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    &format!("{rollback_snake_case_stringified}_error"),
-                    sqlx_error_syn_punctuated_punctuated.clone(),
-                ),
-            ],
-        );
+    let (
+        query_and_rollback_failed_syn_variant,
+        query_and_rollback_failed_syn_variant_initialization_token_stream
+     ) = {
+        let query_and_rollback_failed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::query_and_rollback_failed_upper_camel_case_token_stream();
+        let query_and_rollback_failed_snake_case_token_stream = proc_macro_helpers::naming_conventions::query_and_rollback_failed_snake_case_token_stream();
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+                &proc_macro_helpers::naming_conventions::query_and_rollback_failed_upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &format!("{query_snake_case_stringified}_error"),
+                        sqlx_error_syn_punctuated_punctuated.clone(),
+                    ),
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &format!("{rollback_snake_case_stringified}_error"),
+                        sqlx_error_syn_punctuated_punctuated.clone(),
+                    ),
+                ],
+            ),
+            quote::quote! {
+                QueryAndRollbackFailed {
+                    query_error: #error_snake_case_token_stream,
+                    #rollback_error_name_token_stream,
+                    #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
+                }
+            }
+        )
+    };
     let primary_key_from_row_and_failed_rollback_syn_variant =
         crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
