@@ -3,9 +3,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["Primary", "Key"],
         ["Serialize", "Deserialize"],
         ["With", "Serialize", "Deserialize"],
-        ["Error", "Occurence"]
-        // ,
-        // ["Code", "Occurence"]
+        ["Error", "Occurence"],
+        ["Code", "Occurence"]
         // ,
         // ["", "", ""],
         // ["", "", ""],
@@ -41,52 +40,6 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
     ]
 );
 
-
-////////
-
-
-// pub fn code_occurence_upper_camel_case_stringified() -> std :: string ::
-// String
-// {
-//     format!
-//     ("{}{}", < naming_constants :: Code as naming_constants :: Naming > ::
-//     upper_camel_case_stringified(), < naming_constants :: Occurence as
-//     naming_constants :: Naming > :: upper_camel_case_stringified())
-// } 
-
-
-// pub fn code_occurence_snake_case_stringified() -> std :: string :: String
-// {
-//     format!
-//     ("{}_{}", < naming_constants :: Code as naming_constants :: Naming > ::
-//     snake_case_stringified(), < naming_constants :: Occurence as
-//     naming_constants :: Naming > :: snake_case_stringified())
-// } 
-
-
-// pub fn code_occurence_upper_camel_case_token_stream() -> proc_macro2 ::
-// TokenStream
-// {
-//     let value = code_occurence_upper_camel_case_stringified(); value.parse ::
-//     < proc_macro2 :: TokenStream >
-//     ().unwrap_or_else(| _ | panic!
-//     ("{value} {}", proc_macro_common :: constants ::
-//     PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-// } 
-
-
-// pub fn code_occurence_snake_case_token_stream() -> proc_macro2 ::
-// TokenStream
-// {
-//     let value =
-//     primary_key_from_row_and_failed_rollback_snake_case_stringified();
-//     value.parse :: < proc_macro2 :: TokenStream >
-//     ().unwrap_or_else(| _ | panic!
-//     ("{value} {}", proc_macro_common :: constants ::
-//     PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-// }
-////////
-
 pub fn syn_type_path_stringified() -> std::string::String {
     format!(
         "syn::Type::{}", 
@@ -94,32 +47,6 @@ pub fn syn_type_path_stringified() -> std::string::String {
     )
 }
 
-///////////////
-pub fn code_occurence_upper_camel_case_stringified() -> std::string::String {
-    format!(
-        "{}{}",
-        <naming_constants::Code as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Occurence as naming_constants::Naming>::upper_camel_case_stringified(),
-    )
-}
-pub fn code_occurence_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
-    let value = code_occurence_upper_camel_case_stringified();
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-pub fn code_occurence_snake_case_stringified() -> std::string::String {
-    format!(
-        "{}_{}",
-        <naming_constants::Code as naming_constants::Naming>::snake_case_stringified(),
-        <naming_constants::Occurence as naming_constants::Naming>::snake_case_stringified(),
-    )
-}
-pub fn code_occurence_snake_case_token_stream() -> proc_macro2::TokenStream {
-    let value = code_occurence_snake_case_stringified();
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-/////////////////
 pub fn is_none_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}",

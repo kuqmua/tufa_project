@@ -105,7 +105,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
                 #value_parse_token_stream
             }
             pub fn #phrase_snake_case_token_stream_token_stream() -> #proc_macro2_token_stream {
-                let value = primary_key_from_row_and_failed_rollback_snake_case_stringified();
+                let value = #phrase_snake_case_stringified_token_stream();
                 #value_parse_token_stream
             }
         }
