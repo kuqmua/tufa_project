@@ -1,5 +1,13 @@
 //////////////////////////////////////////////////////////////
 
+naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants!(
+    [
+        ["Primary", "Key"],
+        ["From", "Row"]
+    ]
+);
+
+
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}",

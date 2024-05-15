@@ -1,5 +1,6 @@
 #[proc_macro]
 pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
     let impls_token_stream = match syn::parse::Parser::parse2(
         syn::punctuated::Punctuated::<syn::Expr, syn::Token![,]>::parse_terminated, 
         proc_macro2::TokenStream::from(input)
