@@ -1173,12 +1173,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 vec![
                     (
                         proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &format!("{query_snake_case_stringified}_error"),
+                        &query_snake_case_stringified,
                         sqlx_error_syn_punctuated_punctuated.clone(),
                     ),
                     (
                         proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &format!("{rollback_snake_case_stringified}_error"),
+                        &rollback_snake_case_stringified,
                         sqlx_error_syn_punctuated_punctuated.clone(),
                     ),
                 ],
@@ -1192,24 +1192,45 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let primary_key_from_row_and_failed_rollback_syn_variant =
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            "PrimaryKeyFromRowAndFailedRollback",
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    "primary_key_from_row",
-                    sqlx_error_syn_punctuated_punctuated.clone(),
-                ),
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    &format!("{rollback_snake_case_stringified}_error"),
-                    sqlx_error_syn_punctuated_punctuated.clone(),
-                ),
-            ],
+    let (
+        primary_key_from_row_and_failed_rollback_syn_variant,
+        primary_key_from_row_and_failed_rollback_syn_variant_initialization_token_stream
+     ) = {
+        let primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream();
+        let primary_key_from_row_and_failed_rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::primary_key_from_row_and_failed_rollback_snake_case_token_stream();
+        let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+                &proc_macro_helpers::naming_conventions::primary_key_from_row_and_failed_rollback_upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &proc_macro_helpers::naming_conventions::primary_key_from_row_and_failed_rollback_snake_case_stringified(),
+                        sqlx_error_syn_punctuated_punctuated.clone(),
+                    ),
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &rollback_snake_case_stringified,
+                        sqlx_error_syn_punctuated_punctuated.clone(),
+                    ),
+                ],
+            ),
+            quote::quote! {
+                #primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream {
+                    #primary_key_from_row_and_failed_rollback_snake_case_token_stream: #error_snake_case_token_stream,
+                    #rollback_error_name_token_stream,
+                    #field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream,
+                }
+            }
+        )
+    };
     let non_existing_primary_keys_upper_camel_case_stringified = format!(
         "{}{}{}{}",
         <naming_constants::Non as naming_constants::Naming>::upper_camel_case_stringified(),

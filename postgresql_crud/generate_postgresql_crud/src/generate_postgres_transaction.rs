@@ -19,7 +19,8 @@ pub(crate) fn generate_postgres_transaction(
     error_log_call_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     primary_key_syn_field_with_additional_info: &crate::SynFieldWithAdditionalInfo<'_>,
-    query_and_rollback_failed_syn_variant_initialization_token_stream: &proc_macro2::TokenStream
+    query_and_rollback_failed_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    primary_key_from_row_and_failed_rollback_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let error_snake_case_token_stream = <naming_constants::Error as naming_constants::Naming>::snake_case_token_stream();
     let sqlx_acquire_token_stream = proc_macro_common::sqlx_acquire_token_stream();
@@ -31,30 +32,6 @@ pub(crate) fn generate_postgres_transaction(
     let commit_token_stream =
         <naming_constants::Commit as naming_constants::Naming>::snake_case_token_stream();
     let postgres_transaction_token_stream = quote::quote! {postgres_transaction};
-    // let query_and_rollback_failed_variant_initialization_token_stream = {
-    //     quote::quote! {
-    //         QueryAndRollbackFailed {
-    //             query_error: #error_snake_case_token_stream,
-    //             #rollback_error_name_token_stream,
-    //             #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
-    //         }
-    //     }
-    // };
-    let primary_key_from_row_and_failed_rollback_variant_initialization_token_stream = {
-        let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote! {
-            PrimaryKeyFromRowAndFailedRollback {
-                primary_key_from_row: #error_snake_case_token_stream,
-                #rollback_error_name_token_stream,
-                #field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream,
-            }
-        }
-    };
     let non_existing_primary_keys_variant_initialization_token_stream = {
         let field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
@@ -172,7 +149,7 @@ pub(crate) fn generate_postgres_transaction(
                             #from_log_and_return_error_token_stream;
                         }
                         Err(#rollback_error_name_token_stream) => {
-                            let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#primary_key_from_row_and_failed_rollback_variant_initialization_token_stream;
+                            let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#primary_key_from_row_and_failed_rollback_syn_variant_initialization_token_stream;
                             #error_log_call_token_stream
                             return #response_variants_token_stream::from(#error_snake_case_token_stream);
                         }

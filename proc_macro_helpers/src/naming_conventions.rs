@@ -573,6 +573,40 @@ pub fn query_and_rollback_failed_snake_case_token_stream() -> proc_macro2::Token
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+pub fn primary_key_from_row_and_failed_rollback_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}{}{}{}{}",
+        <naming_constants::Primary as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Key as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::From as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Row as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::And as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Failed as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Rollback as naming_constants::Naming>::upper_camel_case_stringified(),
+    )
+}
+pub fn primary_key_from_row_and_failed_rollback_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}_{}_{}_{}_{}_{}",
+        <naming_constants::Primary as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Key as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::From as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Row as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::And as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Failed as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Rollback as naming_constants::Naming>::upper_camel_case_stringified(),
+    )
+}
+pub fn primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = primary_key_from_row_and_failed_rollback_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn primary_key_from_row_and_failed_rollback_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = primary_key_from_row_and_failed_rollback_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 /////////////////////////////////////////////////////////////////////
 
 pub trait SelfParametersUpperCamelCaseTokenStream {
