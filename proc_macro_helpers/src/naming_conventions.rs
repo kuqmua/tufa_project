@@ -1,23 +1,44 @@
 naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants!(
     [
-        ["Primary", "Key"]
+        ["Primary", "Key"],
+        ["Serialize", "Deserialize"]
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
+        // ["", "", ""],
     ]
 );
 
-pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
-    format!(
-        "{}{}",
-        <naming_constants::Serialize as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Deserialize as naming_constants::Naming>::upper_camel_case_stringified(),
-    )
-}
-pub fn serialize_deserialize_snake_case_stringified() -> std::string::String {
-    format!(
-        "{}_{}",
-        <naming_constants::Serialize as naming_constants::Naming>::snake_case_stringified(),
-        <naming_constants::Deserialize as naming_constants::Naming>::snake_case_stringified(),
-    )
-}
 pub fn with_serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}{}",
