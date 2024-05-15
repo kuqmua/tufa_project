@@ -1,8 +1,9 @@
 naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants!(
     [
         ["Primary", "Key"],
-        ["Serialize", "Deserialize"]
-        // ["", "", ""],
+        ["Serialize", "Deserialize"],
+        ["With", "Serialize", "Deserialize"]
+        // ,
         // ["", "", ""],
         // ["", "", ""],
         // ["", "", ""],
@@ -39,27 +40,6 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
     ]
 );
 
-pub fn with_serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
-    format!(
-        "{}{}{}",
-        <naming_constants::With as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Serialize as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Deserialize as naming_constants::Naming>::upper_camel_case_stringified(),
-    )
-}
-// pub fn with_serialize_deserialize_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
-//     let value = with_serialize_deserialize_upper_camel_case_stringified();
-//     value.parse::<proc_macro2::TokenStream>()
-//     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-// }
-pub fn with_serialize_deserialize_snake_case_stringified() -> std::string::String {
-    format!(
-        "{}_{}_{}",
-        <naming_constants::With as naming_constants::Naming>::snake_case_stringified(),
-        <naming_constants::Serialize as naming_constants::Naming>::snake_case_stringified(),
-        <naming_constants::Deserialize as naming_constants::Naming>::snake_case_stringified(),
-    )
-}
 pub fn error_occurence_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}",
