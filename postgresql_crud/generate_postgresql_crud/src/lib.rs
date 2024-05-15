@@ -1159,6 +1159,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
      ) = {
         let query_and_rollback_failed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::query_and_rollback_failed_upper_camel_case_token_stream();
         let query_and_rollback_failed_snake_case_token_stream = proc_macro_helpers::naming_conventions::query_and_rollback_failed_snake_case_token_stream();
+        let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -1178,8 +1184,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ],
             ),
             quote::quote! {
-                QueryAndRollbackFailed {
-                    query_error: #error_snake_case_token_stream,
+                #query_and_rollback_failed_upper_camel_case_token_stream {
+                    #query_and_rollback_failed_snake_case_token_stream: #error_snake_case_token_stream,
                     #rollback_error_name_token_stream,
                     #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
                 }
