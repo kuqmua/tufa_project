@@ -1,12 +1,8 @@
-//////////////////////////////////////////////////////////////
-
 naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants!(
     [
-        ["Primary", "Key"],
-        ["From", "Row"]
+        ["Primary", "Key"]
     ]
 );
-
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
     format!(
@@ -397,18 +393,6 @@ pub fn wrapper_vec_column_snake_case_stringified() -> std::string::String {
 }
 pub fn wrapper_vec_column_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = wrapper_vec_column_snake_case_stringified();
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-pub fn primary_key_snake_case_stringified() -> std::string::String {
-    format!(
-        "{}_{}",
-        <naming_constants::Primary as naming_constants::Naming>::snake_case_stringified(),
-        <naming_constants::Key as naming_constants::Naming>::snake_case_stringified(),
-    )
-}
-pub fn primary_key_snake_case_token_stream() -> proc_macro2::TokenStream {
-    let value = primary_key_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
