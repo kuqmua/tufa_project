@@ -286,61 +286,61 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
                 snake_case_token_stream_trait_name_upper_camel_case_token_stream
             )
         };
-        //
-        // let (
-        //     upper_camel_case_stringified_trait_function_name_snake_case_token_stream,
-        //     snake_case_stringified_trait_function_name_snake_case_token_stream,
-        //     upper_camel_case_token_stream_trait_function_name_snake_case_token_stream,
-        //     snake_case_token_stream_trait_function_name_snake_case_token_stream
-        // ) = {
-            
-        //     let elements_concat_snake_case_stringified = element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
-        //         let element_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(element);
-        //         if index == 0 {
-        //             acc.push_str(&element_snake_case_stringified);
-        //         }
-        //         else {
-        //             acc.push_str(&format!("_{element_snake_case_stringified}"));
-        //         }
-        //         acc
-        //     });
-        //     let upper_camel_case_stringified_trait_function_name_snake_case_token_stream = {
-        //         let value = format!(
-        //             "{elements_concat_snake_case_stringified}{upper_camel_case_upper_camel_case_stringified}{stringified_upper_camel_case_stringified}"
-        //         );
-        //         value.parse::<proc_macro2::TokenStream>()
-        //         .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //     };
-        //     let snake_case_stringified_trait_function_name_snake_case_token_stream = {
-        //         let value = format!(
-        //             "{elements_concat_snake_case_stringified}{snake_case_upper_camel_case_stringified}{stringified_upper_camel_case_stringified}"
-        //         );
-        //         value.parse::<proc_macro2::TokenStream>()
-        //         .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //     };
-        //     let upper_camel_case_token_stream_trait_function_name_snake_case_token_stream = {
-        //         let value = format!(
-        //             "{elements_concat_snake_case_stringified}{upper_camel_case_upper_camel_case_stringified}{token_stream_upper_camel_case_stringified}"
-        //         );
-        //         value.parse::<proc_macro2::TokenStream>()
-        //         .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //     };
-        //     let snake_case_token_stream_trait_function_name_snake_case_token_stream = {
-        //         let value = format!(
-        //             "{elements_concat_snake_case_stringified}{snake_case_upper_camel_case_stringified}{token_stream_upper_camel_case_stringified}"
-        //         );
-        //         value.parse::<proc_macro2::TokenStream>()
-        //         .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //     };
-        //     (
-        //         upper_camel_case_stringified_trait_function_name_snake_case_token_stream,
-        //         snake_case_stringified_trait_function_name_snake_case_token_stream,
-        //         upper_camel_case_token_stream_trait_function_name_snake_case_token_stream,
-        //         snake_case_token_stream_trait_function_name_snake_case_token_stream
-        //     )
-        // };
-
-        // self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified
+        let (
+            upper_camel_case_stringified_trait_function_name_snake_case_token_stream,
+            snake_case_stringified_trait_function_name_snake_case_token_stream,
+            upper_camel_case_token_stream_trait_function_name_snake_case_token_stream,
+            snake_case_token_stream_trait_function_name_snake_case_token_stream
+        ) = {
+            let prefix_upper_camel_case = prefix_upper_camel_case();
+            let prefix_snake_case = prefix_snake_case();
+            let prefix_stringified = prefix_stringified();
+            let prefix_token_stream = prefix_token_stream();
+            let elements_concat_snake_case_stringified = element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
+                let element_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(element);
+                if index == 0 {
+                    acc.push_str(&element_snake_case_stringified);
+                }
+                else {
+                    acc.push_str(&format!("_{element_snake_case_stringified}"));
+                }
+                acc
+            });
+            let upper_camel_case_stringified_trait_function_name_snake_case_token_stream = {
+                let value = format!(
+                    "{elements_concat_snake_case_stringified}{prefix_upper_camel_case}{prefix_stringified}"
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let snake_case_stringified_trait_function_name_snake_case_token_stream = {
+                let value = format!(
+                    "{elements_concat_snake_case_stringified}{prefix_snake_case}{prefix_stringified}"
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let upper_camel_case_token_stream_trait_function_name_snake_case_token_stream = {
+                let value = format!(
+                    "{elements_concat_snake_case_stringified}{prefix_upper_camel_case}{prefix_token_stream}"
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let snake_case_token_stream_trait_function_name_snake_case_token_stream = {
+                let value = format!(
+                    "{elements_concat_snake_case_stringified}{prefix_snake_case}{prefix_token_stream}"
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            (
+                upper_camel_case_stringified_trait_function_name_snake_case_token_stream,
+                snake_case_stringified_trait_function_name_snake_case_token_stream,
+                upper_camel_case_token_stream_trait_function_name_snake_case_token_stream,
+                snake_case_token_stream_trait_function_name_snake_case_token_stream
+            )
+        };
         quote::quote!{
             // pub trait #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream {
             //     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(
