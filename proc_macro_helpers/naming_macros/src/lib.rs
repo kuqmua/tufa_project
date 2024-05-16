@@ -202,8 +202,23 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
                 panic!("{proc_macro_name_snake_case_stringified} cannot find {self_match_name}");
             }
         }
-        let stringified_upper_camel_case_stringified = "Stringified";
-        let token_stream_upper_camel_case_stringified = "TokenStream";
+        let upper_camel_case_upper_camel_case_stringified = format!(
+            "{}{}{}",
+            <naming_constants::Upper as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Camel as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Case as naming_constants::Naming>::upper_camel_case_stringified(),
+        );
+        let snake_case_upper_camel_case_stringified = format!(
+            "{}{}",
+            <naming_constants::Snake as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Case as naming_constants::Naming>::upper_camel_case_stringified(),
+        );
+        let stringified_upper_camel_case_stringified = <naming_constants::Stringified as naming_constants::Naming>::upper_camel_case_stringified();
+        let token_stream_upper_camel_case_stringified = format!(
+            "{}{}",
+            <naming_constants::Token as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Stream as naming_constants::Naming>::upper_camel_case_stringified()
+        );
 
         // let f = "UpperCamelCaseStringified";
 
