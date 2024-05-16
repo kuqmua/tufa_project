@@ -188,7 +188,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
         let self_match_name = "self";
         {
             let mut is_self_exists_and_only_one = false;
-            for element in element {
+            for element in &element {
                 if element == self_match_name {
                     if is_self_exists_and_only_one {
                         panic!("{proc_macro_name_snake_case_stringified} {self_match_name} written not written only once");
@@ -390,13 +390,13 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             // #pub_fn_upper_camel_case_token_stream_token_stream
             // #pub_fn_snake_case_token_stream_token_stream
             //
-            // pub trait SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified {
+            // pub trait #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream {
             //     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(
             //         &self,
             //     ) -> std::string::String;
             // }
 
-            // impl<T> SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified for T
+            // impl<T> #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream for T
             // where
             //     T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
             // {
@@ -416,13 +416,13 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             //     }
             // }
             
-            // pub trait SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseStringified {
+            // pub trait #snake_case_stringified_trait_name_upper_camel_case_token_stream {
             //     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_stringified(
             //         &self,
             //     ) -> std::string::String;
             // }
 
-            // impl<T> SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseStringified for T
+            // impl<T> #snake_case_stringified_trait_name_upper_camel_case_token_stream for T
             // where
             //     T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
             // {
@@ -442,15 +442,15 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             //     }
             // }
             
-            // pub trait SelfPayloadWithSerializeDeserializeTryFromSelfPayloadUpperCamelCaseTokenStream {
+            // pub trait #upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream {
             //     fn self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(
             //         &self,
             //     ) -> proc_macro2::TokenStream;
             // }
 
-            // impl<T> SelfPayloadWithSerializeDeserializeTryFromSelfPayloadUpperCamelCaseTokenStream for T
+            // impl<T> #upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream for T
             // where
-            //     T: SelfPayloadWithSerializeDeserializeTryFromSelfPayloadUpperCamelCaseStringified,
+            //     T: #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream,
             // {
             //     fn self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(
             //         &self,
@@ -461,15 +461,15 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             //     }
             // }
             
-            // pub trait SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseTokenStream {
+            // pub trait #snake_case_token_stream_trait_name_upper_camel_case_token_stream {
             //     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(
             //         &self,
             //     ) -> proc_macro2::TokenStream;
             // }
 
-            // impl<T> SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseTokenStream for T
+            // impl<T> #snake_case_token_stream_trait_name_upper_camel_case_token_stream for T
             // where
-            //     T: SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseStringified,
+            //     T: #snake_case_stringified_trait_name_upper_camel_case_token_stream,
             // {
             //     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(
             //         &self,
