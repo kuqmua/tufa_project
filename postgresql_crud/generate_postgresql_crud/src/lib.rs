@@ -1723,11 +1723,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         (
             |operation: &crate::Operation| -> proc_macro2::TokenStream {
-                let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
+                let try_operation_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_with_serialize_deserialize_upper_camel_case_token_stream(operation);
                 quote::quote! {
                     #expected_type_upper_camel_case_token_stream {
                         #eo_to_std_string_string_serialize_deserialize_token_stream
-                        #expected_type_snake_case_token_stream: #try_operation_with_serialize_deserialize_token_stream,
+                        #expected_type_snake_case_token_stream: #try_operation_with_serialize_deserialize_upper_camel_case_token_stream,
                         #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                     }
                 }
