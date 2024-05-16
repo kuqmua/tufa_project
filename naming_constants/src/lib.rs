@@ -6,6 +6,7 @@ pub const IS_NONE_STRINGIFIED: &str = "is None";
 pub const STD_STRINGIFIED: &str = "std";
 pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
+pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 
 pub trait Naming {
     fn upper_camel_case_stringified() -> &'static str;

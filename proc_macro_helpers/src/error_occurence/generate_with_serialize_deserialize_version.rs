@@ -220,14 +220,14 @@
 //     field: &syn::Field,
 //     proc_macro_name_ident_stringified: &str,
 // ) -> crate::error_occurence::supported_container::SupportedContainer {
-//     let syn_type_path_stringified = crate::naming_conventions::syn_type_path_stringified();
 //     let syn_type_reference = format!(
 //         "syn::Type::{}",
 //         <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
 //     );
 //     let error_message = format!(
-//         "{} {syn_type_path_stringified} and {syn_type_reference}",
-//         naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//         "{} {} and {syn_type_reference}",
+//         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//         naming_constants::SYN_TYPE_PATH
 //     );
 //     match &field.ty {
 //         syn::Type::Path(type_path) => {
@@ -278,8 +278,9 @@
 //                                     }
 //                                     else {
 //                                         panic!(
-//                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}",
-//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
+//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                             naming_constants::SYN_TYPE_PATH
 //                                         );
 //                                     };
 //                                     crate::error_occurence::vec_element_type::VecElementType::Reference {
@@ -303,12 +304,14 @@
 //                                 syn::Type::TraitObject(_) | 
 //                                 syn::Type::Tuple(_) | 
 //                                 syn::Type::Verbatim(_) => panic!(
-//                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference}",
+//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_constants::SYN_TYPE_PATH
 //                                 ),
 //                                 _ => panic!(
-//                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference} (exhaustive)",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference} (exhaustive)",
+//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_constants::SYN_TYPE_PATH
 //                                 ),
 //                             }
 //                         }
@@ -403,8 +406,9 @@
 //                                     }
 //                                     else {
 //                                         panic!(
-//                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}",
-//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
+//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                             naming_constants::SYN_TYPE_PATH
 //                                         );
 //                                     };
 //                                     crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
@@ -428,12 +432,14 @@
 //                                 syn::Type::TraitObject(_) | 
 //                                 syn::Type::Tuple(_) | 
 //                                 syn::Type::Verbatim(_) => panic!(
-//                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference}",
+//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_constants::SYN_TYPE_PATH
 //                                 ),
 //                                 _ => panic!(
-//                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference} (exhaustive)",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference} (exhaustive)",
+//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_constants::SYN_TYPE_PATH
 //                                 ),
 //                             }
 //                         }
@@ -472,8 +478,9 @@
 //                                     }
 //                                     else {
 //                                         panic!(
-//                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}",
-//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
+//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                             naming_constants::SYN_TYPE_PATH
 //                                         );
 //                                     };
 //                                    crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
@@ -497,12 +504,14 @@
 //                                 syn::Type::TraitObject(_) | 
 //                                 syn::Type::Tuple(_) | 
 //                                 syn::Type::Verbatim(_) => panic!(
-//                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                     "{proc_macro_name_ident_stringified} type_handle {} {} and syn::Type::Reference",
+//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_constants::SYN_TYPE_PATH
 //                                 ),
 //                                 _ => panic!(
-//                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference (exhaustive)",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                     "{proc_macro_name_ident_stringified} type_handle {} {} and syn::Type::Reference (exhaustive)",
+//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_constants::SYN_TYPE_PATH
 //                                 ),
 //                             }
 //                         }
@@ -558,8 +567,9 @@
 //             }
 //             else {
 //                 panic!(
-//                     "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}",
-//                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                     "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
+//                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                     naming_constants::SYN_TYPE_PATH
 //                 );
 //             };
 //             crate::error_occurence::supported_container::SupportedContainer::Reference{

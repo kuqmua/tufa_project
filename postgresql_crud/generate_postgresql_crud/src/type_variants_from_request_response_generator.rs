@@ -219,10 +219,10 @@
 //                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                         }
 //                         else {
-//                             let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
 //                             panic!(
-//                                 "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-//                                 naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                 "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {}",
+//                                 naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                 naming_constants::SYN_TYPE_PATH
 //                             );
 //                         }
 //                     };
@@ -398,10 +398,10 @@
 //                                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                                 }
 //                                 else {
-//                                     let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
 //                                     panic!(
-//                                         "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-//                                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                                         "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {}",
+//                                         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                                         naming_constants::SYN_TYPE_PATH
 //                                     );
 //                                 }
 //                             };

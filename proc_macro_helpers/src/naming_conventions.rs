@@ -45,13 +45,6 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
     ]
 );
 
-pub fn syn_type_path_stringified() -> std::string::String {
-    format!(
-        "syn::Type::{}", 
-        <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
-    )
-}
-
 pub trait SelfParametersUpperCamelCaseTokenStream {
     fn self_parameters_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
 }
