@@ -27,6 +27,40 @@ fn prefix_token_stream() -> std::string::String {
     )
 }
 
+//
+fn upper_camel_case_stringified_format_parameters_places_token_stream(
+    value: &[std::string::String],
+    proc_macro_name_snake_case_stringified: &str
+) -> proc_macro2::TokenStream {
+    let value = value.iter().fold(std::string::String::from(""), |mut acc, _| {
+        acc.push_str("{}");
+        acc
+    });
+    proc_macro_common::generate_quotes::token_stream(
+        &value,
+        &proc_macro_name_snake_case_stringified
+    )
+}
+fn snake_case_stringified_format_parameters_places_token_stream(
+    value: &[std::string::String],
+    proc_macro_name_snake_case_stringified: &str
+) -> proc_macro2::TokenStream {
+    let value = value.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, _)| {
+        if index == 0 {
+            acc.push_str("{}");
+        }
+        else {
+            acc.push_str(&format!("_{{}}"));
+        }
+        acc
+    });
+    proc_macro_common::generate_quotes::token_stream(
+        &value,
+        &proc_macro_name_snake_case_stringified
+    )
+}
+//
+
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
