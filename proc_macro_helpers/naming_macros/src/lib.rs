@@ -185,7 +185,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
                 panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {regex_value}");
             }
         }
-        let self_match_name = "Self";
+        let self_match_name = "self";
         {
             let mut is_self_exists_and_only_one = false;
             for element in element {
