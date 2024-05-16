@@ -366,96 +366,110 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             &element,
             &proc_macro_name_snake_case_stringified
         );
+        let upper_camel_case_stringified_format_parameters_calls_token_stream = element.iter().map(|element|{
+            if element == self_match_name {
+                quote::quote!{
+                    self.to_upper_camel_case_stringified()
+                }
+            }
+            else {
+                let element_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(*&element);
+                quote::quote!{
+                    <naming_constants::#element_upper_camel_case_token_stream as naming_constants::Naming>::upper_camel_case_stringified()
+                }
+            }
+        });
+        let snake_case_stringified_format_parameters_calls_token_stream = element.iter().map(|element|{
+            if element == self_match_name {
+                quote::quote!{
+                    self.to_snake_case_stringified()
+                }
+            }
+            else {
+                let element_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(*&element);
+                quote::quote!{
+                    <naming_constants::#element_upper_camel_case_token_stream as naming_constants::Naming>::snake_case_stringified()
+                }
+            }
+        });
         quote::quote!{
-            // pub trait #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream {
-            //     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(
-            //         &self,
-            //     ) -> #std_string_string_token_stream;
-            // }
+            pub trait #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream {
+                fn #upper_camel_case_stringified_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #std_string_string_token_stream;
+            }
 
-            // impl<T> #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream for T
-            // where
-            //     T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
-            // {
-            //     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(
-            //         &self,
-            //     ) -> #std_string_string_token_stream {
-            //         format!(
-            //             #upper_camel_case_stringified_format_parameters_places_token_stream,
-            //             self.to_upper_camel_case_stringified(),
-            //             <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
-            //             <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
-            //             <naming_constants::From as naming_constants::Naming>::upper_camel_case_stringified(),
-            //             self.to_upper_camel_case_stringified(),
-            //             <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
-            //             with_serialize_deserialize_upper_camel_case_stringified()
-            //         )
-            //     }
-            // }
+            impl<T> #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream for T
+            where
+                T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+            {
+                fn #upper_camel_case_stringified_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #std_string_string_token_stream {
+                    format!(
+                        #upper_camel_case_stringified_format_parameters_places_token_stream,
+                        #(#upper_camel_case_stringified_format_parameters_calls_token_stream),*
+                    )
+                }
+            }
             
-            // pub trait #snake_case_stringified_trait_name_upper_camel_case_token_stream {
-            //     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_stringified(
-            //         &self,
-            //     ) -> #std_string_string_token_stream;
-            // }
+            pub trait #snake_case_stringified_trait_name_upper_camel_case_token_stream {
+                fn #snake_case_stringified_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #std_string_string_token_stream;
+            }
 
-            // impl<T> #snake_case_stringified_trait_name_upper_camel_case_token_stream for T
-            // where
-            //     T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
-            // {
-            //     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_stringified(
-            //         &self,
-            //     ) -> #std_string_string_token_stream {
-            //         format!(
-            //             #snake_case_stringified_format_parameters_places_token_stream,
-            //             self.to_snake_case_stringified(),
-            //             <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
-            //             with_serialize_deserialize_snake_case_stringified(),
-            //             <naming_constants::Try as naming_constants::Naming>::snake_case_stringified(),
-            //             <naming_constants::From as naming_constants::Naming>::snake_case_stringified(),
-            //             self.to_snake_case_stringified(),
-            //             <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
-            //         )
-            //     }
-            // }
+            impl<T> #snake_case_stringified_trait_name_upper_camel_case_token_stream for T
+            where
+                T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
+            {
+                fn #snake_case_stringified_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #std_string_string_token_stream {
+                    format!(
+                        #snake_case_stringified_format_parameters_places_token_stream,
+                        #(#snake_case_stringified_format_parameters_calls_token_stream),*
+                    )
+                }
+            }
             
-            // pub trait #upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream {
-            //     fn self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(
-            //         &self,
-            //     ) -> #proc_macro2_token_stream;
-            // }
+            pub trait #upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream {
+                fn #upper_camel_case_token_stream_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #proc_macro2_token_stream;
+            }
 
-            // impl<T> #upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream for T
-            // where
-            //     T: #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream,
-            // {
-            //     fn self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(
-            //         &self,
-            //     ) -> #proc_macro2_token_stream {
-            //         let value = self.self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_stringified();
-            //         value.parse::<#proc_macro2_token_stream>()
-            //         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            //     }
-            // }
+            impl<T> #upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream for T
+            where
+                T: #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream,
+            {
+                fn #upper_camel_case_token_stream_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #proc_macro2_token_stream {
+                    let value = self.#upper_camel_case_stringified_trait_function_name_snake_case_token_stream();
+                    value.parse::<#proc_macro2_token_stream>()
+                    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                }
+            }
             
-            // pub trait #snake_case_token_stream_trait_name_upper_camel_case_token_stream {
-            //     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(
-            //         &self,
-            //     ) -> #proc_macro2_token_stream;
-            // }
+            pub trait #snake_case_token_stream_trait_name_upper_camel_case_token_stream {
+                fn #snake_case_token_stream_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #proc_macro2_token_stream;
+            }
 
-            // impl<T> #snake_case_token_stream_trait_name_upper_camel_case_token_stream for T
-            // where
-            //     T: #snake_case_stringified_trait_name_upper_camel_case_token_stream,
-            // {
-            //     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(
-            //         &self,
-            //     ) -> #proc_macro2_token_stream {
-            //         let value = self.self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_stringified();
-            //         value.parse::<#proc_macro2_token_stream>()
-            //         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            //     }
-            // }
+            impl<T> #snake_case_token_stream_trait_name_upper_camel_case_token_stream for T
+            where
+                T: #snake_case_stringified_trait_name_upper_camel_case_token_stream,
+            {
+                fn #snake_case_token_stream_trait_function_name_snake_case_token_stream(
+                    &self,
+                ) -> #proc_macro2_token_stream {
+                    let value = self.#snake_case_stringified_trait_function_name_snake_case_token_stream();
+                    value.parse::<#proc_macro2_token_stream>()
+                    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                }
+            }
         }
     });
     let gen = quote::quote!{#(#implementations_token_stream)*};
