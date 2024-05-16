@@ -27,7 +27,6 @@ fn prefix_token_stream() -> std::string::String {
     )
 }
 
-//
 fn upper_camel_case_stringified_format_parameters_places_token_stream(
     value: &[std::string::String],
     proc_macro_name_snake_case_stringified: &str
@@ -59,7 +58,6 @@ fn snake_case_stringified_format_parameters_places_token_stream(
         &proc_macro_name_snake_case_stringified
     )
 }
-//
 
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -125,31 +123,14 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
         };
         let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
         let proc_macro2_token_stream = quote::quote!{proc_macro2::TokenStream};//todo maybe reuse
-        let upper_camel_case_stringified_format_parameters_places_token_stream = {
-            let value = element.iter().fold(std::string::String::from(""), |mut acc, _| {
-                acc.push_str("{}");
-                acc
-            });
-            proc_macro_common::generate_quotes::token_stream(
-                &value,
-                &proc_macro_name_snake_case_stringified
-            )
-        };
-        let snake_case_stringified_format_parameters_places_token_stream = {
-            let value = element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, _)| {
-                if index == 0 {
-                    acc.push_str("{}");
-                }
-                else {
-                    acc.push_str(&format!("_{{}}"));
-                }
-                acc
-            });
-            proc_macro_common::generate_quotes::token_stream(
-                &value,
-                &proc_macro_name_snake_case_stringified
-            )
-        };
+        let upper_camel_case_stringified_format_parameters_places_token_stream = upper_camel_case_stringified_format_parameters_places_token_stream(
+            &element,
+            &proc_macro_name_snake_case_stringified
+        );
+        let snake_case_stringified_format_parameters_places_token_stream = snake_case_stringified_format_parameters_places_token_stream(
+            &element,
+            &proc_macro_name_snake_case_stringified
+        );
         let upper_camel_case_stringified_format_parameters_calls_token_stream = element.iter().map(|element|{
             let element_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(*&element);
             quote::quote!{
@@ -377,6 +358,14 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
         };
         let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
         let proc_macro2_token_stream = quote::quote!{proc_macro2::TokenStream};//todo maybe reuse
+        let upper_camel_case_stringified_format_parameters_places_token_stream = upper_camel_case_stringified_format_parameters_places_token_stream(
+            &element,
+            &proc_macro_name_snake_case_stringified
+        );
+        let snake_case_stringified_format_parameters_places_token_stream = snake_case_stringified_format_parameters_places_token_stream(
+            &element,
+            &proc_macro_name_snake_case_stringified
+        );
         quote::quote!{
             // pub trait #upper_camel_case_stringified_trait_name_upper_camel_case_token_stream {
             //     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(
@@ -392,7 +381,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             //         &self,
             //     ) -> #std_string_string_token_stream {
             //         format!(
-            //             "{}{}{}{}{}{}{}",
+            //             #upper_camel_case_stringified_format_parameters_places_token_stream,
             //             self.to_upper_camel_case_stringified(),
             //             <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
             //             <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -418,7 +407,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             //         &self,
             //     ) -> #std_string_string_token_stream {
             //         format!(
-            //             "{}_{}_{}_{}_{}_{}_{}",
+            //             #snake_case_stringified_format_parameters_places_token_stream,
             //             self.to_snake_case_stringified(),
             //             <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
             //             with_serialize_deserialize_snake_case_stringified(),
