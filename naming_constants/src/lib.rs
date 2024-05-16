@@ -147,7 +147,13 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "bind",
     "version",
     "checked",
-    "add"
+    "add",
+    "upper",
+    "snake",
+    "camel",
+    "stringified",
+    "token",
+    "stream"
 );
 
 #[derive(Debug, Clone, Copy)]

@@ -45,6 +45,15 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
     ]
 );
 
+//
+naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants!(
+    [
+        ["Primary", "Self", "Query"],
+        ["Serialize", "Deserialize", "Self"]
+    ]
+);
+//
+
 pub trait SelfParametersUpperCamelCaseTokenStream {
     fn self_parameters_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
 }
