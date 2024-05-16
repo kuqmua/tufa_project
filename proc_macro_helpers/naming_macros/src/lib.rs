@@ -227,12 +227,8 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             let mut is_self_exists_and_only_one = false;
             for element in &element {
                 if element == self_match_name {
-                    if is_self_exists_and_only_one {
-                        panic!("{proc_macro_name_snake_case_stringified} {self_match_name} written not written only once");
-                    }
-                    else {
-                        is_self_exists_and_only_one = true;
-                    }
+                    is_self_exists_and_only_one = true;
+                    break;
                 }
             }
             if !is_self_exists_and_only_one {
