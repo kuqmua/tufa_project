@@ -1,3 +1,32 @@
+fn prefix_upper_camel_case() -> std::string::String {
+    format!(
+    "_{}_{}_{}",
+        <naming_constants::Upper as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Camel as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Case as naming_constants::Naming>::snake_case_stringified(),
+    )
+}
+fn prefix_snake_case() -> std::string::String {
+    format!(
+        "_{}_{}",
+        <naming_constants::Snake as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Case as naming_constants::Naming>::snake_case_stringified(),
+    )
+}
+fn prefix_stringified() -> std::string::String {
+    format!(
+        "_{}",
+        <naming_constants::Stringified as naming_constants::Naming>::snake_case_stringified(),
+    )
+}
+fn prefix_token_stream() -> std::string::String {
+    format!(
+        "_{}_{}",
+        <naming_constants::Token as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Stream as naming_constants::Naming>::snake_case_stringified(),
+    )
+}
+
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -13,36 +42,16 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
                 panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {regex_value}");
             }
         }
-        let prefix_upper_camel_case = format!(
-            "_{}_{}_{}",
-            <naming_constants::Upper as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Camel as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Case as naming_constants::Naming>::snake_case_stringified(),
-        );
-        let prefix_snake_case = format!(
-            "_{}_{}",
-            <naming_constants::Snake as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Case as naming_constants::Naming>::snake_case_stringified(),
-        );
-        let prefix_stringified = format!(
-            "_{}",
-            <naming_constants::Stringified as naming_constants::Naming>::snake_case_stringified(),
-        );
-        let prefix_token_stream = format!(
-            "_{}_{}",
-            <naming_constants::Token as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Stream as naming_constants::Naming>::snake_case_stringified(),
-        );
         let (
             phrase_upper_camel_case_stringified_token_stream,
             phrase_snake_case_stringified_token_stream,
             phrase_upper_camel_case_token_stream_token_stream,
             phrase_snake_case_token_stream_token_stream
         ) = {
-            let prefix_upper_camel_case_stringified = format!("{prefix_upper_camel_case}{prefix_stringified}");
-            let prefix_snake_case_stringified = format!("{prefix_snake_case}{prefix_stringified}");
-            let prefix_upper_camel_case_token_stream = format!("{prefix_upper_camel_case}{prefix_token_stream}");
-            let prefix_snake_case_token_stream = format!("{prefix_snake_case}{prefix_token_stream}");
+            let prefix_upper_camel_case = prefix_upper_camel_case();
+            let prefix_snake_case = prefix_snake_case();
+            let prefix_stringified = prefix_stringified();
+            let prefix_token_stream = prefix_token_stream();
             let phrase_part_stringified = element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
                 let element_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(*&element);
                 if index == 0 {
@@ -54,22 +63,22 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
                 acc
         }   );
             let phrase_upper_camel_case_stringified_token_stream = {
-                let value = format!("{phrase_part_stringified}{prefix_upper_camel_case_stringified}");
+                let value = format!("{phrase_part_stringified}{prefix_upper_camel_case}{prefix_stringified}");
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_snake_case_stringified_token_stream = {
-                let value = format!("{phrase_part_stringified}{prefix_snake_case_stringified}");
+                let value = format!("{phrase_part_stringified}{prefix_snake_case}{prefix_stringified}");
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_upper_camel_case_token_stream_token_stream = {
-                let value = format!("{phrase_part_stringified}{prefix_upper_camel_case_token_stream}");
+                let value = format!("{phrase_part_stringified}{prefix_upper_camel_case}{prefix_token_stream}");
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_snake_case_token_stream_token_stream = {
-                let value = format!("{phrase_part_stringified}{prefix_snake_case_token_stream}");
+                let value = format!("{phrase_part_stringified}{prefix_snake_case}{prefix_token_stream}");
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
