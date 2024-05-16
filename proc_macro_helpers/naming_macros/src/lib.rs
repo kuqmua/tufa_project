@@ -405,39 +405,52 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             value.parse::<#proc_macro2_token_stream>()
             .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        let generate_pub_trait_declaration = |
-            trait_name_token_stream: &proc_macro2::TokenStream,
-            trait_function_name_token_stream: &proc_macro2::TokenStream,
-            return_type_token_stream: &proc_macro2::TokenStream,
-        | -> proc_macro2::TokenStream {
-            quote::quote!{
-                pub trait #trait_name_token_stream {
-                    fn #trait_function_name_token_stream(
-                        &self,
-                    ) -> #return_type_token_stream;
+        let (
+            upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream,
+            snake_case_stringified_trait_declaration_upper_camel_case_token_stream,
+            upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream,
+            snake_case_token_stream_trait_declaration_upper_camel_case_token_stream
+        ) = {
+            let generate_pub_trait_declaration = |
+                trait_name_token_stream: &proc_macro2::TokenStream,
+                trait_function_name_token_stream: &proc_macro2::TokenStream,
+                return_type_token_stream: &proc_macro2::TokenStream,
+            | -> proc_macro2::TokenStream {
+                quote::quote!{
+                    pub trait #trait_name_token_stream {
+                        fn #trait_function_name_token_stream(
+                            &self,
+                        ) -> #return_type_token_stream;
+                    }
                 }
-            }
+            };
+            let upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
+                &upper_camel_case_stringified_trait_name_upper_camel_case_token_stream,
+                &upper_camel_case_stringified_trait_function_name_snake_case_token_stream,
+                &std_string_string_token_stream
+            );
+            let snake_case_stringified_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
+                &snake_case_stringified_trait_name_upper_camel_case_token_stream,
+                &snake_case_stringified_trait_function_name_snake_case_token_stream,
+                &std_string_string_token_stream
+            );
+            let upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
+                &upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream,
+                &upper_camel_case_token_stream_trait_function_name_snake_case_token_stream,
+                &proc_macro2_token_stream
+            );
+            let snake_case_token_stream_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
+                &snake_case_token_stream_trait_name_upper_camel_case_token_stream,
+                &snake_case_token_stream_trait_function_name_snake_case_token_stream,
+                &proc_macro2_token_stream
+            );
+            (
+                upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream,
+                snake_case_stringified_trait_declaration_upper_camel_case_token_stream,
+                upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream,
+                snake_case_token_stream_trait_declaration_upper_camel_case_token_stream
+            )
         };
-        let upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
-            &upper_camel_case_stringified_trait_name_upper_camel_case_token_stream,
-            &upper_camel_case_stringified_trait_function_name_snake_case_token_stream,
-            &std_string_string_token_stream
-        );
-        let snake_case_stringified_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
-            &snake_case_stringified_trait_name_upper_camel_case_token_stream,
-            &snake_case_stringified_trait_function_name_snake_case_token_stream,
-            &std_string_string_token_stream
-        );
-        let upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
-            &upper_camel_case_token_stream_trait_name_upper_camel_case_token_stream,
-            &upper_camel_case_token_stream_trait_function_name_snake_case_token_stream,
-            &proc_macro2_token_stream
-        );
-        let snake_case_token_stream_trait_declaration_upper_camel_case_token_stream = generate_pub_trait_declaration(
-            &snake_case_token_stream_trait_name_upper_camel_case_token_stream,
-            &snake_case_token_stream_trait_function_name_snake_case_token_stream,
-            &proc_macro2_token_stream
-        );
         quote::quote!{
             #upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream
 
