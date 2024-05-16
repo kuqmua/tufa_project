@@ -6,7 +6,13 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
     .expect("failed to convert tokens input into valid json string[][] pattern")
     .into_iter()
     .map(|element| {
-        //todo check of elements contains only Aa-Zz symbols
+        let regex_value = r"^[a-zA-Z]+$";
+        let regex = regex::Regex::new(regex_value).unwrap();
+        for element in &element {
+            if !regex.is_match(&element) {
+                panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {regex_value}");
+            }
+        }
         let prefix_upper_camel_case = "_upper_camel_case";
         let prefix_snake_case = "_snake_case";
         let prefix_stringified = "_stringified";
@@ -88,27 +94,58 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
             value.parse::<#proc_macro2_token_stream>()
             .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        quote::quote!{
-            pub fn #phrase_upper_camel_case_stringified_token_stream() -> #std_string_string_token_stream {
+        let generate_pub_fn_token_stream = |
+            name_token_stream: &proc_macro2::TokenStream,
+            return_type_token_stream: &proc_macro2::TokenStream,
+            content_token_stream: &proc_macro2::TokenStream,
+        |{
+            quote::quote!{
+                pub fn #name_token_stream() -> #return_type_token_stream {
+                    #content_token_stream
+                }
+            }
+        };
+        let pub_fn_upper_camel_case_stringified_token_stream = generate_pub_fn_token_stream(
+            &phrase_upper_camel_case_stringified_token_stream,
+            &std_string_string_token_stream,
+            &quote::quote!{
                 format!(
                     #upper_camel_case_stringified_format_parameters_places_token_stream,
                     #(#upper_camel_case_stringified_format_parameters_calls_token_stream),*
                 )
             }
-            pub fn #phrase_snake_case_stringified_token_stream() -> #std_string_string_token_stream {
+        );
+        let pub_fn_snake_case_stringified_token_stream = generate_pub_fn_token_stream(
+            &phrase_snake_case_stringified_token_stream,
+            &std_string_string_token_stream,
+            &quote::quote!{
                 format!(
                     #snake_case_stringified_format_parameters_places_token_stream,
                     #(#snake_case_stringified_format_parameters_calls_token_stream),*
                 )
             }
-            pub fn #phrase_upper_camel_case_token_stream_token_stream() -> #proc_macro2_token_stream {
+        );
+        let pub_fn_upper_camel_case_token_stream_token_stream = generate_pub_fn_token_stream(
+            &phrase_upper_camel_case_token_stream_token_stream,
+            &proc_macro2_token_stream,
+            &quote::quote!{
                 let value = #phrase_upper_camel_case_stringified_token_stream();
                 #value_parse_token_stream
             }
-            pub fn #phrase_snake_case_token_stream_token_stream() -> #proc_macro2_token_stream {
+        );
+        let pub_fn_snake_case_token_stream_token_stream = generate_pub_fn_token_stream(
+            &phrase_snake_case_token_stream_token_stream,
+            &proc_macro2_token_stream,
+            &quote::quote!{
                 let value = #phrase_snake_case_stringified_token_stream();
                 #value_parse_token_stream
             }
+        );
+        quote::quote!{
+            #pub_fn_upper_camel_case_stringified_token_stream
+            #pub_fn_snake_case_stringified_token_stream
+            #pub_fn_upper_camel_case_token_stream_token_stream
+            #pub_fn_snake_case_token_stream_token_stream
         }
     });
     let gen = quote::quote!{#(#implementations_token_stream)*};
