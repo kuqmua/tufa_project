@@ -388,6 +388,10 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
                 }
             }
         });
+        let value_parse_token_stream = quote::quote!{
+            value.parse::<#proc_macro2_token_stream>()
+            .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
         let generate_pub_trait_declaration = |
             trait_name_token_stream: &proc_macro2::TokenStream,
             trait_function_name_token_stream: &proc_macro2::TokenStream,
@@ -464,8 +468,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
                     &self,
                 ) -> #proc_macro2_token_stream {
                     let value = self.#upper_camel_case_stringified_trait_function_name_snake_case_token_stream();
-                    value.parse::<#proc_macro2_token_stream>()
-                    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    #value_parse_token_stream
                 }
             }
             
@@ -479,8 +482,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
                     &self,
                 ) -> #proc_macro2_token_stream {
                     let value = self.#snake_case_stringified_trait_function_name_snake_case_token_stream();
-                    value.parse::<#proc_macro2_token_stream>()
-                    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    #value_parse_token_stream
                 }
             }
         }
