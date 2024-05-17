@@ -1151,7 +1151,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_snake_case_stringified = <naming_constants::Query as naming_constants::Naming>::snake_case_stringified();
     let rollback_upper_camel_case_stringified = <naming_constants::Rollback as naming_constants::Naming>::upper_camel_case_stringified();
     let rollback_snake_case_stringified = <naming_constants::Rollback as naming_constants::Naming>::snake_case_stringified();
-    let rollback_error_name_token_stream = quote::quote! {rollback_error};
+    let rollback_snake_case_token_stream = <naming_constants::Rollback as naming_constants::Naming>::snake_case_token_stream();
     let (
         query_and_rollback_failed_syn_variant,
         query_and_rollback_failed_syn_variant_initialization_token_stream
@@ -1185,7 +1185,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #query_and_rollback_failed_upper_camel_case_token_stream {
                     #query_and_rollback_failed_snake_case_token_stream: #error_snake_case_token_stream,
-                    #rollback_error_name_token_stream,
+                    #rollback_snake_case_token_stream,
                     #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
                 }
             }
@@ -1224,7 +1224,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream {
                     #primary_key_from_row_and_failed_rollback_snake_case_token_stream: #error_snake_case_token_stream,
-                    #rollback_error_name_token_stream,
+                    #rollback_snake_case_token_stream,
                     #field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream,
                 }
             }
@@ -1293,7 +1293,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     ),
                     (
                         proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &format!("{rollback_snake_case_stringified}_error"),
+                        &rollback_snake_case_stringified,
                         sqlx_error_syn_punctuated_punctuated.clone()
                     )
                 ]
@@ -1301,7 +1301,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #non_existing_primary_keys_and_failed_rollback_upper_camel_case_token_stream {
                     #non_existing_primary_keys_snake_case_token_stream,
-                    #rollback_error_name_token_stream: #error_snake_case_token_stream,
+                    #rollback_snake_case_token_stream: #error_snake_case_token_stream,
                     #field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream,
                 }
             }
