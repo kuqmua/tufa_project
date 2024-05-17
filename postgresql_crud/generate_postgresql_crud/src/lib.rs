@@ -1339,35 +1339,38 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let not_unique_primary_keys_name_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_token_stream();
-    let not_unique_primary_keys_syn_variant = {
-        let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::not_unique_primary_keys_upper_camel_case_stringified();
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
-                    &variant_name_snake_case_stringified,
-                    primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated
-                )
-            ]
-        )
-    };
-    let not_unique_primary_key_variant_initialization_token_stream = {
+    let (
+        not_unique_primary_keys_syn_variant,
+        not_unique_primary_key_variant_initialization_token_stream
+     ) = {
+        let not_unique_primary_keys_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_upper_camel_case_token_stream();
+        let not_unique_primary_keys_snake_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_token_stream();
         let field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        quote::quote! {
-            NotUniquePrimaryKeys {
-                not_unique_primary_keys,
-                #field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream,
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+                &proc_macro_helpers::naming_conventions::not_unique_primary_keys_upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
+                        &proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_stringified(),
+                        primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated
+                    )
+                ]
+            ),
+            quote::quote! {
+                #not_unique_primary_keys_upper_camel_case_token_stream {
+                    #not_unique_primary_keys_snake_case_token_stream,
+                    #field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream,
+                }
             }
-        }
+        )
     };
     //todo maybe instead primary key put upper camel case RustSqlxMapToPostgresTypeVariant variant
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_upper_camel_case_stringified = "OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailed";
