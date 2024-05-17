@@ -153,7 +153,10 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "camel",
     "stringified",
     "token",
-    "stream"
+    "stream",
+    "done",
+    "but",
+    "operation"
 );
 
 #[derive(Debug, Clone, Copy)]
