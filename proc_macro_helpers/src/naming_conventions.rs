@@ -43,7 +43,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["query", "and", "rollback", "failed"],
         ["primary", "key", "from", "row", "and", "failed", "rollback"],
         ["non", "existing", "primary", "keys"],
-        ["non", "existing", "primary", "keys", "and", "failed", "rollback"]
+        ["non", "existing", "primary", "keys", "and", "failed", "rollback"],
+        ["commit", "failed"]
     ]
 );
 

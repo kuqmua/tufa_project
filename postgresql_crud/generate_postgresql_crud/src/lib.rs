@@ -1307,22 +1307,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let commit_failed_syn_variant = {
-        let variant_name_upper_camel_case_stringified = format!(
-            "{}{}",
-            <naming_constants::Commit as naming_constants::Naming>::upper_camel_case_stringified(),
-            <naming_constants::Failed as naming_constants::Naming>::upper_camel_case_stringified(),
+    let (
+        commit_failed_syn_variant,
+        commit_failed_syn_variant_initialization_token_stream
+     ) = {
+        let commit_failed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::commit_failed_upper_camel_case_token_stream();
+        let commit_failed_snake_case_token_stream = proc_macro_helpers::naming_conventions::commit_failed_snake_case_token_stream();
+        let field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            &variant_name_upper_camel_case_stringified,
-            &code_occurence_field,
-            vec![(
-                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &variant_name_snake_case_stringified,
-                sqlx_error_syn_punctuated_punctuated.clone(),
-            )],
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+                &proc_macro_helpers::naming_conventions::commit_failed_upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![(
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &proc_macro_helpers::naming_conventions::commit_failed_snake_case_stringified(),
+                    sqlx_error_syn_punctuated_punctuated.clone(),
+                )],
+            ),
+            quote::quote! {
+                #commit_failed_upper_camel_case_token_stream {
+                    #commit_failed_snake_case_token_stream: #error_snake_case_token_stream,
+                    #field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream,
+                }
+            }
         )
     };
     let not_unique_primary_keys_name_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_token_stream();
