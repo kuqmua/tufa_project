@@ -59,6 +59,8 @@ fn snake_case_stringified_format_parameters_places_token_stream(
     )
 }
 
+const REGEX_VALUE: &str = r"^[a-zA-Z]+$";
+
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -67,11 +69,10 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
     .expect("failed to convert tokens input into valid json string[][] pattern")
     .into_iter()
     .map(|element| {
-        let regex_value = r"^[a-zA-Z]+$";
-        let regex = regex::Regex::new(regex_value).unwrap();
+        let regex = regex::Regex::new(REGEX_VALUE).unwrap();
         for element in &element {
             if !regex.is_match(&element) {
-                panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {regex_value}");
+                panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {REGEX_VALUE}");
             }
         }
         let (
@@ -227,11 +228,10 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
     .expect("failed to convert tokens input into valid json string[][] pattern")
     .into_iter()
     .map(|element| {
-        let regex_value = r"^[a-zA-Z]+$";
-        let regex = regex::Regex::new(regex_value).unwrap();
+        let regex = regex::Regex::new(REGEX_VALUE).unwrap();
         for element in &element {
             if !regex.is_match(&element) {
-                panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {regex_value}");
+                panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {REGEX_VALUE}");
             }
         }
         let self_match_name = "self";
