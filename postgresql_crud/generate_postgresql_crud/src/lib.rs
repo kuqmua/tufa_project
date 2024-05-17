@@ -1868,9 +1868,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
         )
     };
-    let reqwest_upper_camel_case_token_stream =
-        <naming_constants::Reqwest as naming_constants::Naming>::upper_camel_case_token_stream();
     let (reqwest_declaration_token_stream, reqwest_initialization_token_stream) = {
+        let reqwest_upper_camel_case_token_stream = <naming_constants::Reqwest as naming_constants::Naming>::upper_camel_case_token_stream();
         let field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
