@@ -45,7 +45,32 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["non", "existing", "primary", "keys"],
         ["non", "existing", "primary", "keys", "and", "failed", "rollback"],
         ["commit", "failed"],
-        ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed"]
+        ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed"],
+        ["app", "state"],
+        ["column", "select"], 
+        ["options", "try", "from", "sqlx", "row"],
+        ["try", "generate", "bind", "increments", "error", "named"],
+        ["primary", "key", "try", "from", "sqlx", "row"],
+        ["additional", "http", "status", "codes", "error", "variants"],
+        ["extraction", "result"],
+        ["serde", "json", "to", "string"],
+        ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "server"],
+        ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "client"],
+        ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "client", "error", "unnamed"],
+        ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "client", "many"],
+        ["no", "payload", "fields"],
+        ["no", "payload", "parameters"],
+        ["try", "extract", "value"],
+        ["server", "location"],
+        ["pg", "connection"],
+        ["query", "string"],
+        ["binded", "query"],
+        ["current", "vec", "len"],
+        ["into", "inner", "type", "vec"],
+        ["not", "unique", "column"],
+        ["get", "axum", "http", "status", "code"],
+        ["body", "bytes"],
+        ["into", "response"]
     ]
 );
 

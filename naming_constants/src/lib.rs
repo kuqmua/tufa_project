@@ -156,7 +156,18 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "stream",
     "done",
     "but",
-    "operation"
+    "operation",
+    "generate",
+    "increments",
+    "additional",
+    "http",
+    "codes",
+    "extract",
+    "location",
+    "pg",
+    "connection",
+    "binded",
+    "axum"
 );
 
 #[derive(Debug, Clone, Copy)]
