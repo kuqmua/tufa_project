@@ -1909,12 +1909,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ]
         );
         let failed_to_get_response_text_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-            "FailedToGetResponseText",
+            &proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_stringified(),
             &code_occurence_field,
             vec![
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    "status_code",
+                    &proc_macro_helpers::naming_conventions::status_code_snake_case_stringified(),
                     proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["http","StatusCode"],
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -1922,7 +1922,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ),
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    "headers",
+                    &<naming_constants::Headers as naming_constants::Naming>::snake_case_stringified(),
                     proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["reqwest","header","HeaderMap"],
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -1930,7 +1930,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ),
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    "reqwest",
+                    &<naming_constants::Reqwest as naming_constants::Naming>::snake_case_stringified(),
                     proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["reqwest","Error"],
                         &proc_macro_name_upper_camel_case_ident_stringified
