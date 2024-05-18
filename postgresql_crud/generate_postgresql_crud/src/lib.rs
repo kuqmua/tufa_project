@@ -1230,14 +1230,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let non_existing_primary_keys_upper_camel_case_stringified = format!(
-        "{}{}{}{}",
-        <naming_constants::Non as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Existing as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Primary as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Keys as naming_constants::Naming>::upper_camel_case_stringified(),
-    );
-    let non_existing_primary_keys_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&non_existing_primary_keys_upper_camel_case_stringified);
+    let non_existing_primary_keys_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::non_existing_primary_keys_upper_camel_case_stringified();
+    let non_existing_primary_keys_snake_case_stringified = proc_macro_common::naming_conventions::non_existing_primary_keys_upper_camel_case_stringified();
     let non_existing_primary_keys_snake_case_token_stream = proc_macro_helpers::naming_conventions::non_existing_primary_keys_snake_case_token_stream();
     let (non_existing_primary_keys_syn_variant, non_existing_primary_keys_syn_variant_initialization_token_stream) = {
         let non_existing_primary_keys_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::non_existing_primary_keys_upper_camel_case_token_stream();
