@@ -811,54 +811,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             })  
     };
     let common_middlewares_error_syn_variants_len = common_middlewares_error_syn_variants.len();
-    let extraction_result_snake_case_stringified = "extraction_result";
+    let extraction_result_snake_case_stringified = proc_macro_helpers::naming_conventions::extraction_result_snake_case_stringified();
     let parameters_snake_case_token_stream =
         <naming_constants::Parameters as naming_constants::Naming>::snake_case_token_stream();
     let payload_upper_camel_case_stringified =
         <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified();
-    let payload_snake_case_stringified =
-        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-            &payload_upper_camel_case_stringified,
-        );
-    let payload_snake_case_token_stream = payload_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {payload_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let payload_extraction_result_snake_case_token_stream = {
-        let payload_extraction_result_snake_case =
-            format!("{payload_snake_case_token_stream}_{extraction_result_snake_case_stringified}");
-        payload_extraction_result_snake_case.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {payload_extraction_result_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let payload_snake_case_stringified = <naming_constants::Payload as naming_constants::Naming>::snake_case_stringified();
+    let payload_snake_case_token_stream = <naming_constants::Payload as naming_constants::Naming>::snake_case_token_stream();
+    let payload_extraction_result_snake_case_token_stream = proc_macro_helpers::naming_conventions::extraction_result_snake_case_stringified();
     let use_futures_try_stream_ext_token_stream = quote::quote! {use futures::TryStreamExt};
     let serde_json_to_string_token_stream = quote::quote! {serde_json::to_string};
     // let payload_element_upper_camel_case_stringified = format!("{payload_upper_camel_case_stringified}Element");
     let returning_stringified = <naming_constants::Returning as naming_constants::Naming>::snake_case_stringified();
     let returning_primary_key_stringified =
         format!(" {returning_stringified} {primary_key_field_ident}");
-    let returning_primary_key_quotes_token_stream =
-        proc_macro_common::generate_quotes::token_stream(
-            &returning_primary_key_stringified,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-    let postgresql_crud_token_stream = {
-        let value = postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE;
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let app_state_path = quote::quote! {#postgresql_crud_token_stream::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
-    let serde_json_to_string_upper_camel_case_stringified = format!(
-        "{}{}{}{}",
-        <naming_constants::Serde as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Json as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::To as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
+    let returning_primary_key_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+        &returning_primary_key_stringified,
+        &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let serde_json_to_string_upper_camel_case_token_stream = serde_json_to_string_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {serde_json_to_string_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let serde_json_to_string_snake_case_token_stream = {
-        let serde_json_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&serde_json_to_string_upper_camel_case_stringified);
-        serde_json_to_string_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {serde_json_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let postgresql_crud_token_stream = proc_macro_helpers::naming_conventions::extraction_result_snake_case_stringified();
+    let app_state_path = quote::quote! {#postgresql_crud_token_stream::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
+    let serde_json_to_string_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::serde_json_to_string_upper_camel_case_stringified();
+    let serde_json_to_string_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::serde_json_to_string_upper_camel_case_token_stream();
+    let serde_json_to_string_snake_case_token_stream = proc_macro_helpers::naming_conventions::serde_json_to_string_snake_case_token_stream();
     let serde_json_to_string_variant_initialization_token_stream = {
         let field_code_occurence_new_27b49c75_24b2_4480_ac4d_62a1f75f5646_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
