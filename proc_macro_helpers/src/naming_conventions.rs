@@ -70,7 +70,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["not", "unique", "column"],
         ["get", "axum", "http", "status", "code"],
         ["body", "bytes"],
-        ["into", "response"]
+        ["into", "response"],
+        ["primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "in", "client"]
     ]
 );
 
