@@ -505,22 +505,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{generate_query_vec_column_token_stream}");
-    let column_select_upper_camel_case_stringified = format!(
-        "{}{}",
-        <naming_constants::Column as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Select as naming_constants::Naming>::upper_camel_case_stringified()
-    );
+    let column_select_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::column_select_upper_camel_case_stringified();
     let ident_column_select_upper_camel_case_token_stream = {
         let ident_column_select_upper_camel_case_stringified =
             format!("{ident}{column_select_upper_camel_case_stringified}");
         ident_column_select_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_select_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let options_try_from_sqlx_row_name_token_stream = quote::quote! {options_try_from_sqlx_row};
+    let options_try_from_sqlx_row_snake_case_token_stream = proc_macro_helpers::naming_conventions::options_try_from_sqlx_row_snake_case_token_stream();
     let postgresql_crud_try_generate_bind_increments_error_named_name_token_stream = {
         let value = format!(
-            "{}::TryGenerateBindIncrements{error_named_upper_camel_case_stringified}",
-            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
+            "{}::{}",
+            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+            proc_macro_helpers::naming_conventions::try_generate_bind_increments_error_named_upper_camel_case_stringified()
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -638,19 +635,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // println!("{options_try_from_sqlx_row_token_stream}");
     //todo reuse path
-    let primary_key_try_from_sqlx_row_name_token_stream = {
-        let value = format!(
-            "{}_{}_{}_{}_{}_{}",
-            <naming_constants::Primary as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Key as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Try as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::From as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Sqlx as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Row as naming_constants::Naming>::snake_case_stringified(),
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let primary_key_try_from_sqlx_row_snake_case_token_stream = proc_macro_helpers::naming_conventions::primary_key_try_from_sqlx_row_snake_case_token_stream();
     let primary_key_try_get_sqlx_row_token_stream = {
         let primary_key_str_token_stream = proc_macro_common::generate_quotes::token_stream(
             &primary_key_field_ident.to_string(),
@@ -694,16 +679,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let ident_column_read_permission_token_stream = {
-        let ident_column_read_permission_name_token_stream = {
-            let ident_column_read_permission_name = format!(
-                "{ident}{}{}{}",
-                <naming_constants::Column as naming_constants::Naming>::upper_camel_case_stringified(),
-                <naming_constants::Read as naming_constants::Naming>::upper_camel_case_stringified(),
-                <naming_constants::Permission as naming_constants::Naming>::upper_camel_case_stringified(),
-            );
-            ident_column_read_permission_name.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_read_permission_name} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let ident_column_read_permission_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::ident_column_read_permission_upper_camel_case_token_stream();
         let fields_permission_token_stream = fields_named.iter().map(|element| {
             let field_ident = &element.field_ident;
             quote::quote!{
@@ -721,8 +697,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {pub use #inner_type_token_stream;}
     });
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
-    let additional_http_status_codes_error_variants_snake_case_stringified =
-        "additional_http_status_codes_error_variants";
+    let additional_http_status_codes_error_variants_snake_case_stringified = proc_macro_helpers::naming_conventions::additional_http_status_codes_error_variants_snake_case_stringified();
     let common_middlewares_error_syn_variants = {
         let additional_http_status_codes_error_variant_path =
             format!("{}::{additional_http_status_codes_error_variants_snake_case_stringified}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE);
@@ -775,7 +750,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let element_path = &element.path();
                         let element_path_token_stream = quote::quote!{#element_path};
                         let element_path_stringified = element_path_token_stream.to_string();
-                        element_path_stringified == "path"
+                        element_path_stringified == <naming_constants::Path as naming_constants::Naming>::snake_case_stringified()
                     });
                     let path_attribute = option_path_sttribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no path attribute"), |value| value);
                     let path_to_additional_variant_enum_stringified = "{}".to_owned();//todo
