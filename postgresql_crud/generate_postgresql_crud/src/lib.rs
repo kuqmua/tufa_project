@@ -1852,17 +1852,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let primary_keys_token_stream = proc_macro_helpers::naming_conventions::primary_keys_snake_case_token_stream();
     let primary_key_token_stream = proc_macro_helpers::naming_conventions::primary_key_snake_case_token_stream();
-    let into_inner_type_vec_snake_case_token_stream = {
-        let value = format!(
-            "{}_{}_{}_{}",
-            <naming_constants::Into as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Inner as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Type as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Vec as naming_constants::Naming>::snake_case_stringified(),
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let into_inner_type_vec_snake_case_token_stream = proc_macro_helpers::naming_conventions::into_inner_type_vec_snake_case_token_stream();
     let (
         limit_and_offset_type_token_stream,
         limit_and_offset_type_with_serialize_deserialize_token_stream,
@@ -1885,8 +1875,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream = quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>};
     let std_vec_vec_struct_options_ident_token_stream = quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>};
     //todo reuse naming
-    let not_unique_column_upper_camel_case_token_stream = quote::quote!{NotUniqueColumn};
-    let not_unique_column_snake_case_token_stream = quote::quote!{not_unique_column};
+    let not_unique_column_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_column_upper_camel_case_token_stream();
+    let not_unique_column_snake_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_column_snake_case_token_stream();
     let not_unique_column_variant_token_stream = quote::quote!{
         #not_unique_column_upper_camel_case_token_stream {
             #eo_to_std_string_string_serialize_deserialize_token_stream
@@ -1896,13 +1886,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let axum_http_status_code_token_stream = quote::quote!{axum::http::StatusCode};
     let postgresql_crud_get_axum_http_status_code_token_stream = quote::quote!{postgresql_crud::GetAxumHttpStatusCode};
-    let get_axum_http_status_code_snake_case_token_stream = quote::quote!{get_axum_http_status_code};
+    let get_axum_http_status_code_snake_case_token_stream = proc_macro_helpers::naming_conventions::get_axum_http_status_code_snake_case_token_stream();
     let app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream = quote::quote!{#app_state_name_token_stream: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,};
-    let body_bytes_snake_case_token_stream = quote::quote!{body_bytes};
+    let body_bytes_snake_case_token_stream = proc_macro_helpers::naming_conventions::body_bytes_snake_case_token_stream();
     let body_bytes_bytes_bytes_token_stream = quote::quote!{#body_bytes_snake_case_token_stream: bytes::Bytes,};
     let axum_response_into_response_token_stream = quote::quote!{axum::response::IntoResponse};
     let axum_response_response_token_stream = quote::quote!{axum::response::Response};
-    let into_response_snake_case_token_stream = quote::quote!{into_response};
+    let into_response_snake_case_token_stream = proc_macro_helpers::naming_conventions::into_response_snake_case_token_stream();
     let try_operation_error_named_common_syn_variants = {
         let serde_json_to_string_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
             &serde_json_to_string_upper_camel_case_stringified,
