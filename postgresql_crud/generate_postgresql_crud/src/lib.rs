@@ -116,10 +116,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     });
     // println!("{:#?}", ast.data);
     let ident = &ast.ident;
-    let ident_snake_case_stringified =
-        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-            &ident.to_string(),
-        );
+    let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &ident.to_string()
+    );
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let table_name_stringified = pluralizer::pluralize(&ident_snake_case_stringified, 2, false);
     let table_name_quotes_token_stream =
@@ -1316,21 +1315,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     //todo maybe instead primary key put upper camel case RustSqlxMapToPostgresTypeVariant variant
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_upper_camel_case_stringified();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_snake_case_stringified = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_snake_case_stringified();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_stringified = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_stringified();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case_stringified = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case_stringified();
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream();
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream();
     let (
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream
     ) = {
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified);
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream();
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream();
         let field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
@@ -1340,11 +1332,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError, //todo - is it right status code for this case?
-                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified,
+                &proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified(),
                 &code_occurence_field,
                 vec![(
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    &variant_name_snake_case_stringified,
+                    &proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_stringified(),
                     sqlx_error_syn_punctuated_punctuated.clone(),
                 )],
             ),
