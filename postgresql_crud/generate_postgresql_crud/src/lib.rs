@@ -1272,7 +1272,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let not_unique_primary_keys_name_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_token_stream();
+    let not_unique_primary_keys_name_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_token_stream()q;
     let (
         not_unique_primary_keys_syn_variant,
         not_unique_primary_key_variant_initialization_token_stream
@@ -1347,22 +1347,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = {
-        let value = format!(
-            "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified}{}",
-            <naming_constants::Many as naming_constants::Naming>::upper_camel_case_stringified(),
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream = {
-        let value = format!(
-            "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case_stringified}_{}",
-            <naming_constants::Many as naming_constants::Naming>::snake_case_stringified(),
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream();
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream();
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream = quote::quote! {
         #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream {
             #eo_vec_error_occurence_token_stream
@@ -1452,7 +1438,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //
 
     //
-    let primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream = quote::quote! {primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client};
+    let primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream = 
+        quote::quote! {primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client};
     //todo maybe first convert to type what can be primary key ?
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream = quote::quote! {
         #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream {
@@ -1509,12 +1496,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         acc
     });
     let no_payload_fields_syn_variant = {
-        let variant_name_upper_camel_case_stringified = format!(
-            "{}{}{}",
-            <naming_constants::No as naming_constants::Naming>::upper_camel_case_stringified(),
-            <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
-            <naming_constants::Fields as naming_constants::Naming>::upper_camel_case_stringified()
-        );
+        let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::variant_name_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
@@ -1530,12 +1512,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let no_payload_parameters_syn_variant = {
-        let variant_name_upper_camel_case_stringified = format!(
-            "{}{}{}",
-            <naming_constants::No as naming_constants::Naming>::upper_camel_case_stringified(),
-            <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
-            <naming_constants::Parameters as naming_constants::Naming>::upper_camel_case_stringified()
-        );
+        let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::variant_name_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
@@ -1584,76 +1561,65 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_common::reqwest_header_header_map_token_stream();
     let reqwest_error_token_stream = proc_macro_common::reqwest_error_token_stream();
     // let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
-    let try_extract_value_token_stream = quote::quote! {try_extract_value};
-    let server_location_name_token_stream = quote::quote! {server_location};
+    let try_extract_value_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_extract_value_snake_case_token_stream();
+    let server_location_snake_case_token_stream = proc_macro_helpers::naming_conventions::server_location_snake_case_token_stream();
     let dot_space = ", ";
     // let pg_temp_stringified = "pg_temp";
-    let pg_connection_token_stream = quote::quote! {pg_connection};
-    let query_string_name_token_stream = quote::quote! {query_string};
-    let binded_query_name_token_stream = quote::quote! {binded_query};
-    let current_vec_len_snake_case_token_stream = {
-        let value = format!(
-            "{}_{}_{}",
-            <naming_constants::Current as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Vec as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Len as naming_constants::Naming>::snake_case_stringified()
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let pg_connection_snake_case_token_stream = proc_macro_helpers::naming_conventions::pg_connection_snake_case_token_stream();
+    let query_string_snake_case_token_stream = proc_macro_helpers::naming_conventions::query_string_snake_case_token_stream();
+    let binded_query_snake_case_token_stream = proc_macro_helpers::naming_conventions::binded_query_snake_case_token_stream();
+    let current_vec_len_snake_case_token_stream = proc_macro_helpers::naming_conventions::current_vec_len_snake_case_token_stream();
     let desirable_upper_camel_case_token_stream =
         <naming_constants::Desirable as naming_constants::Naming>::upper_camel_case_token_stream();
     let select_snake_case_token_stream =
         <naming_constants::Select as naming_constants::Naming>::snake_case_token_stream();
-    let limit_token_stream =
+    let limit_snake_case_token_stream =
         <naming_constants::Limit as naming_constants::Naming>::snake_case_token_stream();
-    let offset_token_stream =
+    let offset_snake_case_token_stream =
         <naming_constants::Offset as naming_constants::Naming>::snake_case_token_stream();
     let rollback_snake_case_token_stream =
         <naming_constants::Rollback as naming_constants::Naming>::snake_case_token_stream();
-    let element_name_token_stream =
+    let element_snake_case_token_stream =
         <naming_constants::Element as naming_constants::Naming>::snake_case_token_stream();
-    let acc_name_token_stream =
+    let acc_snake_case_token_stream =
         <naming_constants::Acc as naming_constants::Naming>::snake_case_token_stream();
-    let query_name_token_stream =
+    let query_snake_case_token_stream =
         <naming_constants::Query as naming_constants::Naming>::snake_case_token_stream();
-    let update_name_stringified =
+    let update_snake_case_stringified =
         <naming_constants::Update as naming_constants::Naming>::snake_case_stringified();
-    let as_name_stringified = <naming_constants::As as naming_constants::Naming>::snake_case_stringified();
-    let set_name_stringified = <naming_constants::Set as naming_constants::Naming>::snake_case_stringified();
-    let from_name_stringified =
+    let as_snake_case_stringified = <naming_constants::As as naming_constants::Naming>::snake_case_stringified();
+    let set_snake_case_stringified = <naming_constants::Set as naming_constants::Naming>::snake_case_stringified();
+    let from_snake_case_stringified =
         <naming_constants::From as naming_constants::Naming>::snake_case_stringified();
-    let insert_name_stringified =
+    let insert_snake_case_stringified =
         <naming_constants::Insert as naming_constants::Naming>::snake_case_stringified();
-    let into_name_stringified =
+    let into_snake_case_stringified =
         <naming_constants::Into as naming_constants::Naming>::snake_case_stringified();
-    let values_name_stringified =
+    let values_snake_case_stringified =
         <naming_constants::Values as naming_constants::Naming>::snake_case_stringified();
-    let delete_name_stringified =
+    let delete_snake_case_stringified =
         <naming_constants::Delete as naming_constants::Naming>::snake_case_stringified();
-    let where_name_stringified =
+    let where_snake_case_stringified =
         <naming_constants::Where as naming_constants::Naming>::snake_case_stringified();
-    let where_name_qoutes_token_stream =
+    let where_snake_case_qoutes_token_stream =
         proc_macro_common::generate_quotes::token_stream(
-            where_name_stringified,
+            where_snake_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-    let and_name_stringified = <naming_constants::And as naming_constants::Naming>::snake_case_stringified();
-    // let any_name_stringified = "any";
-    // let array_name_stringified = "array";
-    let select_name_stringified =
+    let and_snake_case_stringified = <naming_constants::And as naming_constants::Naming>::snake_case_stringified();
+    let select_snake_case_stringified =
         <naming_constants::Select as naming_constants::Naming>::snake_case_stringified();
     let order_by_name_stringified = format!(
         "{} {}",
         <naming_constants::Order as naming_constants::Naming>::snake_case_stringified(),
         <naming_constants::By as naming_constants::Naming>::snake_case_stringified()
     );
-    let limit_name_stringified =
+    let limit_snake_case_stringified =
         <naming_constants::Limit as naming_constants::Naming>::snake_case_stringified();
-    let offset_name_stringified =
+    let offset_snake_case_stringified =
         <naming_constants::Offset as naming_constants::Naming>::snake_case_stringified();
-    let in_name_stringified = <naming_constants::In as naming_constants::Naming>::snake_case_stringified();
-    let unnest_name_stringified =
+    let in_snake_case_stringified = <naming_constants::In as naming_constants::Naming>::snake_case_stringified();
+    let unnest_snake_case_stringified =
         <naming_constants::Unnest as naming_constants::Naming>::snake_case_stringified();
     let api_request_unexpected_error_module_path_token_stream =
         quote::quote! { crate::common::api_request_unexpected_error };
