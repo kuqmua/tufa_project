@@ -270,23 +270,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let error_occurence_error_occurence_token_stream =
         proc_macro_common::error_occurence_lib_error_occurence_token_stream();
     let error_snake_case_token_stream = <naming_constants::Error as naming_constants::Naming>::snake_case_token_stream();
-    let app_state_name_token_stream = {
-        let value = format!(
-            "{}_{}",
-            <naming_constants::App as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::State as naming_constants::Naming>::snake_case_stringified()
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let app_state_snake_case_token_stream = proc_macro_helpers::naming_conventions::app_state_snake_case_token_stream();
     let eprintln_error_token_stream = quote::quote! {
         eprintln!("{error}");
     };
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
-    let derive_debug_token_stream =
-        proc_macro_helpers::wrap_derive::token_stream(&[&debug_token_stream]);
+    let derive_debug_token_stream = proc_macro_helpers::wrap_derive::token_stream(&[&debug_token_stream]);
     let derive_debug_thiserror_error_occurence_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &debug_token_stream,
@@ -400,8 +391,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // println!("{from_ident_for_ident_options_token_stream}");
     let code_occurence_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_token_stream();
-    let code_occurence_snake_case_token_stream =
-        proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
+    let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
     let error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {error_occurence_lib::#code_occurence_snake_case_token_stream::#code_occurence_upper_camel_case_token_stream};
     let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {
         #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream
