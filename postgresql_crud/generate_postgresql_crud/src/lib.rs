@@ -8049,6 +8049,7 @@ fn generate_http_request_many_token_stream(
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
     let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
     let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+    let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     // let (unique_status_codes, unique_status_codes_len, unique_status_codes_len_minus_one) = {
     //     let hashmap_unique_status_codes = type_variants_from_request_response_syn_variants.iter().fold(//todo maybe not need hashmap here? maybe just unique vec?
     //         std::collections::HashMap::<proc_macro_helpers::status_code::StatusCode, std::vec::Vec<(
@@ -8260,6 +8261,12 @@ fn generate_http_request_many_token_stream(
         },
     };
     let body_snake_case_token_stream = <naming_constants::Body as naming_constants::Naming>::snake_case_token_stream();
+    let field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     quote::quote! {
         // pub async fn #try_operation_snake_case_token_stream<'a>(
         //     #server_location_name_token_stream: #str_ref_token_stream,
@@ -8362,30 +8369,30 @@ fn generate_http_request_many_token_stream(
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::CheckCommit {
                     check_commit,
                     code_occurence,
-                } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::CheckCommit { check_commit, code_occurence },
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::CheckBodySize {
                     check_body_size,
                     code_occurence,
-                } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::CheckBodySize { check_body_size, code_occurence },
                 //
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::Postgresql {
                     postgresql,
                     code_occurence,
-                } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
+                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Postgresql {
                     postgresql,
                     code_occurence,
                 },
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::Json {
                     json,
                     code_occurence,
-                } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json {
+                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Json {
                     json,
                     code_occurence,
                 },
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::BindQuery {
                     bind_query,
                     code_occurence,
-                } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
+                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::BindQuery {
                     bind_query,
                     code_occurence,
                 },
@@ -8393,26 +8400,15 @@ fn generate_http_request_many_token_stream(
                 {
                     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
                     code_occurence,
-                } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
                 {
                     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
                     code_occurence,
                 },
             };
-            Err(#try_operation_error_named_upper_camel_case_token_stream::TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize{
+            Err(#try_operation_error_named_upper_camel_case_token_stream::#try_operation_route_logic_error_named_witH_serialize_deserialize_upper_camel_case_token_stream {
                 try_create_many_route_logic_error_named_with_serialize_deserialize,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1644,
-                        column: 13,
-                    }),
-                ),
+                #field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_token_stream,
             })
         }
     }
