@@ -1502,18 +1502,46 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ));
         acc
     });
-    let no_payload_fields_syn_variant = {
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &proc_macro_helpers::naming_conventions::no_payload_fields_upper_camel_case_stringified(),
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                    &proc_macro_helpers::naming_conventions::no_payload_fields_snake_case_stringified(),
-                    std_string_string_syn_punctuated_punctuated.clone()
-                )
-            ]
+    let (
+        no_payload_fields_syn_variant,
+        no_payload_fields_syn_variant_initialization_token_stream,
+    ) = {
+        let no_payload_fields_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::no_payload_fields_upper_camel_case_token_stream();
+        let no_payload_fields_snake_case_token_stream = proc_macro_helpers::naming_conventions::no_payload_fields_snake_case_token_stream();
+        let no_payload_fields_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+            &format!(
+                "{} {} {}",
+                <naming_constants::No as naming_constants::Naming>::snake_case_token_stream(),
+                <naming_constants::Payload as naming_constants::Naming>::snake_case_token_stream(),
+                <naming_constants::Fields as naming_constants::Naming>::snake_case_token_stream()
+            ),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+                &proc_macro_helpers::naming_conventions::no_payload_fields_upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                        &proc_macro_helpers::naming_conventions::no_payload_fields_snake_case_stringified(),
+                        std_string_string_syn_punctuated_punctuated.clone()
+                    )
+                ]
+            ),
+            quote::quote! {
+                #no_payload_fields_upper_camel_case_token_stream {
+                    #no_payload_fields_snake_case_token_stream: #std_string_string_token_stream::#from_snake_case_token_stream(#no_payload_fields_quotes_token_stream),
+                    #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
+                }
+            }
         )
     };
     let no_payload_parameters_syn_variant = {

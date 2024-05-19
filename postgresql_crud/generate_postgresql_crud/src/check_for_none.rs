@@ -5,6 +5,7 @@ pub(crate) fn check_for_none(
     dot_space: &str,
     try_ident_response_variants_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     should_exclude_primary_key: bool,
+    no_payload_fields_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let (none_elements, match_elements) = {
         let fields_named_handle = if should_exclude_primary_key {
@@ -47,23 +48,9 @@ pub(crate) fn check_for_none(
     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {none_elements} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let match_elements_token_stream = match_elements.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {match_elements} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let response_variant_token_stream = {
-        let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote! {
-            NoPayloadFields {
-                no_payload_fields: std::string::String::from("no payload fields"),
-                #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
-            }
-        }
-    };
     quote::quote! {
         if let (#none_elements_token_stream) = (#match_elements_token_stream) {
-            return #try_ident_response_variants_upper_camel_case_token_stream::#response_variant_token_stream;
+            return #try_ident_response_variants_upper_camel_case_token_stream::#no_payload_fields_syn_variant_initialization_token_stream;
         }
     }
 }
