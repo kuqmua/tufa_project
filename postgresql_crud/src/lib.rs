@@ -906,3 +906,6 @@ pub trait CombinationOfTraitsForPostgresqlCrudLogic:
     + Sync
 {
 }
+
+pub use naming_constants::Naming;
+pub use naming_constants::Commit;

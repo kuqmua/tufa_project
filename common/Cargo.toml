@@ -45,7 +45,6 @@ error_occurence_lib = {path = "../error_occurence_lib"}
 postgresql_crud = {path = "../postgresql_crud"}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
-# naming_constants = {path = "../naming_constants"}
 constants = {path = "../constants"}
 http_logic = {path = "../http_logic"}
 route_validators = {path = "../route_validators"}
