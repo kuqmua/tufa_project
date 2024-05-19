@@ -238,173 +238,173 @@ pub struct Dog {
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     }
 // }
-pub async fn try_create_many(
-    server_location: &str,//todo rename as endpoint location
-    parameters: CreateManyParameters,
-) -> Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64>, TryCreateManyErrorNamed> {
-    let payload = match serde_json::to_string(&CreateManyPayloadWithSerializeDeserialize::from(
-        parameters.payload,
-    )) {
-        Ok(value) => value,
-        Err(error) => {
-            return Err(TryCreateManyErrorNamed::SerdeJsonToString {
-                serde_json_to_string: error,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 796,
-                        column: 13,
-                    }),
-                ),
-            });
-        }
-    };
-    let url = format!("{server_location}/dogs/create_many");
-    let future = reqwest::Client::new()
-        .post(&url)
-        .header(
-            <naming_constants::Commit as naming_constants::Naming>::snake_case_stringified(),
-            git_info::PROJECT_GIT_INFO.commit,
-        )
-        .header(reqwest::header::CONTENT_TYPE, "application/json")
-        .body(payload)
-        .send();
-    let response = match future.await {
-        Ok(response) => response,
-        Err(error) => {
-            return Err(TryCreateManyErrorNamed::Reqwest {
-                reqwest: error,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1678,
-                        column: 13,
-                    }),
-                ),
-            });
-        }
-    };
-    let status_code = response.status();
-    let headers = response.headers().clone();
-    let response_text = match response.text().await {
-        Ok(response_text) => response_text,
-        Err(error) => {
-            return Err(TryCreateManyErrorNamed::FailedToGetResponseText {
-                reqwest: error,
-                status_code,
-                headers,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1607,
-                        column: 13,
-                    }),
-                ),
-            });
-        }
-    };
-    let expected_response = match serde_json::from_str::<TryCreateManyRouteLogicResponseVariants>(&response_text) {
-        Ok(value) => value,
-        Err(error) => {
-            return Err(TryCreateManyErrorNamed::DeserializeResponse {
-                serde: error,
-                status_code,
-                headers,
-                response_text,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1644,
-                        column: 13,
-                    }),
-                ),
-            });
-        }
-    };
-    let try_create_many_route_logic_error_named_with_serialize_deserialize = match expected_response {
-        TryCreateManyRouteLogicResponseVariants::Desirable(value) => {
-            return Ok(
-                value
-                .into_iter()
-                .map(|element| postgresql_crud::StdPrimitiveI64::from(element))
-                .collect()
-            );
-        },
-        //
-        TryCreateManyRouteLogicResponseVariants::CheckCommit {
-            check_commit,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
-        TryCreateManyRouteLogicResponseVariants::CheckBodySize {
-            check_body_size,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
-        //
-        TryCreateManyRouteLogicResponseVariants::Postgresql {
-            postgresql,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
-            postgresql,
-            code_occurence,
-        },
-        TryCreateManyRouteLogicResponseVariants::Json {
-            json,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json {
-            json,
-            code_occurence,
-        },
-        TryCreateManyRouteLogicResponseVariants::BindQuery {
-            bind_query,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
-            bind_query,
-            code_occurence,
-        },
-        TryCreateManyRouteLogicResponseVariants::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-        {
-            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-        {
-            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-            code_occurence,
-        },
-    };
-    Err(TryCreateManyErrorNamed::TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize{
-        try_create_many_route_logic_error_named_with_serialize_deserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-            file!().to_owned(),
-            line!(),
-            column!(),
-            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                file: std::string::String::from(
-                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                ),
-                line: 1644,
-                column: 13,
-            }),
-        ),
-    })
-}
+// pub async fn try_create_many(
+//     server_location: &str,//todo rename as endpoint location
+//     parameters: CreateManyParameters,
+// ) -> Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64>, TryCreateManyErrorNamed> {
+//     let payload = match serde_json::to_string(&CreateManyPayloadWithSerializeDeserialize::from(
+//         parameters.payload,
+//     )) {
+//         Ok(value) => value,
+//         Err(error) => {
+//             return Err(TryCreateManyErrorNamed::SerdeJsonToString {
+//                 serde_json_to_string: error,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                     file!().to_owned(),
+//                     line!(),
+//                     column!(),
+//                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                         file: std::string::String::from(
+//                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                         ),
+//                         line: 796,
+//                         column: 13,
+//                     }),
+//                 ),
+//             });
+//         }
+//     };
+//     let url = format!("{server_location}/dogs/create_many");
+//     let future = reqwest::Client::new()
+//         .post(&url)
+//         .header(
+//             <naming_constants::Commit as naming_constants::Naming>::snake_case_stringified(),
+//             git_info::PROJECT_GIT_INFO.commit,
+//         )
+//         .header(reqwest::header::CONTENT_TYPE, "application/json")
+//         .body(payload)
+//         .send();
+//     let response = match future.await {
+//         Ok(response) => response,
+//         Err(error) => {
+//             return Err(TryCreateManyErrorNamed::Reqwest {
+//                 reqwest: error,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                     file!().to_owned(),
+//                     line!(),
+//                     column!(),
+//                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                         file: std::string::String::from(
+//                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                         ),
+//                         line: 1678,
+//                         column: 13,
+//                     }),
+//                 ),
+//             });
+//         }
+//     };
+//     let status_code = response.status();
+//     let headers = response.headers().clone();
+//     let response_text = match response.text().await {
+//         Ok(response_text) => response_text,
+//         Err(error) => {
+//             return Err(TryCreateManyErrorNamed::FailedToGetResponseText {
+//                 reqwest: error,
+//                 status_code,
+//                 headers,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                     file!().to_owned(),
+//                     line!(),
+//                     column!(),
+//                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                         file: std::string::String::from(
+//                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                         ),
+//                         line: 1607,
+//                         column: 13,
+//                     }),
+//                 ),
+//             });
+//         }
+//     };
+//     let expected_response = match serde_json::from_str::<TryCreateManyRouteLogicResponseVariants>(&response_text) {
+//         Ok(value) => value,
+//         Err(error) => {
+//             return Err(TryCreateManyErrorNamed::DeserializeResponse {
+//                 serde: error,
+//                 status_code,
+//                 headers,
+//                 response_text,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                     file!().to_owned(),
+//                     line!(),
+//                     column!(),
+//                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                         file: std::string::String::from(
+//                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                         ),
+//                         line: 1644,
+//                         column: 13,
+//                     }),
+//                 ),
+//             });
+//         }
+//     };
+//     let try_create_many_route_logic_error_named_with_serialize_deserialize = match expected_response {
+//         TryCreateManyRouteLogicResponseVariants::Desirable(value) => {
+//             return Ok(
+//                 value
+//                 .into_iter()
+//                 .map(|element| postgresql_crud::StdPrimitiveI64::from(element))
+//                 .collect()
+//             );
+//         },
+//         //
+//         TryCreateManyRouteLogicResponseVariants::CheckCommit {
+//             check_commit,
+//             code_occurence,
+//         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+//         TryCreateManyRouteLogicResponseVariants::CheckBodySize {
+//             check_body_size,
+//             code_occurence,
+//         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+//         //
+//         TryCreateManyRouteLogicResponseVariants::Postgresql {
+//             postgresql,
+//             code_occurence,
+//         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
+//             postgresql,
+//             code_occurence,
+//         },
+//         TryCreateManyRouteLogicResponseVariants::Json {
+//             json,
+//             code_occurence,
+//         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json {
+//             json,
+//             code_occurence,
+//         },
+//         TryCreateManyRouteLogicResponseVariants::BindQuery {
+//             bind_query,
+//             code_occurence,
+//         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
+//             bind_query,
+//             code_occurence,
+//         },
+//         TryCreateManyRouteLogicResponseVariants::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//         {
+//             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+//             code_occurence,
+//         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//         {
+//             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+//             code_occurence,
+//         },
+//     };
+//     Err(TryCreateManyErrorNamed::TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize{
+//         try_create_many_route_logic_error_named_with_serialize_deserialize,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//             file!().to_owned(),
+//             line!(),
+//             column!(),
+//             Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                 file: std::string::String::from(
+//                     "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                 ),
+//                 line: 1644,
+//                 column: 13,
+//             }),
+//         ),
+//     })
+// }
 /////////////////////////route handler
