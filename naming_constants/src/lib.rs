@@ -167,7 +167,9 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "pg",
     "connection",
     "binded",
-    "axum"
+    "axum",
+    "check",
+    "size"
 );
 
 #[derive(Debug, Clone, Copy)]

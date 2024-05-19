@@ -2047,6 +2047,56 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             reqwest_syn_variant,
         ]
     };
+    let (check_body_size_syn_variant, check_body_size_syn_variant_initialization_token_stream) = {
+        let check_body_size_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::check_body_size_upper_camel_case_token_stream();
+        let check_body_size_snake_case_token_stream = proc_macro_helpers::naming_conventions::check_body_size_snake_case_token_stream();
+        let field_code_occurence_new_1b7ff451_4836_40a6_a477_00c30fa61894_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+                &proc_macro_helpers::naming_conventions::check_body_size_upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                        &proc_macro_helpers::naming_conventions::check_body_size_snake_case_stringified(),
+                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &["route_validators", "check_body_size", "CheckBodySizeErrorNamed"],
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ),
+                    )
+                ]
+            ),
+            quote::quote! {
+                #check_body_size_upper_camel_case_token_stream {
+                    #check_body_size_snake_case_token_stream: #error_snake_case_token_stream,
+                    #field_code_occurence_new_1b7ff451_4836_40a6_a477_00c30fa61894_token_stream,
+                }
+            }
+        )
+    };
+    let common_additional_syn_variants: std::vec::Vec<syn::Variant> = vec![
+        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+            &proc_macro_helpers::naming_conventions::check_commit_upper_camel_case_stringified(),
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                    &proc_macro_helpers::naming_conventions::check_commit_snake_case_stringified(),
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["route_validators", "check_commit", "CheckCommitErrorNamed"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        )
+    ];
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
@@ -2099,10 +2149,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     additional_http_status_codes_error_variants.iter().collect(),
                 );
             let type_variants_from_request_response_syn_variants_partial = {
-                let mut type_variants_from_request_response = std::vec::Vec::with_capacity(5);
-                // for element in &common_error_syn_variants {
-                //     type_variants_from_request_response.push(element);
-                // }
+                let mut type_variants_from_request_response = std::vec::Vec::with_capacity(6);
+                for element in &common_additional_syn_variants {
+                    type_variants_from_request_response.push(element);
+                }
+                type_variants_from_request_response.push(&check_body_size_syn_variant);
                 type_variants_from_request_response.push(&postgresql_syn_variant);
                 type_variants_from_request_response.push(&json_syn_variant);
                 type_variants_from_request_response.push(&bind_query_syn_variant);
@@ -2429,14 +2480,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {
                     #derive_debug_serialize_deserialize_token_stream
                     pub enum #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
-                        CheckCommit {
-                            check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        CheckBodySize {
-                            check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
                         #desirable_upper_camel_case_token_stream(#desirable_type_token_stream),
                         #(#variants_token_stream),*
                     }
@@ -2469,20 +2512,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     impl std::convert::From<#try_operation_route_logic_error_named_upper_camel_case_token_stream> for #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
                         fn from(value: #try_operation_route_logic_error_named_upper_camel_case_token_stream) -> Self {
                             match value.#into_serialize_deserialize_version_snake_case_token_stream() {
-                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::CheckCommit {
-                                    check_commit,
-                                    code_occurence,
-                                } => Self::CheckCommit {
-                                    check_commit: check_commit,
-                                    code_occurence,
-                                },
-                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::CheckBodySize {
-                                    check_body_size,
-                                    code_occurence,
-                                } => Self::CheckBodySize {
-                                    check_body_size: check_body_size,
-                                    code_occurence,
-                                },
                                 #(#variants_token_stream),*
                             }
                         }
@@ -2501,16 +2530,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         error_occurence_lib::ErrorOccurence,
                     )]
                     pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
-                        CheckCommit {
-                            #[eo_error_occurence]
-                            check_commit: route_validators::check_commit::CheckCommitErrorNamed,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        CheckBodySize {
-                            #[eo_error_occurence]
-                            check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
                         #(#variants_token_stream),*
                     }
                 }
@@ -8050,6 +8069,7 @@ fn generate_http_request_many_token_stream(
     let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
     let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
     let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+    let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     // let (unique_status_codes, unique_status_codes_len, unique_status_codes_len_minus_one) = {
     //     let hashmap_unique_status_codes = type_variants_from_request_response_syn_variants.iter().fold(//todo maybe not need hashmap here? maybe just unique vec?
     //         std::collections::HashMap::<proc_macro_helpers::status_code::StatusCode, std::vec::Vec<(
@@ -8267,6 +8287,21 @@ fn generate_http_request_many_token_stream(
         column!(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let try_operation_route_logic_response_variants_to_try_operation_route_logic_error_named_with_serialize_deserialize = type_variants_from_request_response_syn_variants.iter().map(|element|{
+        let variant_ident = &element.ident;
+        let fields_idents_token_stream = if let syn::Fields::Named(fields_named) = &element.fields {
+            let fields_idents = fields_named.named.iter().map(|field|&field.ident);
+            quote::quote! {#(#fields_idents),*}
+        }
+        else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+        };
+        quote::quote! {
+            #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#variant_ident {
+                #fields_idents_token_stream
+            } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::#variant_ident { #fields_idents_token_stream }
+        }
+    });
     quote::quote! {
         // pub async fn #try_operation_snake_case_token_stream<'a>(
         //     #server_location_name_token_stream: #str_ref_token_stream,
@@ -8365,48 +8400,9 @@ fn generate_http_request_many_token_stream(
                         .collect()
                     );
                 },
-                //
-                #try_operation_route_logic_response_variants_upper_camel_case_token_stream::CheckCommit {
-                    check_commit,
-                    code_occurence,
-                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::CheckCommit { check_commit, code_occurence },
-                #try_operation_route_logic_response_variants_upper_camel_case_token_stream::CheckBodySize {
-                    check_body_size,
-                    code_occurence,
-                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::CheckBodySize { check_body_size, code_occurence },
-                //
-                #try_operation_route_logic_response_variants_upper_camel_case_token_stream::Postgresql {
-                    postgresql,
-                    code_occurence,
-                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Postgresql {
-                    postgresql,
-                    code_occurence,
-                },
-                #try_operation_route_logic_response_variants_upper_camel_case_token_stream::Json {
-                    json,
-                    code_occurence,
-                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Json {
-                    json,
-                    code_occurence,
-                },
-                #try_operation_route_logic_response_variants_upper_camel_case_token_stream::BindQuery {
-                    bind_query,
-                    code_occurence,
-                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::BindQuery {
-                    bind_query,
-                    code_occurence,
-                },
-                #try_operation_route_logic_response_variants_upper_camel_case_token_stream::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-                {
-                    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                    code_occurence,
-                } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-                {
-                    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                    code_occurence,
-                },
+                #(#try_operation_route_logic_response_variants_to_try_operation_route_logic_error_named_with_serialize_deserialize),*
             };
-            Err(#try_operation_error_named_upper_camel_case_token_stream::#try_operation_route_logic_error_named_witH_serialize_deserialize_upper_camel_case_token_stream {
+            Err(#try_operation_error_named_upper_camel_case_token_stream::#try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream {
                 try_create_many_route_logic_error_named_with_serialize_deserialize,
                 #field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_token_stream,
             })
