@@ -213,6 +213,19 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
             #pub_fn_snake_case_stringified_token_stream
             #pub_fn_upper_camel_case_token_stream_token_stream
             #pub_fn_snake_case_token_stream_token_stream
+            //
+            // pub struct #ident_snake_case_snake_case_token_stream;
+            // impl std::fmt::Display for #ident_snake_case_snake_case_token_stream {
+            //     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            //         write!(formatter, #ident_snake_case_quotes_token_stream)
+            //     }
+            // }
+            // impl quote::ToTokens for #ident_snake_case_snake_case_token_stream {
+            //     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            //         quote::quote!{#ident_snake_case_token_stream}.to_tokens(tokens)
+            //     }
+            // }
+            //
         }
     });
     let gen = quote::quote!{#(#implementations_token_stream)*};
