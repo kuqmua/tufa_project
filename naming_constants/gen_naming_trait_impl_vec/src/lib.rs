@@ -53,9 +53,17 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
                 ident_snake_case_token_stream
             )
         };
-        let ident_token_stream_upper_camel_case_token_stream = {
+        let ident_upper_camel_case_upper_camel_case_token_stream = {
             let value = format!(
-                "{}TokenStream",
+                "{}UpperCamelCase",
+                proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ident.as_str())
+            );
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let ident_snake_case_snake_case_token_stream = {
+            let value = format!(
+                "{}SnakeCase",
                 proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ident.as_str())
             );
             value.parse::<proc_macro2::TokenStream>()
@@ -77,12 +85,28 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote!{#ident_upper_camel_case_token_stream}
                 }
             }
-            // pub struct #ident_token_stream_upper_camel_case_token_stream;
-            // impl quote::ToTokens for Enum {
-            //     fn to_tokens(&self, tokens: &mut quote::Tokens) {
-            //         tokens.append("Enum::B");
-            //     }
-            // }
+            pub struct #ident_upper_camel_case_upper_camel_case_token_stream;
+            impl std::string::ToString for #ident_upper_camel_case_upper_camel_case_token_stream {
+                fn to_string(&self) -> std::string::String {
+                    std::string::String::from(#ident_upper_camel_case_quotes_token_stream)
+                }
+            }
+            impl quote::ToTokens for #ident_upper_camel_case_upper_camel_case_token_stream {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    quote::quote!{#ident_upper_camel_case_token_stream}.to_tokens(tokens)
+                }
+            }
+            pub struct #ident_snake_case_snake_case_token_stream;
+            impl std::string::ToString for #ident_snake_case_snake_case_token_stream {
+                fn to_string(&self) -> std::string::String {
+                    std::string::String::from(#ident_snake_case_quotes_token_stream)
+                }
+            }
+            impl quote::ToTokens for #ident_snake_case_snake_case_token_stream {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    quote::quote!{#ident_snake_case_token_stream}.to_tokens(tokens)
+                }
+            }
         }
     });
     let gen = quote::quote!{#(#impls_token_stream)*};

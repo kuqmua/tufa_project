@@ -408,11 +408,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident_column_upper_camel_case_token_stream = {
         let ident_column_upper_camel_case_stringified = format!(
             "{ident}{}",
-            <naming_constants::Column as naming_constants::Naming>::upper_camel_case_stringified()
+            // <naming_constants::Column as naming_constants::Naming>::upper_camel_case_stringified()
+            naming_constants::ColumnUpperCamelCase.to_string()
         );
         ident_column_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    // let f = naming_constants::LimitUpperCamelCase;
+    // let z = quote::quote!{#f};
+    // println!("##########{}", z);
+    // let s = naming_constants::LimitSnakeCase;
+    // let d = quote::quote!{#s};
+    // println!("##########{}", d);
     let column_token_stream = {
         let variants = fields_named
             .iter()
