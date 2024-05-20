@@ -804,7 +804,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let postgresql_crud_token_stream = proc_macro_helpers::naming_conventions::extraction_result_snake_case_stringified();
     let app_state_path = quote::quote! {#postgresql_crud_token_stream::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
-    let serde_json_to_string_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::serde_json_to_string_upper_camel_case_stringified();
     let serde_json_to_string_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::serde_json_to_string_upper_camel_case_token_stream();
     let serde_json_to_string_snake_case_token_stream = proc_macro_helpers::naming_conventions::serde_json_to_string_snake_case_token_stream();
     let serde_json_to_string_variant_initialization_token_stream = {
@@ -1967,12 +1966,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_response_response_token_stream = quote::quote!{axum::response::Response};
     let into_response_snake_case_token_stream = proc_macro_helpers::naming_conventions::into_response_snake_case_token_stream();
     let serde_json_to_string_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-        &serde_json_to_string_upper_camel_case_stringified,
+        &proc_macro_helpers::naming_conventions::serde_json_to_string_upper_camel_case_stringified(),
         &code_occurence_field,
         vec![
             (
                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&serde_json_to_string_upper_camel_case_stringified),
+                &proc_macro_helpers::naming_conventions::serde_json_to_string_snake_case_stringified(),
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["serde_json","Error"],
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -2075,7 +2074,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         vec![
             (
                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &naming_constants::ReqwestSnakeCase.to_string(),
+                &naming_constants::ReqwestSnakeCase,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["reqwest","Error"],
                     &proc_macro_name_upper_camel_case_ident_stringified

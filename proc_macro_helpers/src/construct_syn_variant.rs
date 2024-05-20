@@ -89,7 +89,7 @@ pub fn construct_syn_variant(
     code_occurence_field: &syn::Field,
     fields: std::vec::Vec<(
         crate::error_occurence::ErrorOccurenceFieldAttribute,
-        &str,
+        &impl std::fmt::Display,
         syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     )>,
 ) -> syn::Variant {
@@ -126,7 +126,7 @@ pub fn construct_syn_variant(
                             }],
                             vis: syn::Visibility::Inherited,
                             mutability: syn::FieldMutability::None,
-                            ident: Some(syn::Ident::new(element.1, proc_macro2::Span::call_site())),
+                            ident: Some(syn::Ident::new(&element.1.to_string(), proc_macro2::Span::call_site())),
                             colon_token: Some(syn::token::Colon {
                                 spans: [proc_macro2::Span::call_site()],
                             }),
