@@ -94,7 +94,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
                     acc.push_str(&format!("_{element_snake_case_stringified}"));
                 }
                 acc
-        }   );
+            });
             let phrase_upper_camel_case_stringified_token_stream = {
                 let value = format!("{phrase_part_stringified}{prefix_upper_camel_case}{prefix_stringified}");
                 value.parse::<proc_macro2::TokenStream>()
@@ -208,19 +208,40 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
                 pub_fn_snake_case_token_stream_token_stream
             )
         };
+        let ident_upper_camel_case_upper_camel_case_token_stream = {
+            let value = format!("{ident}UpperCamelCase");
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let ident_snake_case_upper_camel_case_token_stream = {
+            let value = format!("{ident}SnakeCase");
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
         quote::quote!{
             #pub_fn_upper_camel_case_stringified_token_stream
             #pub_fn_snake_case_stringified_token_stream
             #pub_fn_upper_camel_case_token_stream_token_stream
             #pub_fn_snake_case_token_stream_token_stream
             //
-            // pub struct #ident_snake_case_snake_case_token_stream;
-            // impl std::fmt::Display for #ident_snake_case_snake_case_token_stream {
+            // pub struct #ident_upper_camel_case_upper_camel_case_token_stream;
+            // impl std::fmt::Display for #ident_upper_camel_case_upper_camel_case_token_stream {
             //     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
             //         write!(formatter, #ident_snake_case_quotes_token_stream)
             //     }
             // }
-            // impl quote::ToTokens for #ident_snake_case_snake_case_token_stream {
+            // impl quote::ToTokens for #ident_upper_camel_case_upper_camel_case_token_stream {
+            //     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            //         quote::quote!{#ident_snake_case_token_stream}.to_tokens(tokens)
+            //     }
+            // }
+            // pub struct #ident_snake_case_upper_camel_case_token_stream;
+            // impl std::fmt::Display for #ident_snake_case_upper_camel_case_token_stream {
+            //     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            //         write!(formatter, #ident_snake_case_quotes_token_stream)
+            //     }
+            // }
+            // impl quote::ToTokens for #ident_snake_case_upper_camel_case_token_stream {
             //     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             //         quote::quote!{#ident_snake_case_token_stream}.to_tokens(tokens)
             //     }
