@@ -102,6 +102,13 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
                     std::string::String::from(#ident_snake_case_quotes_token_stream)
                 }
             }
+            //
+            // impl fmt::Display for Person {
+            //     fn fmt(&self, f: &mut std::fmt::Formatter) -> fmt::Result {
+            //         write!(f, "{}", self.name)
+            //     }
+            // }
+            // //
             impl quote::ToTokens for #ident_snake_case_snake_case_token_stream {
                 fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
                     quote::quote!{#ident_snake_case_token_stream}.to_tokens(tokens)
