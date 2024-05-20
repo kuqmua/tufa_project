@@ -15,7 +15,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant_with_status_code(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -33,7 +33,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant_with_status_code(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -50,7 +50,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant_with_status_code(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -70,7 +70,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant_with_status_code(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -87,7 +87,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant_with_status_code(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -151,7 +151,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
                 ),
                 (
                     crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                    "len",
+                    &naming_constants::LenSnakeCase.to_string(),
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["usize"],
                         proc_macro_name_upper_camel_case_ident_stringified
@@ -184,12 +184,12 @@ pub fn sqlx_postgres_error_named_syn_variants(
         vec![
             (
                 crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                "column_decode_index", 
+                &crate::naming_conventions::column_decode_index_snake_case_stringified(),
                 std_string_string_syn_punctuated_punctuated.clone()
             ),
             (
                 crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                "source_handle",
+                &crate::naming_conventions::source_handle_snake_case_stringified(),
                 std_string_string_syn_punctuated_punctuated.clone()
             )
         ]
@@ -200,7 +200,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant_with_status_code(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -268,7 +268,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant_with_status_code(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (

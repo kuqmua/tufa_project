@@ -1,10 +1,10 @@
 pub fn construct_syn_variant_with_status_code(
     status_code: crate::status_code::StatusCode,
-    variant_name: &str,
+    variant_name: &impl std::fmt::Display,
     code_occurence_field: &syn::Field,
     fields: std::vec::Vec<(
         crate::error_occurence::ErrorOccurenceFieldAttribute,
-        &str,
+        &impl std::fmt::Display,
         syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     )>,
 ) -> syn::Variant {
@@ -27,7 +27,7 @@ pub fn construct_syn_variant_with_status_code(
                 },
             }),
         }],
-        ident: syn::Ident::new(variant_name, proc_macro2::Span::call_site()),
+        ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
         fields: syn::Fields::Named(syn::FieldsNamed {
             brace_token: syn::token::Brace::default(),
             named: {
@@ -58,7 +58,7 @@ pub fn construct_syn_variant_with_status_code(
                             }],
                             vis: syn::Visibility::Inherited,
                             mutability: syn::FieldMutability::None,
-                            ident: Some(syn::Ident::new(element.1, proc_macro2::Span::call_site())),
+                            ident: Some(syn::Ident::new(&element.1.to_string(), proc_macro2::Span::call_site())),
                             colon_token: Some(syn::token::Colon {
                                 spans: [proc_macro2::Span::call_site()],
                             }),

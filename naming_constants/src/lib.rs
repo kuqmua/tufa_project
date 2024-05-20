@@ -169,7 +169,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "binded",
     "axum",
     "check",
-    "size"
+    "size",
+    "handle"
 );
 
 #[derive(Debug, Clone, Copy)]
