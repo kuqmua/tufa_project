@@ -9002,7 +9002,7 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(//todo renam
                         Ok(value) => value,
                         Err(error) => {
                             return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
+                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: error,
                                 #field_code_occurence_new_token_stream
                             });
                         }
