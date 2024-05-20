@@ -53,14 +53,19 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
                 ident_snake_case_token_stream
             )
         };
+        let ident_token_stream_upper_camel_case_token_stream = {
+            let value = format!(
+                "{}TokenStream",
+                proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ident.as_str())
+            );
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
         quote::quote!{
             pub struct #ident_upper_camel_case_token_stream;
             impl Naming for #ident_upper_camel_case_token_stream {
                 fn upper_camel_case_stringified() -> &'static str {
                     #ident_upper_camel_case_quotes_token_stream
-                }
-                fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
-                    quote::quote!{#ident_upper_camel_case_token_stream}
                 }
                 fn snake_case_stringified() -> &'static str {
                     #ident_snake_case_quotes_token_stream
@@ -68,7 +73,16 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
                 fn snake_case_token_stream() -> proc_macro2::TokenStream {
                     quote::quote!{#ident_snake_case_token_stream}
                 }
+                fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+                    quote::quote!{#ident_upper_camel_case_token_stream}
+                }
             }
+            // pub struct #ident_token_stream_upper_camel_case_token_stream;
+            // impl quote::ToTokens for Enum {
+            //     fn to_tokens(&self, tokens: &mut quote::Tokens) {
+            //         tokens.append("Enum::B");
+            //     }
+            // }
         }
     });
     let gen = quote::quote!{#(#impls_token_stream)*};
