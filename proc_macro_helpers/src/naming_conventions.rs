@@ -110,38 +110,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ]
 );
 
-pub trait SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated {
-    fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-        &self,
-    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>;
-}
-
-impl<T> SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated for T
-where
-    T: SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified,
-{
-    fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-        &self,
-    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
-        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-        handle.push_value(
-            syn::PathSegment {
-                ident: proc_macro2::Ident::new(
-                    &format!(
-                        "{}{}{}",
-                        self.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(),
-                        <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
-                        <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
-                    ),
-                    proc_macro2::Span::call_site()
-                ),
-                arguments: syn::PathArguments::None,
-            }
-        );
-        handle
-    }
-}
-
 pub trait TrySelfResponseVariantsStatusCodeStringified {
     fn try_self_response_variants_status_code_stringified(
         &self,

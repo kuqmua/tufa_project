@@ -2179,9 +2179,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
-                    proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-                        &operation
-                    )
+                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
                 )
             ]
         );
@@ -8704,32 +8702,26 @@ impl Operation {
             <naming_constants::Deserialize as naming_constants::Naming>::snake_case_stringified()
         )
     }
-    // ["self", "parameters"],
-    // ["self", "payload"],
-    // ["self", "payload", "with", "serialize", "deserialize"],
-    // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
-    // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload"],
-    // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload", "error", "named"],
-    // ["try", "self"],
-    // ["try", "self", "response", "variants"],
-    // ["self", "payload", "element", "with", "serialize", "deserialize"],
-    // ["self", "payload", "element"],
-    // ["self", "payload", "element", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
-    // ["self", "payload", "element", "try", "from", "self", "payload", "element", "with", "serialize", "deserialize", "error", "named"],
-    // ["try", "self", "error", "named"],
-    // ["try", "self", "request", "error"],
-    // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize", "error", "named"],
-    // ["try", "self", "with", "serialize", "deserialize"],
-    // ["tvfrr", "extraction", "logic", "try", "self"],
-    // ["try", "self", "generated", "route", "logic", "error", "named"],
-    // ["try", "self", "generated", "route", "logic", "desirable"],
-    // ["try", "self", "route", "logic"],
-    // ["try", "self", "route", "logic", "response"],
-    // ["try", "self", "route", "logic", "response", "variants"],
-    // ["try", "self", "route", "logic", "error", "named"],
-    // ["try", "self", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
-    // ["try", "self", "generated", "route", "logic", "error", "named", "with", "serialize", "deserialize"]
-    //
+    fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
+        &self,
+    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
+        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+        handle.push_value(
+            syn::PathSegment {
+                ident: proc_macro2::Ident::new(
+                    &format!(
+                        "{}{}{}",
+                        proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self),
+                        <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
+                        <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
+                    ),
+                    proc_macro2::Span::call_site()
+                ),
+                arguments: syn::PathArguments::None,
+            }
+        );
+        handle
+    }
 }
 
 #[derive(proc_macro_assistants::ToSnakeCaseStringified)]
