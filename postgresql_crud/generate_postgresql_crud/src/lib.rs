@@ -8681,6 +8681,33 @@ impl Operation {
         let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(self);
         quote::quote!{std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>}
     }
+    //
+        // ["self", "parameters"],
+        // ["self", "payload"],
+        // ["self", "payload", "with", "serialize", "deserialize"],
+        // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
+        // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload"],
+        // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload", "error", "named"],
+        // ["try", "self"],
+        // ["try", "self", "response", "variants"],
+        // ["self", "payload", "element", "with", "serialize", "deserialize"],
+        // ["self", "payload", "element"],
+        // ["self", "payload", "element", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
+        // ["self", "payload", "element", "try", "from", "self", "payload", "element", "with", "serialize", "deserialize", "error", "named"],
+        // ["try", "self", "error", "named"],
+        // ["try", "self", "request", "error"],
+        // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize", "error", "named"],
+        // ["try", "self", "with", "serialize", "deserialize"],
+        // ["tvfrr", "extraction", "logic", "try", "self"],
+        // ["try", "self", "generated", "route", "logic", "error", "named"],
+        // ["try", "self", "generated", "route", "logic", "desirable"],
+        // ["try", "self", "route", "logic"],
+        // ["try", "self", "route", "logic", "response"],
+        // ["try", "self", "route", "logic", "response", "variants"],
+        // ["try", "self", "route", "logic", "error", "named"],
+        // ["try", "self", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
+        // ["try", "self", "generated", "route", "logic", "error", "named", "with", "serialize", "deserialize"]
+    //
 }
 
 #[derive(proc_macro_assistants::ToSnakeCaseStringified)]
