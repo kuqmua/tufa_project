@@ -48,14 +48,14 @@ fn field_type_implements_serialize_deserialize_handle(
     };
     let field_type = &field.ty;
     let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -63,8 +63,8 @@ fn field_type_implements_serialize_deserialize_handle(
     let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}{}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -150,7 +150,7 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let value = format!(
             "{}{ident}{}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -158,7 +158,7 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let std_option_option_ident_token_stream = {
         let value = format!(
             "{}{ident}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -167,7 +167,7 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let value = format!(
             "{}{}{ident}",
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -176,8 +176,8 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let value = format!(
             "{}{}{ident}{}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -228,8 +228,8 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let ident_with_serialize_deserialize_error_named_token_stream = {
         let value = format!(
             "{ident}{}{}", 
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+            proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -237,7 +237,7 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let std_option_option_ident_token_stream = {
         let value = format!(
             "{}{ident}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -251,7 +251,7 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         let value = format!(
             "{}{ident}{}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -260,8 +260,8 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         let value = format!(
             "{}{ident}{}{}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+            proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -270,9 +270,9 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         let value = format!(
             "{}{}{ident}{}{}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+            proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -281,7 +281,7 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         let value = format!(
             "{}{}{ident}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -290,8 +290,8 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         let value = format!(
             "{}{}{ident}{}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -433,7 +433,7 @@ fn common_handle(
     };
     let field_type = &field.ty;
     let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -446,7 +446,7 @@ fn common_handle(
         let value = format!(
             "{}{ident}{}", 
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -454,7 +454,7 @@ fn common_handle(
     let std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -463,7 +463,7 @@ fn common_handle(
         let value = format!(
             "{}{}{ident}",
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -472,8 +472,8 @@ fn common_handle(
     let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}{}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -482,8 +482,8 @@ fn common_handle(
         let value = format!(
             "{}{}{ident}{}",
             <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -873,14 +873,14 @@ fn common_specific_from_handle(
     let ident = &ast.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -888,8 +888,8 @@ fn common_specific_from_handle(
     let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}{}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -974,14 +974,14 @@ fn common_specific_try_from_handle(
     let ident = &ast.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -989,8 +989,8 @@ fn common_specific_try_from_handle(
     let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
         let value = format!(
             "{}{ident}{}",
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::StdOptionOptionUpperCamelCase,
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -998,8 +998,8 @@ fn common_specific_try_from_handle(
     let ident_with_serialize_deserialize_error_named_token_stream = {
         let value = format!(
             "{ident}{}{}", 
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+            proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase,
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))

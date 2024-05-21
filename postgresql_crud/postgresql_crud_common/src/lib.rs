@@ -1222,9 +1222,9 @@ impl SupportedSqlxPostgresType {
     ) -> std::string::String {
         if matches!(self, Self::SqlxTypesJsonT) { format!(
             "sqlx::types::Json{}<{generic_type_str}>",
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         ) } else { 
-            format!("{self}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()) 
+            format!("{self}{}", proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase) 
         }
     }
     pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
@@ -1236,8 +1236,8 @@ impl SupportedSqlxPostgresType {
             FromOrTryFrom::TryFrom => format!(
                 "{}{}{}", 
                 self.get_inner_type_handle_stringified(generic_type_str),
-                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-                proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified()
+                proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+                proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase
             )
         }
     }
@@ -1248,8 +1248,8 @@ impl SupportedSqlxPostgresType {
                 "{}{}{}{}",
                 <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
                 self.get_inner_type_handle_stringified(generic_type_str),
-                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-                proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified()
+                proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+                proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase
             )
         })
     }

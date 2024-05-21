@@ -302,7 +302,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &utoipa_to_schema_token_stream,
         ]);
     let from_str_upper_camel_case_token_stream =
-        proc_macro_helpers::naming_conventions::from_str_upper_camel_case_token_stream();
+        proc_macro_helpers::naming_conventions::FromStrUpperCamelCase;
     let from_str_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::from_str_snake_case_token_stream();
     let sqlx_row_token_stream = proc_macro_common::sqlx_row_token_stream();
@@ -312,7 +312,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {sqlx::decode::Decode<'a, R::Database>};
     let sqlx_types_type_database_token_stream = quote::quote! {sqlx::types::Type<R::Database>};
     let error_named_upper_camel_case_stringified =
-        proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified();
+        proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase;
     let struct_options_ident_stringified = format!(
         "{ident}{}",
         naming_constants::OptionsUpperCamelCase
@@ -389,7 +389,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{from_ident_for_ident_options_token_stream}");
-    let code_occurence_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_token_stream();
+    let code_occurence_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::CodeOccurenceUpperCamelCase;
     let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
     let error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {error_occurence_lib::#code_occurence_snake_case_token_stream::#code_occurence_upper_camel_case_token_stream};
     let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {
@@ -504,7 +504,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{generate_query_vec_column_token_stream}");
-    let column_select_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::column_select_upper_camel_case_stringified();
+    let column_select_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::ColumnSelectUpperCamelCase;
     let ident_column_select_upper_camel_case_token_stream = {
         let ident_column_select_upper_camel_case_stringified =
             format!("{ident}{column_select_upper_camel_case_stringified}");
@@ -516,12 +516,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let value = format!(
             "{}::{}",
             postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
-            proc_macro_helpers::naming_conventions::try_generate_bind_increments_error_named_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let wrapper_vec_column_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::wrapper_vec_column_upper_camel_case_token_stream();
+    let wrapper_vec_column_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::WrapperVecColumnUpperCamelCase;
     let wrapper_vec_column_snake_case_token_stream = proc_macro_helpers::naming_conventions::wrapper_vec_column_snake_case_token_stream();
     let options_try_from_sqlx_row_token_stream = {
         let declaration_primary_key_token_stream = {
@@ -655,7 +655,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{primary_key_try_get_sqlx_row_token_stream}");
-    let order_by_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_token_stream();
+    let order_by_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::OrderByUpperCamelCase;
     let postgresql_crud_order_by_token_stream = quote::quote! {postgresql_crud::#order_by_upper_camel_case_token_stream};
     let postgresql_crud_order_token_stream = quote::quote! {postgresql_crud::Order};
     let limit_snake_case_token_stream =
@@ -804,7 +804,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let postgresql_crud_token_stream = proc_macro_helpers::naming_conventions::extraction_result_snake_case_stringified();
     let app_state_path = quote::quote! {#postgresql_crud_token_stream::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
-    let serde_json_to_string_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::serde_json_to_string_upper_camel_case_token_stream();
+    let serde_json_to_string_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SerdeJsonToStringUpperCamelCase;
     let serde_json_to_string_snake_case_token_stream = proc_macro_helpers::naming_conventions::serde_json_to_string_snake_case_token_stream();
     let serde_json_to_string_variant_initialization_token_stream = {
         let field_code_occurence_new_27b49c75_24b2_4480_ac4d_62a1f75f5646_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
@@ -1028,7 +1028,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                &proc_macro_helpers::naming_conventions::bind_query_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::BindQueryUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![(
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
@@ -1040,7 +1040,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )]
             ),
             {
-                let bind_query_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::bind_query_upper_camel_case_token_stream();
+                let bind_query_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::BindQueryUpperCamelCase;
                 let bind_query_snake_case_token_stream = proc_macro_helpers::naming_conventions::bind_query_snake_case_token_stream();
                 let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1061,7 +1061,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                &proc_macro_helpers::naming_conventions::checked_add_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1081,7 +1081,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
-                let checked_add_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::checked_add_upper_camel_case_token_stream();
+                let checked_add_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase;
                 let checked_add_snake_case_token_stream = proc_macro_helpers::naming_conventions::checked_add_snake_case_token_stream();
                 let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1110,7 +1110,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                &proc_macro_helpers::naming_conventions::query_and_rollback_failed_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::QueryAndRollbackFailedUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1126,7 +1126,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ],
             ),
             {
-                let query_and_rollback_failed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::query_and_rollback_failed_upper_camel_case_token_stream();
+                let query_and_rollback_failed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::QueryAndRollbackFailedUpperCamelCase;
                 let query_and_rollback_failed_snake_case_token_stream = proc_macro_helpers::naming_conventions::query_and_rollback_failed_snake_case_token_stream();
                 let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1151,7 +1151,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                &proc_macro_helpers::naming_conventions::primary_key_from_row_and_failed_rollback_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::PrimaryKeyFromRowAndFailedRollbackUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1167,7 +1167,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ],
             ),
             {
-                let primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream();
+                let primary_key_from_row_and_failed_rollback_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::PrimaryKeyFromRowAndFailedRollbackUpperCamelCase;
                 let primary_key_from_row_and_failed_rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::primary_key_from_row_and_failed_rollback_snake_case_token_stream();
                 let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1189,7 +1189,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                &proc_macro_helpers::naming_conventions::non_existing_primary_keys_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::NonExistingPrimaryKeysUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1200,7 +1200,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ]
             ),
             {
-                let non_existing_primary_keys_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::non_existing_primary_keys_upper_camel_case_token_stream();
+                let non_existing_primary_keys_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::NonExistingPrimaryKeysUpperCamelCase;
                 let non_existing_primary_keys_snake_case_token_stream = proc_macro_helpers::naming_conventions::non_existing_primary_keys_snake_case_token_stream();
                 let field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1224,7 +1224,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                &proc_macro_helpers::naming_conventions::non_existing_primary_keys_and_failed_rollback_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::NonExistingPrimaryKeysAndFailedRollbackUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1240,7 +1240,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ]
             ),
             {
-                let non_existing_primary_keys_and_failed_rollback_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::non_existing_primary_keys_and_failed_rollback_upper_camel_case_token_stream();
+                let non_existing_primary_keys_and_failed_rollback_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::NonExistingPrimaryKeysAndFailedRollbackUpperCamelCase;
                 let non_existing_primary_keys_snake_case_token_stream = proc_macro_helpers::naming_conventions::non_existing_primary_keys_snake_case_token_stream();
                 let field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1265,7 +1265,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                &proc_macro_helpers::naming_conventions::commit_failed_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::CommitFailedUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![(
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
@@ -1274,7 +1274,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )],
             ),
             {
-                let commit_failed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::commit_failed_upper_camel_case_token_stream();
+                let commit_failed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::CommitFailedUpperCamelCase;
                 let commit_failed_snake_case_token_stream = proc_macro_helpers::naming_conventions::commit_failed_snake_case_token_stream();
                 let field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1299,7 +1299,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                &proc_macro_helpers::naming_conventions::not_unique_primary_keys_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::NotUniquePrimaryKeysUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1310,7 +1310,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ]
             ),
             {
-                let not_unique_primary_keys_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_upper_camel_case_token_stream();
+                let not_unique_primary_keys_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::NotUniquePrimaryKeysUpperCamelCase;
                 let not_unique_primary_keys_snake_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_token_stream();
                 let field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1328,8 +1328,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     //todo maybe instead primary key put upper camel case RustSqlxMapToPostgresTypeVariant variant
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream();
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream();
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientUpperCamelCase;
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamedUpperCamelCase;
     let (
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream
@@ -1337,7 +1337,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError, //todo - is it right status code for this case?
-                &proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![(
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
@@ -1346,7 +1346,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )],
             ),
             {
-                let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream();
+                let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerUpperCamelCase;
                 let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case_token_stream();
                 let field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1367,7 +1367,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream
      ) = {
-        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream();
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientManyUpperCamelCase;
         let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream();
         (
             {
@@ -1382,7 +1382,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             },
             {
-                let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream();
+                let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientManyUpperCamelCase;
                 let field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
                     line!(),
@@ -1535,7 +1535,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                &proc_macro_helpers::naming_conventions::no_payload_fields_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::NoPayloadFieldsUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1546,7 +1546,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ]
             ),
             {
-                let no_payload_fields_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::no_payload_fields_upper_camel_case_token_stream();
+                let no_payload_fields_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::NoPayloadFieldsUpperCamelCase;
                 let no_payload_fields_snake_case_token_stream = proc_macro_helpers::naming_conventions::no_payload_fields_snake_case_token_stream();
                 let no_payload_fields_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                     &format!(
@@ -1575,7 +1575,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let no_payload_parameters_syn_variant = {
         crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &proc_macro_helpers::naming_conventions::no_payload_parameters_upper_camel_case_stringified(),
+            &proc_macro_helpers::naming_conventions::NoPayloadParametersUpperCamelCase.to_string(),
             &code_occurence_field,
             vec![
                 (
@@ -1680,8 +1680,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         naming_constants::UnnestSnakeCase;
     let api_request_unexpected_error_module_path_token_stream =
         quote::quote! { crate::common::api_request_unexpected_error };
-    let expected_type_upper_camel_case_token_stream =
-        proc_macro_helpers::naming_conventions::expected_type_upper_camel_case_token_stream();
+    let expected_type_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::ExpectedTypeUpperCamelCase;
     let expected_type_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::expected_type_snake_case_token_stream();
     //todo make crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
@@ -1714,7 +1713,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
         )
     };
-    let unexpected_status_code_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::unexpected_status_code_upper_camel_case_token_stream();
+    let unexpected_status_code_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::UnexpectedStatusCodeUpperCamelCase;
     let status_code_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::status_code_snake_case_token_stream();
     let headers_snake_case_token_stream =
@@ -1763,7 +1762,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                &proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::FailedToGetResponseTextUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -1786,7 +1785,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // }
             ,
             {
-                let failed_to_get_response_text_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_token_stream();
+                let failed_to_get_response_text_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::FailedToGetResponseTextUpperCamelCase;
                 let reqwest_snake_case_token_stream = naming_constants::ReqwestSnakeCase;
                 let field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1809,7 +1808,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         deserialize_response_declaration_token_stream,
         deserialize_response_initialization_token_stream,
     ) = {
-        let deserialize_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::deserialize_response_upper_camel_case_token_stream();
+        let deserialize_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::DeserializeResponseUpperCamelCase;
         let serde_snake_case_token_stream = naming_constants::SerdeSnakeCase;
         let field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
@@ -1947,7 +1946,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream = quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>};
     let std_vec_vec_struct_options_ident_token_stream = quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>};
     //todo reuse naming
-    let not_unique_column_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_column_upper_camel_case_token_stream();
+    let not_unique_column_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::NotUniqueColumnUpperCamelCase;
     let not_unique_column_snake_case_token_stream = proc_macro_helpers::naming_conventions::not_unique_column_snake_case_token_stream();
     let not_unique_column_variant_token_stream = quote::quote!{
         #not_unique_column_upper_camel_case_token_stream {
@@ -1966,7 +1965,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_response_response_token_stream = quote::quote!{axum::response::Response};
     let into_response_snake_case_token_stream = proc_macro_helpers::naming_conventions::into_response_snake_case_token_stream();
     let serde_json_to_string_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-        &proc_macro_helpers::naming_conventions::serde_json_to_string_upper_camel_case_stringified(),
+        &proc_macro_helpers::naming_conventions::SerdeJsonToStringUpperCamelCase.to_string(),
         &code_occurence_field,
         vec![
             (
@@ -1980,7 +1979,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]
     );
     let failed_to_get_response_text_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-        &proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_stringified(),
+        &proc_macro_helpers::naming_conventions::FailedToGetResponseTextUpperCamelCase.to_string(),
         &code_occurence_field,
         vec![
             (
@@ -2014,7 +2013,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         deserialize_response_syn_variant_initialization_token_stream
     ) = {
         let serde_snake_case_token_stream = naming_constants::SerdeSnakeCase;
-        let deserialize_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::deserialize_response_upper_camel_case_token_stream();
+        let deserialize_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::DeserializeResponseUpperCamelCase;
         let field_code_occurence_new_e04ccb06_5ef1_4e32_82c7_a0aa1e48e5ad_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
@@ -2023,7 +2022,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                &proc_macro_helpers::naming_conventions::deserialize_response_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::DeserializeResponseUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -2091,7 +2090,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]
     };
     let (check_body_size_syn_variant, check_body_size_syn_variant_initialization_token_stream) = {
-        let check_body_size_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::check_body_size_upper_camel_case_token_stream();
+        let check_body_size_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::CheckBodySizeUpperCamelCase;
         let check_body_size_snake_case_token_stream = proc_macro_helpers::naming_conventions::check_body_size_snake_case_token_stream();
         let field_code_occurence_new_1b7ff451_4836_40a6_a477_00c30fa61894_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
@@ -2102,7 +2101,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                &proc_macro_helpers::naming_conventions::check_body_size_upper_camel_case_stringified(),
+                &proc_macro_helpers::naming_conventions::CheckBodySizeUpperCamelCase.to_string(),
                 &code_occurence_field,
                 vec![
                     (
@@ -2126,7 +2125,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_additional_syn_variants: std::vec::Vec<syn::Variant> = vec![
         crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &proc_macro_helpers::naming_conventions::check_commit_upper_camel_case_stringified(),
+            &proc_macro_helpers::naming_conventions::CheckCommitUpperCamelCase.to_string(),
             &code_occurence_field,
             vec![
                 (
@@ -8064,8 +8063,8 @@ fn generate_http_request_many_token_stream(
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
     commit_header_addition_token_stream: &proc_macro2::TokenStream,
     content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
-    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream: &proc_macro2::TokenStream,
-    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream: &proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamedUpperCamelCase,
+    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream: &proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientUpperCamelCase,
     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream: &proc_macro2::TokenStream,
     table_name_stringified: &str,
     operation: &Operation,
@@ -8101,8 +8100,7 @@ fn generate_http_request_many_token_stream(
         type_variants_from_request_response_syn_variants.len();
     let code_occurence_snake_case_stringified =
         proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
-    let code_occurence_upper_camel_case_stringified =
-        proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
+    let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceUpperCamelCase;
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
     let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
     let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);

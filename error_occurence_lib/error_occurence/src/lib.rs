@@ -26,7 +26,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let ident_with_serialize_deserialize_token_stream = {
         let value = format!(
             "{ident}{}",
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value
         .parse::<proc_macro2::TokenStream>()
@@ -443,7 +443,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let field_type = &fields.iter().next().expect("no first field type").ty;
                                 quote::quote!{#field_type}.to_string()
                             },
-                            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+                            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
                         );
                         value
                         .parse::<proc_macro2::TokenStream>()

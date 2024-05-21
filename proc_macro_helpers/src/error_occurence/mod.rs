@@ -202,7 +202,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                             let element_type = &element.ty;
                             quote::quote!{#element_type}
                         },
-                        crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+                        crate::naming_conventions::WithSerializeDeserializeUpperCamelCase
                     );
                     value
                     .parse::<proc_macro2::TokenStream>()
@@ -256,7 +256,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                             let first_arg = args.iter().next().expect("args.iter().next() is None");
                             quote::quote! {#first_arg}
                         },
-                        crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+                        crate::naming_conventions::WithSerializeDeserializeUpperCamelCase,
                     );
                     value
                     .parse::<proc_macro2::TokenStream>()
@@ -300,7 +300,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                     let value = format!(
                         "{}{}",
                         quote::quote! {#second_argument},
-                        crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+                        crate::naming_conventions::WithSerializeDeserializeUpperCamelCase,
                     );
                     value
                     .parse::<proc_macro2::TokenStream>()

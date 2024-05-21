@@ -250,9 +250,9 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
             .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         quote::quote!{
-            #pub_fn_upper_camel_case_stringified_token_stream
+            // #pub_fn_upper_camel_case_stringified_token_stream
             #pub_fn_snake_case_stringified_token_stream
-            #pub_fn_upper_camel_case_token_stream_token_stream
+            // #pub_fn_upper_camel_case_token_stream_token_stream
             #pub_fn_snake_case_token_stream_token_stream
             
             pub struct #phrase_part_upper_camel_case_upper_camel_case_token_stream;
