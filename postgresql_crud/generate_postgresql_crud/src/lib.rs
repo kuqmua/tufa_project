@@ -8078,23 +8078,31 @@ fn generate_http_request_many_token_stream(
     deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     desirable_upper_camel_case_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
-    let parameters_snake_case_token_stream =
-        naming_constants::ParametersSnakeCase;
-    let payload_snake_case_token_stream =
-        naming_constants::PayloadSnakeCase;
-    let operation_http_method_snake_case_token_stream =
-        proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(
-            &operation.http_method(),
-        );
+    let parameters_snake_case = naming_constants::ParametersSnakeCase;
+    let payload_snake_case = naming_constants::PayloadSnakeCase;
+    let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+    let payload_token_stream = {
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+        quote::quote! {
+            let #payload_snake_case = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case_token_stream(
+                #parameters_snake_case.#payload_snake_case,
+            )) {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_snake_case_token_stream) => {
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
+                }
+            };
+        }
+    };
+    let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(
+        &operation.http_method(),
+    );
     let url_handle_token_stream = proc_macro_helpers::naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, table_name_stringified);
     let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
     let operation_parameters_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
-    let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
-    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let type_variants_from_request_response_syn_variants_len =
-        type_variants_from_request_response_syn_variants.len();
-    let code_occurence_snake_case_stringified =
-        proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
+    let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
+    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceUpperCamelCase;
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
     let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
@@ -8215,16 +8223,9 @@ fn generate_http_request_many_token_stream(
         //
         pub async fn #try_operation_snake_case_token_stream(
             #server_location_name_token_stream: #str_ref_token_stream,//todo rename as endpoint location
-            #parameters_snake_case_token_stream: #operation_parameters_upper_camel_case_token_stream,
+            #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
         ) -> Result<std::vec::Vec<#primary_key_inner_type_token_stream>, #try_operation_error_named_upper_camel_case_token_stream> {
-            let #payload_snake_case_token_stream = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case_token_stream(
-                #parameters_snake_case_token_stream.#payload_snake_case_token_stream,
-            )) {
-                Ok(value) => value,
-                Err(#error_snake_case_token_stream) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
-                }
-            };
+            #payload_token_stream
             let url = format!(
                 #url_handle_token_stream,
                 #server_location_name_token_stream,
@@ -8233,7 +8234,7 @@ fn generate_http_request_many_token_stream(
                 .#operation_http_method_snake_case_token_stream(&url)
                 #commit_header_addition_token_stream
                 #content_type_application_json_header_addition_token_stream
-                .#body_snake_case_token_stream(#payload_snake_case_token_stream)
+                .#body_snake_case_token_stream(#payload_snake_case)
                 .send();
             let response = match future.await {
                 Ok(response) => response,
