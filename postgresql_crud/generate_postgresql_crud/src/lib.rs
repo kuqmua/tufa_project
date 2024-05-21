@@ -8682,31 +8682,53 @@ impl Operation {
         quote::quote!{std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>}
     }
     //
-        // ["self", "parameters"],
-        // ["self", "payload"],
-        // ["self", "payload", "with", "serialize", "deserialize"],
-        // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
-        // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload"],
-        // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload", "error", "named"],
-        // ["try", "self"],
-        // ["try", "self", "response", "variants"],
-        // ["self", "payload", "element", "with", "serialize", "deserialize"],
-        // ["self", "payload", "element"],
-        // ["self", "payload", "element", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
-        // ["self", "payload", "element", "try", "from", "self", "payload", "element", "with", "serialize", "deserialize", "error", "named"],
-        // ["try", "self", "error", "named"],
-        // ["try", "self", "request", "error"],
-        // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize", "error", "named"],
-        // ["try", "self", "with", "serialize", "deserialize"],
-        // ["tvfrr", "extraction", "logic", "try", "self"],
-        // ["try", "self", "generated", "route", "logic", "error", "named"],
-        // ["try", "self", "generated", "route", "logic", "desirable"],
-        // ["try", "self", "route", "logic"],
-        // ["try", "self", "route", "logic", "response"],
-        // ["try", "self", "route", "logic", "response", "variants"],
-        // ["try", "self", "route", "logic", "error", "named"],
-        // ["try", "self", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
-        // ["try", "self", "generated", "route", "logic", "error", "named", "with", "serialize", "deserialize"]
+    // pub trait TrySelfGeneratedRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseStringified {
+    //     fn try_self_generated_route_logic_error_named_with_serialize_deserialize_snake_case_stringified(
+    //         &self,
+    //     ) -> std::string::String;
+    // }
+    fn try_self_generated_route_logic_error_named_with_serialize_deserialize_snake_case_stringified(
+        &self,
+    ) -> std::string::String {
+        format!(
+            "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}",
+            <naming_constants::Try as naming_constants::Naming>::snake_case_stringified(),
+            proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(self),
+            <naming_constants::Generated as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Route as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Logic as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Error as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Named as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::With as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Serialize as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Deserialize as naming_constants::Naming>::snake_case_stringified()
+        )
+    }
+    // ["self", "parameters"],
+    // ["self", "payload"],
+    // ["self", "payload", "with", "serialize", "deserialize"],
+    // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
+    // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload"],
+    // ["self", "payload", "with", "serialize", "deserialize", "try", "from", "self", "payload", "error", "named"],
+    // ["try", "self"],
+    // ["try", "self", "response", "variants"],
+    // ["self", "payload", "element", "with", "serialize", "deserialize"],
+    // ["self", "payload", "element"],
+    // ["self", "payload", "element", "try", "from", "self", "payload", "with", "serialize", "deserialize"],
+    // ["self", "payload", "element", "try", "from", "self", "payload", "element", "with", "serialize", "deserialize", "error", "named"],
+    // ["try", "self", "error", "named"],
+    // ["try", "self", "request", "error"],
+    // ["self", "payload", "try", "from", "self", "payload", "with", "serialize", "deserialize", "error", "named"],
+    // ["try", "self", "with", "serialize", "deserialize"],
+    // ["tvfrr", "extraction", "logic", "try", "self"],
+    // ["try", "self", "generated", "route", "logic", "error", "named"],
+    // ["try", "self", "generated", "route", "logic", "desirable"],
+    // ["try", "self", "route", "logic"],
+    // ["try", "self", "route", "logic", "response"],
+    // ["try", "self", "route", "logic", "response", "variants"],
+    // ["try", "self", "route", "logic", "error", "named"],
+    // ["try", "self", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
+    // ["try", "self", "generated", "route", "logic", "error", "named", "with", "serialize", "deserialize"]
     //
 }
 
