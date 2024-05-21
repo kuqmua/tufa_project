@@ -964,7 +964,6 @@ fn common_specific_try_from_handle(
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "CommonSpecificTryFrom";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",

@@ -49,9 +49,6 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
     let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
     let into_serialize_deserialize_version_snake_case_token_stream = proc_macro_helpers::naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
-    let error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream = quote::quote!{
-        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash
-    };
     let generate_impl_std_fmt_display_token_stream = |ident_token_stream: &proc_macro2::TokenStream, content_token_stream: &proc_macro2::TokenStream|{
         quote::quote! {
             impl #std_fmt_display_token_stream for #ident_token_stream {
@@ -118,10 +115,6 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
-                                let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
-                                    &format!("{element_ident}:\n"),
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
-                                );
                                 match proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString |
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
@@ -132,7 +125,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                         quote::quote!{
                                             #element_ident.to_string().lines().fold(
-                                                std::string::String::new(),
+                                                #std_string_string_token_stream::new(),
                                                 |mut acc, element| {
                                                     acc.push_str(&format!("\n {element}"));
                                                     acc
@@ -143,13 +136,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
                                             #element_ident.iter().fold(
-                                                std::string::String::new(),
+                                                #std_string_string_token_stream::new(),
                                                 |mut acc, element| {
                                                     acc.push_str(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                         .lines()
                                                         .fold(
-                                                            std::string::String::new(), 
+                                                            #std_string_string_token_stream::new(), 
                                                             |mut acc, element| { 
                                                                 acc.push_str(&format!("\n {element}")); 
                                                                 acc 
@@ -164,10 +157,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                         quote::quote!{
                                             #element_ident.iter().fold(
-                                                std::string::String::new(),
+                                                #std_string_string_token_stream::new(),
                                                 |mut acc, element| {
                                                     acc.push_str(&element.to_string().lines().fold(
-                                                        std::string::String::new(),
+                                                        #std_string_string_token_stream::new(),
                                                         |mut acc, element| {
                                                             acc.push_str(&format!("\n {element}"));
                                                             acc
@@ -183,7 +176,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #element_ident
                                                 .iter()
                                                 .fold(
-                                                    std::string::String::new(), 
+                                                    #std_string_string_token_stream::new(), 
                                                     |mut acc, (key, value)| {
                                                         acc.push_str(
                                                             &format!(
@@ -201,12 +194,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #element_ident
                                                 .iter()
                                                 .fold(
-                                                    std::string::String::new(), 
+                                                    #std_string_string_token_stream::new(), 
                                                     |mut acc, (key, value)| {
                                                         acc.push_str(&format!(
                                                             "\n {key}: {}",
                                                             value.to_string().lines().fold(
-                                                                std::string::String::new(),
+                                                                #std_string_string_token_stream::new(),
                                                                 |mut acc, element| {
                                                                     acc.push_str(&format!("\n  {element}"));
                                                                     acc
@@ -369,7 +362,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream = {
                 quote::quote! {
                     impl error_occurence_lib::ToStdStringString for #ident_with_serialize_deserialize_token_stream {
-                        fn to_std_string_string(&self) -> std::string::String {
+                        fn to_std_string_string(&self) -> #std_string_string_token_stream {
                             format!("{self}")
                         }
                     }
@@ -384,7 +377,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         },
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
-            let generate_display_formatter_unnamed_token_stream = |ident_token_stream: &proc_macro2::TokenStream|{
+            let generate_display_formatter_unnamed_token_stream = ||{
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
@@ -400,7 +393,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
                 &{
-                    let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream(&quote::quote!{#ident});
+                    let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream();
                     quote::quote! {
                         write!(
                             formatter, 
@@ -463,7 +456,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
                 &ident_with_serialize_deserialize_token_stream,
                 &{
-                    let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream(&ident_with_serialize_deserialize_token_stream);
+                    let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream();
                     quote::quote! {
                         write!(
                             formatter, 
