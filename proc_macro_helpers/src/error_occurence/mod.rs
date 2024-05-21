@@ -179,7 +179,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
     };
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-        *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *crate::naming_conventions::code_occurence_snake_case_stringified()
+        *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *crate::naming_conventions::CodeOccurenceSnakeCase.to_string()
     ).map(|element|{
         let element_ident = element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
         let element_type_token_stream = {
@@ -315,7 +315,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             #element_ident: #element_type_with_serialize_deserialize_token_stream,
         }
     });
-    let code_occurence_snake_case_token_stream = crate::naming_conventions::code_occurence_snake_case_token_stream();
+    let code_occurence_snake_case_token_stream = crate::naming_conventions::CodeOccurenceSnakeCase;
     quote::quote! {
         #element_ident {
             #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream)*

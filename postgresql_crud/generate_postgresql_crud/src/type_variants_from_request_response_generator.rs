@@ -19,7 +19,7 @@
 //     let code_occurence_upper_camel_case_stringified =
 //         proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
 //     let code_occurence_snake_case_stringified =
-//         proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
+//         proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
 //     let desirable_upper_camel_case_token_stream =
 //         <naming_constants::Desirable as naming_constants::Naming>::upper_camel_case_token_stream();
 //     let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);

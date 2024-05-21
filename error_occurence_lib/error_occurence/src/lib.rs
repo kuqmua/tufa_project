@@ -46,9 +46,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     );
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
-    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
-    let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
-    let into_serialize_deserialize_version_snake_case_token_stream = proc_macro_helpers::naming_conventions::into_serialize_deserialize_version_snake_case_token_stream();
+    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
+    let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
+    let into_serialize_deserialize_version_snake_case_token_stream = proc_macro_helpers::naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream = quote::quote!{
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash
     };
@@ -99,14 +99,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 );
                             };
                             let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-                                *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified
+                                *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()
                             ).map(|element|{
                                 let element_ident = &element.ident;
                                 quote::quote! {#element_ident,}
                             });
                             let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
                                 &fields.iter().filter(|element|
-                                    *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified
+                                    *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()
                                 ).fold(std::string::String::new(), |mut acc, element| {
                                     let element_ident = &element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
                                     acc.push_str(&format!("{element_ident}: {{}}\n"));
@@ -115,7 +115,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 &proc_macro_name_upper_camel_case_ident_stringified,
                             );
                             let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-                                *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified
+                                *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
                                 let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
@@ -283,7 +283,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_token_stream = fields.iter().map(|element|&element.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-                        *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified
+                        *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()
                     ).map(|element|{
                         let element_ident = &element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
                         let conversion_token_stream = match proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {

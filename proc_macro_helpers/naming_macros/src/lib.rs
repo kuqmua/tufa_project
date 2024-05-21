@@ -251,9 +251,9 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
         };
         quote::quote!{
             // #pub_fn_upper_camel_case_stringified_token_stream
-            #pub_fn_snake_case_stringified_token_stream
+            // #pub_fn_snake_case_stringified_token_stream
             // #pub_fn_upper_camel_case_token_stream_token_stream
-            #pub_fn_snake_case_token_stream_token_stream
+            // #pub_fn_snake_case_token_stream_token_stream
             
             pub struct #phrase_part_upper_camel_case_upper_camel_case_token_stream;
             impl std::fmt::Display for #phrase_part_upper_camel_case_upper_camel_case_token_stream {
