@@ -110,54 +110,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ]
 );
 
-pub trait TrySelfResponseVariantsStatusCodeStringified {
-    fn try_self_response_variants_status_code_stringified(
-        &self,
-        status_code: &crate::status_code::StatusCode,
-    ) -> std::string::String;
-}
-
-impl<T> TrySelfResponseVariantsStatusCodeStringified for T
-where
-    T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
-{
-    fn try_self_response_variants_status_code_stringified(
-        &self,
-        status_code: &crate::status_code::StatusCode,
-    ) -> std::string::String {
-        format!(
-            "{}{}{}{}{}",
-            <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
-            self.to_upper_camel_case_stringified(),
-            <naming_constants::Response as naming_constants::Naming>::upper_camel_case_stringified(),
-            <naming_constants::Variants as naming_constants::Naming>::upper_camel_case_stringified(),
-            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(status_code),
-        )
-    }
-}
-
-pub trait TrySelfResponseVariantsStatusCodeTokenStream {
-    fn try_self_response_variants_status_code_token_stream(
-        &self,
-        status_code: &crate::status_code::StatusCode,
-    ) -> proc_macro2::TokenStream;
-}
-
-impl<T> TrySelfResponseVariantsStatusCodeTokenStream for T
-where
-    T: TrySelfResponseVariantsStatusCodeStringified,
-{
-    fn try_self_response_variants_status_code_token_stream(
-        &self,
-        status_code: &crate::status_code::StatusCode,
-    ) -> proc_macro2::TokenStream {
-        let value =
-            self.try_self_response_variants_status_code_stringified(status_code);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    }
-}
-
 pub trait TrySelfSnakeCasePrintlnStringified {
     fn try_self_snake_case_println_stringified(
         &self,
