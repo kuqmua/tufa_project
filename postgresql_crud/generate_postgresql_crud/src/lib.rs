@@ -234,24 +234,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .collect::<std::vec::Vec<SynFieldWithAdditionalInfo<'_>>>();
     let fields_named_len = fields_named.len();
     assert!(fields_named_len > 1, "{proc_macro_name_upper_camel_case_ident_stringified} false = fields_named.len() > 1");
-    let field_named_len_token_stream = {
-        let value = fields_named_len.to_string();
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    // let field_named_len_token_stream = {
+    //     let value = fields_named_len.to_string();
+    //     value.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
     let fields_named_excluding_primary_key_len = fields_named_excluding_primary_key.len();
     let is_fields_named_excluding_primary_key_len_equals_one = fields_named_excluding_primary_key_len == 1;
-    let fields_named_from_or_try_from = {
-        let mut value = postgresql_crud_common::FromOrTryFrom::From;
-        for element in &fields_named {
-            let from_or_try_from = element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
-            if from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-                value = from_or_try_from;
-                break;
-            }
-        }
-        value
-    };
+    // let fields_named_from_or_try_from = {
+    //     let mut value = postgresql_crud_common::FromOrTryFrom::From;
+    //     for element in &fields_named {
+    //         let from_or_try_from = element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
+    //         if from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
+    //             value = from_or_try_from;
+    //             break;
+    //         }
+    //     }
+    //     value
+    // };
     let primary_key_from_or_try_from = primary_key_syn_field.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
     let fields_named_excluding_primary_key_from_or_try_from = {
         let mut value = postgresql_crud_common::FromOrTryFrom::From;
@@ -270,9 +270,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_common::error_occurence_lib_error_occurence_token_stream();
     let error_snake_case_token_stream = naming_constants::ErrorSnakeCase;
     let app_state_snake_case_token_stream = proc_macro_helpers::naming_conventions::AppStateSnakeCase;
-    let eprintln_error_token_stream = quote::quote! {
-        eprintln!("{error}");
-    };
+    let eprintln_error_token_stream = quote::quote!{eprintln!("{error}");};
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
@@ -657,14 +655,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let order_by_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::OrderByUpperCamelCase;
     let postgresql_crud_order_by_token_stream = quote::quote! {postgresql_crud::#order_by_upper_camel_case_token_stream};
     let postgresql_crud_order_token_stream = quote::quote! {postgresql_crud::Order};
-    let limit_snake_case_token_stream =
-        naming_constants::LimitSnakeCase;
-    let offset_snake_case_token_stream =
-        naming_constants::OffsetSnakeCase;
-    let order_snake_case_token_stream =
-        naming_constants::OrderSnakeCase;
-    let column_snake_case_token_stream =
-        naming_constants::ColumnSnakeCase;
+    let limit_snake_case_token_stream = naming_constants::LimitSnakeCase;
+    let offset_snake_case_token_stream = naming_constants::OffsetSnakeCase;
+    let order_snake_case_token_stream = naming_constants::OrderSnakeCase;
+    let column_snake_case_token_stream = naming_constants::ColumnSnakeCase;
     let allow_methods_token_stream = {
         let http_method_token_stream = quote::quote!{http::Method};
         quote::quote! {
@@ -2592,7 +2586,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     check_body_size: error,
                                     #field_code_occurence_new_feac0c87_10ed_4115_ab71_81e15f09a860_token_stream,
                                 };
-                                eprintln!("{error}");
+                                #eprintln_error_token_stream
                                 return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                     status_code,
                                     body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
@@ -2613,7 +2607,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     check_commit: error,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 };
-                                eprintln!("{error}");
+                                #eprintln_error_token_stream
                                 return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                     status_code,
                                     body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
@@ -2643,7 +2637,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case_token_stream,
                                             #field_code_occurence_new_91c61a45_6c97_47cc_ac96_65bdcfec0494_token_stream,
                                         };
-                                        eprintln!("{error}");
+                                        #eprintln_error_token_stream
                                         return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                             #status_code_snake_case_token_stream: axum::http::StatusCode::CREATED,
                                             #body_snake_case_token_stream: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream),
@@ -2661,7 +2655,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
                                 Err(#error_snake_case_token_stream) => {
                                     let #error_snake_case_token_stream = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#json_syn_variant_initialization_token_stream;
-                                    eprintln!("{error}");
+                                    #eprintln_error_token_stream
                                     return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                         #status_code_snake_case_token_stream: axum::http::StatusCode::CREATED,
                                         #body_snake_case_token_stream: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(#error_snake_case_token_stream),
@@ -2788,7 +2782,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         let mut rows = #binded_query_snake_case_token_stream.fetch(#pg_connection_snake_case_token_stream.as_mut());
                         let mut vec_values = std::vec::Vec::new();
-                        while let Some(row) = {
+                        while let Some(value) = {
                             match {
                                 use futures::TryStreamExt;
                                 rows.try_next()
@@ -2798,7 +2792,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Ok(value) => value,
                                 Err(error) => {
                                     let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_initialization_token_stream;
-                                    eprintln!("{error}");
+                                    #eprintln_error_token_stream
                                     return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                         status_code: axum::http::StatusCode::CREATED,//todo
                                         body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(error),
@@ -2806,10 +2800,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         } {
-                            match {
-                                use sqlx::Row;
-                                row.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
-                            } {
+                            match sqlx::Row::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
                                 Ok(value) => {
                                     vec_values.push(
                                         #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
@@ -2819,7 +2810,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                                 Err(error) => {
                                     let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_initialization_token_stream;
-                                    eprintln!("{error}");
+                                    #eprintln_error_token_stream
                                     return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                         status_code: axum::http::StatusCode::CREATED,//todo
                                         body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
