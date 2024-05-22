@@ -2955,9 +2955,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #try_operation_error_named_token_stream
                     #http_request_token_stream
                 },
-                quote::quote! {
-                    
-                },
+                quote::quote! {},
                 // http_request_test_token_stream,
             )
         };
@@ -2985,13 +2983,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // // #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream
-                // // #try_operation_error_with_middleware_error_variants_token_stream
                 #try_operation_route_logic_token_stream
                 #http_request_token_stream
-                // #route_handler_token_stream
-                
-                // // #common_middlewares_error_syn_variants_from_impls
             },
             // http_request_test_token_stream,
             quote::quote! {}
