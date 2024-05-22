@@ -1,6 +1,6 @@
 pub(crate) fn acquire_pool_and_connection(
     pg_connection_token_stream: &proc_macro_helpers::naming_conventions::PgConnectionSnakeCase,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
+    // proc_macro_name_upper_camel_case_ident_stringified: &str,
     try_operation_route_logic_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     try_operation_route_logic_response_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     try_operation_route_logic_response_variants_upper_camel_case_token_stream: &proc_macro2::TokenStream,

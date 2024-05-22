@@ -2779,7 +2779,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{binded_query_token_stream}");
                 let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
                     &pg_connection_snake_case_token_stream,
-                    &proc_macro_name_upper_camel_case_ident_stringified,
+                    // &proc_macro_name_upper_camel_case_ident_stringified,
                     &try_operation_route_logic_error_named_upper_camel_case_token_stream,
                     &try_operation_route_logic_response_upper_camel_case_token_stream,
                     &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
@@ -8095,10 +8095,83 @@ fn generate_http_request_many_token_stream(
             };
         }
     };
-    let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(
-        &operation.http_method(),
-    );
-    let url_handle_token_stream = proc_macro_helpers::naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, table_name_stringified);
+    let url_snake_case = naming_constants::UrlSnakeCase;
+    let url_token_stream = {
+        let url_handle_token_stream = proc_macro_helpers::naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, table_name_stringified);
+        quote::quote! {
+            let #url_snake_case = format!(
+                #url_handle_token_stream,
+                #server_location_name_token_stream,
+            );
+        }
+    };
+    let future_snake_case = naming_constants::FutureSnakeCase;
+    let future_token_stream = {
+        let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(
+            &operation.http_method(),
+        );
+        let body_snake_case_token_stream = naming_constants::BodySnakeCase;
+        quote::quote! {
+            let #future_snake_case = #reqwest_client_new_token_stream
+                .#operation_http_method_snake_case_token_stream(&#url_snake_case)
+                #commit_header_addition_token_stream
+                #content_type_application_json_header_addition_token_stream
+                .#body_snake_case_token_stream(#payload_snake_case)
+                .send();
+        }
+    };
+    let response_snake_case = naming_constants::ResponseSnakeCase;
+    let response_token_stream = {
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        quote::quote! {
+            let #response_snake_case = match #future_snake_case.await {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_snake_case_token_stream) => {
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_initialization_token_stream);
+                }
+            };
+        }
+    };
+    let status_code_snake_case = proc_macro_helpers::naming_conventions::StatusCodeSnakeCase;
+    let status_code_token_stream = {
+        quote::quote! {
+            let #status_code_snake_case = #response_snake_case.status();
+        }
+    };
+    let headers_snake_case = naming_constants::HeadersSnakeCase;
+    let headers_token_stream = {
+        quote::quote! {
+            let #headers_snake_case = #response_snake_case.headers().clone();
+        }
+    };
+    let response_text_snake_case = proc_macro_helpers::naming_conventions::ResponseTextSnakeCase;
+    let response_text_token_stream = {
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        let error_snake_case = naming_constants::ErrorSnakeCase;
+        quote::quote! {
+            let #response_text_snake_case = match #response_snake_case.text().await {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_snake_case) => {
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
+                }
+            };
+        }
+    };
+    let expected_response_snake_case = proc_macro_helpers::naming_conventions::ExpectedResponseSnakeCase;
+    let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+    let expected_response_token_stream = {
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        let error_snake_case = naming_constants::ErrorSnakeCase;
+        quote::quote! {
+            let #expected_response_snake_case = match serde_json::from_str::<#try_operation_route_logic_response_variants_upper_camel_case_token_stream>(&#response_text_snake_case) {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_snake_case) => {
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
+                }
+            };
+        }
+    };
+
     let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
     let operation_parameters_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
     let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
@@ -8106,7 +8179,6 @@ fn generate_http_request_many_token_stream(
     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceUpperCamelCase;
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
     let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
-    let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
     let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     let desirable_enum_name = {
@@ -8152,7 +8224,7 @@ fn generate_http_request_many_token_stream(
             }
         },
     };
-    let body_snake_case_token_stream = naming_constants::BodySnakeCase;
+    
     let field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
@@ -8226,36 +8298,14 @@ fn generate_http_request_many_token_stream(
             #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
         ) -> Result<std::vec::Vec<#primary_key_inner_type_token_stream>, #try_operation_error_named_upper_camel_case_token_stream> {
             #payload_token_stream
-            let url = format!(
-                #url_handle_token_stream,
-                #server_location_name_token_stream,
-            );
-            let future = #reqwest_client_new_token_stream
-                .#operation_http_method_snake_case_token_stream(&url)
-                #commit_header_addition_token_stream
-                #content_type_application_json_header_addition_token_stream
-                .#body_snake_case_token_stream(#payload_snake_case)
-                .send();
-            let response = match future.await {
-                Ok(response) => response,
-                Err(#error_snake_case_token_stream) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_initialization_token_stream);
-                }
-            };
-            let status_code = response.status();
-            let headers = response.headers().clone();
-            let response_text = match response.text().await {
-                Ok(response_text) => response_text,
-                Err(error) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
-                }
-            };
-            let expected_response = match serde_json::from_str::<#try_operation_route_logic_response_variants_upper_camel_case_token_stream>(&response_text) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
-                }
-            };
+            #url_token_stream
+            #future_token_stream
+            #response_token_stream
+            #status_code_token_stream
+            #headers_token_stream
+            #response_text_token_stream
+            #expected_response_token_stream
+        
             let try_create_many_route_logic_error_named_with_serialize_deserialize = match expected_response {
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case_token_stream(value) => {
                     return Ok(

@@ -76,7 +76,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["check", "commit", "error", "named"],
         ["check", "body", "size"],
         ["source", "handle"],
-        ["column", "decode", "index"]
+        ["column", "decode", "index"],
+        ["expected", "response"]
     ]
 );
 

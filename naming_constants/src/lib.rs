@@ -170,7 +170,9 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "axum",
     "check",
     "size",
-    "handle"
+    "handle",
+    "url",
+    "future"
 );
 
 #[derive(Debug, Clone, Copy)]
