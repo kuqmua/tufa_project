@@ -2800,7 +2800,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         } {
-                            match sqlx::Row::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
+                            match #sqlx_row_token_stream::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
                                 Ok(value) => {
                                     vec_values.push(
                                         #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
@@ -3276,10 +3276,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 };
     //                 #acquire_pool_and_connection_token_stream
     //                 match #binded_query_name_token_stream.fetch_one(#pg_connection_token_stream.as_mut()).await {
-    //                     Ok(value) => match {
-    //                         use #sqlx_row_token_stream;
-    //                         value.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
-    //                     } {
+    //                     Ok(value) => match #sqlx_row_token_stream::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
     //                         Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(
     //                             #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
     //                                 #primary_key_inner_type_token_stream(value)
@@ -6173,10 +6170,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     .fetch_one(#pg_connection_token_stream.as_mut())
     //                     .await
     //                 {
-    //                     Ok(value) => match {
-    //                         use #sqlx_row_token_stream;
-    //                         value.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
-    //                     } {
+    //                     Ok(value) => #sqlx_row_token_stream::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
     //                         Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(
     //                             #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
     //                                 #primary_key_inner_type_token_stream(value)
@@ -7082,10 +7076,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                             }
     //                         }
     //                     } {
-    //                         match {
-    //                             use #sqlx_row_token_stream;
-    //                             row.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
-    //                         } {
+    //                         match #sqlx_row_token_stream::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
     //                             Ok(value) => {
     //                                 vec_values.push(
     //                                     #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
@@ -7558,10 +7549,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     .fetch_one(#pg_connection_token_stream.as_mut())
     //                     .await
     //                 {
-    //                     Ok(value) => match {
-    //                         use #sqlx_row_token_stream;
-    //                         value.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
-    //                     } {
+    //                     Ok(value) => #sqlx_row_token_stream::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
     //                         Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(
     //                             #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
     //                                 #primary_key_inner_type_token_stream(value)
