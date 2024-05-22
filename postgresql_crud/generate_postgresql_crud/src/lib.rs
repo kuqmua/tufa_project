@@ -2202,7 +2202,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &full_additional_http_status_codes_error_variants,
             )
         };
-        let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr201Created;
+        let desirable_status_code = operation.desirable_status_code();
         let unique_status_codes = generate_unique_status_codes(
             desirable_status_code,
             &type_variants_from_request_response_syn_variants,
@@ -3068,7 +3068,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &full_additional_http_status_codes_error_variants,
     //         )
     //     };
-    //     let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr201Created;
+    //     let desirable_status_code = operation.desirable_status_code();
     //     let unique_status_codes = generate_unique_status_codes(
     //         desirable_status_code,
     //         &type_variants_from_request_response_syn_variants,
@@ -3564,7 +3564,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &full_additional_http_status_codes_error_variants,
     //         )
     //     };
-    //     let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
+    //     let desirable_status_code = operation.desirable_status_code();
     //     let unique_status_codes = generate_unique_status_codes(
     //         desirable_status_code,
     //         &type_variants_from_request_response_syn_variants,
@@ -4485,7 +4485,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &full_additional_http_status_codes_error_variants,
     //         )
     //     };
-    //     let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
+    //     let desirable_status_code = operation.desirable_status_code();
     //     let unique_status_codes = generate_unique_status_codes(
     //         desirable_status_code,
     //         &type_variants_from_request_response_syn_variants,
@@ -5025,7 +5025,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &full_additional_http_status_codes_error_variants,
     //         )
     //     };
-    //     let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
+    //     let desirable_status_code = operation.desirable_status_code();
     //     let unique_status_codes = generate_unique_status_codes(
     //         desirable_status_code,
     //         &type_variants_from_request_response_syn_variants,
@@ -5809,7 +5809,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &full_additional_http_status_codes_error_variants,
     //         )
     //     };
-    //     let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
+    //     let desirable_status_code = operation.desirable_status_code();
     //     let unique_status_codes = generate_unique_status_codes(
     //         desirable_status_code,
     //         &type_variants_from_request_response_syn_variants,
@@ -6468,7 +6468,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &full_additional_http_status_codes_error_variants,
     //         )
     //     };
-    //     let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
+    //     let desirable_status_code = operation.desirable_status_code();
     //     let unique_status_codes = generate_unique_status_codes(
     //         desirable_status_code,
     //         &type_variants_from_request_response_syn_variants,
@@ -7374,7 +7374,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &full_additional_http_status_codes_error_variants,
     //         )
     //     };
-    //     let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
+    //     let desirable_status_code = operation.desirable_status_code();
     //     let unique_status_codes = generate_unique_status_codes(
     //         desirable_status_code,
     //         &type_variants_from_request_response_syn_variants,
@@ -8669,6 +8669,18 @@ impl Operation {
             }
         );
         handle
+    }
+    const fn desirable_status_code(&self) -> proc_macro_helpers::status_code::StatusCode {
+        match self {
+            Self::CreateMany |
+            Self::CreateOne => proc_macro_helpers::status_code::StatusCode::Tvfrr201Created,
+            Self::ReadMany |
+            Self::ReadOne |
+            Self::UpdateMany |
+            Self::UpdateOne |
+            Self::DeleteMany |
+            Self::DeleteOne => proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok,
+        }
     }
 }
 
