@@ -1030,7 +1030,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
                     &proc_macro_helpers::naming_conventions::BindQuerySnakeCase.to_string(),
                     proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,"TryGenerateBindIncrementsErrorNamed"],//todo
+                        &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, &proc_macro_helpers::naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 )]

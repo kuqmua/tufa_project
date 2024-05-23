@@ -6668,8 +6668,8 @@ pub enum TryGenerateBindIncrementsErrorNamed {
     },
 }
 pub trait BindQuery {
-    fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed>;
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed>;
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
