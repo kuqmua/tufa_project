@@ -513,15 +513,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_select_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let options_try_from_sqlx_row_snake_case = proc_macro_helpers::naming_conventions::OptionsTryFromSqlxRowSnakeCase;
-    let postgresql_crud_try_generate_bind_increments_error_named_name_token_stream = {
-        let value = format!(
-            "{}::{}",
-            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
-            proc_macro_helpers::naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let wrapper_vec_column_upper_camel_case = proc_macro_helpers::naming_conventions::WrapperVecColumnUpperCamelCase;
     let wrapper_vec_column_snake_case = proc_macro_helpers::naming_conventions::WrapperVecColumnSnakeCase;
     let options_try_from_sqlx_row_token_stream = {

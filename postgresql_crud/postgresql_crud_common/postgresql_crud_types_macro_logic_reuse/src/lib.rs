@@ -519,6 +519,7 @@ fn common_handle(
         proc_macro2::TokenStream::new()
     };
     let try_generate_bind_increments_error_named_upper_camel_case = proc_macro_helpers::naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let checked_add_upper_camel_case = proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase;
     let gen = quote::quote!{
         impl std::fmt::Display for #ident {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -590,7 +591,7 @@ fn common_handle(
         }
         impl BindQuery for #ident {
             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), #try_generate_bind_increments_error_named_upper_camel_case> {
-                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                     checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }), |incr| {
@@ -606,7 +607,7 @@ fn common_handle(
                         increments.push_str(&format!("${increment}"));
                     }
                     None => {
-                        return Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                        return Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                             checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -631,7 +632,7 @@ fn common_handle(
         }
         impl BindQuery for #where_ident_token_stream {
             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), #try_generate_bind_increments_error_named_upper_camel_case> {
-                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                     checked_add: std::string::String::from("checked_add is None"),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }), |incr| {
@@ -643,7 +644,7 @@ fn common_handle(
                 std::string::String,
                 #try_generate_bind_increments_error_named_upper_camel_case,
             > {
-                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                     checked_add: std::string::String::from("checked_add is None"),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }), |incr| {
@@ -727,7 +728,7 @@ fn common_handle(
                         *increment = incr;
                         Ok(())
                     }
-                    None => Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                    None => Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                         checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
@@ -744,7 +745,7 @@ fn common_handle(
                         increments.push_str(&format!("${increment}"));
                     }
                     None => {
-                        return Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                        return Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                             checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -779,7 +780,7 @@ fn common_handle(
                 &self,
                 increment: &mut std::primitive::u64,
             ) -> Result<(), #try_generate_bind_increments_error_named_upper_camel_case> {
-                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                     checked_add: std::string::String::from("checked_add is None"),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }), |incr| {
@@ -796,7 +797,7 @@ fn common_handle(
                         *increment = incr;
                         Ok(format!("${increment}"))
                     }
-                    None => Err(#try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd {
+                    None => Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                         checked_add: std::string::String::from("checked_add is None"),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
