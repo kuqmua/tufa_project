@@ -270,7 +270,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_common::error_occurence_lib_error_occurence_token_stream();
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let app_state_snake_case_token_stream = proc_macro_helpers::naming_conventions::AppStateSnakeCase;
-    let eprintln_error_token_stream = quote::quote!{eprintln!("{error}");};
+    let eprintln_error_token_stream = {
+        let error_snake_case_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+            &format!("{{{error_snake_case}}}"),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{eprintln!(#error_snake_case_quotes_token_stream);}
+    };
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
