@@ -296,11 +296,12 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let eo_error_occurence_attribute_token_stream = proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence.to_attribute_view_token_stream();
     let gen = quote::quote!{
         #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
         pub enum #where_ident_with_serialize_deserialize_error_named_token_stream {
             #ident {
-                #[eo_error_occurence]
+                #eo_error_occurence_attribute_token_stream
                 #ident_snake_case_token_stream: #ident_with_serialize_deserialize_error_named_token_stream,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence//todo reuse path to error_occurence_lib
             },
@@ -326,7 +327,7 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
         pub enum #where_std_option_option_ident_with_serialize_deserialize_error_named_token_stream {
             #ident {
-                #[eo_error_occurence]
+                #eo_error_occurence_attribute_token_stream
                 #ident_snake_case_token_stream: #ident_with_serialize_deserialize_error_named_token_stream,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence//todo reuse path to error_occurence_lib
             },
