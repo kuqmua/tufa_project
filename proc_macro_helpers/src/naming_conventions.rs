@@ -104,7 +104,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
         ["try", "self", "generated", "route", "logic", "error", "named"],
         ["try", "self", "generated", "route", "logic", "desirable"],
         ["try", "self", "route", "logic"],
-        ["try", "self", "route", "logic", "response"],
         ["try", "self", "route", "logic", "response", "variants"],
         ["try", "self", "route", "logic", "error", "named"],
         ["try", "self", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
