@@ -1,4 +1,3 @@
-pub use generate_postgresql_crud::additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::create_many_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::create_one_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::delete_many_additional_http_status_codes_error_variants;
@@ -7,6 +6,7 @@ pub use generate_postgresql_crud::read_many_additional_http_status_codes_error_v
 pub use generate_postgresql_crud::read_one_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::update_many_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::update_one_additional_http_status_codes_error_variants;
+pub use generate_postgresql_crud::common_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 pub use postgresql_crud_common::NumBigintBigIntWithSerializeDeserialize;

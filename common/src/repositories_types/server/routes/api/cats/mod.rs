@@ -7,7 +7,7 @@
 #[postgresql_crud::update_many_additional_http_status_codes_error_variants{}]
 #[postgresql_crud::delete_one_additional_http_status_codes_error_variants{}]
 #[postgresql_crud::delete_many_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::additional_http_status_codes_error_variants{
+#[postgresql_crud::common_additional_http_status_codes_error_variants{
     enum AdditionalHttpStatusCodesErrorVariants {
         CheckCommit {
             #[eo_error_occurence]

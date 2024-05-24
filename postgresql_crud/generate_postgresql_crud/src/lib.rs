@@ -97,7 +97,7 @@ pub fn delete_many_additional_http_status_codes_error_variants(
 }
 
 #[proc_macro_attribute]
-pub fn additional_http_status_codes_error_variants(
+pub fn common_additional_http_status_codes_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
@@ -693,7 +693,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {pub use #inner_type_token_stream;}
     });
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
-    let additional_http_status_codes_error_variants_snake_case = proc_macro_helpers::naming_conventions::AdditionalHttpStatusCodesErrorVariantsSnakeCase;
+    let additional_http_status_codes_error_variants_snake_case = proc_macro_helpers::naming_conventions::CommonAdditionalHttpStatusCodesErrorVariantsSnakeCase;
     let common_middlewares_error_syn_variants = {
         let additional_http_status_codes_error_variant_path = format!("{}::{additional_http_status_codes_error_variants_snake_case}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE);
         let additional_http_status_codes_error_variants_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
