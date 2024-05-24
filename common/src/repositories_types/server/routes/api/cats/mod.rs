@@ -8,29 +8,13 @@
 #[postgresql_crud::delete_one_additional_http_status_codes_error_variants{}]
 #[postgresql_crud::delete_many_additional_http_status_codes_error_variants{}]
 #[postgresql_crud::additional_http_status_codes_error_variants{
-    // #[path(crate::server::extractors::commit_extractor::)]
-    // enum CommitExtractorCheckErrorNamed {
-    //     #[tvfrr_400_bad_request]
-    //     CommitExtractorNotEqual {
-    //         #[eo_to_std_string_string_serialize_deserialize]
-    //         commit_not_equal: std::string::String,
-    //         #[eo_to_std_string_string_serialize_deserialize]
-    //         commit_to_use: std::string::String,
-    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    //     },
-    //     #[tvfrr_400_bad_request]
-    //     CommitExtractorToStrConversion {
-    //         #[eo_to_std_string_string]
-    //         commit_to_str_conversion: http::header::ToStrError,
-    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    //     },
-    //     #[tvfrr_400_bad_request]
-    //     NoCommitExtractorHeader {
-    //         #[eo_to_std_string_string_serialize_deserialize]
-    //         no_commit_header: std::string::String,
-    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    //     },
-    // }
+    enum AdditionalHttpStatusCodesErrorVariants {
+        CheckCommit {
+            #[eo_error_occurence]
+            check_commit: route_validators::check_commit::CheckCommitErrorNamed,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        },
+    }
 }]
 pub struct Dog {
     pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,

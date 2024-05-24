@@ -695,14 +695,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
     let additional_http_status_codes_error_variants_snake_case = proc_macro_helpers::naming_conventions::AdditionalHttpStatusCodesErrorVariantsSnakeCase;
     let common_middlewares_error_syn_variants = {
-        let additional_http_status_codes_error_variant_path =
-            format!("{}::{additional_http_status_codes_error_variants_snake_case}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE);
-        let additional_http_status_codes_error_variants_attribute =
-            proc_macro_helpers::get_macro_attribute::get_macro_attribute(
-                &ast.attrs,
-                &additional_http_status_codes_error_variant_path,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        let additional_http_status_codes_error_variant_path = format!("{}::{additional_http_status_codes_error_variants_snake_case}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE);
+        let additional_http_status_codes_error_variants_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
+            &ast.attrs,
+            &additional_http_status_codes_error_variant_path,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
         if additional_http_status_codes_error_variants_attribute.path().segments.len() == 2 {
             let first_ident = &additional_http_status_codes_error_variants_attribute.path().segments.first().unwrap_or_else(|| {
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path().segments.get(0) is None")
@@ -718,9 +716,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         // println!("{additional_http_status_codes_error_variants_attribute:#?}");
         let additional_http_status_codes_error_variants_attribute_tokens_stringified = "{}".to_owned();//todo
-            // additional_http_status_codes_error_variants_attribute
-            //     .tokens
-            //     .to_string();
+        //
+          
+       
+        println!("{additional_http_status_codes_error_variants_attribute:#?}");
+
+        //
         let additional_http_status_codes_error_variants_attribute_tokens_stringified_len =
             additional_http_status_codes_error_variants_attribute_tokens_stringified.len();
         let additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified =
@@ -773,6 +774,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 acc
             })  
     };
+    // println!("{common_middlewares_error_syn_variants:#?}");
     let common_middlewares_error_syn_variants_len = common_middlewares_error_syn_variants.len();
     let extraction_result_snake_case = proc_macro_helpers::naming_conventions::ExtractionResultSnakeCase;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
