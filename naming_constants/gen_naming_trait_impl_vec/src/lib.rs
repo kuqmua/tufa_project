@@ -85,9 +85,10 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote!{#ident_upper_camel_case_token_stream}
                 }
             }
+            #[derive(Debug, Clone, Copy)]
             pub struct #ident_upper_camel_case_upper_camel_case_token_stream;
             impl std::fmt::Display for #ident_upper_camel_case_upper_camel_case_token_stream {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                     write!(formatter, #ident_upper_camel_case_quotes_token_stream)
                 }
             }
@@ -96,9 +97,10 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote!{#ident_upper_camel_case_token_stream}.to_tokens(tokens)
                 }
             }
+            #[derive(Debug, Clone, Copy)]
             pub struct #ident_snake_case_upper_camel_case_token_stream;
             impl std::fmt::Display for #ident_snake_case_upper_camel_case_token_stream {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                     write!(formatter, #ident_snake_case_quotes_token_stream)
                 }
             }

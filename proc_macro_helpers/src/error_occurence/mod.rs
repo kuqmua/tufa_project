@@ -142,8 +142,8 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     }
     let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
     {
-        let hashmap_upper_camel_case_stringified = <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified();
-        assert!(third_segment.ident == hashmap_upper_camel_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {hashmap_upper_camel_case_stringified} {}", third_segment.ident);
+        let hashmap_upper_camel_case = naming_constants::HashMapUpperCamelCase;
+        assert!(third_segment.ident == &hashmap_upper_camel_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {hashmap_upper_camel_case} {}", third_segment.ident);
     };
     let args = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
         args,

@@ -177,17 +177,41 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
 
 #[derive(Debug, Clone, Copy)]
 pub struct HashMap;
-impl Naming for HashMap {
-    fn upper_camel_case_stringified() -> &'static str {
-        "HashMap"
+// impl Naming for HashMap {
+//     fn upper_camel_case_stringified() -> &'static str {
+//         "HashMap"
+//     }
+//     fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+//         quote::quote! { HashMap }
+//     }
+//     fn snake_case_stringified() -> &'static str {
+//         "hashmap"
+//     }
+//     fn snake_case_token_stream() -> proc_macro2::TokenStream {
+//         quote::quote! { hashmap }
+//     }
+// }
+#[derive(Debug, Clone, Copy)]
+pub struct HashMapUpperCamelCase;
+impl std::fmt::Display for HashMapUpperCamelCase {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "HashMap")
     }
-    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! { HashMap }
+}
+impl quote::ToTokens for HashMapUpperCamelCase {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{HashMap}.to_tokens(tokens)
     }
-    fn snake_case_stringified() -> &'static str {
-        "hashmap"
+}
+#[derive(Debug, Clone, Copy)]
+pub struct HashMapSnakeCase;
+impl std::fmt::Display for HashMapSnakeCase {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "hashmap")
     }
-    fn snake_case_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! { hashmap }
+}
+impl quote::ToTokens for HashMapSnakeCase {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{hashmap}.to_tokens(tokens)
     }
 }
