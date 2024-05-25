@@ -2162,18 +2162,40 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                                   //     &proc_macro_name_snake_case,
                                                                   //     &proc_macro_name_upper_camel_case_ident_stringified
                                                                   // );
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::BadRequest400,
-            &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ]
-        );
+        let operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
+        let (
+            operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant,
+            operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream,
+        ) = {
+            (
+                crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                   operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code,
+                   &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
+                   &code_occurence_field,
+                   vec![
+                       (
+                           proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                           &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
+                           operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
+                       )
+                   ]
+                ),
+                {
+                    let field_code_occurence_new_50fa7a3f_0015_4480_a054_91e811b3fdba_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    quote::quote! {
+                        #operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+                            #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case,
+                            #field_code_occurence_new_50fa7a3f_0015_4480_a054_91e811b3fdba_token_stream,
+                        }
+                    }
+                }
+            )
+        };
         let type_variants_from_request_response_syn_variants = {
             let full_additional_http_status_codes_error_variants =
                 generate_full_additional_http_status_codes_error_variants(
@@ -2583,18 +2605,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 column!(),
                                 &proc_macro_name_upper_camel_case_ident_stringified,
                             );
+                            let axum_http_status_code_token_stream = operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code.to_axum_http_status_code_token_stream();
                             quote::quote! {
-                                match #operation_payload_upper_camel_case_token_stream::try_from(value) {
-                                    Ok(value) => value,
+                                match #operation_payload_upper_camel_case_token_stream::#try_from_snake_case(#value_snake_case) {
+                                    Ok(#value_snake_case) => #value_snake_case,
                                     Err(#error_snake_case) => {
-                                        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-                                            #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_snake_case,
-                                            #field_code_occurence_new_91c61a45_6c97_47cc_ac96_65bdcfec0494_token_stream,
-                                        };
+                                        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream;
                                         #eprintln_error_token_stream
 
                                         let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                                        *#response_snake_case.status_mut() = axum::http::StatusCode::CREATED;
+                                        *#response_snake_case.status_mut() = #axum_http_status_code_token_stream;
                                         return #response_snake_case;
                                     }
                                 }
