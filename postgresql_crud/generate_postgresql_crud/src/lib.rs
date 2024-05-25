@@ -2106,6 +2106,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let value_snake_case = naming_constants::ValueSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let response_snake_case = naming_constants::ResponseSnakeCase;
+    let generate_response_creation_token_stream = |
+        try_operation_route_logic_response_variants_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+        syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+        status_code_token_stream: &proc_macro2::TokenStream,
+    |{
+        quote::quote! {
+            let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#syn_variant_initialization_token_stream));
+            *#response_snake_case.status_mut() = #status_code_token_stream;
+            return #response_snake_case;
+        }
+    };
     let generate_request_parts_preparation_token_stream = |operation: &Operation|{
         let try_operation_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
         let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
@@ -2612,7 +2623,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     Err(#error_snake_case) => {
                                         let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream;
                                         #eprintln_error_token_stream
-
                                         let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
                                         *#response_snake_case.status_mut() = #axum_http_status_code_token_stream;
                                         return #response_snake_case;
@@ -2795,7 +2805,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         vec_values
                     }
                 };
-                // println!("{try_operation_token_stream}");
+                let desirable_response_creation_token_stream = generate_response_creation_token_stream(
+                    &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
+                    &quote::quote! {#desirable_upper_camel_case(#value_snake_case)},
+                    &quote::quote! {axum::http::StatusCode::CREATED},
+                );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &table_name_stringified,
                 //     &unique_status_codes,
@@ -2825,9 +2839,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let #value_snake_case = {
                             #postgresql_logic_token_stream
                         };
-                        let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(#value_snake_case)));
-                        *#response_snake_case.status_mut() = axum::http::StatusCode::CREATED;
-                        return #response_snake_case;
+                        #desirable_response_creation_token_stream
                     }
                 }
             };
