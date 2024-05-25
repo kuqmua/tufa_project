@@ -2105,6 +2105,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     ];
     let value_snake_case = naming_constants::ValueSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
+    let generate_request_parts_preparation_token_stream = |operation: &Operation|{
+        let try_operation_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+        let field_code_occurence_new_feac0c87_10ed_4115_ab71_81e15f09a860_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote! {
+            let (parts, body) = request.into_parts();
+            let headers = parts.headers;
+            let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_snake_case) => {
+                    let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_snake_case);
+                    let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckBodySize {
+                        check_body_size: #error_snake_case,
+                        #field_code_occurence_new_feac0c87_10ed_4115_ab71_81e15f09a860_token_stream,
+                    };
+                    #eprintln_error_token_stream
+                    let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
+                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    // *res.headers_mut() = axum::http::HeaderMap::new();
+                    return res;
+                }
+            };
+        }
+    };
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
@@ -2522,34 +2551,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let try_operation_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(&operation);
                 let try_operation_route_logic_error_named_upper_camel_case_token_stream =     proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
                 let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
-                let request_parts_preparation_token_stream = {
-                    let field_code_occurence_new_feac0c87_10ed_4115_ab71_81e15f09a860_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    quote::quote! {
-                        let (parts, body) = request.into_parts();
-                        let headers = parts.headers;
-                        let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
-                            Ok(#value_snake_case) => #value_snake_case,
-                            Err(#error_snake_case) => {
-                                let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_snake_case);
-                                let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckBodySize {
-                                    check_body_size: #error_snake_case,
-                                    #field_code_occurence_new_feac0c87_10ed_4115_ab71_81e15f09a860_token_stream,
-                                };
-                                #eprintln_error_token_stream
-
-                                let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                                *res.status_mut() = axum::http::StatusCode::CREATED;
-                                // *res.headers_mut() = axum::http::HeaderMap::new();
-                                return res;
-                            }
-                        };
-                    }
-                };
+                let request_parts_preparation_token_stream = generate_request_parts_preparation_token_stream(&operation);
                 let additional_validators_token_stream = {
                     let check_commit_token_stream = {
                         quote::quote! {
@@ -2811,17 +2813,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let value = {
                             #postgresql_logic_token_stream
                         };
-                        // #try_operation_route_logic_response_upper_camel_case_token_stream {
-                        //     status_code: axum::http::StatusCode::CREATED,
-                        //     body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::Desirable(value),
-                        // }
-
-                        //
-                        let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::Desirable(value)));
+                        let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(value)));
                         *res.status_mut() = axum::http::StatusCode::CREATED;
                         // *res.headers_mut() = axum::http::HeaderMap::new();
                         return res;
-                        //
                     }
                 }
             };
