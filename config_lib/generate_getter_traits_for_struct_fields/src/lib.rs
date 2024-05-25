@@ -89,7 +89,7 @@ pub fn generate_getter_trait(
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_upper_camel_case_stringified = format!(
         "{}{ident}",
-        <naming_constants::Get as naming_constants::Naming>::upper_camel_case_stringified(),
+        naming_constants::GetUpperCamelCase,
     );
     let get_ident_upper_camel_case_token_stream = {
         get_ident_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()

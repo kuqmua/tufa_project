@@ -147,20 +147,20 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
         ) = {
             let upper_camel_case_upper_camel_case_stringified = format!(
                 "{}{}{}",
-                <naming_constants::Upper as naming_constants::Naming>::upper_camel_case_stringified(),
-                <naming_constants::Camel as naming_constants::Naming>::upper_camel_case_stringified(),
-                <naming_constants::Case as naming_constants::Naming>::upper_camel_case_stringified(),
+                naming_constants::UpperUpperCamelCase,
+                naming_constants::CamelUpperCamelCase,
+                naming_constants::CaseUpperCamelCase,
             );
             let snake_case_upper_camel_case_stringified = format!(
                 "{}{}",
-                <naming_constants::Snake as naming_constants::Naming>::upper_camel_case_stringified(),
-                <naming_constants::Case as naming_constants::Naming>::upper_camel_case_stringified(),
+                naming_constants::SnakeUpperCamelCase,
+                naming_constants::CaseUpperCamelCase,
             );
-            let stringified_upper_camel_case_stringified = <naming_constants::Stringified as naming_constants::Naming>::upper_camel_case_stringified();
+            let stringified_upper_camel_case = naming_constants::StringifiedUpperCamelCase;
             let token_stream_upper_camel_case_stringified = format!(
                 "{}{}",
-                <naming_constants::Token as naming_constants::Naming>::upper_camel_case_stringified(),
-                <naming_constants::Stream as naming_constants::Naming>::upper_camel_case_stringified()
+                naming_constants::TokenUpperCamelCase,
+                naming_constants::StreamUpperCamelCase
             );
             let elements_concat_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
                 acc.push_str(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(element));
@@ -168,14 +168,14 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
             });
             let upper_camel_case_stringified_trait_name_upper_camel_case_token_stream = {
                 let value = format!(
-                    "{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}{stringified_upper_camel_case_stringified}"
+                    "{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}{stringified_upper_camel_case}"
                 );
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let snake_case_stringified_trait_name_upper_camel_case_token_stream = {
                 let value = format!(
-                    "{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}{stringified_upper_camel_case_stringified}"
+                    "{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}{stringified_upper_camel_case}"
                 );
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -211,23 +211,23 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
         ) = {
             let prefix_upper_camel_case = format!(
                 "_{}_{}_{}",
-                <naming_constants::Upper as naming_constants::Naming>::snake_case_stringified(),
-                <naming_constants::Camel as naming_constants::Naming>::snake_case_stringified(),
-                <naming_constants::Case as naming_constants::Naming>::snake_case_stringified(),
+                naming_constants::UpperSnakeCase,
+                naming_constants::CamelSnakeCase,
+                naming_constants::CaseSnakeCase,
             );
             let prefix_snake_case = format!(
                 "_{}_{}",
-                <naming_constants::Snake as naming_constants::Naming>::snake_case_stringified(),
-                <naming_constants::Case as naming_constants::Naming>::snake_case_stringified(),
+                naming_constants::SnakeSnakeCase,
+                naming_constants::CaseSnakeCase,
             );
             let prefix_stringified = format!(
                 "_{}",
-                <naming_constants::Stringified as naming_constants::Naming>::snake_case_stringified(),
+                naming_constants::StringifiedSnakeCase,
             );
             let prefix_token_stream = format!(
                 "_{}_{}",
-                <naming_constants::Token as naming_constants::Naming>::snake_case_stringified(),
-                <naming_constants::Stream as naming_constants::Naming>::snake_case_stringified(),
+                naming_constants::TokenSnakeCase,
+                naming_constants::StreamSnakeCase,
             );
             let elements_concat_snake_case_stringified = element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
                 let element_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(element);

@@ -8,12 +8,6 @@ pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 
-pub trait Naming {
-    fn upper_camel_case_stringified() -> &'static str;
-    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream;
-    fn snake_case_stringified() -> &'static str;
-    fn snake_case_token_stream() -> proc_macro2::TokenStream;
-}
 gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "type",
     "in",
@@ -177,20 +171,6 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
 
 #[derive(Debug, Clone, Copy)]
 pub struct HashMap;
-// impl Naming for HashMap {
-//     fn upper_camel_case_stringified() -> &'static str {
-//         "HashMap"
-//     }
-//     fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
-//         quote::quote! { HashMap }
-//     }
-//     fn snake_case_stringified() -> &'static str {
-//         "hashmap"
-//     }
-//     fn snake_case_token_stream() -> proc_macro2::TokenStream {
-//         quote::quote! { hashmap }
-//     }
-// }
 #[derive(Debug, Clone, Copy)]
 pub struct HashMapUpperCamelCase;
 impl std::fmt::Display for HashMapUpperCamelCase {

@@ -907,5 +907,5 @@ pub trait CombinationOfTraitsForPostgresqlCrudLogic:
 {
 }
 
-pub use naming_constants::Naming;
-pub use naming_constants::Commit;
+pub use naming_constants::CommitUpperCamelCase;
+pub use naming_constants::CommitSnakeCase;

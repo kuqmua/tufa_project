@@ -1246,7 +1246,7 @@ impl SupportedSqlxPostgresType {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
                 "{}{}{}{}",
-                <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
+                naming_constants::WhereUpperCamelCase,
                 self.get_inner_type_handle_stringified(generic_type_str),
                 proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
                 proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase
@@ -2301,14 +2301,14 @@ impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         add_path(&format!(
             "{}{}", 
-            <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(), 
+            naming_constants::WhereUpperCamelCase, 
             self.get_inner_type_handle_stringified(generic_type_str)
         ))
     }
     pub fn get_where_inner_type_with_serialize_deserialize_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         format!(
             "{}{}",
-            <naming_constants::Where as naming_constants::Naming>::upper_camel_case_stringified(),
+            naming_constants::WhereUpperCamelCase,
             self.get_inner_type_with_serialize_deserialize_handle_stringified(
                 generic_type_str,
             )
@@ -6682,9 +6682,9 @@ pub enum ConjunctiveOperator {
 impl std::fmt::Display for ConjunctiveOperator {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Or => write!(formatter, "{}", <naming_constants::Or as naming_constants::Naming>::upper_camel_case_stringified()),
+            Self::Or => write!(formatter, "{}", naming_constants::OrUpperCamelCase),
             Self::And => {
-                write!(formatter, "{}", <naming_constants::And as naming_constants::Naming>::upper_camel_case_stringified())
+                write!(formatter, "{}", naming_constants::AndUpperCamelCase)
             }
         }
     }
@@ -6707,8 +6707,8 @@ pub enum Order {
 impl std::fmt::Display for Order {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Asc => write!(formatter, "{}", <naming_constants::Asc as naming_constants::Naming>::upper_camel_case_stringified()),
-            Self::Desc => write!(formatter, "{}", <naming_constants::Desc as naming_constants::Naming>::upper_camel_case_stringified()),
+            Self::Asc => write!(formatter, "{}", naming_constants::AscUpperCamelCase),
+            Self::Desc => write!(formatter, "{}", naming_constants::DescUpperCamelCase),
         }
     }
 }

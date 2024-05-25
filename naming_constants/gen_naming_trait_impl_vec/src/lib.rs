@@ -70,21 +70,6 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
             .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         quote::quote!{
-            pub struct #ident_upper_camel_case_token_stream;
-            impl Naming for #ident_upper_camel_case_token_stream {
-                fn upper_camel_case_stringified() -> &'static str {
-                    #ident_upper_camel_case_quotes_token_stream
-                }
-                fn snake_case_stringified() -> &'static str {
-                    #ident_snake_case_quotes_token_stream
-                }
-                fn snake_case_token_stream() -> proc_macro2::TokenStream {
-                    quote::quote!{#ident_snake_case_token_stream}
-                }
-                fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
-                    quote::quote!{#ident_upper_camel_case_token_stream}
-                }
-            }
             #[derive(Debug, Clone, Copy)]
             pub struct #ident_upper_camel_case_upper_camel_case_token_stream;
             impl std::fmt::Display for #ident_upper_camel_case_upper_camel_case_token_stream {

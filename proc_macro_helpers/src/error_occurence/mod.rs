@@ -115,7 +115,7 @@ pub fn attribute_view(attribute: &str) -> std::string::String {
 pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     value: &'a syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-    std_snake_case_stringified: &std::primitive::str,
+    std_snake_case: &naming_constants::StdSnakeCase,
     std_string_string_token_stream: &proc_macro2::TokenStream,
 ) -> &'a syn::GenericArgument {
     let segments = if let syn::Type::Path(value) = &value.ty {
@@ -126,15 +126,15 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     };
     assert!(segments.len() == 3, "{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
     let first_segment = segments.iter().next().expect("no .next()) element");
-    assert!(first_segment.ident == std_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
+    assert!(first_segment.ident == &std_snake_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case} {}", first_segment.ident);
     match first_segment.arguments {
         syn::PathArguments::None => (),
         _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None")
     }
     let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
     {
-        let collections_snake_case_stringified = <naming_constants::Collections as naming_constants::Naming>::snake_case_stringified();
-        assert!(second_segment.ident == collections_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {collections_snake_case_stringified} {}", second_segment.ident);
+        let collections_snake_case = naming_constants::CollectionsSnakeCase;
+        assert!(second_segment.ident == &collections_snake_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {collections_snake_case} {}", second_segment.ident);
     };
     match second_segment.arguments {
         syn::PathArguments::None => (),
@@ -186,7 +186,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             let element_type = &element.ty;
             quote::quote!{#element_type}
         };
-        let std_snake_case_stringified = <naming_constants::Std as naming_constants::Naming>::snake_case_stringified();
+        let std_snake_case = naming_constants::StdSnakeCase;
         let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote!{
@@ -226,15 +226,15 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 };
                 assert!(segments.len() == 3, "{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
                 let first_segment = segments.iter().next().expect("no .next() element");
-                assert!(first_segment.ident == std_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
+                assert!(first_segment.ident == &std_snake_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case} {}", first_segment.ident);
                 match first_segment.arguments {
                     syn::PathArguments::None => (),
                     _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None")
                 }
                 let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
                 {
-                    let vec_snake_case_stringified = <naming_constants::Vec as naming_constants::Naming>::snake_case_stringified();
-                    assert!(second_segment.ident == vec_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {vec_snake_case_stringified} {}", second_segment.ident);
+                    let vec_snake_case = naming_constants::VecSnakeCase;
+                    assert!(second_segment.ident == &vec_snake_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {vec_snake_case} {}", second_segment.ident);
                 };
                 match second_segment.arguments {
                     syn::PathArguments::None => (),
@@ -242,8 +242,8 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 }
                 let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
                 {
-                    let vec_upper_camel_case_stringified = <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified();
-                    assert!(third_segment.ident == vec_upper_camel_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {vec_upper_camel_case_stringified} {}", third_segment.ident);
+                    let vec_upper_camel_case = naming_constants::VecUpperCamelCase;
+                    assert!(third_segment.ident == &vec_upper_camel_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {vec_upper_camel_case} {}", third_segment.ident);
                 };
                 let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
                     args,
@@ -273,7 +273,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
                     element,
                     &proc_macro_name_upper_camel_case_ident_stringified,
-                    std_snake_case_stringified,
+                    &std_snake_case,
                     &std_string_string_token_stream,
                 );
                 quote::quote!{
@@ -284,7 +284,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
                     element,
                     &proc_macro_name_upper_camel_case_ident_stringified,
-                    std_snake_case_stringified,
+                    &std_snake_case,
                     &std_string_string_token_stream,
                 );
                 element_type_token_stream
@@ -293,7 +293,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(
                     element,
                     &proc_macro_name_upper_camel_case_ident_stringified,
-                    std_snake_case_stringified,
+                    &std_snake_case,
                     &std_string_string_token_stream,
                 );
                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = {

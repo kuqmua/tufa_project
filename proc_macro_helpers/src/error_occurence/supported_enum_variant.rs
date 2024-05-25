@@ -14,8 +14,8 @@ pub fn create(
         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
         naming_constants::SYN_FIELDS,
         naming_constants::SYN_FIELDS,
-        <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
-        <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified(),
+        naming_constants::NamedUpperCamelCase,
+        naming_constants::UnnamedUpperCamelCase,
     );
     data_enum
         .variants

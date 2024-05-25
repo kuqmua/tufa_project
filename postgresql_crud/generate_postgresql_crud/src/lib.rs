@@ -1577,7 +1577,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let commit_header_addition_token_stream = quote::quote! {
         .header(
-            <postgresql_crud::Commit as postgresql_crud::Naming>::snake_case_stringified(),//todo remove it
+            &postgresql_crud::CommitSnakeCase.to_string(),//todo remove it
             git_info::PROJECT_GIT_INFO.commit,
         )
     };
@@ -8575,16 +8575,16 @@ impl Operation {
     ) -> std::string::String {
         format!(
             "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}",
-            <naming_constants::Try as naming_constants::Naming>::snake_case_stringified(),
+            naming_constants::TrySnakeCase,
             proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(self),
-            <naming_constants::Generated as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Route as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Logic as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Error as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Named as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::With as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Serialize as naming_constants::Naming>::snake_case_stringified(),
-            <naming_constants::Deserialize as naming_constants::Naming>::snake_case_stringified()
+            naming_constants::GeneratedSnakeCase,
+            naming_constants::RouteSnakeCase,
+            naming_constants::LogicSnakeCase,
+            naming_constants::ErrorSnakeCase,
+            naming_constants::NamedSnakeCase,
+            naming_constants::WithSnakeCase,
+            naming_constants::SerializeSnakeCase,
+            naming_constants::DeserializeSnakeCase
         )
     }
     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
@@ -8597,8 +8597,8 @@ impl Operation {
                     &format!(
                         "{}{}{}",
                         proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self),
-                        <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
-                        <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
+                        naming_constants::ErrorUpperCamelCase,
+                        naming_constants::NamedUpperCamelCase,
                     ),
                     proc_macro2::Span::call_site()
                 ),
