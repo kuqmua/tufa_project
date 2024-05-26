@@ -998,14 +998,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let into_serialize_deserialize_version_snake_case = proc_macro_helpers::naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let (bind_query_syn_variant, bind_query_variant_initialization_token_stream) = {
+        let bind_query_upper_camel_case = proc_macro_helpers::naming_conventions::BindQueryUpperCamelCase;
+        let bind_query_snake_case = proc_macro_helpers::naming_conventions::BindQuerySnakeCase;
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
-                &proc_macro_helpers::naming_conventions::BindQueryUpperCamelCase.to_string(),
+                &bind_query_upper_camel_case,
                 &code_occurence_field,
                 vec![(
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &proc_macro_helpers::naming_conventions::BindQuerySnakeCase.to_string(),
+                    &bind_query_snake_case,
                     proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, &proc_macro_helpers::naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()],
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -1013,8 +1015,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )]
             ),
             {
-                let bind_query_upper_camel_case = proc_macro_helpers::naming_conventions::BindQueryUpperCamelCase;
-                let bind_query_snake_case = proc_macro_helpers::naming_conventions::BindQuerySnakeCase;
                 let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
                     line!(),
@@ -1032,7 +1032,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let (checked_add_syn_variant, checked_add_variant_initialization_token_stream) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
                 &proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1081,7 +1081,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         query_and_rollback_failed_syn_variant_initialization_token_stream
      ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
                 &proc_macro_helpers::naming_conventions::QueryAndRollbackFailedUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1122,7 +1122,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         primary_key_from_row_and_failed_rollback_syn_variant_initialization_token_stream
      ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
                 &proc_macro_helpers::naming_conventions::PrimaryKeyFromRowAndFailedRollbackUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1160,7 +1160,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let (non_existing_primary_keys_syn_variant, non_existing_primary_keys_syn_variant_initialization_token_stream) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::BadRequest400,
                 &proc_macro_helpers::naming_conventions::NonExistingPrimaryKeysUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1195,7 +1195,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         non_existing_primary_keys_and_failed_rollback_syn_variant_initialization_token_stream
      ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::BadRequest400,
                 &proc_macro_helpers::naming_conventions::NonExistingPrimaryKeysAndFailedRollbackUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1236,7 +1236,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         commit_failed_syn_variant_initialization_token_stream
      ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
                 &proc_macro_helpers::naming_conventions::CommitFailedUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1270,7 +1270,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         not_unique_primary_key_variant_initialization_token_stream
      ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::BadRequest400,
                 &proc_macro_helpers::naming_conventions::NotUniquePrimaryKeysUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1308,7 +1308,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream
     ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500, //todo - is it right status code for this case?
                 &proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1373,7 +1373,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
      };
     let (postgresql_syn_variant, postgresql_syn_variant_initialization_token_stream) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
                 &naming_constants::PostgresqlUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1406,7 +1406,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (json_syn_variant, json_syn_variant_initialization_token_stream, json_syn_variant_status_code) = {
         let json_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 json_syn_variant_status_code.clone(),
                 &naming_constants::JsonUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1485,7 +1485,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
         let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
         let where_inner_type_with_serialize_deserialize_handle_stringified = &element.where_inner_type_with_serialize_deserialize_handle_stringified;
-        acc.push(crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+        acc.push(proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::BadRequest400,
             &not_unique_field_vec_upper_camel_stringified,
             &code_occurence_field,
@@ -1508,7 +1508,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         no_payload_fields_syn_variant_initialization_token_stream,
     ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::BadRequest400,
                 &proc_macro_helpers::naming_conventions::NoPayloadFieldsUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1548,7 +1548,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let no_payload_parameters_syn_variant = {
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::BadRequest400,
             &proc_macro_helpers::naming_conventions::NoPayloadParametersUpperCamelCase.to_string(),
             &code_occurence_field,
@@ -1637,7 +1637,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! { crate::common::api_request_unexpected_error };
     let expected_type_upper_camel_case = proc_macro_helpers::naming_conventions::ExpectedTypeUpperCamelCase;
     let expected_type_snake_case = proc_macro_helpers::naming_conventions::ExpectedTypeSnakeCase;
-    //todo make crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //todo make proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     let (
         generate_expected_type_declaration_token_stream,
         expected_type_initialization_token_stream,
@@ -1678,7 +1678,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         failed_to_get_response_text_initialization_token_stream,
     ) = {
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::BadRequest400,
                 &proc_macro_helpers::naming_conventions::FailedToGetResponseTextUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -1977,7 +1977,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         (
-            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::BadRequest400,
                 &proc_macro_helpers::naming_conventions::CheckBodySizeUpperCamelCase.to_string(),
                 &code_occurence_field,
@@ -2001,7 +2001,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let common_additional_syn_variants: std::vec::Vec<syn::Variant> = vec![
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
             proc_macro_helpers::status_code::StatusCode::BadRequest400,
             &proc_macro_helpers::naming_conventions::CheckCommitUpperCamelCase.to_string(),
             &code_occurence_field,
@@ -2106,7 +2106,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream,
         ) = {
             (
-                crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                    operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code,
                    &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
                    &code_occurence_field,
@@ -2924,7 +2924,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                               //     &proc_macro_name_snake_case,
     //                                                               //     &proc_macro_name_upper_camel_case_ident_stringified
     //                                                               // );
-    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
     //         &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
     //         &code_occurence_field,
@@ -3412,7 +3412,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                               //     &proc_macro_name_snake_case,
     //                                                               //     &proc_macro_name_upper_camel_case_ident_stringified
     //                                                               // );
-    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
     //         &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
     //         &code_occurence_field,
@@ -4339,7 +4339,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                               //     &proc_macro_name_snake_case,
     //                                                               //     &proc_macro_name_upper_camel_case_ident_stringified
     //                                                               // );
-    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
     //         &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
     //         &code_occurence_field,
@@ -4868,7 +4868,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                               //     &proc_macro_name_snake_case,
     //                                                               //     &proc_macro_name_upper_camel_case_ident_stringified
     //                                                               // );
-    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
     //         &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
     //         &code_occurence_field,
@@ -5660,7 +5660,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                               //     &proc_macro_name_snake_case,
     //                                                               //     &proc_macro_name_upper_camel_case_ident_stringified
     //                                                               // );
-    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
     //         &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
     //         &code_occurence_field,
@@ -6303,7 +6303,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                               //     &proc_macro_name_snake_case,
     //                                                               //     &proc_macro_name_upper_camel_case_ident_stringified
     //                                                               // );
-    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
     //         &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
     //         &code_occurence_field,
@@ -7220,7 +7220,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                                               //     &proc_macro_name_snake_case,
     //                                                               //     &proc_macro_name_upper_camel_case_ident_stringified
     //                                                               // );
-    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+    //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
     //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
     //         &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
     //         &code_occurence_field,
