@@ -1667,18 +1667,39 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let no_payload_parameters_syn_variant = {
-        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::BadRequest400,
-            &proc_macro_helpers::naming_conventions::NoPayloadParametersUpperCamelCase.to_string(),
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                    &proc_macro_helpers::naming_conventions::NoPayloadParametersSnakeCase.to_string(),
-                    std_string_string_syn_punctuated_punctuated.clone()
-                )
-            ]
+    let (
+        no_payload_parameters_syn_variant,
+        no_payload_parameters_syn_variant_initialization_token_stream,
+     ) = {
+        let no_payload_parameters_upper_camel_case = proc_macro_helpers::naming_conventions::NoPayloadParametersUpperCamelCase;
+        let no_payload_parameters_snake_case = proc_macro_helpers::naming_conventions::NoPayloadParametersSnakeCase;
+        (
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::BadRequest400,
+                &no_payload_parameters_upper_camel_case,
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                        &no_payload_parameters_snake_case,
+                        std_string_string_syn_punctuated_punctuated.clone()
+                    )
+                ]
+            ),
+            {
+                let field_code_occurence_new_0b135c41_f41a_4117_8b43_2ad519ad6386_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                quote::quote! {
+                    #no_payload_parameters_upper_camel_case {
+                        #no_payload_parameters_snake_case: #error_snake_case,
+                        #field_code_occurence_new_0b135c41_f41a_4117_8b43_2ad519ad6386_token_stream
+                    }
+                }
+            }
         )
     };
     let commit_header_addition_token_stream = quote::quote! {
