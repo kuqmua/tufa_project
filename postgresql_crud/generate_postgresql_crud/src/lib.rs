@@ -1335,38 +1335,105 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    //heref
     let (
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_syn_variant,
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream
      ) = {
         let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientManyUpperCamelCase;
         let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientManySnakeCase;
         (
-            // proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-            //     &naming_constants::JsonUpperCamelCase.to_string(),
-            //     &code_occurence_field,
-            //     vec![
-            //         (
-            //             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-            //             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case,
-            //             proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-            //                 &["std","extract","rejection","JsonRejection"],
-            //                 &proc_macro_name_upper_camel_case_ident_stringified
-            //             ),
-            //         )
-            //     ]
-            // ),
-            {
-                quote::quote! {
-                    #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case {
-                        #eo_vec_error_occurence_token_stream
-                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case: std::vec::Vec<
-                            #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case
-                        >,
-                        #code_occurence_snake_case: #error_occurence_lib_code_occurence_code_occurence_token_stream,
-                    }
-                }
+            syn::Variant {
+                attrs: vec![],
+                ident: syn::Ident::new(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case.to_string(), proc_macro2::Span::call_site()),
+                fields: syn::Fields::Named(syn::FieldsNamed {
+                    brace_token: syn::token::Brace::default(),
+                    named: {
+                        let mut punctuated = syn::punctuated::Punctuated::new();
+                        punctuated.push_value(syn::Field {
+                            attrs: vec![syn::Attribute {
+                                pound_token: syn::token::Pound {
+                                    spans: [proc_macro2::Span::call_site()],
+                                },
+                                style: syn::AttrStyle::Outer,
+                                bracket_token: syn::token::Bracket::default(),
+                                meta: syn::Meta::Path(syn::Path {
+                                    leading_colon: None,
+                                    segments: {
+                                        let mut handle = syn::punctuated::Punctuated::new();
+                                        handle.push(syn::PathSegment {
+                                            ident: proc_macro2::Ident::new(
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence),
+                                                proc_macro2::Span::call_site(),
+                                            ),
+                                            arguments: syn::PathArguments::None,
+                                        });
+                                        handle
+                                    },
+                                }),
+                            }],
+                            vis: syn::Visibility::Inherited,
+                            mutability: syn::FieldMutability::None,
+                            ident: Some(syn::Ident::new(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case.to_string(), proc_macro2::Span::call_site())),
+                            colon_token: Some(syn::token::Colon {
+                                spans: [proc_macro2::Span::call_site()],
+                            }),
+                            ty: syn::Type::Path(syn::TypePath {
+                                qself: None,
+                                path: syn::Path {
+                                    leading_colon: None,
+                                    segments: {
+                                        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                                        handle.push_value(syn::PathSegment {
+                                            ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
+                                            arguments: syn::PathArguments::None,
+                                        });
+                                        handle.push_punct(syn::token::PathSep {
+                                            spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+                                        });
+                                        handle.push_value(syn::PathSegment {
+                                            ident: proc_macro2::Ident::new("vec", proc_macro2::Span::call_site()),
+                                            arguments: syn::PathArguments::None,
+                                        });
+                                        handle.push_punct(syn::token::PathSep {
+                                            spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+                                        });
+                                        handle.push_value(syn::PathSegment {
+                                            ident: proc_macro2::Ident::new("Vec", proc_macro2::Span::call_site()),
+                                            arguments: syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments{
+                                                colon2_token: None,
+                                                lt_token: syn::token::Lt::default(),
+                                                args: {
+                                                    let mut handle_arguments_type = syn::punctuated::Punctuated::<syn::GenericArgument, syn::token::Comma>::new();
+                                                    handle_arguments_type.push_value(syn::GenericArgument::Type(
+                                                        syn::Type::Path(syn::TypePath{
+                                                            qself: None,
+                                                            path: syn::Path {
+                                                                leading_colon: None,
+                                                                segments: {
+                                                                    let mut handle_vec_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                                                                    handle_vec_type.push_value(syn::PathSegment {
+                                                                        ident: proc_macro2::Ident::new(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case.to_string(), proc_macro2::Span::call_site()),
+                                                                        arguments: syn::PathArguments::None,
+                                                                    });
+                                                                    handle_vec_type
+                                                                }
+                                                            },
+                                                        }),
+                                                    ));
+                                                    handle_arguments_type
+                                                },
+                                                gt_token: syn::token::Gt::default(),
+                                            }),
+                                        });
+                                        handle
+                                    }
+                                },
+                            }),
+                        });
+                        punctuated
+                    },
+                }),
+                discriminant: None,
             },
             {
                 let field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
@@ -1489,9 +1556,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream = match primary_key_from_or_try_from {
         postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
-        postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
-            #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
-        },
+        postgresql_crud_common::FromOrTryFrom::TryFrom => generate_error_occurence_variant_token_stream(
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_syn_variant,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        ),
     };
     let not_unique_vec_syn_variants: std::vec::Vec<syn::Variant> = fields_named.iter().fold(std::vec::Vec::with_capacity(fields_named_len.checked_sub(1).unwrap()), |mut acc, element| {
         let field_ident = &element.field_ident;
