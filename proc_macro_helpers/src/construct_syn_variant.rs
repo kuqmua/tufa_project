@@ -85,7 +85,7 @@ pub fn construct_syn_variant_with_status_code(
 }
 
 pub fn construct_syn_variant(
-    variant_name: &str,
+    variant_name: &impl std::fmt::Display,
     code_occurence_field: &syn::Field,
     fields: std::vec::Vec<(
         crate::error_occurence::ErrorOccurenceFieldAttribute,
@@ -95,7 +95,7 @@ pub fn construct_syn_variant(
 ) -> syn::Variant {
     syn::Variant {
         attrs: vec![],
-        ident: syn::Ident::new(variant_name, proc_macro2::Span::call_site()),
+        ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
         fields: syn::Fields::Named(syn::FieldsNamed {
             brace_token: syn::token::Brace::default(),
             named: {
