@@ -1,14 +1,14 @@
 #[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
-#[postgresql_crud::create_many_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::create_one_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::read_one_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::read_many_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::update_one_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::update_many_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::delete_one_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::delete_many_additional_http_status_codes_error_variants{}]
-#[postgresql_crud::common_additional_http_status_codes_error_variants{
-    enum AdditionalHttpStatusCodesErrorVariants {
+#[postgresql_crud::create_many_additional_error_variants{}]
+#[postgresql_crud::create_one_additional_error_variants{}]
+#[postgresql_crud::read_one_additional_error_variants{}]
+#[postgresql_crud::read_many_additional_error_variants{}]
+#[postgresql_crud::update_one_additional_error_variants{}]
+#[postgresql_crud::update_many_additional_error_variants{}]
+#[postgresql_crud::delete_one_additional_error_variants{}]
+#[postgresql_crud::delete_many_additional_error_variants{}]
+#[postgresql_crud::common_additional_error_variants{
+    enum CommonAdditionalErrorVariants {
         CheckCommit {
             #[eo_error_occurence]
             check_commit: route_validators::check_commit::CheckCommitErrorNamed,

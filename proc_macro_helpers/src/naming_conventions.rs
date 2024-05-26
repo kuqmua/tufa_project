@@ -51,7 +51,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["options", "try", "from", "sqlx", "row"],
         ["try", "generate", "bind", "increments", "error", "named"],
         ["primary", "key", "try", "from", "sqlx", "row"],
-        ["common", "additional", "http", "status", "codes", "error", "variants"],
+        ["common", "additional", "error", "variants"],
         ["extraction", "result"],
         ["serde", "json", "to", "string"],
         ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "server"],

@@ -40,56 +40,56 @@ mod type_variants_from_request_response_generator;
 //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
 
 #[proc_macro_attribute]
-pub fn create_many_additional_http_status_codes_error_variants(
+pub fn create_many_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_attribute]
-pub fn create_one_additional_http_status_codes_error_variants(
+pub fn create_one_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_attribute]
-pub fn read_one_additional_http_status_codes_error_variants(
+pub fn read_one_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_attribute]
-pub fn read_many_additional_http_status_codes_error_variants(
+pub fn read_many_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_attribute]
-pub fn update_one_additional_http_status_codes_error_variants(
+pub fn update_one_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_attribute]
-pub fn update_many_additional_http_status_codes_error_variants(
+pub fn update_many_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_attribute]
-pub fn delete_one_additional_http_status_codes_error_variants(
+pub fn delete_one_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_attribute]
-pub fn delete_many_additional_http_status_codes_error_variants(
+pub fn delete_many_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
@@ -97,7 +97,7 @@ pub fn delete_many_additional_http_status_codes_error_variants(
 }
 
 #[proc_macro_attribute]
-pub fn common_additional_http_status_codes_error_variants(
+pub fn common_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
@@ -693,55 +693,55 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {pub use #inner_type_token_stream;}
     });
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
-    let additional_http_status_codes_error_variants_snake_case = proc_macro_helpers::naming_conventions::CommonAdditionalHttpStatusCodesErrorVariantsSnakeCase;
-    let common_additional_http_status_codes_error_variants = {
-        let additional_http_status_codes_error_variant_path = format!("{}::{additional_http_status_codes_error_variants_snake_case}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE);
-        let additional_http_status_codes_error_variants_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
+    let common_additional_error_variants_snake_case = proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsSnakeCase;
+    let common_additional_error_variants = {
+        let common_additional_error_variant_path_stringified = format!("{}::{common_additional_error_variants_snake_case}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE);
+        let common_additional_error_variants_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
             &ast.attrs,
-            &additional_http_status_codes_error_variant_path,
+            &common_additional_error_variant_path_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        if additional_http_status_codes_error_variants_attribute.path().segments.len() == 2 {
-            let first_ident = &additional_http_status_codes_error_variants_attribute.path().segments.first().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path().segments.get(0) is None")
+        if common_additional_error_variants_attribute.path().segments.len() == 2 {
+            let first_ident = &common_additional_error_variants_attribute.path().segments.first().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} common_additional_error_variants_attribute.path().segments.get(0) is None")
             }).ident;
-            let second_ident = &additional_http_status_codes_error_variants_attribute.path().segments.last().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path().segments.get(0) is None")
+            let second_ident = &common_additional_error_variants_attribute.path().segments.last().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} common_additional_error_variants_attribute.path().segments.get(0) is None")
             }).ident;
-            let possible_additional_http_status_codes_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
-            assert!(additional_http_status_codes_error_variant_path == possible_additional_http_status_codes_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path}     {possible_additional_http_status_codes_error_variants_attribute_path} is not {additional_http_status_codes_error_variant_path}");
+            let possible_common_additional_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
+            assert!(common_additional_error_variant_path_stringified == possible_common_additional_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} {possible_common_additional_error_variants_attribute_path} is not {common_additional_error_variant_path_stringified}");
         }
         else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no {additional_http_status_codes_error_variant_path} path")
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} no {common_additional_error_variant_path_stringified} path")
         }
-        // println!("{additional_http_status_codes_error_variants_attribute:#?}");
-        let additional_http_status_codes_error_variants_attribute_tokens_stringified = "{}".to_owned();//todo
+        // println!("{common_additional_error_variants_attribute:#?}");
+        let common_additional_error_variants_attribute_tokens_stringified = "{}".to_owned();//todo
         //
           
        
-        println!("{additional_http_status_codes_error_variants_attribute:#?}");
+        println!("{common_additional_error_variants_attribute:#?}");
 
         //
-        let additional_http_status_codes_error_variants_attribute_tokens_stringified_len =
-            additional_http_status_codes_error_variants_attribute_tokens_stringified.len();
-        let additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified =
-            &additional_http_status_codes_error_variants_attribute_tokens_stringified
-            .get(1..additional_http_status_codes_error_variants_attribute_tokens_stringified_len.checked_sub(1).unwrap())
+        let common_additional_error_variants_attribute_tokens_stringified_len =
+            common_additional_error_variants_attribute_tokens_stringified.len();
+        let common_additional_error_variants_attribute_tokens_without_brackets_stringified =
+            &common_additional_error_variants_attribute_tokens_stringified
+            .get(1..common_additional_error_variants_attribute_tokens_stringified_len.checked_sub(1).unwrap())
             .expect("slice not found");
-        // [1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1)]; //todo maybe check
-        additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified.split(';').collect::<Vec<&str>>()
+        // [1..(common_additional_error_variants_attribute_tokens_stringified_len - 1)]; //todo maybe check
+        common_additional_error_variants_attribute_tokens_without_brackets_stringified.split(';').collect::<Vec<&str>>()
             .iter().fold(std::vec::Vec::<(
                 syn::Ident,
                 proc_macro2::TokenStream,
                 std::vec::Vec::<syn::Variant>
             )>::new(), |mut acc, element| {
                 let element_token_stream: proc_macro::TokenStream = element.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} {element} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} {element} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     .into();
                 let element_token_stream_stringified = element_token_stream.to_string();
                 if !element_token_stream_stringified.is_empty() {
                     let element_derive_input: syn::DeriveInput = syn::parse(element_token_stream).unwrap_or_else(|error| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} parse additional_http_status_codes_error_variants_attribute_tokens failed {error}");
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} parse additional_http_status_codes_error_variants_attribute_tokens failed {error}");
                     });
                     let option_path_sttribute = element_derive_input.attrs.iter().find(|element|{
                         let element_path_stringified = {
@@ -751,7 +751,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                         element_path_stringified == naming_constants::PathSnakeCase.to_string()
                     });
-                    let path_attribute = option_path_sttribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no path attribute"), |value| value);
+                    let path_attribute = option_path_sttribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} no path attribute"), |value| value);
                     let path_to_additional_variant_enum_stringified = "{}".to_owned();//todo
                     // &path_attribute.tokens.to_string();
                     let path_to_additional_variant_enum_without_brackets_stringified = &path_to_additional_variant_enum_stringified
@@ -763,7 +763,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let data_enum = if let syn::Data::Enum(data_enum) = element_derive_input.data {
                         data_enum
                     } else {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} does not work on enums!");
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} does not work on enums!");
                     };
                     acc.push((
                         element_ident,
@@ -774,8 +774,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 acc
             })  
     };
-    // println!("{common_additional_http_status_codes_error_variants:#?}");
-    let common_additional_http_status_codes_error_variants_len = common_additional_http_status_codes_error_variants.len();
+    // println!("{common_additional_error_variants:#?}");
+    let common_additional_error_variants_len = common_additional_error_variants.len();
     let extraction_result_snake_case = proc_macro_helpers::naming_conventions::ExtractionResultSnakeCase;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_upper_camel_case = naming_constants::PayloadUpperCamelCase;
@@ -2281,7 +2281,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = {
             let full_additional_http_status_codes_error_variants =
                 generate_full_additional_http_status_codes_error_variants(
-                    common_additional_http_status_codes_error_variants.iter().collect(),
+                    common_additional_error_variants.iter().collect(),
                     additional_http_status_codes_error_variants.iter().collect(),
                 );
             let type_variants_from_request_response_syn_variants_partial = {
