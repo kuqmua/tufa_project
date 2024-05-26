@@ -1689,40 +1689,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let body_snake_case = naming_constants::BodySnakeCase;
     let response_text_result_snake_case = proc_macro_helpers::naming_conventions::ResponseTextResultSnakeCase;
     let response_text_snake_case = proc_macro_helpers::naming_conventions::ResponseTextSnakeCase;
-    // let (
-    //     unexpected_status_code_declaration_token_stream,
-    //     unexpected_status_code_initialization_token_stream,
-    // ) = {
-    //     let field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     (
-    //         quote::quote! {
-    //             #unexpected_status_code_upper_camel_case_token_stream {
-    //                 #eo_to_std_string_string_token_stream
-    //                 #status_code_snake_case: #http_status_code_token_stream,
-    //                 #eo_to_std_string_string_token_stream
-    //                 #headers_snake_case: #reqwest_header_header_map_token_stream,
-    //                 #eo_to_std_string_string_token_stream
-    //                 #response_text_result_snake_case_token_stream: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
-    //                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //             }
-    //         },
-    //         quote::quote! {
-    //             #unexpected_status_code_upper_camel_case_token_stream {
-    //                 #status_code_snake_case,
-    //                 #headers_snake_case,
-    //                 #response_text_result_snake_case_token_stream: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text),
-    //                 #field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream
-    //             }
-    //         },
-    //     )
-    // };
     let (
-        failed_to_get_response_text_declaration_token_stream,
+        failed_to_get_response_text_syn_variant,
         failed_to_get_response_text_initialization_token_stream,
     ) = {
         (
@@ -1732,24 +1700,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &code_occurence_field,
                 vec![
                     (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                        &proc_macro_helpers::naming_conventions::FailedToGetResponseTextSnakeCase.to_string(),
-                        std_string_string_syn_punctuated_punctuated.clone()
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &proc_macro_helpers::naming_conventions::StatusCodeSnakeCase.to_string(),
+                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &["http","StatusCode"],
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ),
+                    ),
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &naming_constants::HeadersSnakeCase.to_string(),
+                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &["reqwest","header","HeaderMap"],
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ),
+                    ),
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &naming_constants::ReqwestSnakeCase.to_string(),
+                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &["reqwest","Error"],
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ),
                     )
                 ]
-            )
-            // quote::quote! {
-            //     #failed_to_get_response_text_upper_camel_case_token_stream {
-            //         #eo_to_std_string_string_token_stream
-            //         #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
-            //         #eo_to_std_string_string_token_stream
-            //         #status_code_snake_case: #http_status_code_token_stream,
-            //         #eo_to_std_string_string_token_stream
-            //         #headers_snake_case: #reqwest_header_header_map_token_stream,
-            //         #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-            //     }
-            // }
-            ,
+            ),
             {
                 let failed_to_get_response_text_upper_camel_case = proc_macro_helpers::naming_conventions::FailedToGetResponseTextUpperCamelCase;
                 let reqwest_snake_case = naming_constants::ReqwestSnakeCase;
@@ -1939,36 +1914,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_helpers::naming_conventions::SerdeJsonToStringSnakeCase,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["serde_json","Error"],
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ),
-            )
-        ]
-    );
-    let failed_to_get_response_text_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-        &proc_macro_helpers::naming_conventions::FailedToGetResponseTextUpperCamelCase.to_string(),
-        &code_occurence_field,
-        vec![
-            (
-                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &proc_macro_helpers::naming_conventions::StatusCodeSnakeCase.to_string(),
-                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &["http","StatusCode"],
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ),
-            ),
-            (
-                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &naming_constants::HeadersSnakeCase.to_string(),
-                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &["reqwest","header","HeaderMap"],
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ),
-            ),
-            (
-                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &naming_constants::ReqwestSnakeCase.to_string(),
-                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &["reqwest","Error"],
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ),
             )
