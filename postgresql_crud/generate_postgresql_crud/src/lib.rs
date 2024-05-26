@@ -1031,15 +1031,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let (checked_add_syn_variant, checked_add_variant_initialization_token_stream) = {
+        let checked_add_upper_camel_case= proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase;
+        let checked_add_snake_case = proc_macro_helpers::naming_conventions::CheckedAddSnakeCase;
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
-                &proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase.to_string(),
+                &checked_add_upper_camel_case,
                 &code_occurence_field,
                 vec![
                     (
                         proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                        &proc_macro_helpers::naming_conventions::CheckedAddSnakeCase.to_string(),
+                        &checked_add_snake_case,
                         std_string_string_syn_punctuated_punctuated.clone()
                     )
                 ]
@@ -1047,15 +1049,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             {
                 let checked_is_none_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                     &format!(
-                        "{} {} {}",
-                        proc_macro_helpers::naming_conventions::CheckedAddSnakeCase,
+                        "{checked_add_snake_case} {} {}",
                         naming_constants::IsSnakeCase,
                         naming_constants::NoneUpperCamelCase
                     ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
-                let checked_add_upper_camel_case= proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase;
-                let checked_add_snake_case = proc_macro_helpers::naming_conventions::CheckedAddSnakeCase;
                 let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
                     line!(),
@@ -1080,10 +1079,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         query_and_rollback_failed_syn_variant,
         query_and_rollback_failed_syn_variant_initialization_token_stream
      ) = {
+        let query_and_rollback_failed_upper_camel_case = proc_macro_helpers::naming_conventions::QueryAndRollbackFailedUpperCamelCase;
+        let query_and_rollback_failed_snake_case = proc_macro_helpers::naming_conventions::QueryAndRollbackFailedSnakeCase;
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::InternalServerError500,
-                &proc_macro_helpers::naming_conventions::QueryAndRollbackFailedUpperCamelCase.to_string(),
+                &query_and_rollback_failed_upper_camel_case,
                 &code_occurence_field,
                 vec![
                     (
@@ -1099,8 +1100,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ],
             ),
             {
-                let query_and_rollback_failed_upper_camel_case = proc_macro_helpers::naming_conventions::QueryAndRollbackFailedUpperCamelCase;
-                let query_and_rollback_failed_snake_case = proc_macro_helpers::naming_conventions::QueryAndRollbackFailedSnakeCase;
                 let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
                     line!(),
