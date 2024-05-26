@@ -79,7 +79,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["column", "decode", "index"],
         ["expected", "response"],
         ["postgresql", "crud"],
-        ["check", "body", "size", "error", "named"]
+        ["check", "body", "size", "error", "named"],
+        ["primary", "key", "from", "row"]
     ]
 );
 
