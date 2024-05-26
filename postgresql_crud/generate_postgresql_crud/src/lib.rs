@@ -197,7 +197,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         primary_key_field_option.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {primary_key_attr_name} attribute"), |value| value)
     };
-    println!("{primary_key_syn_field:#?}");
     let primary_key_field = &primary_key_syn_field.field;
     let primary_key_field_ident = &primary_key_syn_field.field_ident;
     let primary_key_rust_sqlx_map_to_postgres_type_variant = &primary_key_syn_field.rust_sqlx_map_to_postgres_type_variant; 
@@ -695,7 +694,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     });
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
     let additional_http_status_codes_error_variants_snake_case = proc_macro_helpers::naming_conventions::CommonAdditionalHttpStatusCodesErrorVariantsSnakeCase;
-    let common_middlewares_error_syn_variants = {
+    let common_additional_http_status_codes_error_variants = {
         let additional_http_status_codes_error_variant_path = format!("{}::{additional_http_status_codes_error_variants_snake_case}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE);
         let additional_http_status_codes_error_variants_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
             &ast.attrs,
@@ -775,8 +774,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 acc
             })  
     };
-    // println!("{common_middlewares_error_syn_variants:#?}");
-    let common_middlewares_error_syn_variants_len = common_middlewares_error_syn_variants.len();
+    // println!("{common_additional_http_status_codes_error_variants:#?}");
+    let common_additional_http_status_codes_error_variants_len = common_additional_http_status_codes_error_variants.len();
     let extraction_result_snake_case = proc_macro_helpers::naming_conventions::ExtractionResultSnakeCase;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_upper_camel_case = naming_constants::PayloadUpperCamelCase;
@@ -2282,7 +2281,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = {
             let full_additional_http_status_codes_error_variants =
                 generate_full_additional_http_status_codes_error_variants(
-                    common_middlewares_error_syn_variants.iter().collect(),
+                    common_additional_http_status_codes_error_variants.iter().collect(),
                     additional_http_status_codes_error_variants.iter().collect(),
                 );
             let type_variants_from_request_response_syn_variants_partial = {
