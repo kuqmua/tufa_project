@@ -1592,12 +1592,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant,
             &proc_macro_name_upper_camel_case_ident_stringified,
         ),
-
-        // {
-
-        //     // quote::quote!{#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream,}
-        // }
-        // ,
     };
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream = match primary_key_from_or_try_from {
         postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
@@ -1633,22 +1627,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         no_payload_fields_syn_variant,
         no_payload_fields_syn_variant_initialization_token_stream,
     ) = {
+        let no_payload_fields_upper_camel_case = proc_macro_helpers::naming_conventions::NoPayloadFieldsUpperCamelCase;
+        let no_payload_fields_snake_case = proc_macro_helpers::naming_conventions::NoPayloadFieldsSnakeCase;
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 proc_macro_helpers::status_code::StatusCode::BadRequest400,
-                &proc_macro_helpers::naming_conventions::NoPayloadFieldsUpperCamelCase.to_string(),
+                &no_payload_fields_upper_camel_case,
                 &code_occurence_field,
                 vec![
                     (
                         proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                        &proc_macro_helpers::naming_conventions::NoPayloadFieldsSnakeCase.to_string(),
+                        &no_payload_fields_snake_case,
                         std_string_string_syn_punctuated_punctuated.clone()
                     )
                 ]
             ),
             {
-                let no_payload_fields_upper_camel_case = proc_macro_helpers::naming_conventions::NoPayloadFieldsUpperCamelCase;
-                let no_payload_fields_snake_case = proc_macro_helpers::naming_conventions::NoPayloadFieldsSnakeCase;
                 let no_payload_fields_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                     &format!(
                         "{} {} {}",
