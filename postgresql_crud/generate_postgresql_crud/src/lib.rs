@@ -698,6 +698,32 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let payload_upper_camel_case = naming_constants::PayloadUpperCamelCase;
     let payload_snake_case = naming_constants::PayloadSnakeCase;
     let payload_snake_case = naming_constants::PayloadSnakeCase;
+    let query_upper_camel_case = naming_constants::QueryUpperCamelCase;
+    let query_snake_case = naming_constants::QuerySnakeCase;
+    let rollback_upper_camel_case = naming_constants::RollbackUpperCamelCase;
+    let rollback_snake_case = naming_constants::RollbackSnakeCase;
+    let rollback_snake_case = naming_constants::RollbackSnakeCase;
+    let pg_connection_snake_case = proc_macro_helpers::naming_conventions::PgConnectionSnakeCase;
+    let query_string_snake_case = proc_macro_helpers::naming_conventions::QueryStringSnakeCase;
+    let binded_query_snake_case = proc_macro_helpers::naming_conventions::BindedQuerySnakeCase;
+    let current_vec_len_snake_case = proc_macro_helpers::naming_conventions::CurrentVecLenSnakeCase;
+    let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
+    let select_snake_case = naming_constants::SelectSnakeCase;
+    let limit_snake_case = naming_constants::LimitSnakeCase;
+    let offset_snake_case = naming_constants::OffsetSnakeCase;
+    let rollback_snake_case = naming_constants::RollbackSnakeCase;
+    let element_snake_case = naming_constants::ElementSnakeCase;
+    let acc_snake_case = naming_constants::AccSnakeCase;
+    let query_snake_case = naming_constants::QuerySnakeCase;
+    let update_snake_case = naming_constants::UpdateSnakeCase;
+    let as_snake_case = naming_constants::AsSnakeCase;
+    let set_snake_case = naming_constants::SetSnakeCase;
+    let from_snake_case = naming_constants::FromSnakeCase;
+    let insert_snake_case = naming_constants::InsertSnakeCase;
+    let into_snake_case = naming_constants::IntoSnakeCase;
+    let values_snake_case = naming_constants::ValuesSnakeCase;
+    let delete_snake_case = naming_constants::DeleteSnakeCase;
+    let where_snake_case = naming_constants::WhereSnakeCase;
     let payload_extraction_result_snake_case = proc_macro_helpers::naming_conventions::ExtractionResultSnakeCase;
     let use_futures_try_stream_ext_token_stream = quote::quote! {use futures::TryStreamExt};
     let serde_json_to_string_token_stream = quote::quote! {serde_json::to_string};
@@ -954,11 +980,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let query_upper_camel_case = naming_constants::QueryUpperCamelCase;
-    let query_snake_case = naming_constants::QuerySnakeCase;
-    let rollback_upper_camel_case = naming_constants::RollbackUpperCamelCase;
-    let rollback_snake_case = naming_constants::RollbackSnakeCase;
-    let rollback_snake_case = naming_constants::RollbackSnakeCase;
     let (
         query_and_rollback_failed_syn_variant,
         query_and_rollback_failed_syn_variant_initialization_token_stream
@@ -1551,32 +1572,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let try_extract_value_snake_case = proc_macro_helpers::naming_conventions::TryExtractValueSnakeCase;
     let dot_space = ", ";
     // let pg_temp_stringified = "pg_temp";
-    let pg_connection_snake_case = proc_macro_helpers::naming_conventions::PgConnectionSnakeCase;
-    let query_string_snake_case = proc_macro_helpers::naming_conventions::QueryStringSnakeCase;
-    let binded_query_snake_case = proc_macro_helpers::naming_conventions::BindedQuerySnakeCase;
-    let current_vec_len_snake_case = proc_macro_helpers::naming_conventions::CurrentVecLenSnakeCase;
-    let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
-    let select_snake_case = naming_constants::SelectSnakeCase;
-    let limit_snake_case = naming_constants::LimitSnakeCase;
-    let offset_snake_case = naming_constants::OffsetSnakeCase;
-    let rollback_snake_case = naming_constants::RollbackSnakeCase;
-    let element_snake_case = naming_constants::ElementSnakeCase;
-    let acc_snake_case = naming_constants::AccSnakeCase;
-    let query_snake_case = naming_constants::QuerySnakeCase;
-    let update_snake_case = naming_constants::UpdateSnakeCase;
-    let as_snake_case = naming_constants::AsSnakeCase;
-    let set_snake_case = naming_constants::SetSnakeCase;
-    let from_snake_case = naming_constants::FromSnakeCase;
-    let insert_snake_case = naming_constants::InsertSnakeCase;
-    let into_snake_case = naming_constants::IntoSnakeCase;
-    let values_snake_case = naming_constants::ValuesSnakeCase;
-    let delete_snake_case = naming_constants::DeleteSnakeCase;
-    let where_snake_case = naming_constants::WhereSnakeCase;
-    let where_snake_case_qoutes_token_stream =
-        proc_macro_common::generate_quotes::token_stream(
-            &where_snake_case.to_string(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
+    let where_snake_case_qoutes_token_stream = proc_macro_common::generate_quotes::token_stream(
+        &where_snake_case.to_string(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let and_snake_case = naming_constants::AndSnakeCase;
     let select_snake_case = naming_constants::SelectSnakeCase;
     let order_by_name_stringified = format!(
