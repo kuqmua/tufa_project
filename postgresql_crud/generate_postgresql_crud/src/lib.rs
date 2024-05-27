@@ -693,55 +693,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {pub use #inner_type_token_stream;}
     });
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
-    let common_additional_error_variants_attribute = {
-        let common_additional_error_variant_path_stringified = format!(
-            "{}::{}", 
-            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
-            proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsSnakeCase
-        );
-        let value = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
-            &ast.attrs,
-            &common_additional_error_variant_path_stringified,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        if value.path().segments.len() == 2 {
-            let first_ident = &value.path().segments.first().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
-            }).ident;
-            let second_ident = &value.path().segments.last().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
-            }).ident;
-            let possible_common_additional_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
-            assert!(common_additional_error_variant_path_stringified == possible_common_additional_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} {possible_common_additional_error_variants_attribute_path} is not {common_additional_error_variant_path_stringified}");
-        }
-        else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} no {common_additional_error_variant_path_stringified} path")
-        }
-        value
-    };
-    let common_additional_error_variants_attribute_tokens = if let syn::Meta::List(value) = &common_additional_error_variants_attribute.meta {
-        &value.tokens
-    }
-    else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} common_additional_error_variants_attribute.meta is not syn::Meta::List(value)")
-    };
-    let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_tokens).clone().into()).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    // println!("{:#?}", common_additional_error_variants_attribute_ast.data);
-    let current_common_additional_error_variants_ast_ident = &common_additional_error_variants_attribute_ast.ident;
-    let common_additional_error_variants_upper_camel_case = proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsUpperCamelCase;
-    assert!(current_common_additional_error_variants_ast_ident == &common_additional_error_variants_upper_camel_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} expected common_additional_error_variants_enum_name is not {common_additional_error_variants_upper_camel_case} (found {current_common_additional_error_variants_ast_ident})");
-    let common_additional_error_variants = if let syn::Data::Enum(data_enum) = &common_additional_error_variants_attribute_ast.data {
-        &data_enum.variants
-    }
-    else {
-        panic!("{proc_macro_name_upper_camel_case} common_additional_error_variants_attribute_ast.data is not syn::Data::Enum");
-    };
-    // println!("{common_additional_error_variants:#?}");
     let extraction_result_snake_case = proc_macro_helpers::naming_conventions::ExtractionResultSnakeCase;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_upper_camel_case = naming_constants::PayloadUpperCamelCase;
@@ -963,39 +914,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ),
     };
     let into_serialize_deserialize_version_snake_case = proc_macro_helpers::naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
-    let (bind_query_syn_variant, bind_query_variant_initialization_token_stream) = {
-        let bind_query_upper_camel_case = proc_macro_helpers::naming_conventions::BindQueryUpperCamelCase;
-        let bind_query_snake_case = proc_macro_helpers::naming_conventions::BindQuerySnakeCase;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                proc_macro_helpers::status_code::StatusCode::InternalServerError500,
-                &bind_query_upper_camel_case,
-                &code_occurence_field,
-                vec![(
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &bind_query_snake_case,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, &proc_macro_helpers::naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
-                )]
-            ),
-            {
-                let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #bind_query_upper_camel_case {
-                        #bind_query_snake_case: #error_snake_case.#into_serialize_deserialize_version_snake_case(),
-                        #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
-                    }
-                }
-            }
-        )
-    };
     let (checked_add_syn_variant, checked_add_variant_initialization_token_stream) = {
         let checked_add_upper_camel_case= proc_macro_helpers::naming_conventions::CheckedAddUpperCamelCase;
         let checked_add_snake_case = proc_macro_helpers::naming_conventions::CheckedAddSnakeCase;
@@ -1416,75 +1334,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
      };
-    let (postgresql_syn_variant, postgresql_syn_variant_initialization_token_stream) = {
-        let postgresql_upper_camel_case = naming_constants::PostgresqlUpperCamelCase;
-        let postgresql_snake_case = naming_constants::PostgresqlSnakeCase;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                proc_macro_helpers::status_code::StatusCode::InternalServerError500,
-                &postgresql_upper_camel_case,
-                &code_occurence_field,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &postgresql_snake_case,
-                        sqlx_error_syn_punctuated_punctuated,
-                    )
-                ]
-            ),
-            {
-                let field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #postgresql_upper_camel_case {
-                        #postgresql_snake_case: error,//todo reuse error_snake_case_token_stream
-                        #field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream,
-                    }
-                }
-            }
-        )
-    };
-    let (json_syn_variant, json_syn_variant_initialization_token_stream, json_syn_variant_status_code) = {
-        let json_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
-        let json_upper_camel_case = naming_constants::JsonUpperCamelCase;
-        let json_snake_case = naming_constants::JsonSnakeCase;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                json_syn_variant_status_code.clone(),
-                &json_upper_camel_case,
-                &code_occurence_field,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &json_snake_case,
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["axum","extract","rejection","JsonRejection"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    )
-                ]
-            ),
-            {
-                let field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #json_upper_camel_case {
-                        #json_snake_case: #error_snake_case,
-                        #field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream,
-                    }
-                }
-            },
-            json_syn_variant_status_code
-        )
-    };
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case = proc_macro_helpers::naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientUpperCamelCase;
     //todo maybe first convert to type what can be primary key ?
     let (
@@ -2065,6 +1914,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
+    let value_snake_case = naming_constants::ValueSnakeCase;
+    let error_snake_case = naming_constants::ErrorSnakeCase;
+    let response_snake_case = naming_constants::ResponseSnakeCase;
+    let common_http_request_syn_variants = {
+        vec![
+            serde_json_to_string_syn_variant,
+            failed_to_get_response_text_syn_variant,
+            deserialize_response_syn_variant,
+            reqwest_syn_variant,
+        ]
+    };
     let (check_body_size_syn_variant, check_body_size_syn_variant_initialization_token_stream) = {
         let check_body_size_upper_camel_case = proc_macro_helpers::naming_conventions::CheckBodySizeUpperCamelCase;
         let check_body_size_snake_case = proc_macro_helpers::naming_conventions::CheckBodySizeSnakeCase;
@@ -2098,9 +1958,166 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    let error_snake_case = naming_constants::ErrorSnakeCase;
-    let response_snake_case = naming_constants::ResponseSnakeCase;
+    let (postgresql_syn_variant, postgresql_syn_variant_initialization_token_stream) = {
+        let postgresql_upper_camel_case = naming_constants::PostgresqlUpperCamelCase;
+        let postgresql_snake_case = naming_constants::PostgresqlSnakeCase;
+        (
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::InternalServerError500,
+                &postgresql_upper_camel_case,
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &postgresql_snake_case,
+                        sqlx_error_syn_punctuated_punctuated,
+                    )
+                ]
+            ),
+            {
+                let field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                quote::quote! {
+                    #postgresql_upper_camel_case {
+                        #postgresql_snake_case: error,//todo reuse error_snake_case_token_stream
+                        #field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream,
+                    }
+                }
+            }
+        )
+    };
+    let (json_syn_variant, json_syn_variant_initialization_token_stream, json_syn_variant_status_code) = {
+        let json_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
+        let json_upper_camel_case = naming_constants::JsonUpperCamelCase;
+        let json_snake_case = naming_constants::JsonSnakeCase;
+        (
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+                json_syn_variant_status_code.clone(),
+                &json_upper_camel_case,
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &json_snake_case,
+                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &["axum","extract","rejection","JsonRejection"],
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ),
+                    )
+                ]
+            ),
+            {
+                let field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                quote::quote! {
+                    #json_upper_camel_case {
+                        #json_snake_case: #error_snake_case,
+                        #field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream,
+                    }
+                }
+            },
+            json_syn_variant_status_code
+        )
+    };
+    let (bind_query_syn_variant, bind_query_variant_initialization_token_stream) = {
+        let bind_query_upper_camel_case = proc_macro_helpers::naming_conventions::BindQueryUpperCamelCase;
+        let bind_query_snake_case = proc_macro_helpers::naming_conventions::BindQuerySnakeCase;
+        (
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::InternalServerError500,
+                &bind_query_upper_camel_case,
+                &code_occurence_field,
+                vec![(
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                    &bind_query_snake_case,
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, &proc_macro_helpers::naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )]
+            ),
+            {
+                let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                quote::quote! {
+                    #bind_query_upper_camel_case {
+                        #bind_query_snake_case: #error_snake_case.#into_serialize_deserialize_version_snake_case(),
+                        #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
+                    }
+                }
+            }
+        )
+    };
+    let common_additional_error_variants_attribute = {
+        let common_additional_error_variant_path_stringified = format!(
+            "{}::{}", 
+            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+            proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsSnakeCase
+        );
+        let value = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
+            &ast.attrs,
+            &common_additional_error_variant_path_stringified,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        if value.path().segments.len() == 2 {
+            let first_ident = &value.path().segments.first().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
+            }).ident;
+            let second_ident = &value.path().segments.last().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
+            }).ident;
+            let possible_common_additional_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
+            assert!(common_additional_error_variant_path_stringified == possible_common_additional_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} {possible_common_additional_error_variants_attribute_path} is not {common_additional_error_variant_path_stringified}");
+        }
+        else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} no {common_additional_error_variant_path_stringified} path")
+        }
+        value
+    };
+    let common_additional_error_variants_attribute_tokens = if let syn::Meta::List(value) = &common_additional_error_variants_attribute.meta {
+        &value.tokens
+    }
+    else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} common_additional_error_variants_attribute.meta is not syn::Meta::List(value)")
+    };
+    let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_tokens).clone().into()).unwrap_or_else(|error| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {error}",
+            proc_macro_common::constants::AST_PARSE_FAILED
+        )
+    });
+    let current_common_additional_error_variants_ast_ident = &common_additional_error_variants_attribute_ast.ident;
+    let common_additional_error_variants_upper_camel_case = proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsUpperCamelCase;
+    assert!(current_common_additional_error_variants_ast_ident == &common_additional_error_variants_upper_camel_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} expected common_additional_error_variants_enum_name is not {common_additional_error_variants_upper_camel_case} (found {current_common_additional_error_variants_ast_ident})");
+    let common_additional_error_variants = if let syn::Data::Enum(data_enum) = &common_additional_error_variants_attribute_ast.data {
+        &data_enum.variants
+    }
+    else {
+        panic!("{proc_macro_name_upper_camel_case} common_additional_error_variants_attribute_ast.data is not syn::Data::Enum");
+    };
+    let common_route_syn_variants = {
+        let mut value = std::vec::Vec::with_capacity(common_additional_error_variants.len() + common_additional_error_variants.len());
+        value.push(&check_body_size_syn_variant);
+        value.push(&postgresql_syn_variant);
+        value.push(&json_syn_variant);
+        value.push(&bind_query_syn_variant);
+        for element in common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
+            value.push(element);
+        }
+        value
+    };
     let generate_response_creation_token_stream = |
         operation: &Operation,
         try_operation_route_logic_response_variants_initialization_token_stream: &proc_macro2::TokenStream,
@@ -2149,25 +2166,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
         }
-    };
-    let common_http_request_syn_variants = {
-        vec![
-            serde_json_to_string_syn_variant,
-            failed_to_get_response_text_syn_variant,
-            deserialize_response_syn_variant,
-            reqwest_syn_variant,
-        ]
-    };
-    let common_route_syn_variants = {
-        let mut value = std::vec::Vec::with_capacity(common_additional_error_variants.len() + common_additional_error_variants.len());
-        value.push(&check_body_size_syn_variant);
-        value.push(&postgresql_syn_variant);
-        value.push(&json_syn_variant);
-        value.push(&bind_query_syn_variant);
-        for element in common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
-            value.push(element);
-        }
-        value
     };
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
