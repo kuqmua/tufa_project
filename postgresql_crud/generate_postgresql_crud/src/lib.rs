@@ -693,56 +693,53 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {pub use #inner_type_token_stream;}
     });
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
-    let common_additional_error_variants = {
-        let common_additional_error_variants_attribute = {
-            let common_additional_error_variant_path_stringified = format!(
-                "{}::{}", 
-                postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
-                proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsSnakeCase
-            );
-            let value = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
-                &ast.attrs,
-                &common_additional_error_variant_path_stringified,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            if value.path().segments.len() == 2 {
-                let first_ident = &value.path().segments.first().unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
-                }).ident;
-                let second_ident = &value.path().segments.last().unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
-                }).ident;
-                let possible_common_additional_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
-                assert!(common_additional_error_variant_path_stringified == possible_common_additional_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} {possible_common_additional_error_variants_attribute_path} is not {common_additional_error_variant_path_stringified}");
-            }
-            else {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} no {common_additional_error_variant_path_stringified} path")
-            }
-            value
-        };
-        let common_additional_error_variants_attribute_tokens = if let syn::Meta::List(value) = &common_additional_error_variants_attribute.meta {
-            &value.tokens
+    let common_additional_error_variants_attribute = {
+        let common_additional_error_variant_path_stringified = format!(
+            "{}::{}", 
+            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+            proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsSnakeCase
+        );
+        let value = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
+            &ast.attrs,
+            &common_additional_error_variant_path_stringified,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        if value.path().segments.len() == 2 {
+            let first_ident = &value.path().segments.first().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
+            }).ident;
+            let second_ident = &value.path().segments.last().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
+            }).ident;
+            let possible_common_additional_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
+            assert!(common_additional_error_variant_path_stringified == possible_common_additional_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} {possible_common_additional_error_variants_attribute_path} is not {common_additional_error_variant_path_stringified}");
         }
         else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} common_additional_error_variants_attribute.meta is not syn::Meta::List(value)")
-        };
-        let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_tokens).clone().into()).unwrap_or_else(|error| {
-            panic!(
-                "{proc_macro_name_upper_camel_case} {}: {error}",
-                proc_macro_common::constants::AST_PARSE_FAILED
-            )
-        });
-        println!("{:#?}", common_additional_error_variants_attribute_ast.data);
-        let current_common_additional_error_variants_ast_ident = &common_additional_error_variants_attribute_ast.ident;
-        let common_additional_error_variants_upper_camel_case = proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsUpperCamelCase;
-        assert!(current_common_additional_error_variants_ast_ident == &common_additional_error_variants_upper_camel_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} expected common_additional_error_variants_enum_name is not {common_additional_error_variants_upper_camel_case} (found {current_common_additional_error_variants_ast_ident})");
-        let data_enum_variants = if let syn::Data::Enum(data_enum) = &common_additional_error_variants_attribute_ast.data {
-            &data_enum.variants
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} no {common_additional_error_variant_path_stringified} path")
         }
-        else {
-            panic!("{proc_macro_name_upper_camel_case} common_additional_error_variants_attribute_ast.data is not syn::Data::Enum");
-        };
-        vec![]
+        value
+    };
+    let common_additional_error_variants_attribute_tokens = if let syn::Meta::List(value) = &common_additional_error_variants_attribute.meta {
+        &value.tokens
+    }
+    else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} common_additional_error_variants_attribute.meta is not syn::Meta::List(value)")
+    };
+    let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_tokens).clone().into()).unwrap_or_else(|error| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {error}",
+            proc_macro_common::constants::AST_PARSE_FAILED
+        )
+    });
+    // println!("{:#?}", common_additional_error_variants_attribute_ast.data);
+    let current_common_additional_error_variants_ast_ident = &common_additional_error_variants_attribute_ast.ident;
+    let common_additional_error_variants_upper_camel_case = proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsUpperCamelCase;
+    assert!(current_common_additional_error_variants_ast_ident == &common_additional_error_variants_upper_camel_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} expected common_additional_error_variants_enum_name is not {common_additional_error_variants_upper_camel_case} (found {current_common_additional_error_variants_ast_ident})");
+    let common_additional_error_variants = if let syn::Data::Enum(data_enum) = &common_additional_error_variants_attribute_ast.data {
+        &data_enum.variants
+    }
+    else {
+        panic!("{proc_macro_name_upper_camel_case} common_additional_error_variants_attribute_ast.data is not syn::Data::Enum");
     };
     // println!("{common_additional_error_variants:#?}");
     let common_additional_error_variants_len = common_additional_error_variants.len();
@@ -2201,7 +2198,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
         let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream(&operation);
         let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
-        let additional_http_status_codes_error_variants = []; //todo find out why rust analyzer crashes
+        // let additional_http_status_codes_error_variants = []; //todo find out why rust analyzer crashes
                                                                   // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
                                                                   //     &ast,
                                                                   //     &operation_name_snake_case_stringified,
@@ -2249,11 +2246,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         };
         let type_variants_from_request_response_syn_variants = {
-            let full_additional_http_status_codes_error_variants =
-                generate_full_additional_http_status_codes_error_variants(
-                    common_additional_error_variants.iter().collect(),
-                    additional_http_status_codes_error_variants.iter().collect(),
-                );
+            // let full_additional_http_status_codes_error_variants =
+            //     generate_full_additional_http_status_codes_error_variants(
+            //         common_additional_error_variants.iter().collect(),
+            //         additional_http_status_codes_error_variants.iter().collect(),
+            //     );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response = std::vec::Vec::with_capacity(6);
                 for element in &common_additional_syn_variants {
@@ -2271,7 +2268,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             generate_type_variants_from_request_response_syn_variants(
                 &type_variants_from_request_response_syn_variants_partial,
-                &full_additional_http_status_codes_error_variants,
+                // &full_additional_http_status_codes_error_variants,
+                &vec![]
             )
         };
         let desirable_status_code = operation.desirable_status_code();
