@@ -2107,23 +2107,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let common_additional_syn_variants: std::vec::Vec<syn::Variant> = vec![
-        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::BadRequest400,
-            &proc_macro_helpers::naming_conventions::CheckCommitUpperCamelCase.to_string(),
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &proc_macro_helpers::naming_conventions::CheckCommitSnakeCase.to_string(),
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &["route_validators", "check_commit", "CheckCommitErrorNamed"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
-                )
-            ]
-        )
-    ];
+    // let common_additional_syn_variants: std::vec::Vec<syn::Variant> = vec![
+    //     proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+    //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
+    //         &proc_macro_helpers::naming_conventions::CheckCommitUpperCamelCase.to_string(),
+    //         &code_occurence_field,
+    //         vec![
+    //             (
+    //                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+    //                 &proc_macro_helpers::naming_conventions::CheckCommitSnakeCase.to_string(),
+    //                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+    //                     &["route_validators", "check_commit", "CheckCommitErrorNamed"],
+    //                     &proc_macro_name_upper_camel_case_ident_stringified
+    //                 ),
+    //             )
+    //         ]
+    //     )
+    // ];
     let value_snake_case = naming_constants::ValueSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let response_snake_case = naming_constants::ResponseSnakeCase;
@@ -2253,9 +2253,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //     );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response = std::vec::Vec::with_capacity(6);
-                for element in &common_additional_syn_variants {
+                //
+                for element in common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
                     type_variants_from_request_response.push(element);
                 }
+                //
+                // for element in &common_additional_syn_variants {
+                //     type_variants_from_request_response.push(element);
+                // }
                 type_variants_from_request_response.push(&check_body_size_syn_variant);
                 type_variants_from_request_response.push(&postgresql_syn_variant);
                 type_variants_from_request_response.push(&json_syn_variant);
@@ -2273,11 +2278,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         };
         let desirable_status_code = operation.desirable_status_code();
-        let unique_status_codes = generate_unique_status_codes(
-            desirable_status_code,
-            &type_variants_from_request_response_syn_variants,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
+        // let unique_status_codes = generate_unique_status_codes(
+        //     desirable_status_code,
+        //     &type_variants_from_request_response_syn_variants,
+        //     &proc_macro_name_upper_camel_case_ident_stringified,
+        // );
         let parameters_token_stream = {
             let payload_token_stream = {
                 let operation_payload_element_token_stream = {
@@ -8510,24 +8515,24 @@ fn generate_type_variants_from_request_response_syn_variants<'a>(
     handle
 }
 
-fn generate_unique_status_codes(
-    desirable_status_code: proc_macro_helpers::status_code::StatusCode,
-    type_variants_from_request_response_syn_variants: &[&syn::Variant],
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> std::vec::Vec<proc_macro_helpers::status_code::StatusCode> {
-    let mut value =
-        std::vec::Vec::with_capacity(type_variants_from_request_response_syn_variants.len());
-    value.push(desirable_status_code);
-    for element in type_variants_from_request_response_syn_variants {
-        let variant_ident = &element.ident;
-        let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)
-        .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
-        if !value.contains(&error_variant_status_code) {
-            value.push(error_variant_status_code);
-        }
-    }
-    value
-}
+// fn generate_unique_status_codes(
+//     desirable_status_code: proc_macro_helpers::status_code::StatusCode,
+//     type_variants_from_request_response_syn_variants: &[&syn::Variant],
+//     proc_macro_name_upper_camel_case_ident_stringified: &str,
+// ) -> std::vec::Vec<proc_macro_helpers::status_code::StatusCode> {
+//     let mut value =
+//         std::vec::Vec::with_capacity(type_variants_from_request_response_syn_variants.len());
+//     value.push(desirable_status_code);
+//     for element in type_variants_from_request_response_syn_variants {
+//         let variant_ident = &element.ident;
+//         let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)
+//         .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
+//         if !value.contains(&error_variant_status_code) {
+//             value.push(error_variant_status_code);
+//         }
+//     }
+//     value
+// }
 
 // fn generate_swagger_open_api_token_stream(
 //     table_name_stringified: &str,

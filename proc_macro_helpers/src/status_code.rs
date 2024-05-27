@@ -492,67 +492,69 @@ impl StatusCode {
     }
 }
 
-impl TryFrom<&syn::Variant> for StatusCode {
-    type Error = std::string::String;
-    fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
-        let mut option_self: Option<Self> = None;
-        for element in &value.attrs {
-            if element.path().segments.len() == 1 {
-                match element.path().segments.first() {
-                    Some(segment) => {
-                        if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
-                            match option_self {
-                                Some(value) => {
-                                    return Err(format!("duplicated status_code attributes {value} are not supported"));
-                                }
-                                None => {
-                                    option_self = Some(value);
-                                }
-                            }
-                        }
-                    }
-                    None => {
-                        return Err(std::string::String::from(
-                            "element.path().segments.first() is None",
-                        ));
-                    }
-                }
-            }
-        }
-        option_self.map_or_else(|| Err(std::string::String::from("status_code attribute not found")), |value| Ok(value))
-    }
-}
+// impl TryFrom<&syn::Variant> for StatusCode {
+//     type Error = std::string::String;
+//     fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
+//         let mut option_self: Option<Self> = None;
+//         for element in &value.attrs {
+//             if element.path().segments.len() == 1 {
+//                 match element.path().segments.first() {
+//                     Some(segment) => {
+//                         println!("1{}", &segment.ident.to_string());
+//                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
+//                             match option_self {
+//                                 Some(value) => {
+//                                     return Err(format!("duplicated status_code attributes {value} are not supported"));
+//                                 }
+//                                 None => {
+//                                     option_self = Some(value);
+//                                 }
+//                             }
+//                         }
+//                     }
+//                     None => {
+//                         return Err(std::string::String::from(
+//                             "element.path().segments.first() is None",
+//                         ));
+//                     }
+//                 }
+//             }
+//         }
+//         option_self.map_or_else(|| Err(std::string::String::from("status_code attribute not found")), |value| Ok(value))
+//     }
+// }
 
-impl TryFrom<&&syn::Variant> for StatusCode {
-    type Error = std::string::String;
-    fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
-        let mut option_self: Option<Self> = None;
-        for element in &value.attrs {
-            if element.path().segments.len() == 1 {
-                match element.path().segments.first() {
-                    Some(segment) => {
-                        if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
-                            match option_self {
-                                Some(value) => {
-                                    return Err(format!("duplicated status_code attributes {value} are not supported"));
-                                }
-                                None => {
-                                    option_self = Some(value);
-                                }
-                            }
-                        }
-                    }
-                    None => {
-                        return Err(std::string::String::from(
-                            "element.path().segments.first() is None",
-                        ));
-                    }
-                }
-            }
-        }
-        option_self.map_or_else(|| Err(std::string::String::from("status_code attribute not found")), |value| Ok(value))
-    }
-}
+// impl TryFrom<&&syn::Variant> for StatusCode {
+//     type Error = std::string::String;
+//     fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
+//         let mut option_self: Option<Self> = None;
+//         for element in &value.attrs {
+//             if element.path().segments.len() == 1 {
+//                 match element.path().segments.first() {
+//                     Some(segment) => {
+//                         println!("2{}", &segment.ident.to_string());
+//                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
+//                             match option_self {
+//                                 Some(value) => {
+//                                     return Err(format!("duplicated status_code attributes {value} are not supported"));
+//                                 }
+//                                 None => {
+//                                     option_self = Some(value);
+//                                 }
+//                             }
+//                         }
+//                     }
+//                     None => {
+//                         return Err(std::string::String::from(
+//                             "element.path().segments.first() is None",
+//                         ));
+//                     }
+//                 }
+//             }
+//         }
+//         option_self.map_or_else(|| Err(std::string::String::from("status_code attribute not found")), |value| Ok(value))
+//     }
+// }
 
 impl TryFrom<&std::string::String> for StatusCode {
     type Error = ();
