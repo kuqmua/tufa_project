@@ -742,7 +742,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         panic!("{proc_macro_name_upper_camel_case} common_additional_error_variants_attribute_ast.data is not syn::Data::Enum");
     };
     // println!("{common_additional_error_variants:#?}");
-    let common_additional_error_variants_len = common_additional_error_variants.len();
     let extraction_result_snake_case = proc_macro_helpers::naming_conventions::ExtractionResultSnakeCase;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_upper_camel_case = naming_constants::PayloadUpperCamelCase;
@@ -2066,14 +2065,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let try_operation_error_named_common_syn_variants = {
-        vec![
-            serde_json_to_string_syn_variant,
-            failed_to_get_response_text_syn_variant,
-            deserialize_response_syn_variant,
-            reqwest_syn_variant,
-        ]
-    };
     let (check_body_size_syn_variant, check_body_size_syn_variant_initialization_token_stream) = {
         let check_body_size_upper_camel_case = proc_macro_helpers::naming_conventions::CheckBodySizeUpperCamelCase;
         let check_body_size_snake_case = proc_macro_helpers::naming_conventions::CheckBodySizeSnakeCase;
@@ -2107,23 +2098,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    // let common_additional_syn_variants: std::vec::Vec<syn::Variant> = vec![
-    //     proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-    //         proc_macro_helpers::status_code::StatusCode::BadRequest400,
-    //         &proc_macro_helpers::naming_conventions::CheckCommitUpperCamelCase.to_string(),
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-    //                 &proc_macro_helpers::naming_conventions::CheckCommitSnakeCase.to_string(),
-    //                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-    //                     &["route_validators", "check_commit", "CheckCommitErrorNamed"],
-    //                     &proc_macro_name_upper_camel_case_ident_stringified
-    //                 ),
-    //             )
-    //         ]
-    //     )
-    // ];
     let value_snake_case = naming_constants::ValueSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let response_snake_case = naming_constants::ResponseSnakeCase;
@@ -2175,6 +2149,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
         }
+    };
+    let common_http_request_syn_variants = {
+        vec![
+            serde_json_to_string_syn_variant,
+            failed_to_get_response_text_syn_variant,
+            deserialize_response_syn_variant,
+            reqwest_syn_variant,
+        ]
+    };
+    let common_route_syn_variants = {
+        let mut value = std::vec::Vec::with_capacity(common_additional_error_variants.len() + common_additional_error_variants.len());
+        value.push(&check_body_size_syn_variant);
+        value.push(&postgresql_syn_variant);
+        value.push(&json_syn_variant);
+        value.push(&bind_query_syn_variant);
+        for element in common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
+            value.push(element);
+        }
+        value
     };
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
@@ -2246,25 +2239,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         };
         let type_variants_from_request_response_syn_variants = {
-            // let full_additional_http_status_codes_error_variants =
-            //     generate_full_additional_http_status_codes_error_variants(
-            //         common_additional_error_variants.iter().collect(),
-            //         additional_http_status_codes_error_variants.iter().collect(),
-            //     );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response = std::vec::Vec::with_capacity(6);
-                //
-                for element in common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
+                for element in common_route_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
-                //
-                // for element in &common_additional_syn_variants {
-                //     type_variants_from_request_response.push(element);
-                // }
-                type_variants_from_request_response.push(&check_body_size_syn_variant);
-                type_variants_from_request_response.push(&postgresql_syn_variant);
-                type_variants_from_request_response.push(&json_syn_variant);
-                type_variants_from_request_response.push(&bind_query_syn_variant);
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
                 if fields_named_excluding_primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
@@ -2897,8 +2876,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_error_named_token_stream = {
                 let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
                 let syn_variants = {
-                    let mut value = std::vec::Vec::with_capacity(try_operation_error_named_common_syn_variants.len() + 1);
-                    for element in try_operation_error_named_common_syn_variants {
+                    let mut value = std::vec::Vec::with_capacity(common_http_request_syn_variants.len() + 1);
+                    for element in common_http_request_syn_variants {
                         value.push(element);
                     }
                     value.push(construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
@@ -8725,34 +8704,6 @@ enum OperationHttpMethod {
 //         }
 //     }
 // }
-
-fn generate_full_additional_http_status_codes_error_variants<'a>(
-    common_middlewares_error_syn_variants: std::vec::Vec<&'a (
-        syn::Ident,
-        proc_macro2::TokenStream,
-        std::vec::Vec<syn::Variant>,
-    )>,
-    additional_http_status_codes_error_variants: std::vec::Vec<&'a (
-        syn::Ident,
-        proc_macro2::TokenStream,
-        std::vec::Vec<syn::Variant>,
-    )>,
-) -> std::vec::Vec<&'a (
-    syn::Ident,
-    proc_macro2::TokenStream,
-    std::vec::Vec<syn::Variant>,
-)> {
-    let mut handle = std::vec::Vec::with_capacity(
-        common_middlewares_error_syn_variants.len().checked_add(additional_http_status_codes_error_variants.len()).unwrap()
-    );
-    for element in common_middlewares_error_syn_variants {
-        handle.push(element);
-    }
-    for element in additional_http_status_codes_error_variants {
-        handle.push(element);
-    }
-    handle
-}
 
 //todo test asc desc
 enum Order {
