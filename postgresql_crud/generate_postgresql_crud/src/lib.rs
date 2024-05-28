@@ -2058,38 +2058,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let common_additional_error_variants_attribute = {
-        let common_additional_error_variant_path_stringified = format!(
-            "{}::{}", 
-            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
-            proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsSnakeCase
-        );
-        let value = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
-            &ast.attrs,
-            &common_additional_error_variant_path_stringified,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        if value.path().segments.len() == 2 {
-            let first_ident = &value.path().segments.first().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
-            }).ident;
-            let second_ident = &value.path().segments.last().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} value.path().segments.get(0) is None")
-            }).ident;
-            let possible_common_additional_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
-            assert!(common_additional_error_variant_path_stringified == possible_common_additional_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} {possible_common_additional_error_variants_attribute_path} is not {common_additional_error_variant_path_stringified}");
-        }
-        else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_error_variant_path_stringified} no {common_additional_error_variant_path_stringified} path")
-        }
-        value
-    };
-    let common_additional_error_variants_attribute_tokens = if let syn::Meta::List(value) = &common_additional_error_variants_attribute.meta {
-        &value.tokens
-    }
-    else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} common_additional_error_variants_attribute.meta is not syn::Meta::List(value)")
-    };
+    let common_additional_error_variants_attribute_tokens = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_tokens(
+        &ast.attrs,
+        &GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants.generate_path_to_attribute(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_tokens).clone().into()).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
@@ -2165,36 +2138,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
-    //
-    // common_additional_route_logic(
-    let common_additional_route_logic_attribute = {
-        let common_additional_route_logic_path_stringified = format!(
-            "{}::{}", 
-            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
-            proc_macro_helpers::naming_conventions::CommonAdditionalRouteLogicSnakeCase
-        );
-        let value = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
-            &ast.attrs,
-            &common_additional_route_logic_path_stringified,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        if value.path().segments.len() == 2 {
-            let first_ident = &value.path().segments.first().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_route_logic_path_stringified} value.path().segments.get(0) is None")
-            }).ident;
-            let second_ident = &value.path().segments.last().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_route_logic_path_stringified} value.path().segments.get(0) is None")
-            }).ident;
-            let possible_common_additional_route_logic_attribute_path = format!("{first_ident}::{second_ident}");
-            assert!(common_additional_route_logic_path_stringified == possible_common_additional_route_logic_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_route_logic_path_stringified} {possible_common_additional_route_logic_attribute_path} is not {common_additional_route_logic_path_stringified}");
-        }
-        else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {common_additional_route_logic_path_stringified} path")
-        }
-        value
-    };
+    let common_additional_route_logic_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_tokens(
+        &ast.attrs,
+        &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     println!("{common_additional_route_logic_attribute:#?}");
-    //
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
@@ -9247,3 +9196,58 @@ fn construct_try_operation_route_logic_error_named_with_serialize_deserialize_sy
         ]
     )
 }
+
+enum GeneratePostgresqlCrudAttribute {
+    CreateManyAdditionalErrorVariants,
+    CreateOneAdditionalErrorVariants,
+    ReadManyAdditionalErrorVariants,
+    ReadOneAdditionalErrorVariants,
+    UpdateManyAdditionalErrorVariants,
+    UpdateOneAdditionalErrorVariants,
+    DeleteManyAdditionalErrorVariants,
+    DeleteOneAdditionalErrorVariants,
+    CommonAdditionalErrorVariants,
+    CreateManyAdditionalRouteLogic,
+    CreateOneAdditionalRouteLogic,
+    ReadManyAdditionalRouteLogic,
+    ReadOneAdditionalRouteLogic,
+    UpdateManyAdditionalRouteLogic,
+    UpdateOneAdditionalRouteLogic,
+    DeleteManyAdditionalRouteLogic,
+    DeleteOneAdditionalRouteLogic,
+    CommonAdditionalRouteLogic,
+}
+impl std::fmt::Display for GeneratePostgresqlCrudAttribute {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter, 
+            "{}",
+            match self {
+                Self::CreateManyAdditionalErrorVariants => proc_macro_helpers::naming_conventions::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateOneAdditionalErrorVariants => proc_macro_helpers::naming_conventions::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadManyAdditionalErrorVariants => proc_macro_helpers::naming_conventions::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadOneAdditionalErrorVariants => proc_macro_helpers::naming_conventions::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateManyAdditionalErrorVariants => proc_macro_helpers::naming_conventions::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateOneAdditionalErrorVariants => proc_macro_helpers::naming_conventions::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteManyAdditionalErrorVariants => proc_macro_helpers::naming_conventions::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteOneAdditionalErrorVariants => proc_macro_helpers::naming_conventions::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CommonAdditionalErrorVariants => proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateManyAdditionalRouteLogic => proc_macro_helpers::naming_conventions::CreateManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::CreateOneAdditionalRouteLogic => proc_macro_helpers::naming_conventions::CreateOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::ReadManyAdditionalRouteLogic => proc_macro_helpers::naming_conventions::ReadManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::ReadOneAdditionalRouteLogic => proc_macro_helpers::naming_conventions::ReadOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::UpdateManyAdditionalRouteLogic => proc_macro_helpers::naming_conventions::UpdateManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::UpdateOneAdditionalRouteLogic => proc_macro_helpers::naming_conventions::UpdateOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::DeleteManyAdditionalRouteLogic => proc_macro_helpers::naming_conventions::DeleteManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::DeleteOneAdditionalRouteLogic => proc_macro_helpers::naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::CommonAdditionalRouteLogic => proc_macro_helpers::naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
+            }
+        )
+    }
+}
+impl GeneratePostgresqlCrudAttribute {
+    fn generate_path_to_attribute(self) -> std::string::String {
+        format!("{}::{self}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE)
+    }
+}
+
