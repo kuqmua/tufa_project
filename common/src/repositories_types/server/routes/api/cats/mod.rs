@@ -1,12 +1,12 @@
 #[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
 #[postgresql_crud::create_many_additional_error_variants{}]
 #[postgresql_crud::create_one_additional_error_variants{}]
-#[postgresql_crud::read_one_additional_error_variants{}]
 #[postgresql_crud::read_many_additional_error_variants{}]
-#[postgresql_crud::update_one_additional_error_variants{}]
+#[postgresql_crud::read_one_additional_error_variants{}]
 #[postgresql_crud::update_many_additional_error_variants{}]
-#[postgresql_crud::delete_one_additional_error_variants{}]
+#[postgresql_crud::update_one_additional_error_variants{}]
 #[postgresql_crud::delete_many_additional_error_variants{}]
+#[postgresql_crud::delete_one_additional_error_variants{}]
 #[postgresql_crud::common_additional_error_variants{
     enum CommonAdditionalErrorVariants {
         CheckCommit {
@@ -16,6 +16,15 @@
         },
     }
 }]
+#[postgresql_crud::create_many_additional_route_logic{}]
+#[postgresql_crud::create_one_additional_route_logic{}]
+#[postgresql_crud::read_many_additional_route_logic{}]
+#[postgresql_crud::read_one_additional_route_logic{}]
+#[postgresql_crud::update_many_additional_route_logic{}]
+#[postgresql_crud::update_one_additional_route_logic{}]
+#[postgresql_crud::delete_many_additional_route_logic{}]
+#[postgresql_crud::delete_one_additional_route_logic{}]
+#[postgresql_crud::common_additional_route_logic{}]
 pub struct Dog {
     pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
     // pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull,

@@ -95,9 +95,72 @@ pub fn delete_many_additional_error_variants(
 ) -> proc_macro::TokenStream {
     item
 }
-
 #[proc_macro_attribute]
 pub fn common_additional_error_variants(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+
+#[proc_macro_attribute]
+pub fn create_many_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn create_one_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn read_many_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn read_one_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn update_many_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn update_one_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn delete_many_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn delete_one_additional_route_logic(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn common_additional_route_logic(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
@@ -1551,8 +1614,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let content_type_application_json_header_addition_token_stream = quote::quote! {
         .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
     };
-    let axum_response_into_response_token_stream =
-        proc_macro_common::axum_response_into_response_token_stream();
+    let axum_response_into_response_token_stream = proc_macro_common::axum_response_into_response_token_stream();
     let axum_extract_rejection_json_rejection_token_stream = proc_macro_common::axum_extract_rejection_json_rejection_token_stream();
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
