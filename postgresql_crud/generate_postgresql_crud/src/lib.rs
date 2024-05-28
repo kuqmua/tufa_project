@@ -2058,33 +2058,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let common_additional_error_variants_attribute_ast: syn::DeriveInput = {
+    let common_additional_error_variants = {
         let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
             &ast.attrs,
             &GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants.generate_path_to_attribute(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let value = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
+        let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
             panic!(
                 "{proc_macro_name_upper_camel_case} {}: {error}",
                 proc_macro_common::constants::AST_PARSE_FAILED
             )
         });
-        value
-    };
-    let common_additional_error_variants = if let syn::Data::Enum(data_enum) = &common_additional_error_variants_attribute_ast.data {
-        &data_enum.variants
-    }
-    else {
-        panic!("{proc_macro_name_upper_camel_case} common_additional_error_variants_attribute_ast.data is not syn::Data::Enum");
+        let variants = if let syn::Data::Enum(data_enum) = value.data {
+            data_enum.variants
+        }
+        else {
+            panic!("{proc_macro_name_upper_camel_case} value.data is not syn::Data::Enum");
+        };
+        variants
     };
     let common_route_syn_variants = {
-        let mut value = std::vec::Vec::with_capacity(common_additional_error_variants.len() + common_additional_error_variants.len());
+        let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
+        let mut value = std::vec::Vec::with_capacity(common_additional_error_variants_vec.len() + common_additional_error_variants_vec.len());
         value.push(&check_body_size_syn_variant);
         value.push(&postgresql_syn_variant);
         value.push(&json_syn_variant);
         value.push(&bind_query_syn_variant);
-        for element in common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
+        for element in common_additional_error_variants_vec {
             value.push(element);
         }
         value
@@ -9233,4 +9234,3 @@ impl GeneratePostgresqlCrudAttribute {
         format!("{}::{self}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE)
     }
 }
-
