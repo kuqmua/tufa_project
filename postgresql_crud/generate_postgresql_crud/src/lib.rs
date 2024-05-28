@@ -2058,12 +2058,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let common_additional_error_variants_attribute_tokens = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_tokens(
+    let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &ast.attrs,
         &GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants.generate_path_to_attribute(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_tokens).clone().into()).unwrap_or_else(|error| {
+    let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
@@ -2138,12 +2138,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
-    let common_additional_route_logic_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_tokens(
+    let common_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &ast.attrs,
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    println!("{common_additional_route_logic_attribute:#?}");
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
@@ -2581,30 +2580,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
                 let request_parts_preparation_token_stream = generate_request_parts_preparation_token_stream(&operation);
                 let additional_validators_token_stream = {
-                    let check_commit_token_stream = {
-                        let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                            &operation,
-                            &quote::quote! {
-                                CheckCommit {
-                                    check_commit: #error_snake_case,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                }
-                            },
-                            &quote::quote! {#from_snake_case(#error_snake_case)},
-                            &quote::quote! {#status_code_snake_case},
-                        );
-                        quote::quote! {
-                            if let Err(#error_snake_case) = route_validators::check_commit::check_commit(
-                                *app_state.get_enable_api_git_commit_check(),
-                                &headers,
-                            ) {
-                                let #status_code_snake_case = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_snake_case);
-                                #error_initialization_eprintln_response_creation_token_stream
-                            }
-                        }
-                    };
+                    let create_many_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+                        &ast.attrs,
+                        &GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic.generate_path_to_attribute(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
                     quote::quote! {
-                        #check_commit_token_stream
+                        #common_additional_route_logic_token_stream
+                        #create_many_additional_route_logic_token_stream
                     }
                 };
                 let parameters_logic_token_stream = {

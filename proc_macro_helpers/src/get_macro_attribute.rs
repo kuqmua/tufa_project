@@ -15,7 +15,7 @@ pub fn get_macro_attribute<'a>(
     }, |attribute| attribute)
 }
 
-pub fn get_macro_attribute_meta_list_tokens<'a>(
+pub fn get_macro_attribute_meta_list_token_stream<'a>(
     attrs: &'a [syn::Attribute],
     attribute_path: &std::string::String,
     proc_macro_name_ident_stringified: &std::string::String,

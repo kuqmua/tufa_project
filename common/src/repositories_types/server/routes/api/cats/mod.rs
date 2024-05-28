@@ -24,7 +24,24 @@
 #[postgresql_crud::update_one_additional_route_logic{}]
 #[postgresql_crud::delete_many_additional_route_logic{}]
 #[postgresql_crud::delete_one_additional_route_logic{}]
-#[postgresql_crud::common_additional_route_logic{}]
+#[postgresql_crud::common_additional_route_logic{
+    if let Err(error) = route_validators::check_commit::check_commit(
+        *app_state.get_enable_api_git_commit_check(),
+        &headers,
+    ) {
+        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+        let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+            check_commit: error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        };
+        eprintln!("{error}");
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(
+            TryCreateManyRouteLogicResponseVariants::from(error),
+        ));
+        *response.status_mut() = status_code;
+        return response;
+    }
+}]
 pub struct Dog {
     pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
     // pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull,
