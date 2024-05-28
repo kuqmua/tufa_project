@@ -2165,6 +2165,36 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
+    //
+    // common_additional_route_logic(
+    let common_additional_route_logic_attribute = {
+        let common_additional_route_logic_path_stringified = format!(
+            "{}::{}", 
+            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+            proc_macro_helpers::naming_conventions::CommonAdditionalRouteLogicSnakeCase
+        );
+        let value = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
+            &ast.attrs,
+            &common_additional_route_logic_path_stringified,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        if value.path().segments.len() == 2 {
+            let first_ident = &value.path().segments.first().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_route_logic_path_stringified} value.path().segments.get(0) is None")
+            }).ident;
+            let second_ident = &value.path().segments.last().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_route_logic_path_stringified} value.path().segments.get(0) is None")
+            }).ident;
+            let possible_common_additional_route_logic_attribute_path = format!("{first_ident}::{second_ident}");
+            assert!(common_additional_route_logic_path_stringified == possible_common_additional_route_logic_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {common_additional_route_logic_path_stringified} {possible_common_additional_route_logic_attribute_path} is not {common_additional_route_logic_path_stringified}");
+        }
+        else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {common_additional_route_logic_path_stringified} path")
+        }
+        value
+    };
+    println!("{common_additional_route_logic_attribute:#?}");
+    //
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
