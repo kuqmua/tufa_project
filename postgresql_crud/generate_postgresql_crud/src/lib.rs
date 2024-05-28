@@ -2060,6 +2060,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let common_additional_error_variants = generate_additional_error_variants(
         &ast,
+        GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
     let common_route_syn_variants = {
@@ -2197,10 +2198,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code
             )
         };
+        let operation_additional_error_variants = generate_additional_error_variants(
+            &ast,
+            GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
+        let operation_additional_error_variants_handle = operation_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
         let type_variants_from_request_response_syn_variants = {
             let type_variants_from_request_response_syn_variants_partial = {
-                let mut type_variants_from_request_response = std::vec::Vec::with_capacity(6);
+                let mut type_variants_from_request_response = std::vec::Vec::with_capacity(common_route_syn_variants.len() + operation_additional_error_variants.len() + 2);
                 for element in common_route_syn_variants {
+                    type_variants_from_request_response.push(element);
+                }
+                for element in operation_additional_error_variants_handle {
                     type_variants_from_request_response.push(element);
                 }
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
@@ -9221,11 +9231,12 @@ impl GeneratePostgresqlCrudAttribute {
 
 fn generate_additional_error_variants(
     ast: &syn::DeriveInput,
+    generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute,
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
 ) -> std::vec::Vec<syn::Variant> {
     let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &ast.attrs,
-        &GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants.generate_path_to_attribute(),
+        &generate_postgresql_crud_attribute.generate_path_to_attribute(),
         proc_macro_name_upper_camel_case_ident_stringified,
     );
     let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
