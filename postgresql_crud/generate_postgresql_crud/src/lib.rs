@@ -2058,20 +2058,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-        &ast.attrs,
-        &GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants.generate_path_to_attribute(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let common_additional_error_variants_attribute_ast: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    let current_common_additional_error_variants_ast_ident = &common_additional_error_variants_attribute_ast.ident;
-    let common_additional_error_variants_upper_camel_case = proc_macro_helpers::naming_conventions::CommonAdditionalErrorVariantsUpperCamelCase;
-    assert!(current_common_additional_error_variants_ast_ident == &common_additional_error_variants_upper_camel_case.to_string(), "{proc_macro_name_upper_camel_case_ident_stringified} expected common_additional_error_variants_enum_name is not {common_additional_error_variants_upper_camel_case} (found {current_common_additional_error_variants_ast_ident})");
+    let common_additional_error_variants_attribute_ast: syn::DeriveInput = {
+        let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+            &ast.attrs,
+            &GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants.generate_path_to_attribute(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let value = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
+            panic!(
+                "{proc_macro_name_upper_camel_case} {}: {error}",
+                proc_macro_common::constants::AST_PARSE_FAILED
+            )
+        });
+        value
+    };
     let common_additional_error_variants = if let syn::Data::Enum(data_enum) = &common_additional_error_variants_attribute_ast.data {
         &data_enum.variants
     }
