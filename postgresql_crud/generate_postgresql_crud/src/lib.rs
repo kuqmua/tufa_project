@@ -2203,14 +2203,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let operation_additional_error_variants_handle = operation_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
         let type_variants_from_request_response_syn_variants = {
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response = std::vec::Vec::with_capacity(common_route_syn_variants.len() + operation_additional_error_variants.len() + 2);
                 for element in common_route_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
-                for element in operation_additional_error_variants_handle {
+                for element in operation_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
                     type_variants_from_request_response.push(element);
                 }
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
