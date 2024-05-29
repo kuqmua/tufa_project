@@ -343,7 +343,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
-    let derive_debug_token_stream = proc_macro_helpers::wrap_derive::token_stream(&[&quote::quote!{#debug_upper_camel_case}]);
+    let derive_debug = DeriveDebug;
     let derive_debug_thiserror_error_occurence_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &quote::quote!{#debug_upper_camel_case},
@@ -2169,11 +2169,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_token_stream = {
                 let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
                     &operation,
-                    &derive_debug_token_stream,
+                    &derive_debug,
                     &fields_named_excluding_primary_key
                 );
                 let operation_payload_token_stream = quote::quote! {
-                    #derive_debug_token_stream
+                    #derive_debug
                     pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
                 };
                 quote::quote! {
@@ -2389,7 +2389,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
             let parameters_token_stream = quote::quote! {
-                #derive_debug_token_stream
+                #derive_debug
                 pub struct #operation_parameters_upper_camel_case_token_stream {//todo maybe not need additional info, so parameters wrapper potentially can be removed
                     pub #payload_snake_case: #operation_payload_upper_camel_case_token_stream,
                 }
@@ -9206,13 +9206,13 @@ impl quote::ToTokens for DeriveDebug {
 
 fn generate_operation_payload_element_token_stream(
     operation: &Operation,
-    derive_debug_token_stream: &proc_macro2::TokenStream,//todo make it tokensteram type wrapper? 
+    derive_debug: &DeriveDebug, 
     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
     let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
     quote::quote! {
-        #derive_debug_token_stream
+        #derive_debug
         pub struct #operation_payload_element_upper_camel_case_token_stream {
             #(#fields_with_excluded_primary_key_token_stream),*
         }
