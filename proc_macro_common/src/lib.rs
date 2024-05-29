@@ -40,7 +40,4 @@ pub fn generate_function_name_snake_case_token_stream(
 pub fn trait_path_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {proc_macro_common::naming_conventions}
 }
-pub fn std_string_string_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {std::string::String}
-}
 

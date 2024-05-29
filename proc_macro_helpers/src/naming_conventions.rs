@@ -404,3 +404,10 @@ impl quote::ToTokens for RefStdPrimitiveStr {
         quote::quote! {&std::primitive::str}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct StdStringString;
+impl quote::ToTokens for StdStringString {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::string::String}.to_tokens(tokens)
+    }
+}

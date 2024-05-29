@@ -25,7 +25,7 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
+    let std_string_string = proc_macro_helpers::naming_conventions::StdStringString;
     let variants_matching_values_token_stream = data_enum.variants.iter().map(|variant| match &variant.fields {
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
@@ -34,7 +34,7 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
                 &variant_ident_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_upper_camel_case_quotes_token_stream)}
+            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_upper_camel_case_quotes_token_stream)}
         },
         syn::Fields::Named(_) | 
         syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
