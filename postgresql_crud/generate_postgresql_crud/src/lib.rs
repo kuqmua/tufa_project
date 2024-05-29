@@ -1614,7 +1614,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let content_type_application_json_header_addition_token_stream = quote::quote! {
         .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
     };
-    let axum_response_into_response_token_stream = proc_macro_common::axum_response_into_response_token_stream();
+    let axum_response_into_response = proc_macro_helpers::naming_conventions::AxumResponseIntoResponse;
     let axum_extract_rejection_json_rejection = proc_macro_helpers::naming_conventions::AxumExtractRejectionJsonRejection;
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};

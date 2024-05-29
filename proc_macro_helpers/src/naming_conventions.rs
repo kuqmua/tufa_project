@@ -327,3 +327,10 @@ impl quote::ToTokens for AxumExtractRejectionJsonRejection {
         quote::quote! {axum::extract::rejection::JsonRejection}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct AxumResponseIntoResponse;
+impl quote::ToTokens for AxumResponseIntoResponse {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {axum::response::IntoResponse}.to_tokens(tokens)
+    }
+}

@@ -73,6 +73,3 @@ pub fn reqwest_header_header_map_token_stream() -> proc_macro2::TokenStream {
 pub fn reqwest_error_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {reqwest::Error}
 }
-pub fn axum_response_into_response_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {axum::response::IntoResponse} //todo maybe remove impl
-}
