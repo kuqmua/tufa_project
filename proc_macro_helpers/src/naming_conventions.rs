@@ -397,3 +397,10 @@ impl quote::ToTokens for ThiserrorError {
         quote::quote! {thiserror::Error}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct RefStdPrimitiveStr;
+impl quote::ToTokens for RefStdPrimitiveStr {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {&std::primitive::str}.to_tokens(tokens)
+    }
+}

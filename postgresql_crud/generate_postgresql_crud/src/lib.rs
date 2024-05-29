@@ -189,8 +189,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &table_name_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-    let str_ref_token_stream = proc_macro_common::str_ref_token_stream();
-    let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #str_ref_token_stream = #table_name_quotes_token_stream;};
+    let ref_std_primitive_str = proc_macro_helpers::naming_conventions::RefStdPrimitiveStr;
+    let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;};
     let fields_named = if let syn::Data::Struct(data_struct) = &ast.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             fields_named.named
@@ -2660,7 +2660,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         } {
-                            match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
+                            match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&value, #primary_key_field_ident_quotes_token_stream) {
                                 Ok(#value_snake_case) => {
                                     vec_values.push(
                                         #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
@@ -2745,7 +2745,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
-                &str_ref_token_stream,
+                &ref_std_primitive_str,
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
@@ -7865,7 +7865,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 }
 
 fn generate_http_request_many_token_stream(
-    str_ref_token_stream: &proc_macro2::TokenStream,
+    str_ref_token_stream: &proc_macro_helpers::naming_conventions::RefStdPrimitiveStr,
     serde_json_to_string_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
