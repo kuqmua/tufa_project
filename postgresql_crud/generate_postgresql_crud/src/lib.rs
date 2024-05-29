@@ -2172,10 +2172,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &derive_debug,
                     &fields_named_excluding_primary_key
                 );
-                let operation_payload_token_stream = quote::quote! {
-                    #derive_debug
-                    pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
-                };
+                let operation_payload_token_stream = generate_operation_payload_token_stream(
+                    &operation,
+                    &derive_debug,
+                );
                 quote::quote! {
                     #operation_payload_element_token_stream
                     #operation_payload_token_stream
@@ -9207,22 +9207,45 @@ impl quote::ToTokens for DeriveDebug {
 fn generate_operation_payload_element_token_stream(
     operation: &Operation,
     derive_debug: &DeriveDebug, 
-    fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
+    syn_field_with_additional_info_vec: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
-    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
+    let fields_token_stream = syn_field_with_additional_info_vec.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
     quote::quote! {
         #derive_debug
         pub struct #operation_payload_element_upper_camel_case_token_stream {
-            #(#fields_with_excluded_primary_key_token_stream),*
+            #(#fields_token_stream),*
         }
     }
 }
-// fn generate_operation_payload_token_stream(
+fn generate_operation_payload_token_stream(
+    operation: &Operation,
+    derive_debug: &DeriveDebug, 
+) -> proc_macro2::TokenStream {
+    let operation_payload_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
+    let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
+    quote::quote! {
+        #derive_debug
+        pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
+    }
+}
 
+// fn generate_operation_payload_full_token_stream(
+//     operation: &Operation,
+//     derive_debug: &DeriveDebug, 
+//     syn_field_with_additional_info_vec: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 // ) -> proc_macro2::TokenStream {
+//     let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
+//         &operation,
+//         &derive_debug,
+//         &syn_field_with_additional_info_vec
+//     );
+//     let operation_payload_token_stream = generate_operation_payload_token_stream(
+//         &operation,
+//         &derive_debug,
+//     );
 //     quote::quote! {
-//         #derive_debug_token_stream
-//         pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
+//         #operation_payload_element_token_stream
+//         #operation_payload_token_stream
 //     }
 // }
