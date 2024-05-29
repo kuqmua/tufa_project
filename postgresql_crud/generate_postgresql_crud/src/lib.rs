@@ -328,7 +328,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value
     };
     let debug_upper_camel_case = naming_constants::DebugUpperCamelCase;
-    let thiserror_error_token_stream = proc_macro_common::thiserror_error_token_stream();
+    let thiserror_error = proc_macro_helpers::naming_conventions::ThiserrorError;
     let error_occurence_error_occurence = proc_macro_helpers::naming_conventions::ErrorOccurenceLibErrorOccurence;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let app_state_snake_case = proc_macro_helpers::naming_conventions::AppStateSnakeCase;
@@ -347,7 +347,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let derive_debug_thiserror_error_occurence_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &quote::quote!{#debug_upper_camel_case},
-            &thiserror_error_token_stream,
+            &quote::quote!{#thiserror_error},
             &quote::quote!{#error_occurence_error_occurence},
         ]);
     let derive_debug_to_schema_token_stream =

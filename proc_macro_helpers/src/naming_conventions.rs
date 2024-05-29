@@ -390,3 +390,10 @@ impl quote::ToTokens for ErrorOccurenceLibErrorOccurence {
         quote::quote! {error_occurence_lib::ErrorOccurence}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct ThiserrorError;
+impl quote::ToTokens for ThiserrorError {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {thiserror::Error}.to_tokens(tokens)
+    }
+}

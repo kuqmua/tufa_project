@@ -46,6 +46,4 @@ pub fn std_string_string_token_stream() -> proc_macro2::TokenStream {
 pub fn str_ref_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {&str}
 }
-pub fn thiserror_error_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {thiserror::Error}
-}
+
