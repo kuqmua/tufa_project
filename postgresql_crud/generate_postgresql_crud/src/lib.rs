@@ -343,7 +343,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
-    let derive_debug = DeriveDebug;
+    let derive_debug = proc_macro_helpers::naming_conventions::DeriveDebug;
     let derive_debug_thiserror_error_occurence_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &quote::quote!{#debug_upper_camel_case},
@@ -9196,17 +9196,9 @@ fn generate_additional_error_variants(
     variants.into_iter().collect()
 }
 
-struct DeriveDebug;
-impl quote::ToTokens for DeriveDebug {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let debug_upper_camel_case = naming_constants::DebugUpperCamelCase;
-        proc_macro_helpers::wrap_derive::token_stream(&[&quote::quote!{#debug_upper_camel_case}]).to_tokens(tokens)
-    }
-}
-
 fn generate_operation_payload_element_token_stream(
     operation: &Operation,
-    derive_debug: &DeriveDebug, 
+    derive_debug: &proc_macro_helpers::naming_conventions::DeriveDebug, 
     syn_field_with_additional_info_vec: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
@@ -9220,7 +9212,7 @@ fn generate_operation_payload_element_token_stream(
 }
 fn generate_operation_payload_token_stream(
     operation: &Operation,
-    derive_debug: &DeriveDebug, 
+    derive_debug: &proc_macro_helpers::naming_conventions::DeriveDebug, 
 ) -> proc_macro2::TokenStream {
     let operation_payload_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
     let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();

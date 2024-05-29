@@ -304,3 +304,12 @@ where
 //     url_handle_stringified.parse::<proc_macro2::TokenStream>()
 //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {url_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 // }
+
+#[derive(Debug, Clone, Copy)]
+pub struct DeriveDebug;
+impl quote::ToTokens for DeriveDebug {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let debug_upper_camel_case = naming_constants::DebugUpperCamelCase;
+        crate::wrap_derive::token_stream(&[&quote::quote!{#debug_upper_camel_case}]).to_tokens(tokens)
+    }
+}
