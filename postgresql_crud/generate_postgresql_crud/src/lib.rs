@@ -1615,7 +1615,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
     };
     let axum_response_into_response_token_stream = proc_macro_common::axum_response_into_response_token_stream();
-    let axum_extract_rejection_json_rejection_token_stream = proc_macro_common::axum_extract_rejection_json_rejection_token_stream();
+    let axum_extract_rejection_json_rejection = proc_macro_helpers::naming_conventions::AxumExtractRejectionJsonRejection;
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
     let axum_extract_state_token_stream = quote::quote! {axum::extract::State};
@@ -3175,7 +3175,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
     //                 #payload_extraction_result_snake_case_token_stream: Result<
     //                     #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
-    //                     #axum_extract_rejection_json_rejection_token_stream,
+    //                     #axum_extract_rejection_json_rejection,
     //                 >,
     //             ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
     //                 let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
@@ -4093,7 +4093,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
     //                 #payload_extraction_result_snake_case_token_stream: Result<
     //                     #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
-    //                     #axum_extract_rejection_json_rejection_token_stream,
+    //                     #axum_extract_rejection_json_rejection,
     //                 >,
     //             ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
     //                 let mut #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
@@ -4584,7 +4584,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
     //                 #payload_extraction_result_snake_case_token_stream: Result<
     //                     #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
-    //                     #axum_extract_rejection_json_rejection_token_stream,
+    //                     #axum_extract_rejection_json_rejection,
     //                 >,
     //             ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
     //                 let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
@@ -5437,7 +5437,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
     //                 #payload_extraction_result_snake_case_token_stream: Result<
     //                     #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
-    //                     #axum_extract_rejection_json_rejection_token_stream,
+    //                     #axum_extract_rejection_json_rejection,
     //                 >,
     //             ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
     //                 let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
@@ -6067,7 +6067,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
     //                 #payload_extraction_result_snake_case_token_stream: Result<
     //                     #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
-    //                     #axum_extract_rejection_json_rejection_token_stream,
+    //                     #axum_extract_rejection_json_rejection,
     //                 >,
     //             ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
     //                 let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
@@ -6985,7 +6985,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
     //                 #payload_extraction_result_snake_case_token_stream: Result<
     //                     #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
-    //                     #axum_extract_rejection_json_rejection_token_stream,
+    //                     #axum_extract_rejection_json_rejection,
     //                 >,
     //             ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
     //                 let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
@@ -7446,7 +7446,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
     //                 #payload_extraction_result_snake_case_token_stream: Result<
     //                     #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
-    //                     #axum_extract_rejection_json_rejection_token_stream,
+    //                     #axum_extract_rejection_json_rejection,
     //                 >,
     //             ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
     //                 let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
