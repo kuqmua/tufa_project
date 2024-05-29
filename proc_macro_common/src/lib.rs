@@ -55,9 +55,4 @@ pub fn error_occurence_lib_error_occurence_token_stream() -> proc_macro2::TokenS
 pub fn utoipa_to_schema_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {utoipa::ToSchema}
 }
-pub fn serde_serialize_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {serde::Serialize}
-}
-pub fn serde_deserialize_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {serde::Deserialize}
-}
+

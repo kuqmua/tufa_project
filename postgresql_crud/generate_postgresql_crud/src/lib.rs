@@ -341,8 +341,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote!{eprintln!(#error_snake_case_quotes_token_stream);}
     };
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
-    let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
-    let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
+    let serde_serialize = proc_macro_helpers::naming_conventions::SerdeSerialize;
+    let serde_deserialize = proc_macro_helpers::naming_conventions::SerdeDeserialize;
+
     let derive_debug = proc_macro_helpers::naming_conventions::DeriveDebug;
     let derive_debug_thiserror_error_occurence_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
@@ -358,14 +359,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let derive_debug_serialize_deserialize_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &quote::quote!{#debug_upper_camel_case},
-            &serde_serialize_token_stream,
-            &serde_deserialize_token_stream,
+            &quote::quote!{#serde_serialize},
+            &quote::quote!{#serde_deserialize},
         ]);
     let derive_debug_serialize_deserialize_to_schema_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &quote::quote!{#debug_upper_camel_case},
-            &serde_serialize_token_stream,
-            &serde_deserialize_token_stream,
+            &quote::quote!{#serde_serialize},
+            &quote::quote!{#serde_deserialize},
             &utoipa_to_schema_token_stream,
         ]);
     let from_str_upper_camel_case = proc_macro_helpers::naming_conventions::FromStrUpperCamelCase;
@@ -518,8 +519,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             #[derive(
                 #debug_upper_camel_case,
-                #serde_serialize_token_stream,
-                #serde_deserialize_token_stream,
+                #serde_serialize,
+                #serde_deserialize,
                 enum_extension_lib::EnumExtension,
                 postgresql_crud::EnumIter,
                 PartialEq,

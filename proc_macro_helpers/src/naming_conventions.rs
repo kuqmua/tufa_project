@@ -362,3 +362,17 @@ impl quote::ToTokens for SqlxRow {
         quote::quote! {sqlx::Row}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct SerdeSerialize;
+impl quote::ToTokens for SerdeSerialize {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {serde::Serialize}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SerdeDeserialize;
+impl quote::ToTokens for SerdeDeserialize {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {serde::Deserialize}.to_tokens(tokens)
+    }
+}
