@@ -1956,12 +1956,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let (postgresql_syn_variant, postgresql_syn_variant_initialization_token_stream) = {
+    let (postgresql_syn_variant, postgresql_syn_variant_initialization_token_stream, postgresql_syn_variant_status_code) = {
+        let postgresql_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
         let postgresql_upper_camel_case = naming_constants::PostgresqlUpperCamelCase;
         let postgresql_snake_case = naming_constants::PostgresqlSnakeCase;
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                proc_macro_helpers::status_code::StatusCode::InternalServerError500,
+                postgresql_syn_variant_status_code.clone(),
                 &postgresql_upper_camel_case,
                 &code_occurence_field,
                 vec![
@@ -1985,7 +1986,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream,
                     }
                 }
-            }
+            },
+            postgresql_syn_variant_status_code
         )
     };
     let (json_syn_variant, json_syn_variant_initialization_token_stream, json_syn_variant_status_code) = {
@@ -2728,6 +2730,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &eprintln_error_token_stream,
                 );
                 let postgresql_logic_token_stream = {
+                    let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &postgresql_syn_variant_initialization_token_stream,
+                        &quote::quote! {#from_snake_case(#error_snake_case)},
+                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                    );
                     quote::quote! {
                         let mut rows = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
                         let mut vec_values = std::vec::Vec::new();
@@ -2740,12 +2748,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_snake_case) => {
-                                    let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_initialization_token_stream;
-                                    #eprintln_error_token_stream
-
-                                    let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                                    *#response_snake_case.status_mut() = axum::http::StatusCode::CREATED;
-                                    return #response_snake_case;
+                                    #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         } {
@@ -2758,12 +2761,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     );
                                 }
                                 Err(#error_snake_case) => {
-                                    let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_initialization_token_stream;
-                                    #eprintln_error_token_stream
-
-                                    let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                                    *#response_snake_case.status_mut() = axum::http::StatusCode::CREATED;
-                                    return #response_snake_case;
+                                    #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         }
