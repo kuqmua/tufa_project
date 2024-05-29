@@ -24,7 +24,9 @@
         },
     }
 }]
-#[postgresql_crud::create_many_additional_route_logic{}]
+#[postgresql_crud::create_many_additional_route_logic{
+    println!("kekw");
+}]
 #[postgresql_crud::create_one_additional_route_logic{}]
 #[postgresql_crud::read_many_additional_route_logic{}]
 #[postgresql_crud::read_one_additional_route_logic{}]
