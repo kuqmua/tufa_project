@@ -2771,7 +2771,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let desirable_response_creation_token_stream = generate_response_creation_token_stream(
                     &operation,
                     &quote::quote! {#desirable_upper_camel_case(#value_snake_case)},
-                    &quote::quote! {axum::http::StatusCode::CREATED},
+                    &operation.desirable_status_code().to_axum_http_status_code_token_stream(),
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &table_name_stringified,
