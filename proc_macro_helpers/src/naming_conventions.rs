@@ -313,3 +313,11 @@ impl quote::ToTokens for DeriveDebug {
         crate::wrap_derive::token_stream(&[&quote::quote!{#debug_upper_camel_case}]).to_tokens(tokens)
     }
 }
+
+#[derive(Debug, Clone, Copy)]
+pub struct SqlxAcquire;
+impl quote::ToTokens for SqlxAcquire {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::Acquire}.to_tokens(tokens)
+    }
+}

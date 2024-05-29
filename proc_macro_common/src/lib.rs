@@ -79,6 +79,3 @@ pub fn axum_response_into_response_token_stream() -> proc_macro2::TokenStream {
 pub fn axum_extract_rejection_json_rejection_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {axum::extract::rejection::JsonRejection}
 }
-pub fn sqlx_acquire_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {sqlx::Acquire}
-}
