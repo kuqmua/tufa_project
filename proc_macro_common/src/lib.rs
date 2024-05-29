@@ -61,15 +61,3 @@ pub fn serde_serialize_token_stream() -> proc_macro2::TokenStream {
 pub fn serde_deserialize_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {serde::Deserialize}
 }
-pub fn sqlx_row_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {sqlx::Row}
-}
-pub fn http_status_code_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {http::StatusCode}
-}
-pub fn reqwest_header_header_map_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {reqwest::header::HeaderMap}
-}
-pub fn reqwest_error_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {reqwest::Error}
-}

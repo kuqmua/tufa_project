@@ -334,3 +334,31 @@ impl quote::ToTokens for AxumResponseIntoResponse {
         quote::quote! {axum::response::IntoResponse}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct ReqwestError;
+impl quote::ToTokens for ReqwestError {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {reqwest::Error}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct ReqwestHeaderHeaderMap;
+impl quote::ToTokens for ReqwestHeaderHeaderMap {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {reqwest::header::HeaderMap}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct HttpStatusCode;
+impl quote::ToTokens for HttpStatusCode {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {http::StatusCode}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SqlxRow;
+impl quote::ToTokens for SqlxRow {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::Row}.to_tokens(tokens)
+    }
+}

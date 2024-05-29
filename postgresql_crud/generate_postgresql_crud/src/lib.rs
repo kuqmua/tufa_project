@@ -370,7 +370,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]);
     let from_str_upper_camel_case = proc_macro_helpers::naming_conventions::FromStrUpperCamelCase;
     let from_str_snake_case = proc_macro_helpers::naming_conventions::FromStrSnakeCase;
-    let sqlx_row_token_stream = proc_macro_common::sqlx_row_token_stream();
+    let sqlx_row = proc_macro_helpers::naming_conventions::SqlxRow;
     let std_primitive_str_sqlx_column_index_token_stream =
         quote::quote! {&'a std::primitive::str: sqlx::ColumnIndex<R>,};
     let sqlx_decode_decode_database_token_stream =
@@ -661,7 +661,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #[derive(Debug)]
             struct #wrapper_vec_column_upper_camel_case(std::vec::Vec<#ident_column_upper_camel_case_token_stream>);
             impl #wrapper_vec_column_upper_camel_case {
-                fn #options_try_from_sqlx_row_snake_case<'a, R: #sqlx_row_token_stream>(
+                fn #options_try_from_sqlx_row_snake_case<'a, R: #sqlx_row>(
                     &self, 
                     row: &'a R
                 ) -> sqlx::Result<#struct_options_ident_token_stream>
@@ -698,7 +698,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let row_snake_case = naming_constants::RowSnakeCase;
         let primary_key_name = proc_macro_helpers::naming_conventions::PrimaryKeySnakeCase;
         quote::quote! {
-            fn #primary_key_try_from_sqlx_row_snake_case<'a, R: #sqlx_row_token_stream>(#row_snake_case: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
+            fn #primary_key_try_from_sqlx_row_snake_case<'a, R: #sqlx_row>(#row_snake_case: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
             where
                 #std_primitive_str_sqlx_column_index_token_stream
                 #primary_key_original_type_token_stream: #sqlx_decode_decode_database_token_stream,
@@ -1627,9 +1627,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
     let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_increment};
     let increment_initialization_token_stream = quote::quote! {let mut increment: u64 = 0;};
-    let http_status_code_token_stream = proc_macro_common::http_status_code_token_stream();
-    let reqwest_header_header_map_token_stream = proc_macro_common::reqwest_header_header_map_token_stream();
-    let reqwest_error_token_stream = proc_macro_common::reqwest_error_token_stream();
+    let http_status_code = proc_macro_helpers::naming_conventions::HttpStatusCode;
+    let reqwest_header_header_map = proc_macro_helpers::naming_conventions::ReqwestHeaderHeaderMap;
+    let reqwest_error = proc_macro_helpers::naming_conventions::ReqwestError;
     // let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
     let try_extract_value_snake_case = proc_macro_helpers::naming_conventions::TryExtractValueSnakeCase;
     let dot_space = ", ";
@@ -2660,7 +2660,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         } {
-                            match #sqlx_row_token_stream::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
+                            match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(&value, #primary_key_field_ident_quotes_token_stream) {
                                 Ok(#value_snake_case) => {
                                     vec_values.push(
                                         #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
