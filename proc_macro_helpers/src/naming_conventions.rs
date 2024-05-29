@@ -383,3 +383,10 @@ impl quote::ToTokens for UtoipaToSchema {
         quote::quote! {utoipa::ToSchema}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct ErrorOccurenceLibErrorOccurence;
+impl quote::ToTokens for ErrorOccurenceLibErrorOccurence {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {error_occurence_lib::ErrorOccurence}.to_tokens(tokens)
+    }
+}
