@@ -2167,15 +2167,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let desirable_status_code = operation.desirable_status_code();
         let parameters_token_stream = {
             let payload_token_stream = {
-                let operation_payload_element_token_stream = {
-                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
-                    quote::quote! {
-                        #derive_debug_token_stream
-                        pub struct #operation_payload_element_upper_camel_case_token_stream {
-                            #(#fields_with_excluded_primary_key_token_stream),*
-                        }
-                    }
-                };
+                let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
+                    &operation,
+                    &derive_debug_token_stream,
+                    &fields_named_excluding_primary_key
+                );
                 let operation_payload_token_stream = quote::quote! {
                     #derive_debug_token_stream
                     pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
@@ -9199,3 +9195,34 @@ fn generate_additional_error_variants(
     };
     variants.into_iter().collect()
 }
+
+struct DeriveDebug;
+impl quote::ToTokens for DeriveDebug {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let debug_upper_camel_case = naming_constants::DebugUpperCamelCase;
+        proc_macro_helpers::wrap_derive::token_stream(&[&quote::quote!{#debug_upper_camel_case}]).to_tokens(tokens)
+    }
+}
+
+fn generate_operation_payload_element_token_stream(
+    operation: &Operation,
+    derive_debug_token_stream: &proc_macro2::TokenStream,//todo make it tokensteram type wrapper? 
+    fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
+) -> proc_macro2::TokenStream {
+    let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
+    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
+    quote::quote! {
+        #derive_debug_token_stream
+        pub struct #operation_payload_element_upper_camel_case_token_stream {
+            #(#fields_with_excluded_primary_key_token_stream),*
+        }
+    }
+}
+// fn generate_operation_payload_token_stream(
+
+// ) -> proc_macro2::TokenStream {
+//     quote::quote! {
+//         #derive_debug_token_stream
+//         pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
+//     }
+// }
