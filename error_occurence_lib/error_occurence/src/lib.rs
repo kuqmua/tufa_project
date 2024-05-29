@@ -45,7 +45,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
-    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
+    let std_string_string = naming_constants::StdStringString;
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
     let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
     let into_serialize_deserialize_version_snake_case_token_stream = proc_macro_helpers::naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
@@ -125,7 +125,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                         quote::quote!{
                                             #element_ident.to_string().lines().fold(
-                                                #std_string_string_token_stream::new(),
+                                                #std_string_string::new(),
                                                 |mut acc, element| {
                                                     acc.push_str(&format!("\n {element}"));
                                                     acc
@@ -136,13 +136,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
                                             #element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
+                                                #std_string_string::new(),
                                                 |mut acc, element| {
                                                     acc.push_str(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                         .lines()
                                                         .fold(
-                                                            #std_string_string_token_stream::new(), 
+                                                            #std_string_string::new(), 
                                                             |mut acc, element| { 
                                                                 acc.push_str(&format!("\n {element}")); 
                                                                 acc 
@@ -157,10 +157,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                         quote::quote!{
                                             #element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
+                                                #std_string_string::new(),
                                                 |mut acc, element| {
                                                     acc.push_str(&element.to_string().lines().fold(
-                                                        #std_string_string_token_stream::new(),
+                                                        #std_string_string::new(),
                                                         |mut acc, element| {
                                                             acc.push_str(&format!("\n {element}"));
                                                             acc
@@ -176,7 +176,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #element_ident
                                                 .iter()
                                                 .fold(
-                                                    #std_string_string_token_stream::new(), 
+                                                    #std_string_string::new(), 
                                                     |mut acc, (key, value)| {
                                                         acc.push_str(
                                                             &format!(
@@ -194,12 +194,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #element_ident
                                                 .iter()
                                                 .fold(
-                                                    #std_string_string_token_stream::new(), 
+                                                    #std_string_string::new(), 
                                                     |mut acc, (key, value)| {
                                                         acc.push_str(&format!(
                                                             "\n {key}: {}",
                                                             value.to_string().lines().fold(
-                                                                #std_string_string_token_stream::new(),
+                                                                #std_string_string::new(),
                                                                 |mut acc, element| {
                                                                     acc.push_str(&format!("\n  {element}"));
                                                                     acc
@@ -362,7 +362,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream = {
                 quote::quote! {
                     impl error_occurence_lib::ToStdStringString for #ident_with_serialize_deserialize_token_stream {
-                        fn to_std_string_string(&self) -> #std_string_string_token_stream {
+                        fn to_std_string_string(&self) -> #std_string_string {
                             format!("{self}")
                         }
                     }

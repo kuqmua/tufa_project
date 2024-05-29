@@ -25,7 +25,7 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let std_string_string = proc_macro_helpers::naming_conventions::StdStringString;
+    let std_string_string = naming_constants::StdStringString;
     let variants_matching_values_token_stream = data_enum.variants.iter().map(|variant| match &variant.fields {
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
@@ -52,7 +52,7 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
         );
     let gen = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
-            fn #function_name_snake_case_token_stream(&self) -> #std_string_string_token_stream {//todo maybe write duplicate Trait with &str instead of std::string::String
+            fn #function_name_snake_case_token_stream(&self) -> #std_string_string {//todo maybe write duplicate Trait with &str instead of std::string::String
                 match self {
                     #(#variants_matching_values_token_stream),*
                 }
@@ -90,7 +90,7 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
+    let std_string_string = naming_constants::StdStringString;
     let variants_matching_values_token_stream = data_enum.variants.iter().map(|variant| match &variant.fields {
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
@@ -99,7 +99,7 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
                 &variant_ident_snake_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_snake_case_quotes_token_stream)}
+            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_quotes_token_stream)}
         },
         syn::Fields::Named(_) | 
         syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit")
@@ -117,7 +117,7 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
         );
     let gen = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
-            fn #function_name_snake_case_token_stream(&self) -> #std_string_string_token_stream {
+            fn #function_name_snake_case_token_stream(&self) -> #std_string_string {
                 match self {
                     #(#variants_matching_values_token_stream),*
                 }
@@ -156,7 +156,7 @@ pub fn to_screaming_snake_case_stringified(
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
+    let std_string_string = naming_constants::StdStringString;
     let variants_matching_values_token_stream = data_enum.variants.iter().map(|variant| match &variant.fields {
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
@@ -165,7 +165,7 @@ pub fn to_screaming_snake_case_stringified(
                 &variant_ident_snake_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_snake_case_quotes_token_stream)}
+            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_quotes_token_stream)}
         },
         syn::Fields::Named(_) | 
         syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
@@ -183,7 +183,7 @@ pub fn to_screaming_snake_case_stringified(
         );
     let gen = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
-            fn #function_name_snake_case_token_stream(&self) -> #std_string_string_token_stream {
+            fn #function_name_snake_case_token_stream(&self) -> #std_string_string {
                 match self {
                     #(#variants_matching_values_token_stream),*
                 }

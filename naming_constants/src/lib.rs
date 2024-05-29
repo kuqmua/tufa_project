@@ -195,3 +195,110 @@ impl quote::ToTokens for HashMapSnakeCase {
         quote::quote!{hashmap}.to_tokens(tokens)
     }
 }
+
+///////////
+#[derive(Debug, Clone, Copy)]
+pub struct DeriveDebug;
+impl quote::ToTokens for DeriveDebug {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{#[derive(Debug)]}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SqlxAcquire;
+impl quote::ToTokens for SqlxAcquire {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::Acquire}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct AxumExtractRejectionJsonRejection;
+impl quote::ToTokens for AxumExtractRejectionJsonRejection {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {axum::extract::rejection::JsonRejection}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct AxumResponseIntoResponse;
+impl quote::ToTokens for AxumResponseIntoResponse {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {axum::response::IntoResponse}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct ReqwestError;
+impl quote::ToTokens for ReqwestError {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {reqwest::Error}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct ReqwestHeaderHeaderMap;
+impl quote::ToTokens for ReqwestHeaderHeaderMap {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {reqwest::header::HeaderMap}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct HttpStatusCode;
+impl quote::ToTokens for HttpStatusCode {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {http::StatusCode}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SqlxRow;
+impl quote::ToTokens for SqlxRow {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::Row}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SerdeSerialize;
+impl quote::ToTokens for SerdeSerialize {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {serde::Serialize}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SerdeDeserialize;
+impl quote::ToTokens for SerdeDeserialize {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {serde::Deserialize}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct UtoipaToSchema;
+impl quote::ToTokens for UtoipaToSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {utoipa::ToSchema}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct ErrorOccurenceLibErrorOccurence;
+impl quote::ToTokens for ErrorOccurenceLibErrorOccurence {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {error_occurence_lib::ErrorOccurence}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct ThiserrorError;
+impl quote::ToTokens for ThiserrorError {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {thiserror::Error}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct RefStdPrimitiveStr;
+impl quote::ToTokens for RefStdPrimitiveStr {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {&std::primitive::str}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdStringString;
+impl quote::ToTokens for StdStringString {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::string::String}.to_tokens(tokens)
+    }
+}

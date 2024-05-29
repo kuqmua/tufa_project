@@ -116,7 +116,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     value: &'a syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
     std_snake_case: &naming_constants::StdSnakeCase,
-    std_string_string_token_stream: &proc_macro2::TokenStream,
+    std_string_string: &naming_constants::StdStringString,
 ) -> &'a syn::GenericArgument {
     let segments = if let syn::Type::Path(value) = &value.ty {
         &value.path.segments
@@ -159,7 +159,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
         let first_argument = args.iter().next().expect("args.iter().next() is None");
         quote::quote! {#first_argument}.to_string()
     };
-    assert!(std_string_string_token_stream.to_string() == first_argument_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} {std_string_string_token_stream} != {first_argument_stringified}");
+    assert!(quote::quote!{#std_string_string}.to_string() == first_argument_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} {} != {first_argument_stringified}", quote::quote!{#std_string_string}.to_string());
     args.iter().nth(1).expect("args.iter().nth(1) is None")
 }
 
@@ -177,7 +177,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             naming_constants::SUPPORTS_ONLY_STRINGIFIED
         );
     };
-    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
+    let std_string_string = naming_constants::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element|
         *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *crate::naming_conventions::CodeOccurenceSnakeCase.to_string()
     ).map(|element|{
@@ -190,7 +190,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
         let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote!{
-                    #std_string_string_token_stream
+                    #std_string_string
                 }
             },
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
@@ -214,7 +214,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             },
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote::quote!{
-                    std::vec::Vec<#std_string_string_token_stream>
+                    std::vec::Vec<#std_string_string>
                 }
             },
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
@@ -274,10 +274,10 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                     element,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                     &std_snake_case,
-                    &std_string_string_token_stream,
+                    &std_string_string,
                 );
                 quote::quote!{
-                    std::collections::HashMap<#std_string_string_token_stream, #std_string_string_token_stream>
+                    std::collections::HashMap<#std_string_string, #std_string_string>
                 }
             },
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
@@ -285,7 +285,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                     element,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                     &std_snake_case,
-                    &std_string_string_token_stream,
+                    &std_string_string,
                 );
                 element_type_token_stream
             },
@@ -294,7 +294,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                     element,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                     &std_snake_case,
-                    &std_string_string_token_stream,
+                    &std_string_string,
                 );
                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
                     let value = format!(
@@ -307,7 +307,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 quote::quote!{
-                    std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
+                    std::collections::HashMap<#std_string_string, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
                 }
             },
         }; 

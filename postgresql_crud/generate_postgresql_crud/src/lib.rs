@@ -189,7 +189,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &table_name_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-    let ref_std_primitive_str = proc_macro_helpers::naming_conventions::RefStdPrimitiveStr;
+    let ref_std_primitive_str = naming_constants::RefStdPrimitiveStr;
     let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;};
     let fields_named = if let syn::Data::Struct(data_struct) = &ast.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
@@ -289,7 +289,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &primary_key_field_ident.to_string(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
+    let std_string_string = naming_constants::StdStringString;
     let fields_named_excluding_primary_key = fields_named
         .clone()
         .into_iter()
@@ -328,8 +328,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value
     };
     let debug_upper_camel_case = naming_constants::DebugUpperCamelCase;
-    let thiserror_error = proc_macro_helpers::naming_conventions::ThiserrorError;
-    let error_occurence_error_occurence = proc_macro_helpers::naming_conventions::ErrorOccurenceLibErrorOccurence;
+    let thiserror_error = naming_constants::ThiserrorError;
+    let error_occurence_error_occurence = naming_constants::ErrorOccurenceLibErrorOccurence;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let app_state_snake_case = proc_macro_helpers::naming_conventions::AppStateSnakeCase;
     let eprintln_error_token_stream = {
@@ -339,11 +339,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote!{eprintln!(#error_snake_case_quotes_token_stream);}
     };
-    let utoipa_to_schema = proc_macro_helpers::naming_conventions::UtoipaToSchema;
-    let serde_serialize = proc_macro_helpers::naming_conventions::SerdeSerialize;
-    let serde_deserialize = proc_macro_helpers::naming_conventions::SerdeDeserialize;
+    let utoipa_to_schema = naming_constants::UtoipaToSchema;
+    let serde_serialize = naming_constants::SerdeSerialize;
+    let serde_deserialize = naming_constants::SerdeDeserialize;
 
-    let derive_debug = proc_macro_helpers::naming_conventions::DeriveDebug;
+    let derive_debug = naming_constants::DeriveDebug;
     let derive_debug_thiserror_error_occurence_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &quote::quote!{#debug_upper_camel_case},
@@ -370,7 +370,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]);
     let from_str_upper_camel_case = proc_macro_helpers::naming_conventions::FromStrUpperCamelCase;
     let from_str_snake_case = proc_macro_helpers::naming_conventions::FromStrSnakeCase;
-    let sqlx_row = proc_macro_helpers::naming_conventions::SqlxRow;
+    let sqlx_row = naming_constants::SqlxRow;
     let std_primitive_str_sqlx_column_index_token_stream =
         quote::quote! {&'a std::primitive::str: sqlx::ColumnIndex<R>,};
     let sqlx_decode_decode_database_token_stream =
@@ -554,8 +554,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => #field_ident_string_quotes_token_stream}
         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {
-            fn #generate_query_vec_column_snake_case_token_stream(value: &[#ident_column_upper_camel_case_token_stream]) -> #std_string_string_token_stream {
-                let mut value = value.iter().fold(#std_string_string_token_stream::from(""), |mut acc, element| {
+            fn #generate_query_vec_column_snake_case_token_stream(value: &[#ident_column_upper_camel_case_token_stream]) -> #std_string_string {
+                let mut value = value.iter().fold(#std_string_string::from(""), |mut acc, element| {
                     acc += match element {
                         #(#variants_token_stream),*
                     };
@@ -1036,7 +1036,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #checked_add_upper_camel_case { //todo remove it? refactor it?
-                        #checked_add_snake_case: #std_string_string_token_stream::#from_snake_case(#checked_is_none_quotes_token_stream),
+                        #checked_add_snake_case: #std_string_string::#from_snake_case(#checked_is_none_quotes_token_stream),
                         #field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream,
                     }
                 }
@@ -1558,7 +1558,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #no_payload_fields_upper_camel_case {
-                        #no_payload_fields_snake_case: #std_string_string_token_stream::#from_snake_case(#no_payload_fields_quotes_token_stream),
+                        #no_payload_fields_snake_case: #std_string_string::#from_snake_case(#no_payload_fields_quotes_token_stream),
                         #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
                     }
                 }
@@ -1614,8 +1614,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let content_type_application_json_header_addition_token_stream = quote::quote! {
         .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
     };
-    let axum_response_into_response = proc_macro_helpers::naming_conventions::AxumResponseIntoResponse;
-    let axum_extract_rejection_json_rejection = proc_macro_helpers::naming_conventions::AxumExtractRejectionJsonRejection;
+    let axum_response_into_response = naming_constants::AxumResponseIntoResponse;
+    let axum_extract_rejection_json_rejection = naming_constants::AxumExtractRejectionJsonRejection;
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
     let axum_extract_state_token_stream = quote::quote! {axum::extract::State};
@@ -1627,9 +1627,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
     let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_increment};
     let increment_initialization_token_stream = quote::quote! {let mut increment: u64 = 0;};
-    let http_status_code = proc_macro_helpers::naming_conventions::HttpStatusCode;
-    let reqwest_header_header_map = proc_macro_helpers::naming_conventions::ReqwestHeaderHeaderMap;
-    let reqwest_error = proc_macro_helpers::naming_conventions::ReqwestError;
+    let http_status_code = naming_constants::HttpStatusCode;
+    let reqwest_header_header_map = naming_constants::ReqwestHeaderHeaderMap;
+    let reqwest_error = naming_constants::ReqwestError;
     // let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
     let try_extract_value_snake_case = proc_macro_helpers::naming_conventions::TryExtractValueSnakeCase;
     let dot_space = ", ";
@@ -7865,7 +7865,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 }
 
 fn generate_http_request_many_token_stream(
-    str_ref_token_stream: &proc_macro_helpers::naming_conventions::RefStdPrimitiveStr,
+    str_ref_token_stream: &naming_constants::RefStdPrimitiveStr,
     serde_json_to_string_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
@@ -9198,7 +9198,7 @@ fn generate_additional_error_variants(
 
 fn generate_operation_payload_element_token_stream(
     operation: &Operation,
-    derive_debug: &proc_macro_helpers::naming_conventions::DeriveDebug, 
+    derive_debug: &naming_constants::DeriveDebug, 
     syn_field_with_additional_info_vec: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
@@ -9212,7 +9212,7 @@ fn generate_operation_payload_element_token_stream(
 }
 fn generate_operation_payload_token_stream(
     operation: &Operation,
-    derive_debug: &proc_macro_helpers::naming_conventions::DeriveDebug, 
+    derive_debug: &naming_constants::DeriveDebug, 
 ) -> proc_macro2::TokenStream {
     let operation_payload_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
     let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
