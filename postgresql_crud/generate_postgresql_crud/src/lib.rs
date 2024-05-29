@@ -2144,7 +2144,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let operation_additional_error_variants = generate_additional_error_variants(
             &ast,
-            GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
+            operation.to_additional_error_variants(),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = {
