@@ -340,7 +340,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote!{eprintln!(#error_snake_case_quotes_token_stream);}
     };
-    let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
+    let utoipa_to_schema = proc_macro_helpers::naming_conventions::UtoipaToSchema;
     let serde_serialize = proc_macro_helpers::naming_conventions::SerdeSerialize;
     let serde_deserialize = proc_macro_helpers::naming_conventions::SerdeDeserialize;
 
@@ -354,7 +354,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let derive_debug_to_schema_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
             &quote::quote!{#debug_upper_camel_case},
-            &utoipa_to_schema_token_stream,
+            &quote::quote!{#utoipa_to_schema},
         ]);
     let derive_debug_serialize_deserialize_token_stream =
         proc_macro_helpers::wrap_derive::token_stream(&[
@@ -367,7 +367,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &quote::quote!{#debug_upper_camel_case},
             &quote::quote!{#serde_serialize},
             &quote::quote!{#serde_deserialize},
-            &utoipa_to_schema_token_stream,
+            &quote::quote!{#utoipa_to_schema},
         ]);
     let from_str_upper_camel_case = proc_macro_helpers::naming_conventions::FromStrUpperCamelCase;
     let from_str_snake_case = proc_macro_helpers::naming_conventions::FromStrSnakeCase;

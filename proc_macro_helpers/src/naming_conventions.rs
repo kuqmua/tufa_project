@@ -376,3 +376,10 @@ impl quote::ToTokens for SerdeDeserialize {
         quote::quote! {serde::Deserialize}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct UtoipaToSchema;
+impl quote::ToTokens for UtoipaToSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {utoipa::ToSchema}.to_tokens(tokens)
+    }
+}
