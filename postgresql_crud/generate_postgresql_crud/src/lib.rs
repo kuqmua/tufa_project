@@ -9210,3 +9210,27 @@ fn generate_operation_payload_many_token_stream(
         #operation_payload_token_stream
     }
 }
+
+//
+// let payload_with_serialize_deserialize_token_stream = {
+//     let operation_payload_element_with_serialize_deserialize_token_stream = {
+//         let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| generate_field_ident_field_type_with_serialize_deserialize_token_stream(
+//             element
+//         ));
+//         quote::quote! {
+//             #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+//             pub struct #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream {
+//                 #(#fields_with_excluded_primary_key_token_stream),*
+//             }
+//         }
+//     };
+//     let operation_payload_with_serialize_deserialize_token_stream = quote::quote! {
+//         #derive_debug_serde_serialize_serde_deserialize
+//         pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>);
+//     };
+//     quote::quote! {
+//         #operation_payload_element_with_serialize_deserialize_token_stream
+//         #operation_payload_with_serialize_deserialize_token_stream
+//     }
+// };
+//
