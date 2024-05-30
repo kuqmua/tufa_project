@@ -36,6 +36,7 @@ members = [
   "tests",
   "impl_display_as_debug",
   "error_occurence_test",
+  "token_patterns",
 ]
 exclude = [
   "client",

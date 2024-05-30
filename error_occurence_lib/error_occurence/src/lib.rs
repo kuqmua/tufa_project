@@ -45,7 +45,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
-    let std_string_string = naming_constants::StdStringString;
+    let std_string_string = token_patterns::StdStringString;
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
     let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
     let into_serialize_deserialize_version_snake_case_token_stream = proc_macro_helpers::naming_conventions::IntoSerializeDeserializeVersionSnakeCase;

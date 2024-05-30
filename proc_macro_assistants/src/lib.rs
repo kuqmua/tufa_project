@@ -25,7 +25,7 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let std_string_string = naming_constants::StdStringString;
+    let std_string_string = quote::quote! {std::string::String};
     let variants_matching_values_token_stream = data_enum.variants.iter().map(|variant| match &variant.fields {
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
@@ -90,7 +90,7 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let std_string_string = naming_constants::StdStringString;
+    let std_string_string = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum.variants.iter().map(|variant| match &variant.fields {
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
@@ -156,7 +156,7 @@ pub fn to_screaming_snake_case_stringified(
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let std_string_string = naming_constants::StdStringString;
+    let std_string_string = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum.variants.iter().map(|variant| match &variant.fields {
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;

@@ -201,7 +201,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_fro
                 snake_case_token_stream_trait_name_upper_camel_case_token_stream
             )
         };
-        let std_string_string = naming_constants::StdStringString;
+        let std_string_string = token_patterns::StdStringString;
         let proc_macro2_token_stream = quote::quote!{proc_macro2::TokenStream};//todo maybe reuse
         let (
             upper_camel_case_stringified_trait_function_name_snake_case_token_stream,

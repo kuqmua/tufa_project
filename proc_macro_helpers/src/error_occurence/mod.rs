@@ -116,7 +116,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     value: &'a syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
     std_snake_case: &naming_constants::StdSnakeCase,
-    std_string_string: &naming_constants::StdStringString,
+    std_string_string: &token_patterns::StdStringString,
 ) -> &'a syn::GenericArgument {
     let segments = if let syn::Type::Path(value) = &value.ty {
         &value.path.segments
@@ -177,7 +177,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             naming_constants::SUPPORTS_ONLY_STRINGIFIED
         );
     };
-    let std_string_string = naming_constants::StdStringString;
+    let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element|
         *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *crate::naming_conventions::CodeOccurenceSnakeCase.to_string()
     ).map(|element|{

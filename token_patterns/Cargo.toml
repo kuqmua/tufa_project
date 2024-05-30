@@ -1,0 +1,11 @@
+[package]
+name = "token_patterns"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+proc-macro2 = {version = "=1.0.81"}
+quote = {version = "=1.0.36"}
+
+[lints]
+workspace = true

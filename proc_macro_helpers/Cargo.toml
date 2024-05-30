@@ -13,6 +13,7 @@ proc_macro_assistants = {path = "../proc_macro_assistants"}
 proc_macro_common = {path = "../proc_macro_common"}
 naming_constants = {path = "../naming_constants"}
 naming_macros = {path = "./naming_macros"}
+token_patterns = {path = "../token_patterns"}
 
 [lints]
 workspace = true
