@@ -2143,25 +2143,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = operation.desirable_status_code();
         let parameters_token_stream = {
-            let payload_token_stream = {
-                let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
-                    &operation,
-                    &derive_debug,
-                    // &fields_named_excluding_primary_key
-                    &{
-                        let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
-                        quote::quote! {#(#fields_token_stream),*}
-                    }
-                );
-                let operation_payload_token_stream = generate_operation_payload_token_stream(
-                    &operation,
-                    &derive_debug,
-                );
-                quote::quote! {
-                    #operation_payload_element_token_stream
-                    #operation_payload_token_stream
+            let payload_token_stream = generate_operation_payload_many_token_stream(
+                &operation,
+                &derive_debug, 
+                &{
+                    let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
+                    quote::quote! {#(#fields_token_stream),*}
                 }
-            };
+            );
             // println!("{payload_token_stream}");
             let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
             let payload_with_serialize_deserialize_token_stream = {
@@ -9202,22 +9191,22 @@ fn generate_operation_payload_token_stream(
     }
 }
 
-// fn generate_operation_payload_full_token_stream(
-//     operation: &Operation,
-//     derive_debug: &DeriveDebug, 
-//     syn_field_with_additional_info_vec: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
-// ) -> proc_macro2::TokenStream {
-//     let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
-//         &operation,
-//         &derive_debug,
-//         &syn_field_with_additional_info_vec
-//     );
-//     let operation_payload_token_stream = generate_operation_payload_token_stream(
-//         &operation,
-//         &derive_debug,
-//     );
-//     quote::quote! {
-//         #operation_payload_element_token_stream
-//         #operation_payload_token_stream
-//     }
-// }
+fn generate_operation_payload_many_token_stream(
+    operation: &Operation,
+    derive_debug: &naming_constants::DeriveDebug, 
+    fields_token_stream: &dyn quote::ToTokens,//todo maybe use instead &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
+) -> proc_macro2::TokenStream {
+    let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
+        &operation,
+        &derive_debug,
+        fields_token_stream
+    );
+    let operation_payload_token_stream = generate_operation_payload_token_stream(
+        &operation,
+        &derive_debug,
+    );
+    quote::quote! {
+        #operation_payload_element_token_stream
+        #operation_payload_token_stream
+    }
+}
