@@ -1,0 +1,13 @@
+[package]
+name = "naming_conventions"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+proc-macro2 = {version = "=1.0.81"}
+quote = {version = "=1.0.36"}
+proc_macro_common = {path = "../proc_macro_common"}
+naming_macros = {path = "./naming_macros"}
+
+[lints]
+workspace = true

@@ -1,5 +1,5 @@
 pub(crate) fn acquire_pool_and_connection(
-    pg_connection_token_stream: &proc_macro_helpers::naming_conventions::PgConnectionSnakeCase,
+    pg_connection_token_stream: &naming_conventions::PgConnectionSnakeCase,
     // proc_macro_name_upper_camel_case_ident_stringified: &str,
     try_operation_route_logic_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     try_operation_route_logic_response_variants_upper_camel_case_token_stream: &proc_macro2::TokenStream,
@@ -10,7 +10,7 @@ pub(crate) fn acquire_pool_and_connection(
     let value_snake_case = naming_constants::ValueSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let from_snake_case = naming_constants::FromSnakeCase;
-    let into_response_snake_case = proc_macro_helpers::naming_conventions::IntoResponseSnakeCase;
+    let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
     quote::quote! {
         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
             Ok(#value_snake_case) => #value_snake_case,

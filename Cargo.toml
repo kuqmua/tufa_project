@@ -22,7 +22,6 @@ members = [
   "proc_macro_assistants",
   "proc_macro_common",
   "proc_macro_helpers",
-  "proc_macro_helpers/naming_macros",
   "server",
   "telegram_bot",
   "config_lib/generate_getter_traits_for_struct_fields",
@@ -37,6 +36,8 @@ members = [
   "impl_display_as_debug",
   "error_occurence_test",
   "token_patterns",
+  "naming_conventions",
+  "naming_conventions/naming_macros",
 ]
 exclude = [
   "client",

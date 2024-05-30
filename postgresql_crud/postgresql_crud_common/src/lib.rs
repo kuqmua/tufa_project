@@ -1222,9 +1222,9 @@ impl SupportedSqlxPostgresType {
     ) -> std::string::String {
         if matches!(self, Self::SqlxTypesJsonT) { format!(
             "sqlx::types::Json{}<{generic_type_str}>",
-            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
+            naming_conventions::WithSerializeDeserializeUpperCamelCase
         ) } else { 
-            format!("{self}{}", proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase) 
+            format!("{self}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase) 
         }
     }
     pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
@@ -1236,8 +1236,8 @@ impl SupportedSqlxPostgresType {
             FromOrTryFrom::TryFrom => format!(
                 "{}{}{}", 
                 self.get_inner_type_handle_stringified(generic_type_str),
-                proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
-                proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase
+                naming_conventions::WithSerializeDeserializeUpperCamelCase,
+                naming_conventions::ErrorNamedUpperCamelCase
             )
         }
     }
@@ -1248,8 +1248,8 @@ impl SupportedSqlxPostgresType {
                 "{}{}{}{}",
                 naming_constants::WhereUpperCamelCase,
                 self.get_inner_type_handle_stringified(generic_type_str),
-                proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase,
-                proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase
+                naming_conventions::WithSerializeDeserializeUpperCamelCase,
+                naming_conventions::ErrorNamedUpperCamelCase
             )
         })
     }

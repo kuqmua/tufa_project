@@ -179,7 +179,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
     };
     let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-        *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *crate::naming_conventions::CodeOccurenceSnakeCase.to_string()
+        *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *naming_conventions::CodeOccurenceSnakeCase.to_string()
     ).map(|element|{
         let element_ident = element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
         let element_type_token_stream = {
@@ -202,7 +202,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                             let element_type = &element.ty;
                             quote::quote!{#element_type}
                         },
-                        crate::naming_conventions::WithSerializeDeserializeUpperCamelCase
+                        naming_conventions::WithSerializeDeserializeUpperCamelCase
                     );
                     value
                     .parse::<proc_macro2::TokenStream>()
@@ -256,7 +256,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                             let first_arg = args.iter().next().expect("args.iter().next() is None");
                             quote::quote! {#first_arg}
                         },
-                        crate::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+                        naming_conventions::WithSerializeDeserializeUpperCamelCase,
                     );
                     value
                     .parse::<proc_macro2::TokenStream>()
@@ -300,7 +300,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                     let value = format!(
                         "{}{}",
                         quote::quote! {#second_argument},
-                        crate::naming_conventions::WithSerializeDeserializeUpperCamelCase,
+                        naming_conventions::WithSerializeDeserializeUpperCamelCase,
                     );
                     value
                     .parse::<proc_macro2::TokenStream>()
@@ -315,7 +315,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             #element_ident: #element_type_with_serialize_deserialize_token_stream,
         }
     });
-    let code_occurence_snake_case_token_stream = crate::naming_conventions::CodeOccurenceSnakeCase;
+    let code_occurence_snake_case_token_stream = naming_conventions::CodeOccurenceSnakeCase;
     quote::quote! {
         #element_ident {
             #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream)*

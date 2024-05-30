@@ -32,7 +32,7 @@ pub fn generate_field_code_occurence_new_token_stream(
             )
         }
     };
-    let code_occurence_snake_case_token_stream = crate::naming_conventions::CodeOccurenceSnakeCase;
+    let code_occurence_snake_case_token_stream = naming_conventions::CodeOccurenceSnakeCase;
     quote::quote! {
         #code_occurence_snake_case_token_stream: #code_occurence_new_token_stream
     }

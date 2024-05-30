@@ -26,7 +26,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let ident_with_serialize_deserialize_token_stream = {
         let value = format!(
             "{ident}{}",
-            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
+            naming_conventions::WithSerializeDeserializeUpperCamelCase
         );
         value
         .parse::<proc_macro2::TokenStream>()
@@ -46,9 +46,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     );
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
     let std_string_string = token_patterns::StdStringString;
-    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
-    let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
-    let into_serialize_deserialize_version_snake_case_token_stream = proc_macro_helpers::naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
+    let code_occurence_snake_case_stringified = naming_conventions::CodeOccurenceSnakeCase;
+    let code_occurence_snake_case_token_stream = naming_conventions::CodeOccurenceSnakeCase;
+    let into_serialize_deserialize_version_snake_case_token_stream = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let generate_impl_std_fmt_display_token_stream = |ident_token_stream: &proc_macro2::TokenStream, content_token_stream: &proc_macro2::TokenStream|{
         quote::quote! {
             impl #std_fmt_display_token_stream for #ident_token_stream {
@@ -436,7 +436,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let field_type = &fields.iter().next().expect("no first field type").ty;
                                 quote::quote!{#field_type}.to_string()
                             },
-                            proc_macro_helpers::naming_conventions::WithSerializeDeserializeUpperCamelCase
+                            naming_conventions::WithSerializeDeserializeUpperCamelCase
                         );
                         value
                         .parse::<proc_macro2::TokenStream>()
