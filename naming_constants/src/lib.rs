@@ -198,13 +198,6 @@ impl quote::ToTokens for HashMapSnakeCase {
 
 ///////////
 #[derive(Debug, Clone, Copy)]
-pub struct DeriveDebug;
-impl quote::ToTokens for DeriveDebug {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote!{#[derive(Debug)]}.to_tokens(tokens)
-    }
-}
-#[derive(Debug, Clone, Copy)]
 pub struct SqlxAcquire;
 impl quote::ToTokens for SqlxAcquire {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -300,5 +293,33 @@ pub struct StdStringString;
 impl quote::ToTokens for StdStringString {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         quote::quote! {std::string::String}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct DeriveDebug;
+impl quote::ToTokens for DeriveDebug {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{#[derive(Debug)]}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct DeriveDebugUtoipaToSchema;
+impl quote::ToTokens for DeriveDebugUtoipaToSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {#[derive(Debug, utoipa::ToSchema)]}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct DeriveDebugSerdeSerializeSerdeDeserialize;
+impl quote::ToTokens for DeriveDebugSerdeSerializeSerdeDeserialize {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {#[derive(Debug, serde::Serialize, serde::Deserialize)]}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
+impl quote::ToTokens for DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]}.to_tokens(tokens)
     }
 }

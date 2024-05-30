@@ -350,29 +350,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &quote::quote!{#thiserror_error},
             &quote::quote!{#error_occurence_error_occurence},
         ]);
-    let derive_debug_to_schema_token_stream =
-        proc_macro_helpers::wrap_derive::token_stream(&[
-            &quote::quote!{#debug_upper_camel_case},
-            &quote::quote!{#utoipa_to_schema},
-        ]);
-    let derive_debug_serialize_deserialize_token_stream =
-        proc_macro_helpers::wrap_derive::token_stream(&[
-            &quote::quote!{#debug_upper_camel_case},
-            &quote::quote!{#serde_serialize},
-            &quote::quote!{#serde_deserialize},
-        ]);
-    let derive_debug_serialize_deserialize_to_schema_token_stream =
-        proc_macro_helpers::wrap_derive::token_stream(&[
-            &quote::quote!{#debug_upper_camel_case},
-            &quote::quote!{#serde_serialize},
-            &quote::quote!{#serde_deserialize},
-            &quote::quote!{#utoipa_to_schema},
-        ]);
+    let derive_debug_utoipa_to_schema = naming_constants::DeriveDebugUtoipaToSchema;
+    let derive_debug_serde_serialize_serde_deserialize = naming_constants::DeriveDebugSerdeSerializeSerdeDeserialize;
+    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = naming_constants::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let from_str_upper_camel_case = proc_macro_helpers::naming_conventions::FromStrUpperCamelCase;
     let from_str_snake_case = proc_macro_helpers::naming_conventions::FromStrSnakeCase;
     let sqlx_row = naming_constants::SqlxRow;
-    let std_primitive_str_sqlx_column_index_token_stream =
-        quote::quote! {&'a std::primitive::str: sqlx::ColumnIndex<R>,};
+    let std_primitive_str_sqlx_column_index = {
+        #[derive(Debug, Clone, Copy)]
+        struct StdPrimitiveStrSqlxColumnIndex;
+        impl quote::ToTokens for StdPrimitiveStrSqlxColumnIndex {
+            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                quote::quote! {&'a std::primitive::str: sqlx::ColumnIndex<R>,}.to_tokens(tokens)
+            }
+        }
+        StdPrimitiveStrSqlxColumnIndex
+    };
     let sqlx_decode_decode_database_token_stream =
         quote::quote! {sqlx::decode::Decode<'a, R::Database>};
     let sqlx_types_type_database_token_stream = quote::quote! {sqlx::types::Type<R::Database>};
@@ -404,7 +397,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         });
         quote::quote! {
-            #derive_debug_serialize_deserialize_token_stream
+            #derive_debug_serde_serialize_serde_deserialize
             pub struct #struct_options_ident_token_stream {
                 #field_option_primary_key_token_stream,
                 #(#fields_options_excluding_primary_key_token_stream),*
@@ -666,7 +659,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     row: &'a R
                 ) -> sqlx::Result<#struct_options_ident_token_stream>
                 where
-                    #std_primitive_str_sqlx_column_index_token_stream
+                    #std_primitive_str_sqlx_column_index
                     #sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream
                     #(#sqlx_decode_decode_and_sqlx_types_type_with_excluded_primary_key_token_stream)*
                 {
@@ -700,7 +693,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             fn #primary_key_try_from_sqlx_row_snake_case<'a, R: #sqlx_row>(#row_snake_case: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
             where
-                #std_primitive_str_sqlx_column_index_token_stream
+                #std_primitive_str_sqlx_column_index
                 #primary_key_original_type_token_stream: #sqlx_decode_decode_database_token_stream,
                 #primary_key_original_type_token_stream: #sqlx_types_type_database_token_stream,
             {
@@ -2189,14 +2182,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         element
                     ));
                     quote::quote! {
-                        #derive_debug_serialize_deserialize_to_schema_token_stream
+                        #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
                         pub struct #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream {
                             #(#fields_with_excluded_primary_key_token_stream),*
                         }
                     }
                 };
                 let operation_payload_with_serialize_deserialize_token_stream = quote::quote! {
-                    #derive_debug_serialize_deserialize_token_stream
+                    #derive_debug_serde_serialize_serde_deserialize
                     pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>);
                 };
                 quote::quote! {
@@ -2412,7 +2405,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 ));
                 quote::quote! {
-                    #derive_debug_serialize_deserialize_token_stream
+                    #derive_debug_serde_serialize_serde_deserialize
                     pub enum #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
                         #desirable_upper_camel_case(#desirable_type_token_stream),
                         #(#variants_token_stream),*
@@ -2914,7 +2907,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     .iter()
     //                     .map(|element|generate_pub_field_ident_field_type_token_stream(element));
     //             quote::quote! {
-    //                 #derive_debug_to_schema_token_stream
+    //                 #derive_debug_utoipa_to_schema
     //                 pub struct #operation_payload_upper_camel_case_token_stream {
     //                     #(#fields_with_excluded_primary_key_token_stream),*
     //                 }
@@ -2929,7 +2922,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         element
     //                     ));
     //             quote::quote! {
-    //                 #derive_debug_serialize_deserialize_to_schema_token_stream
+    //                 #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
     //                 pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
     //                     #(#fields_with_excluded_primary_key_token_stream),*
     //                 }
@@ -3045,8 +3038,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         desirable_status_code,
     //         primary_key_inner_type_with_serialize_deserialize_token_stream,
     //         &derive_debug_thiserror_error_occurence_token_stream,
-    //         &derive_debug_serialize_deserialize_token_stream,
-    //         &derive_debug_serialize_deserialize_to_schema_token_stream,
+    //         &derive_debug_serde_serialize_serde_deserialize,
+    //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
     //         &proc_macro_name_upper_camel_case_ident_stringified,
     //         &operation,
@@ -3411,7 +3404,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 }
     //             });
     //             quote::quote! {
-    //                 #derive_debug_to_schema_token_stream
+    //                 #derive_debug_utoipa_to_schema
     //                 pub struct #operation_payload_upper_camel_case_token_stream {
     //                     pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
     //                     #(#fields_with_excluded_primary_key_token_stream)*
@@ -3432,7 +3425,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 }
     //             });
     //             quote::quote! {
-    //                 #derive_debug_serialize_deserialize_token_stream
+    //                 #derive_debug_serde_serialize_serde_deserialize
     //                 pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
     //                     #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
     //                     #(#fields_with_excluded_primary_key_token_stream)*
@@ -3662,8 +3655,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         desirable_status_code,
     //         &std_vec_vec_struct_options_ident_token_stream,
     //         &derive_debug_thiserror_error_occurence_token_stream,
-    //         &derive_debug_serialize_deserialize_token_stream,
-    //         &derive_debug_serialize_deserialize_to_schema_token_stream,
+    //         &derive_debug_serde_serialize_serde_deserialize,
+    //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
     //         &proc_macro_name_upper_camel_case_ident_stringified,
     //         &operation,
@@ -4323,7 +4316,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     );
     //     let parameters_token_stream = {
     //         let payload_token_stream = quote::quote! {
-    //             #derive_debug_to_schema_token_stream
+    //             #derive_debug_utoipa_to_schema
     //             pub struct #operation_payload_upper_camel_case_token_stream {
     //                 pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
     //                 pub #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
@@ -4331,7 +4324,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         };
     //         // println!("{payload_token_stream}");
     //         let payload_with_serialize_deserialize_token_stream = quote::quote! {
-    //             #derive_debug_serialize_deserialize_token_stream
+    //             #derive_debug_serde_serialize_serde_deserialize
     //             pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
     //                 #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
     //                 #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
@@ -4490,8 +4483,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         desirable_status_code,
     //         &struct_options_ident_token_stream,
     //         &derive_debug_thiserror_error_occurence_token_stream,
-    //         &derive_debug_serialize_deserialize_token_stream,
-    //         &derive_debug_serialize_deserialize_to_schema_token_stream,
+    //         &derive_debug_serde_serialize_serde_deserialize,
+    //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
     //         &proc_macro_name_upper_camel_case_ident_stringified,
     //         &operation,
@@ -4870,7 +4863,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         .iter()
     //                         .map(|element|generate_pub_field_ident_field_type_token_stream(element));
     //                 quote::quote! {
-    //                     #derive_debug_to_schema_token_stream
+    //                     #derive_debug_utoipa_to_schema
     //                     pub struct #operation_payload_element_upper_camel_case_token_stream {
     //                         pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
     //                         #(#fields_with_excluded_primary_key_token_stream),*
@@ -4878,7 +4871,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 }
     //             };
     //             let operation_payload_token_stream = quote::quote! {
-    //                 #derive_debug_to_schema_token_stream
+    //                 #derive_debug_utoipa_to_schema
     //                 pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
     //             };
     //             quote::quote! {
@@ -4894,7 +4887,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     element
     //                 ));
     //                 quote::quote! {
-    //                     #derive_debug_serialize_deserialize_to_schema_token_stream
+    //                     #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
     //                     pub struct #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream {
     //                         #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
     //                         #(#fields_with_excluded_primary_key_token_stream),*
@@ -4902,7 +4895,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 }
     //             };
     //             let operation_payload_with_serialize_deserialize_token_stream = quote::quote! {
-    //                 #derive_debug_serialize_deserialize_to_schema_token_stream
+    //                 #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
     //                 pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>);
     //             };
     //             quote::quote! {
@@ -5204,8 +5197,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         desirable_status_code,
     //         &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
     //         &derive_debug_thiserror_error_occurence_token_stream,
-    //         &derive_debug_serialize_deserialize_token_stream,
-    //         &derive_debug_serialize_deserialize_to_schema_token_stream,
+    //         &derive_debug_serde_serialize_serde_deserialize,
+    //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
     //         &proc_macro_name_upper_camel_case_ident_stringified,
     //         &operation,
@@ -5658,7 +5651,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         }
     //                     });
     //             quote::quote! {
-    //                 #derive_debug_to_schema_token_stream
+    //                 #derive_debug_utoipa_to_schema
     //                 pub struct #operation_payload_upper_camel_case_token_stream {
     //                     pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
     //                     #(#fields_with_excluded_primary_key_token_stream),*
@@ -5678,7 +5671,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         }
     //                     });
     //             quote::quote! {
-    //                 #derive_debug_serialize_deserialize_to_schema_token_stream
+    //                 #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
     //                 pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
     //                     #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
     //                     #(#fields_with_excluded_primary_key_token_stream),*
@@ -5873,8 +5866,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         desirable_status_code,
     //         primary_key_inner_type_with_serialize_deserialize_token_stream,
     //         &derive_debug_thiserror_error_occurence_token_stream,
-    //         &derive_debug_serialize_deserialize_token_stream,
-    //         &derive_debug_serialize_deserialize_to_schema_token_stream,
+    //         &derive_debug_serde_serialize_serde_deserialize,
+    //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
     //         &proc_macro_name_upper_camel_case_ident_stringified,
     //         &operation,
@@ -6314,7 +6307,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         }
     //                     });
     //             quote::quote! {
-    //                 #derive_debug_to_schema_token_stream
+    //                 #derive_debug_utoipa_to_schema
     //                 pub struct #operation_payload_upper_camel_case_token_stream {
     //                     pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
     //                     #(#fields_with_excluded_primary_key_token_stream),*
@@ -6331,7 +6324,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 }
     //             });
     //             quote::quote! {
-    //                 #derive_debug_serialize_deserialize_token_stream
+    //                 #derive_debug_serde_serialize_serde_deserialize
     //                 pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
     //                     #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
     //                     #(#fields_with_excluded_primary_key_token_stream),*
@@ -6524,8 +6517,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             desirable_status_code,
     //             &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
     //             &derive_debug_thiserror_error_occurence_token_stream,
-    //             &derive_debug_serialize_deserialize_token_stream,
-    //             &derive_debug_serialize_deserialize_to_schema_token_stream,
+    //             &derive_debug_serde_serialize_serde_deserialize,
+    //             &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //             &type_variants_from_request_response_syn_variants,
     //             &proc_macro_name_upper_camel_case_ident_stringified,
     //             &operation,
@@ -7206,14 +7199,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     );
     //     let parameters_token_stream = {
     //         let payload_token_stream = quote::quote! {
-    //             #derive_debug_to_schema_token_stream
+    //             #derive_debug_utoipa_to_schema
     //             pub struct #operation_payload_upper_camel_case_token_stream {
     //                 pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
     //             }
     //         };
     //         // println!("{payload_token_stream}");
     //         let payload_with_serialize_deserialize_token_stream = quote::quote! {
-    //             #derive_debug_serialize_deserialize_to_schema_token_stream
+    //             #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
     //             pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
     //                 #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
     //             }
@@ -7317,8 +7310,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         desirable_status_code,
     //         primary_key_inner_type_with_serialize_deserialize_token_stream,
     //         &derive_debug_thiserror_error_occurence_token_stream,
-    //         &derive_debug_serialize_deserialize_token_stream,
-    //         &derive_debug_serialize_deserialize_to_schema_token_stream,
+    //         &derive_debug_serde_serialize_serde_deserialize,
+    //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
     //         &proc_macro_name_upper_camel_case_ident_stringified,
     //         &operation,
