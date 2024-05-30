@@ -1,6 +1,3 @@
-
-
-///////////
 #[derive(Debug, Clone, Copy)]
 pub struct SqlxAcquire;
 impl quote::ToTokens for SqlxAcquire {
@@ -106,7 +103,6 @@ impl quote::ToTokens for DeriveDebug {
         quote::quote!{#[derive(Debug)]}.to_tokens(tokens)
     }
 }
-//
 #[derive(Debug, Clone, Copy)]
 pub struct DeriveDebugThiserrorErrorOccurence;
 impl quote::ToTokens for DeriveDebugThiserrorErrorOccurence {
@@ -157,16 +153,13 @@ impl quote::ToTokens for SqlxTypesTypeDatabase {
     }
 }
 
-//
-// #[derive(Debug, Clone, Copy)]
-// pub struct ErrorOccurenceLibCodeOccurenceCodeOccurence;
-// impl quote::ToTokens for ErrorOccurenceLibCodeOccurenceCodeOccurence {
-//     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-//         let code_occurence_upper_camel_case = CodeOccurenceUpperCamelCase;
-//         let code_occurence_snake_case = CodeOccurenceSnakeCase;
-//         quote::quote! {error_occurence_lib::#code_occurence_snake_case::Code}.to_tokens(tokens)
-//     }
-// }
+#[derive(Debug, Clone, Copy)]
+pub struct ErrorOccurenceLibCodeOccurenceCodeOccurence;
+impl quote::ToTokens for ErrorOccurenceLibCodeOccurenceCodeOccurence {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {error_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens)
+    }
+}
     // let error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {error_occurence_lib::#code_occurence_snake_case::#code_occurence_upper_camel_case};
     // let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {
     //     #code_occurence_snake_case: #error_occurence_lib_code_occurence_code_occurence_token_stream

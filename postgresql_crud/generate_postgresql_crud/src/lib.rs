@@ -432,7 +432,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{from_ident_for_ident_options_token_stream}");
     let code_occurence_upper_camel_case = proc_macro_helpers::naming_conventions::CodeOccurenceUpperCamelCase;
     let code_occurence_snake_case = proc_macro_helpers::naming_conventions::CodeOccurenceSnakeCase;
-    let error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {error_occurence_lib::#code_occurence_snake_case::#code_occurence_upper_camel_case};
+    let error_occurence_lib_code_occurence_code_occurence_token_stream = token_patterns::ErrorOccurenceLibCodeOccurenceCodeOccurence;
     let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {
         #code_occurence_snake_case: #error_occurence_lib_code_occurence_code_occurence_token_stream
     };
