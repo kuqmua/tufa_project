@@ -2167,6 +2167,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 postgresql_crud_common::FromOrTryFrom::TryFrom => {
                     let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
                     let impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = {
+                        //
                         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream = {
                             let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
                                 &fields_named_excluding_primary_key,
@@ -9300,26 +9301,28 @@ fn generate_impl_std_convert_from_operation_payload_and_paylaod_element_with_ser
     }
 }
 
-//
-// fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream(
-//     operation: &Operation,
-//     derive_debug_thiserror_error_occurence: &naming_constants::DeriveDebugThiserrorErrorOccurence,
-//     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
-
-// ) -> proc_macro2::TokenStream {
-//     let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
-//         &fields_named_excluding_primary_key,
-//         &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-//         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-//         &eo_error_occurence_attribute_token_stream,
-//     );
-//     quote::quote! {
-//         #derive_debug_thiserror_error_occurence
-//         pub enum #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
-//             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
-//         }
-//     }
-// }
+fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream(
+    operation: &Operation,
+    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
+    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
+    fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
+    primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
+    eo_error_occurence_attribute_token_stream: &proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
+    let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
+        &fields_named_excluding_primary_key,
+        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
+        &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+        &eo_error_occurence_attribute_token_stream,
+    );
+    quote::quote! {
+        #derive_debug_thiserror_error_occurence
+        pub enum #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
+            #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
+        }
+    }
+}
 //
             // let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
             //     postgresql_crud_common::FromOrTryFrom::From => {
