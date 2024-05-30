@@ -2143,7 +2143,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = operation.desirable_status_code();
         let parameters_token_stream = {
-            let payload_token_stream = generate_operation_payload_many_token_stream(
+            let payload_token_stream = generate_operation_many_payload_wrapper_token_stream(
                 &operation,
                 &derive_debug, 
                 &{
@@ -9170,7 +9170,7 @@ fn generate_additional_error_variants(
     variants.into_iter().collect()
 }
 
-fn generate_operation_payload_element_token_stream(
+fn generate_operation_many_payload_element_token_stream(
     operation: &Operation,
     derive_debug: &naming_constants::DeriveDebug, 
     fields_token_stream: &dyn quote::ToTokens,
@@ -9183,7 +9183,7 @@ fn generate_operation_payload_element_token_stream(
         }
     }
 }
-fn generate_operation_payload_token_stream(
+fn generate_operation_many_payload_token_stream(
     operation: &Operation,
     derive_debug: &naming_constants::DeriveDebug, 
 ) -> proc_macro2::TokenStream {
@@ -9195,17 +9195,17 @@ fn generate_operation_payload_token_stream(
     }
 }
 
-fn generate_operation_payload_many_token_stream(
+fn generate_operation_many_payload_wrapper_token_stream(
     operation: &Operation,
     derive_debug: &naming_constants::DeriveDebug, 
     fields_token_stream: &dyn quote::ToTokens,//todo maybe use instead &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 ) -> proc_macro2::TokenStream {
-    let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
+    let operation_payload_element_token_stream = generate_operation_many_payload_element_token_stream(
         &operation,
         &derive_debug,
         fields_token_stream
     );
-    let operation_payload_token_stream = generate_operation_payload_token_stream(
+    let operation_payload_token_stream = generate_operation_many_payload_token_stream(
         &operation,
         &derive_debug,
     );
@@ -9215,7 +9215,7 @@ fn generate_operation_payload_many_token_stream(
     }
 }
 
-fn generate_operation_payload_element_with_serialize_deserialize_token_stream(
+fn generate_operation_many_payload_element_with_serialize_deserialize_token_stream(
     operation: &Operation,
     derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &naming_constants::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
     fields_token_stream: &dyn quote::ToTokens,
@@ -9229,7 +9229,7 @@ fn generate_operation_payload_element_with_serialize_deserialize_token_stream(
     }
 }
 
-fn generate_operation_payload_with_serialize_deserialize_token_stream(
+fn generate_operation_many_payload_with_serialize_deserialize_token_stream(
     operation: &Operation,
     derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &naming_constants::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
 ) -> proc_macro2::TokenStream {
