@@ -2147,7 +2147,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let operation_payload_element_token_stream = generate_operation_payload_element_token_stream(
                     &operation,
                     &derive_debug,
-                    &fields_named_excluding_primary_key
+                    // &fields_named_excluding_primary_key
+                    &{
+                        let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
+                        quote::quote! {#(#fields_token_stream),*}
+                    }
                 );
                 let operation_payload_token_stream = generate_operation_payload_token_stream(
                     &operation,
@@ -9176,14 +9180,13 @@ fn generate_additional_error_variants(
 fn generate_operation_payload_element_token_stream(
     operation: &Operation,
     derive_debug: &naming_constants::DeriveDebug, 
-    syn_field_with_additional_info_vec: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
+    fields_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
-    let fields_token_stream = syn_field_with_additional_info_vec.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
     quote::quote! {
         #derive_debug
         pub struct #operation_payload_element_upper_camel_case_token_stream {
-            #(#fields_token_stream),*
+            #fields_token_stream
         }
     }
 }
