@@ -8424,6 +8424,10 @@ impl Operation {
         let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(self);
         quote::quote!{std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>}
     }
+    fn std_vec_vec_self_payload_element_with_serialize_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
+        let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(self);
+        quote::quote!{std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>}
+    }
     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
         &self,
     ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
@@ -9211,6 +9215,31 @@ fn generate_operation_payload_many_token_stream(
     }
 }
 
+fn generate_operation_payload_element_with_serialize_deserialize_token_stream(
+    operation: &Operation,
+    derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &naming_constants::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
+    fields_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+    quote::quote! {
+        #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+        pub struct #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream {
+            #fields_token_stream
+        }
+    }
+}
+
+fn generate_operation_payload_with_serialize_deserialize_token_stream(
+    operation: &Operation,
+    derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &naming_constants::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
+) -> proc_macro2::TokenStream {
+    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+    let std_vec_vec_operation_payload_element_with_serialize_deserialize_token_stream = operation.std_vec_vec_self_payload_element_with_serialize_deserialize_token_stream();
+    quote::quote! {
+        #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+        pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_with_serialize_deserialize_token_stream);
+    }
+}
 //
 // let payload_with_serialize_deserialize_token_stream = {
 //     let operation_payload_element_with_serialize_deserialize_token_stream = {
