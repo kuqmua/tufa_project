@@ -152,7 +152,6 @@ impl quote::ToTokens for SqlxTypesTypeDatabase {
         quote::quote! {sqlx::types::Type<R::Database>}.to_tokens(tokens)
     }
 }
-
 #[derive(Debug, Clone, Copy)]
 pub struct ErrorOccurenceLibCodeOccurenceCodeOccurence;
 impl quote::ToTokens for ErrorOccurenceLibCodeOccurenceCodeOccurence {
@@ -160,7 +159,15 @@ impl quote::ToTokens for ErrorOccurenceLibCodeOccurenceCodeOccurence {
         quote::quote! {error_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens)
     }
 }
-    // let error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {error_occurence_lib::#code_occurence_snake_case::#code_occurence_upper_camel_case};
+#[derive(Debug, Clone, Copy)]
+pub struct CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence;
+impl quote::ToTokens for CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {code_occurence: error_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens)
+    }
+}
+
+    
     // let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {
     //     #code_occurence_snake_case: #error_occurence_lib_code_occurence_code_occurence_token_stream
     // };
