@@ -302,6 +302,14 @@ impl quote::ToTokens for DeriveDebug {
         quote::quote!{#[derive(Debug)]}.to_tokens(tokens)
     }
 }
+//
+#[derive(Debug, Clone, Copy)]
+pub struct DeriveDebugThiserrorErrorOccurence;
+impl quote::ToTokens for DeriveDebugThiserrorErrorOccurence {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}.to_tokens(tokens)
+    }
+}
 #[derive(Debug, Clone, Copy)]
 pub struct DeriveDebugUtoipaToSchema;
 impl quote::ToTokens for DeriveDebugUtoipaToSchema {
@@ -321,5 +329,26 @@ pub struct DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
 impl quote::ToTokens for DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         quote::quote! {#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveStrSqlxColumnIndex;
+impl quote::ToTokens for StdPrimitiveStrSqlxColumnIndex {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {&'a std::primitive::str: sqlx::ColumnIndex<R>,}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SqlxDecodeDecodeDatabase;
+impl quote::ToTokens for SqlxDecodeDecodeDatabase {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::decode::Decode<'a, R::Database>}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct SqlxTypesTypeDatabase;
+impl quote::ToTokens for SqlxTypesTypeDatabase {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::types::Type<R::Database>}.to_tokens(tokens)
     }
 }

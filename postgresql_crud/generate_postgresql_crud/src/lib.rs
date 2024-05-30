@@ -342,41 +342,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let utoipa_to_schema = naming_constants::UtoipaToSchema;
     let serde_serialize = naming_constants::SerdeSerialize;
     let serde_deserialize = naming_constants::SerdeDeserialize;
-
     let derive_debug = naming_constants::DeriveDebug;
-    let derive_debug_thiserror_error_occurence_token_stream =
-        proc_macro_helpers::wrap_derive::token_stream(&[
-            &quote::quote!{#debug_upper_camel_case},
-            &quote::quote!{#thiserror_error},
-            &quote::quote!{#error_occurence_error_occurence},
-        ]);
+    let derive_debug_thiserror_error_occurence = naming_constants::DeriveDebugThiserrorErrorOccurence;
     let derive_debug_utoipa_to_schema = naming_constants::DeriveDebugUtoipaToSchema;
     let derive_debug_serde_serialize_serde_deserialize = naming_constants::DeriveDebugSerdeSerializeSerdeDeserialize;
     let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = naming_constants::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let from_str_upper_camel_case = proc_macro_helpers::naming_conventions::FromStrUpperCamelCase;
     let from_str_snake_case = proc_macro_helpers::naming_conventions::FromStrSnakeCase;
     let sqlx_row = naming_constants::SqlxRow;
-    let std_primitive_str_sqlx_column_index = {
-        #[derive(Debug, Clone, Copy)]
-        struct StdPrimitiveStrSqlxColumnIndex;
-        impl quote::ToTokens for StdPrimitiveStrSqlxColumnIndex {
-            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                quote::quote! {&'a std::primitive::str: sqlx::ColumnIndex<R>,}.to_tokens(tokens)
-            }
-        }
-        StdPrimitiveStrSqlxColumnIndex
-    };
-    let sqlx_decode_decode_database_token_stream =
-        quote::quote! {sqlx::decode::Decode<'a, R::Database>};
-    let sqlx_types_type_database_token_stream = quote::quote! {sqlx::types::Type<R::Database>};
+    let std_primitive_str_sqlx_column_index = naming_constants::StdPrimitiveStrSqlxColumnIndex;
+    let sqlx_decode_decode_database = naming_constants::SqlxDecodeDecodeDatabase;
+    let sqlx_types_type_database = naming_constants::SqlxTypesTypeDatabase;
     let error_named_upper_camel_case = proc_macro_helpers::naming_conventions::ErrorNamedUpperCamelCase;
-    let struct_options_ident_stringified = format!(
-        "{ident}{}",
-        naming_constants::OptionsUpperCamelCase
-    );
     let struct_options_ident_token_stream = {
-        struct_options_ident_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_options_ident_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = format!(
+            "{ident}{}",
+            naming_constants::OptionsUpperCamelCase
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let struct_options_token_stream = {
         // let serde_skip_serializing_if_value_attribute_token_stream = quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]};//todo maybe its not correct for nullable\option types
@@ -639,15 +623,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream = {
             quote::quote! {
-                std::option::Option<#primary_key_original_type_token_stream>: #sqlx_decode_decode_database_token_stream,
-                std::option::Option<#primary_key_original_type_token_stream>: #sqlx_types_type_database_token_stream,
+                std::option::Option<#primary_key_original_type_token_stream>: #sqlx_decode_decode_database,
+                std::option::Option<#primary_key_original_type_token_stream>: #sqlx_types_type_database,
             }
         };
         let sqlx_decode_decode_and_sqlx_types_type_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| {
             let original_type_token_stream = &element.original_type_token_stream;
             quote::quote!{
-                std::option::Option<#original_type_token_stream>: #sqlx_decode_decode_database_token_stream,
-                std::option::Option<#original_type_token_stream>: #sqlx_types_type_database_token_stream,
+                std::option::Option<#original_type_token_stream>: #sqlx_decode_decode_database,
+                std::option::Option<#original_type_token_stream>: #sqlx_types_type_database,
             }
         });
         quote::quote! {
@@ -694,8 +678,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             fn #primary_key_try_from_sqlx_row_snake_case<'a, R: #sqlx_row>(#row_snake_case: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
             where
                 #std_primitive_str_sqlx_column_index
-                #primary_key_original_type_token_stream: #sqlx_decode_decode_database_token_stream,
-                #primary_key_original_type_token_stream: #sqlx_types_type_database_token_stream,
+                #primary_key_original_type_token_stream: #sqlx_decode_decode_database,
+                #primary_key_original_type_token_stream: #sqlx_types_type_database,
             {
                 let #primary_key_name: #primary_key_original_type_token_stream = #row_snake_case.try_get(#primary_key_str_token_stream)?;
                 Ok(#primary_key_inner_type_token_stream(#primary_key_name))
@@ -2246,7 +2230,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &eo_error_occurence_attribute_token_stream,
                             );
                             quote::quote! {
-                                #derive_debug_thiserror_error_occurence_token_stream
+                                #derive_debug_thiserror_error_occurence
                                 pub enum #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
                                     #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
                                 }
@@ -2298,7 +2282,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             };
                             quote::quote! {
-                                #derive_debug_thiserror_error_occurence_token_stream
+                                #derive_debug_thiserror_error_occurence
                                 pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
                                     #primary_key_variant_token_stream
                                 }
@@ -2730,7 +2714,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 ));
                 quote::quote! {
-                    #derive_debug_thiserror_error_occurence_token_stream
+                    #derive_debug_thiserror_error_occurence
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         #(#variants_token_stream),*
                     }
@@ -2960,7 +2944,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         &eo_error_occurence_attribute_token_stream,
     //                     );
     //                     quote::quote! {
-    //                         #derive_debug_thiserror_error_occurence_token_stream
+    //                         #derive_debug_thiserror_error_occurence
     //                         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
     //                         }
@@ -3037,7 +3021,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
     //         desirable_status_code,
     //         primary_key_inner_type_with_serialize_deserialize_token_stream,
-    //         &derive_debug_thiserror_error_occurence_token_stream,
+    //         &derive_debug_thiserror_error_occurence,
     //         &derive_debug_serde_serialize_serde_deserialize,
     //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
@@ -3196,7 +3180,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         let try_operation_error_named_token_stream = {
     //             let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
     //             quote::quote! {
-    //                 #derive_debug_thiserror_error_occurence_token_stream
+    //                 #derive_debug_thiserror_error_occurence
     //                 pub enum #try_operation_error_named_upper_camel_case_token_stream {
     //                     #http_request_error_named_serde_json_to_string_variant_token_stream,
     //                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_handle_token_stream
@@ -3511,7 +3495,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                             &eo_error_occurence_attribute_token_stream,
     //                         );
     //                         quote::quote! {
-    //                             #derive_debug_thiserror_error_occurence_token_stream
+    //                             #derive_debug_thiserror_error_occurence
     //                             pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                                 #primary_key_variant_token_stream
     //                                 #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
@@ -3654,7 +3638,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
     //         desirable_status_code,
     //         &std_vec_vec_struct_options_ident_token_stream,
-    //         &derive_debug_thiserror_error_occurence_token_stream,
+    //         &derive_debug_thiserror_error_occurence,
     //         &derive_debug_serde_serialize_serde_deserialize,
     //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
@@ -4115,7 +4099,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             let expected_type_declaration_token_stream =
     //                 generate_expected_type_declaration_token_stream(&operation);
     //             quote::quote! {
-    //                 #derive_debug_thiserror_error_occurence_token_stream
+    //                 #derive_debug_thiserror_error_occurence
     //                 pub enum #try_operation_error_named_upper_camel_case_token_stream {
     //                     #http_request_error_named_serde_json_to_string_variant_token_stream,
     //                     #expected_type_declaration_token_stream,
@@ -4383,7 +4367,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                     }
     //                 };
     //                 quote::quote! {
-    //                     #derive_debug_thiserror_error_occurence_token_stream
+    //                     #derive_debug_thiserror_error_occurence
     //                     pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                         //todo enum potentially can be empty(no variants) - meaning its not try_from. its just from
     //                         #primary_key_variant_token_stream
@@ -4438,7 +4422,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             let operation_payload_with_serialize_deserialize_try_from_operation_payload_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::PayloadWithSerializeDeserializeTryFromPayloadErrorNamedUpperCamelCaseTokenStream::payload_with_serialize_deserialize_try_from_payload_error_named_upper_camel_case_token_stream(&operation);
     //             let operation_payload_with_serialize_deserialize_try_from_operation_payload_error_named_token_stream = {
     //                 quote::quote! {
-    //                     #derive_debug_thiserror_error_occurence_token_stream
+    //                     #derive_debug_thiserror_error_occurence
     //                     pub enum #operation_payload_with_serialize_deserialize_try_from_operation_payload_error_named_upper_camel_case_token_stream {
     //                         #not_unique_column_variant_token_stream,
     //                     }
@@ -4482,7 +4466,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
     //         desirable_status_code,
     //         &struct_options_ident_token_stream,
-    //         &derive_debug_thiserror_error_occurence_token_stream,
+    //         &derive_debug_thiserror_error_occurence,
     //         &derive_debug_serde_serialize_serde_deserialize,
     //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
@@ -4629,7 +4613,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 }
     //             };
     //             quote::quote! {
-    //                 #derive_debug_thiserror_error_occurence_token_stream
+    //                 #derive_debug_thiserror_error_occurence
     //                 pub enum #try_operation_error_named_upper_camel_case_token_stream {
     //                     #http_request_error_named_serde_json_to_string_variant_token_stream,
     //                     #expected_type_declaration_token_stream,
@@ -4947,7 +4931,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                             &eo_error_occurence_attribute_token_stream,
     //                         );
     //                         quote::quote! {
-    //                             #derive_debug_thiserror_error_occurence_token_stream
+    //                             #derive_debug_thiserror_error_occurence
     //                             pub enum #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                                 #primary_key_variant_token_stream
     //                                 #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
@@ -5041,7 +5025,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                                 &eo_error_occurence_attribute_token_stream,
     //                             );
     //                             quote::quote! {
-    //                                 #derive_debug_thiserror_error_occurence_token_stream
+    //                                 #derive_debug_thiserror_error_occurence
     //                                 pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                                     #primary_key_variant_token_stream
     //                                     #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
@@ -5196,7 +5180,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
     //         desirable_status_code,
     //         &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
-    //         &derive_debug_thiserror_error_occurence_token_stream,
+    //         &derive_debug_thiserror_error_occurence,
     //         &derive_debug_serde_serialize_serde_deserialize,
     //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
@@ -5458,7 +5442,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
     //             let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
     //             quote::quote! {
-    //                 #derive_debug_thiserror_error_occurence_token_stream
+    //                 #derive_debug_thiserror_error_occurence
     //                 pub enum #try_operation_error_named_upper_camel_case_token_stream {
     //                     #http_request_error_named_serde_json_to_string_variant_token_stream,
     //                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream
@@ -5726,7 +5710,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         &eo_error_occurence_attribute_token_stream,
     //                     );
     //                     quote::quote! {
-    //                         #derive_debug_thiserror_error_occurence_token_stream
+    //                         #derive_debug_thiserror_error_occurence
     //                         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                             #primary_key_variant_token_stream
     //                             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
@@ -5865,7 +5849,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
     //         desirable_status_code,
     //         primary_key_inner_type_with_serialize_deserialize_token_stream,
-    //         &derive_debug_thiserror_error_occurence_token_stream,
+    //         &derive_debug_thiserror_error_occurence,
     //         &derive_debug_serde_serialize_serde_deserialize,
     //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
@@ -6088,7 +6072,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         let try_operation_error_named_token_stream = {
     //             let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
     //             quote::quote! {
-    //                 #derive_debug_thiserror_error_occurence_token_stream
+    //                 #derive_debug_thiserror_error_occurence
     //                 pub enum #try_operation_error_named_upper_camel_case_token_stream {
     //                     #http_request_error_named_serde_json_to_string_variant_token_stream,
     //                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_handle_token_stream
@@ -6385,7 +6369,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         &eo_error_occurence_attribute_token_stream,
     //                     );
     //                     quote::quote! {
-    //                         #derive_debug_thiserror_error_occurence_token_stream
+    //                         #derive_debug_thiserror_error_occurence
     //                         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                             #primary_key_variant_token_stream
     //                             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
@@ -6516,7 +6500,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
     //             desirable_status_code,
     //             &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
-    //             &derive_debug_thiserror_error_occurence_token_stream,
+    //             &derive_debug_thiserror_error_occurence,
     //             &derive_debug_serde_serialize_serde_deserialize,
     //             &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //             &type_variants_from_request_response_syn_variants,
@@ -7006,7 +6990,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
     //             let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
     //             quote::quote! {
-    //                 #derive_debug_thiserror_error_occurence_token_stream
+    //                 #derive_debug_thiserror_error_occurence
     //                 pub enum #try_operation_error_named_upper_camel_case_token_stream {
     //                     #http_request_error_named_serde_json_to_string_variant_token_stream,
     //                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream
@@ -7230,7 +7214,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         &eo_error_occurence_attribute_token_stream,
     //                     );
     //                     quote::quote! {
-    //                         #derive_debug_thiserror_error_occurence_token_stream
+    //                         #derive_debug_thiserror_error_occurence
     //                         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
     //                             #primary_key_variant_token_stream
     //                         }
@@ -7309,7 +7293,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
     //         desirable_status_code,
     //         primary_key_inner_type_with_serialize_deserialize_token_stream,
-    //         &derive_debug_thiserror_error_occurence_token_stream,
+    //         &derive_debug_thiserror_error_occurence,
     //         &derive_debug_serde_serialize_serde_deserialize,
     //         &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     //         &type_variants_from_request_response_syn_variants,
@@ -7467,7 +7451,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         let try_operation_error_named_token_stream = {
     //             let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
     //             quote::quote! {
-    //                 #derive_debug_thiserror_error_occurence_token_stream
+    //                 #derive_debug_thiserror_error_occurence
     //                 pub enum #try_operation_error_named_upper_camel_case_token_stream {
     //                     #http_request_error_named_serde_json_to_string_variant_token_stream,
     //                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_handle_token_stream
