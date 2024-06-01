@@ -2134,8 +2134,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let parameters_token_stream = generate_parameters_wrapper_token_stream(
             &operation,
-            &derive_debug,
-            &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
             &{
                 let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
                 quote::quote! {#(#fields_token_stream),*}
@@ -2144,7 +2142,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(element));
                 quote::quote! {#(#fields_token_stream),*}
             },
-            &derive_debug_thiserror_error_occurence,
             &{
                 let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
                 quote::quote!{
@@ -2169,7 +2166,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             },
-            &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
             &fields_named_excluding_primary_key,
             &fields_idents_excluding_primary_key_token_stream,
             &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
@@ -8716,7 +8712,6 @@ fn generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_st
 
 fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
     value: &SynFieldWithAdditionalInfo<'_>,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
@@ -8744,6 +8739,7 @@ fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_er
                 .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let eo_error_occurence_attribute_token_stream = proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence.to_attribute_view_token_stream();
+            let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence = token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence;
             quote::quote!{
                 #field_ident_upper_camel_case_token_stream {
                     #eo_error_occurence_attribute_token_stream
@@ -8757,12 +8753,10 @@ fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_er
 
 fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
     value: &[SynFieldWithAdditionalInfo<'_>],
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
 ) -> std::vec::Vec<proc_macro2::TokenStream> {
     value.iter().map(|element| generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
         element,
-        code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
         primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
     )).collect()
 }
@@ -8961,9 +8955,9 @@ fn generate_additional_error_variants(
 
 fn generate_operation_many_payload_element_token_stream(
     operation: &Operation,
-    derive_debug: &token_patterns::DeriveDebug, 
     fields_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
+    let derive_debug = token_patterns::DeriveDebug;
     let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
     quote::quote! {
         #derive_debug
@@ -8974,8 +8968,8 @@ fn generate_operation_many_payload_element_token_stream(
 }
 fn generate_operation_many_payload_token_stream(
     operation: &Operation,
-    derive_debug: &token_patterns::DeriveDebug, 
 ) -> proc_macro2::TokenStream {
+    let derive_debug = token_patterns::DeriveDebug;
     let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
     let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
     quote::quote! {
@@ -8986,17 +8980,14 @@ fn generate_operation_many_payload_token_stream(
 
 fn generate_operation_many_payload_wrapper_token_stream(
     operation: &Operation,
-    derive_debug: &token_patterns::DeriveDebug, 
     fields_token_stream: &dyn quote::ToTokens,//todo maybe use instead &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_token_stream = generate_operation_many_payload_element_token_stream(
         &operation,
-        &derive_debug,
         fields_token_stream
     );
     let operation_payload_token_stream = generate_operation_many_payload_token_stream(
         &operation,
-        &derive_debug,
     );
     quote::quote! {
         #operation_payload_element_token_stream
@@ -9006,9 +8997,9 @@ fn generate_operation_many_payload_wrapper_token_stream(
 
 fn generate_operation_many_payload_element_with_serialize_deserialize_token_stream(
     operation: &Operation,
-    derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
     fields_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
+    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     quote::quote! {
         #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
@@ -9018,10 +9009,8 @@ fn generate_operation_many_payload_element_with_serialize_deserialize_token_stre
     }
 }
 
-fn generate_operation_many_payload_with_serialize_deserialize_token_stream(
-    operation: &Operation,
-    derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
-) -> proc_macro2::TokenStream {
+fn generate_operation_many_payload_with_serialize_deserialize_token_stream(operation: &Operation) -> proc_macro2::TokenStream {
+    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     let std_vec_vec_operation_payload_element_with_serialize_deserialize_token_stream = operation.std_vec_vec_self_payload_element_with_serialize_deserialize_token_stream();
     quote::quote! {
@@ -9032,17 +9021,14 @@ fn generate_operation_many_payload_with_serialize_deserialize_token_stream(
 
 fn generate_operation_many_payload_with_serialize_deserialize_wrapper_token_stream(
     operation: &Operation,
-    derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
     fields_token_stream: &dyn quote::ToTokens,//todo maybe use instead &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_with_serialize_deserialize_token_stream = generate_operation_many_payload_element_with_serialize_deserialize_token_stream(
         &operation,
-        &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
         fields_token_stream
     );
     let operation_payload_with_serialize_deserialize_token_stream = generate_operation_many_payload_with_serialize_deserialize_token_stream(
         &operation,
-        &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
     );
     quote::quote! {
         #operation_payload_element_with_serialize_deserialize_token_stream
@@ -9052,8 +9038,6 @@ fn generate_operation_many_payload_with_serialize_deserialize_wrapper_token_stre
 
 fn generate_operation_may_payload_and_payload_with_serialize_deserialize_wrapper(
     operation: &Operation,
-    derive_debug: &token_patterns::DeriveDebug,
-    derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
     fields_payload_token_stream: &dyn quote::ToTokens,
     fields_payload_with_serialize_deserialize_token_stream: &dyn quote::ToTokens,
 ) -> (
@@ -9062,12 +9046,10 @@ fn generate_operation_may_payload_and_payload_with_serialize_deserialize_wrapper
 ) {
     let payload_token_stream = generate_operation_many_payload_wrapper_token_stream(
         &operation,
-        &derive_debug, 
         &fields_payload_token_stream
     );
     let payload_with_serialize_deserialize_token_stream = generate_operation_many_payload_with_serialize_deserialize_wrapper_token_stream(
         &operation,
-        &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
         &fields_payload_with_serialize_deserialize_token_stream
     );
     (
@@ -9139,15 +9121,13 @@ fn generate_impl_std_convert_from_operation_payload_and_paylaod_element_with_ser
 
 fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream(
     operation: &Operation,
-    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
+    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
     let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
     let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
         &fields_named_excluding_primary_key,
-        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
     );
     quote::quote! {
@@ -9197,8 +9177,6 @@ fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_d
 
 fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
     operation: &Operation,
-    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
     fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
@@ -9206,8 +9184,6 @@ fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_d
 ) -> proc_macro2::TokenStream {
     let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream(
         &operation,
-        &derive_debug_thiserror_error_occurence,
-        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
         &fields_named_excluding_primary_key,
         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
     );
@@ -9226,9 +9202,9 @@ fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_d
 
 fn generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
     operation: &Operation,
-    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
     variants_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
+    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
     let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
     quote::quote! {
         #derive_debug_thiserror_error_occurence
@@ -9272,14 +9248,12 @@ fn generate_impl_std_convert_try_from_operation_payload_with_serialize_deseriali
 
 fn generate_impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
     operation: &Operation,
-    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
     error_variant_declaration_token_stream: &proc_macro2::TokenStream,
     error_variant_initialization_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
         &operation,
-        &derive_debug_thiserror_error_occurence,
         &error_variant_declaration_token_stream
     );
     let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream_for_operation_payload_upper_camel_case_token_stream = generate_impl_std_convert_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream_for_operation_payload_upper_camel_case_token_stream(
@@ -9295,10 +9269,8 @@ fn generate_impl_std_convert_try_from_operation_payload_with_serialize_deseriali
 
 fn generate_impl_std_convert_try_from_operation_payload_and_payload_element_with_serialize_deserialize_for_operation_payload_and_payload_element_token_stream(
     operation: &Operation,
-    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
     error_variant_declaration_token_stream: &proc_macro2::TokenStream,
     error_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
     fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
@@ -9306,8 +9278,6 @@ fn generate_impl_std_convert_try_from_operation_payload_and_payload_element_with
 ) -> proc_macro2::TokenStream {
     let impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
         &operation,
-        &derive_debug_thiserror_error_occurence,
-        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
         &fields_named_excluding_primary_key,
         &fields_idents_excluding_primary_key_token_stream,
         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
@@ -9315,7 +9285,6 @@ fn generate_impl_std_convert_try_from_operation_payload_and_payload_element_with
     );
     let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
         &operation,
-        &derive_debug_thiserror_error_occurence,
         &error_variant_declaration_token_stream,
         &error_variant_initialization_token_stream,
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -9328,10 +9297,8 @@ fn generate_impl_std_convert_try_from_operation_payload_and_payload_element_with
 
 fn generate_impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
     operation: &Operation,
-    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
     error_variant_declaration_token_stream: &proc_macro2::TokenStream,
     error_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
     fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
@@ -9346,10 +9313,8 @@ fn generate_impl_std_convert_from_or_try_from_operation_payload_with_serialize_d
         ),
         postgresql_crud_common::FromOrTryFrom::TryFrom => generate_impl_std_convert_try_from_operation_payload_and_payload_element_with_serialize_deserialize_for_operation_payload_and_payload_element_token_stream(
             &operation,
-            &derive_debug_thiserror_error_occurence,
             &error_variant_declaration_token_stream,
             &error_variant_initialization_token_stream,
-            &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
             &fields_named_excluding_primary_key,
             &fields_idents_excluding_primary_key_token_stream,
             &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
@@ -9435,14 +9400,10 @@ fn generate_parameters_token_stream(operation: &Operation) -> proc_macro2::Token
 
 fn generate_parameters_wrapper_token_stream(
     operation: &Operation,
-    derive_debug: &token_patterns::DeriveDebug,
-    derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema: &token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema,
     fields_payload_token_stream: &dyn quote::ToTokens,
     fields_payload_with_serialize_deserialize_token_stream: &dyn quote::ToTokens,
-    derive_debug_thiserror_error_occurence: &token_patterns::DeriveDebugThiserrorErrorOccurence,
     error_variant_declaration_token_stream: &proc_macro2::TokenStream,
     error_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
     fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
@@ -9454,8 +9415,6 @@ fn generate_parameters_wrapper_token_stream(
         payload_with_serialize_deserialize_token_stream
     ) = generate_operation_may_payload_and_payload_with_serialize_deserialize_wrapper(
         &operation,
-        &derive_debug,
-        &derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema,
         &{
             let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
             quote::quote! {#(#fields_token_stream),*}
@@ -9467,10 +9426,8 @@ fn generate_parameters_wrapper_token_stream(
     );
     let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
         &operation,
-        &derive_debug_thiserror_error_occurence,
         &error_variant_declaration_token_stream,
         &error_variant_initialization_token_stream,
-        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
         &fields_named_excluding_primary_key,
         &fields_idents_excluding_primary_key_token_stream,
         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
