@@ -2186,25 +2186,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let try_operation_route_logic_error_named_token_stream = {
-                let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
-                    &element,
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                ));
-                quote::quote! {
-                    #[derive(
-                        Debug,
-                        thiserror::Error,
-                        error_occurence_lib::ErrorOccurence,
-                    )]
-                    pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
-                        #(#variants_token_stream),*
-                    }
-                }
-            };
+            let try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_error_named_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
             let try_operation_route_logic_token_stream = {
                 let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(&operation);
-                let try_operation_route_logic_error_named_upper_camel_case_token_stream =     naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
+                let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
                 let request_parts_preparation_token_stream = generate_request_parts_preparation_token_stream(&operation);
                 let additional_validators_token_stream = {
                     let create_many_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
@@ -9470,6 +9459,29 @@ fn generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_
                     #(#variants_token_stream),*
                 }
             }
+        }
+    }
+}
+
+
+fn generate_try_operation_route_logic_error_named_token_stream(
+    operation: &Operation,
+    type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> proc_macro2::TokenStream {
+    let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+    let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
+        &element,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    ));
+    quote::quote! {
+        #[derive(
+            Debug,
+            thiserror::Error,
+            error_occurence_lib::ErrorOccurence,
+        )]
+        pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
+            #(#variants_token_stream),*
         }
     }
 }
