@@ -1,12 +1,12 @@
 pub fn construct_syn_variant_with_status_code(
     status_code: crate::status_code::StatusCode,
     variant_name: &impl std::fmt::Display,
-    code_occurence_field: &syn::Field,
     fields: std::vec::Vec<(
         crate::error_occurence::ErrorOccurenceFieldAttribute,
         &impl std::fmt::Display,
         syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     )>,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> syn::Variant {
     syn::Variant {
         attrs: vec![syn::Attribute {
@@ -76,7 +76,7 @@ pub fn construct_syn_variant_with_status_code(
                         acc
                     },
                 );
-                handle.push_value(code_occurence_field.clone());
+                handle.push_value(crate::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified));
                 handle
             },
         }),
@@ -86,12 +86,12 @@ pub fn construct_syn_variant_with_status_code(
 
 pub fn construct_syn_variant(
     variant_name: &impl std::fmt::Display,
-    code_occurence_field: &syn::Field,
     fields: std::vec::Vec<(
         crate::error_occurence::ErrorOccurenceFieldAttribute,
         &impl std::fmt::Display,
         syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     )>,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> syn::Variant {
     syn::Variant {
         attrs: vec![],
@@ -144,7 +144,7 @@ pub fn construct_syn_variant(
                         acc
                     },
                 );
-                handle.push_value(code_occurence_field.clone());
+                handle.push_value(crate::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified));
                 handle
             },
         }),
