@@ -2195,15 +2195,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &fields_idents_excluding_primary_key_token_stream,
             );
             // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
-            let parameters_token_stream = {
-                let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(&operation);
-                quote::quote! {
-                    #derive_debug
-                    pub struct #operation_parameters_upper_camel_case_token_stream {//todo maybe not need additional info, so parameters wrapper potentially can be removed
-                        pub #payload_snake_case: #operation_payload_upper_camel_case_token_stream,
-                    }
-                }
-            };
+            let parameters_token_stream = generate_parameters_token_stream(&operation);
             quote::quote! {
                 #payload_token_stream
                 #payload_with_serialize_deserialize_token_stream
@@ -9453,5 +9445,18 @@ fn generate_impl_std_convert_from_operation_payload_for_operation_payload_with_s
     quote::quote! {
         #impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream
         #impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream
+    }
+}
+
+fn generate_parameters_token_stream(operation: &Operation) -> proc_macro2::TokenStream {
+    let derive_debug = token_patterns::DeriveDebug;
+    let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
+    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
+    let payload_snake_case = naming_constants::PayloadSnakeCase;
+    quote::quote! {
+        #derive_debug
+        pub struct #operation_parameters_upper_camel_case_token_stream {//todo maybe not need additional info, so parameters wrapper potentially can be removed
+            pub #payload_snake_case: #operation_payload_upper_camel_case_token_stream,
+        }
     }
 }
