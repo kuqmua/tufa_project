@@ -2090,8 +2090,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
-        let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
-        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
             &code_occurence_field,
         );
@@ -2360,30 +2358,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                quote::quote! {
-                    // // #swagger_open_api_token_stream
-                    pub async fn #try_operation_route_logic_snake_case_token_stream(
-                        app_state: axum::extract::State<
-                            crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
-                        >,
-                        request: axum::extract::Request,
-                    ) -> #axum_response_response_token_stream {
-                        #request_parts_preparation_token_stream
-                        #additional_validators_token_stream
-                        #parameters_logic_token_stream
-                        println!("{:#?}", #parameters_snake_case);
-                        let #query_string_snake_case = #query_string_token_stream;
-                        println!("{}", #query_string_snake_case);
-                        let #binded_query_snake_case = {
-                            #binded_query_token_stream
-                        };
-                        #acquire_pool_and_connection_token_stream
-                        let #value_snake_case = {
-                            #postgresql_logic_token_stream
-                        };
-                        #desirable_response_creation_token_stream
-                    }
-                }
+                generate_try_operation_route_logic_snake_case_token_stream(
+                    &operation,
+                    &request_parts_preparation_token_stream,
+                    &additional_validators_token_stream,
+                    &parameters_logic_token_stream,
+                    &query_string_token_stream,
+                    &binded_query_token_stream,
+                    &acquire_pool_and_connection_token_stream,
+                    &postgresql_logic_token_stream,
+                    &desirable_response_creation_token_stream,
+                )
             };
             quote::quote! {
                 #try_operation_route_logic_response_variants_token_stream
@@ -9499,6 +9484,49 @@ fn generate_parameters_logic_token_stream(
                 }
             },
         };
+    }
+}
+
+fn generate_try_operation_route_logic_snake_case_token_stream(
+    operation: &Operation,
+    request_parts_preparation_token_stream: &proc_macro2::TokenStream,
+    additional_validators_token_stream: &proc_macro2::TokenStream,
+    parameters_logic_token_stream: &proc_macro2::TokenStream,
+    query_string_token_stream: &proc_macro2::TokenStream,
+    binded_query_token_stream: &proc_macro2::TokenStream,
+    acquire_pool_and_connection_token_stream: &proc_macro2::TokenStream,
+    postgresql_logic_token_stream: &proc_macro2::TokenStream,
+    desirable_response_creation_token_stream: &proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
+    let axum_response_response_token_stream = quote::quote!{axum::response::Response};
+    let parameters_snake_case = naming_constants::ParametersSnakeCase;
+    let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
+    let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
+    let value_snake_case = naming_constants::ValueSnakeCase;
+    quote::quote! {
+        // // #swagger_open_api_token_stream
+        pub async fn #try_operation_route_logic_snake_case_token_stream(
+            app_state: axum::extract::State<
+                crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
+            >,
+            request: axum::extract::Request,
+        ) -> #axum_response_response_token_stream {
+            #request_parts_preparation_token_stream
+            #additional_validators_token_stream
+            #parameters_logic_token_stream
+            println!("{:#?}", #parameters_snake_case);
+            let #query_string_snake_case = #query_string_token_stream;
+            println!("{}", #query_string_snake_case);
+            let #binded_query_snake_case = {
+                #binded_query_token_stream
+            };
+            #acquire_pool_and_connection_token_stream
+            let #value_snake_case = {
+                #postgresql_logic_token_stream
+            };
+            #desirable_response_creation_token_stream
+        }
     }
 }
 
