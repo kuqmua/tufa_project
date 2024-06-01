@@ -2070,31 +2070,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
-            &code_occurence_field,
-        );
+        let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
+        for element in common_route_syn_variants {
+            type_variants_from_request_response_syn_variants.push(element);
+        }
         let operation_additional_error_variants = generate_additional_error_variants(
             &ast,
             operation.to_additional_error_variants(),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let type_variants_from_request_response_syn_variants = {
-            let type_variants_from_request_response_syn_variants_partial = {
-                let mut type_variants_from_request_response = std::vec::Vec::with_capacity(common_route_syn_variants.len() + operation_additional_error_variants.len() + 2);
-                for element in common_route_syn_variants {
-                    type_variants_from_request_response.push(element);
-                }
-                for element in operation_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
-                    type_variants_from_request_response.push(element);
-                }
-                type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
-                if fields_named_excluding_primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-                    type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-                }
-                type_variants_from_request_response
-            };
-            type_variants_from_request_response_syn_variants_partial
-        };
+        for element in operation_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
+            type_variants_from_request_response_syn_variants.push(element);
+        }
+        type_variants_from_request_response_syn_variants.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
+        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
+            &code_occurence_field,
+        );
+        if fields_named_excluding_primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
+            type_variants_from_request_response_syn_variants.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
+        }
         let parameters_token_stream = generate_parameters_wrapper_token_stream(
             &operation,
             &{
