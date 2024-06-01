@@ -18,7 +18,7 @@ pub fn get_macro_attribute<'a>(
 pub fn get_macro_attribute_meta_list_token_stream<'a>(
     attrs: &'a [syn::Attribute],
     attribute_path: &std::string::String,
-    proc_macro_name_ident_stringified: &std::string::String,
+    proc_macro_name_ident_stringified: &std::primitive::str,
 ) -> &'a proc_macro2::TokenStream {
     let option_attribute = attrs.iter().find(|attr| {
         *attribute_path == {
