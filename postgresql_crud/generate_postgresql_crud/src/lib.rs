@@ -2306,7 +2306,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{binded_query_token_stream}");
                 let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
                     &pg_connection_snake_case,
-                    // &proc_macro_name_upper_camel_case_ident_stringified,
                     &try_operation_route_logic_error_named_upper_camel_case_token_stream,
                     &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
                     &postgresql_syn_variant_initialization_token_stream,
@@ -2394,31 +2393,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let (http_request_token_stream, http_request_test_token_stream) = {
-            let try_operation_error_named_token_stream = {
-                let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-                let syn_variants = {
-                    let mut value = std::vec::Vec::with_capacity(common_http_request_syn_variants.len() + 1);
-                    for element in common_http_request_syn_variants {
-                        value.push(element);
-                    }
-                    value.push(construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
-                        &operation,
-                        &code_occurence_field,
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    ));
-                    value
-                };
-                let variants_token_stream = syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
-                    &element,
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                ));
-                quote::quote! {
-                    #derive_debug_thiserror_error_occurence
-                    pub enum #try_operation_error_named_upper_camel_case_token_stream {
-                        #(#variants_token_stream),*
-                    }
-                }
-            };
+            let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
+                &operation,
+                common_http_request_syn_variants,
+                &code_occurence_field,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &ref_std_primitive_str,
@@ -9519,5 +9499,37 @@ fn generate_parameters_logic_token_stream(
                 }
             },
         };
+    }
+}
+
+fn generate_try_operation_error_named_token_stream(
+    operation: &Operation,
+    common_http_request_syn_variants: std::vec::Vec<syn::Variant>,
+    code_occurence_field: &syn::Field,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> proc_macro2::TokenStream {
+    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
+    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+    let syn_variants = {
+        let mut value = std::vec::Vec::with_capacity(common_http_request_syn_variants.len() + 1);
+        for element in common_http_request_syn_variants {
+            value.push(element);
+        }
+        value.push(construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
+            &operation,
+            &code_occurence_field,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        ));
+        value
+    };
+    let variants_token_stream = syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
+        &element,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    ));
+    quote::quote! {
+        #derive_debug_thiserror_error_occurence
+        pub enum #try_operation_error_named_upper_camel_case_token_stream {
+            #(#variants_token_stream),*
+        }
     }
 }
