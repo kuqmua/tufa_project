@@ -950,31 +950,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ),
         }
     };
-    let code_occurence_field = syn::Field {
-        attrs: vec![],
-        vis: syn::Visibility::Inherited,
-        mutability: syn::FieldMutability::None,
-        ident: Some(
-            syn::Ident::new("code_occurence", proc_macro2::Span::call_site())
-        ),
-        colon_token: Some(
-            syn::token::Colon {
-                spans: [proc_macro2::Span::call_site()],
-            },
-        ),
-        ty: syn::Type::Path(
-            syn::TypePath {
-                qself: None,
-                path: syn::Path {
-                    leading_colon: None,
-                    segments: proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &["error_occurence_lib","code_occurence","CodeOccurence"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
-                },
-            },
-        ),
-    };
+    let code_occurence_field = proc_macro_helpers::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified);
     let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let (checked_add_syn_variant, checked_add_variant_initialization_token_stream) = {
         let checked_add_upper_camel_case= naming_conventions::CheckedAddUpperCamelCase;
@@ -2436,6 +2412,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     // let (create_one_token_stream, create_one_http_request_test_token_stream) = {
     //     let operation = Operation::CreateOne;
+    //     let mut type_variants_from_request_response_syn_variants = common_route_syn_variants.clone();
     //     // let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);
     //     // let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(&operation);
     //     // let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
@@ -9538,3 +9515,32 @@ fn generate_try_operation_error_named_token_stream(
         }
     }
 }
+
+//
+// fn generate_type_variants_from_request_response_syn_variants<'a>(
+//     common_route_syn_variants: std::vec::Vec<&'a syn::Variant>,
+//     ast: &'a syn::DeriveInput,
+//     operation: &Operation,
+//     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+//     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant: &'a syn::Variant,
+// ) -> std::vec::Vec<&'a syn::Variant> {
+//     let mut type_variants_from_request_response_syn_variants = common_route_syn_variants.clone();
+//     let operation_additional_error_variants = generate_additional_error_variants(
+//         &ast,
+//         operation.to_additional_error_variants(),
+//         &proc_macro_name_upper_camel_case_ident_stringified
+//     );
+//     for element in operation_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>() {
+//         type_variants_from_request_response_syn_variants.push(element);
+//     }
+//     type_variants_from_request_response_syn_variants.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
+//     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
+//         &code_occurence_field,
+//     );
+//     if fields_named_excluding_primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
+//         type_variants_from_request_response_syn_variants.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
+//     }
+//     type_variants_from_request_response_syn_variants
+// }
+
+//
