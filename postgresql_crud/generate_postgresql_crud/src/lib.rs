@@ -8694,6 +8694,7 @@ fn construct_try_operation_route_logic_error_named_with_serialize_deserialize_sy
     )
 }
 
+#[derive(Debug, strum_macros::Display)]
 enum GeneratePostgresqlCrudAttribute {
     CreateManyAdditionalErrorVariants,
     CreateOneAdditionalErrorVariants,
@@ -8714,37 +8715,57 @@ enum GeneratePostgresqlCrudAttribute {
     DeleteOneAdditionalRouteLogic,
     CommonAdditionalRouteLogic,
 }
-impl std::fmt::Display for GeneratePostgresqlCrudAttribute {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter, 
-            "{}",
-            match self {
-                Self::CreateManyAdditionalErrorVariants => naming_conventions::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::CreateOneAdditionalErrorVariants => naming_conventions::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::ReadManyAdditionalErrorVariants => naming_conventions::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::ReadOneAdditionalErrorVariants => naming_conventions::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::UpdateManyAdditionalErrorVariants => naming_conventions::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::UpdateOneAdditionalErrorVariants => naming_conventions::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::DeleteManyAdditionalErrorVariants => naming_conventions::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::DeleteOneAdditionalErrorVariants => naming_conventions::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::CommonAdditionalErrorVariants => naming_conventions::CommonAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::CreateManyAdditionalRouteLogic => naming_conventions::CreateManyAdditionalRouteLogicSnakeCase.to_string(),
-                Self::CreateOneAdditionalRouteLogic => naming_conventions::CreateOneAdditionalRouteLogicSnakeCase.to_string(),
-                Self::ReadManyAdditionalRouteLogic => naming_conventions::ReadManyAdditionalRouteLogicSnakeCase.to_string(),
-                Self::ReadOneAdditionalRouteLogic => naming_conventions::ReadOneAdditionalRouteLogicSnakeCase.to_string(),
-                Self::UpdateManyAdditionalRouteLogic => naming_conventions::UpdateManyAdditionalRouteLogicSnakeCase.to_string(),
-                Self::UpdateOneAdditionalRouteLogic => naming_conventions::UpdateOneAdditionalRouteLogicSnakeCase.to_string(),
-                Self::DeleteManyAdditionalRouteLogic => naming_conventions::DeleteManyAdditionalRouteLogicSnakeCase.to_string(),
-                Self::DeleteOneAdditionalRouteLogic => naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
-                Self::CommonAdditionalRouteLogic => naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
-            }
-        )
-    }
-}
+// impl std::fmt::Display for GeneratePostgresqlCrudAttribute {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(
+//             formatter, 
+//             "{}",
+//             match self {
+//                 Self::CreateManyAdditionalErrorVariants => "CreateManyAdditionalErrorVariants",
+//                 Self::CreateOneAdditionalErrorVariants => "CreateOneAdditionalErrorVariants",
+//                 Self::ReadManyAdditionalErrorVariants => "ReadManyAdditionalErrorVariants",
+//                 Self::ReadOneAdditionalErrorVariants => "ReadOneAdditionalErrorVariants",
+//                 Self::UpdateManyAdditionalErrorVariants => "UpdateManyAdditionalErrorVariants",
+//                 Self::UpdateOneAdditionalErrorVariants => "UpdateOneAdditionalErrorVariants",
+//                 Self::DeleteManyAdditionalErrorVariants => "DeleteManyAdditionalErrorVariants",
+//                 Self::DeleteOneAdditionalErrorVariants => "DeleteOneAdditionalErrorVariants",
+//                 Self::CommonAdditionalErrorVariants => "CommonAdditionalErrorVariants",
+//                 Self::CreateManyAdditionalRouteLogic => "CreateManyAdditionalRouteLogic",
+//                 Self::CreateOneAdditionalRouteLogic => "CreateOneAdditionalRouteLogic",
+//                 Self::ReadManyAdditionalRouteLogic => "ReadManyAdditionalRouteLogic",
+//                 Self::ReadOneAdditionalRouteLogic => "ReadOneAdditionalRouteLogic",
+//                 Self::UpdateManyAdditionalRouteLogic => "UpdateManyAdditionalRouteLogic",
+//                 Self::UpdateOneAdditionalRouteLogic => "UpdateOneAdditionalRouteLogic",
+//                 Self::DeleteManyAdditionalRouteLogic => "DeleteManyAdditionalRouteLogic",
+//                 Self::DeleteOneAdditionalRouteLogic => "DeleteOneAdditionalRouteLogic",
+//                 Self::CommonAdditionalRouteLogic => "CommonAdditionalRouteLogic",
+//             }
+//         )
+//     }
+// }
 impl GeneratePostgresqlCrudAttribute {
     fn generate_path_to_attribute(self) -> std::string::String {
-        format!("{}::{self}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE)
+        let value = match self {
+            Self::CreateManyAdditionalErrorVariants => naming_conventions::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::CreateOneAdditionalErrorVariants => naming_conventions::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::ReadManyAdditionalErrorVariants => naming_conventions::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::ReadOneAdditionalErrorVariants => naming_conventions::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::UpdateManyAdditionalErrorVariants => naming_conventions::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::UpdateOneAdditionalErrorVariants => naming_conventions::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::DeleteManyAdditionalErrorVariants => naming_conventions::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::DeleteOneAdditionalErrorVariants => naming_conventions::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::CommonAdditionalErrorVariants => naming_conventions::CommonAdditionalErrorVariantsSnakeCase.to_string(),
+            Self::CreateManyAdditionalRouteLogic => naming_conventions::CreateManyAdditionalRouteLogicSnakeCase.to_string(),
+            Self::CreateOneAdditionalRouteLogic => naming_conventions::CreateOneAdditionalRouteLogicSnakeCase.to_string(),
+            Self::ReadManyAdditionalRouteLogic => naming_conventions::ReadManyAdditionalRouteLogicSnakeCase.to_string(),
+            Self::ReadOneAdditionalRouteLogic => naming_conventions::ReadOneAdditionalRouteLogicSnakeCase.to_string(),
+            Self::UpdateManyAdditionalRouteLogic => naming_conventions::UpdateManyAdditionalRouteLogicSnakeCase.to_string(),
+            Self::UpdateOneAdditionalRouteLogic => naming_conventions::UpdateOneAdditionalRouteLogicSnakeCase.to_string(),
+            Self::DeleteManyAdditionalRouteLogic => naming_conventions::DeleteManyAdditionalRouteLogicSnakeCase.to_string(),
+            Self::DeleteOneAdditionalRouteLogic => naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
+            Self::CommonAdditionalRouteLogic => naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
+        };
+        format!("{}::{value}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE)
     }
 }
 
@@ -8753,6 +8774,7 @@ fn generate_additional_error_variants(
     generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> std::vec::Vec<syn::Variant> {
+    let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
     let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &ast.attrs,
         &generate_postgresql_crud_attribute.generate_path_to_attribute(),
@@ -8764,6 +8786,8 @@ fn generate_additional_error_variants(
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
+    let value_ident_stringified = value.ident.to_string();
+    assert!(value_ident_stringified == generate_postgresql_crud_attribute_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} {value_ident_stringified} is not equal to {generate_postgresql_crud_attribute_stringified}");
     let variants = if let syn::Data::Enum(data_enum) = value.data {
         data_enum.variants
     }
