@@ -2580,37 +2580,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 },
             );
-            
-            // {
-            //     let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-            //         .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(
-            //             element,
-            //             &from_snake_case_token_stream,
-            //         ));
-            //     quote::quote! {
-            //         impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-            //             fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
-            //                 #(#fields_assignment_excluding_primary_key_token_stream)*
-            //                 Self{
-            //                     #(#fields_idents_excluding_primary_key_token_stream),*
-            //                 }
-            //             }
-            //         }
-            //     }
-            // };
             // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
-            // let parameters_token_stream = quote::quote! {
-            //     #derive_debug_token_stream
-            //     pub struct #operation_parameters_upper_camel_case_token_stream {
-            //         pub #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream,
-            //     }
-            // };
+            let parameters_token_stream = generate_parameters_token_stream(&operation);
             quote::quote! {
                 #payload_token_stream
-                // #payload_with_serialize_deserialize_token_stream
-                // #impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
-                // #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
-                // #parameters_token_stream
+                #payload_with_serialize_deserialize_token_stream
+                #impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
+                #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
+                #parameters_token_stream
             }
         };
         // println!("{parameters_token_stream}");
