@@ -9341,15 +9341,15 @@ fn generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_
     let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
     let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let value_snake_case = naming_constants::ValueSnakeCase;
-    quote::quote! {
-        impl std::convert::From<#try_operation_route_logic_error_named_upper_camel_case_token_stream> for #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
-            fn from(#value_snake_case: #try_operation_route_logic_error_named_upper_camel_case_token_stream) -> Self {
-                match #value_snake_case.#into_serialize_deserialize_version_snake_case() {
-                    #(#variants_token_stream),*
-                }
+    generate_impl_std_convert_from_token_stream(
+        &try_operation_route_logic_error_named_upper_camel_case_token_stream,
+        &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
+        &quote::quote!{
+            match #value_snake_case.#into_serialize_deserialize_version_snake_case() {
+                #(#variants_token_stream),*
             }
         }
-    }
+    )
 }
 
 
