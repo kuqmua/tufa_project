@@ -1,12 +1,12 @@
 #[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
-#[postgresql_crud::read_many_additional_error_variants{}]
-#[postgresql_crud::read_one_additional_error_variants{}]
-#[postgresql_crud::update_many_additional_error_variants{}]
-#[postgresql_crud::update_one_additional_error_variants{}]
-#[postgresql_crud::delete_many_additional_error_variants{}]
-#[postgresql_crud::delete_one_additional_error_variants{}]
+#[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
+#[postgresql_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
+#[postgresql_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
+#[postgresql_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
+#[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
+#[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
 #[postgresql_crud::common_additional_error_variants{
     enum CommonAdditionalErrorVariants {
         CheckCommit {
