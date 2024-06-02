@@ -1565,7 +1565,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_response_into_response = token_patterns::AxumResponseIntoResponse;
     let axum_extract_rejection_json_rejection = token_patterns::AxumExtractRejectionJsonRejection;
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
-    let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
     let axum_extract_state_token_stream = quote::quote! {axum::extract::State};
     let axum_json_token_stream = quote::quote! {axum::Json};
     //todo remove it after refactor to not support middleware
@@ -2316,7 +2315,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &serde_json_to_string_variant_initialization_token_stream,
-                &reqwest_client_new_token_stream,
                 &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case,
@@ -7444,7 +7442,6 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 
 fn generate_http_request_many_token_stream(
     serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    reqwest_client_new_token_stream: &proc_macro2::TokenStream,
     commit_header_addition_token_stream: &proc_macro2::TokenStream,
     content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case: &naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamedUpperCamelCase,
@@ -7500,6 +7497,7 @@ fn generate_http_request_many_token_stream(
             &operation.http_method(),
         );
         let body_snake_case = naming_constants::BodySnakeCase;
+        let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
         quote::quote! {
             let #future_snake_case = #reqwest_client_new_token_stream
                 .#operation_http_method_snake_case_token_stream(&#url_snake_case)
