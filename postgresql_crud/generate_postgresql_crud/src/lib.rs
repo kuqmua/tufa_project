@@ -1654,7 +1654,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
     let (
         serde_json_to_string_syn_variant,
-        serde_json_to_string_variant_initialization_token_stream
+        serde_json_to_string_syn_variant_initialization_token_stream
      ) = {
         let serde_json_to_string_upper_camel_case = naming_conventions::SerdeJsonToStringUpperCamelCase;
         let serde_json_to_string_snake_case = naming_conventions::SerdeJsonToStringSnakeCase;
@@ -2300,23 +2300,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             );
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
-                // &serde_json_to_string_variant_initialization_token_stream,
-                // &table_name_stringified,
-                // &operation,
-                // &proc_macro_name_upper_camel_case_ident_stringified,
-                // &type_variants_from_request_response_syn_variants,
-                // &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
-                // &reqwest_syn_variant_initialization_token_stream,
-                // &failed_to_get_response_text_initialization_token_stream,
-                // &primary_key_syn_field,
-                // &deserialize_response_syn_variant_initialization_token_stream,
-                //
                 &operation,
                 &table_name_stringified,
                 &primary_key_syn_field,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
-                &serde_json_to_string_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_initialization_token_stream,
                 &reqwest_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
@@ -2953,7 +2942,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //         let #payload_snake_case_token_stream = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case_token_stream)) {
             //             Ok(value) => value,
             //             Err(#error_snake_case) => {
-            //                 return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
+            //                 return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
             //             }
             //         };
             //     },
@@ -3856,7 +3845,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 ) {
     //                     Ok(value) => value,
     //                     Err(#error_snake_case) => {
-    //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
+    //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
     //                     }
     //                 };
     //             },
@@ -4356,7 +4345,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         Ok(value) => match #serde_json_to_string_token_stream(&value) {
     //                             Ok(value) => value,
     //                             Err(#error_snake_case) => {
-    //                                 return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
+    //                                 return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
     //                             }
     //                         },
     //                         Err(#error_snake_case) => {
@@ -5143,7 +5132,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &server_location_name_token_stream,
     //             &str_ref_token_stream,
     //             &serde_json_to_string_token_stream,
-    //             &serde_json_to_string_variant_initialization_token_stream,
+    //             &serde_json_to_string_syn_variant_initialization_token_stream,
     //             &reqwest_client_new_token_stream,
     //             &commit_header_addition_token_stream,
     //             &content_type_application_json_header_addition_token_stream,
@@ -5754,7 +5743,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 )) {
     //                     Ok(value) => value,
     //                     Err(#error_snake_case) => {
-    //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
+    //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
     //                     }
     //                 };
     //             },
@@ -6643,7 +6632,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &server_location_name_token_stream,
     //             &str_ref_token_stream,
     //             &serde_json_to_string_token_stream,
-    //             &serde_json_to_string_variant_initialization_token_stream,
+    //             &serde_json_to_string_syn_variant_initialization_token_stream,
     //             &reqwest_client_new_token_stream,
     //             &commit_header_addition_token_stream,
     //             &content_type_application_json_header_addition_token_stream,
@@ -7088,7 +7077,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 ) {
     //                     Ok(value) => value,
     //                     Err(#error_snake_case) => {
-    //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
+    //                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
     //                     }
     //                 };
     //             },
@@ -7438,7 +7427,7 @@ fn generate_http_request_many_token_stream(
     primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
     type_variants_from_request_response_syn_variants: &[&syn::Variant],
     desirable_type_token_stream: &proc_macro2::TokenStream,
-    serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
     deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
@@ -7461,7 +7450,7 @@ fn generate_http_request_many_token_stream(
             )) {
                 Ok(#value_snake_case) => #value_snake_case,
                 Err(#error_snake_case) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_variant_initialization_token_stream);
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
                 }
             };
         }
