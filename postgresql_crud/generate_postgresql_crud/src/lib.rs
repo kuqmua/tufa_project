@@ -2246,11 +2246,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // println!("{binded_query_token_stream}");
-                let acquire_pool_and_connection_token_stream = acquire_pool_and_connection(
-                    &operation,
-                    &postgresql_syn_variant_initialization_token_stream,
-                    &eprintln_error_token_stream,
-                );
                 let postgresql_logic_token_stream = {
                     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
@@ -2306,11 +2301,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &parameters_logic_token_stream,
                     &query_string_token_stream,
                     &binded_query_token_stream,
-                    &acquire_pool_and_connection_token_stream,
                     &postgresql_logic_token_stream,
                     &desirable_response_creation_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
                     &eprintln_error_token_stream,
+                    &check_body_size_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_initialization_token_stream,
                 )
             };
             quote::quote! {
@@ -9318,11 +9313,11 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     parameters_logic_token_stream: &proc_macro2::TokenStream,
     query_string_token_stream: &proc_macro2::TokenStream,
     binded_query_token_stream: &proc_macro2::TokenStream,
-    acquire_pool_and_connection_token_stream: &proc_macro2::TokenStream,
     postgresql_logic_token_stream: &proc_macro2::TokenStream,
     desirable_response_creation_token_stream: &proc_macro2::TokenStream,
-    check_body_size_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     eprintln_error_token_stream: &proc_macro2::TokenStream,
+    check_body_size_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    postgresql_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
     let axum_response_response_token_stream = quote::quote!{axum::response::Response};
@@ -9355,6 +9350,11 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
             };
         }
     };
+    let acquire_pool_and_connection_token_stream = acquire_pool_and_connection(
+        &operation,
+        &postgresql_syn_variant_initialization_token_stream,
+        &eprintln_error_token_stream,
+    );
     quote::quote! {
         // // #swagger_open_api_token_stream
         pub async fn #try_operation_route_logic_snake_case_token_stream(
