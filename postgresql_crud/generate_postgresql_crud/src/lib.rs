@@ -2534,9 +2534,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
                     let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = 
-                    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    proc_macro_helpers::generate_impl_std_convert_try_from_token_stream::generate_impl_std_convert_try_from_token_stream(
                         &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
                         &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                        &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation),
                         &{
                             let field_code_occurence_new_3763990f_5c49_47d0_a774_5ef584cd1236_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                                 file!(),
@@ -2559,6 +2560,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         },
                     );
+                    // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
                     quote::quote! {
                         #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream
                         #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
@@ -2868,7 +2870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
-                // #parameters_token_stream
+                #parameters_token_stream
                 // #try_operation_error_with_middleware_error_variants_token_stream
                 // #http_request_token_stream
                 // #route_handler_token_stream
@@ -7209,7 +7211,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             #create_many_token_stream
-            // #create_one_token_stream
+            #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
             // #update_many_token_stream
