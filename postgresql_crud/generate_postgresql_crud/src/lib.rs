@@ -9341,7 +9341,7 @@ fn generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_
     let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
     let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let value_snake_case = naming_constants::ValueSnakeCase;
-    generate_impl_std_convert_from_token_stream(
+    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
         &try_operation_route_logic_error_named_upper_camel_case_token_stream,
         &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
         &quote::quote!{
@@ -9588,21 +9588,6 @@ fn generate_payload_with_serialize_deserialize_token_stream(
         #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
         pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
             #fields_token_stream
-        }
-    }
-}
-
-fn generate_impl_std_convert_from_token_stream(
-    from_type_token_stream: &proc_macro2::TokenStream,
-    for_type_token_stream: &proc_macro2::TokenStream,
-    content_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    quote::quote! {
-        impl std::convert::From<#from_type_token_stream> for #for_type_token_stream {
-            fn from(#value_snake_case: #from_type_token_stream) -> Self {
-                #content_token_stream
-            }
         }
     }
 }
