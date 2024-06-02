@@ -2479,31 +2479,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // );
 
         let parameters_token_stream = {
-            let payload_token_stream = generate_operation_payload_one_token_stream(
+            let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
                 &{
-                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key
+                    let fields_token_stream = fields_named_excluding_primary_key
                         .iter()
                         .map(|element|generate_pub_field_ident_field_type_token_stream(element));
-                    quote::quote! {#(#fields_with_excluded_primary_key_token_stream),*}
+                    quote::quote! {#(#fields_token_stream),*}
                 },
             );
             // println!("{payload_token_stream}");
-            // let payload_with_serialize_deserialize_token_stream = {
-            //     let fields_with_excluded_primary_key_token_stream =
-            //         fields_named_excluding_primary_key
-            //             .iter()
-            //             .map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-            //                 element
-            //             ));
-            //     quote::quote! {
-            //         #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-            //         pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-            //             #(#fields_with_excluded_primary_key_token_stream),*
-            //         }
-            //     }
-            // };
-            // // println!("{payload_with_serialize_deserialize_token_stream}");
+            let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
+                &operation,
+                &{
+                    let fields_token_stream = fields_named_excluding_primary_key.iter()
+                        .map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(
+                            element
+                        ));
+                    quote::quote! {#(#fields_token_stream),*}
+                },
+            );
+            // println!("{payload_with_serialize_deserialize_token_stream}");
             // let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
             //     postgresql_crud_common::FromOrTryFrom::From => {
             //         let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
@@ -9566,7 +9562,7 @@ fn generate_type_variants_from_request_response_syn_variants<'a>(
 }
 
 ///////////////////////
-fn generate_operation_payload_one_token_stream(
+fn generate_operation_payload_token_stream(
     operation: &Operation,
     fields_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
@@ -9575,6 +9571,20 @@ fn generate_operation_payload_one_token_stream(
     quote::quote! {
         #derive_debug
         pub struct #operation_payload_upper_camel_case_token_stream {
+            #fields_token_stream
+        }
+    }
+}
+
+fn generate_payload_with_serialize_deserialize_token_stream(
+    operation: &Operation,
+    fields_token_stream: &proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
+    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+    quote::quote! {
+        #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+        pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
             #fields_token_stream
         }
     }
