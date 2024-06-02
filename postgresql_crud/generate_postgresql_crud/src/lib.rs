@@ -2315,7 +2315,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             );
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
-                &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
                 &commit_header_addition_token_stream,
@@ -7444,7 +7443,6 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 }
 
 fn generate_http_request_many_token_stream(
-    serde_json_to_string_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
     commit_header_addition_token_stream: &proc_macro2::TokenStream,
@@ -7473,6 +7471,7 @@ fn generate_http_request_many_token_stream(
         let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
         let error_snake_case = naming_constants::ErrorSnakeCase;
         let from_snake_case = naming_constants::FromSnakeCase;
+        let serde_json_to_string_token_stream = quote::quote! {serde_json::to_string};
         quote::quote! {
             let #payload_snake_case = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(
                 #parameters_snake_case.#payload_snake_case,
