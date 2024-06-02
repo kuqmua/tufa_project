@@ -2522,52 +2522,47 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     },
                 ),
                 postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                    // let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::PayloadTryFromPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::payload_try_from_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
-                    // let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = {
-                    //     let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
-                    //         &fields_named_excluding_primary_key,
-                    //         &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-                    //         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-                    //     );
-                    //     quote::quote! {
-                    //         #derive_debug_thiserror_error_occurence
-                    //         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
-                    //             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
-                    //         }
-                    //     }
-                    // };
-                    // // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
-                    // let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
-                    //     let field_code_occurence_new_3763990f_5c49_47d0_a774_5ef584cd1236_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    //         file!(),
-                    //         line!(),
-                    //         column!(),
-                    //         &proc_macro_name_upper_camel_case_ident_stringified,
-                    //     );
-                    //     let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-                    //         .map(|element| generate_let_field_ident_value_field_ident_try_from_token_stream(
-                    //             element,
-                    //             &proc_macro_name_upper_camel_case_ident_stringified,
-                    //             &field_code_occurence_new_3763990f_5c49_47d0_a774_5ef584cd1236_token_stream,
-                    //             &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-                    //         ));
-                    //     quote::quote! {
-                    //         impl std::convert::TryFrom<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
-                    //             type Error = #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream;
-                    //             fn try_from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
-                    //                 #(#fields_assignment_excluding_primary_key_token_stream)*
-                    //                 Ok(Self {
-                    //                     #(#fields_idents_excluding_primary_key_token_stream),*
-                    //                 })
-                    //             }
-                    //         }
-                    //     }
-                    // };
-                    // quote::quote! {
-                    //     #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream
-                    //     #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
-                    // }
-                    quote::quote! {}
+                    let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
+                        &operation,
+                        &{
+                            let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
+                                &fields_named_excluding_primary_key,
+                                &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                            );
+                            quote::quote! {#(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*}
+                        },
+                    );
+                    // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
+                    let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = 
+                    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
+                        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                        &{
+                            let field_code_occurence_new_3763990f_5c49_47d0_a774_5ef584cd1236_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                                file!(),
+                                line!(),
+                                column!(),
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                            );
+                            let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                            .map(|element| generate_let_field_ident_value_field_ident_try_from_token_stream(
+                                element,
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                                &field_code_occurence_new_3763990f_5c49_47d0_a774_5ef584cd1236_token_stream,
+                                &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                            ));
+                            quote::quote! {
+                                #(#fields_assignment_excluding_primary_key_token_stream)*
+                                Ok(Self {
+                                    #(#fields_idents_excluding_primary_key_token_stream),*
+                                })
+                            }
+                        },
+                    );
+                    quote::quote! {
+                        #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream
+                        #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
+                    }
                 }
             };
             // // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
