@@ -1548,14 +1548,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let application_json_quotes_token_stream =
-        proc_macro_common::generate_quotes::token_stream(
-            "application/json",
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-    let content_type_application_json_header_addition_token_stream = quote::quote! {
-        .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
-    };
     let axum_response_into_response = token_patterns::AxumResponseIntoResponse;
     let axum_extract_rejection_json_rejection = token_patterns::AxumExtractRejectionJsonRejection;
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
@@ -2309,7 +2301,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &serde_json_to_string_variant_initialization_token_stream,
-                &content_type_application_json_header_addition_token_stream,
                 &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case,
                 &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case,
                 &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream,
@@ -7435,7 +7426,6 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 
 fn generate_http_request_many_token_stream(
     serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case: &naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamedUpperCamelCase,
     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case: &naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientUpperCamelCase,
     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream: &proc_macro2::TokenStream,
@@ -7495,6 +7485,14 @@ fn generate_http_request_many_token_stream(
                 &postgresql_crud::CommitSnakeCase.to_string(),//todo remove it
                 git_info::PROJECT_GIT_INFO.commit,
             )
+        };
+        let application_json_quotes_token_stream =
+            proc_macro_common::generate_quotes::token_stream(
+                "application/json",
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+        let content_type_application_json_header_addition_token_stream = quote::quote! {
+            .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
         };
         quote::quote! {
             let #future_snake_case = #reqwest_client_new_token_stream
