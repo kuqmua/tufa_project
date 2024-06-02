@@ -949,7 +949,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ),
         }
     };
-    let code_occurence_field = proc_macro_helpers::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified);
     let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let (checked_add_syn_variant, checked_add_variant_initialization_token_stream) = {
         let checked_add_upper_camel_case= naming_conventions::CheckedAddUpperCamelCase;
@@ -2295,7 +2294,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
                 &common_http_request_syn_variants,
-                &code_occurence_field,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
@@ -2310,7 +2308,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                //
             );
             // let http_request_test_token_stream = {
             //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -2931,7 +2928,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
                 &common_http_request_syn_variants,
-                &code_occurence_field,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // let http_request_token_stream = generate_try_operation_token_stream(
@@ -8698,7 +8694,6 @@ fn generate_error_occurence_variant_token_stream(
 
 fn construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
     value: &Operation,
-    code_occurence_field: &syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> syn::Variant {
     let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified(*&value);
@@ -9555,7 +9550,6 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
 fn generate_try_operation_error_named_token_stream(
     operation: &Operation,
     common_http_request_syn_variants: &std::vec::Vec<syn::Variant>,
-    code_occurence_field: &syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
@@ -9567,7 +9561,6 @@ fn generate_try_operation_error_named_token_stream(
         }
         value.push(construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
             &operation,
-            &code_occurence_field,
             &proc_macro_name_upper_camel_case_ident_stringified,
         ));
         value
