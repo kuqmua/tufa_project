@@ -2300,17 +2300,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             );
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
-                &serde_json_to_string_variant_initialization_token_stream,
-                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream,
-                &table_name_stringified,
+                // &serde_json_to_string_variant_initialization_token_stream,
+                // &table_name_stringified,
+                // &operation,
+                // &proc_macro_name_upper_camel_case_ident_stringified,
+                // &type_variants_from_request_response_syn_variants,
+                // &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
+                // &reqwest_syn_variant_initialization_token_stream,
+                // &failed_to_get_response_text_initialization_token_stream,
+                // &primary_key_syn_field,
+                // &deserialize_response_syn_variant_initialization_token_stream,
+                //
                 &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
+                &table_name_stringified,
+                &primary_key_syn_field,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
+                &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_initialization_token_stream,
-                &primary_key_syn_field,
                 &deserialize_response_syn_variant_initialization_token_stream,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+                //
             );
             // let http_request_test_token_stream = {
             //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -7422,17 +7433,16 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 }
 
 fn generate_http_request_many_token_stream(
-    serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream: &proc_macro2::TokenStream,
-    table_name_stringified: &str,
     operation: &Operation,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
+    table_name_stringified: &str,
+    primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
     type_variants_from_request_response_syn_variants: &[&syn::Variant],
     desirable_type_token_stream: &proc_macro2::TokenStream,
-    reqwest_initialization_token_stream: &proc_macro2::TokenStream,
+    serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
-    primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
     deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
     let try_operation_snake_case_token_stream = naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
     let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
@@ -7505,7 +7515,7 @@ fn generate_http_request_many_token_stream(
             let #response_snake_case = match #future_snake_case.await {
                 Ok(#value_snake_case) => #value_snake_case,
                 Err(#error_snake_case) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_initialization_token_stream);
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_syn_variant_initialization_token_stream);
                 }
             };
         }
