@@ -2122,17 +2122,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             let try_operation_route_logic_token_stream = {
-                let additional_validators_token_stream = {
-                    let operation_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-                        &ast.attrs,
-                        &operation.to_additional_route_logic().generate_path_to_attribute(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    quote::quote! {
-                        #common_additional_route_logic_token_stream
-                        #operation_additional_route_logic_token_stream
-                    }
-                };
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
                    &fields_named_excluding_primary_key_from_or_try_from,
@@ -2297,7 +2286,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &additional_validators_token_stream,
+                    &ast,
+                    &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &query_string_token_stream,
                     &binded_query_token_stream,
@@ -2306,6 +2296,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
                     &postgresql_syn_variant_initialization_token_stream,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             quote::quote! {
@@ -9491,7 +9482,8 @@ fn generate_parameters_logic_token_stream(
 
 fn generate_try_operation_route_logic_snake_case_token_stream(
     operation: &Operation,
-    additional_validators_token_stream: &proc_macro2::TokenStream,
+    ast: &syn::DeriveInput,
+    common_additional_route_logic_token_stream: &proc_macro2::TokenStream,
     parameters_logic_token_stream: &proc_macro2::TokenStream,
     query_string_token_stream: &proc_macro2::TokenStream,
     binded_query_token_stream: &proc_macro2::TokenStream,
@@ -9500,6 +9492,7 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     eprintln_error_token_stream: &proc_macro2::TokenStream,
     check_body_size_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     postgresql_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
     let axum_response_response_token_stream = quote::quote!{axum::response::Response};
@@ -9530,6 +9523,17 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
                     #error_initialization_eprintln_response_creation_token_stream
                 }
             };
+        }
+    };
+    let additional_validators_token_stream = {
+        let operation_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+            &ast.attrs,
+            &operation.to_additional_route_logic().generate_path_to_attribute(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote! {
+            #common_additional_route_logic_token_stream
+            #operation_additional_route_logic_token_stream
         }
     };
     let acquire_pool_and_connection_token_stream = acquire_pool_and_connection(
