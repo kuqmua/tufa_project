@@ -1691,7 +1691,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let (
         failed_to_get_response_text_syn_variant,
-        failed_to_get_response_text_initialization_token_stream,
+        failed_to_get_response_text_syn_variant_initialization_token_stream,
     ) = {
         let failed_to_get_response_text_upper_camel_case = naming_conventions::FailedToGetResponseTextUpperCamelCase;
         let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
@@ -2307,7 +2307,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &serde_json_to_string_syn_variant_initialization_token_stream,
                 &reqwest_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_initialization_token_stream,
+                &failed_to_get_response_text_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 //
@@ -2969,7 +2969,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //     &deserialize_response_initialization_token_stream,
             //     &unexpected_status_code_initialization_token_stream,
             //     &reqwest_initialization_token_stream,
-            //     &failed_to_get_response_text_initialization_token_stream,
+            //     &failed_to_get_response_text_syn_variant_initialization_token_stream,
             //     &expected_type_initialization_token_stream,
             //     &from_snake_case_token_stream,
             //     &from_str_snake_case_token_stream,
@@ -3864,7 +3864,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &deserialize_response_initialization_token_stream,
     //             &unexpected_status_code_initialization_token_stream,
     //             &reqwest_initialization_token_stream,
-    //             &failed_to_get_response_text_initialization_token_stream,
+    //             &failed_to_get_response_text_syn_variant_initialization_token_stream,
     //             &expected_type_initialization_token_stream,
     //             &from_snake_case_token_stream,
     //             &from_str_snake_case_token_stream,
@@ -4372,7 +4372,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &deserialize_response_initialization_token_stream,
     //             &unexpected_status_code_initialization_token_stream,
     //             &reqwest_initialization_token_stream,
-    //             &failed_to_get_response_text_initialization_token_stream,
+    //             &failed_to_get_response_text_syn_variant_initialization_token_stream,
     //             &expected_type_initialization_token_stream,
     //             &from_snake_case_token_stream,
     //             &from_str_snake_case_token_stream,
@@ -5148,7 +5148,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &deserialize_response_initialization_token_stream,
     //             &unexpected_status_code_initialization_token_stream,
     //             &reqwest_initialization_token_stream,
-    //             &failed_to_get_response_text_initialization_token_stream,
+    //             &failed_to_get_response_text_syn_variant_initialization_token_stream,
     //             &expected_type_initialization_token_stream,
     //             &primary_key_syn_field,
     //             &from_snake_case_token_stream,
@@ -5769,7 +5769,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &deserialize_response_initialization_token_stream,
     //             &unexpected_status_code_initialization_token_stream,
     //             &reqwest_initialization_token_stream,
-    //             &failed_to_get_response_text_initialization_token_stream,
+    //             &failed_to_get_response_text_syn_variant_initialization_token_stream,
     //             &expected_type_initialization_token_stream,
     //             &from_snake_case_token_stream,
     //             &from_str_snake_case_token_stream,
@@ -6648,7 +6648,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &deserialize_response_initialization_token_stream,
     //             &unexpected_status_code_initialization_token_stream,
     //             &reqwest_initialization_token_stream,
-    //             &failed_to_get_response_text_initialization_token_stream,
+    //             &failed_to_get_response_text_syn_variant_initialization_token_stream,
     //             &expected_type_initialization_token_stream,
     //             &primary_key_syn_field,
     //             &from_snake_case_token_stream,
@@ -7102,7 +7102,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             &deserialize_response_initialization_token_stream,
     //             &unexpected_status_code_initialization_token_stream,
     //             &reqwest_initialization_token_stream,
-    //             &failed_to_get_response_text_initialization_token_stream,
+    //             &failed_to_get_response_text_syn_variant_initialization_token_stream,
     //             &expected_type_initialization_token_stream,
     //             &from_snake_case_token_stream,
     //             &from_str_snake_case_token_stream,
@@ -7429,7 +7429,7 @@ fn generate_http_request_many_token_stream(
     desirable_type_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
+    failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
@@ -7529,7 +7529,7 @@ fn generate_http_request_many_token_stream(
             let #response_text_snake_case = match #response_snake_case.text().await {
                 Ok(#value_snake_case) => #value_snake_case,
                 Err(#error_snake_case) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_syn_variant_initialization_token_stream);
                 }
             };
         }
@@ -7637,7 +7637,7 @@ fn generate_http_request_many_token_stream(
 //     deserialize_response_initialization_token_stream: &proc_macro2::TokenStream,
 //     unexpected_status_code_initialization_token_stream: &proc_macro2::TokenStream,
 //     reqwest_initialization_token_stream: &proc_macro2::TokenStream,
-//     failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
+//     failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
 //     expected_type_initialization_token_stream: &proc_macro2::TokenStream,
 //     from_snake_case_token_stream: &proc_macro2::TokenStream,
 //     from_str_snake_case_token_stream: &proc_macro2::TokenStream,
@@ -7867,7 +7867,7 @@ fn generate_http_request_many_token_stream(
 //             let response_text = match response.text().await {
 //                 Ok(response_text) => response_text,
 //                 Err(#error_snake_case) => {
-//                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
+//                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_syn_variant_initialization_token_stream);
 //                 }
 //             };
 //             let variants = #(#status_code_enums_try_from)*;
