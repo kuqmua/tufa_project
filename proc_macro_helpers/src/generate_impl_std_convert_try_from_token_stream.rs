@@ -1,6 +1,3 @@
-
-
-
 pub fn generate_impl_std_convert_try_from_token_stream(
     from_type_token_stream: &proc_macro2::TokenStream,
     for_type_token_stream: &proc_macro2::TokenStream,
