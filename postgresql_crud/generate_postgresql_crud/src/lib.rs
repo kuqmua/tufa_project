@@ -8908,16 +8908,18 @@ fn generate_impl_std_convert_from_operation_payload_element_with_serialize_deser
     let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
     let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
         .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(element));
-    quote::quote! {
-        impl std::convert::From<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_element_upper_camel_case_token_stream {
-            fn from(value: #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
+    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+        &operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream,
+        &operation_payload_element_upper_camel_case_token_stream,
+        &{
+            quote::quote! {
                 #(#fields_assignment_excluding_primary_key_token_stream)*
                 Self {
                     #(#fields_idents_excluding_primary_key_token_stream),*
                 }
             }
-        }
-    }
+        },
+    )
 }
 
 fn generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
@@ -9005,17 +9007,19 @@ fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_d
             &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
         ));
     //todo it can be std::convert::From if all #(#fields_assignment_excluding_primary_key_token_stream)* are impl from
-    quote::quote! {
-        impl std::convert::TryFrom<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_element_upper_camel_case_token_stream {
-            type Error = #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream;
-            fn try_from(value: #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
+    proc_macro_helpers::generate_impl_std_convert_try_from_token_stream::generate_impl_std_convert_try_from_token_stream(
+        &operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream,
+        &operation_payload_element_upper_camel_case_token_stream,
+        &operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
+        &{
+            quote::quote! {
                 #(#fields_assignment_excluding_primary_key_token_stream)*
                 Ok(Self {
                     #(#fields_idents_excluding_primary_key_token_stream),*
                 })
             }
-        }
-    }
+        },
+    )
 }
 
 fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
@@ -9068,10 +9072,12 @@ fn generate_impl_std_convert_try_from_operation_payload_with_serialize_deseriali
     let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let value_snake_case = naming_constants::ValueSnakeCase;
-    quote::quote! {
-        impl std::convert::TryFrom<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
-            type Error = #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream;
-            fn try_from(#value_snake_case: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
+    proc_macro_helpers::generate_impl_std_convert_try_from_token_stream::generate_impl_std_convert_try_from_token_stream(
+        &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+        &operation_payload_upper_camel_case_token_stream,
+        &operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
+        &{
+            quote::quote! {
                 let mut elements = std::vec::Vec::with_capacity(#value_snake_case.0.len());
                 for element in #value_snake_case.0 {
                     match #operation_payload_element_upper_camel_case_token_stream::try_from(element) {
@@ -9085,8 +9091,8 @@ fn generate_impl_std_convert_try_from_operation_payload_with_serialize_deseriali
                 }
                 Ok(Self(elements))
             }
-        }
-    }
+        },
+    )
 }
 
 fn generate_impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
