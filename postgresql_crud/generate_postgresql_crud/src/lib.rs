@@ -2307,7 +2307,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
                 &reqwest_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_initialization_token_stream,
                 &primary_key_syn_field,
@@ -7430,7 +7429,6 @@ fn generate_http_request_many_token_stream(
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     type_variants_from_request_response_syn_variants: &[&syn::Variant],
     desirable_type_token_stream: &proc_macro2::TokenStream,
-    deserialize_response_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_initialization_token_stream: &proc_macro2::TokenStream,
     failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
     primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
@@ -7546,7 +7544,7 @@ fn generate_http_request_many_token_stream(
             let #expected_response_snake_case = match serde_json::from_str::<#try_operation_route_logic_response_variants_upper_camel_case_token_stream>(&#response_text_snake_case) {
                 Ok(#value_snake_case) => #value_snake_case,
                 Err(#error_snake_case) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_syn_variant_initialization_token_stream);
                 }
             };
         }
