@@ -71,7 +71,7 @@ CreateManyPayloadElement
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 9018, column : 9,
+                        line : 8995, column : 9,
                     }))
                 });
             }
@@ -346,7 +346,7 @@ Request,) -> axum :: response :: Response
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 8098, column : 13,
+                            line : 8075, column : 13,
                         })),
                     }; eprintln! ("{error}"); let mut response = axum ::
                     response :: IntoResponse ::
@@ -700,7 +700,7 @@ postgresql_crud::StdPrimitiveI64 > , TryCreateManyErrorNamed >
         {
             file : std :: string :: String ::
             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line
-            : 7605, column : 13,
+            : 7582, column : 13,
         })),
     })
 }
