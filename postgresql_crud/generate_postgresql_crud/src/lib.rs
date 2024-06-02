@@ -2247,7 +2247,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{binded_query_token_stream}");
                 let acquire_pool_and_connection_token_stream = acquire_pool_and_connection(
-                    &pg_connection_snake_case,
                     &operation,
                     &postgresql_syn_variant_initialization_token_stream,
                     &eprintln_error_token_stream,
@@ -8004,7 +8003,6 @@ impl Order {
 }
 
 fn acquire_pool_and_connection(
-    pg_connection_token_stream: &naming_conventions::PgConnectionSnakeCase,
     operation: &Operation,
     postgresql_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     eprintln_error_token_stream: &proc_macro2::TokenStream,
@@ -8015,6 +8013,7 @@ fn acquire_pool_and_connection(
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let from_snake_case = naming_constants::FromSnakeCase;
     let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+    let pg_connection_snake_case = naming_conventions::PgConnectionSnakeCase;
     quote::quote! {
         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
             Ok(#value_snake_case) => #value_snake_case,
@@ -8028,7 +8027,7 @@ fn acquire_pool_and_connection(
                 return res;
             }
         };
-        let #pg_connection_token_stream = match sqlx::Acquire::acquire(&mut pool_connection).await {
+        let #pg_connection_snake_case = match sqlx::Acquire::acquire(&mut pool_connection).await {
             Ok(#value_snake_case) => #value_snake_case,
             Err(#error_snake_case) => {
                 let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_initialization_token_stream;
