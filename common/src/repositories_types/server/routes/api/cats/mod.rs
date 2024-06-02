@@ -1,14 +1,6 @@
 #[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
-#[postgresql_crud::create_many_additional_error_variants{
-    enum CommonAdditionalErrorVariants {
-        CheckCommitTest {
-            #[eo_error_occurence]
-            check_commit_test: route_validators::check_commit::CheckCommitErrorNamed,
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        },
-    }
-}]
-#[postgresql_crud::create_one_additional_error_variants{}]
+#[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
+#[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{}]
 #[postgresql_crud::read_one_additional_error_variants{}]
 #[postgresql_crud::update_many_additional_error_variants{}]
