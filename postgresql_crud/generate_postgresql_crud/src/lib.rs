@@ -7595,7 +7595,6 @@ fn generate_try_operation_many_token_stream(
     };
     let primary_key_inner_type_token_stream = &primary_key_syn_field.inner_type_token_stream;
     let result_ok_type_token_stream = quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>};
-    let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream(operation);
     let try_operation_route_logic_error_named_with_serialize_deserialize_token_stream = {
         let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
         let try_operation_route_logic_response_variants_to_try_operation_route_logic_error_named_with_serialize_deserialize = type_variants_from_request_response_syn_variants.iter().map(|element|{
@@ -7619,6 +7618,7 @@ fn generate_try_operation_many_token_stream(
         let value_snake_case = naming_constants::ValueSnakeCase;
         let element_snake_case = naming_constants::ElementSnakeCase;
         let from_snake_case = naming_constants::FromSnakeCase;
+        let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream(operation);
         quote::quote! {
             let #try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = match #expected_response_snake_case {
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(#value_snake_case) => {
