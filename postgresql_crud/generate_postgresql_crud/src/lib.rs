@@ -7413,6 +7413,37 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
         .collect()
 }
 
+fn generate_try_operation_wrapper_token_stream(
+    operation: &Operation,
+    result_ok_type_token_stream: &proc_macro2::TokenStream,
+    content_token_stream: proc_macro2::TokenStream
+) -> proc_macro2::TokenStream {
+    let server_location_snake_case = naming_conventions::ServerLocationSnakeCase;
+    let str_ref_token_stream = token_patterns::RefStdPrimitiveStr;
+    let parameters_snake_case = naming_constants::ParametersSnakeCase;
+    let try_operation_snake_case_token_stream = naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
+    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+    let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
+    quote::quote! {
+        pub async fn #try_operation_snake_case_token_stream(
+            #server_location_snake_case: #str_ref_token_stream,//todo rename as endpoint location
+            #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
+        ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
+            #content_token_stream
+            // #payload_token_stream
+            // #url_token_stream
+            // #future_token_stream
+            // #response_token_stream
+            // #status_code_token_stream
+            // #headers_token_stream
+            // #response_text_token_stream
+            // #expected_response_token_stream
+            // #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
+            // #return_error_token_stream
+        }
+    }
+}
+
 fn generate_try_operation_many_token_stream(
     operation: &Operation,
     table_name_stringified: &str,
