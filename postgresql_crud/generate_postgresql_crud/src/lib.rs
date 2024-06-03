@@ -7415,15 +7415,13 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 
 fn generate_try_operation_wrapper_token_stream(
     operation: &Operation,
-    result_ok_type_token_stream: &proc_macro2::TokenStream,
+    result_ok_type_token_stream: &proc_macro2::TokenStream,// quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>},
+    table_name_stringified: &std::primitive::str,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+    reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     payload_token_stream: &proc_macro2::TokenStream,
-    url_token_stream: &proc_macro2::TokenStream,
-    future_token_stream: &proc_macro2::TokenStream,
-    response_token_stream: &proc_macro2::TokenStream,
-    status_code_token_stream: &proc_macro2::TokenStream,
-    headers_token_stream: &proc_macro2::TokenStream,
-    response_text_token_stream: &proc_macro2::TokenStream,
-    expected_response_token_stream: &proc_macro2::TokenStream,
     try_operation_route_logic_error_named_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     return_error_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
@@ -7433,57 +7431,7 @@ fn generate_try_operation_wrapper_token_stream(
     let try_operation_snake_case_token_stream = naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
     let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
     let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
-    quote::quote! {
-        pub async fn #try_operation_snake_case_token_stream(
-            #server_location_snake_case: #str_ref_token_stream,//todo rename as endpoint location
-            #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
-        ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
-            #payload_token_stream
-            #url_token_stream
-            #future_token_stream
-            #response_token_stream
-            #status_code_token_stream
-            #headers_token_stream
-            #response_text_token_stream
-            #expected_response_token_stream
-            #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
-            #return_error_token_stream
-        }
-    }
-}
-
-fn generate_try_operation_many_token_stream(
-    operation: &Operation,
-    table_name_stringified: &str,
-    primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
-    type_variants_from_request_response_syn_variants: &[&syn::Variant],
-    desirable_type_token_stream: &proc_macro2::TokenStream,
-    serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_snake_case = naming_constants::PayloadSnakeCase;
-    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
-    let payload_token_stream = {
-        let value_snake_case = naming_constants::ValueSnakeCase;
-        let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-        let error_snake_case = naming_constants::ErrorSnakeCase;
-        let from_snake_case = naming_constants::FromSnakeCase;
-        let serde_json_to_string_token_stream = quote::quote! {serde_json::to_string};
-        quote::quote! {
-            let #payload_snake_case = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(
-                #parameters_snake_case.#payload_snake_case,
-            )) {
-                Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_snake_case) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
-                }
-            };
-        }
-    };
     let url_snake_case = naming_constants::UrlSnakeCase;
     let server_location_snake_case = naming_conventions::ServerLocationSnakeCase;
     let url_token_stream = {
@@ -7577,6 +7525,61 @@ fn generate_try_operation_many_token_stream(
             };
         }
     };
+    quote::quote! {
+        pub async fn #try_operation_snake_case_token_stream(
+            #server_location_snake_case: #str_ref_token_stream,//todo rename as endpoint location
+            #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
+        ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
+            #payload_token_stream
+
+            #url_token_stream
+            #future_token_stream
+            #response_token_stream
+            #status_code_token_stream
+            #headers_token_stream
+            #response_text_token_stream
+            #expected_response_token_stream
+
+            #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
+            #return_error_token_stream
+        }
+    }
+}
+
+fn generate_try_operation_many_token_stream(
+    operation: &Operation,
+    table_name_stringified: &str,
+    primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
+    type_variants_from_request_response_syn_variants: &[&syn::Variant],
+    desirable_type_token_stream: &proc_macro2::TokenStream,
+    serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> proc_macro2::TokenStream {
+    let parameters_snake_case = naming_constants::ParametersSnakeCase;
+    let payload_snake_case = naming_constants::PayloadSnakeCase;
+    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+    let payload_token_stream = {
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+        let error_snake_case = naming_constants::ErrorSnakeCase;
+        let from_snake_case = naming_constants::FromSnakeCase;
+        let serde_json_to_string_token_stream = quote::quote! {serde_json::to_string};
+        quote::quote! {
+            let #payload_snake_case = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(
+                #parameters_snake_case.#payload_snake_case,
+            )) {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_snake_case) => {
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
+                }
+            };
+        }
+    };
+    let expected_response_snake_case = naming_conventions::ExpectedResponseSnakeCase;
+    let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
     let primary_key_inner_type_token_stream = &primary_key_syn_field.inner_type_token_stream;
     let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream(operation);
@@ -7631,14 +7634,12 @@ fn generate_try_operation_many_token_stream(
     generate_try_operation_wrapper_token_stream(
         &operation,
         &quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>},
+        &table_name_stringified,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+        &reqwest_syn_variant_initialization_token_stream,
+        &deserialize_response_syn_variant_initialization_token_stream,
+        &failed_to_get_response_text_syn_variant_initialization_token_stream,
         &payload_token_stream,
-        &url_token_stream,
-        &future_token_stream,
-        &response_token_stream,
-        &status_code_token_stream,
-        &headers_token_stream,
-        &response_text_token_stream,
-        &expected_response_token_stream,
         &try_operation_route_logic_error_named_with_serialize_deserialize_token_stream,
         &return_error_token_stream,
     )
