@@ -2,7 +2,7 @@
 
 POST http://127.0.0.1:8080/dogs/create_many HTTP/1.1
 content-type: application/json
-commit: 4c3634b7caaec753bd4057311616c21760555d7e4
+commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 [
     {
@@ -21,12 +21,12 @@ commit: 4c3634b7caaec753bd4057311616c21760555d7e4
 
 POST http://127.0.0.1:8080/dogs/create_one HTTP/1.1
 content-type: application/json
-commit: 7566999599814c9ebc4cacfde468ae840697173c
+commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 {
     "std_primitive_bool_as_postgresql_bool": false,
     "std_primitive_i16_as_postgresql_small_int": null,
-    "std_primitive_i32_as_postgresql_int": 84
+    "std_primitive_i32_as_postgresql_int": 83
 }
 
 ###
