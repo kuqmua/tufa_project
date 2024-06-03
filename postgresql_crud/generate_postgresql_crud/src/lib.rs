@@ -2302,11 +2302,32 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>},
-                &quote::quote!{
-                    #value_snake_case
-                    .into_iter()
-                    .map(|#element_snake_case| #primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case))
-                    .collect()
+                &match primary_key_from_or_try_from {
+                    postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
+                        #value_snake_case
+                        .into_iter()
+                        .map(|#element_snake_case| #primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case))
+                        .collect()
+                    },
+                    postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                        let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
+                        quote::quote!{
+                            {
+                                let mut values = std::vec::Vec::new();
+                                for #element_snake_case in #value_snake_case {
+                                    match #primary_key_inner_type_token_stream::#try_from_snake_case(#element_snake_case) {
+                                        Ok(#value_snake_case) => {
+                                            values.push(#value_snake_case);
+                                        },
+                                        Err(#error_snake_case) => Err(
+                                            #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
+                                        )
+                                    }
+                                }
+                                values
+                            }
+                        }
+                    }
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
@@ -2934,6 +2955,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &common_http_request_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let try_operation_token_stream = generate_try_operation_token_stream(
+                &operation,
+                &table_name_stringified,
+                &type_variants_from_request_response_syn_variants,
+                &primary_key_inner_type_token_stream,
+                &match primary_key_from_or_try_from {
+                    postgresql_crud_common::FromOrTryFrom::From => quote::quote!{#primary_key_inner_type_token_stream::#from_snake_case(value)},
+                    postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                        let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
+                        quote::quote!{
+                            match #primary_key_inner_type_token_stream::#try_from_snake_case(#value_snake_case) {
+                                Ok(#value_snake_case) => #value_snake_case,
+                                Err(#error_snake_case) => Err(
+                                    #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
+                                )
+                            }
+                        }
+                    }
+                },
+                &proc_macro_name_upper_camel_case_ident_stringified,
+                &reqwest_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_initialization_token_stream,
+                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_initialization_token_stream,
             );
             // let try_operation_token_stream = generate_try_operation_token_stream(
             //     &server_location_name_token_stream,
