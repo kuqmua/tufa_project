@@ -7416,7 +7416,16 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 fn generate_try_operation_wrapper_token_stream(
     operation: &Operation,
     result_ok_type_token_stream: &proc_macro2::TokenStream,
-    content_token_stream: proc_macro2::TokenStream
+    payload_token_stream: &proc_macro2::TokenStream,
+    url_token_stream: &proc_macro2::TokenStream,
+    future_token_stream: &proc_macro2::TokenStream,
+    response_token_stream: &proc_macro2::TokenStream,
+    status_code_token_stream: &proc_macro2::TokenStream,
+    headers_token_stream: &proc_macro2::TokenStream,
+    response_text_token_stream: &proc_macro2::TokenStream,
+    expected_response_token_stream: &proc_macro2::TokenStream,
+    try_operation_route_logic_error_named_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
+    return_error_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let server_location_snake_case = naming_conventions::ServerLocationSnakeCase;
     let str_ref_token_stream = token_patterns::RefStdPrimitiveStr;
@@ -7429,17 +7438,16 @@ fn generate_try_operation_wrapper_token_stream(
             #server_location_snake_case: #str_ref_token_stream,//todo rename as endpoint location
             #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
         ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
-            #content_token_stream
-            // #payload_token_stream
-            // #url_token_stream
-            // #future_token_stream
-            // #response_token_stream
-            // #status_code_token_stream
-            // #headers_token_stream
-            // #response_text_token_stream
-            // #expected_response_token_stream
-            // #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
-            // #return_error_token_stream
+            #payload_token_stream
+            #url_token_stream
+            #future_token_stream
+            #response_token_stream
+            #status_code_token_stream
+            #headers_token_stream
+            #response_text_token_stream
+            #expected_response_token_stream
+            #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
+            #return_error_token_stream
         }
     }
 }
@@ -7623,23 +7631,20 @@ fn generate_try_operation_many_token_stream(
         }
     };
     let str_ref_token_stream = token_patterns::RefStdPrimitiveStr;
-    quote::quote! {
-        pub async fn #try_operation_snake_case_token_stream(
-            #server_location_snake_case: #str_ref_token_stream,//todo rename as endpoint location
-            #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
-        ) -> Result<std::vec::Vec<#primary_key_inner_type_token_stream>, #try_operation_error_named_upper_camel_case_token_stream> {
-            #payload_token_stream
-            #url_token_stream
-            #future_token_stream
-            #response_token_stream
-            #status_code_token_stream
-            #headers_token_stream
-            #response_text_token_stream
-            #expected_response_token_stream
-            #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
-            #return_error_token_stream
-        }
-    }
+    generate_try_operation_wrapper_token_stream(
+        &operation,
+        &quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>},
+        &payload_token_stream,
+        &url_token_stream,
+        &future_token_stream,
+        &response_token_stream,
+        &status_code_token_stream,
+        &headers_token_stream,
+        &response_text_token_stream,
+        &expected_response_token_stream,
+        &try_operation_route_logic_error_named_with_serialize_deserialize_token_stream,
+        &return_error_token_stream,
+    )
 }
 
 fn generate_try_operation_one_token_stream(
@@ -7855,6 +7860,24 @@ fn generate_try_operation_one_token_stream(
     //     assert!(is_last_element_found, "{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
     //     status_code_enums_try_from_variants
     // };
+
+
+
+    
+    // generate_try_operation_wrapper_token_stream(
+    //     &operation,
+    //     &return_result_ok_type_token_stream,
+    //     &payload_token_stream,
+    //     &url_token_stream,
+    //     &future_token_stream,
+    //     &response_token_stream,
+    //     &status_code_token_stream,
+    //     &headers_token_stream,
+    //     &response_text_token_stream,
+    //     &expected_response_token_stream,
+    //     &try_operation_route_logic_error_named_with_serialize_deserialize_token_stream,
+    //     &return_error_token_stream,
+    // )
     quote::quote! {
         pub async fn #try_operation_snake_case_token_stream<'a>(
             #server_location_name_token_stream: #str_ref_token_stream,
