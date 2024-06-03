@@ -2297,17 +2297,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
-            let try_operation_token_stream = generate_try_operation_many_token_stream(
+            let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
                 &table_name_stringified,
-                &primary_key_syn_field,
                 &type_variants_from_request_response_syn_variants,
-                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
-                &reqwest_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
+                &quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>},
+                &{
+                    let value_snake_case = naming_constants::ValueSnakeCase;
+                    let from_snake_case = naming_constants::FromSnakeCase;
+                    let element_snake_case = naming_constants::ElementSnakeCase;
+                    quote::quote!{
+                        #value_snake_case
+                        .into_iter()
+                        .map(|#element_snake_case| #primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case))
+                        .collect()
+                    }
+                },
                 &proc_macro_name_upper_camel_case_ident_stringified,
+                &reqwest_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_initialization_token_stream,
+                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_initialization_token_stream,
             );
             // let try_operation_test_token_stream = {
             //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -7413,17 +7423,17 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
         .collect()
 }
 
-fn generate_try_operation_wrapper_token_stream(
+fn generate_try_operation_token_stream(
     operation: &Operation,
-    result_ok_type_token_stream: &proc_macro2::TokenStream,
     table_name_stringified: &std::primitive::str,
+    type_variants_from_request_response_syn_variants: &[&syn::Variant],
+    result_ok_type_token_stream: &proc_macro2::TokenStream,
+    desirable_value_with_serialize_deserialize_convert_to_desirable_value_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
     reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    type_variants_from_request_response_syn_variants: &[&syn::Variant],
-    desirable_value_with_serialize_deserialize_convert_to_desirable_value_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let server_location_snake_case = naming_conventions::ServerLocationSnakeCase;
     let str_ref_token_stream = token_patterns::RefStdPrimitiveStr;
@@ -7614,45 +7624,6 @@ fn generate_try_operation_wrapper_token_stream(
             #return_error_token_stream
         }
     }
-}
-
-fn generate_try_operation_many_token_stream(
-    operation: &Operation,
-    table_name_stringified: &str,
-    primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
-    type_variants_from_request_response_syn_variants: &[&syn::Variant],
-    desirable_type_token_stream: &proc_macro2::TokenStream,
-    serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    let primary_key_inner_type_token_stream = &primary_key_syn_field.inner_type_token_stream;
-    let result_ok_type_token_stream = quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>};
-    let desirable_value_with_serialize_deserialize_convert_to_desirable_value_token_stream = {
-        let value_snake_case = naming_constants::ValueSnakeCase;
-        let from_snake_case = naming_constants::FromSnakeCase;
-        let element_snake_case = naming_constants::ElementSnakeCase;
-        quote::quote!{
-            #value_snake_case
-            .into_iter()
-            .map(|#element_snake_case| #primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case))
-            .collect()
-        }
-    };
-    generate_try_operation_wrapper_token_stream(
-        &operation,
-        &result_ok_type_token_stream,
-        &table_name_stringified,
-        &proc_macro_name_upper_camel_case_ident_stringified,
-        &reqwest_syn_variant_initialization_token_stream,
-        &deserialize_response_syn_variant_initialization_token_stream,
-        &failed_to_get_response_text_syn_variant_initialization_token_stream,
-        &serde_json_to_string_syn_variant_initialization_token_stream,
-        &type_variants_from_request_response_syn_variants,
-        &desirable_value_with_serialize_deserialize_convert_to_desirable_value_token_stream
-    )
 }
 
 // fn generate_try_operation_one_token_stream(
@@ -7872,7 +7843,7 @@ fn generate_try_operation_many_token_stream(
 
 
     
-//     // generate_try_operation_wrapper_token_stream(
+//     // generate_try_operation_token_stream(
 //     //     &operation,
 //     //     &return_result_ok_type_token_stream,
 //     //     &payload_token_stream,
