@@ -7428,7 +7428,7 @@ fn generate_try_operation_token_stream(
     table_name_stringified: &std::primitive::str,
     type_variants_from_request_response_syn_variants: &[&syn::Variant],
     result_ok_type_token_stream: &proc_macro2::TokenStream,
-    desirable_value_with_serialize_deserialize_convert_to_desirable_value_token_stream: &proc_macro2::TokenStream,
+    desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
     reqwest_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     deserialize_response_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
@@ -7584,7 +7584,7 @@ fn generate_try_operation_token_stream(
         quote::quote! {
             let #try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = match #expected_response_snake_case {
                 #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(#value_snake_case) => {
-                    let #value_snake_case = #desirable_value_with_serialize_deserialize_convert_to_desirable_value_token_stream;
+                    let #value_snake_case = #desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream;
                     return Ok(#value_snake_case);
                 },
                 #(#try_operation_route_logic_response_variants_to_try_operation_route_logic_error_named_with_serialize_deserialize),*
