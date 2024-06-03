@@ -2302,16 +2302,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &quote::quote!{std::vec::Vec<#primary_key_inner_type_token_stream>},
-                &{
-                    let value_snake_case = naming_constants::ValueSnakeCase;
-                    let from_snake_case = naming_constants::FromSnakeCase;
-                    let element_snake_case = naming_constants::ElementSnakeCase;
-                    quote::quote!{
-                        #value_snake_case
-                        .into_iter()
-                        .map(|#element_snake_case| #primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case))
-                        .collect()
-                    }
+                &quote::quote!{
+                    #value_snake_case
+                    .into_iter()
+                    .map(|#element_snake_case| #primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case))
+                    .collect()
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
@@ -7839,24 +7834,6 @@ fn generate_try_operation_token_stream(
 //     //     assert!(is_last_element_found, "{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
 //     //     status_code_enums_try_from_variants
 //     // };
-
-
-
-    
-//     // generate_try_operation_token_stream(
-//     //     &operation,
-//     //     &return_result_ok_type_token_stream,
-//     //     &payload_token_stream,
-//     //     &url_token_stream,
-//     //     &future_token_stream,
-//     //     &response_token_stream,
-//     //     &status_code_token_stream,
-//     //     &headers_token_stream,
-//     //     &response_text_token_stream,
-//     //     &expected_response_token_stream,
-//     //     &try_operation_route_logic_error_named_with_serialize_deserialize_token_stream,
-//     //     &return_error_token_stream,
-//     // )
 //     quote::quote! {
 //         pub async fn #try_operation_snake_case_token_stream<'a>(
 //             #server_location_name_token_stream: #str_ref_token_stream,
