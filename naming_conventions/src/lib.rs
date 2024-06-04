@@ -97,7 +97,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["update", "one", "additional", "route", "logic"],
         ["delete", "many", "additional", "route", "logic"],
         ["delete", "one", "additional", "route", "logic"],
-        ["common", "additional", "route", "logic"]
+        ["common", "additional", "route", "logic"],
+        ["not", "unique", "field", "vec"]
     ]
 );
 
