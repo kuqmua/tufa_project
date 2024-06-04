@@ -5,7 +5,6 @@ pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
 pub mod generate_simple_syn_punctuated_punctuated;
 pub mod get_macro_attribute;
-// pub mod naming_conventions;
 pub mod status_code;
 pub mod type_variants_from_request_response;
 pub mod wrap_derive;
