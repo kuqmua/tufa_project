@@ -3026,55 +3026,48 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
-            // let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
-            //     let primary_key_field_assignment_token_stream = {
-            //         quote::quote! {
-            //             let #primary_key_field_ident = match value.#primary_key_field_ident {
-            //                 Some(value) => Some(
-            //                     value
-            //                         .into_iter()
-            //                         .map(|element| #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(element))
-            //                         .collect::<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>(),
-            //                 ),
-            //                 None => None,
-            //             };
-            //             }
-            //     };
-            //     let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-            //         .map(|element| generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_stream(
-            //             element,
-            //             &from_snake_case_token_stream,
-            //         ));
-            //     quote::quote! {
-            //         impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-            //             fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
-            //                 #primary_key_field_assignment_token_stream
-            //                 #(#fields_assignment_excluding_primary_key_token_stream)*
-            //                 let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
-            //                 let #order_by_snake_case_token_stream = value.#order_by_snake_case_token_stream;
-            //                 let #limit_snake_case_token_stream = #limit_and_offset_type_with_serialize_deserialize_token_stream::#from_snake_case(value.#limit_snake_case_token_stream);//todo reuse
-            //                 let #offset_snake_case_token_stream = #limit_and_offset_type_with_serialize_deserialize_token_stream::#from_snake_case(value.#offset_snake_case_token_stream);//todo reuse
-            //                 Self{
-            //                     #(#fields_named_idents_comma_token_stream)*
-            //                     #select_snake_case_token_stream,
-            //                     #order_by_snake_case_token_stream,
-            //                     #limit_snake_case_token_stream,
-            //                     #offset_snake_case_token_stream,
-            //                 }
-            //             }
-            //         }
-            //     }
-            // };
-            // // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
-            // let parameters_token_stream = quote::quote! {
-            //     #derive_debug_token_stream
-            //     pub struct #operation_parameters_upper_camel_case_token_stream {
-            //         pub #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream,
-            //     }
-            // };
+            let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
+                &{
+                    let primary_key_field_assignment_token_stream = {
+                        quote::quote! {
+                            let #primary_key_field_ident = match value.#primary_key_field_ident {
+                                Some(value) => Some(
+                                    value
+                                        .into_iter()
+                                        .map(|element| #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(element))
+                                        .collect::<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>(),
+                                ),
+                                None => None,
+                            };
+                        }
+                    };
+                    let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                        .map(|element| generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_stream(element));
+                    let order_by_snake_case = naming_conventions::OrderBySnakeCase;
+                    quote::quote! {
+                        #primary_key_field_assignment_token_stream
+                        #(#fields_assignment_excluding_primary_key_token_stream)*
+                        let #select_snake_case = #value_snake_case.#select_snake_case;
+                        let #order_by_snake_case = #value_snake_case.#order_by_snake_case;
+                        let #limit_snake_case = #limit_and_offset_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case.#limit_snake_case);//todo reuse
+                        let #offset_snake_case = #limit_and_offset_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case.#offset_snake_case);//todo reuse
+                        Self{
+                            #(#fields_named_idents_comma_token_stream)*
+                            #select_snake_case,
+                            #order_by_snake_case,
+                            #limit_snake_case,
+                            #offset_snake_case,
+                        }
+                    }
+                },
+            );
+            // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
+            let parameters_token_stream = generate_parameters_token_stream(&operation);
             quote::quote! {
-                // #payload_token_stream
-                // #payload_with_serialize_deserialize_token_stream
+                #payload_token_stream
+                #payload_with_serialize_deserialize_token_stream
                 // #impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
                 // #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
                 // #parameters_token_stream
@@ -3626,7 +3619,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // // println!("{try_operation_token_stream}");
         (
             quote::quote! {
-                // #parameters_token_stream
+                #parameters_token_stream
                 // #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
@@ -6819,7 +6812,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             // #read_one_token_stream
             // #update_many_token_stream
             // #update_one_token_stream
