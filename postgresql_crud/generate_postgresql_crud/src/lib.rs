@@ -1479,6 +1479,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 acc
             }),
             {
+                todo 
+                        //                 let not_unique_field_vec_snake_case_token_stream = {
+        //                     let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
+        //                     not_unique_field_vec_snake_case_stringified.parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 };
+        //                 let not_unique_field_vec_vec_upper_camel_token_stream = {
+        //                     let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
+        //                     not_unique_field_vec_upper_camel_stringified.parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_upper_camel_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 };
+
+
+
                 let not_unique_field_vec_upper_camel_case = naming_conventions::NotUniqueFieldVecUpperCamelCase;
                 let not_unique_field_vec_snake_case = naming_conventions::NotUniqueFieldVecSnakeCase;
                 let field_code_occurence_new_4300d2b0_b9ce_47ac_a33c_a143254e1652_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
