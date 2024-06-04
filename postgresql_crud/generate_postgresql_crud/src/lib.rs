@@ -3082,16 +3082,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            // let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream(
-            //     &operation,
-            //     &type_variants_from_request_response_syn_variants,
-            //     &proc_macro_name_upper_camel_case_ident_stringified,
-            // );
-            // let try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_error_named_token_stream(
-            //     &operation,
-            //     &type_variants_from_request_response_syn_variants,
-            //     &proc_macro_name_upper_camel_case_ident_stringified,
-            // );
+            let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_error_named_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
             // let try_operation_route_logic_token_stream = {
             //     let parameters_logic_token_stream = generate_parameters_logic_token_stream(
             //        &operation,
@@ -3188,9 +3188,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //     )
             // };
             quote::quote! {
-                // #try_operation_route_logic_response_variants_token_stream
-                // #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
-                // #try_operation_route_logic_error_named_token_stream
+                #try_operation_route_logic_response_variants_token_stream
+                #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
+                #try_operation_route_logic_error_named_token_stream
                 // #try_operation_route_logic_token_stream
             }
         };
@@ -3745,7 +3745,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
             // try_operation_test_token_stream,
