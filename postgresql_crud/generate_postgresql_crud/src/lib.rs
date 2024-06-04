@@ -2842,27 +2842,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             );
             // println!("{payload_token_stream}");
-            // let payload_with_serialize_deserialize_token_stream = {
-            //     let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-            //         let field_ident = &element.field_ident;
-            //         let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
-            //         quote::quote!{
-            //             #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,
-            //         }
-            //     });
-            //     quote::quote! {
-            //         #derive_debug_serde_serialize_serde_deserialize
-            //         pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-            //             #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
-            //             #(#fields_with_excluded_primary_key_token_stream)*
-            //             #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
-            //             #order_by_snake_case_token_stream: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-            //             #limit_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
-            //             #offset_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
-            //         }
-            //     }
-            // };
-            // // println!("{payload_with_serialize_deserialize_token_stream}");
+            let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
+                &operation,
+                &{
+                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                        let field_ident = &element.field_ident;
+                        let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
+                        quote::quote!{
+                            #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,
+                        }
+                    });
+                    let select_snake_case = naming_constants::SelectSnakeCase;
+                    let order_by_snake_case = naming_conventions::OrderBySnakeCase;
+                    let limit_snake_case = naming_constants::LimitSnakeCase;
+                    let offset_snake_case = naming_constants::OffsetSnakeCase;
+                    quote::quote! {
+                        #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
+                        #(#fields_with_excluded_primary_key_token_stream)*
+                        #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
+                        #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
+                        #limit_snake_case: #limit_and_offset_type_with_serialize_deserialize_token_stream,
+                        #offset_snake_case: #limit_and_offset_type_with_serialize_deserialize_token_stream,
+                    }
+                },
+            );
+            // println!("{payload_with_serialize_deserialize_token_stream}");
             // let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
             //     let common_initialization_token_stream = quote::quote!{
             //         let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
