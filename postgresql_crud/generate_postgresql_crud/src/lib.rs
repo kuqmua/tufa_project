@@ -1448,7 +1448,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         ),
     };
-    //
     let (
         not_unique_field_vec_syn_variants_with_initialization_and_status_code,
         generate_not_unique_field_vec_syn_variant_error_initialization_eprintln_response_creation_token_stream,
@@ -1486,7 +1485,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &not_unique_field_vec_syn_variant_initialization_token_stream,
                 &quote::quote! {#from_snake_case(#error_snake_case)},
-                &FFF.to_axum_http_status_code_token_stream(),
+                &NOT_UNIQUE_FIELD_VEC_SYN_VARIANTS_STATUS_CODE.to_axum_http_status_code_token_stream(),
                 &eprintln_error_token_stream,
             )
         };
@@ -1497,7 +1496,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
                 let where_inner_type_with_serialize_deserialize_handle_stringified = &element.where_inner_type_with_serialize_deserialize_handle_stringified;
                 acc.push(proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                    FFF.clone(),
+                    NOT_UNIQUE_FIELD_VEC_SYN_VARIANTS_STATUS_CODE.clone(),
                     &not_unique_field_vec_upper_camel_case_stringified,
                     vec![
                         (
@@ -1517,7 +1516,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             generate_not_unique_field_vec_syn_variant_error_initialization_eprintln_response_creation_token_stream
         )
     };
-    //
     let (
         no_payload_fields_syn_variant,
         no_payload_fields_syn_variant_initialization_token_stream,
@@ -3204,43 +3202,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
-                        //
-                        let not_unique_field_vec_syn_variant_initialization_token_stream = {
-                            let not_unique_field_vec_upper_camel_case_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
-                            let not_unique_field_vec_upper_camel_case_token_stream = {
-                                not_unique_field_vec_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                            };
-                            let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
-                            let not_unique_field_vec_snake_case_token_stream = {
-                                not_unique_field_vec_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                            };
-                            let field_code_occurence_new_4300d2b0_b9ce_47ac_a33c_a143254e1652_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                                file!(),
-                                line!(),
-                                column!(),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            );
-                            quote::quote! {
-                                #not_unique_field_vec_upper_camel_case_token_stream {
-                                    #not_unique_field_vec_snake_case_token_stream,
-                                    #field_code_occurence_new_4300d2b0_b9ce_47ac_a33c_a143254e1652_token_stream,
-                                }
-                            }
-                        };
-                        //
                         let error_initialization_eprintln_response_creation_token_stream = generate_not_unique_field_vec_syn_variant_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
                             &field_ident,
                         );
-                        // generate_error_initialization_eprintln_response_creation_token_stream(
-                        //     &operation,
-                        //     &not_unique_field_vec_syn_variant_initialization_token_stream,
-                        //     &quote::quote! {#from_snake_case(#error_snake_case)},
-                        //     &not_unique_field_vec_syn_variants_status_code.to_axum_http_status_code_token_stream(),
-                        //     &eprintln_error_token_stream,
-                        // );
                         quote::quote!{
                             let #field_handle_token_stream = match #parameters_snake_case.#payload_snake_case.#field_ident {
                                 Some(value) => {
