@@ -2069,6 +2069,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         value
     };
+    let checked_add_and_bind_query_syn_variants = vec![&checked_add_syn_variant, &bind_query_syn_variant];
     let generate_desirable_response_creation_token_stream = |operation: &Operation|{
         let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
         let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
@@ -2805,8 +2806,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
+        let syn_variants = {
+            let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + checked_add_and_bind_query_syn_variants.len());
+            common_route_syn_variants.iter().for_each(|element|{
+                value.push(*element);
+            });
+            checked_add_and_bind_query_syn_variants.iter().for_each(|element|{
+                value.push(*element);
+            });
+            value
+        };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &common_route_syn_variants,
+            &syn_variants,
             &operation_additional_error_variants,
             &ast,
             &operation,
@@ -3134,7 +3145,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        //
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_token_stream = generate_try_operation_route_logic_response_variants_token_stream(
                 &operation,
@@ -9726,7 +9736,7 @@ fn generate_try_operation_error_named_token_stream(
 }
 
 fn generate_type_variants_from_request_response_syn_variants<'a>(
-    common_route_syn_variants: &'a std::vec::Vec<&syn::Variant>,
+    syn_variants: &'a std::vec::Vec<&syn::Variant>,
     operation_additional_error_variants: &'a std::vec::Vec<syn::Variant>,
     ast: &'a syn::DeriveInput,
     operation: &Operation,
@@ -9736,7 +9746,7 @@ fn generate_type_variants_from_request_response_syn_variants<'a>(
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> std::vec::Vec<&'a syn::Variant> {
     let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
-    for element in common_route_syn_variants {
+    for element in syn_variants {
         type_variants_from_request_response_syn_variants.push(*element);
     }
     for element in operation_additional_error_variants {
