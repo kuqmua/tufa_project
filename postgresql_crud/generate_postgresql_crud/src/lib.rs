@@ -2044,7 +2044,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #bind_query_upper_camel_case {
-                        #bind_query_snake_case: #error_snake_case.#into_serialize_deserialize_version_snake_case(),
+                        #bind_query_snake_case: #error_snake_case,
                         #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
                     }
                 }
