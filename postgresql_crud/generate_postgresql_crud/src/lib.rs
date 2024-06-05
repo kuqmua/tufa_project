@@ -2070,19 +2070,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value
     };
     let checked_add_and_bind_query_syn_variants = vec![&checked_add_syn_variant, &bind_query_syn_variant];
-    let generate_desirable_response_creation_token_stream = |operation: &Operation|{
-        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-        let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
-        quote::quote! {
-            let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(
-                axum::Json(
-                    #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(#value_snake_case)
-                )
-            );
-            *#response_snake_case.status_mut() = #status_code_token_stream;
-            return #response_snake_case;
-        }
-    };
     let common_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &ast.attrs,
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
@@ -2320,7 +2307,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         vec_values
                     }
                 };
-                let desirable_response_creation_token_stream = generate_desirable_response_creation_token_stream(&operation);
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &table_name_stringified,
                 //     &unique_status_codes,
@@ -2337,7 +2323,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &desirable_response_creation_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
                     &postgresql_syn_variant_initialization_token_stream,
@@ -2677,7 +2662,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     }
                 };
-                let desirable_response_creation_token_stream = generate_desirable_response_creation_token_stream(&operation);
                 // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 // //     &table_name_stringified,
                 // //     &unique_status_codes,
@@ -2694,7 +2678,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &desirable_response_creation_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
                     &postgresql_syn_variant_initialization_token_stream,
@@ -3524,7 +3507,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         vec_values
                     }
                 };
-                let desirable_response_creation_token_stream = generate_desirable_response_creation_token_stream(&operation);
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &table_name_stringified,
                 //     &unique_status_codes,
@@ -3541,7 +3523,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &desirable_response_creation_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
                     &postgresql_syn_variant_initialization_token_stream,
@@ -9146,7 +9127,6 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     query_string_token_stream: &proc_macro2::TokenStream,
     binded_query_token_stream: &proc_macro2::TokenStream,
     postgresql_logic_token_stream: &proc_macro2::TokenStream,
-    desirable_response_creation_token_stream: &proc_macro2::TokenStream,
     eprintln_error_token_stream: &proc_macro2::TokenStream,
     check_body_size_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     postgresql_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
@@ -9199,6 +9179,22 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
         &postgresql_syn_variant_initialization_token_stream,
         &eprintln_error_token_stream,
     );
+    let desirable_response_creation_token_stream = {
+        let response_snake_case = naming_constants::ResponseSnakeCase;
+        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+        let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+        let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
+        quote::quote! {
+            let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(
+                axum::Json(
+                    #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(#value_snake_case)
+                )
+            );
+            *#response_snake_case.status_mut() = #status_code_token_stream;
+            return #response_snake_case;
+        }
+    };
     quote::quote! {
         // // #swagger_open_api_token_stream
         pub async fn #try_operation_route_logic_snake_case_token_stream(
