@@ -3336,7 +3336,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &eprintln_error_token_stream,
                         );
                         quote::quote!{
-                            if let Some(value) = &#field_handle_token_stream {
+                            if let Some(value) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 let prefix = match additional_parameters.is_empty() {
                                     true => #where_snake_case_qoutes_token_stream,
                                     false => #prefix_false_handle_token_stream,
@@ -3485,13 +3485,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
-                        let field_handle_token_stream = {
-                            let field_handle_stringified = format!("{field_ident}_handle");
-                            field_handle_stringified.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
                         quote::quote!{
-                            if let Some(values) = #field_handle_token_stream {
+                            if let Some(values) = #parameters_snake_case.#payload_snake_case.#field_ident {
                                 for value in values {
                                     query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
                                         value, query,
@@ -3553,38 +3548,37 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 let desirable_response_creation_token_stream = generate_desirable_response_creation_token_stream(&operation);
-                // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                // //     &table_name_stringified,
-                // //     &unique_status_codes,
-                // //     &application_json_quotes_token_stream,
-                // //     &table_name_quotes_token_stream,
-                // //     &operation_payload_upper_camel_case_token_stream,
-                // //     &operation,
-                // // );
-                // generate_try_operation_route_logic_snake_case_token_stream(
+                // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+                //     &table_name_stringified,
+                //     &unique_status_codes,
+                //     &application_json_quotes_token_stream,
+                //     &table_name_quotes_token_stream,
+                //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
-                //     &ast,
-                //     &common_additional_route_logic_token_stream,
-                //     &parameters_logic_token_stream,
-                //     &query_string_token_stream,
-                //     &binded_query_token_stream,
-                //     &postgresql_logic_token_stream,
-                //     &desirable_response_creation_token_stream,
-                //     &eprintln_error_token_stream,
-                //     &check_body_size_syn_variant_initialization_token_stream,
-                //     &postgresql_syn_variant_initialization_token_stream,
-                //     &proc_macro_name_upper_camel_case_ident_stringified,
-                // )
-                quote::quote! {}
+                // );
+                generate_try_operation_route_logic_snake_case_token_stream(
+                    &operation,
+                    &ast,
+                    &common_additional_route_logic_token_stream,
+                    &parameters_logic_token_stream,
+                    &query_string_token_stream,
+                    &binded_query_token_stream,
+                    &postgresql_logic_token_stream,
+                    &desirable_response_creation_token_stream,
+                    &eprintln_error_token_stream,
+                    &check_body_size_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_initialization_token_stream,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                )
             };
+            // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_token_stream
                 #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
                 #try_operation_route_logic_error_named_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
             }
         };
-        //
         // let route_handler_token_stream = {
         //     // let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         //     //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
