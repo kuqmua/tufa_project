@@ -3489,15 +3489,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                             .await
                             {
-                                Ok(value) => value,
+                                Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_snake_case) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         } {
                             match #wrapper_vec_column_snake_case.#options_try_from_sqlx_row_snake_case(&row) {
-                                Ok(value) => {
-                                    vec_values.push(value);
+                                Ok(#value_snake_case) => {
+                                    vec_values.push(#value_snake_case);
                                 }
                                 Err(#error_snake_case) => {
                                     #error_initialization_eprintln_response_creation_token_stream
