@@ -3439,35 +3439,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
                     let binded_query_primary_key_modification_token_stream = quote::quote! {
-                        if let Some(value) = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
-                            query = query.bind(value.into_iter().map(|element|element.into_inner().clone()).collect::<std::vec::Vec<#primary_key_original_type_token_stream>>());
+                        if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
+                            #query_snake_case = #query_snake_case.bind(#value_snake_case.into_iter().map(|#element_snake_case|#element_snake_case.into_inner().clone()).collect::<std::vec::Vec<#primary_key_original_type_token_stream>>());
                         }
                     };
                     let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
                         quote::quote!{
                             if let Some(values) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                for value in values {
-                                    query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
-                                        value, query,
+                                for #value_snake_case in values {
+                                    #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
+                                        #value_snake_case, #query_snake_case,
                                     );
                                 }
                             }
                         }
                     });
                     quote::quote! {
-                        let mut query = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
+                        let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         #binded_query_primary_key_modification_token_stream
                         #(#binded_query_modifications_token_stream)*
-                        query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
+                        #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
                             #parameters_snake_case.#payload_snake_case.#limit_snake_case,
-                            query,
+                            #query_snake_case,
                         );
-                        query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
+                        #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
                             #parameters_snake_case.#payload_snake_case.#offset_snake_case,
-                            query,
+                            #query_snake_case,
                         );
-                        query
+                        #query_snake_case
                     }
                 };
                 let postgresql_logic_token_stream = {
