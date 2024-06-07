@@ -2077,20 +2077,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
-        let operation_additional_error_variants = generate_additional_error_variants(
-            &ast,
-            operation.to_additional_error_variants(),
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
-            &operation_additional_error_variants,
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
-            &operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant,
+            &operation,
+            &ast,
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = generate_parameters_wrapper_token_stream(
             &operation,
@@ -2438,20 +2431,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
-        let operation_additional_error_variants = generate_additional_error_variants(
-            &ast,
-            operation.to_additional_error_variants(),
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
-            &operation_additional_error_variants,
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
-            &operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant,
+            &operation,
+            &ast,
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
@@ -2775,14 +2761,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (read_many_token_stream, read_many_test_token_stream) = {
         let operation = Operation::ReadMany;
-        let operation_additional_error_variants = generate_additional_error_variants(
-            &ast,
-            operation.to_additional_error_variants(),
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
         let syn_variants = {
             let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + checked_add_and_bind_query_syn_variants.len());
             common_route_syn_variants.iter().for_each(|element|{
@@ -2795,10 +2773,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &syn_variants,
-            &operation_additional_error_variants,
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
-            &operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant,
+            &operation,
+            &ast,
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         // let type_variants_from_request_response_syn_variants = {
         //     let full_additional_http_status_codes_error_variants =
@@ -7049,7 +7028,7 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 fn generate_try_operation_token_stream(
     operation: &Operation,
     table_name_stringified: &std::primitive::str,
-    type_variants_from_request_response_syn_variants: &[&syn::Variant],
+    type_variants_from_request_response_syn_variants: &[syn::Variant],
     result_ok_type_token_stream: &proc_macro2::TokenStream,
     desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
@@ -7058,7 +7037,6 @@ fn generate_try_operation_token_stream(
     failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
-    let server_location_snake_case = naming_conventions::ServerLocationSnakeCase;
     let str_ref_token_stream = token_patterns::RefStdPrimitiveStr;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let try_operation_snake_case_token_stream = naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
@@ -8951,7 +8929,7 @@ fn generate_parameters_wrapper_token_stream(
 fn generate_try_operation_route_logic_response_variants_token_stream(
     operation: &Operation,
     desirable_type_token_stream: &proc_macro2::TokenStream,
-    type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
+    type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
@@ -8972,7 +8950,7 @@ fn generate_try_operation_route_logic_response_variants_token_stream(
 
 fn generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream(
     operation: &Operation,
-    type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
+    type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
@@ -9016,7 +8994,7 @@ fn generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_
 
 fn generate_try_operation_route_logic_error_named_token_stream(
     operation: &Operation,
-    type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
+    type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
@@ -9231,23 +9209,32 @@ fn generate_try_operation_error_named_token_stream(
     }
 }
 
-fn generate_type_variants_from_request_response_syn_variants<'a>(
-    syn_variants: &'a std::vec::Vec<&syn::Variant>,
-    operation_additional_error_variants: &'a std::vec::Vec<syn::Variant>,
+fn generate_type_variants_from_request_response_syn_variants(
+    syn_variants: &std::vec::Vec<&syn::Variant>,
     from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant: &'a syn::Variant,
-    operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant: &'a syn::Variant,
-) -> std::vec::Vec<&'a syn::Variant> {
+    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant: &syn::Variant,
+    operation: &Operation,
+    ast: &syn::DeriveInput,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> std::vec::Vec<syn::Variant> {
     let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
     for element in syn_variants {
-        type_variants_from_request_response_syn_variants.push(*element);
+        type_variants_from_request_response_syn_variants.push((*element).clone());
     }
+    let operation_additional_error_variants = generate_additional_error_variants(
+        &ast,
+        operation.to_additional_error_variants(),
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     for element in operation_additional_error_variants {
-        type_variants_from_request_response_syn_variants.push(&element);
+        type_variants_from_request_response_syn_variants.push(element.clone());
     }
-    type_variants_from_request_response_syn_variants.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
+    type_variants_from_request_response_syn_variants.push(operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant.clone());
     if *from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        type_variants_from_request_response_syn_variants.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
+        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        type_variants_from_request_response_syn_variants.push(operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant.clone());
     }
     type_variants_from_request_response_syn_variants
 }
