@@ -3636,17 +3636,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             );
             // // println!("{payload_token_stream}");
-            // let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
-            //     &operation,
-            //     &{
-            //         let fields_token_stream = fields_named_excluding_primary_key.iter()
-            //             .map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-            //                 element
-            //             ));
-            //         quote::quote! {#(#fields_token_stream),*}
-            //     },
-            // );
-            // // println!("{payload_with_serialize_deserialize_token_stream}");
+            let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
+                &operation,
+                &{
+                    quote::quote!{
+                        #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
+                        #select_snake_case std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
+                    }
+                },
+            );
+            // println!("{payload_with_serialize_deserialize_token_stream}");
             // let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
             //     postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
             //         &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
