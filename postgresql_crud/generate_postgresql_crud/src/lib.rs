@@ -3617,6 +3617,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         read_one_http_request_test_expect_fail_token_stream,
     ) = {
         let operation = Operation::ReadOne;
+        let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
+            &common_route_syn_variants,
+            &fields_named_excluding_primary_key_from_or_try_from,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation,
+            &ast,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
         // let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);
         // let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(&operation);
         // let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
