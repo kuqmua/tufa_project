@@ -208,5 +208,3 @@ pub struct Dog {
 // pub struct Something {
 //     something: std::string::String,
 // }
-
-//////////////
