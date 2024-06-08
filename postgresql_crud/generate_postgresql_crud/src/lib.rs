@@ -3880,20 +3880,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // println!("{query_string_token_stream}");
-                // let binded_query_token_stream = {
-                //     let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                //         let field_ident = &element.field_ident;
-                //         quote::quote!{
-                //             query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case.#payload_snake_case.#field_ident, query);
-                //         }
-                //     });
-                //     quote::quote! {
-                //         let mut query = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                //         #(#binded_query_modifications_token_stream)*
-                //         query
-                //     }
-                // };
-                // // println!("{binded_query_token_stream}");
+                let binded_query_token_stream = {
+                    let binded_query_modifications_token_stream = quote::quote! {
+                        let #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case.#payload_snake_case.#primary_key_field_ident, #query_snake_case);
+                    };
+                    quote::quote! {
+                        let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
+                        #binded_query_modifications_token_stream
+                        #query_snake_case
+                    }
+                };
+                // println!("{binded_query_token_stream}");
                 // let postgresql_logic_token_stream = {
                 //     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                 //         &operation,
