@@ -1257,7 +1257,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case = naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamedUpperCamelCase;
+    // let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case = naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamedUpperCamelCase;
     let (
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_syn_variant,
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream
@@ -1335,7 +1335,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                                 segments: {
                                                                     let mut handle_vec_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                                                                     handle_vec_type.push_value(syn::PathSegment {
-                                                                        ident: proc_macro2::Ident::new(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case.to_string(), proc_macro2::Span::call_site()),
+                                                                        ident: proc_macro2::Ident::new(
+                                                                            &naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamedUpperCamelCase.to_string(),
+                                                                            proc_macro2::Span::call_site()
+                                                                        ),
                                                                         arguments: syn::PathArguments::None,
                                                                     });
                                                                     handle_vec_type
@@ -3650,11 +3653,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {}
         )
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &read_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &read_many_token_stream,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let (
         read_one_token_stream,
         read_one_http_request_test_expect_success_token_stream,
@@ -7113,7 +7116,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            #read_many_token_stream
+            // #read_many_token_stream
             // #read_one_token_stream
             // #update_many_token_stream
             // #update_one_token_stream
