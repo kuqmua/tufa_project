@@ -7113,9 +7113,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
+            // #read_many_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
@@ -8446,7 +8446,7 @@ fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_
                                 }
                                 Err(error) => {
                                     return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                        #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
+                                        #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: error,
                                         #field_code_occurence_new_68674e53_54cf_4cfe_b532_2e4aecda32c5_token_stream,
                                     });
                                 }
