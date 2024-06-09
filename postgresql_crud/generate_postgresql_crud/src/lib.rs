@@ -4575,40 +4575,76 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     query_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
-                // // println!("{query_string_token_stream}");
-                // let binded_query_token_stream = {
-                //     let binded_query_primary_key_modification_token_stream = quote::quote! {
-                //         if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
-                //             #query_snake_case = #query_snake_case.bind(#value_snake_case.into_iter().map(|#element_snake_case|#element_snake_case.into_inner().clone()).collect::<std::vec::Vec<#primary_key_original_type_token_stream>>());
-                //         }
-                //     };
-                //     let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                //         let field_ident = &element.field_ident;
-                //         quote::quote!{
-                //             if let Some(values) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                //                 for #value_snake_case in values {
-                //                     #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
-                //                         #value_snake_case, #query_snake_case,
-                //                     );
-                //                 }
-                //             }
-                //         }
-                //     });
-                //     quote::quote! {
-                //         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                //         #binded_query_primary_key_modification_token_stream
-                //         #(#binded_query_modifications_token_stream)*
-                //         #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
-                //             #parameters_snake_case.#payload_snake_case.#limit_snake_case,
-                //             #query_snake_case,
-                //         );
-                //         #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
-                //             #parameters_snake_case.#payload_snake_case.#offset_snake_case,
-                //             #query_snake_case,
-                //         );
-                //         #query_snake_case
-                //     }
-                // };
+                // println!("{query_string_token_stream}");
+                let binded_query_token_stream = {
+                    //todo remove () if in fields named only one element
+                    let column_vecs_token_stream = fields_named.iter().map(|element|{
+                        let field_ident_underscore_vec_stringified = format!("{}_{}", &element.field_ident, naming_constants::VecSnakeCase);
+                        field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    });
+                    let column_vecs_with_capacity_token_stream = fields_named.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_snake_case)});
+                    let columns_acc_push_elements_token_stream = fields_named.iter().enumerate().map(|(index, element)|{
+                        let field_ident = &element.field_ident;
+                        let index_token_stream = {
+                            let index_stringified = format!("{index}");
+                            index_stringified.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        };
+                        quote::quote!{#acc_snake_case.#index_token_stream.push(#element_snake_case.#field_ident);}
+                    });
+                    let column_query_bind_primary_key_vec_token_stream = {
+                        let field_ident_underscore_vec_token_stream = {
+                            let field_ident_underscore_vec_stringified = format!(
+                                "{primary_key_field_ident}_{}", naming_constants::VecSnakeCase
+                            );
+                            field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        };
+                        quote::quote! {
+                            #query_snake_case = #query_snake_case.bind(
+                                #field_ident_underscore_vec_token_stream
+                                .into_iter()
+                                .map(|#element_snake_case| #element_snake_case.into_inner())
+                                .collect::<std::vec::Vec<#primary_key_original_type_token_stream>>()
+                            );
+                        }
+                    };
+                    let column_query_bind_vecs_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                        let field_ident_underscore_vec_token_stream = {
+                            let field_ident_underscore_vec_stringified = {
+                                let field_ident = &element.field_ident;
+                                format!("{field_ident}_{}", naming_constants::VecSnakeCase)
+                            };
+                            field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        };
+                        let original_type_token_stream = &element.original_type_token_stream;
+                        quote::quote!{
+                            #query_snake_case = #query_snake_case.bind(
+                                #field_ident_underscore_vec_token_stream
+                                    .into_iter()
+                                    .map(|element| element.into_inner())
+                                    .collect::<std::vec::Vec<#original_type_token_stream>>(),
+                            );
+                        }
+                    });
+                    quote::quote! {
+                        let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
+                        let #current_vec_len_snake_case = #parameters_snake_case.#payload_snake_case.0.len();
+                        let (
+                            #(#column_vecs_token_stream),*
+                        ) = #parameters_snake_case.#payload_snake_case.0.into_iter().fold((
+                            #(#column_vecs_with_capacity_token_stream),*
+                        ), |mut #acc_snake_case, #element_snake_case| {
+                            #(#columns_acc_push_elements_token_stream)*
+                            #acc_snake_case
+                        });
+                        #column_query_bind_primary_key_vec_token_stream
+                        #(#column_query_bind_vecs_token_stream)*
+                        #query_snake_case
+                    }
+                };
                 // let postgresql_logic_token_stream = {
                 //     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                 //         &operation,
