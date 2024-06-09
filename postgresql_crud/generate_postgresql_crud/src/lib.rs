@@ -3727,10 +3727,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
-                value.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 value
             },
-            &fields_named_excluding_primary_key_from_or_try_from,
+            &postgresql_crud_common::FromOrTryFrom::TryFrom,//fields_named_excluding_primary_key_from_or_try_from
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
             &ast,
@@ -4060,12 +4059,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
                         quote::quote!{
                             {
-                                match #struct_options_ident_token_stream::#try_from_snake_case(#value_snake_case) {
-                                    Ok(#value_snake_case) => #value_snake_case,
-                                    Err(#error_snake_case) => Err(
-                                        #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
-                                    )
-                                }
+                                #value_snake_case
                             }
                         }
                     }
@@ -7109,7 +7103,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_many_token_stream
             #create_one_token_stream
             #read_many_token_stream
-            // #read_one_token_stream
+            #read_one_token_stream
             // #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
