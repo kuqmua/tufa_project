@@ -4215,31 +4215,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{payload_token_stream}");
-            // let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
-            //     &operation,
-            //     &{
-            //         let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-            //             let field_ident = &element.field_ident;
-            //             let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
-            //             quote::quote!{
-            //                 #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,
-            //             }
-            //         });
-            //         let select_snake_case = naming_constants::SelectSnakeCase;
-            //         let order_by_snake_case = naming_conventions::OrderBySnakeCase;
-            //         let limit_snake_case = naming_constants::LimitSnakeCase;
-            //         let offset_snake_case = naming_constants::OffsetSnakeCase;
-            //         quote::quote! {
-            //             #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
-            //             #(#fields_with_excluded_primary_key_token_stream)*
-            //             #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
-            //             #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-            //             #limit_snake_case: #limit_and_offset_type_with_serialize_deserialize_token_stream,
-            //             #offset_snake_case: #limit_and_offset_type_with_serialize_deserialize_token_stream,
-            //         }
-            //     },
-            // );
-            // // println!("{payload_with_serialize_deserialize_token_stream}");
+            let payload_with_serialize_deserialize_token_stream = {
+                let operation_payload_element_with_serialize_deserialize_token_stream = generate_operation_many_payload_element_token_stream(
+                    &operation,
+                    &{
+                        let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(element));
+                        quote::quote! {
+                            #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
+                            #(#fields_with_excluded_primary_key_token_stream),*
+                        }
+                    },
+                );
+                let operation_payload_with_serialize_deserialize_token_stream = generate_operation_many_payload_with_serialize_deserialize_token_stream(&operation);
+                quote::quote! {
+                    #operation_payload_element_with_serialize_deserialize_token_stream
+                    #operation_payload_with_serialize_deserialize_token_stream
+                }
+            };
+            // println!("{payload_with_serialize_deserialize_token_stream}");
             // let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
             //     let order_by_snake_case = naming_conventions::OrderBySnakeCase;
             //     let common_initialization_token_stream = quote::quote!{
@@ -4440,7 +4433,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // let parameters_token_stream = generate_parameters_token_stream(&operation);
             quote::quote! {
                 #payload_token_stream
-                // #payload_with_serialize_deserialize_token_stream
+                #payload_with_serialize_deserialize_token_stream
                 // #impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
                 // #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
                 // #parameters_token_stream
