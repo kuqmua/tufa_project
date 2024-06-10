@@ -1169,13 +1169,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let (
         commit_failed_syn_variant,
-        commit_failed_syn_variant_initialization_token_stream
+        commit_failed_syn_variant_initialization_token_stream,
+        commit_failed_syn_variant_status_code,
      ) = {
         let commit_failed_upper_camel_case = naming_conventions::CommitFailedUpperCamelCase;
         let commit_failed_snake_case = naming_conventions::CommitFailedSnakeCase;
+        let commit_failed_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                proc_macro_helpers::status_code::StatusCode::InternalServerError500,
+                commit_failed_syn_variant_status_code.clone(),
                 &commit_failed_upper_camel_case,
                 vec![(
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
@@ -1197,7 +1199,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream,
                     }
                 }
-            }
+            },
+            commit_failed_syn_variant_status_code
         )
     };
     let (
@@ -4516,7 +4519,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_token_stream = generate_try_operation_route_logic_response_variants_token_stream(
                 &operation,
-                &std_vec_vec_struct_options_ident_token_stream,
+                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
@@ -4696,35 +4699,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &non_existing_primary_keys_and_failed_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
-                    // quote::quote! {
-                    //     let mut rows = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
-                    //     let mut vec_values = std::vec::Vec::new();
-                    //     let #wrapper_vec_column_snake_case = #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case);
-                    //     while let Some(row) = {
-                    //         match {
-                    //             #use_futures_try_stream_ext_token_stream;
-                    //             rows.try_next()
-                    //         }
-                    //         .await
-                    //         {
-                    //             Ok(#value_snake_case) => #value_snake_case,
-                    //             Err(#error_snake_case) => {
-                    //                 #error_initialization_eprintln_response_creation_token_stream
-                    //             }
-                    //         }
-                    //     } {
-                    //         match #wrapper_vec_column_snake_case.#options_try_from_sqlx_row_snake_case(&row) {
-                    //             Ok(#value_snake_case) => {
-                    //                 vec_values.push(#value_snake_case);
-                    //             }
-                    //             Err(#error_snake_case) => {
-                    //                 #error_initialization_eprintln_response_creation_token_stream
-                    //             }
-                    //         }
-                    //     }
-                    //     vec_values
-                    // }
-                    //
+                    let commit_failed_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &commit_failed_syn_variant_initialization_token_stream,
+                        &quote::quote! {#from_snake_case(#error_snake_case)},
+                        &commit_failed_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &eprintln_error_token_stream,
+                    );
                     let postgres_transaction_token_stream = quote::quote! {postgres_transaction};
                     let expected_updated_primary_keys_name_token_stream = quote::quote! {expected_updated_primary_keys};
                     let primary_key_vec_name_token_stream = quote::quote! {primary_key_vec};
@@ -4733,6 +4714,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
                     let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
                     let non_existing_primary_keys_snake_case = naming_conventions::NonExistingPrimaryKeysSnakeCase;
+                    let commit_snake_case = naming_constants::CommitSnakeCase;
                     quote::quote! {
                         let mut #postgres_transaction_token_stream = match {
                             use #sqlx_acquire;
@@ -4774,15 +4756,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
                                     Err(#rollback_error_snake_case) => {
-                                        //
-                                        // #query_and_rollback_failed_snake_case: #error_snake_case,
-                                        // #rollback_snake_case,
-                                        //
                                         //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
                                         #query_and_rollback_failed_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                        // let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_syn_variant_initialization_token_stream;
-                                        // #error_log_call_token_stream
-                                        // return #response_variants_token_stream::from(#error_snake_case_token_stream);
                                     }
                                 }
                             }
@@ -4833,42 +4808,38 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 |element|#primary_key_inner_type_with_serialize_deserialize_token_stream::from(element)
                             ).collect(),
                             Err(#error_snake_case) => {
-                                let #error_snake_case = #try_ident_upper_camel_case_token_stream::#commit_failed_syn_variant_initialization_token_stream;
-                                #error_log_call_token_stream
-                                #response_variants_token_stream::from(#error_snake_case)
+                                #commit_failed_syn_variant_error_initialization_eprintln_response_creation_token_stream
                             }
                         }
                     }
-                    //
                 };
-                // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                // //     &table_name_stringified,
-                // //     &unique_status_codes,
-                // //     &application_json_quotes_token_stream,
-                // //     &table_name_quotes_token_stream,
-                // //     &operation_payload_upper_camel_case_token_stream,
-                // //     &operation,
-                // // );
-                // generate_try_operation_route_logic_snake_case_token_stream(
+                // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+                //     &table_name_stringified,
+                //     &unique_status_codes,
+                //     &application_json_quotes_token_stream,
+                //     &table_name_quotes_token_stream,
+                //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
-                //     &ast,
-                //     &common_additional_route_logic_token_stream,
-                //     &parameters_logic_token_stream,
-                //     &query_string_token_stream,
-                //     &binded_query_token_stream,
-                //     &postgresql_logic_token_stream,
-                //     &eprintln_error_token_stream,
-                //     &check_body_size_syn_variant_initialization_token_stream,
-                //     &postgresql_syn_variant_initialization_token_stream,
-                //     &proc_macro_name_upper_camel_case_ident_stringified,
-                // )
-                quote::quote! {}
+                // );
+                generate_try_operation_route_logic_snake_case_token_stream(
+                    &operation,
+                    &ast,
+                    &common_additional_route_logic_token_stream,
+                    &parameters_logic_token_stream,
+                    &query_string_token_stream,
+                    &binded_query_token_stream,
+                    &postgresql_logic_token_stream,
+                    &eprintln_error_token_stream,
+                    &check_body_size_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_initialization_token_stream,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                )
             };
             // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
-                // #try_operation_route_logic_response_variants_token_stream
-                // #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
-                // #try_operation_route_logic_error_named_token_stream
+                #try_operation_route_logic_response_variants_token_stream
+                #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
+                #try_operation_route_logic_error_named_token_stream
                 // #try_operation_route_logic_token_stream
             }
         };
@@ -5202,7 +5173,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
             quote::quote! {}
