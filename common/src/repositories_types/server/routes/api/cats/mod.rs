@@ -251,6 +251,10 @@ pub enum TryUpdateManyRouteLogicResponseVariants {
         non_existing_primary_keys : std :: vec :: Vec < std :: string ::
         String > , rollback : std :: string :: String, code_occurence :
         error_occurence_lib :: code_occurence :: CodeOccurence,
+    }, CommitFailed
+    {
+        commit_failed : std :: string :: String, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence,
     },
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
     {
@@ -301,6 +305,9 @@ impl std::convert::From<TryUpdateManyRouteLogicErrorNamed>
             { non_existing_primary_keys, rollback, code_occurence } => Self ::
             NonExistingPrimaryKeysAndFailedRollback
             { non_existing_primary_keys, rollback, code_occurence },
+            TryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize ::
+            CommitFailed { commit_failed, code_occurence } => Self ::
+            CommitFailed { commit_failed, code_occurence },
             TryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize ::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
@@ -371,6 +378,11 @@ pub enum TryUpdateManyRouteLogicErrorNamed {
         non_existing_primary_keys: std::vec::Vec<postgresql_crud::StdPrimitiveI64>,
         #[eo_to_std_string_string]
         rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitFailed {
+        #[eo_to_std_string_string]
+        commit_failed: sqlx::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
@@ -461,7 +473,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 8062, column : 13,
+                            line : 8063, column : 13,
                         })),
                     };
                     eprintln!("{error}");
