@@ -1032,7 +1032,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
                 quote::quote! {
                     #query_and_rollback_failed_upper_camel_case {
-                        #query_and_rollback_failed_snake_case: #error_snake_case,
+                        #query_snake_case: #error_snake_case,
                         #rollback_snake_case: #rollback_error_snake_case,
                         #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
                     }
@@ -4863,7 +4863,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_route_logic_token_stream
             }
         };
-        println!("{try_operation_route_logic_token_stream}");
+        // println!("{try_operation_route_logic_token_stream}");
         // let route_handler_token_stream = {
         //     let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -5194,7 +5194,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
             quote::quote! {}
