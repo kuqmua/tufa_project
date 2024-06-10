@@ -4645,43 +4645,157 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #query_snake_case
                     }
                 };
-                // let postgresql_logic_token_stream = {
-                //     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                //         &operation,
-                //         &postgresql_syn_variant_initialization_token_stream,
-                //         &quote::quote! {#from_snake_case(#error_snake_case)},
-                //         &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
-                //         &eprintln_error_token_stream,
-                //     );
-                //     quote::quote! {
-                //         let mut rows = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
-                //         let mut vec_values = std::vec::Vec::new();
-                //         let #wrapper_vec_column_snake_case = #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case);
-                //         while let Some(row) = {
-                //             match {
-                //                 #use_futures_try_stream_ext_token_stream;
-                //                 rows.try_next()
-                //             }
-                //             .await
-                //             {
-                //                 Ok(#value_snake_case) => #value_snake_case,
-                //                 Err(#error_snake_case) => {
-                //                     #error_initialization_eprintln_response_creation_token_stream
-                //                 }
-                //             }
-                //         } {
-                //             match #wrapper_vec_column_snake_case.#options_try_from_sqlx_row_snake_case(&row) {
-                //                 Ok(#value_snake_case) => {
-                //                     vec_values.push(#value_snake_case);
-                //                 }
-                //                 Err(#error_snake_case) => {
-                //                     #error_initialization_eprintln_response_creation_token_stream
-                //                 }
-                //             }
-                //         }
-                //         vec_values
-                //     }
-                // };
+                let postgresql_logic_token_stream = {
+                    let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &postgresql_syn_variant_initialization_token_stream,
+                        &quote::quote! {#from_snake_case(#error_snake_case)},
+                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &eprintln_error_token_stream,
+                    );
+                    // quote::quote! {
+                    //     let mut rows = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
+                    //     let mut vec_values = std::vec::Vec::new();
+                    //     let #wrapper_vec_column_snake_case = #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case);
+                    //     while let Some(row) = {
+                    //         match {
+                    //             #use_futures_try_stream_ext_token_stream;
+                    //             rows.try_next()
+                    //         }
+                    //         .await
+                    //         {
+                    //             Ok(#value_snake_case) => #value_snake_case,
+                    //             Err(#error_snake_case) => {
+                    //                 #error_initialization_eprintln_response_creation_token_stream
+                    //             }
+                    //         }
+                    //     } {
+                    //         match #wrapper_vec_column_snake_case.#options_try_from_sqlx_row_snake_case(&row) {
+                    //             Ok(#value_snake_case) => {
+                    //                 vec_values.push(#value_snake_case);
+                    //             }
+                    //             Err(#error_snake_case) => {
+                    //                 #error_initialization_eprintln_response_creation_token_stream
+                    //             }
+                    //         }
+                    //     }
+                    //     vec_values
+                    // }
+                    //
+                    let postgres_transaction_token_stream = quote::quote! {postgres_transaction};
+                    let expected_updated_primary_keys_name_token_stream = quote::quote! {expected_updated_primary_keys};
+                    let sqlx_acquire = token_patterns::SqlxAcquire;
+                    let begin_snake_case = naming_constants::BeginSnakeCase;
+                    let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
+                    quote::quote! {
+                        let mut #postgres_transaction_token_stream = match {
+                            use #sqlx_acquire;
+                            #pg_connection_snake_case.#begin_snake_case()
+                        }
+                        .await
+                        {
+                            Ok(#value_snake_case) => #value_snake_case,
+                            Err(#error_snake_case) => {
+                                #error_initialization_eprintln_response_creation_token_stream
+                            }
+                        };
+                        let results_vec = {
+                            let mut results_vec = std::vec::Vec::with_capacity(#expected_updated_primary_keys_name_token_stream.len());
+                            let mut option_error: Option<sqlx::Error> = None;
+                            {
+                                let mut rows = #binded_query_snake_case.fetch(#postgres_transaction_token_stream.as_mut());
+                                while let (Some(Some(row)), None) = (
+                                    match {
+                                        #use_futures_try_stream_ext_token_stream;
+                                        rows.try_next()
+                                    }
+                                    .await
+                                    {
+                                        Ok(value) => Some(value),
+                                        Err(#error_snake_case) => {
+                                            option_error = Some(#error_snake_case);
+                                            None
+                                        }
+                                    },
+                                    &option_error,
+                                ) {
+                                    results_vec.push(row);
+                                }
+                            }
+                            if let Some(e) = option_error {
+                                match #postgres_transaction_token_stream.#rollback_snake_case().await {
+                                    Ok(_) => {
+                                        #error_initialization_eprintln_response_creation_token_stream
+                                    }
+                                    Err(#rollback_error_name_token_stream) => {
+                                        //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
+                                        let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_syn_variant_initialization_token_stream;
+                                        #error_log_call_token_stream
+                                        return #response_variants_token_stream::from(#error_snake_case_token_stream);
+                                    }
+                                }
+                            }
+                            results_vec
+                        };
+                        let #primary_key_vec_name_token_stream = {
+                            let mut #primary_key_vec_name_token_stream = std::vec::Vec::with_capacity(#expected_updated_primary_keys_name_token_stream.len());
+                            for element in results_vec {
+                                match #primary_key_try_from_sqlx_row_name_token_stream(&element) {
+                                    Ok(primary_key) => {
+                                        #primary_key_vec_name_token_stream.push(primary_key);
+                                    }
+                                    Err(#error_snake_case) => match #postgres_transaction_token_stream.#rollback_snake_case().await {
+                                        Ok(_) => {
+                                            #error_initialization_eprintln_response_creation_token_stream
+                                        }
+                                        Err(#rollback_error_name_token_stream) => {
+                                            let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#primary_key_from_row_and_failed_rollback_syn_variant_initialization_token_stream;
+                                            #error_log_call_token_stream
+                                            return #response_variants_token_stream::from(#error_snake_case_token_stream);
+                                        }
+                                    },
+                                }
+                            }
+                            #primary_key_vec_name_token_stream
+                        };
+                        {
+                            let #non_existing_primary_keys_name_token_stream = {
+                                let len = #expected_updated_primary_keys_name_token_stream.len();
+                                #expected_updated_primary_keys_name_token_stream.into_iter().fold(std::vec::Vec::with_capacity(len), |mut acc, element| {
+                                    if let false = #primary_key_vec_name_token_stream.contains(&element) {
+                                        acc.push(element);
+                                    }
+                                    acc
+                                })
+                            };
+                            if let false = #non_existing_primary_keys_name_token_stream.is_empty() {
+                                match #postgres_transaction_token_stream.#rollback_token_stream().await {
+                                    Ok(_) => {
+                                        let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#non_existing_primary_keys_syn_variant_initialization_token_stream;
+                                        #error_log_call_token_stream
+                                        return #response_variants_token_stream::from(#error_snake_case_token_stream);
+                                    }
+                                    Err(#error_snake_case) => {
+                                        let #error_snake_case = #try_ident_upper_camel_case_token_stream::#non_existing_primary_keys_and_failed_rollback_syn_variant_initialization_token_stream;
+                                        #error_log_call_token_stream
+                                        return #response_variants_token_stream::from(#error_snake_case);
+                                    }
+                                }
+                            }
+                        }
+                        match #postgres_transaction_token_stream.#commit_token_stream().await {
+                            Ok(_) => #primary_key_vec_name_token_stream.into_iter().map(
+                                |element|#primary_key_inner_type_with_serialize_deserialize_token_stream::from(element)
+                            ).collect(),
+                            Err(#error_snake_case) => {
+                                let #error_snake_case = #try_ident_upper_camel_case_token_stream::#commit_failed_syn_variant_initialization_token_stream;
+                                #error_log_call_token_stream
+                                #response_variants_token_stream::from(#error_snake_case)
+                            }
+                        }
+                    }
+                    //
+                };
                 // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 // //     &table_name_stringified,
                 // //     &unique_status_codes,
