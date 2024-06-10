@@ -1029,10 +1029,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     column!(),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
+                let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
                 quote::quote! {
                     #query_and_rollback_failed_upper_camel_case {
                         #query_and_rollback_failed_snake_case: #error_snake_case,
-                        #rollback_snake_case,
+                        #rollback_snake_case: #rollback_error_snake_case,
                         #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
                     }
                 }
@@ -1068,6 +1069,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
             ),
             {
+                let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
                 let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
                     line!(),
@@ -1077,7 +1079,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {
                     #primary_key_from_row_and_failed_rollback_upper_camel_case {
                         #primary_key_from_row_snake_case: #error_snake_case,
-                        #rollback_snake_case,
+                        #rollback_snake_case: #rollback_error_snake_case,
                         #field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream,
                     }
                 }
@@ -2364,6 +2366,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &ast,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
+                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -2713,6 +2716,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &ast,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
+                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -3551,6 +3555,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &ast,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
+                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -3741,7 +3746,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + checked_add_and_bind_query_syn_variants.len());
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len());
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
@@ -4021,6 +4026,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &ast,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
+                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -4196,7 +4202,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (update_many_token_stream, update_many_test_token_stream) = {
         let operation = Operation::UpdateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &common_route_syn_variants,
+            &{
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len());
+                common_route_syn_variants.iter().for_each(|element|{
+                    value.push(*element);
+                });
+                // value.push(postgresql_syn_variant);
+                value.push(&query_and_rollback_failed_syn_variant);
+                value.push(&primary_key_from_row_and_failed_rollback_syn_variant);
+                value.push(&non_existing_primary_keys_syn_variant);
+                value.push(&non_existing_primary_keys_and_failed_rollback_syn_variant);
+                //
+                value
+            },
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
@@ -4542,16 +4560,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &eprintln_error_token_stream,
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
-        //         let expected_updated_primary_keys_token_stream = {
-        //             quote::quote! {
-        //                 #parameters_snake_case
-        //                 .#payload_snake_case_token_stream
-        //                 .0
-        //                 .iter()
-        //                 .map(|element| element.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-        //                 .collect::<std::vec::Vec<#primary_key_inner_type_token_stream>>()
-        //             }
-        //         };
+                let expected_updated_primary_keys_name_token_stream = quote::quote! {expected_updated_primary_keys};
+                let expected_updated_primary_keys_token_stream = {
+                   quote::quote! {
+                       let #expected_updated_primary_keys_name_token_stream = #parameters_snake_case
+                       .#payload_snake_case
+                       .0
+                       .iter()
+                       .map(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
+                       .collect::<std::vec::Vec<#primary_key_inner_type_token_stream>>();
+                   }
+                };
                 let query_string_token_stream = {
                     let column_names = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let possible_dot_space = if (
@@ -4707,7 +4726,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &eprintln_error_token_stream,
                     );
                     let postgres_transaction_token_stream = quote::quote! {postgres_transaction};
-                    let expected_updated_primary_keys_name_token_stream = quote::quote! {expected_updated_primary_keys};
                     let primary_key_vec_name_token_stream = quote::quote! {primary_key_vec};
                     let sqlx_acquire = token_patterns::SqlxAcquire;
                     let begin_snake_case = naming_constants::BeginSnakeCase;
@@ -4750,7 +4768,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     results_vec.push(row);
                                 }
                             }
-                            if let Some(e) = option_error {
+                            if let Some(#error_snake_case) = option_error {
                                 match #postgres_transaction_token_stream.#rollback_snake_case().await {
                                     Ok(_) => {
                                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4826,6 +4844,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &ast,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
+                    &expected_updated_primary_keys_token_stream,
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -4840,9 +4859,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_route_logic_response_variants_token_stream
                 #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
                 #try_operation_route_logic_error_named_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
             }
         };
+        println!("{try_operation_route_logic_token_stream}");
         // let route_handler_token_stream = {
         //     let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -5173,7 +5193,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                #try_operation_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
             quote::quote! {}
@@ -9426,6 +9446,7 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     ast: &syn::DeriveInput,
     common_additional_route_logic_token_stream: &proc_macro2::TokenStream,
     parameters_logic_token_stream: &proc_macro2::TokenStream,
+    expected_updated_primary_keys_token_stream: &proc_macro2::TokenStream,
     query_string_token_stream: &proc_macro2::TokenStream,
     binded_query_token_stream: &proc_macro2::TokenStream,
     postgresql_logic_token_stream: &proc_macro2::TokenStream,
@@ -9509,6 +9530,7 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
             #additional_validators_token_stream
             #parameters_logic_token_stream
             println!("{:#?}", #parameters_snake_case);
+            #expected_updated_primary_keys_token_stream
             let #query_string_snake_case = #query_string_token_stream;
             println!("{}", #query_string_snake_case);
             let #binded_query_snake_case = {
