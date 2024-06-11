@@ -4906,16 +4906,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     )
         // };
         //     //
-        //     let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
-        //         &operation,
-        //         &{
-        //             let mut value = common_http_request_syn_variants.clone();
-        //             value.push(operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant);
-        //             value
-        //         },
-        //         &proc_macro_name_upper_camel_case_ident_stringified,
-        //     );
-        //     // println!("{try_operation_error_named_token_stream}");
+            let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
+                &operation,
+                &{
+                    let value = common_http_request_syn_variants.clone();
+                    value
+                },
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            // println!("{try_operation_error_named_token_stream}");
         //     let try_operation_token_stream = generate_try_operation_token_stream(
         //         &operation,
         //         &table_name_stringified,
@@ -5033,7 +5032,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 quote::quote! {
                     #try_operation_error_named_token_stream
-                    #try_operation_token_stream
+                    // #try_operation_token_stream
                 },
                 quote::quote! {}
                 // try_operation_test_token_stream,
