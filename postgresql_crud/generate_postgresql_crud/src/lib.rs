@@ -5032,6 +5032,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             );
             // println!("{payload_token_stream}");
+            let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
+                &operation,
+                &{
+                    let fields_token_stream = fields_named.iter()
+                        .map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(
+                            element
+                        ));
+                    quote::quote! {#(#fields_token_stream),*}
+                },
+            );
+            // println!("{payload_with_serialize_deserialize_token_stream}");
             // let payload_with_serialize_deserialize_token_stream = {
             //     let fields_with_excluded_primary_key_token_stream =
             //         fields_named_excluding_primary_key
