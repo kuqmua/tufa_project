@@ -5121,186 +5121,156 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
-            // let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_from_or_try_from {
-            //     postgresql_crud_common::FromOrTryFrom::From => {
-            //         let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-            //             .map(|element| {
-            //                 let field_ident = &element.field_ident;
-            //                 let inner_type_token_stream = &element.inner_type_token_stream;
-            //                 quote::quote! {
-            //                     let #field_ident = match value.#field_ident {
-            //                         Some(value) => Some(#inner_type_token_stream::#from_snake_case(value)),
-            //                         None => None,
-            //                     };
-            //                 }
-            //             });
-            //         let primary_key_let_field_ident_value_field_ident_try_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(
-            //             &primary_key_syn_field,
-            //             &from_snake_case_token_stream,
-            //         );
-            //         quote::quote! {
-            //             impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
-            //                 fn from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
-            //                     #primary_key_let_field_ident_value_field_ident_try_from_token_stream
-            //                     //todo with_serialize_deserialize
-            //                     #(#fields_assignment_excluding_primary_key_token_stream)*
-            //                     Self {
-            //                         #primary_key_field_ident,
-            //                         #(#fields_idents_excluding_primary_key_token_stream),*
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     },
-            //     postgresql_crud_common::FromOrTryFrom::TryFrom => {
-            //         let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream =  naming_conventions::PayloadTryFromPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::payload_try_from_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
-            //         let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = {
-            //             let primary_key_variant_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
-            //                 &primary_key_syn_field,
-            //                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-            //                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-            //             );
-            //             let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
-            //                 &fields_named_excluding_primary_key,
-            //                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-            //                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-            //             );
-            //             quote::quote! {
-            //                 #derive_debug_thiserror_error_occurence
-            //                 pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
-            //                     #primary_key_variant_token_stream
-            //                     #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
-            //                 }
-            //             }
-            //         };
-            //         // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
-            //         let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
-            //             let field_code_occurence_new_1755cb35_9932_42ce_8a4a_edd53bb789a1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            //                 file!(),
-            //                 line!(),
-            //                 column!(),
-            //                 &proc_macro_name_upper_camel_case_ident_stringified,
-            //             );
-            //             let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-            //                 .map(|element| {
-            //                     let field_ident = &element.field_ident;
-            //                     let inner_token_stream = quote::quote! {value.#field_ident};
-            //                     let initialization_token_stream = {
-            //                         let inner_type_token_stream = &element.inner_type_token_stream;
-            //                         match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-            //                             postgresql_crud_common::FromOrTryFrom::From => {
-            //                                 quote::quote!{
-            //                                     match #inner_token_stream {
-            //                                         Some(value) => Some(#inner_type_token_stream::#from_snake_case(value)),
-            //                                         None => None,
-            //                                     }
-            //                                 }
-            //                             },
-            //                             postgresql_crud_common::FromOrTryFrom::TryFrom => {
-            //                                 let field_ident_upper_camel_case_token_stream = {
-            //                                     //todo its a temporal naming desicion. maybe it can be better
-            //                                     let value = syn_ident_to_upper_camel_case_stringified(element.field_ident);
-            //                                     value.parse::<proc_macro2::TokenStream>()
-            //                                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            //                                 };
-            //                                 quote::quote!{
-            //                                     match #inner_token_stream {
-            //                                         Some(value) => match #inner_type_token_stream::try_from(value) {
-            //                                             Ok(value) => Some(value),
-            //                                             Err(error) => {
-            //                                                 return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-            //                                                     #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
-            //                                                     #field_code_occurence_new_1755cb35_9932_42ce_8a4a_edd53bb789a1_token_stream
-            //                                                 });
-            //                                             }
-            //                                         },
-            //                                         None => None,
-            //                                     }
-            //                                 }
-            //                             }
-            //                         }
-            //                     };
-            //                     quote::quote! {
-            //                         let #field_ident = #initialization_token_stream;
-            //                     }
-            //                 });
-            //             let field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            //                 file!(),
-            //                 line!(),
-            //                 column!(),
-            //                 &proc_macro_name_upper_camel_case_ident_stringified,
-            //             );
-            //             let primary_key_let_field_ident_value_field_ident_try_from_token_stream = generate_let_field_ident_value_field_ident_try_from_token_stream(
-            //                 &primary_key_syn_field,
-            //                 &proc_macro_name_upper_camel_case_ident_stringified,
-            //                 &field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream,
-            //                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-            //             );
-            //             quote::quote! {
-            //                 impl std::convert::TryFrom<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
-            //                     type Error = #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream;
-            //                     fn try_from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
-            //                         #primary_key_let_field_ident_value_field_ident_try_from_token_stream
-            //                         //todo with_serialize_deserialize
-            //                         #(#fields_assignment_excluding_primary_key_token_stream)*
-            //                         Ok(Self {
-            //                             #primary_key_field_ident,
-            //                             #(#fields_idents_excluding_primary_key_token_stream),*
-            //                         })
-            //                     }
-            //                 }
-            //             }
-            //         };
-            //         quote::quote! {
-            //             #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream
-            //             #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
-            //         }
-            //     },
-            // };
-            // // println!("{impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
-            // let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
-            //     let fields_assignment_excluding_primary_key_token_stream =
-            //         fields_named_excluding_primary_key
-            //             .iter()
-            //             .map(|element| {
-            //                 let field_ident = &element.field_ident;
-            //                 let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
-            //                 quote::quote! {
-            //                     let #field_ident = match value.#field_ident {
-            //                         Some(value) => Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case(value)),
-            //                         None => None,
-            //                     };//todo from or try_from
-            //                 }
-            //             });
-            //     quote::quote! {
-            //         impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-            //             fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
-            //                 let #primary_key_field_ident = #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(value.#primary_key_field_ident);
-            //                 #(#fields_assignment_excluding_primary_key_token_stream)*
-            //                 Self{
-            //                     #primary_key_field_ident,
-            //                     #(#fields_idents_excluding_primary_key_token_stream),*
-            //                 }
-            //             }
-            //         }
-            //     }
-            // };
-            // // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
-            // let parameters_token_stream = quote::quote! {
-            //     #derive_debug_token_stream
-            //     pub struct #operation_parameters_upper_camel_case_token_stream {
-            //         pub #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream,
-            //     }
-            // };
+            let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
+                &{
+                    let fields_assignment_token_stream = fields_named.iter()
+                        .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(element));
+                    let self_init_fields_token_stream = generate_self_fields_token_stream(
+                        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    quote::quote! {
+                        #(#fields_assignment_token_stream)*
+                        Self{
+                            #(#self_init_fields_token_stream),*
+                        }
+                    }
+                },
+            );
+            // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
+            let parameters_token_stream = generate_parameters_token_stream(&operation);
             quote::quote! {
                 #payload_token_stream
                 #payload_with_serialize_deserialize_token_stream
                 #impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
-                // #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
-                // #parameters_token_stream
+                #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
+                #parameters_token_stream
             }
         };
         // println!("{parameters_token_stream}");
+        //
+        let try_operation_route_logic_token_stream = {
+            let try_operation_route_logic_response_variants_token_stream = generate_try_operation_route_logic_response_variants_token_stream(
+                &operation,
+                &primary_key_inner_type_with_serialize_deserialize_token_stream,
+                &type_variants_from_request_response_syn_variants,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_error_named_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let try_operation_route_logic_token_stream = {
+                let parameters_logic_token_stream = generate_parameters_logic_token_stream(
+                   &operation,
+                   &fields_named_from_or_try_from,
+                   &json_syn_variant_initialization_token_stream,
+                   &json_syn_variant_status_code,
+                   &eprintln_error_token_stream,
+                   &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                // let query_string_token_stream = {
+                //     let (column_names, column_increments) = {
+                //         fields_named_excluding_primary_key.iter().enumerate().fold((
+                //             std::string::String::default(),
+                //             std::string::String::default()
+                //         ), |mut acc, (index, element)| {
+                //             let field_ident = &element.field_ident;
+                //             let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                //             if incremented_index == fields_named_excluding_primary_key_len {
+                //                 acc.0.push_str(&format!("{field_ident}"));
+                //                 acc.1.push_str(&format!("${incremented_index}"));
+                //             }
+                //             else {
+                //                 acc.0.push_str(&format!("{field_ident}{dot_space}"));
+                //                 acc.1.push_str(&format!("${incremented_index}{dot_space}"));
+                //             }
+                //             acc
+                //         })
+                //     };
+                //     let query_stringified = format!("\"{insert_snake_case} {into_snake_case} {table_name_stringified}({column_names}) {values_snake_case} ({column_increments}){returning_primary_key_stringified}\"");
+                //     query_stringified.parse::<proc_macro2::TokenStream>()
+                //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                // };
+                // // println!("{query_string_token_stream}");
+                // let binded_query_token_stream = {
+                //     let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                //         let field_ident = &element.field_ident;
+                //         quote::quote!{
+                //             query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case.#payload_snake_case.#field_ident, query);
+                //         }
+                //     });
+                //     quote::quote! {
+                //         let mut query = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
+                //         #(#binded_query_modifications_token_stream)*
+                //         query
+                //     }
+                // };
+                // // println!("{binded_query_token_stream}");
+                // let postgresql_logic_token_stream = {
+                //     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                //         &operation,
+                //         &postgresql_syn_variant_initialization_token_stream,
+                //         &quote::quote! {#from_snake_case(#error_snake_case)},
+                //         &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                //         &eprintln_error_token_stream,
+                //     );
+                //     quote::quote! {
+                //         match #binded_query_snake_case.fetch_one(#pg_connection_snake_case.as_mut()).await {
+                //             Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, &str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                //                 Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
+                //                     #primary_key_inner_type_token_stream(#value_snake_case)
+                //                 ),
+                //                 Err(#error_snake_case) => {
+                //                     #error_initialization_eprintln_response_creation_token_stream
+                //                 }
+                //             },
+                //             Err(#error_snake_case) => {
+                //                 #error_initialization_eprintln_response_creation_token_stream
+                //             }
+                //         }
+                //     }
+                // };
+                // // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+                // // //     &table_name_stringified,
+                // // //     &unique_status_codes,
+                // // //     &application_json_quotes_token_stream,
+                // // //     &table_name_quotes_token_stream,
+                // // //     &operation_payload_upper_camel_case_token_stream,
+                // // //     &operation,
+                // // // );
+                // generate_try_operation_route_logic_snake_case_token_stream(
+                //     &operation,
+                //     &ast,
+                //     &common_additional_route_logic_token_stream,
+                //     &parameters_logic_token_stream,
+                //     &proc_macro2::TokenStream::new(),
+                //     &query_string_token_stream,
+                //     &binded_query_token_stream,
+                //     &postgresql_logic_token_stream,
+                //     &eprintln_error_token_stream,
+                //     &check_body_size_syn_variant_initialization_token_stream,
+                //     &postgresql_syn_variant_initialization_token_stream,
+                //     &proc_macro_name_upper_camel_case_ident_stringified,
+                // )
+                quote::quote! {}
+            };
+            quote::quote! {
+                #try_operation_route_logic_response_variants_token_stream
+                #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
+                #try_operation_route_logic_error_named_token_stream
+                #try_operation_route_logic_token_stream
+            }
+        };
+        //
         // let route_handler_token_stream = {
         //     let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
