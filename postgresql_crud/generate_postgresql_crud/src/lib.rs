@@ -5248,20 +5248,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // println!("{query_string_token_stream}");
-                // let binded_query_token_stream = {
-                //     let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                //         let field_ident = &element.field_ident;
-                //         quote::quote!{
-                //             query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case.#payload_snake_case.#field_ident, query);
-                //         }
-                //     });
-                //     quote::quote! {
-                //         let mut query = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                //         #(#binded_query_modifications_token_stream)*
-                //         query
-                //     }
-                // };
-                // // println!("{binded_query_token_stream}");
+                let binded_query_token_stream = {
+                    let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                        let field_ident = &element.field_ident;
+                        quote::quote!{
+                            if let Some(value) = #parameters_snake_case.#payload_snake_case.#field_ident {
+                                query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
+                                    value,
+                                    query,
+                                );
+                            }
+                        }
+                    });
+                    let binded_query_primary_key_modification_token_stream = quote::quote! {
+                        query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
+                            #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
+                            query,
+                        );
+                    };
+                    quote::quote! {
+                        let mut query = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
+                        #(#binded_query_modifications_token_stream)*
+                        #binded_query_primary_key_modification_token_stream
+                        query
+                    }
+                };
                 // let postgresql_logic_token_stream = {
                 //     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                 //         &operation,
@@ -5331,70 +5342,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //                 &try_operation_response_variants_token_stream,
         //                 true,
         //             );
-        //         let query_string_token_stream = {
-        //             let additional_parameters_modification_token_stream = {
-        //                 fields_named_excluding_primary_key.iter().enumerate().map(|(index, element)| {
-        //                     let field_ident = &element.field_ident;
-        //                     let handle_token_stream = {
-        //                         let possible_dot_space = if (
-        //                             index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
-        //                         ) == fields_named_excluding_primary_key_len {
-        //                             ""
-        //                         }
-        //                         else {
-        //                             dot_space
-        //                         };
-        //                         let handle_stringified = format!("\"{field_ident} = ${{increment}}{possible_dot_space}\"");
-        //                         handle_stringified.parse::<proc_macro2::TokenStream>()
-        //                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //                     };
-        //                     quote::quote!{
-        //                         if let Some(value) = &#parameters_snake_case.#payload_snake_case_token_stream.#field_ident {
-        //                             match #crate_server_postgres_bind_query_bind_query_try_increment_token_stream(value, &mut increment) {
-        //                                 Ok(_) => {
-        //                                     query.push_str(&format!(#handle_token_stream));//add dot_space for all elements except last
-        //                                 },
-        //                                 Err(#error_snake_case) => {
-        //                                     return #try_operation_response_variants_token_stream::#bind_query_syn_variant_initialization_token_stream;
-        //                                 },
-        //                             }
-        //                         }
-        //                     }
-        //                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>()
-        //             };
-        //             let additional_parameters_primary_key_modification_token_stream = {
-        //                 let query_part_token_stream = {
-        //                     let query_part_stringified =
-        //                         format!("\" where {primary_key_field_ident} = ${{increment}}\""); //todo where
-        //                     query_part_stringified.parse::<proc_macro2::TokenStream>()
-        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_part_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //                 };
-        //                 quote::quote! {
-        //                     match #crate_server_postgres_bind_query_bind_query_try_increment_token_stream(&#parameters_snake_case.#payload_snake_case_token_stream.#primary_key_field_ident, &mut increment) {
-        //                         Ok(_) => {
-        //                             query.push_str(&format!(#query_part_token_stream));
-        //                         },
-        //                         Err(#error_snake_case) => {
-        //                             return #try_operation_response_variants_token_stream::#bind_query_syn_variant_initialization_token_stream;
-        //                         },
-        //                     }
-        //                 }
-        //             };
-        //             let handle_token_stream = {
-        //                 let handle_stringified = format!("\"{update_name_stringified} {table_name_stringified} {set_name_stringified} \""); //todo where
-        //                 handle_stringified.parse::<proc_macro2::TokenStream>()
-        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //             };
-        //             quote::quote! {
-        //                 #increment_initialization_token_stream
-        //                 let mut query = #std_string_string_token_stream::#from_snake_case(#handle_token_stream);
-        //                 #(#additional_parameters_modification_token_stream)*
-        //                 #additional_parameters_primary_key_modification_token_stream
-        //                 query.push_str(&format!(#returning_primary_key_quotes_token_stream));
-        //                 query
-        //             }
-        //         };
-        //         // println!("{query_string_token_stream}");
         //         let binded_query_token_stream = {
         //             let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
         //                 let field_ident = &element.field_ident;
