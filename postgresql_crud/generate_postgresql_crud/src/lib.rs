@@ -6249,13 +6249,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             );
             // println!("{payload_token_stream}");
-            // let payload_with_serialize_deserialize_token_stream = quote::quote! {
-            //     #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-            //     pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-            //         #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
-            //     }
-            // };
-            // // println!("{payload_with_serialize_deserialize_token_stream}");
+            let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
+                &operation,
+                &quote::quote! {
+                    #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream
+                },
+            );
+            // println!("{payload_with_serialize_deserialize_token_stream}");
             // let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &primary_key_from_or_try_from {
             //     postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
             //         impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
