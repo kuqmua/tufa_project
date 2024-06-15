@@ -6234,7 +6234,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
-            &postgresql_crud_common::FromOrTryFrom::TryFrom,//fields_named_excluding_primary_key_from_or_try_from
+            &postgresql_crud_common::FromOrTryFrom::From,//fields_named_excluding_primary_key_from_or_try_from
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
             &ast,
@@ -6342,7 +6342,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        //
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_token_stream = generate_try_operation_route_logic_response_variants_token_stream(
                 &operation,
@@ -6527,8 +6526,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             quote::quote! {
                 #try_operation_route_logic_response_variants_token_stream
-                #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
-                #try_operation_route_logic_error_named_token_stream
+                // #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
+                // #try_operation_route_logic_error_named_token_stream
                 // #try_operation_route_logic_token_stream
             }
         };
@@ -6762,7 +6761,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
             quote::quote! {}
