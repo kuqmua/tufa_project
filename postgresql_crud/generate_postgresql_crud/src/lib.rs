@@ -5212,7 +5212,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 if let Some(_) = &#parameters_snake_case.#payload_snake_case.#field_ident.0 {
                                     match #crate_server_postgres_bind_query_bind_query_try_increment_token_stream(&#parameters_snake_case.#payload_snake_case.#field_ident, &mut increment) {
                                         Ok(_) => {
-                                            query.push_str(&format!(#handle_token_stream));//add dot_space for all elements except last
+                                            #query_snake_case.push_str(&format!(#handle_token_stream));//add dot_space for all elements except last
                                         },
                                         Err(#error_snake_case) => {
                                             #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -5232,7 +5232,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote! {
                             match #crate_server_postgres_bind_query_bind_query_try_increment_token_stream(&#parameters_snake_case.#payload_snake_case.#primary_key_field_ident, &mut increment) {
                                 Ok(_) => {
-                                    query.push_str(&format!(#query_part_token_stream));
+                                    #query_snake_case.push_str(&format!(#query_part_token_stream));
                                 },
                                 Err(#error_snake_case) => {
                                     #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -5248,11 +5248,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         {
                             #increment_initialization_token_stream
-                            let mut query = #std_string_string::#from_snake_case(#handle_token_stream);
+                            let mut #query_snake_case = #std_string_string::#from_snake_case(#handle_token_stream);
                             #(#additional_parameters_modification_token_stream)*
                             #additional_parameters_primary_key_modification_token_stream
-                            query.push_str(&format!(#returning_primary_key_quotes_token_stream));
-                            query
+                            #query_snake_case.push_str(&format!(#returning_primary_key_quotes_token_stream));
+                            #query_snake_case
                         }
                     }
                 };
@@ -5262,24 +5262,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident = &element.field_ident;
                         quote::quote!{
                             if let Some(_) = #parameters_snake_case.#payload_snake_case.#field_ident.0 {
-                                query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
+                                #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
                                     #parameters_snake_case.#payload_snake_case.#field_ident,
-                                    query,
+                                    #query_snake_case,
                                 );
                             }
                         }
                     });
                     let binded_query_primary_key_modification_token_stream = quote::quote! {
-                        query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
+                        #query_snake_case = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
                             #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                            query,
+                            #query_snake_case,
                         );
                     };
                     quote::quote! {
-                        let mut query = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
+                        let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         #(#binded_query_modifications_token_stream)*
                         #binded_query_primary_key_modification_token_stream
-                        query
+                        #query_snake_case
                     }
                 };
                 let postgresql_logic_token_stream = {
@@ -5302,9 +5302,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             .fetch_one(#pg_connection_snake_case.as_mut())
                             .await
                         {
-                            Ok(value) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, &std::primitive::str>(&value, #primary_key_field_ident_quotes_token_stream) {
-                                Ok(value) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
-                                    #primary_key_inner_type_token_stream(value)
+                            Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, &std::primitive::str>(&value, #primary_key_field_ident_quotes_token_stream) {
+                                Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
+                                    #primary_key_inner_type_token_stream(#value_snake_case)
                                 ),
                                 Err(#error_snake_case) => {
                                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_error_initialization_eprintln_response_creation_token_stream
