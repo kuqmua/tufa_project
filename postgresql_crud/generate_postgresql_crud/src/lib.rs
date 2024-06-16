@@ -2529,23 +2529,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
-                &{
-                    let fields_token_stream = fields_named_excluding_primary_key
-                        .iter()
-                        .map(|element|generate_pub_field_ident_field_type_token_stream(element));
-                    quote::quote! {#(#fields_token_stream),*}
-                },
+                &generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream),
             );
             // println!("{payload_token_stream}");
             let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
                 &operation,
-                &{
-                    let fields_token_stream = fields_named_excluding_primary_key.iter()
-                        .map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-                            element
-                        ));
-                    quote::quote! {#(#fields_token_stream),*}
-                },
+                &generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
             );
             // println!("{payload_with_serialize_deserialize_token_stream}");
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
@@ -2901,6 +2890,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
                 &{
+                    // generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream),
                     let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
                         let where_inner_type_token_stream = &element.where_inner_type_token_stream;
@@ -7856,7 +7846,7 @@ fn generate_field_ident_field_type_with_serialize_deserialize_token_stream(eleme
     let inner_type_with_serialize_deserialize_token_stream =
         &element.inner_type_with_serialize_deserialize_token_stream;
     quote::quote! {
-        pub #field_ident: #inner_type_with_serialize_deserialize_token_stream
+        #field_ident: #inner_type_with_serialize_deserialize_token_stream
     }
 }
 
