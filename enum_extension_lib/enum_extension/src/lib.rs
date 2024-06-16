@@ -32,7 +32,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         syn::Data::Union(_) => panic!("EnumIntoArray works only on enums"),
     };
     let ident = &ast.ident;
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         impl #ident {
             pub fn get_length() -> std::primitive::usize {
                 #len
@@ -82,7 +82,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         }
     };
     // if name == "" {
-    //     println!("{gen}");
+    //     println!("{generated}");
     // }
-    gen.into()
+    generated.into()
 }

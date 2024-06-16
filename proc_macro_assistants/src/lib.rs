@@ -50,7 +50,7 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
             proc_macro_name_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
             fn #function_name_snake_case_token_stream(&self) -> #std_string_string {//todo maybe write duplicate Trait with &str instead of std::string::String
                 match self {
@@ -59,8 +59,8 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
             }
         }
     };
-    // println!("{gen}");
-    gen.into()
+    // println!("{generated}");
+    generated.into()
 }
 
 /*
@@ -115,7 +115,7 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
             proc_macro_name_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
             fn #function_name_snake_case_token_stream(&self) -> #std_string_string {
                 match self {
@@ -124,8 +124,8 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    // println!("{gen}");
-    gen.into()
+    // println!("{generated}");
+    generated.into()
 }
 /*
 only works if all enum variants without fields like this
@@ -181,7 +181,7 @@ pub fn to_screaming_snake_case_stringified(
             proc_macro_name_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
             fn #function_name_snake_case_token_stream(&self) -> #std_string_string {
                 match self {
@@ -190,6 +190,6 @@ pub fn to_screaming_snake_case_stringified(
             }
         }
     };
-    // println!("{gen}");
-    gen.into()
+    // println!("{generated}");
+    generated.into()
 }

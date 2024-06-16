@@ -58,11 +58,11 @@ pub fn generate_getter_traits_for_struct_fields(
             }
         }
     });
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         #(#generated_traits_implementations)*
     };
-    // println!("{gen}");
-    gen.into()
+    // println!("{generated}");
+    generated.into()
 }
 
 #[proc_macro_derive(GenerateGetterTrait)]
@@ -102,11 +102,11 @@ pub fn generate_getter_trait(
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         pub trait #get_ident_upper_camel_case_token_stream {
             fn #get_ident_snake_case_token_stream(&self) -> &#first_field_unnamed_type;
         }
     };
-    // println!("{gen}");
-    gen.into()
+    // println!("{generated}");
+    generated.into()
 }

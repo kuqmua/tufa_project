@@ -96,7 +96,7 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     });
-    let gen = quote::quote!{#(#impls_token_stream)*};
-    // println!("{gen}");
-    gen.into()
+    let generated = quote::quote!{#(#impls_token_stream)*};
+    // println!("{generated}");
+    generated.into()
 }

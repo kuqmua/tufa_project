@@ -22,11 +22,11 @@ pub fn compile_time_project_git_info(
     let commit_id_token_stream = format!("\"{hash}\"")
         .parse::<proc_macro2::TokenStream>()
         .expect("commit_id parse failed");
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         //crate::common::git::project_git_info::
         ProjectGitInfo {
             commit: #commit_id_token_stream,
         }
     };
-    gen.into()
+    generated.into()
 }

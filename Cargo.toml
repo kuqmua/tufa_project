@@ -120,7 +120,6 @@ hidden-glob-reexports = { level = "deny", priority = 0 } #name introduced by a p
 improper-ctypes = { level = "deny", priority = 0 } #proper use of libc types in foreign modules
 improper-ctypes-definitions = { level = "deny", priority = 0 } #proper use of libc types in foreign item definitions
 incomplete-features = { level = "deny", priority = 0 } #incomplete features that may function improperly in some or all cases
-indirect-structural-match = { level = "deny", priority = 0 } #constant used in pattern contains value of non-structural-match type in a field or a variant
 inline-no-sanitize = { level = "deny", priority = 0 } #detects incompatible use of `#[inline(always)]` and `#[no_sanitize(...)]`
 internal-features = { level = "deny", priority = 0 } #internal features are not supposed to be used
 invalid-doc-attributes = { level = "deny", priority = 0 } #detects invalid `#[doc(...)]` attributes
@@ -145,7 +144,6 @@ no-mangle-generic-items = { level = "deny", priority = 0 } #generic items must b
 opaque-hidden-inferred-bound = { level = "deny", priority = 0 } #detects the use of nested `impl Trait` types in associated type bounds that are not general enough
 overlapping-range-endpoints = { level = "deny", priority = 0 } #detects range patterns with overlapping endpoints
 path-statements = { level = "deny", priority = 0 } #path statements with no effect
-pointer-structural-match = { level = "deny", priority = 0 } #pointers are not structural-match
 private-bounds = { level = "deny", priority = 0 } #private type in secondary interface of an item
 private-interfaces = { level = "deny", priority = 0 } #private type in primary interface of an item
 redundant-semicolons = { level = "deny", priority = 0 } #detects unnecessary trailing semicolons
@@ -192,8 +190,7 @@ unused-unsafe = { level = "deny", priority = 0 } #unnecessary use of an `unsafe`
 unused-variables = { level = "warn", priority = 0 } #detect variables which are not used in any way
 useless-ptr-null-checks = { level = "deny", priority = 0 } #useless checking of non-null-typed pointer
 warnings = { level = "warn", priority = 0 } #mass-change the level for lints which produce warnings
-where-clauses-object-safety = { level = "deny", priority = 0 } #checks the object safety of where clauses
-while-true = { level = "deny", priority = 0 } #suggest using `loop { }` instead of `while true { }`
+while_true = { level = "deny", priority = 0 } #suggest using `loop { }` instead of `while true { }`
 ambiguous-associated-items = { level = "deny", priority = 0 } #ambiguous associated items
 arithmetic-overflow = { level = "deny", priority = 0 } #arithmetic operation overflows
 bindings-with-variant-name = { level = "deny", priority = 0 } #detects pattern bindings with the same name as one of the matched variants
@@ -218,7 +215,6 @@ no-mangle-const-items = { level = "deny", priority = 0 } #const items will not h
 order-dependent-trait-objects = { level = "deny", priority = 0 } #trait-object types were treated as different depending on marker-trait order
 overflowing-literals = { level = "deny", priority = 0 } #literal out of range for its type
 patterns-in-fns-without-body = { level = "deny", priority = 0 } #patterns in functions without body were erroneously allowed
-proc-macro-back-compat = { level = "deny", priority = 0 } #detects usage of old versions of certain proc-macro crates
 proc-macro-derive-resolution-fallback = { level = "deny", priority = 0 } #detects proc macro derives using inaccessible names from parent modules
 pub-use-of-private-extern-crate = { level = "deny", priority = 0 } #detect public re-exports of private extern crates
 soft-unstable = { level = "deny", priority = 0 } #a feature gate that doesn't break dependent crates

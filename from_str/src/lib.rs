@@ -51,7 +51,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         error_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         impl std::str::FromStr for #ident {
             type Err = std::string::String;
             fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -63,7 +63,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         }
     };
     // if ident == "" {
-    //    println!("{gen}");
+    //    println!("{generated}");
     // }
-    gen.into()
+    generated.into()
 }
