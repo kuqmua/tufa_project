@@ -2890,17 +2890,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
                 &{
-                    // generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream),
-                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                    fn generate_pub_field_ident_std_option_option_std_vec_vec_where_inner_type_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
                         let field_ident = &element.field_ident;
                         let where_inner_type_token_stream = &element.where_inner_type_token_stream;
-                        quote::quote!{
-                            pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>,
+                        quote::quote! {
+                            pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>
                         }
-                    });
+                    }
+                    let fields_with_excluded_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_std_option_option_std_vec_vec_where_inner_type_token_stream);
                     quote::quote! {
                         pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
-                        #(#fields_with_excluded_primary_key_token_stream)*
+                        #fields_with_excluded_primary_key_token_stream,
                         pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
                         pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         pub #limit_snake_case: #limit_and_offset_type_token_stream,
@@ -2912,20 +2912,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
                 &operation,
                 &{
-                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                    fn generate_field_ident_std_option_option_std_vec_vec_where_inner_type_with_serialize_deserialize_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
                         let field_ident = &element.field_ident;
                         let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
-                        quote::quote!{
-                            #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,
+                        quote::quote! {
+                            #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>
                         }
-                    });
-                    // let select_snake_case = naming_constants::SelectSnakeCase;
-                    // let order_by_snake_case = naming_conventions::OrderBySnakeCase;
-                    // let limit_snake_case = naming_constants::LimitSnakeCase;
-                    // let offset_snake_case = naming_constants::OffsetSnakeCase;
+                    }
+                    let fields_with_excluded_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_std_option_option_std_vec_vec_where_inner_type_with_serialize_deserialize_token_stream);
                     quote::quote! {
                         #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
-                        #(#fields_with_excluded_primary_key_token_stream)*
+                        #fields_with_excluded_primary_key_token_stream,
                         #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
                         #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         #limit_snake_case: #limit_and_offset_type_with_serialize_deserialize_token_stream,
