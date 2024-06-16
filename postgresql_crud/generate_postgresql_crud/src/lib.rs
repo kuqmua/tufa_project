@@ -2148,17 +2148,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let (
                 payload_token_stream,
                 payload_with_serialize_deserialize_token_stream
-            ) = generate_operation_many_payload_and_payload_with_serialize_deserialize_wrapper(
-                &operation,
-                &{
-                    let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
-                    quote::quote! {#(#fields_token_stream),*}
-                },
-                &{
-                    let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(element));
-                    quote::quote! {#(#fields_token_stream),*}
-                }
-            );
+            ) = {
+                let payload_token_stream = generate_operation_many_payload_wrapper_token_stream(
+                    &operation,
+                    &{
+                        let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
+                        quote::quote! {#(#fields_token_stream),*}
+                    },
+                );
+                let payload_with_serialize_deserialize_token_stream = generate_operation_many_payload_with_serialize_deserialize_wrapper_token_stream(
+                    &operation,
+                    &{
+                        let fields_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(element));
+                        quote::quote! {#(#fields_token_stream),*}
+                    }
+                );
+                (
+                    payload_token_stream,
+                    payload_with_serialize_deserialize_token_stream
+                )
+            };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
                 &operation,
                 &{
@@ -3784,6 +3793,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &ast,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
+        // let type_variants_from_request_response_syn_variants = {
+        //     let full_additional_http_status_codes_error_variants =
+        //         generate_full_additional_http_status_codes_error_variants(
+        //             common_middlewares_error_syn_variants.iter().collect(),
+        //             additional_http_status_codes_error_variants.iter().collect(),
+        //         );
+        //     let type_variants_from_request_response_syn_variants_partial = {
+        //         let mut type_variants_from_request_response =
+        //             std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(1).unwrap());
+        //         for element in &common_error_syn_variants {
+        //             type_variants_from_request_response.push(element);
+        //         }
+        //         // if let postgresql_crud_common::FromOrTryFrom::TryFrom = primary_key_from_or_try_from {
+        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
+        //         // }
+        //         type_variants_from_request_response
+        //     };
+        //     generate_type_variants_from_request_response_syn_variants(
+        //         &type_variants_from_request_response_syn_variants_partial,
+        //         &full_additional_http_status_codes_error_variants,
+        //     )
+        // };
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
@@ -3944,28 +3975,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        // let type_variants_from_request_response_syn_variants = {
-        //     let full_additional_http_status_codes_error_variants =
-        //         generate_full_additional_http_status_codes_error_variants(
-        //             common_middlewares_error_syn_variants.iter().collect(),
-        //             additional_http_status_codes_error_variants.iter().collect(),
-        //         );
-        //     let type_variants_from_request_response_syn_variants_partial = {
-        //         let mut type_variants_from_request_response =
-        //             std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(1).unwrap());
-        //         for element in &common_error_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         // if let postgresql_crud_common::FromOrTryFrom::TryFrom = primary_key_from_or_try_from {
-        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-        //         // }
-        //         type_variants_from_request_response
-        //     };
-        //     generate_type_variants_from_request_response_syn_variants(
-        //         &type_variants_from_request_response_syn_variants_partial,
-        //         &full_additional_http_status_codes_error_variants,
-        //     )
-        // };
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_token_stream = generate_try_operation_route_logic_response_variants_token_stream(
                 &operation,
@@ -8363,28 +8372,6 @@ fn generate_operation_many_payload_with_serialize_deserialize_wrapper_token_stre
         #operation_payload_element_with_serialize_deserialize_token_stream
         #operation_payload_with_serialize_deserialize_token_stream
     }
-}
-
-fn generate_operation_many_payload_and_payload_with_serialize_deserialize_wrapper(
-    operation: &Operation,
-    fields_payload_token_stream: &dyn quote::ToTokens,
-    fields_payload_with_serialize_deserialize_token_stream: &dyn quote::ToTokens,
-) -> (
-    proc_macro2::TokenStream,
-    proc_macro2::TokenStream
-) {
-    let payload_token_stream = generate_operation_many_payload_wrapper_token_stream(
-        &operation,
-        &fields_payload_token_stream
-    );
-    let payload_with_serialize_deserialize_token_stream = generate_operation_many_payload_with_serialize_deserialize_wrapper_token_stream(
-        &operation,
-        &fields_payload_with_serialize_deserialize_token_stream
-    );
-    (
-        payload_token_stream,
-        payload_with_serialize_deserialize_token_stream
-    )
 }
 
 fn generate_impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
