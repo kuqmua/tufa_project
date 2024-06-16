@@ -968,5 +968,3 @@ needless_character_iteration = { level = "deny", priority = 0 }
 needless_maybe_sized = { level = "deny", priority = 0 }
 renamed_function_params = { level = "deny", priority = 0 }
 while_float = { level = "deny", priority = 0 }
-mismatched_target_os = { level = "deny", priority = 0 }
-maybe_misused_cfg = { level = "deny", priority = 0 }
