@@ -2134,6 +2134,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let generate_fields_named_excluding_primary_key_token_stream = |function: fn(&SynFieldWithAdditionalInfo<'_>)-> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
+        let fields_token_stream = fields_named_excluding_primary_key.iter().map(function);
+        quote::quote! {#(#fields_token_stream),*}
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2148,17 +2152,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let (
                 payload_token_stream,
                 payload_with_serialize_deserialize_token_stream
-            ) = generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
-                &operation,
-                &{
-                    let fields_token_stream = fields_named_excluding_primary_key.iter().map(generate_pub_field_ident_field_type_token_stream);
-                    quote::quote! {#(#fields_token_stream),*}
-                },
-                &{
-                    let fields_token_stream = fields_named_excluding_primary_key.iter().map(generate_field_ident_field_type_with_serialize_deserialize_token_stream);
-                    quote::quote! {#(#fields_token_stream),*}
-                }
-            );
+            ) = {
+                generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
+                    &operation,
+                    &generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream),
+                    &generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
+                )
+            };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
                 &operation,
                 &{
@@ -4247,17 +4247,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ) = generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
                 &operation,
                 &{
-                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(generate_pub_field_ident_field_type_token_stream);
+                    //todo maybe rewrite it as Option of type. but there is a problem with Option<Option<T>> cases. maybe add another wrapper
+                    let fields_with_excluded_primary_key_token_stream = &generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream);
                     quote::quote! {
                         pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
-                        #(#fields_with_excluded_primary_key_token_stream),*
+                        #fields_with_excluded_primary_key_token_stream
                     }
                 },
                 &{
-                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(generate_field_ident_field_type_with_serialize_deserialize_token_stream);
+                    //todo maybe rewrite it as Option of type. but there is a problem with Option<Option<T>> cases. maybe add another wrapper
+                    let fields_with_excluded_primary_key_token_stream = &generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream);
                     quote::quote! {
                         #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
-                        #(#fields_with_excluded_primary_key_token_stream),*
+                        #fields_with_excluded_primary_key_token_stream
                     }
                 },
             );
