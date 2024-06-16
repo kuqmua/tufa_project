@@ -2927,10 +2927,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>,
                         }
                     });
-                    let select_snake_case = naming_constants::SelectSnakeCase;
-                    let order_by_snake_case = naming_conventions::OrderBySnakeCase;
-                    let limit_snake_case = naming_constants::LimitSnakeCase;
-                    let offset_snake_case = naming_constants::OffsetSnakeCase;
                     quote::quote! {
                         pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
                         #(#fields_with_excluded_primary_key_token_stream)*
@@ -2952,10 +2948,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,
                         }
                     });
-                    let select_snake_case = naming_constants::SelectSnakeCase;
-                    let order_by_snake_case = naming_conventions::OrderBySnakeCase;
-                    let limit_snake_case = naming_constants::LimitSnakeCase;
-                    let offset_snake_case = naming_constants::OffsetSnakeCase;
+                    // let select_snake_case = naming_constants::SelectSnakeCase;
+                    // let order_by_snake_case = naming_conventions::OrderBySnakeCase;
+                    // let limit_snake_case = naming_constants::LimitSnakeCase;
+                    // let offset_snake_case = naming_constants::OffsetSnakeCase;
                     quote::quote! {
                         #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
                         #(#fields_with_excluded_primary_key_token_stream)*
