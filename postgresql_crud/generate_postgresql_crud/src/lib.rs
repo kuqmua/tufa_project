@@ -2134,6 +2134,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let generate_fields_named_token_stream = |function: fn(&SynFieldWithAdditionalInfo<'_>)-> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
+        let fields_token_stream = fields_named.iter().map(function);
+        quote::quote! {#(#fields_token_stream),*}
+    };
     let generate_fields_named_excluding_primary_key_token_stream = |function: fn(&SynFieldWithAdditionalInfo<'_>)-> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let fields_token_stream = fields_named_excluding_primary_key.iter().map(function);
         quote::quote! {#(#fields_token_stream),*}
@@ -4234,22 +4238,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_with_serialize_deserialize_token_stream
             ) = generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
                 &operation,
-                &{
-                    //todo maybe rewrite it as Option of type. but there is a problem with Option<Option<T>> cases. maybe add another wrapper
-                    let fields_with_excluded_primary_key_token_stream = &generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream);
-                    quote::quote! {
-                        #pub_primary_key_field_ident_primary_key_inner_type_token_stream,
-                        #fields_with_excluded_primary_key_token_stream
-                    }
-                },
-                &{
-                    //todo maybe rewrite it as Option of type. but there is a problem with Option<Option<T>> cases. maybe add another wrapper
-                    let fields_with_excluded_primary_key_token_stream = &generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream);
-                    quote::quote! {
-                        #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
-                        #fields_with_excluded_primary_key_token_stream
-                    }
-                },
+                &generate_fields_named_token_stream(generate_pub_field_ident_field_type_token_stream),
+                &generate_fields_named_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
             );
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                 let impl_std_convert_from_or_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = match fields_named_from_or_try_from {
@@ -5019,23 +5009,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
-                &{
-                    let fields_token_stream = fields_named
-                        .iter()
-                        .map(|element|generate_pub_field_ident_field_type_token_stream(element));
-                    quote::quote! {#(#fields_token_stream),*}
-                },
+                &generate_fields_named_token_stream(generate_pub_field_ident_field_type_token_stream),
             );
             // println!("{payload_token_stream}");
             let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
                 &operation,
-                &{
-                    let fields_token_stream = fields_named.iter()
-                        .map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-                            element
-                        ));
-                    quote::quote! {#(#fields_token_stream),*}
-                },
+                &generate_fields_named_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
             );
             // println!("{payload_with_serialize_deserialize_token_stream}");
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_from_or_try_from {
@@ -7840,8 +7819,7 @@ fn generate_pub_field_ident_field_type_token_stream(element: &SynFieldWithAdditi
 
 fn generate_field_ident_field_type_with_serialize_deserialize_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
     let field_ident = &element.field_ident;
-    let inner_type_with_serialize_deserialize_token_stream =
-        &element.inner_type_with_serialize_deserialize_token_stream;
+    let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
     quote::quote! {
         #field_ident: #inner_type_with_serialize_deserialize_token_stream
     }
