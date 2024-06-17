@@ -5491,22 +5491,43 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
-            let payload_token_stream = generate_operation_payload_token_stream(
-                &operation,
-                &quote::quote! {
-                    pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
-                    #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
-                },
-            );
-            // println!("{payload_token_stream}");
-            let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
-                &operation,
-                &quote::quote! {
-                    #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
-                    #fields_idents_std_option_option_std_vec_vec_where_inner_type_with_serialize_deserialize_token_stream
-                },
-            );
-            // println!("{payload_with_serialize_deserialize_token_stream}");
+            let (
+                payload_token_stream,
+                payload_with_serialize_deserialize_token_stream
+            ) = {
+                let generate_fields_token_stream = |is_pub: bool| -> proc_macro2::TokenStream {
+                    let pub_handle_token_stream = match is_pub {
+                        true => quote::quote! {pub},
+                        false => proc_macro2::TokenStream::new()
+                    };
+                    let primary_key_inner_type_handle_token_stream = match is_pub {
+                        true => &primary_key_inner_type_token_stream,
+                        false => &primary_key_inner_type_with_serialize_deserialize_token_stream,
+                    };
+                    let fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream = match is_pub {
+                        true => &pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
+                        false => &fields_idents_std_option_option_std_vec_vec_where_inner_type_with_serialize_deserialize_token_stream,
+                    };
+                    quote::quote! {
+                        #pub_handle_token_stream #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_handle_token_stream>>,
+                        #fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream
+                    }
+                };
+                let payload_token_stream = generate_operation_payload_token_stream(
+                    &operation,
+                    &generate_fields_token_stream(true),
+                );
+                // println!("{payload_token_stream}");
+                let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
+                    &operation,
+                    &generate_fields_token_stream(false),
+                );
+                // println!("{payload_with_serialize_deserialize_token_stream}");
+                (
+                    payload_token_stream,
+                    payload_with_serialize_deserialize_token_stream
+                )
+            };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                     &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
