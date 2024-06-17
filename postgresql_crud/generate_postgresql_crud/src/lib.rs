@@ -3732,32 +3732,32 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         read_one_http_request_test_expect_fail_token_stream,
     ) = {
         let operation = Operation::ReadOne;
-        let (
-            operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant,
-            operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream,
-            operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code
-        ) = {
-            let operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
-            let operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_token_stream(&operation);
-            let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
-            (
-                proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                    operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code.clone(),
-                    &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                    vec![(
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                        &operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream,
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &[&naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_stringified(&operation)],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    )],
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                ),
-                quote::quote! {},
-                operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code
-            )
-        };
+        // let (
+        //     operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant,
+        //     operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream,
+        //     operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code
+        // ) = {
+        //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
+        //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_token_stream(&operation);
+        //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
+        //     (
+        //         proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+        //             operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code.clone(),
+        //             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+        //             vec![(
+        //                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+        //                 &operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream,
+        //                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+        //                     &[&naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_stringified(&operation)],
+        //                     &proc_macro_name_upper_camel_case_ident_stringified
+        //                 ),
+        //             )],
+        //             &proc_macro_name_upper_camel_case_ident_stringified,
+        //         ),
+        //         quote::quote! {},
+        //         operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code
+        //     )
+        // };
         let (
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
