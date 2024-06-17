@@ -3838,6 +3838,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_token_stream,
                 payload_with_serialize_deserialize_token_stream
             ) = {
+                let generate_fields_token_stream = |is_pub: bool| -> proc_macro2::TokenStream {
+                    let pub_handle_token_stream = match is_pub {
+                        true => quote::quote! {pub},
+                        false => proc_macro2::TokenStream::new()
+                    };
+                    let primary_key_inner_type_handle_token_stream = match is_pub {
+                        true => &primary_key_inner_type_token_stream,
+                        false => &primary_key_inner_type_with_serialize_deserialize_token_stream,
+                    };
+                    quote::quote! {
+                        #pub_handle_token_stream #primary_key_field_ident: #primary_key_inner_type_token_stream,
+                        #pub_handle_token_stream #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
+                    }
+                };
                 let payload_token_stream = generate_operation_payload_token_stream(
                     &operation,
                     &{
