@@ -3834,26 +3834,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     )
         // };
         let parameters_token_stream = {
-            let payload_token_stream = generate_operation_payload_token_stream(
-                &operation,
-                &{
-                    quote::quote! {
-                        #pub_primary_key_field_ident_primary_key_inner_type_token_stream,
-                        pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
-                    }
-                },
-            );
-            // println!("{payload_token_stream}");
-            let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
-                &operation,
-                &{
-                    quote::quote!{
-                        #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
-                        #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
-                    }
-                },
-            );
-            // println!("{payload_with_serialize_deserialize_token_stream}");
+            let (
+                payload_token_stream,
+                payload_with_serialize_deserialize_token_stream
+            ) = {
+                let payload_token_stream = generate_operation_payload_token_stream(
+                    &operation,
+                    &{
+                        quote::quote! {
+                            pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
+                            pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
+                        }
+                    },
+                );
+                // println!("{payload_token_stream}");
+                let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
+                    &operation,
+                    &{
+                        quote::quote!{
+                            #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
+                            #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
+                        }
+                    },
+                );
+                // println!("{payload_with_serialize_deserialize_token_stream}");
+                (
+                    payload_token_stream,
+                    payload_with_serialize_deserialize_token_stream
+                )
+            };
             let select_assignment_token_stream = {
                 quote::quote! {
                     let #select_snake_case = {
