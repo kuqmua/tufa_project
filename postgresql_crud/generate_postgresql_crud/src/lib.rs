@@ -3856,7 +3856,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_with_serialize_deserialize_token_stream
             ) = {
                 let generate_fields_token_stream = |is_pub: bool| -> proc_macro2::TokenStream {
-                    let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
                     let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(is_pub);
                     let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = generate_pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream(is_pub);
                     quote::quote! {
@@ -5508,7 +5507,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_with_serialize_deserialize_token_stream
             ) = {
                 let generate_fields_token_stream = |is_pub: bool| -> proc_macro2::TokenStream {
-                    let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
                     let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = generate_primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream(is_pub);
                     let fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream = generate_fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream(is_pub);
                     quote::quote! {
