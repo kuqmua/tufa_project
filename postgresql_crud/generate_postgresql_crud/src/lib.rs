@@ -2215,6 +2215,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
         quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_inner_type_handle_token_stream}
     };
+    let self_init_fields_token_stream = generate_self_fields_token_stream(
+        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -4315,10 +4319,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &{
                             let primary_key_let_field_ident_value_field_ident_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(&primary_key_syn_field);
                             let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(generate_let_field_ident_value_inner_type_from_token_stream);
-                            let self_init_fields_token_stream = generate_self_fields_token_stream(
-                                &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            );
                             quote::quote! {
                                 #primary_key_let_field_ident_value_field_ident_from_token_stream
                                 #(#fields_assignments_token_stream)*
@@ -4354,10 +4354,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         &field_code_occurence_new_77f303a5_de96_4f73_a274_f2195cb619b1_token_stream,
                                         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                                     ));
-                                let self_init_fields_token_stream = generate_self_fields_token_stream(
-                                    &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
-                                );
                                 let field_code_occurence_new_814b41f8_3219_4b62_bc0b_02a26d23b262_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                                     file!(),
                                     line!(),
@@ -4490,10 +4486,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
                     &{
                         let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(element));
-                        let self_init_fields_token_stream = generate_self_fields_token_stream(
-                            &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
                         quote::quote! {
                             let #primary_key_field_ident = #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(value.#primary_key_field_ident);
                             #(#fields_assignments_token_stream)*
@@ -5091,10 +5083,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let #field_ident = #inner_type_token_stream::#from_snake_case(value.#field_ident);
                             }
                         });
-                        let self_init_fields_token_stream = generate_self_fields_token_stream(
-                            &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
                         quote::quote! {
                             #primary_key_let_field_ident_value_field_ident_from_token_stream
                             #(#fields_assignment_token_stream)*
@@ -5135,10 +5123,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &field_code_occurence_new_3763990f_5c49_47d0_a774_5ef584cd1236_token_stream,
                                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                             ));
-                            let self_init_fields_token_stream = generate_self_fields_token_stream(
-                                &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            );
                             quote::quote! {
                                 #(#fields_assignment_token_stream)*
                                 Ok(Self {
@@ -5161,10 +5145,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &{
                     let fields_assignment_token_stream = fields_named.iter()
                         .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(element));
-                    let self_init_fields_token_stream = generate_self_fields_token_stream(
-                        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
                     quote::quote! {
                         #(#fields_assignment_token_stream)*
                         Self{
@@ -5544,10 +5524,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 };
                             }
                         });
-                        let self_init_fields_token_stream = generate_self_fields_token_stream(
-                            &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
                         //todo maybe use where with conjuctive operator
                         let primary_key_let_field_ident_value_field_ident_from_token_stream = quote::quote! {
                             let #primary_key_field_ident = match value.#primary_key_field_ident {
@@ -5640,10 +5616,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                     &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                                 ));
-                            let self_init_fields_token_stream = generate_self_fields_token_stream(
-                                &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            );
                             quote::quote! {
                                 #primary_key_let_field_ident_value_field_ident_try_from_token_stream
                                 #(#fields_assignments_token_stream)*
@@ -5666,10 +5638,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let fields_assignments_token_stream = fields_named_excluding_primary_key
                         .iter()
                         .map(|element| generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_stream(element));
-                    let self_init_fields_token_stream = generate_self_fields_token_stream(
-                        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
                     quote::quote! {
                         let #primary_key_field_ident = match value.#primary_key_field_ident {
                             Some(value) => Some(value.into_iter()
