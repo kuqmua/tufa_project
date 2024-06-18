@@ -550,6 +550,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let options_try_from_sqlx_row_snake_case = naming_conventions::OptionsTryFromSqlxRowSnakeCase;
     let wrapper_vec_column_upper_camel_case = naming_conventions::WrapperVecColumnUpperCamelCase;
     let wrapper_vec_column_snake_case = naming_conventions::WrapperVecColumnSnakeCase;
+    let primary_key_field_ident_variant_initialization_token_stream = {
+        let field_code_occurence_new_46d303bf_4267_4eb4_a98d_22193db9d220_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote! {
+            #primary_key_field_ident_upper_camel_case_token_stream {
+                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case,
+                #field_code_occurence_new_46d303bf_4267_4eb4_a98d_22193db9d220_token_stream
+            }
+        }
+    };
     let options_try_from_sqlx_row_token_stream = {
         let declaration_primary_key_token_stream = {
             let inner_type_with_serialize_deserialize_token_stream =
@@ -2258,20 +2272,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             },
                         }
                     },
-                    &{
-                        let field_code_occurence_new_46d303bf_4267_4eb4_a98d_22193db9d220_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                            file!(),
-                            line!(),
-                            column!(),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
-                        quote::quote! {
-                            #primary_key_field_ident_upper_camel_case_token_stream {
-                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case,
-                                #field_code_occurence_new_46d303bf_4267_4eb4_a98d_22193db9d220_token_stream
-                            }
-                        }
-                    },
+                    &primary_key_field_ident_variant_initialization_token_stream,
                     &fields_named_excluding_primary_key,
                     &fields_idents_excluding_primary_key_token_stream,
                     &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
@@ -3111,16 +3112,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 &proc_macro_name_upper_camel_case_ident_stringified,
                                             );
                                             quote::quote! {
-                                                match value.into_iter()
-                                                    .map(|element|#primary_key_inner_type_token_stream::try_from(
-                                                        #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(element)
+                                                match #value_snake_case.into_iter()
+                                                    .map(|#element_snake_case|#primary_key_inner_type_token_stream::#try_from_snake_case(
+                                                        #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
                                                     ))
                                                     .collect::<Result<
                                                         std::vec::Vec<#primary_key_inner_type_token_stream>,
                                                         #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
                                                     >>()
                                                 {
-                                                    Ok(value) => Some(value),
+                                                    Ok(#value_snake_case) => Some(#value_snake_case),
                                                     Err(#error_snake_case) => {
                                                         return Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
                                                             #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case,
@@ -4440,7 +4441,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         )
                                     );
                                     quote::quote! {
-                                        match value {
+                                        match #value_snake_case {
                                             #primary_key_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream
                                             #(#fields_named_excluding_primary_key_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream)*
                                         }
