@@ -2638,9 +2638,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_with_serialize_deserialize_token_stream
             ) = generate_payload_and_payload_with_serialize_deserialize_one(&operation, true);
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
-                postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                    &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
-                    &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                    &operation,
                     &{
                         let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
                         .map(|element| {
@@ -3039,9 +3038,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #offset_snake_case,
                 };
                 match fields_named_from_or_try_from {
-                    postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
-                        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                    postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                        &operation,
                         &{
                             let primary_key_field_assignment_token_stream = {
                                 quote::quote! {
@@ -3077,7 +3075,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #common_assignment_token_stream
                                 }
                             }
-                        }
+                        },
                     ),
                     postgresql_crud_common::FromOrTryFrom::TryFrom => {
                         let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
@@ -4398,9 +4396,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_from_or_try_from {
-                    postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
-                        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                    postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                        &operation,
                         &{
                             let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
                             quote::quote! {
@@ -5085,9 +5082,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_with_serialize_deserialize_token_stream
             ) = generate_payload_and_payload_with_serialize_deserialize_one(&operation, false);
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_from_or_try_from {
-                postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                    &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
-                    &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                    &operation,
                     &{
                         let primary_key_let_field_ident_value_field_ident_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(&primary_key_syn_field);
                         let fields_assignment_token_stream = fields_named.iter()
@@ -5525,9 +5521,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_from_or_try_from {
-                postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                    &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
-                    &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                    &operation,
                     &{
                         let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(|element| {
                             let field_ident = &element.field_ident;
@@ -6249,15 +6244,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &primary_key_from_or_try_from {
-                postgresql_crud_common::FromOrTryFrom::From => proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                    &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
-                    &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                    &operation,
                     &quote::quote! {
                         Self{ #primary_key_field_ident: #primary_key_inner_type_token_stream::#from_snake_case(value.#primary_key_field_ident) }
                     },
                 ),
                 postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                    // let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::PayloadTryFromPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::payload_try_from_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
                     let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
                         &operation,
                         &{
@@ -9003,4 +8996,15 @@ fn generate_parameters_pattern_token_stream(
         #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
         #parameters_token_stream
     }
+}
+
+fn generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+    operation: &Operation,
+    content_token_stream: &proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation),
+        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation),
+        &content_token_stream,
+    )
 }
