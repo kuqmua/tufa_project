@@ -5563,24 +5563,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation),
                         &{
                             let primary_key_let_field_ident_value_field_ident_try_from_token_stream = {
-                                let inner_token_stream = quote::quote! {value.#primary_key_field_ident};
+                                let inner_token_stream = quote::quote! {#value_snake_case.#primary_key_field_ident};
                                 let initialization_token_stream = match primary_key_rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
                                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
                                         match #inner_token_stream {
-                                            Some(value) => Some(value.into_iter().map(|element|#primary_key_inner_type_token_stream::#from_snake_case(element)).collect()),
+                                            Some(#value_snake_case) => Some(#value_snake_case.into_iter().map(|#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case)).collect()),
                                             None => None,
                                         }
                                     },
                                     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
                                         match #inner_token_stream {
-                                            Some(value) => {
-                                                let mut values = std::vec::Vec::with_capacity(value.len());
-                                                for element in value {
-                                                    match #primary_key_inner_type_token_stream::try_from(element) {
-                                                        Ok(value) => {
-                                                            values.push(value);
+                                            Some(#value_snake_case) => {
+                                                let mut values = std::vec::Vec::with_capacity(#value_snake_case.len());
+                                                for #element_snake_case in #value_snake_case {
+                                                    match #primary_key_inner_type_token_stream::#try_from_snake_case(#element_snake_case) {
+                                                        Ok(#value_snake_case) => {
+                                                            values.push(#value_snake_case);
                                                         }
-                                                        Err(error) => {
+                                                        Err(#error_snake_case) => {
                                                             return Err(Self::Error::#primary_key_field_ident_variant_initialization_token_stream);
                                                         }
                                                     }
