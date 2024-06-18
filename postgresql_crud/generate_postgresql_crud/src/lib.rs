@@ -2255,29 +2255,48 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &fields_named_excluding_primary_key_from_or_try_from {
-                postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_operation_payload_and_paylaod_element_with_serialize_deserialize_for_operation_payload_and_payload_element_token_stream(
-                    &operation,
-                    &fields_named_excluding_primary_key,
-                    &fields_idents_excluding_primary_key_token_stream,
-                ),
-                postgresql_crud_common::FromOrTryFrom::TryFrom => generate_impl_std_convert_try_from_operation_payload_and_payload_element_with_serialize_deserialize_for_operation_payload_and_payload_element_token_stream(
-                    &operation,
-                    &{
-                        let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream =  naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
-                        quote::quote!{
-                            #primary_key_field_ident_upper_camel_case_token_stream {
-                                #eo_error_occurence_attribute_token_stream
-                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
-                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-                            },
-                        }
-                    },
-                    &primary_key_field_ident_variant_initialization_token_stream,
-                    &fields_named_excluding_primary_key,
-                    &fields_idents_excluding_primary_key_token_stream,
-                    &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                )
+                postgresql_crud_common::FromOrTryFrom::From => {
+                    let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
+                        &operation,
+                        &fields_named_excluding_primary_key,
+                        &fields_idents_excluding_primary_key_token_stream,
+                    );
+                    let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
+                        &operation
+                    );
+                    quote::quote! {
+                        #impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
+                        #impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
+                    }
+                },
+                postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                    let impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
+                        &operation,
+                        &fields_named_excluding_primary_key,
+                        &fields_idents_excluding_primary_key_token_stream,
+                        &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
+                        &operation,
+                        &{
+                            let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream =  naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
+                            quote::quote!{
+                                #primary_key_field_ident_upper_camel_case_token_stream {
+                                    #eo_error_occurence_attribute_token_stream
+                                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
+                                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
+                                },
+                            }
+                        },
+                        &primary_key_field_ident_variant_initialization_token_stream,
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    quote::quote! {
+                        #impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
+                        #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
+                    }
+                }
             };
             // println!("{impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream(
@@ -8320,25 +8339,6 @@ fn generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_f
     )
 }
 
-fn generate_impl_std_convert_from_operation_payload_and_paylaod_element_with_serialize_deserialize_for_operation_payload_and_payload_element_token_stream(
-    operation: &Operation,
-    fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
-    fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
-) -> proc_macro2::TokenStream {
-    let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
-        &operation,
-        &fields_named_excluding_primary_key,
-        &fields_idents_excluding_primary_key_token_stream,
-    );
-    let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
-        &operation
-    );
-    quote::quote! {
-        #impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
-        #impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
-    }
-}
-
 fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream(
     operation: &Operation,
     fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
@@ -8488,34 +8488,6 @@ fn generate_impl_std_convert_try_from_operation_payload_with_serialize_deseriali
     quote::quote! {
         #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream
         #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream_for_operation_payload_upper_camel_case_token_stream
-    }
-}
-
-fn generate_impl_std_convert_try_from_operation_payload_and_payload_element_with_serialize_deserialize_for_operation_payload_and_payload_element_token_stream(
-    operation: &Operation,
-    error_variant_declaration_token_stream: &proc_macro2::TokenStream,
-    error_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
-    fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
-    primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    let impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
-        &operation,
-        &fields_named_excluding_primary_key,
-        &fields_idents_excluding_primary_key_token_stream,
-        &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
-        &operation,
-        &error_variant_declaration_token_stream,
-        &error_variant_initialization_token_stream,
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    quote::quote! {
-        #impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
-        #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
     }
 }
 
