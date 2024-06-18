@@ -3104,30 +3104,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 .collect::<std::vec::Vec<#primary_key_inner_type_token_stream>>()
                                             )
                                         },
-                                        postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                                            let field_code_occurence_new_ed55593d_d353_440c_8145_c1c712bc5ace_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                                                file!(),
-                                                line!(),
-                                                column!(),
-                                                &proc_macro_name_upper_camel_case_ident_stringified,
-                                            );
-                                            quote::quote! {
-                                                match #value_snake_case.into_iter()
-                                                    .map(|#element_snake_case|#primary_key_inner_type_token_stream::#try_from_snake_case(
-                                                        #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
-                                                    ))
-                                                    .collect::<Result<
-                                                        std::vec::Vec<#primary_key_inner_type_token_stream>,
-                                                        #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
-                                                    >>()
-                                                {
-                                                    Ok(#value_snake_case) => Some(#value_snake_case),
-                                                    Err(#error_snake_case) => {
-                                                        return Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
-                                                            #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case,
-                                                            #field_code_occurence_new_ed55593d_d353_440c_8145_c1c712bc5ace_token_stream,
-                                                        });
-                                                    }
+                                        postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
+                                            match #value_snake_case.into_iter()
+                                                .map(|#element_snake_case|#primary_key_inner_type_token_stream::#try_from_snake_case(
+                                                    #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
+                                                ))
+                                                .collect::<Result<
+                                                    std::vec::Vec<#primary_key_inner_type_token_stream>,
+                                                    #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
+                                                >>()
+                                            {
+                                                Ok(#value_snake_case) => Some(#value_snake_case),
+                                                Err(#error_snake_case) => {
+                                                    return Err(Self::Error::#primary_key_field_ident_variant_initialization_token_stream);
                                                 }
                                             }
                                         }
@@ -5582,34 +5571,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             None => None,
                                         }
                                     },
-                                    postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                                        let field_code_occurence_new_5215e422_9693_4c9e_937e_759f477a20c7_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                                            file!(),
-                                            line!(),
-                                            column!(),
-                                            &proc_macro_name_upper_camel_case_ident_stringified,
-                                        );
-                                        quote::quote!{
-                                            match #inner_token_stream {
-                                                Some(value) => {
-                                                    let mut values = std::vec::Vec::with_capacity(value.len());
-                                                    for element in value {
-                                                        match #primary_key_inner_type_token_stream::try_from(element) {
-                                                            Ok(value) => {
-                                                                values.push(value);
-                                                            }
-                                                            Err(error) => {
-                                                                return Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
-                                                                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
-                                                                    #field_code_occurence_new_5215e422_9693_4c9e_937e_759f477a20c7_token_stream,
-                                                                });
-                                                            }
+                                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
+                                        match #inner_token_stream {
+                                            Some(value) => {
+                                                let mut values = std::vec::Vec::with_capacity(value.len());
+                                                for element in value {
+                                                    match #primary_key_inner_type_token_stream::try_from(element) {
+                                                        Ok(value) => {
+                                                            values.push(value);
+                                                        }
+                                                        Err(error) => {
+                                                            return Err(Self::Error::#primary_key_field_ident_variant_initialization_token_stream);
                                                         }
                                                     }
-                                                    Some(values)
                                                 }
-                                                None => None,
+                                                Some(values)
                                             }
+                                            None => None,
                                         }
                                     }
                                 };
@@ -6285,22 +6263,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
                                         Ok(Self{ #primary_key_field_ident: #primary_key_inner_type_token_stream::#from_snake_case(#inner_token_stream) })
                                     },
-                                    postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                                        let try_from_snake_case_token_stream = naming_conventions::TryFromSnakeCase;
-                                        let field_code_occurence_new_66343753_b4dc_4b64_b7a6_3f206033a0b1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                                            file!(),
-                                            line!(),
-                                            column!(),
-                                            &proc_macro_name_upper_camel_case_ident_stringified,
-                                        );
-                                        quote::quote!{
-                                            match #primary_key_inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
-                                                Ok(value) => Ok(Self{ #primary_key_field_ident: value }),
-                                                Err(#error_snake_case) => Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
-                                                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case,
-                                                    #field_code_occurence_new_66343753_b4dc_4b64_b7a6_3f206033a0b1_token_stream
-                                                })
-                                            }
+                                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
+                                        match #primary_key_inner_type_token_stream::#try_from_snake_case(#inner_token_stream) {
+                                            Ok(#value_snake_case) => Ok(Self{ #primary_key_field_ident: #value_snake_case }),
+                                            Err(#error_snake_case) => Err(Self::Error::#primary_key_field_ident_variant_initialization_token_stream)
                                         }
                                     }
                                 }
