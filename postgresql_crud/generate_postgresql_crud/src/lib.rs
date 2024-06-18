@@ -5514,16 +5514,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let field_ident = &element.field_ident;
                             let where_inner_type_token_stream = &element.where_inner_type_token_stream;
                             quote::quote! {
-                                let #field_ident = match value.#field_ident {
-                                    Some(value) => Some(value.into_iter().map(|element|#where_inner_type_token_stream::#from_snake_case(element)).collect()),
+                                let #field_ident = match #value_snake_case.#field_ident {
+                                    Some(#value_snake_case) => Some(#value_snake_case.into_iter().map(|#element_snake_case|#where_inner_type_token_stream::#from_snake_case(#element_snake_case)).collect()),
                                     None => None,
                                 };
                             }
                         });
                         //todo maybe use where with conjuctive operator
                         let primary_key_let_field_ident_value_field_ident_from_token_stream = quote::quote! {
-                            let #primary_key_field_ident = match value.#primary_key_field_ident {
-                                Some(value) => Some(value.into_iter().map(|element|#primary_key_inner_type_token_stream::#from_snake_case(element)).collect()),
+                            let #primary_key_field_ident = match #value_snake_case.#primary_key_field_ident {
+                                Some(#value_snake_case) => Some(#value_snake_case.into_iter().map(|#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case)).collect()),
                                 None => None,
                             };
                         };
