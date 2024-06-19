@@ -8341,28 +8341,27 @@ fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_d
     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
-    let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
-    let field_code_occurence_new_ac56a8a4_9fc6_430b_b511_a779d7e07be4_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-        file!(),
-        line!(),
-        column!(),
-        proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
-    let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-        .map(|element| generate_let_field_ident_value_field_ident_try_from_token_stream(
-            element,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-            &field_code_occurence_new_ac56a8a4_9fc6_430b_b511_a779d7e07be4_token_stream,
-            &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-        ));
-    //todo it can be std::convert::From if all #(#fields_assignment_excluding_primary_key_token_stream)* are impl from
     proc_macro_helpers::generate_impl_std_convert_try_from_token_stream::generate_impl_std_convert_try_from_token_stream(
-        &operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream,
-        &operation_payload_element_upper_camel_case_token_stream,
-        &operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
+        &naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation),
+        &naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation),
+        &naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation),
         &{
+            let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                .map(|element| {
+                    let field_code_occurence_new_ac56a8a4_9fc6_430b_b511_a779d7e07be4_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    generate_let_field_ident_value_field_ident_try_from_token_stream(
+                        element,
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                        &field_code_occurence_new_ac56a8a4_9fc6_430b_b511_a779d7e07be4_token_stream,
+                        &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                    )
+                });
+            //todo it can be std::convert::From if all #(#fields_assignment_excluding_primary_key_token_stream)* are impl from
             quote::quote! {
                 #(#fields_assignment_excluding_primary_key_token_stream)*
                 Ok(Self {
