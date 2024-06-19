@@ -2269,13 +2269,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         },
                     );
-                    let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
-                        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                    let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                        &operation,
                         &{
-                            let from_snake_case = naming_constants::FromSnakeCase;
-                            let element_snake_case = naming_constants::ElementSnakeCase;
-                            let value_snake_case = naming_constants::ValueSnakeCase;
                             let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
                             quote::quote! {
                                 let mut elements = std::vec::Vec::with_capacity(#value_snake_case.0.len());
