@@ -2269,8 +2269,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         },
                     );
-                    let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
-                        &operation
+                    let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
+                        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                        &{
+                            let from_snake_case = naming_constants::FromSnakeCase;
+                            let element_snake_case = naming_constants::ElementSnakeCase;
+                            let value_snake_case = naming_constants::ValueSnakeCase;
+                            let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
+                            quote::quote! {
+                                let mut elements = std::vec::Vec::with_capacity(#value_snake_case.0.len());
+                                for #element_snake_case in #value_snake_case.0 {//todo refactor
+                                    elements.push(#operation_payload_element_upper_camel_case_token_stream::#from_snake_case(#element_snake_case));
+                                }
+                                Self(elements)
+                            }
+                        },
                     );
                     quote::quote! {
                         #impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
@@ -8297,29 +8311,6 @@ fn generate_operation_many_payload_with_serialize_deserialize_token_stream(opera
         #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
         pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_with_serialize_deserialize_token_stream);
     }
-}
-
-fn generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
-    operation: &Operation,
-) -> proc_macro2::TokenStream {
-    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
-    let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
-    let from_snake_case = naming_constants::FromSnakeCase;
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-        &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-        &operation_payload_upper_camel_case_token_stream,
-        &{
-            quote::quote! {
-                let mut elements = std::vec::Vec::with_capacity(#value_snake_case.0.len());
-                for element in #value_snake_case.0 {//todo refactor
-                    elements.push(#operation_payload_element_upper_camel_case_token_stream::#from_snake_case(element));
-                }
-                Self(elements)
-            }
-        },
-    )
 }
 
 fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream(
