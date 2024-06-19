@@ -2380,12 +2380,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             // println!("{impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
-                let impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream(
-                    &operation,
-                    &fields_named_excluding_primary_key,
-                    &fields_idents_excluding_primary_key_token_stream,
+                let impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream = proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    &naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation),
+                    &naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
+                    &{
+                        let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                            .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(element));
+                        quote::quote!{
+                            #(#fields_assignment_excluding_primary_key_token_stream)*
+                            Self{
+                                #(#fields_idents_excluding_primary_key_token_stream),*
+                            }
+                        }
+                    },
                 );
-                let impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = generate_impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
+                let impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                    &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
+                    &{
+                        let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream =                naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
+                        quote::quote!{
+                            Self(
+                                #value_snake_case.0.into_iter()
+                                .map(|#element_snake_case|#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(#element_snake_case))
+                                .collect::<std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>>()
+                            )
+                        }
+                    },
+                );
                 quote::quote! {
                     #impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream
                     #impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream
@@ -8370,46 +8392,6 @@ fn generate_operation_payload_try_from_operation_payload_with_serialize_deserial
             #variants_token_stream
         }
     }
-}
-
-fn generate_impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream(
-    operation: &Operation,
-    fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
-    fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
-) -> proc_macro2::TokenStream {
-    let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
-    let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-        .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(element));
-    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-        &operation_payload_element_upper_camel_case_token_stream,
-        &operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream,
-        &quote::quote!{
-                #(#fields_assignment_excluding_primary_key_token_stream)*
-                Self{
-                    #(#fields_idents_excluding_primary_key_token_stream),*
-                }
-        },
-    )
-}
-
-fn generate_impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation: &Operation) -> proc_macro2::TokenStream {
-    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
-    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let from_snake_case = naming_constants::FromSnakeCase;
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-        &operation_payload_upper_camel_case_token_stream,
-        &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-        &quote::quote!{
-            Self(
-                #value_snake_case.0.into_iter()
-                .map(|element|#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(element))
-                .collect::<std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>>()
-            )
-        },
-    )
 }
 
 fn generate_parameters_token_stream(operation: &Operation) -> proc_macro2::TokenStream {
