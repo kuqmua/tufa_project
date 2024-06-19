@@ -2256,11 +2256,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &fields_named_excluding_primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => {
-                    let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
-                        &operation,
-                        &fields_named_excluding_primary_key,
-                        &fields_idents_excluding_primary_key_token_stream,
-                    );
+                    let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = {
+                        let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
+                        let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
+                        let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                            .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(element));
+                        proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                            &operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream,
+                            &operation_payload_element_upper_camel_case_token_stream,
+                            &{
+                                quote::quote! {
+                                    #(#fields_assignment_excluding_primary_key_token_stream)*
+                                    Self {
+                                        #(#fields_idents_excluding_primary_key_token_stream),*
+                                    }
+                                }
+                            },
+                        )
+                    };
                     let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
                         &operation
                     );
@@ -8284,29 +8297,6 @@ fn generate_operation_many_payload_with_serialize_deserialize_token_stream(opera
         #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
         pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_with_serialize_deserialize_token_stream);
     }
-}
-
-fn generate_impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream(
-    operation: &Operation,
-    fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>,
-    fields_idents_excluding_primary_key_token_stream: &std::vec::Vec<&syn::Ident>,
-) -> proc_macro2::TokenStream {
-    let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation);
-    let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-        .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(element));
-    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-        &operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream,
-        &operation_payload_element_upper_camel_case_token_stream,
-        &{
-            quote::quote! {
-                #(#fields_assignment_excluding_primary_key_token_stream)*
-                Self {
-                    #(#fields_idents_excluding_primary_key_token_stream),*
-                }
-            }
-        },
-    )
 }
 
 fn generate_impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream(
