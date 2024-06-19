@@ -2303,12 +2303,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &operation,
                             &{
                                 let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
-                                let error_snake_case = naming_constants::ErrorSnakeCase;
-                                let value_snake_case = naming_constants::ValueSnakeCase;
                                 quote::quote! {
                                     let mut elements = std::vec::Vec::with_capacity(#value_snake_case.0.len());
-                                    for element in #value_snake_case.0 {
-                                        match #operation_payload_element_upper_camel_case_token_stream::try_from(element) {
+                                    for #element_snake_case in #value_snake_case.0 {
+                                        match #operation_payload_element_upper_camel_case_token_stream::#try_from_snake_case(#element_snake_case) {
                                             Ok(#value_snake_case) => {
                                                 elements.push(#value_snake_case);
                                             },
