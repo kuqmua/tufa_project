@@ -2257,14 +2257,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &fields_named_excluding_primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => {
                     let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = {
-                        let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
-                        let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
-                        let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-                            .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(element));
                         proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                            &operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream,
-                            &operation_payload_element_upper_camel_case_token_stream,
+                            &naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation),
+                            &naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation),
                             &{
+                                let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                                    .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(element));
                                 quote::quote! {
                                     #(#fields_assignment_excluding_primary_key_token_stream)*
                                     Self {
