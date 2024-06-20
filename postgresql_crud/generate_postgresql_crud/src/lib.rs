@@ -8922,4 +8922,31 @@ fn generate_impl_std_convert_from_operation_payload_upper_camel_case_token_strea
     )
 } 
 
-
+fn generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
+    operation: &Operation,
+    desirable_type_token_stream: &proc_macro2::TokenStream,
+    type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str
+) -> proc_macro2::TokenStream {
+    let try_operation_route_logic_response_variants_token_stream = generate_try_operation_route_logic_response_variants_token_stream(
+        &operation,
+        &desirable_type_token_stream,
+        &type_variants_from_request_response_syn_variants,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream(
+        &operation,
+        &type_variants_from_request_response_syn_variants,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_error_named_token_stream(
+        &operation,
+        &type_variants_from_request_response_syn_variants,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    quote::quote! {
+        #try_operation_route_logic_response_variants_token_stream
+        #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
+        #try_operation_route_logic_error_named_token_stream
+    }
+}
