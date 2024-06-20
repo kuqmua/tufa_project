@@ -2233,6 +2233,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let select_assignment_token_stream = {
+        quote::quote! {
+            let #select_snake_case = {
+                let mut vec = std::vec::Vec::with_capacity(#field_named_len_token_stream);
+                for #element_snake_case in #value_snake_case.#select_snake_case {
+                    if vec.contains(&#element_snake_case) {
+                        return Err(Self::Error::#not_unique_column_syn_variant_initialization_token_stream);
+                    }
+                    else {
+                        vec.push(#element_snake_case);
+                    }
+                }
+                vec
+            };
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2396,7 +2412,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = generate_impl_std_convert_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream(
                     &operation,
                     &{
-                        let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream =                naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
+                        let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
                         quote::quote!{
                             Self(
                                 #value_snake_case.0.into_iter()
@@ -3993,22 +4009,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     payload_token_stream,
                     payload_with_serialize_deserialize_token_stream
                 )
-            };
-            let select_assignment_token_stream = {
-                quote::quote! {
-                    let #select_snake_case = {
-                        let mut vec = std::vec::Vec::with_capacity(#field_named_len_token_stream);
-                        for #element_snake_case in #value_snake_case.#select_snake_case {
-                            if vec.contains(&#element_snake_case) {
-                                return Err(Self::Error::#not_unique_column_syn_variant_initialization_token_stream);
-                            }
-                            else {
-                                vec.push(#element_snake_case);
-                            }
-                        }
-                        vec
-                    };
-                }
             };
             let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                 let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
