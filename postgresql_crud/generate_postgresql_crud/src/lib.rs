@@ -3060,6 +3060,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 checked_add_and_bind_query_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
+                // type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
                 value
             },
             &fields_named_excluding_primary_key_from_or_try_from,
@@ -3068,34 +3069,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &ast,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        // let type_variants_from_request_response_syn_variants = {
-        //     let full_additional_http_status_codes_error_variants =
-        //         generate_full_additional_http_status_codes_error_variants(
-        //             common_middlewares_error_syn_variants.iter().collect(),
-        //             additional_http_status_codes_error_variants.iter().collect(),
-        //         );
-        //     let type_variants_from_request_response_syn_variants_partial = {
-        //         let mut type_variants_from_request_response = std::vec::Vec::with_capacity(
-        //             common_error_syn_variants.len().checked_add(not_unique_field_vec_syn_variants.len().checked_add(4).unwrap()).unwrap()
-        //         );
-        //         for element in &common_error_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         for element in &not_unique_field_vec_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
-        //         type_variants_from_request_response.push(&bind_query_syn_variant);
-        //         if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-        //         }
-        //         type_variants_from_request_response
-        //     };
-        //     generate_type_variants_from_request_response_syn_variants(
-        //         &type_variants_from_request_response_syn_variants_partial,
-        //         &full_additional_http_status_codes_error_variants,
-        //     )
-        // };
         let parameters_token_stream = {
             let (
                 payload_token_stream,
@@ -3844,32 +3817,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         read_one_http_request_test_expect_fail_token_stream,
     ) = {
         let operation = Operation::ReadOne;
-        // let (
-        //     operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant,
-        //     operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream,
-        //     operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code
-        // ) = {
-        //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
-        //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_token_stream(&operation);
-        //     let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
-        //     (
-        //         proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-        //             operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code.clone(),
-        //             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-        //             vec![(
-        //                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-        //                 &operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream,
-        //                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-        //                     &[&naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_stringified(&operation)],
-        //                     &proc_macro_name_upper_camel_case_ident_stringified
-        //                 ),
-        //             )],
-        //             &proc_macro_name_upper_camel_case_ident_stringified,
-        //         ),
-        //         quote::quote! {},
-        //         operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_status_code
-        //     )
-        // };
         let (
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
@@ -3892,28 +3839,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &ast,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        // let type_variants_from_request_response_syn_variants = {
-        //     let full_additional_http_status_codes_error_variants =
-        //         generate_full_additional_http_status_codes_error_variants(
-        //             common_middlewares_error_syn_variants.iter().collect(),
-        //             additional_http_status_codes_error_variants.iter().collect(),
-        //         );
-        //     let type_variants_from_request_response_syn_variants_partial = {
-        //         let mut type_variants_from_request_response =
-        //             std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(1).unwrap());
-        //         for element in &common_error_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         // if let postgresql_crud_common::FromOrTryFrom::TryFrom = primary_key_from_or_try_from {
-        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-        //         // }
-        //         type_variants_from_request_response
-        //     };
-        //     generate_type_variants_from_request_response_syn_variants(
-        //         &type_variants_from_request_response_syn_variants_partial,
-        //         &full_additional_http_status_codes_error_variants,
-        //     )
-        // };
         let parameters_token_stream = {
             let (
                 payload_token_stream,
@@ -4312,13 +4237,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
-                // value.push(postgresql_syn_variant);
                 value.push(&query_and_rollback_failed_syn_variant);
                 value.push(&primary_key_from_row_and_failed_rollback_syn_variant);
                 value.push(&non_existing_primary_keys_syn_variant);
                 value.push(&non_existing_primary_keys_and_failed_rollback_syn_variant);
                 value.push(&commit_failed_syn_variant);
-                //
+                // value.push(&not_unique_primary_keys_syn_variant);
+                // value.push(&bind_query_syn_variant);
+                // value.push(&checked_add_syn_variant);
+                // value.push(&no_payload_fields_syn_variant);
                 value
             },
             &fields_named_excluding_primary_key_from_or_try_from,
@@ -4563,39 +4490,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     ],
         //     &proc_macro_name_upper_camel_case_ident_stringified,
         // );
-        // let type_variants_from_request_response_syn_variants = {
-        //     let full_additional_http_status_codes_error_variants =
-        //         generate_full_additional_http_status_codes_error_variants(
-        //             common_middlewares_error_syn_variants.iter().collect(),
-        //             additional_http_status_codes_error_variants.iter().collect(),
-        //         );
-        //     let type_variants_from_request_response_syn_variants_partial = {
-        //         let mut type_variants_from_request_response =
-        //             std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(10).unwrap());
-        //         for element in &common_error_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
-        //         type_variants_from_request_response.push(&bind_query_syn_variant);
-        //         type_variants_from_request_response.push(&checked_add_syn_variant);
-        //         type_variants_from_request_response.push(&no_payload_fields_syn_variant);
-        //         type_variants_from_request_response.push(&commit_failed_syn_variant);
-        //         type_variants_from_request_response.push(&non_existing_primary_keys_syn_variant);
-        //         type_variants_from_request_response
-        //             .push(&primary_key_from_row_and_failed_rollback_syn_variant);
-        //         type_variants_from_request_response
-        //             .push(&non_existing_primary_keys_and_failed_rollback_syn_variant);
-        //         type_variants_from_request_response.push(&query_and_rollback_failed_syn_variant);
-        //         if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-        //         }
-        //         type_variants_from_request_response
-        //     };
-        //     generate_type_variants_from_request_response_syn_variants(
-        //         &type_variants_from_request_response_syn_variants_partial,
-        //         &full_additional_http_status_codes_error_variants,
-        //     )
-        // };
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                 &operation,
@@ -5035,31 +4929,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     ],
         //     &proc_macro_name_upper_camel_case_ident_stringified,
         // );
-        // let type_variants_from_request_response_syn_variants = {
-        //     let full_additional_http_status_codes_error_variants =
-        //         generate_full_additional_http_status_codes_error_variants(
-        //             common_middlewares_error_syn_variants.iter().collect(),
-        //             additional_http_status_codes_error_variants.iter().collect(),
-        //         );
-        //     let type_variants_from_request_response_syn_variants_partial = {
-        //         let mut type_variants_from_request_response =
-        //             std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(4).unwrap());
-        //         for element in &common_error_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         type_variants_from_request_response.push(&bind_query_syn_variant);
-        //         type_variants_from_request_response.push(&no_payload_fields_syn_variant);
-        //         if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-        //         }
-        //         type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
-        //         type_variants_from_request_response
-        //     };
-        //     generate_type_variants_from_request_response_syn_variants(
-        //         &type_variants_from_request_response_syn_variants_partial,
-        //         &full_additional_http_status_codes_error_variants,
-        //     )
-        // };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -5067,6 +4936,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&bind_query_syn_variant);
+                // value.push(&no_payload_fields_syn_variant);
+                // value.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
                 value
             },
             &fields_named_excluding_primary_key_from_or_try_from,
@@ -5422,44 +5293,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     ],
         //     &proc_macro_name_upper_camel_case_ident_stringified,
         // );
-        // let type_variants_from_request_response_syn_variants = {
-        //     let full_additional_http_status_codes_error_variants =
-        //         generate_full_additional_http_status_codes_error_variants(
-        //             common_middlewares_error_syn_variants.iter().collect(),
-        //             additional_http_status_codes_error_variants.iter().collect(),
-        //         );
-        //     let type_variants_from_request_response_syn_variants_partial = {
-        //         let mut type_variants_from_request_response = std::vec::Vec::with_capacity(
-        //             common_error_syn_variants.len().checked_add(not_unique_field_vec_syn_variants.len().checked_add(12).unwrap()).unwrap(),
-        //         );
-        //         for element in &common_error_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         for element in &not_unique_field_vec_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
-        //         type_variants_from_request_response.push(&bind_query_syn_variant);
-        //         type_variants_from_request_response.push(&no_payload_fields_syn_variant);
-        //         type_variants_from_request_response.push(&no_payload_parameters_syn_variant);
-        //         type_variants_from_request_response.push(&non_existing_primary_keys_syn_variant);
-        //         type_variants_from_request_response
-        //             .push(&non_existing_primary_keys_and_failed_rollback_syn_variant);
-        //         type_variants_from_request_response
-        //             .push(&primary_key_from_row_and_failed_rollback_syn_variant);
-        //         type_variants_from_request_response.push(&commit_failed_syn_variant);
-        //         type_variants_from_request_response.push(&query_and_rollback_failed_syn_variant);
-        //         if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-        //         }
-        //         type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
-        //         type_variants_from_request_response
-        //     };
-        //     generate_type_variants_from_request_response_syn_variants(
-        //         &type_variants_from_request_response_syn_variants_partial,
-        //         &full_additional_http_status_codes_error_variants,
-        //     )
-        // };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -5467,6 +5300,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&bind_query_syn_variant);
+                //let mut value = std::vec::Vec::with_capacity(
+                //    common_error_syn_variants.len().checked_add(not_unique_field_vec_syn_variants.len().checked_add(12).unwrap()).unwrap(),
+                //);
+                //for element in &common_error_syn_variants {
+                //    value.push(element);
+                //}
+                //for element in &not_unique_field_vec_syn_variants {
+                //    value.push(element);
+                //}
+                //value.push(&not_unique_primary_keys_syn_variant);
+                //value.push(&no_payload_fields_syn_variant);
+                //value.push(&no_payload_parameters_syn_variant);
+                //value.push(&non_existing_primary_keys_syn_variant);
+                //value
+                //    .push(&non_existing_primary_keys_and_failed_rollback_syn_variant);
+                //value
+                //    .push(&primary_key_from_row_and_failed_rollback_syn_variant);
+                //value.push(&commit_failed_syn_variant);
+                //value.push(&query_and_rollback_failed_syn_variant);
+                //value.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
                 value
             },
             &postgresql_crud_common::FromOrTryFrom::TryFrom,//fields_named_excluding_primary_key_from_or_try_from
@@ -6153,32 +6006,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     ],
         //     &proc_macro_name_upper_camel_case_ident_stringified,
         // );
-        // let type_variants_from_request_response_syn_variants = {
-        //     let full_additional_http_status_codes_error_variants =
-        //         generate_full_additional_http_status_codes_error_variants(
-        //             common_middlewares_error_syn_variants.iter().collect(),
-        //             additional_http_status_codes_error_variants.iter().collect(),
-        //         );
-        //     let type_variants_from_request_response_syn_variants_partial = {
-        //         let mut type_variants_from_request_response =
-        //             std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(2).unwrap());
-        //         for element in &common_error_syn_variants {
-        //             type_variants_from_request_response.push(element);
-        //         }
-        //         //todo why no bind query error here?
-        //         if primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        //             type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-        //         }
-        //         type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
-        //         type_variants_from_request_response
-        //     };
-        //     generate_type_variants_from_request_response_syn_variants(
-        //         &type_variants_from_request_response_syn_variants_partial,
-        //         &full_additional_http_status_codes_error_variants,
-        //     )
-        // };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &common_route_syn_variants,
+            &{
+                common_route_syn_variants
+                // type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
+            },
             &postgresql_crud_common::FromOrTryFrom::From,//fields_named_excluding_primary_key_from_or_try_from
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
