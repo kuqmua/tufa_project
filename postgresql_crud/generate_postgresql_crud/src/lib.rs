@@ -2149,7 +2149,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         value
     };
-    let checked_add_and_bind_query_syn_variants = vec![&checked_add_syn_variant, &bind_query_syn_variant];
     let common_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &ast.attrs,
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
@@ -3050,13 +3049,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-            let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + checked_add_and_bind_query_syn_variants.len());
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 2);
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
-                checked_add_and_bind_query_syn_variants.iter().for_each(|element|{
-                    value.push(*element);
-                });
+                value.push(&checked_add_syn_variant);
+                value.push(&bind_query_syn_variant);
                 // type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
                 value
             },
