@@ -1456,29 +1456,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             colon_token: Some(syn::token::Colon {
                                 spans: [proc_macro2::Span::call_site()],
                             }),
-                            ty: syn::Type::Path(syn::TypePath{
-                                qself: None,
-                                path: syn::Path {
-                                    leading_colon: None,
-                                    segments: {
-                                        //Punctuated<PathSegment, PathSep>
-                                        let mut punctuated = syn::punctuated::Punctuated::new();
-                                        punctuated.push_value(syn::PathSegment {
-                                            ident: syn::Ident::new("postgresql_crud", proc_macro2::Span::call_site()),
-                                            arguments: syn::PathArguments::None,
-                                        });
-                                        punctuated.push_punct(syn::token::PathSep{
-                                            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-                                        });
-                                        punctuated.push_value(syn::PathSegment {//todo - generate type
-                                            ident: syn::Ident::new("SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed", proc_macro2::Span::call_site()),
-                                            arguments: syn::PathArguments::None,
-                                        });
-                                        punctuated
-                                        //
-                                    },
-                                },
-                            }),
+                            ty: {
+                                let value: syn::Type = syn::parse(primary_key_inner_type_with_serialize_deserialize_error_named_token_stream.clone().into())
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} cannot convert {primary_key_inner_type_with_serialize_deserialize_error_named_token_stream} into syn::Type {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                value
+                            }
                         });
                         punctuated.push_punct(syn::token::Comma {
                             spans: [proc_macro2::Span::call_site()],
