@@ -36,10 +36,10 @@ fn crud(
             ),
             
         )
-        .route(
-            "/create_one",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::try_create_one_route_logic),
-        )
+        // .route(
+        //     "/create_one",
+        //     axum::routing::post(common::repositories_types::server::routes::api::cats::try_create_one_route_logic),
+        // )
         // .route(
         //     "/read_many",
         //     axum::routing::post(common::repositories_types::server::routes::api::cats::read_many),

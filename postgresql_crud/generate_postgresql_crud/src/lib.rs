@@ -1418,11 +1418,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant,
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
      ) = {
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case = naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientUpperCamelCase;
         let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case = naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientSnakeCase;
         (
             syn::Variant {
                 attrs: vec![],
-                ident: syn::Ident::new(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case.to_string(), proc_macro2::Span::call_site()),
+                ident: syn::Ident::new(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case.to_string(), proc_macro2::Span::call_site()),
                 fields: syn::Fields::Named(syn::FieldsNamed {
                     brace_token: syn::token::Brace::default(),
                     named: {
@@ -1455,8 +1456,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             colon_token: Some(syn::token::Colon {
                                 spans: [proc_macro2::Span::call_site()],
                             }),
-                            ty: primary_key_syn_field.field.ty.clone(),
+                            ty: syn::Type::Path(syn::TypePath{
+                                qself: None,
+                                path: syn::Path {
+                                    leading_colon: None,
+                                    segments: {
+                                        //Punctuated<PathSegment, PathSep>
+                                        let mut punctuated = syn::punctuated::Punctuated::new();
+                                        punctuated.push_value(syn::PathSegment {
+                                            ident: syn::Ident::new("postgresql_crud", proc_macro2::Span::call_site()),
+                                            arguments: syn::PathArguments::None,
+                                        });
+                                        punctuated.push_punct(syn::token::PathSep{
+                                            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
+                                        });
+                                        punctuated.push_value(syn::PathSegment {//todo - generate type
+                                            ident: syn::Ident::new("SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed", proc_macro2::Span::call_site()),
+                                            arguments: syn::PathArguments::None,
+                                        });
+                                        punctuated
+                                        //
+                                    },
+                                },
+                            }),
                         });
+                        punctuated.push_punct(syn::token::Comma {
+                            spans: [proc_macro2::Span::call_site()],
+                        });
+                        punctuated.push_value(proc_macro_helpers::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified));
                         punctuated
                     },
                 }),
@@ -1486,7 +1513,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         ),
     };
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream = match primary_key_from_or_try_from {
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_handle_token_stream = match primary_key_from_or_try_from {
         postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
         postgresql_crud_common::FromOrTryFrom::TryFrom => generate_error_occurence_variant_token_stream(
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_syn_variant,
@@ -2633,7 +2660,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
-                &common_http_request_syn_variants,
+                &{
+                    let mut value = common_http_request_syn_variants.clone();
+                    value.push(operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant);
+                    value
+                },
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
@@ -2663,9 +2694,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         Ok(#value_snake_case) => {
                                             values.push(#value_snake_case);
                                         },
-                                        Err(#error_snake_case) => Err(
-                                            #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
-                                        )
+                                        Err(#error_snake_case) => {
+                                            return Err(
+                                                #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
+                                            );
+                                        }
                                     }
                                 }
                                 values
@@ -6383,13 +6416,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             #create_many_token_stream
-            #create_one_token_stream
-            #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
-            #update_one_token_stream
-            #delete_many_token_stream
-            #delete_one_token_stream
+            // #create_one_token_stream
+            // #read_many_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
+            // #update_one_token_stream
+            // #delete_many_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
