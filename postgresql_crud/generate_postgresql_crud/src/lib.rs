@@ -2662,7 +2662,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &{
                     let mut value = common_http_request_syn_variants.clone();
-                    value.push(operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant);
+                    if let postgresql_crud_common::FromOrTryFrom::TryFrom = primary_key_from_or_try_from {
+                        value.push(operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant);
+                    }
                     value
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
