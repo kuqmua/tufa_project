@@ -3850,13 +3850,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len());
-                common_route_syn_variants.iter().for_each(|element|{
-                    value.push(*element);
-                });
-                value
-            },
+            &common_route_syn_variants,
             &postgresql_crud_common::FromOrTryFrom::TryFrom,//fields_named_excluding_primary_key_from_or_try_from
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
