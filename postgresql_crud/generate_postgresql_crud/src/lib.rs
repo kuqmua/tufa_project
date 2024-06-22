@@ -2271,6 +2271,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         value
     };
+    //
+    let generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream = |
+        operation: &Operation,
+        operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream: &proc_macro2::TokenStream
+    | {
+        let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+        let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+        quote::quote!{
+            match #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#try_from_snake_case(
+                #parameters_snake_case.#payload_snake_case
+            ) {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_snake_case) => {
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream);
+                }
+            }
+        }
+    };
+    //
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -3725,20 +3744,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_struct_options_ident_token_stream,
-                &{
-                    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
-                    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-                    quote::quote!{
-                        match #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#try_from_snake_case(
-                            #parameters_snake_case.#payload_snake_case
-                        ) {
-                            Ok(#value_snake_case) => #value_snake_case,
-                            Err(#error_snake_case) => {
-                                return Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream);
-                            }
-                        }
-                    }
-                },
+                &generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream(
+                    &operation,
+                    &operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream
+                ),
                 &match fields_named_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
                         #value_snake_case
@@ -4095,20 +4104,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &struct_options_ident_token_stream,
-                &{
-                    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
-                    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-                    quote::quote!{
-                        match #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#try_from_snake_case(
-                            #parameters_snake_case.#payload_snake_case
-                        ) {
-                            Ok(#value_snake_case) => #value_snake_case,
-                            Err(#error_snake_case) => {
-                                return Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream);
-                            }
-                        }
-                    }
-                },
+                &generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream(
+                    &operation,
+                    &operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream
+                ),
                 &match fields_named_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
                         #struct_options_ident_token_stream::#from_snake_case(#value_snake_case)
