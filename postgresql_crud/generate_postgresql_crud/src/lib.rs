@@ -3087,7 +3087,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
                 value
             },
-            &fields_named_excluding_primary_key_from_or_try_from,
+            &postgresql_crud_common::FromOrTryFrom::TryFrom,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
             &ast,
@@ -3300,7 +3300,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
-                   &fields_named_excluding_primary_key_from_or_try_from,
+                   &postgresql_crud_common::FromOrTryFrom::TryFrom,
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
@@ -6438,7 +6438,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             // #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
