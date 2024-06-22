@@ -2778,13 +2778,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &{
                         let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-                        .map(|element| {
-                            let field_ident = &element.field_ident;
-                            let inner_type_token_stream = &element.inner_type_token_stream;
-                            quote::quote!{
-                                let #field_ident = #inner_type_token_stream::#from_snake_case(#value_snake_case.#field_ident);
-                            }
-                        });
+                        .map(generate_let_field_ident_value_inner_type_from_token_stream);
                         quote::quote! {
                             #(#fields_assignment_excluding_primary_key_token_stream)*
                             Self {
@@ -4286,10 +4280,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_element_with_serialize_deserialize_for_self_payload_element_token_stream(
                         &operation,
                         &{
-                            // let primary_key_let_field_ident_value_field_ident_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(&primary_key_syn_field);
                             let fields_assignments_token_stream = fields_named.iter().map(generate_let_field_ident_value_inner_type_from_token_stream);
                             quote::quote! {
-                                // #primary_key_let_field_ident_value_field_ident_from_token_stream
                                 #(#fields_assignments_token_stream)*
                                 Self{
                                     #(#self_init_fields_token_stream),*
@@ -7719,8 +7711,9 @@ fn generate_let_field_ident_value_inner_type_from_token_stream(
     let field_ident = &element.field_ident;
     let inner_type_token_stream = &element.inner_type_token_stream;
     let from_snake_case = naming_constants::FromSnakeCase;
+    let value_snake_case = naming_constants::ValueSnakeCase;
     quote::quote! {
-        let #field_ident = #inner_type_token_stream::#from_snake_case(value.#field_ident);
+        let #field_ident = #inner_type_token_stream::#from_snake_case(#value_snake_case.#field_ident);
     }
 }
 
