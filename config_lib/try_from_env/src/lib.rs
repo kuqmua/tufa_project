@@ -2,13 +2,13 @@
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "TryFromEnv";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case_stringified} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    let ident = &ast.ident;
+    let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named = syn::Ident::new(&format!(
         "{ident}{}{}{}{}{}",
         naming_constants::TryUpperCamelCase,
@@ -17,7 +17,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         naming_constants::ErrorUpperCamelCase,
         naming_constants::NamedUpperCamelCase,
     ), ident.span());
-    let data_struct = match ast.data {
+    let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | 
         syn::Data::Union(_) => panic!("{proc_macro_name_upper_camel_case_stringified} only works on Struct"),

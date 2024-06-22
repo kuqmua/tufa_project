@@ -2,14 +2,14 @@
 pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     //it only supported for enums without values
-    let ast: syn::DeriveInput = syn::parse(input).expect("EnumExtension syn::parse(input) failed");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("EnumExtension syn::parse(input) failed");
     //todo to implement into_array() and into_vec - must implement Default for all inner variant types
-    let len = match ast.data.clone() {
+    let len = match syn_derive_input.data.clone() {
         syn::Data::Enum(enum_item) => enum_item.variants.len(),
         syn::Data::Struct(_) | 
         syn::Data::Union(_) => panic!("EnumVariantCount only works on Enums"),
     };
-    let variants = match ast.data {
+    let variants = match syn_derive_input.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|element| {
             let variant_ident = element.ident;
             match element.fields {
@@ -31,7 +31,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         syn::Data::Struct(_) | 
         syn::Data::Union(_) => panic!("EnumIntoArray works only on enums"),
     };
-    let ident = &ast.ident;
+    let ident = &syn_derive_input.ident;
     let generated = quote::quote! {
         impl #ident {
             pub fn get_length() -> std::primitive::usize {

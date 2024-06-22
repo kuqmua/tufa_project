@@ -1,12 +1,12 @@
 #[proc_macro_derive(SvgComponent)]
 pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let ast: syn::DeriveInput = syn::parse(input).expect("SvgComponent syn::parse(input) failed");
-    let ident = &ast.ident;
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("SvgComponent syn::parse(input) failed");
+    let ident = &syn_derive_input.ident;
     // let get_html_variants: TokenStream;
     // let get_class_variants: TokenStream;
     //to tired to think how to do it without .clone()
-    let get_html_variants = match ast.data.clone() {
+    let get_html_variants = match syn_derive_input.data.clone() {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
             let variant_ident = v.ident;
             let module = syn::Ident::new(
@@ -30,7 +30,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
         }),
         _ => panic!("SvgComponent works only on enums"),
     };
-    let get_class_variants = match ast.data {
+    let get_class_variants = match syn_derive_input.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
             let variant_ident = v.ident;
             let class = &format!(

@@ -2,13 +2,13 @@
 // pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 //     proc_macro_common::panic_location::panic_location();
 //     let proc_macro_name_upper_camel_case = "FromSqlxPostgresError";
-//     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
+//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
 //         panic!(
 //             "{}",
 //             proc_macro_common::constants::AST_PARSE_FAILED
 //         )
 //     });
-//     let ident = &ast.ident;
+//     let ident = &syn_derive_input.ident;
 //     let proc_macro_name_upper_camel_case_ident_stringified =
 //         format!("{proc_macro_name_upper_camel_case} {ident}");
 

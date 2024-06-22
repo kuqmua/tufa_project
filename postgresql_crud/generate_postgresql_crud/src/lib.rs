@@ -170,14 +170,14 @@ pub fn common_additional_route_logic(
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    // println!("{:#?}", ast.data);
-    let ident = &ast.ident;
+    // println!("{:#?}", syn_derive_input.data);
+    let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &ident.to_string()
     );
@@ -190,7 +190,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
     let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;};
-    let fields_named = if let syn::Data::Struct(data_struct) = &ast.data {
+    let fields_named = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             fields_named.named
                 .iter()
@@ -2144,7 +2144,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let common_additional_error_variants = generate_additional_error_variants(
-        &ast,
+        &syn_derive_input,
         GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
@@ -2161,7 +2161,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value
     };
     let common_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-        &ast.attrs,
+        &syn_derive_input.attrs,
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
@@ -2278,7 +2278,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -2631,7 +2631,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
@@ -2765,7 +2765,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -2942,7 +2942,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
@@ -3070,7 +3070,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &postgresql_crud_common::FromOrTryFrom::TryFrom,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -3682,7 +3682,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
@@ -3830,10 +3830,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation = Operation::ReadOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
-            &postgresql_crud_common::FromOrTryFrom::TryFrom,//fields_named_excluding_primary_key_from_or_try_from
+            &postgresql_crud_common::FromOrTryFrom::TryFrom,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -4052,7 +4052,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
@@ -4113,12 +4113,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
                         #struct_options_ident_token_stream::#from_snake_case(#value_snake_case)
                     },
-                    postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                        let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-                        quote::quote!{
-                            {
-                                #value_snake_case
-                            }
+                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
+                        {
+                            #value_snake_case
                         }
                     }
                 },
@@ -4255,7 +4252,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &fields_named_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -4790,7 +4787,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &expected_updated_primary_keys_token_stream,
@@ -4948,7 +4945,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &fields_named_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -5194,7 +5191,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
@@ -5324,7 +5321,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &fields_named_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -5846,7 +5843,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
@@ -6015,7 +6012,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
-            &ast,
+            &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
@@ -6212,7 +6209,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // );
                 generate_try_operation_route_logic_snake_case_token_stream(
                     &operation,
-                    &ast,
+                    &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
@@ -7977,13 +7974,13 @@ impl GeneratePostgresqlCrudAttribute {
 }
 
 fn generate_additional_error_variants(
-    ast: &syn::DeriveInput,
+    syn_derive_input: &syn::DeriveInput,
     generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> std::vec::Vec<syn::Variant> {
     let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
     let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-        &ast.attrs,
+        &syn_derive_input.attrs,
         &generate_postgresql_crud_attribute.generate_path_to_attribute(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
@@ -8256,7 +8253,7 @@ fn generate_parameters_logic_token_stream(
 
 fn generate_try_operation_route_logic_snake_case_token_stream(
     operation: &Operation,
-    ast: &syn::DeriveInput,
+    syn_derive_input: &syn::DeriveInput,
     common_additional_route_logic_token_stream: &proc_macro2::TokenStream,
     parameters_logic_token_stream: &proc_macro2::TokenStream,
     expected_updated_primary_keys_token_stream: &proc_macro2::TokenStream,
@@ -8301,7 +8298,7 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     };
     let additional_validators_token_stream = {
         let operation_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-            &ast.attrs,
+            &syn_derive_input.attrs,
             &operation.to_additional_route_logic().generate_path_to_attribute(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -8393,7 +8390,7 @@ fn generate_type_variants_from_request_response_syn_variants(
     from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant: &syn::Variant,
     operation: &Operation,
-    ast: &syn::DeriveInput,
+    syn_derive_input: &syn::DeriveInput,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> std::vec::Vec<syn::Variant> {
     let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
@@ -8401,7 +8398,7 @@ fn generate_type_variants_from_request_response_syn_variants(
         type_variants_from_request_response_syn_variants.push((*element).clone());
     }
     let operation_additional_error_variants = generate_additional_error_variants(
-        &ast,
+        &syn_derive_input,
         operation.to_additional_error_variants(),
         &proc_macro_name_upper_camel_case_ident_stringified
     );

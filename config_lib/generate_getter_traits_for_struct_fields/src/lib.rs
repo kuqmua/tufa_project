@@ -4,10 +4,10 @@ pub fn generate_getter_traits_for_struct_fields(
 ) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "GenerateGetterTraitsForStructFields";
-    let ast: syn::DeriveInput =
+    let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("{proc_macro_name_upper_camel_case_stringified} syn::parse(input) failed");
-    let ident = &ast.ident;
-    let datastruct = match ast.data {
+    let ident = &syn_derive_input.ident;
+    let datastruct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | 
         syn::Data::Union(_) => panic!("GenerateGetterTraitsForStructFields only works on Struct"),
@@ -71,10 +71,10 @@ pub fn generate_getter_trait(
 ) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "GenerateGetterTrait";
-    let ast: syn::DeriveInput =
+    let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("{proc_macro_name_upper_camel_case_stringified} syn::parse(input) failed");
-    let ident = &ast.ident;
-    let data_struct = match ast.data {
+    let ident = &syn_derive_input.ident;
+    let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | 
         syn::Data::Union(_) => panic!("GenerateGetterTrait only works on Struct"),

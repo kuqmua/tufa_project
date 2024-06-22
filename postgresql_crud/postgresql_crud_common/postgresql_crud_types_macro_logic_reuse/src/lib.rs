@@ -26,15 +26,15 @@ fn field_type_implements_serialize_deserialize_handle(
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    let ident = &ast.ident;
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let field = if let syn::Data::Struct(data_struct) = &ast.data {
+    let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
                 1 => &fields_unnamed.unnamed[0],
@@ -133,13 +133,13 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonFrom";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    let ident = &ast.ident;
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let where_ident_token_stream = {
         let value = format!("{}{ident}", naming_constants::WhereUpperCamelCase);
@@ -212,13 +212,13 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonTryFrom";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    let ident = &ast.ident;
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let ident_snake_case_token_stream = {
         let value = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
@@ -411,16 +411,16 @@ fn common_handle(
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    // println!("{:#?}", ast.data);
-    let ident = &ast.ident;
+    // println!("{:#?}", syn_derive_input.data);
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let field = if let syn::Data::Struct(data_struct) = &ast.data {
+    let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
                 1 => &fields_unnamed.unnamed[0],
@@ -872,13 +872,13 @@ fn common_specific_from_handle(
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    let ident = &ast.ident;
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let ident_with_serialize_deserialize_token_stream = {
         let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
@@ -972,13 +972,13 @@ fn common_specific_try_from_handle(
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    let ident = &ast.ident;
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let ident_with_serialize_deserialize_token_stream = {
         let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
@@ -1064,16 +1064,16 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "AsPostgresqlCommon";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    // println!("{:#?}", ast.data);
-    let ident = &ast.ident;
+    // println!("{:#?}", syn_derive_input.data);
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let _field = if let syn::Data::Struct(data_struct) = &ast.data {
+    let _field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
                 1 => &fields_unnamed.unnamed[0],
