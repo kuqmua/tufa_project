@@ -3059,8 +3059,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
-            operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_status_code
-        ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_status_code(
+        ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization(
             &operation,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -3832,8 +3831,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
             operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
-            operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_status_code
-        ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_status_code(
+        ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization(
             &operation,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -8657,10 +8655,10 @@ fn generate_try_operation_route_logic_response_variants_impl_std_convert_from_tr
     }
 }
 
-fn generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_status_code(
+fn generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization(
     operation: &Operation,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> (syn::Variant, proc_macro2::TokenStream, proc_macro_helpers::status_code::StatusCode) {
+) -> (syn::Variant, proc_macro2::TokenStream) {
     let operation_payload_with_serialize_deserialize_try_from_operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeTryFromSelfPayloadUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(operation);
     let operation_payload_with_serialize_deserialize_try_from_operation_payload_snake_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseTokenStream::self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(operation);
     let operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
@@ -8693,6 +8691,5 @@ fn generate_operation_payload_with_serialize_deserialize_try_from_operation_payl
                 }
             }
         },
-        operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_status_code
     )
 }
