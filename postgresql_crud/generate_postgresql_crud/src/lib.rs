@@ -4109,14 +4109,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream
                 ),
                 &match fields_named_from_or_try_from {
-                    postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
-                        #struct_options_ident_token_stream::#from_snake_case(#value_snake_case)
-                    },
-                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
-                        {
-                            #value_snake_case
-                        }
-                    }
+                    postgresql_crud_common::FromOrTryFrom::From => quote::quote!{#struct_options_ident_token_stream::#from_snake_case(#value_snake_case)},
+                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{#value_snake_case}
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
