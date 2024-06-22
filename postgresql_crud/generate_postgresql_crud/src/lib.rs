@@ -5944,9 +5944,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         Ok(#value_snake_case) => {
                                             values.push(#value_snake_case);
                                         },
-                                        Err(#error_snake_case) => Err(
-                                            #try_operation_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream
-                                        )
+                                        Err(#error_snake_case) => {
+                                            return Err(
+                                                #try_operation_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream
+                                            );
+                                        }
                                     }
                                 }
                                 values
@@ -6438,7 +6440,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
-            // #delete_many_token_stream
+            #delete_many_token_stream
             // #delete_one_token_stream
         // }
     };
