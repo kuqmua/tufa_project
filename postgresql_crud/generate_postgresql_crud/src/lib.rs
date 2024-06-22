@@ -5355,7 +5355,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //value.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
                 value
             },
-            &postgresql_crud_common::FromOrTryFrom::TryFrom,//fields_named_excluding_primary_key_from_or_try_from
+            &fields_named_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
             &ast,
