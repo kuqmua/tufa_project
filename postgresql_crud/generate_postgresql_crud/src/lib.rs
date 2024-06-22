@@ -8661,10 +8661,8 @@ fn generate_operation_payload_with_serialize_deserialize_try_from_operation_payl
 ) -> (syn::Variant, proc_macro2::TokenStream) {
     let operation_payload_with_serialize_deserialize_try_from_operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeTryFromSelfPayloadUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(operation);
     let operation_payload_with_serialize_deserialize_try_from_operation_payload_snake_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseTokenStream::self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(operation);
-    let operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
     (
-        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-            operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_status_code.clone(),
+        proc_macro_helpers::construct_syn_variant::construct_syn_variant(
             &operation_payload_with_serialize_deserialize_try_from_operation_payload_upper_camel_case_token_stream,
             vec![(
                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
