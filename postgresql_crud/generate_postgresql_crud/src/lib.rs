@@ -6052,7 +6052,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 common_route_syn_variants
                 // type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
             },
-            &postgresql_crud_common::FromOrTryFrom::From,//fields_named_excluding_primary_key_from_or_try_from
+            &primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
             &ast,
@@ -6300,9 +6300,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote!{
                             match #primary_key_inner_type_token_stream::#try_from_snake_case(#value_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
-                                Err(#error_snake_case) => Err(
-                                    #try_operation_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream
-                                )
+                                Err(#error_snake_case) => {
+                                    return Err(
+                                        #try_operation_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream
+                                    );
+                                }
                             }
                         }
                     }
@@ -6441,7 +6443,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream
-            // #delete_one_token_stream
+            #delete_one_token_stream
         // }
     };
     // if ident == "" {
