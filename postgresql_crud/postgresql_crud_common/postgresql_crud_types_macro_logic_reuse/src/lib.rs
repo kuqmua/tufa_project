@@ -527,6 +527,11 @@ fn common_handle(
                 write!(formatter, "{:?}", self.0)
             }
         }
+        impl error_occurence_lib::ToStdStringString for #ident {
+            fn to_std_string_string(&self) -> std::string::String {
+                format!("{self}")
+            }
+        }
         impl #ident {
             pub fn into_inner(self) -> #field_type {
                 self.0

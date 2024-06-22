@@ -2459,6 +2459,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
+            // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
@@ -2468,6 +2469,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &eprintln_error_token_stream,
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
+                // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let field_ident = &element.field_ident;
@@ -4270,7 +4272,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // value.push(&no_payload_fields_syn_variant);
                 value
             },
-            &fields_named_excluding_primary_key_from_or_try_from,
+            &fields_named_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
             &ast,
@@ -4290,10 +4292,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_element_with_serialize_deserialize_for_self_payload_element_token_stream(
                         &operation,
                         &{
-                            let primary_key_let_field_ident_value_field_ident_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(&primary_key_syn_field);
-                            let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(generate_let_field_ident_value_inner_type_from_token_stream);
+                            // let primary_key_let_field_ident_value_field_ident_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(&primary_key_syn_field);
+                            let fields_assignments_token_stream = fields_named.iter().map(generate_let_field_ident_value_inner_type_from_token_stream);
                             quote::quote! {
-                                #primary_key_let_field_ident_value_field_ident_from_token_stream
+                                // #primary_key_let_field_ident_value_field_ident_from_token_stream
                                 #(#fields_assignments_token_stream)*
                                 Self{
                                     #(#self_init_fields_token_stream),*
@@ -4306,7 +4308,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &operation,
                             &{
                                 let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
-                                    &fields_named_excluding_primary_key,
+                                    &fields_named,
                                     &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                                 );
                                 quote::quote! {
@@ -4519,10 +4521,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
+            // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
-                   &fields_named_excluding_primary_key_from_or_try_from,
+                   &fields_named_from_or_try_from,
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
@@ -4868,9 +4871,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         Ok(#value_snake_case) => {
                                             values.push(#value_snake_case);
                                         },
-                                        Err(#error_snake_case) => Err(
-                                            #try_operation_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream
-                                        )
+                                        Err(#error_snake_case) => {
+                                            return Err(
+                                                #try_operation_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream
+                                            );
+                                        }
                                     }
                                 }
                                 values
@@ -6437,7 +6442,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream

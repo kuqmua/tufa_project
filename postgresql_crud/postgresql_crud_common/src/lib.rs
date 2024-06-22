@@ -4150,13 +4150,6 @@ impl PostgresqlOrder for StdPrimitiveI32 {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
-//todo impl error_occurence_lib::ToStdStringString for primary key types here
-impl error_occurence_lib::ToStdStringString for StdPrimitiveI64 {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
-//
 impl AsPostgresqlBigInt for StdPrimitiveI64 {}
 impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl AsPostgresqlInt8 for StdPrimitiveI64 {}
