@@ -3056,13 +3056,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (read_many_token_stream, read_many_test_token_stream) = {
         let operation = Operation::ReadMany;
-        let (
-            operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
-            operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
-        ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization(
-            &operation,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 2);
@@ -3710,6 +3703,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{try_operation_route_logic_token_stream}");
         let (try_operation_token_stream, try_operation_test_token_stream) = {
+            let (
+                operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
+                operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
+            ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization(
+                &operation,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
                 &{
@@ -3828,13 +3828,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         read_one_http_request_test_expect_fail_token_stream,
     ) = {
         let operation = Operation::ReadOne;
-        let (
-            operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
-            operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
-        ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization(
-            &operation,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
             &postgresql_crud_common::FromOrTryFrom::TryFrom,//fields_named_excluding_primary_key_from_or_try_from
@@ -4080,6 +4073,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{try_operation_route_logic_token_stream}");
         let (try_operation_token_stream, try_operation_test_token_stream) = {
+            let (
+                operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant,
+                operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization_token_stream,
+            ) = generate_operation_payload_with_serialize_deserialize_try_from_operation_payload_syn_variant_initialization(
+                &operation,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
                 &{
