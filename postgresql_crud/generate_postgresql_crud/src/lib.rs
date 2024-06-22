@@ -2264,6 +2264,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             vec
         };
     };
+    let common_http_request_with_possible_operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variants = &{
+        let mut value = common_http_request_syn_variants.clone();
+        if let Some(variant) = &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option {
+            value.push(variant.clone());
+        }
+        value
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2290,8 +2297,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_from_self_payload_element_with_serialize_deserialize_for_self_payload_element_token_stream(
                         &operation,
                         &{
-                            let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
-                                .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(element));
+                            let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(generate_let_field_ident_value_inner_type_from_token_stream);
                             quote::quote! {
                                 #(#fields_assignment_excluding_primary_key_token_stream)*
                                 Self {
@@ -2646,13 +2652,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
-                &{
-                    let mut value = common_http_request_syn_variants.clone();
-                    if let Some(variant) = &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option {
-                        value.push(variant.clone());
-                    }
-                    value
-                },
+                &common_http_request_with_possible_operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
@@ -2963,13 +2963,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
-                &{
-                    let mut value = common_http_request_syn_variants.clone();
-                    if let Some(variant) = &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option {
-                        value.push(variant.clone());
-                    }
-                    value
-                },
+                &common_http_request_with_possible_operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
@@ -4821,13 +4815,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
-                &{
-                    let mut value = common_http_request_syn_variants.clone();
-                    if let Some(variant) = &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option {
-                        value.push(variant.clone());
-                    }
-                    value
-                },
+                &common_http_request_with_possible_operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
@@ -5230,13 +5218,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
-                &{
-                    let mut value = common_http_request_syn_variants.clone();
-                    if let Some(variant) = &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option {
-                        value.push(variant.clone());
-                    }
-                    value
-                },
+                &common_http_request_with_possible_operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
@@ -5894,13 +5876,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
-                &{
-                    let mut value = common_http_request_syn_variants.clone();
-                    if let Some(variant) = &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option {
-                        value.push(variant.clone());
-                    }
-                    value
-                },
+                &common_http_request_with_possible_operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
@@ -6260,13 +6236,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
-                &{
-                    let mut value = common_http_request_syn_variants.clone();
-                    if let Some(variant) = &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option {
-                        value.push(variant.clone());
-                    }
-                    value
-                },
+                &common_http_request_with_possible_operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             // println!("{try_operation_error_named_token_stream}");
