@@ -3196,11 +3196,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let primary_key_initialization_token_stream = match primary_key_from_or_try_from {
                                 postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
                                     Some(
-                                        #value_snake_case.into_iter()
+                                        #value_snake_case
+                                        .into_iter()
                                         .map(|#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(
                                             #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
                                         ))
-                                        .collect::<std::vec::Vec<#primary_key_inner_type_token_stream>>()
+                                        .collect()
                                     )
                                 },
                                 postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
@@ -6891,7 +6892,7 @@ fn generate_try_operation_token_stream(
 //     //                         if let syn::Type::Path(type_path) = &field.ty {
 //     //                             let mut code_occurence_type_repeat_checker = false;
 //     //                             let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-//     //                             .fold(std::string::String::new(), |mut acc, path_segment| {
+//     //                             .fold(std::string::String::default(), |mut acc, path_segment| {
 //     //                                 let path_segment_ident = &path_segment.ident;
 //     //                                 if *path_segment_ident == &code_occurence_upper_camel_case.to {
 //     //                                     assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
