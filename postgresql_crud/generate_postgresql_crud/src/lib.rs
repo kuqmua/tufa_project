@@ -3137,7 +3137,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 value.push(&checked_add_syn_variant);
                 value.push(&bind_query_syn_variant);
-                // type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
                 value
             },
             &read_from_or_try_from,
