@@ -963,6 +963,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ),
         }
     };
+    let primary_key_rust_sqlx_map_to_postgres_type_variant_inner_type_handle_syn_punctuated_punctuated = {
+        let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+        value.push_value(syn::PathSegment {
+            ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+            arguments: syn::PathArguments::None,
+        });
+        value.push_punct(syn::token::PathSep {
+            spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+        });
+        value.push_value(syn::PathSegment {
+            ident: proc_macro2::Ident::new(&primary_key_rust_sqlx_map_to_postgres_type_variant.get_inner_type_handle_stringified(""), proc_macro2::Span::call_site()),
+            arguments: syn::PathArguments::None,
+        });
+        value
+    };
     let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
     let (
         checked_add_syn_variant, 
