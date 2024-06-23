@@ -2546,6 +2546,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
+                   &proc_macro2::TokenStream::new(),
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 // println!("{parameters_logic_token_stream}");
@@ -2941,6 +2942,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
+                   &proc_macro2::TokenStream::new(),
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
@@ -3381,6 +3383,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
+                   &proc_macro2::TokenStream::new(),
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let filter_unique_parameters_token_stream = {
@@ -4068,6 +4071,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
+                   &proc_macro2::TokenStream::new(),
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
@@ -4549,6 +4553,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
+                   &proc_macro2::TokenStream::new(),
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let expected_updated_primary_keys_name_token_stream = quote::quote! {expected_updated_primary_keys};
@@ -5093,6 +5098,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
+                   &proc_macro2::TokenStream::new(),
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
@@ -5572,6 +5578,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &json_syn_variant_initialization_token_stream,
                         &json_syn_variant_status_code,
                         &eprintln_error_token_stream,
+                        &proc_macro2::TokenStream::new(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
@@ -6169,6 +6176,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
+                   &proc_macro2::TokenStream::new(),
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
@@ -8239,6 +8247,7 @@ fn generate_parameters_logic_token_stream(
     json_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     json_syn_variant_status_code: &proc_macro_helpers::status_code::StatusCode,
     eprintln_error_token_stream: &proc_macro2::TokenStream,
+    operation_payload_with_serialize_deserialize_check_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming_constants::ValueSnakeCase;
@@ -8284,10 +8293,14 @@ fn generate_parameters_logic_token_stream(
     let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     quote::quote! {
         let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
+            //todo maybe use serde json parsing instead of axum. (coz less info)
             #payload_snake_case: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
                 &#body_bytes_snake_case,
             ) {
-                Ok(axum::Json(#value_snake_case)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
+                Ok(axum::Json(#value_snake_case)) => {
+                    #operation_payload_with_serialize_deserialize_check_token_stream
+                    #try_or_try_from_operation_payload_upper_camel_case_token_stream
+                },
                 Err(#error_snake_case) => {
                     #error_initialization_eprintln_response_creation_token_stream
                 }
