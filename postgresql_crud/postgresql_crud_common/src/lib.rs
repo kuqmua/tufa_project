@@ -2270,7 +2270,7 @@ impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         add_path(&self.get_inner_type_handle_stringified(generic_type_str))
     }
-    fn get_inner_type_with_serialize_deserialize_handle_stringified(
+    pub fn get_inner_type_with_serialize_deserialize_handle_stringified(
         self,
         generic_type_str: &str,
     ) -> std::string::String {
