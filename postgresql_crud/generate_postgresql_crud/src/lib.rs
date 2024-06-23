@@ -3542,7 +3542,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         }
                                     }
                                     if let false = bind_increments.is_empty() {
-                                        bind_increments.pop();
+                                        let _ = bind_increments.pop();
                                     }
                                     bind_increments
                                 };
@@ -3840,7 +3840,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                #try_operation_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
                 #try_operation_token_stream
             },
             // try_operation_test_token_stream,
