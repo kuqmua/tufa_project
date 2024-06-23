@@ -2708,7 +2708,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
-                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -3019,7 +3018,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &proc_macro2::TokenStream::new(),
                     &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
@@ -3785,7 +3783,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
-                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -4133,7 +4130,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &proc_macro2::TokenStream::new(),
                     &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
@@ -4839,7 +4835,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &proc_macro2::TokenStream::new(),
                     &expected_updated_primary_keys_token_stream,
                     &query_string_token_stream,
                     &binded_query_token_stream,
@@ -5244,7 +5239,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &proc_macro2::TokenStream::new(),
                     &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
@@ -5898,7 +5892,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
-                    &proc_macro2::TokenStream::new(),
             //         let expected_updated_primary_keys_token_stream = quote::quote! {
             //             #primary_key_field_ident
             //             .iter()
@@ -6265,7 +6258,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
                     &proc_macro2::TokenStream::new(),
-                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -6442,7 +6434,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
@@ -8309,7 +8301,6 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     syn_derive_input: &syn::DeriveInput,
     common_additional_route_logic_token_stream: &proc_macro2::TokenStream,
     parameters_logic_token_stream: &proc_macro2::TokenStream,
-    parameters_check_token_stream: &proc_macro2::TokenStream,
     expected_updated_primary_keys_token_stream: &proc_macro2::TokenStream,
     query_string_token_stream: &proc_macro2::TokenStream,
     binded_query_token_stream: &proc_macro2::TokenStream,
@@ -8393,7 +8384,6 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
             #request_parts_preparation_token_stream
             #additional_validators_token_stream
             #parameters_logic_token_stream
-            #parameters_check_token_stream
             println!("{:#?}", #parameters_snake_case);
             #expected_updated_primary_keys_token_stream
             let #query_string_snake_case = #query_string_token_stream;
