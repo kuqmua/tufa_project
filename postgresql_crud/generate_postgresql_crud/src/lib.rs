@@ -3775,13 +3775,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     postgresql_crud_common::FromOrTryFrom::TryFrom => {
                         let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
                         quote::quote!{
-                            {
-                                let mut values = std::vec::Vec::new();
-                                for #element_snake_case in #value_snake_case {
-                                    values.push(#element_snake_case);
+                            #value_snake_case
+                            .into_iter()
+                            .fold(
+                                std::vec::Vec::new(), 
+                                |mut acc, #element_snake_case| {
+                                    acc.push(#element_snake_case);
+                                    acc
                                 }
-                                values
-                            }
+                            )
                         }
                     }
                 },
