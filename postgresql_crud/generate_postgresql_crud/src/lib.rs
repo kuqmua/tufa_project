@@ -1334,7 +1334,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #not_unique_primary_key_with_serialize_deserialize_upper_camel_case {
-                        #not_unique_primary_key_with_serialize_deserialize_snake_case,
+                        #not_unique_primary_key_with_serialize_deserialize_snake_case: #element_snake_case.clone(),
                         #field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream,
                     }
                 }
@@ -3461,10 +3461,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             quote::quote! {
                                 if let Some(#primary_key_field_ident) = &#value_snake_case.#primary_key_field_ident {
                                     let mut acc = std::vec::Vec::new();
-                                    //todo renaming not_unique_primary_key to element 
-                                    for #not_unique_primary_key_snake_case in #primary_key_field_ident {
-                                        if !acc.contains(&#not_unique_primary_key_snake_case) {
-                                            acc.push(&#not_unique_primary_key_snake_case);
+                                    //todo renaming not_unique_primary_key_with_serialize_deserialize to element 
+                                    for #element_snake_case in #primary_key_field_ident {
+                                        if !acc.contains(&#element_snake_case) {
+                                            acc.push(&#element_snake_case);
                                         }
                                         else {
                                             #error_initialization_eprintln_response_creation_token_stream
@@ -3970,11 +3970,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {}
         )
     };
-    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        &proc_macro_name_upper_camel_case,
-        &read_many_token_stream,
-        &proc_macro_name_upper_camel_case_ident_stringified
-    );
+    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     &proc_macro_name_upper_camel_case,
+    //     &read_many_token_stream,
+    //     &proc_macro_name_upper_camel_case_ident_stringified
+    // );
     let (
         read_one_token_stream,
         read_one_http_request_test_expect_success_token_stream,
@@ -6517,7 +6517,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream

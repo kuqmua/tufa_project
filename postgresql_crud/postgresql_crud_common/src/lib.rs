@@ -6121,6 +6121,11 @@ impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserialize {
     }
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
+impl error_occurence_lib::ToStdStringString for SqlxTypesUuidUuidWithSerializeDeserialize {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
