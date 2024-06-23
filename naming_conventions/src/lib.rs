@@ -34,7 +34,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["wrapper", "vec", "column"],
         ["order", "by"],
         ["primary", "keys"],
-        ["not", "unique", "primary", "keys"],
+        ["not", "unique", "primary", "key"],
         ["response", "variants"],
         ["tvfrr", "extraction", "logic"],
         ["bind", "query"],

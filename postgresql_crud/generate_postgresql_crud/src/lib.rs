@@ -1234,33 +1234,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             commit_failed_syn_variant_status_code
         )
     };
-    let not_unique_primary_keys_snake_case = naming_conventions::NotUniquePrimaryKeysSnakeCase;
+    let not_unique_primary_key_snake_case = naming_conventions::NotUniquePrimaryKeySnakeCase;
     let (
-        not_unique_primary_keys_syn_variant,
-        not_unique_primary_keys_syn_variant_initialization_token_stream,
-        not_unique_primary_keys_syn_variant_status_code,
-        not_unique_primary_keys_syn_variant_token_stream
+        not_unique_primary_key_syn_variant,
+        not_unique_primary_key_syn_variant_initialization_token_stream,
+        not_unique_primary_key_syn_variant_status_code,
+        not_unique_primary_key_syn_variant_token_stream
      ) = {
-        let not_unique_primary_keys_upper_camel_case = naming_conventions::NotUniquePrimaryKeysUpperCamelCase;
-        let not_unique_primary_keys_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
-        let not_unique_primary_keys_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-            not_unique_primary_keys_syn_variant_status_code.clone(),
-            &not_unique_primary_keys_upper_camel_case,
+        let not_unique_primary_key_upper_camel_case = naming_conventions::NotUniquePrimaryKeyUpperCamelCase;
+        let not_unique_primary_key_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
+        let not_unique_primary_key_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+            not_unique_primary_key_syn_variant_status_code.clone(),
+            &not_unique_primary_key_upper_camel_case,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
-                    &not_unique_primary_keys_snake_case,
-                    primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &not_unique_primary_key_snake_case,
+                    primary_key_rust_sqlx_map_to_postgres_type_variant_inner_type_handle_syn_punctuated_punctuated
                 )
             ],
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let not_unique_primary_keys_syn_variant_token_stream = generate_error_occurence_variant_token_stream(
-            &not_unique_primary_keys_syn_variant,
+        let not_unique_primary_key_syn_variant_token_stream = generate_error_occurence_variant_token_stream(
+            &not_unique_primary_key_syn_variant,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         (
-            not_unique_primary_keys_syn_variant,
+            not_unique_primary_key_syn_variant,
             {
                 let field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
@@ -1269,14 +1269,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 quote::quote! {
-                    #not_unique_primary_keys_upper_camel_case {
-                        #not_unique_primary_keys_snake_case,
+                    #not_unique_primary_key_upper_camel_case {
+                        #not_unique_primary_key_snake_case,
                         #field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream,
                     }
                 }
             },
-            not_unique_primary_keys_syn_variant_status_code,
-            not_unique_primary_keys_syn_variant_token_stream
+            not_unique_primary_key_syn_variant_status_code,
+            not_unique_primary_key_syn_variant_token_stream
         )
     };
     //todo maybe instead primary key put upper camel case RustSqlxMapToPostgresTypeVariant variant
@@ -3208,7 +3208,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #primary_key_variant_token_stream
                             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
                             #not_unique_column_syn_variant_token_stream,
-                            #not_unique_primary_keys_syn_variant_token_stream,
+                            #not_unique_primary_key_syn_variant_token_stream,
                         }
                     },
                 );
@@ -3221,22 +3221,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
                                     {
                                         let mut acc = std::vec::Vec::new();
-                                        let mut #not_unique_primary_keys_snake_case = std::vec::Vec::new();
+                                        let mut not_unique_primary_key_option = None;
                                         for #element_snake_case in #value_snake_case {
                                             let #value_snake_case = #primary_key_inner_type_token_stream::#from_snake_case(
                                                 #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
                                             );
                                             if acc.contains(&#value_snake_case) {
-                                                if !#not_unique_primary_keys_snake_case.contains(&#value_snake_case) {
-                                                    #not_unique_primary_keys_snake_case.push(#value_snake_case);
-                                                }
+                                                not_unique_primary_key_option = Some(#value_snake_case);
+                                                break;
                                             }
                                             else {
                                                 acc.push(#value_snake_case);
                                             }
                                         }
-                                        if !#not_unique_primary_keys_snake_case.is_empty() {
-                                            return Err(Self::Error::#not_unique_primary_keys_syn_variant_initialization_token_stream);
+                                        if let Some(#not_unique_primary_key_snake_case) = not_unique_primary_key_option {
+                                            return Err(Self::Error::#not_unique_primary_key_syn_variant_initialization_token_stream);
                                         }
                                         Some(acc)
                                     }
@@ -3378,9 +3377,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let filter_unique_parameters_primary_key_token_stream = {
                         let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
-                            &not_unique_primary_keys_syn_variant_initialization_token_stream,
+                            &not_unique_primary_key_syn_variant_initialization_token_stream,
                             &quote::quote! {#from_snake_case(#error_snake_case)},
-                            &not_unique_primary_keys_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                            &not_unique_primary_key_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                             &eprintln_error_token_stream,
                         );
                         quote::quote! {
