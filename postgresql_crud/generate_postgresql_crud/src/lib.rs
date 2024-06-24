@@ -3164,7 +3164,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&checked_add_syn_variant);
                 value.push(&bind_query_syn_variant);
                 value.push(&not_unique_primary_key_with_serialize_deserialize_syn_variant);
-                //not_unique_column_syn_variant
+                value.push(&not_unique_column_syn_variant);
                 not_unique_fields_syn_variants.iter().for_each(|element|{
                     value.push(&element);
                 });
