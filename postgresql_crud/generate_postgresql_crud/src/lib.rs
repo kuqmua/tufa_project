@@ -3006,13 +3006,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (read_many_token_stream, read_many_test_token_stream) = {
         let operation = Operation::ReadMany;
-        let not_unique_primary_key_with_serialize_deserialize_snake_case = naming_conventions::NotUniquePrimaryKeyWithSerializeDeserializeSnakeCase;
         let (
             not_unique_primary_key_with_serialize_deserialize_syn_variant,
             not_unique_primary_key_with_serialize_deserialize_syn_variant_initialization_token_stream,
             not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code,
          ) = {
             let not_unique_primary_key_with_serialize_deserialize_upper_camel_case = naming_conventions::NotUniquePrimaryKeyWithSerializeDeserializeUpperCamelCase;
+            let not_unique_primary_key_with_serialize_deserialize_snake_case = naming_conventions::NotUniquePrimaryKeyWithSerializeDeserializeSnakeCase;
             let not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
             (
                 proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
@@ -3741,13 +3741,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{try_operation_route_logic_token_stream}");
         let (try_operation_token_stream, try_operation_test_token_stream) = {
-            let not_unique_primary_key_snake_case = naming_conventions::NotUniquePrimaryKeySnakeCase;
             let (
                 not_unique_primary_key_syn_variant,
                 not_unique_primary_key_syn_variant_initialization_token_stream,
                 not_unique_primary_key_syn_variant_status_code,
              ) = {
                 let not_unique_primary_key_upper_camel_case = naming_conventions::NotUniquePrimaryKeyUpperCamelCase;
+                let not_unique_primary_key_snake_case = naming_conventions::NotUniquePrimaryKeySnakeCase;
                 let not_unique_primary_key_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
                 (
                     proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
