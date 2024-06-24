@@ -3252,7 +3252,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #primary_key_variant_token_stream
                             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
                             #not_unique_column_syn_variant_token_stream,
-                            #not_unique_primary_key_syn_variant_token_stream,
                         }
                     },
                 );
@@ -3263,49 +3262,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let primary_key_field_assignment_token_stream = {
                             let primary_key_initialization_token_stream = match primary_key_from_or_try_from {
                                 postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
-                                    {
-                                        let mut acc = std::vec::Vec::new();
-                                        let mut not_unique_primary_key_option = None;
-                                        for #element_snake_case in #value_snake_case {
-                                            let #value_snake_case = #primary_key_inner_type_token_stream::#from_snake_case(
-                                                #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
-                                            );
-                                            if acc.contains(&#value_snake_case) {//todo maybe move check on unique to primary_key_inner_type_with_serialize_deserialize deserialize mannual implementation?
-                                                not_unique_primary_key_option = Some(#value_snake_case);
-                                                break;
-                                            }
-                                            else {
-                                                acc.push(#value_snake_case);
-                                            }
-                                        }
-                                        if let Some(#not_unique_primary_key_snake_case) = not_unique_primary_key_option {
-                                            return Err(Self::Error::#not_unique_primary_key_syn_variant_initialization_token_stream);
-                                        }
-                                        Some(acc)
-                                    }
+                                    Some(#value_snake_case.iter().map(|#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(
+                                        #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
+                                    )).collect())
                                 },
                                 postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
                                     {
                                         let mut acc = std::vec::Vec::new();
-                                        let mut not_unique_primary_key_option = None;
                                         for #element_snake_case in #value_snake_case {
                                             match #primary_key_inner_type_token_stream::#try_from_snake_case(#element_snake_case) {
                                                 Ok(#value_snake_case) => {
-                                                    if acc.contains(&#value_snake_case) {//todo maybe move check on unique to primary_key_inner_type_with_serialize_deserialize deserialize mannual implementation?
-                                                        not_unique_primary_key_option = Some(#value_snake_case);
-                                                        break;
-                                                    }
-                                                    else {
-                                                        acc.push(#value_snake_case);
-                                                    }
+                                                    acc.push(#value_snake_case);
                                                 },
                                                 Err(#error_snake_case) => {
                                                     return Err(Self::Error::#primary_key_field_ident_variant_initialization_token_stream);
                                                 }
                                             }
-                                        }
-                                        if let Some(#not_unique_primary_key_snake_case) = not_unique_primary_key_option {
-                                            return Err(Self::Error::#not_unique_primary_key_syn_variant_initialization_token_stream);
                                         }
                                         Some(acc)
                                     }
@@ -6471,13 +6443,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             #create_many_token_stream
-            #create_one_token_stream
+            // #create_one_token_stream
             #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
-            #update_one_token_stream
-            #delete_many_token_stream
-            #delete_one_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
+            // #update_one_token_stream
+            // #delete_many_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
