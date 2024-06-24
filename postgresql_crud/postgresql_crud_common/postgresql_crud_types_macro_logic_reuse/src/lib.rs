@@ -78,10 +78,15 @@ fn field_type_implements_serialize_deserialize_handle(
     let gen = quote::quote!{
         //todo maybe some of them will not be needed in the future
         #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-        pub struct #ident_with_serialize_deserialize_token_stream(#field_type);
+        pub struct #ident_with_serialize_deserialize_token_stream(pub #field_type);
         impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "{:?}", self.0)
+            }
+        }
+        impl error_occurence_lib::ToStdStringString for #ident_with_serialize_deserialize_token_stream {
+            fn to_std_string_string(&self) -> std::string::String {
+                format!("{self}")
             }
         }
         impl std::convert::From<#ident_with_serialize_deserialize_token_stream> for #ident {
@@ -103,7 +108,7 @@ fn field_type_implements_serialize_deserialize_handle(
             serde::Deserialize,
             utoipa::ToSchema,
         )]
-        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(std::option::Option<#field_type>);
+        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(pub std::option::Option<#field_type>);
         impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "{:?}", self.0)
@@ -917,7 +922,7 @@ fn common_specific_from_handle(
             serde::Deserialize,
             utoipa::ToSchema,
         )]
-        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(std::option::Option<#ident_with_serialize_deserialize_token_stream>);
+        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(pub std::option::Option<#ident_with_serialize_deserialize_token_stream>);
         impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "{:?}", self.0)
@@ -1026,7 +1031,7 @@ fn common_specific_try_from_handle(
             serde::Deserialize,
             utoipa::ToSchema,
         )]
-        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(std::option::Option<#ident_with_serialize_deserialize_token_stream>);
+        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(pub std::option::Option<#ident_with_serialize_deserialize_token_stream>);
         impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "{:?}", self.0)

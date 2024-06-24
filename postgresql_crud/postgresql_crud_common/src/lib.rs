@@ -563,7 +563,7 @@ impl std::convert::From<&SupportedSqlxPostgresType> for SqlxPostgresTypeOrOption
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, strum_macros::Display)]
 pub enum SqlxPostgresType {
     StdPrimitiveBool,
     StdPrimitiveI16,
