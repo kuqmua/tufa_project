@@ -4050,7 +4050,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
-                   &proc_macro2::TokenStream::new(),
+                   &{
+                        let filter_not_unique_column_token_stream = {
+                            let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                                &operation,
+                                &not_unique_column_syn_variant_initialization_token_stream,
+                                &quote::quote! {#from_snake_case(#error_snake_case)},
+                                &not_unique_column_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                                &eprintln_error_token_stream,
+                            );
+                            quote::quote!{
+                                let mut acc = std::vec::Vec::new();
+                                for #element_snake_case in &#value_snake_case.#select_snake_case {
+                                    if acc.contains(&#element_snake_case) {
+                                        #error_initialization_eprintln_response_creation_token_stream
+                                    }
+                                    else {
+                                        acc.push(#element_snake_case);
+                                    }
+                                }
+                            }
+                        };
+                        quote::quote!{
+                            #filter_not_unique_column_token_stream
+                        }
+                   },
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
