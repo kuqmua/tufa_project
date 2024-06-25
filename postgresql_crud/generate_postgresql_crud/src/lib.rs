@@ -3968,7 +3968,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     ) = {
         let operation = Operation::ReadOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &common_route_syn_variants,
+            &{
+                let mut value = common_route_syn_variants.clone();
+                value.push(&not_unique_column_syn_variant);
+                value
+            },
             &read_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
