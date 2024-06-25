@@ -2984,22 +2984,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (read_many_token_stream, read_many_test_token_stream) = {
         let operation = Operation::ReadMany;
         let (
-            not_unique_primary_key_with_serialize_deserialize_syn_variant,
-            not_unique_primary_key_with_serialize_deserialize_syn_variant_initialization_token_stream,
-            not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code,
+            not_unique_primary_key_syn_variant,
+            not_unique_primary_key_syn_variant_initialization_token_stream,
+            not_unique_primary_key_syn_variant_status_code,
             not_unique_fields_syn_variants
          ) = {
-            let not_unique_primary_key_with_serialize_deserialize_upper_camel_case = naming_conventions::NotUniquePrimaryKeyWithSerializeDeserializeUpperCamelCase;
-            let not_unique_primary_key_with_serialize_deserialize_snake_case = naming_conventions::NotUniquePrimaryKeyWithSerializeDeserializeSnakeCase;
-            let not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
+            let not_unique_primary_key_upper_camel_case = naming_conventions::NotUniquePrimaryKeyUpperCamelCase;
+            let not_unique_primary_key_snake_case = naming_conventions::NotUniquePrimaryKeySnakeCase;
+            let not_unique_primary_key_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
             (
                 proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                    not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code.clone(),
-                    &not_unique_primary_key_with_serialize_deserialize_upper_camel_case,
+                    not_unique_primary_key_syn_variant_status_code.clone(),
+                    &not_unique_primary_key_upper_camel_case,
                     vec![
                         (
                             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            &not_unique_primary_key_with_serialize_deserialize_snake_case,
+                            &not_unique_primary_key_snake_case,
                             {
                                 let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                                 value.push_value(syn::PathSegment {
@@ -3027,13 +3027,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
-                        #not_unique_primary_key_with_serialize_deserialize_upper_camel_case {
-                            #not_unique_primary_key_with_serialize_deserialize_snake_case: #element_snake_case.clone(),
+                        #not_unique_primary_key_upper_camel_case {
+                            #not_unique_primary_key_snake_case: #element_snake_case.clone(),
                             #field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream,
                         }
                     }
                 },
-                not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code,
+                not_unique_primary_key_syn_variant_status_code,
                 fields_named_excluding_primary_key.iter().map(|element|{
                     let not_unique_field_ident_upper_camel_case_stringified = format!(
                         "{}{}",
@@ -3046,7 +3046,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element.field_ident.to_string()),
                     );
                     proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                        not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code.clone(),
+                        not_unique_primary_key_syn_variant_status_code.clone(),
                         &not_unique_field_ident_upper_camel_case_stringified,
                         vec![
                             (
@@ -3091,7 +3091,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 value.push(&checked_add_syn_variant);
                 value.push(&bind_query_syn_variant);
-                value.push(&not_unique_primary_key_with_serialize_deserialize_syn_variant);
+                value.push(&not_unique_primary_key_syn_variant);
                 not_unique_fields_syn_variants.iter().for_each(|element|{
                     value.push(&element);
                 });
@@ -3298,9 +3298,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let filter_not_unique_primary_key_token_stream = {
                                 let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                                     &operation,
-                                    &not_unique_primary_key_with_serialize_deserialize_syn_variant_initialization_token_stream,
+                                    &not_unique_primary_key_syn_variant_initialization_token_stream,
                                     &quote::quote! {#from_snake_case(#error_snake_case)},
-                                    &not_unique_primary_key_with_serialize_deserialize_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                                    &not_unique_primary_key_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                                     &eprintln_error_token_stream,
                                 );
                                 quote::quote! {
@@ -3711,7 +3711,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &{
                     let mut value = common_http_request_syn_variants.clone();
-                    value.push(not_unique_primary_key_with_serialize_deserialize_syn_variant);
+                    value.push(not_unique_primary_key_syn_variant);
                     not_unique_fields_syn_variants.iter().for_each(|element|{
                         value.push(element.clone());
                     });
@@ -3737,7 +3737,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         if !acc.contains(&#element_snake_case) {
                                             acc.push(&#element_snake_case);
                                         } else {
-                                            return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_primary_key_with_serialize_deserialize_syn_variant_initialization_token_stream);
+                                            return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_primary_key_syn_variant_initialization_token_stream);
                                         }
                                     }
                                 }
