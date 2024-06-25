@@ -2161,6 +2161,39 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let read_from_or_try_from = postgresql_crud_common::FromOrTryFrom::TryFrom;
+    let generate_filter_not_unique_column_route_logic_token_stream = |operation: &Operation|{
+        let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+            &operation,
+            &not_unique_column_syn_variant_initialization_token_stream,
+            &quote::quote! {#from_snake_case(#error_snake_case)},
+            &not_unique_column_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &eprintln_error_token_stream,
+        );
+        quote::quote!{
+            let mut acc = std::vec::Vec::new();
+            for #element_snake_case in &#value_snake_case.#select_snake_case {
+                if acc.contains(&#element_snake_case) {
+                    #error_initialization_eprintln_response_creation_token_stream
+                }
+                else {
+                    acc.push(#element_snake_case);
+                }
+            }
+        }
+    };
+    let generate_filter_not_unique_column_http_request_token_stream = |operation: &Operation|{
+         let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+        quote::quote!{
+            let mut acc = std::vec::Vec::new();
+            for #element_snake_case in &#value_snake_case.#select_snake_case {
+                if acc.contains(&#element_snake_case) {
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_initialization_token_stream);
+                } else {
+                    acc.push(#element_snake_case);
+                }
+            }
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -3358,26 +3391,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #(#filter_not_unique_fields_named_excluding_primary_key_token_stream)*
                             }
                         };
-                        let filter_not_unique_column_token_stream = {
-                            let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                                &operation,
-                                &not_unique_column_syn_variant_initialization_token_stream,
-                                &quote::quote! {#from_snake_case(#error_snake_case)},
-                                &not_unique_column_syn_variant_status_code.to_axum_http_status_code_token_stream(),
-                                &eprintln_error_token_stream,
-                            );
-                            quote::quote!{
-                                let mut acc = std::vec::Vec::new();
-                                for #element_snake_case in &#value_snake_case.#select_snake_case {
-                                    if acc.contains(&#element_snake_case) {
-                                        #error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                    else {
-                                        acc.push(#element_snake_case);
-                                    }
-                                }
-                            }
-                        };
+                        let filter_not_unique_column_token_stream = generate_filter_not_unique_column_route_logic_token_stream(&operation);
                         quote::quote!{
                             #filter_not_unique_fields_token_stream
                             #filter_not_unique_column_token_stream
@@ -3796,18 +3810,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #(#filter_not_unique_fields_named_excluding_primary_key_token_stream)*
                         }
                     };
-                    let filter_not_unique_column_token_stream = {
-                        quote::quote!{
-                            let mut acc = std::vec::Vec::new();
-                            for #element_snake_case in &#value_snake_case.#select_snake_case {
-                                if acc.contains(&#element_snake_case) {
-                                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_initialization_token_stream);
-                                } else {
-                                    acc.push(#element_snake_case);
-                                }
-                            }
-                        }
-                    };
+                    let filter_not_unique_column_token_stream = generate_filter_not_unique_column_http_request_token_stream(&operation);
                     quote::quote!{
                         #filter_not_unique_fields_token_stream
                         #filter_not_unique_column_token_stream
@@ -4051,26 +4054,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
                    &{
-                        let filter_not_unique_column_token_stream = {
-                            let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                                &operation,
-                                &not_unique_column_syn_variant_initialization_token_stream,
-                                &quote::quote! {#from_snake_case(#error_snake_case)},
-                                &not_unique_column_syn_variant_status_code.to_axum_http_status_code_token_stream(),
-                                &eprintln_error_token_stream,
-                            );
-                            quote::quote!{
-                                let mut acc = std::vec::Vec::new();
-                                for #element_snake_case in &#value_snake_case.#select_snake_case {
-                                    if acc.contains(&#element_snake_case) {
-                                        #error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                    else {
-                                        acc.push(#element_snake_case);
-                                    }
-                                }
-                            }
-                        };
+                        let filter_not_unique_column_token_stream = generate_filter_not_unique_column_route_logic_token_stream(&operation);
                         quote::quote!{
                             #filter_not_unique_column_token_stream
                         }
@@ -4171,19 +4155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &struct_options_ident_token_stream,
                 &{
-                    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-                    let filter_not_unique_column_token_stream = {
-                        quote::quote!{
-                            let mut acc = std::vec::Vec::new();
-                            for #element_snake_case in &#value_snake_case.#select_snake_case {
-                                if acc.contains(&#element_snake_case) {
-                                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_initialization_token_stream);
-                                } else {
-                                    acc.push(#element_snake_case);
-                                }
-                            }
-                        }
-                    };
+                    let filter_not_unique_column_token_stream = generate_filter_not_unique_column_http_request_token_stream(&operation);
                     quote::quote!{
                         #filter_not_unique_column_token_stream
                     }
