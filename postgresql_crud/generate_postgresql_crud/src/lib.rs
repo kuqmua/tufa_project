@@ -4146,7 +4146,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &struct_options_ident_token_stream,
-                &proc_macro2::TokenStream::new(),
+                &{
+                    let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
+                    let filter_not_unique_column_token_stream = {
+                        quote::quote!{
+                            let mut acc = std::vec::Vec::new();
+                            for #element_snake_case in &#value_snake_case.#select_snake_case {
+                                if acc.contains(&#element_snake_case) {
+                                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_initialization_token_stream);
+                                } else {
+                                    acc.push(#element_snake_case);
+                                }
+                            }
+                        }
+                    };
+                    quote::quote!{
+                        #filter_not_unique_column_token_stream
+                    }
+                },
                 &generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream(&operation),
                 &match fields_named_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{#struct_options_ident_token_stream::#from_snake_case(#value_snake_case)},
