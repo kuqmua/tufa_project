@@ -2160,7 +2160,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)
         }
     };
-    let read_from_or_try_from = postgresql_crud_common::FromOrTryFrom::TryFrom;
     let generate_filter_not_unique_column_route_logic_token_stream = |operation: &Operation|{
         let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
             &operation,
@@ -3281,18 +3280,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream(
                 &operation,
                 &{
-                    let primary_key_field_assignment_token_stream = {
-                        quote::quote! {
-                            let #primary_key_field_ident = match value.#primary_key_field_ident {
-                                Some(value) => Some(
-                                    value
-                                        .into_iter()
-                                        .map(|element| #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(element))
-                                        .collect::<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>(),
-                                ),
-                                None => None,
-                            };
-                        }
+                    let primary_key_field_assignment_token_stream = quote::quote! {
+                        let #primary_key_field_ident = match #value_snake_case.#primary_key_field_ident {
+                            Some(#value_snake_case) => Some(
+                                #value_snake_case
+                                    .into_iter()
+                                    .map(|#element_snake_case| #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case))
+                                    .collect::<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>(),
+                            ),
+                            None => None,
+                        };
                     };
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
                         .map(|element| generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_stream(element));
