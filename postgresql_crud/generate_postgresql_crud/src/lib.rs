@@ -2185,7 +2185,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
          let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
         quote::quote!{
             let mut acc = std::vec::Vec::new();
-            for #element_snake_case in &#value_snake_case.#select_snake_case {
+            for #element_snake_case in &#parameters_snake_case.#payload_snake_case.#select_snake_case {
                 if acc.contains(&#element_snake_case) {
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_initialization_token_stream);
                 } else {
@@ -3387,10 +3387,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #(#filter_not_unique_fields_named_excluding_primary_key_token_stream)*
                             }
                         };
-                        // let filter_not_unique_column_token_stream = generate_filter_not_unique_column_route_logic_token_stream(&operation);
+                        let filter_not_unique_column_token_stream = generate_filter_not_unique_column_route_logic_token_stream(&operation);
                         quote::quote!{
                             #filter_not_unique_fields_token_stream
-                            // #filter_not_unique_column_token_stream
+                            #filter_not_unique_column_token_stream
                         }
                    },
                    &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3805,10 +3805,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #(#filter_not_unique_fields_named_excluding_primary_key_token_stream)*
                         }
                     };
-                    // let filter_not_unique_column_token_stream = generate_filter_not_unique_column_http_request_token_stream(&operation);
+                    let filter_not_unique_column_token_stream = generate_filter_not_unique_column_http_request_token_stream(&operation);
                     quote::quote!{
                         #filter_not_unique_fields_token_stream
-                        // #filter_not_unique_column_token_stream
+                        #filter_not_unique_column_token_stream
                     }
                 },
                 &generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream(&operation),
