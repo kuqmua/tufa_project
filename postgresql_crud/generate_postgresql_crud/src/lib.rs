@@ -3094,7 +3094,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&not_unique_column_syn_variant);
                 value
             },
-            &read_from_or_try_from,
+            &fields_named_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
             &syn_derive_input,
@@ -3138,41 +3138,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     payload_with_serialize_deserialize_token_stream
                 )
             };
-            let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
-                let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
-                    &operation,
-                    &{
-                        let primary_key_variant_token_stream = match primary_key_from_or_try_from {
-                            postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
-                            postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
-                                #primary_key_field_ident_upper_camel_case_token_stream {
-                                    #eo_error_occurence_attribute_token_stream
-                                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,
-                                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-                                },
-                            }
-                        };
-                        let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
-                            &fields_named_excluding_primary_key,
-                            &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-                            &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-                            &eo_error_occurence_attribute_token_stream,
-                        );
-                        quote::quote! {
-                            #primary_key_variant_token_stream
-                            #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
-                        }
-                    },
-                );
-                // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
-                let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_try_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+            let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_from_or_try_from {
+                postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
                     &operation,
                     &{
                         let primary_key_field_assignment_token_stream = {
                             let primary_key_initialization_token_stream = match primary_key_from_or_try_from {
                                 postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
-                                    Some(#value_snake_case.iter().map(|#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(
-                                        #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
+                                    Some(#value_snake_case.into_iter().map(|#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(
+                                        #element_snake_case
                                     )).collect())
                                 },
                                 postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
@@ -3212,19 +3186,104 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let #order_by_snake_case = #value_snake_case.#order_by_snake_case;
                             let #limit_snake_case = #limit_and_offset_type_token_stream::#from_snake_case(#value_snake_case.#limit_snake_case);
                             let #offset_snake_case = #limit_and_offset_type_token_stream::#from_snake_case(#value_snake_case.#offset_snake_case);
-                            Ok(Self {
+                            Self {
                                 #(#fields_named_idents_comma_token_stream)*
                                 #select_snake_case,
                                 #order_by_snake_case,
                                 #limit_snake_case,
                                 #offset_snake_case,
-                            })
+                            }
                         }
                     },
-                );
-                quote::quote! {
-                    #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream
-                    #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
+                ),
+                postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                    let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
+                        &operation,
+                        &{
+                            let primary_key_variant_token_stream = match primary_key_from_or_try_from {
+                                postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
+                                postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
+                                    #primary_key_field_ident_upper_camel_case_token_stream {
+                                        #eo_error_occurence_attribute_token_stream
+                                        #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,
+                                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
+                                    },
+                                }
+                            };
+                            let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
+                                &fields_named_excluding_primary_key,
+                                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
+                                &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                                &eo_error_occurence_attribute_token_stream,
+                            );
+                            quote::quote! {
+                                #primary_key_variant_token_stream
+                                #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
+                            }
+                        },
+                    );
+                    // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
+                    let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = generate_impl_std_convert_try_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
+                        &operation,
+                        &{
+                            let primary_key_field_assignment_token_stream = {
+                                let primary_key_initialization_token_stream = match primary_key_from_or_try_from {
+                                    postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
+                                        Some(#value_snake_case.into_iter().map(|#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(
+                                            #element_snake_case
+                                        )).collect())
+                                    },
+                                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
+                                        Some({
+                                            let mut acc = std::vec::Vec::new();
+                                            for #element_snake_case in #value_snake_case {
+                                                match #primary_key_inner_type_token_stream::#try_from_snake_case(#element_snake_case) {
+                                                    Ok(#value_snake_case) => {
+                                                        acc.push(#value_snake_case);
+                                                    },
+                                                    Err(#error_snake_case) => {
+                                                        return Err(Self::Error::#primary_key_field_ident_variant_initialization_token_stream);
+                                                    }
+                                                }
+                                            }
+                                            acc
+                                        })
+                                    }
+                                };
+                                quote::quote! {
+                                    let #primary_key_field_ident = match #value_snake_case.#primary_key_field_ident {
+                                        Some(#value_snake_case) => #primary_key_initialization_token_stream,
+                                        None => None
+                                    };
+                                }
+                            };
+                            let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                                .map(|element| generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
+                                    element,
+                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                    &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                                ));
+                            quote::quote! {
+                                #primary_key_field_assignment_token_stream
+                                #(#fields_assignment_excluding_primary_key_token_stream)*
+                                let #select_snake_case = #value_snake_case.#select_snake_case;
+                                let #order_by_snake_case = #value_snake_case.#order_by_snake_case;
+                                let #limit_snake_case = #limit_and_offset_type_token_stream::#from_snake_case(#value_snake_case.#limit_snake_case);
+                                let #offset_snake_case = #limit_and_offset_type_token_stream::#from_snake_case(#value_snake_case.#offset_snake_case);
+                                Ok(Self {
+                                    #(#fields_named_idents_comma_token_stream)*
+                                    #select_snake_case,
+                                    #order_by_snake_case,
+                                    #limit_snake_case,
+                                    #offset_snake_case,
+                                })
+                            }
+                        },
+                    );
+                    quote::quote! {
+                        #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream
+                        #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
+                    }
                 }
             };
             // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
@@ -3285,7 +3344,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
-                   &read_from_or_try_from,
+                   &fields_named_from_or_try_from,
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
