@@ -4781,7 +4781,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_token_stream,
-                &proc_macro2::TokenStream::new(),
+                &{
+                    let filter_not_unique_primary_key_token_stream = {
+                        let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
+                        quote::quote!{
+                            let mut acc = std::vec::Vec::new();
+                            for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                if !acc.contains(&&#element_snake_case.#primary_key_field_ident) {
+                                    acc.push(&#element_snake_case.#primary_key_field_ident);
+                                } else {
+                                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_primary_key_syn_variant_initialization_token_stream);
+                                }
+                            }
+                        }
+                    };
+                    quote::quote!{
+                        #filter_not_unique_primary_key_token_stream
+                    }
+                },
                 &{
                     let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
                     quote::quote!{#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
