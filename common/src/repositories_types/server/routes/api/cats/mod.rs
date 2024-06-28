@@ -212,16 +212,6 @@ pub struct Dog {
 
 /////////////
 #[derive(Debug)]
-pub struct OptionField<T> {
-    pub value: std::option::Option<T>
-}
-
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct OptionFieldWithSerializeDeserialize<T> {
-    pub value: std::option::Option<T>
-}
-
-#[derive(Debug)]
 pub struct UpdateManyPayloadElement {
     pub std_primitive_bool_as_postgresql_bool: OptionField<postgresql_crud::StdOptionOptionStdPrimitiveBool>,
     pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::StdOptionOptionStdPrimitiveI16,
@@ -286,18 +276,12 @@ impl std::convert::TryFrom<UpdateManyPayloadElementWithSerializeDeserialize>
                     );
                 }
             };
-
-//             OptionField<T> {
-//     pub value: std::option::Option<T>
-// }
-// let boold: bool = value.std_primitive_bool_as_postgresql_bool;
-//OptionFieldWithSerializeDeserialize<StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize>
-        let std_primitive_bool_as_postgresql_bool = 
-
-
-            postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
-                value.std_primitive_bool_as_postgresql_bool,
-            );
+        let std_primitive_bool_as_postgresql_bool = OptionField { 
+            value: match value.std_primitive_bool_as_postgresql_bool.value {
+                Some(value) => Some(postgresql_crud::StdOptionOptionStdPrimitiveBool::from(value)),
+                None => None
+            }
+        };
         let std_primitive_i16_as_postgresql_small_int =
             postgresql_crud::StdOptionOptionStdPrimitiveI16::from(
                 value.std_primitive_i16_as_postgresql_small_int,
@@ -364,10 +348,12 @@ impl std::convert::From<UpdateManyPayloadElement>
             postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
                 value.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
             );
-        let std_primitive_bool_as_postgresql_bool =
-            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
-                value.std_primitive_bool_as_postgresql_bool,
-            );
+        let std_primitive_bool_as_postgresql_bool = OptionFieldWithSerializeDeserialize {
+            value: match value.std_primitive_bool_as_postgresql_bool.value {
+                Some(value) => Some(postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(value)),
+                None => None
+            }
+        };
         let std_primitive_i16_as_postgresql_small_int =
             postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
                 value.std_primitive_i16_as_postgresql_small_int,

@@ -732,6 +732,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let inner_type_token_stream = &element.inner_type_token_stream;
         quote::quote! {pub use #inner_type_token_stream;}
     });
+    let value_snake_case = naming_constants::ValueSnakeCase;
+    let option_field_and_option_field_with_serialize_deserialize_token_stream = {
+        let derive_debug = token_patterns::DeriveDebug;
+        let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
+        quote::quote!{
+            #derive_debug
+            pub struct OptionField<T> {
+                pub #value_snake_case: std::option::Option<T>
+            }       
+            #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+            pub struct OptionFieldWithSerializeDeserialize<T> {
+                pub #value_snake_case: std::option::Option<T>
+            }
+        }
+    };
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_snake_case = naming_constants::PayloadSnakeCase;
     // let query_upper_camel_case = naming_constants::QueryUpperCamelCase;
@@ -1388,7 +1403,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let offset_snake_case = naming_constants::OffsetSnakeCase;
     let in_snake_case = naming_constants::InSnakeCase;
     let unnest_snake_case = naming_constants::UnnestSnakeCase;
-    let value_snake_case = naming_constants::ValueSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     // let response_snake_case = naming_constants::ResponseSnakeCase;
     // let primary_keys_snake_case = naming_conventions::PrimaryKeysSnakeCase;
@@ -6353,6 +6367,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream
         #(#reexport_postgresql_sqlx_column_types_token_stream)*
+        #option_field_and_option_field_with_serialize_deserialize_token_stream
         // #[cfg(test)]
         // mod test_try_create_many {
             // #emulate_crud_api_usage_test_token_stream
