@@ -4649,6 +4649,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         acc.push_str(&format!("{field_ident} = data.{field_ident}{possible_dot_space}"));
                         acc
                     });
+                    //todo maybe remove unnest - if OptionField value in None then simpli ignore it, not need to push in vec
                     let query_stringified = format!("\"{update_snake_case} {table_name_stringified} {as_snake_case} t {set_snake_case} {declarations} {from_snake_case} ({select_snake_case} * {from_snake_case} {unnest_snake_case}({column_increments})) as data({column_names}) where t.{primary_key_field_ident} = data.{primary_key_field_ident} {returning_snake_case} data.{primary_key_field_ident}\"");
                     query_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -4699,11 +4700,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                         let original_type_token_stream = &element.original_type_token_stream;
                         quote::quote!{
+                            //todo this is wrong!!! if OptionField value in None then simpli ignore it, not need to push in vec
                             #query_snake_case = #query_snake_case.bind(
                                 #field_ident_underscore_vec_token_stream
                                     .into_iter()
-                                    .map(|element| element.into_inner())
-                                    .collect::<std::vec::Vec<#original_type_token_stream>>(),
+                                    .map(|#element_snake_case| match #element_snake_case.#value_snake_case {
+                                        Some(#value_snake_case) => #value_snake_case.into_inner(),
+                                        None => None
+                                    })
+                                    .collect::<std::vec::Vec<std::option::Option<#original_type_token_stream>>>(),
                             );
                         }
                     });
