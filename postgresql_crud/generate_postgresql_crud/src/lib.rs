@@ -736,13 +736,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let option_field_and_option_field_with_serialize_deserialize_token_stream = {
         let derive_debug = token_patterns::DeriveDebug;
         let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
+        let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+        let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
         quote::quote!{
             #derive_debug
-            pub struct OptionField<T> {
+            pub struct #option_field_upper_camel_case<T> {
                 pub #value_snake_case: std::option::Option<T>
             }       
             #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-            pub struct OptionFieldWithSerializeDeserialize<T> {
+            pub struct #option_field_with_serialize_deserialize_upper_camel_case<T> {
                 pub #value_snake_case: std::option::Option<T>
             }
         }
@@ -4222,15 +4224,54 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_with_serialize_deserialize_token_stream
             ) = generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
                 &operation,
-                &generate_fields_named_token_stream(generate_pub_field_ident_field_type_token_stream),
-                &generate_fields_named_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
+                &generate_fields_named_token_stream({
+                    fn generate_option_fields_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
+                       let field_ident = &element.field_ident;
+                       let inner_type_token_stream = &element.inner_type_token_stream;
+                       let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                       quote::quote! {
+                           pub #field_ident: #option_field_upper_camel_case<#inner_type_token_stream>
+                       }
+                    }
+                    generate_option_fields_token_stream
+                }),
+                &generate_fields_named_token_stream({
+                    fn generate_option_field_with_serialize_deserialize_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
+                        let field_ident = &element.field_ident;
+                        let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
+                        let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
+                        quote::quote! {
+                            #field_ident: #option_field_with_serialize_deserialize_upper_camel_case<#inner_type_with_serialize_deserialize_token_stream>
+                        }
+                    }
+                    generate_option_field_with_serialize_deserialize_token_stream
+                }),
             );
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                 let impl_std_convert_from_or_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = match fields_named_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_element_with_serialize_deserialize_for_self_payload_element_token_stream(
                         &operation,
                         &{
-                            let fields_assignments_token_stream = fields_named.iter().map(generate_let_field_ident_value_inner_type_from_token_stream);
+                            let fields_assignments_token_stream = fields_named.iter().map({
+                                fn generate_let_field_ident_value_option_field_from_option_field_with_serialize_deserialize_token_stream(
+                                    element: &SynFieldWithAdditionalInfo<'_>,
+                                ) -> proc_macro2::TokenStream {
+                                    let field_ident = &element.field_ident;
+                                    let inner_type_token_stream = &element.inner_type_token_stream;
+                                    let from_snake_case = naming_constants::FromSnakeCase;
+                                    let value_snake_case = naming_constants::ValueSnakeCase;
+                                    let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                                    quote::quote! {
+                                        let #field_ident = #option_field_upper_camel_case { 
+                                            #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
+                                                Some(#value_snake_case) => Some(#inner_type_token_stream::#from_snake_case(#value_snake_case)),
+                                                None => None
+                                            }
+                                        };
+                                    }
+                                }
+                                generate_let_field_ident_value_option_field_from_option_field_with_serialize_deserialize_token_stream
+                            });
                             quote::quote! {
                                 #(#fields_assignments_token_stream)*
                                 Self{
@@ -4262,13 +4303,76 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     column!(),
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                 );
-                                let fields_assignments_token_stream = fields_named_excluding_primary_key.iter()
-                                    .map(|element| generate_let_field_ident_value_field_ident_try_from_token_stream(
+                                let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(|element| {
+                                    fn generate_let_field_ident_value_option_field_try_from_option_field_with_serialize_deserialize_token_stream(
+                                        element: &SynFieldWithAdditionalInfo<'_>,
+                                        proc_macro_name_upper_camel_case_ident_stringified: &str,
+                                        field_code_occurence_new_token_stream: &proc_macro2::TokenStream,
+                                        primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
+                                    ) -> proc_macro2::TokenStream {
+                                            let field_ident = &element.field_ident;
+                                            let inner_token_stream = quote::quote! {value.#field_ident};
+                                            let initialization_token_stream = {
+                                                let inner_type_token_stream = &element.inner_type_token_stream;
+                                                let from_snake_case = naming_constants::FromSnakeCase;
+                                                let value_snake_case = naming_constants::ValueSnakeCase;
+                                                let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                                                match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+                                                    postgresql_crud_common::FromOrTryFrom::From => {
+                                                        quote::quote!{
+                                                            #option_field_upper_camel_case { 
+                                                                #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
+                                                                    Some(#value_snake_case) => Some(#inner_type_token_stream::#from_snake_case(#value_snake_case)),
+                                                                    None => None
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                                                        let try_from_snake_case = naming_conventions::TryFromSnakeCase;
+                                                        let error_snake_case = naming_constants::ErrorSnakeCase;
+                                                        let field_ident_upper_camel_case_token_stream = {
+                                                            //todo its a temporal naming desicion. maybe it can be better
+                                                            let value = syn_ident_to_upper_camel_case_stringified(element.field_ident);
+                                                            value.parse::<proc_macro2::TokenStream>()
+                                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        };
+                                                        let field_ident_snake_case_token_stream = {
+                                                            //todo its a temporal naming desicion. maybe it can be better
+                                                            let value = syn_ident_to_snake_case_stringified(element.field_ident);
+                                                            value.parse::<proc_macro2::TokenStream>()
+                                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        };
+                                                        quote::quote!{
+                                                            #option_field_upper_camel_case { 
+                                                                #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
+                                                                    Some(#value_snake_case) => Some(match #inner_type_token_stream::#try_from_snake_case(#value_snake_case) {
+                                                                        Ok(#value_snake_case) => #value_snake_case,
+                                                                        Err(#error_snake_case) => {
+                                                                            return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
+                                                                                #field_ident_snake_case_token_stream: #error_snake_case,
+                                                                                #field_code_occurence_new_token_stream
+                                                                            });
+                                                                        }
+                                                                    }),
+                                                                    None => None
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            };
+                                            quote::quote! {
+                                                let #field_ident = #initialization_token_stream;
+                                            }
+                                    }
+                                    generate_let_field_ident_value_option_field_try_from_option_field_with_serialize_deserialize_token_stream(
                                         element,
                                         &proc_macro_name_upper_camel_case_ident_stringified,
                                         &field_code_occurence_new_77f303a5_de96_4f73_a274_f2195cb619b1_token_stream,
                                         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-                                    ));
+                                    )
+                                });
                                 let field_code_occurence_new_814b41f8_3219_4b62_bc0b_02a26d23b262_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                                     file!(),
                                     line!(),
@@ -7431,6 +7535,9 @@ fn acquire_pool_and_connection(
 
 fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())
+}
+fn syn_ident_to_snake_case_stringified(value: &syn::Ident) -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&value.to_string())
 }
 
 #[derive(Debug, Clone)]
