@@ -4224,28 +4224,42 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 payload_with_serialize_deserialize_token_stream
             ) = generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
                 &operation,
-                &generate_fields_named_token_stream({
-                    fn generate_option_fields_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
-                       let field_ident = &element.field_ident;
-                       let inner_type_token_stream = &element.inner_type_token_stream;
-                       let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
-                       quote::quote! {
-                           pub #field_ident: #option_field_upper_camel_case<#inner_type_token_stream>
-                       }
-                    }
-                    generate_option_fields_token_stream
-                }),
-                &generate_fields_named_token_stream({
-                    fn generate_option_field_with_serialize_deserialize_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
-                        let field_ident = &element.field_ident;
-                        let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
-                        let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
-                        quote::quote! {
-                            #field_ident: #option_field_with_serialize_deserialize_upper_camel_case<#inner_type_with_serialize_deserialize_token_stream>
+                &{
+                    let primary_key_field_named_token_stream = quote::quote! {pub #primary_key_field_ident: #primary_key_inner_type_token_stream};
+                    let fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream({
+                        fn generate_option_fields_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
+                           let field_ident = &element.field_ident;
+                           let inner_type_token_stream = &element.inner_type_token_stream;
+                           let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                           quote::quote! {
+                               pub #field_ident: #option_field_upper_camel_case<#inner_type_token_stream>
+                           }
                         }
+                        generate_option_fields_token_stream
+                    });
+                    quote::quote! {
+                        #primary_key_field_named_token_stream,
+                        #fields_named_excluding_primary_key_token_stream
                     }
-                    generate_option_field_with_serialize_deserialize_token_stream
-                }),
+                },
+                &{
+                    let primary_key_field_named_token_stream = quote::quote! {#primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream};
+                    let fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream({
+                        fn generate_option_field_with_serialize_deserialize_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
+                            let field_ident = &element.field_ident;
+                            let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
+                            let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
+                            quote::quote! {
+                                #field_ident: #option_field_with_serialize_deserialize_upper_camel_case<#inner_type_with_serialize_deserialize_token_stream>
+                            }
+                        }
+                        generate_option_field_with_serialize_deserialize_token_stream
+                    });
+                    quote::quote! {
+                        #primary_key_field_named_token_stream,
+                        #fields_named_excluding_primary_key_token_stream
+                    }
+                },
             );
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                 let impl_std_convert_from_or_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = match fields_named_from_or_try_from {
@@ -4708,7 +4722,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         Some(#value_snake_case) => #value_snake_case.into_inner(),
                                         None => None
                                     })
-                                    .collect::<std::vec::Vec<std::option::Option<#original_type_token_stream>>>(),
+                                    .collect::<std::vec::Vec<#original_type_token_stream>>(),
                             );
                         }
                     });
@@ -6520,7 +6534,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
