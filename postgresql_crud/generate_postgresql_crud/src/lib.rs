@@ -4304,7 +4304,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                 );
                                 let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(|element| {
-                                    fn generate_let_field_ident_value_option_field_try_from_option_field_with_serialize_deserialize_token_stream(
+                                    fn generate_let_field_ident_value_option_field_from_or_try_from_option_field_with_serialize_deserialize_token_stream(
                                         element: &SynFieldWithAdditionalInfo<'_>,
                                         proc_macro_name_upper_camel_case_ident_stringified: &str,
                                         field_code_occurence_new_token_stream: &proc_macro2::TokenStream,
@@ -4366,7 +4366,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 let #field_ident = #initialization_token_stream;
                                             }
                                     }
-                                    generate_let_field_ident_value_option_field_try_from_option_field_with_serialize_deserialize_token_stream(
+                                    generate_let_field_ident_value_option_field_from_or_try_from_option_field_with_serialize_deserialize_token_stream(
                                         element,
                                         &proc_macro_name_upper_camel_case_ident_stringified,
                                         &field_code_occurence_new_77f303a5_de96_4f73_a274_f2195cb619b1_token_stream,
@@ -4499,9 +4499,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_and_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_token_stream(
                 &operation,
                 &{
-                    let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(element));
+                    let fields_assignments_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                        fn generate_let_field_ident_value_option_field_with_serialize_deserialize_from_option_field_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
+                            let field_ident = &element.field_ident;
+                            let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
+                            let from_snake_case = naming_constants::FromSnakeCase;
+                            let value_snake_case = naming_constants::ValueSnakeCase;
+                            let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
+                            quote::quote! {
+                                let #field_ident = #option_field_with_serialize_deserialize_upper_camel_case {
+                                    #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
+                                        Some(#value_snake_case) => Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case)),
+                                        None => None
+                                    }
+                                };
+                            }
+                        }
+                        generate_let_field_ident_value_option_field_with_serialize_deserialize_from_option_field_token_stream(element)
+                    });
                     quote::quote! {
-                        let #primary_key_field_ident = #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(value.#primary_key_field_ident);
+                        let #primary_key_field_ident = #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case.#primary_key_field_ident);
                         #(#fields_assignments_token_stream)*
                         Self {
                             #(#self_init_fields_token_stream),*
