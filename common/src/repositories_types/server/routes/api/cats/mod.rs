@@ -67,7 +67,7 @@ pub struct Dog {
     // pub std_primitive_i64_as_postgresql_big_int_not_null: postgresql_crud::StdPrimitiveI64AsPostgresqlBigIntNotNull,
     // pub std_primitive_i64_as_postgresql_big_serial: postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerial,
     // pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
-    // pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
     // pub std_primitive_i64_as_postgresql_big_int8: postgresql_crud::StdPrimitiveI64AsPostgresqlInt8,
     // pub std_primitive_i64_as_postgresql_big_int8_not_null: postgresql_crud::StdPrimitiveI64AsPostgresqlInt8NotNull,
 
@@ -173,7 +173,7 @@ pub struct Dog {
 
     // pub sqlx_types_uuid_uuid_as_postgresql_uuid: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuid,
     // pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
-    pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,//todo Primary Key support only for Uuid - its simplification. maybe later support something else but now i think uuid v7 is enough //fails too but primary key is a different logic. need refactor it as different task 
+    // pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,//todo Primary Key support only for Uuid - its simplification. maybe later support something else but now i think uuid v7 is enough //fails too but primary key is a different logic. need refactor it as different task 
 
     // pub sqlx_types_ipnetwork_ip_network_as_postgresql_inet: postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
     // pub sqlx_types_ipnetwork_ip_network_as_postgresql_inet_not_null: postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
@@ -213,8 +213,8 @@ pub struct Dog {
 /////////////
 #[derive(Debug)]
 pub struct UpdateManyPayloadElement {
-    pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key:
-        postgresql_crud::SqlxTypesUuidUuid,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64,
     pub std_primitive_bool_as_postgresql_bool:
         OptionField<postgresql_crud::StdOptionOptionStdPrimitiveBool>,
     pub std_primitive_i16_as_postgresql_small_int:
@@ -226,8 +226,8 @@ pub struct UpdateManyPayloadElement {
 pub struct UpdateManyPayload(pub std::vec::Vec<UpdateManyPayloadElement>);
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct UpdateManyPayloadElementWithSerializeDeserialize {
-    sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key:
-        postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize,
+    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
     std_primitive_bool_as_postgresql_bool: OptionFieldWithSerializeDeserialize<
         postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
     >,
@@ -242,47 +242,14 @@ pub struct UpdateManyPayloadElementWithSerializeDeserialize {
 pub struct UpdateManyPayloadWithSerializeDeserialize(
     pub std::vec::Vec<UpdateManyPayloadElementWithSerializeDeserialize>,
 );
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum UpdateManyPayloadElementTryFromUpdateManyPayloadElementWithSerializeDeserializeErrorNamed {
-    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
-        #[eo_error_occurence]
-        sqlx_types_uuid_uuid: postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<UpdateManyPayloadElementWithSerializeDeserialize>
+impl std::convert::From<UpdateManyPayloadElementWithSerializeDeserialize>
     for UpdateManyPayloadElement
 {
-    type Error =
-        UpdateManyPayloadElementTryFromUpdateManyPayloadElementWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: UpdateManyPayloadElementWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        let sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key =
-            match postgresql_crud::SqlxTypesUuidUuid::try_from(
-                value.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
-            ) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(
-                        Self::Error::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
-                            sqlx_types_uuid_uuid: error,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                file!().to_owned(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                    file: std::string::String::from(
-                                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                    ),
-                                    line: 4392,
-                                    column: 37,
-                                }),
-                            ),
-                        },
-                    );
-                }
-            };
+    fn from(value: UpdateManyPayloadElementWithSerializeDeserialize) -> Self {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+            postgresql_crud::StdPrimitiveI64::from(
+                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            );
         let std_primitive_bool_as_postgresql_bool = OptionField {
             value: match value.std_primitive_bool_as_postgresql_bool.value {
                 Some(value) => Some(postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
@@ -303,63 +270,32 @@ impl std::convert::TryFrom<UpdateManyPayloadElementWithSerializeDeserialize>
                 None => None,
             },
         };
-        Ok(Self {
+        Self {
             std_primitive_bool_as_postgresql_bool,
             std_primitive_i16_as_postgresql_small_int,
             std_primitive_i32_as_postgresql_int,
-            sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
-        })
-    }
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamed {
-    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
-        #[eo_error_occurence]
-        sqlx_types_uuid_uuid: postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl
-    std::convert::From<
-        UpdateManyPayloadElementTryFromUpdateManyPayloadElementWithSerializeDeserializeErrorNamed,
-    > for UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamed
-{
-    fn from(
-        value :
-    UpdateManyPayloadElementTryFromUpdateManyPayloadElementWithSerializeDeserializeErrorNamed,
-    ) -> Self {
-        match value
-        {
-            UpdateManyPayloadElementTryFromUpdateManyPayloadElementWithSerializeDeserializeErrorNamed
-            :: SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey
-            { sqlx_types_uuid_uuid, code_occurence, } => Self ::
-            SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey
-            { sqlx_types_uuid_uuid, code_occurence, },
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
         }
     }
 }
-impl std::convert::TryFrom<UpdateManyPayloadWithSerializeDeserialize> for UpdateManyPayload {
-    type Error = UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamed;
-    fn try_from(value: UpdateManyPayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        match
-        value.0.into_iter().map(| element | UpdateManyPayloadElement ::
-        try_from(element)).collect :: < Result < std :: vec :: Vec <
-        UpdateManyPayloadElement > ,
-        UpdateManyPayloadElementTryFromUpdateManyPayloadElementWithSerializeDeserializeErrorNamed
-        >> ()
-        {
-            Ok(value) => Ok(Self(value)), Err(error) =>
-            Err(Self :: Error :: from(error)),
-        }
+impl std::convert::From<UpdateManyPayloadWithSerializeDeserialize> for UpdateManyPayload {
+    fn from(value: UpdateManyPayloadWithSerializeDeserialize) -> Self {
+        Self(
+            value
+                .0
+                .into_iter()
+                .map(|element| UpdateManyPayloadElement::from(element))
+                .collect(),
+        )
     }
 }
 impl std::convert::From<UpdateManyPayloadElement>
     for UpdateManyPayloadElementWithSerializeDeserialize
 {
     fn from(value: UpdateManyPayloadElement) -> Self {
-        let sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key =
-            postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
-                value.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+            postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
+                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             );
         let std_primitive_bool_as_postgresql_bool = OptionFieldWithSerializeDeserialize {
             value: match value.std_primitive_bool_as_postgresql_bool.value {
@@ -395,7 +331,7 @@ impl std::convert::From<UpdateManyPayloadElement>
             std_primitive_bool_as_postgresql_bool,
             std_primitive_i16_as_postgresql_small_int,
             std_primitive_i32_as_postgresql_int,
-            sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
         }
     }
 }
@@ -416,68 +352,57 @@ pub struct UpdateManyParameters {
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryUpdateManyRouteLogicResponseVariants {
-    Desirable(std :: vec :: Vec :: <
-    postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize >),
-    CheckBodySize
-    {
-        check_body_size : route_validators :: check_body_size ::
-        CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, Postgresql
-    {
-        postgresql : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, Json
-    {
-        json : std :: string :: String, code_occurence : error_occurence_lib
-        :: code_occurence :: CodeOccurence,
-    }, CheckCommit
-    {
-        check_commit : route_validators :: check_commit ::
-        CheckCommitErrorNamedWithSerializeDeserialize, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, QueryAndRollbackFailed
-    {
-        query : std :: string :: String, rollback : std :: string :: String,
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }, PrimaryKeyFromRowAndFailedRollback
-    {
-        primary_key_from_row : std :: string :: String, rollback : std ::
-        string :: String, code_occurence : error_occurence_lib ::
-        code_occurence :: CodeOccurence,
-    }, NonExistingPrimaryKeys
-    {
-        non_existing_primary_keys : std :: vec :: Vec < std :: string ::
-        String > , code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }, NonExistingPrimaryKeysAndFailedRollback
-    {
-        non_existing_primary_keys : std :: vec :: Vec < std :: string ::
-        String > , rollback : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, CommitFailed
-    {
-        commit_failed : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, NotUniquePrimaryKey
-    {
-        not_unique_primary_key : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
+    Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
+    CheckBodySize {
+        check_body_size:
+            route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        postgresql: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Json {
+        json: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryAndRollbackFailed {
+        query: std::string::String,
+        rollback: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PrimaryKeyFromRowAndFailedRollback {
+        primary_key_from_row: std::string::String,
+        rollback: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NonExistingPrimaryKeys {
+        non_existing_primary_keys: std::vec::Vec<std::string::String>,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NonExistingPrimaryKeysAndFailedRollback {
+        non_existing_primary_keys: std::vec::Vec<std::string::String>,
+        rollback: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitFailed {
+        commit_failed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniquePrimaryKey {
+        not_unique_primary_key: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
     {
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
-        : std :: string :: String, code_occurence : error_occurence_lib ::
-        code_occurence :: CodeOccurence,
-    }, UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-    {
-        update_many_payload_try_from_update_many_payload_with_serialize_deserialize
-        :
-        UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl std::convert::From<TryUpdateManyRouteLogicErrorNamed>
     for TryUpdateManyRouteLogicResponseVariants
@@ -531,16 +456,6 @@ impl std::convert::From<TryUpdateManyRouteLogicErrorNamed>
             {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
                 code_occurence
-            }, TryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
             }
         }
     }
@@ -583,12 +498,12 @@ pub enum TryUpdateManyRouteLogicErrorNamed {
     },
     NonExistingPrimaryKeys {
         #[eo_vec_to_std_string_string]
-        non_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
+        non_existing_primary_keys: std::vec::Vec<postgresql_crud::StdPrimitiveI64>,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NonExistingPrimaryKeysAndFailedRollback {
         #[eo_vec_to_std_string_string]
-        non_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
+        non_existing_primary_keys: std::vec::Vec<postgresql_crud::StdPrimitiveI64>,
         #[eo_to_std_string_string]
         rollback: sqlx::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -600,7 +515,7 @@ pub enum TryUpdateManyRouteLogicErrorNamed {
     },
     NotUniquePrimaryKey {
         #[eo_to_std_string_string]
-        not_unique_primary_key: postgresql_crud::SqlxTypesUuidUuid,
+        not_unique_primary_key: postgresql_crud::StdPrimitiveI64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
@@ -608,12 +523,6 @@ pub enum TryUpdateManyRouteLogicErrorNamed {
         #[eo_to_std_string_string]
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
             sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize {
-        #[eo_error_occurence]
-        update_many_payload_try_from_update_many_payload_with_serialize_deserialize:
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -678,45 +587,21 @@ DynArcCombinationOfAppStateLogicTraits, >,
             &body_bytes,
         ) {
             Ok(axum::Json(value)) => {
-                let value = match UpdateManyPayload::try_from(value) {
-                    Ok(value) => value,
-                    Err(error) => {
-                        let error = TryUpdateManyRouteLogicErrorNamed ::
-                        UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-                        {
-                            update_many_payload_try_from_update_many_payload_with_serialize_deserialize
-                            : error, code_occurence : error_occurence_lib ::
-                            code_occurence :: CodeOccurence ::
-                            new(file! ().to_owned(), line! (), column! (),
-                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                            {
-                                file : std :: string :: String ::
-                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 7432, column : 13,
-                            })),
-                        };
-                        eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(
-                            TryUpdateManyRouteLogicResponseVariants::from(error),
-                        ));
-                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                        return response;
-                    }
-                };
+                let value = UpdateManyPayload::from(value);
                 let mut acc = std::vec::Vec::new();
                 for element in &value.0 {
                     if !acc.contains(
-                        &element.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
+                        &element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
                     ) {
                         acc.push(
                             element
-                                .sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
+                                .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                                 .clone(),
                         );
                     } else {
                         let error = TryUpdateManyRouteLogicErrorNamed::NotUniquePrimaryKey {
                             not_unique_primary_key: element
-                                .sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
+                                .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                                 .clone(),
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                 file!().to_owned(),
@@ -773,18 +658,22 @@ DynArcCombinationOfAppStateLogicTraits, >,
         .iter()
         .map(|element| {
             element
-                .sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
+                .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                 .clone()
         })
-        .collect::<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>>();
+        .collect::<std::vec::Vec<postgresql_crud::StdPrimitiveI64>>();
+    //
     let query_string = {
         let mut increment = 0;
+        //
+
+        //
         let primary_keys = {
             let mut acc = std::string::String::default();
             for element in &parameters.payload.0 {
-                match postgresql_crud::BindQuery::try_generate_bind_increments(&element.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key, &mut increment) {
+                match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
                     Ok(value) => {
-                        acc.push_str(&value);
+                        acc.push_str(&format!("{value},"));
                     },
                     Err(error) => {
                         todo!()
@@ -795,7 +684,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
             acc
         };
         //
-        r#"
+        format!("
             UPDATE dogs
             SET 
                 std_primitive_bool_as_postgresql_bool = 
@@ -812,8 +701,8 @@ DynArcCombinationOfAppStateLogicTraits, >,
                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 9 THEN 10  -- Reset ship_date to NULL for order_id = 3
                         ELSE std_primitive_i16_as_postgresql_small_int  -- Keep the current ship_date if no condition matches
                     END
-            WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key IN (1, 2, 3, 4, 5, 9);
-        "#
+            WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key IN ({primary_keys});
+        ")
     };
     // r#"
     //     update dogs as t 
@@ -833,6 +722,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
     //     t.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key = data.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key 
     //     returning data.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
     // "#;
+    //
     println!("{}", query_string);
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
@@ -841,7 +731,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
             std_primitive_bool_as_postgresql_bool_vec,
             std_primitive_i16_as_postgresql_small_int_vec,
             std_primitive_i32_as_postgresql_int_vec,
-            sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key_vec,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec,
         ) = parameters.payload.0.into_iter().fold(
             (
                 std::vec::Vec::with_capacity(current_vec_len),
@@ -855,15 +745,15 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     .push(element.std_primitive_i16_as_postgresql_small_int);
                 acc.2.push(element.std_primitive_i32_as_postgresql_int);
                 acc.3
-                    .push(element.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key);
+                    .push(element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key);
                 acc
             },
         );
         query = query.bind(
-            sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key_vec
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec
                 .into_iter()
                 .map(|element| element.into_inner())
-                .collect::<std::vec::Vec<sqlx::types::uuid::Uuid>>(),
+                .collect::<std::vec::Vec<std::primitive::i64>>(),
         );
         query = query.bind(
             std_primitive_bool_as_postgresql_bool_vec
@@ -1172,7 +1062,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
             Ok(_) => primary_key_vec
                 .into_iter()
                 .map(|element| {
-                    postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(element)
+                    postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(element)
                 })
                 .collect(),
             Err(error) => {
@@ -1238,16 +1128,9 @@ pub enum TryUpdateManyErrorNamed {
         reqwest: reqwest::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient
-    {
-        #[eo_error_occurence]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client:
-            postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
     NotUniquePrimaryKey {
         #[eo_to_std_string_string]
-        not_unique_primary_key: postgresql_crud::SqlxTypesUuidUuid,
+        not_unique_primary_key: postgresql_crud::StdPrimitiveI64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     TryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize {
@@ -1260,17 +1143,18 @@ pub enum TryUpdateManyErrorNamed {
 pub async fn try_update_many(
     server_location: &std::primitive::str,
     parameters: UpdateManyParameters,
-) -> Result<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>, TryUpdateManyErrorNamed> {
+) -> Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64>, TryUpdateManyErrorNamed> {
     let payload = {
         let mut acc = std::vec::Vec::new();
         for element in &parameters.payload.0 {
-            if !acc.contains(&&element.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key)
+            if !acc
+                .contains(&&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key)
             {
-                acc.push(&element.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key);
+                acc.push(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key);
             } else {
                 return Err(TryUpdateManyErrorNamed::NotUniquePrimaryKey {
                     not_unique_primary_key: element
-                        .sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
+                        .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                         .clone(),
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                         file!().to_owned(),
@@ -1393,34 +1277,8 @@ pub async fn try_update_many(
         TryUpdateManyRouteLogicResponseVariants :: Desirable(value) =>
         {
             let value =
-            {
-                let mut values = std :: vec :: Vec :: new(); for element in
-                value
-                {
-                    match postgresql_crud::SqlxTypesUuidUuid ::
-                    try_from(element)
-                    {
-                        Ok(value) => { values.push(value); }, Err(error) =>
-                        {
-                            return
-                            Err(TryUpdateManyErrorNamed ::
-                            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient
-                            {
-                                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client
-                                : error, code_occurence : error_occurence_lib ::
-                                code_occurence :: CodeOccurence ::
-                                new(file! ().to_owned(), line! (), column! (),
-                                Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                                {
-                                    file : std :: string :: String ::
-                                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 1328, column : 29,
-                                })),
-                            });
-                        }
-                    }
-                } values
-            }; return Ok(value);
+            value.into_iter().map(| element | postgresql_crud::StdPrimitiveI64
+            :: from(element)).collect(); return Ok(value);
         }, TryUpdateManyRouteLogicResponseVariants :: CheckBodySize
         { check_body_size, code_occurence } =>
         TryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize ::
@@ -1474,16 +1332,6 @@ pub async fn try_update_many(
         {
             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
             code_occurence
-        }, TryUpdateManyRouteLogicResponseVariants ::
-        UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-        {
-            update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-            code_occurence
-        } => TryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-        {
-            update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-            code_occurence
         }
     };
     Err(
@@ -1497,7 +1345,7 @@ pub async fn try_update_many(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6934,
+                    line: 6943,
                     column: 13,
                 }),
             ),

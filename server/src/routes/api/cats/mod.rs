@@ -42,18 +42,20 @@ fn crud(
         // )
         .route(
             "/read_many",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::try_read_many_route_logic),
+            axum::routing::post(
+                common::repositories_types::server::routes::api::cats::try_read_many_route_logic
+            ),
         )
         // .route(
         //     "/read_one",
         //     axum::routing::post(common::repositories_types::server::routes::api::cats::read_one),
         // )
-        // .route(
-        //     "/update_many",
-        //     axum::routing::patch(
-        //         common::repositories_types::server::routes::api::cats::update_many,
-        //     ),
-        // )
+        .route(
+            "/update_many",
+            axum::routing::patch(
+                common::repositories_types::server::routes::api::cats::try_update_many_route_logic,
+            ),
+        )
         // .route(
         //     "/update_one",
         //     axum::routing::patch(common::repositories_types::server::routes::api::cats::update_one),

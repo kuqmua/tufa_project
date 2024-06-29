@@ -4268,7 +4268,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_element_with_serialize_deserialize_for_self_payload_element_token_stream(
                         &operation,
                         &{
-                            let fields_assignments_token_stream = fields_named.iter().map({
+                            let primary_key_field_assignment_token_stream = {
+                                let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                                quote::quote! {
+                                    let #primary_key_field_ident = #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case.#primary_key_field_ident);
+                                }
+                            };
+                            let fields_assignments_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map({
                                 fn generate_let_field_ident_value_option_field_from_option_field_with_serialize_deserialize_token_stream(
                                     element: &SynFieldWithAdditionalInfo<'_>,
                                 ) -> proc_macro2::TokenStream {
@@ -4289,7 +4295,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 generate_let_field_ident_value_option_field_from_option_field_with_serialize_deserialize_token_stream
                             });
                             quote::quote! {
-                                #(#fields_assignments_token_stream)*
+                                #primary_key_field_assignment_token_stream
+                                #(#fields_assignments_excluding_primary_key_token_stream)*
                                 Self{
                                     #(#self_init_fields_token_stream),*
                                 }
@@ -5047,11 +5054,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // try_operation_test_token_stream,
         )
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &update_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &update_many_token_stream,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let (update_one_token_stream, update_one_test_token_stream) = {
         let operation = Operation::UpdateOne;
