@@ -166,7 +166,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "size",
     "handle",
     "url",
-    "future"
+    "future",
+    "field"
 );
 
 #[derive(Debug, Clone, Copy)]
