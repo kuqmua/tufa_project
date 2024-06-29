@@ -215,9 +215,12 @@ pub struct Dog {
 pub struct UpdateManyPayloadElement {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64,
-    pub std_primitive_bool_as_postgresql_bool: std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveBool>>,
-    pub std_primitive_i16_as_postgresql_small_int: std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI16>>,
-    pub std_primitive_i32_as_postgresql_int: std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI32>>,
+    pub std_primitive_bool_as_postgresql_bool:
+        std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveBool>>,
+    pub std_primitive_i16_as_postgresql_small_int:
+        std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI16>>,
+    pub std_primitive_i32_as_postgresql_int:
+        std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI32>>,
 }
 #[derive(Debug)]
 pub struct UpdateManyPayload(pub std::vec::Vec<UpdateManyPayloadElement>);
@@ -225,15 +228,21 @@ pub struct UpdateManyPayload(pub std::vec::Vec<UpdateManyPayloadElement>);
 pub struct UpdateManyPayloadElementWithSerializeDeserialize {
     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
-    std_primitive_bool_as_postgresql_bool: std::option::Option<FieldWithSerializeDeserialize<
-        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
-    >>,
-    std_primitive_i16_as_postgresql_small_int: std::option::Option<FieldWithSerializeDeserialize<
-        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
-    >>,
-    std_primitive_i32_as_postgresql_int: std::option::Option<FieldWithSerializeDeserialize<
-        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
-    >>,
+    std_primitive_bool_as_postgresql_bool: std::option::Option<
+        FieldWithSerializeDeserialize<
+            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+        >,
+    >,
+    std_primitive_i16_as_postgresql_small_int: std::option::Option<
+        FieldWithSerializeDeserialize<
+            postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+        >,
+    >,
+    std_primitive_i32_as_postgresql_int: std::option::Option<
+        FieldWithSerializeDeserialize<
+            postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+        >,
+    >,
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct UpdateManyPayloadWithSerializeDeserialize(
@@ -247,29 +256,25 @@ impl std::convert::From<UpdateManyPayloadElementWithSerializeDeserialize>
             postgresql_crud::StdPrimitiveI64::from(
                 value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             );
-        let std_primitive_bool_as_postgresql_bool = match value.std_primitive_bool_as_postgresql_bool {
-            Some(value) => Some(Field {
-                value: postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
-                    value.value,
-                )
-            }),
-            None => None
-        };
-        let std_primitive_i16_as_postgresql_small_int = match value.std_primitive_i16_as_postgresql_small_int {
-            Some(value) => Some(Field {
-                value: postgresql_crud::StdOptionOptionStdPrimitiveI16::from(
-                    value.value,
-                )
-            }),
-            None => None
-        };
+        let std_primitive_bool_as_postgresql_bool =
+            match value.std_primitive_bool_as_postgresql_bool {
+                Some(value) => Some(Field {
+                    value: postgresql_crud::StdOptionOptionStdPrimitiveBool::from(value.value),
+                }),
+                None => None,
+            };
+        let std_primitive_i16_as_postgresql_small_int =
+            match value.std_primitive_i16_as_postgresql_small_int {
+                Some(value) => Some(Field {
+                    value: postgresql_crud::StdOptionOptionStdPrimitiveI16::from(value.value),
+                }),
+                None => None,
+            };
         let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
-        Some(value) => Some(Field {
-                value: postgresql_crud::StdOptionOptionStdPrimitiveI32::from(
-                    value.value,
-                )
+            Some(value) => Some(Field {
+                value: postgresql_crud::StdOptionOptionStdPrimitiveI32::from(value.value),
             }),
-            None => None
+            None => None,
         };
         Self {
             std_primitive_bool_as_postgresql_bool,
@@ -298,29 +303,36 @@ impl std::convert::From<UpdateManyPayloadElement>
             postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
                 value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             );
-        let std_primitive_bool_as_postgresql_bool = match value.std_primitive_bool_as_postgresql_bool {
+        let std_primitive_bool_as_postgresql_bool = match value
+            .std_primitive_bool_as_postgresql_bool
+        {
             Some(value) => Some(FieldWithSerializeDeserialize {
-                    value: postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
-                    value.value,
-                )
+                value:
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+                        value.value,
+                    ),
             }),
-            None => None
+            None => None,
         };
-        let std_primitive_i16_as_postgresql_small_int = match value.std_primitive_i16_as_postgresql_small_int {
+        let std_primitive_i16_as_postgresql_small_int = match value
+            .std_primitive_i16_as_postgresql_small_int
+        {
             Some(value) => Some(FieldWithSerializeDeserialize {
-                value: postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
-                    value.value,
-                )
+                value:
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
+                        value.value,
+                    ),
             }),
-            None => None
+            None => None,
         };
         let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
             Some(value) => Some(FieldWithSerializeDeserialize {
-                value: postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
-                    value.value,
-                )
+                value:
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
+                        value.value,
+                    ),
             }),
-            None => None
+            None => None,
         };
         Self {
             std_primitive_bool_as_postgresql_bool,
@@ -658,104 +670,93 @@ DynArcCombinationOfAppStateLogicTraits, >,
         })
         .collect::<std::vec::Vec<postgresql_crud::StdPrimitiveI64>>();
     //
-//     let query_string = {
-//         let mut increment = 0;
-//         //
-// // #[derive(Debug)]
-// // pub struct UpdateManyPayloadElement {
-// //     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-// //         postgresql_crud::StdPrimitiveI64,
-// //     pub std_primitive_bool_as_postgresql_bool:
-// //         OptionField<postgresql_crud::StdOptionOptionStdPrimitiveBool>,
-// //     pub std_primitive_i16_as_postgresql_small_int:
-// //         OptionField<postgresql_crud::StdOptionOptionStdPrimitiveI16>,
-// //     pub std_primitive_i32_as_postgresql_int:
-// //         OptionField<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
-// // }
-//         //
-//         let mut fields_acc = std::string::String::from("update dogs set ");
-//         // let std_primitive_bool_as_postgresql_bool_handle = {
-//         let is_std_primitive_bool_as_postgresql_bool_update_exist = false;
-//         for element in &parameters.payload.0 {
-//             if element.std_primitive_bool_as_postgresql_bool.value.is_some() {
-//                 is_std_primitive_bool_as_postgresql_bool_update_exist = true;
-//                 break;
-//             }
-//         }
-//         if is_std_primitive_bool_as_postgresql_bool_update_exist {
-//             let mut acc = std::string::String::default();
-//             for element in &parameters.payload.0 {
-//                 if let Some(value) = &element.std_primitive_bool_as_postgresql_bool.value {
+    let query_string = {
+        let mut increment = 0;
+        //
+        //
+        let mut fields_acc = std::string::String::from("update dogs set ");
+        // let std_primitive_bool_as_postgresql_bool_handle = {
+        let is_std_primitive_bool_as_postgresql_bool_update_exist = false;
+        for element in &parameters.payload.0 {
+            if element.std_primitive_bool_as_postgresql_bool.value.is_some() {
+                is_std_primitive_bool_as_postgresql_bool_update_exist = true;
+                break;
+            }
+        }
+        if is_std_primitive_bool_as_postgresql_bool_update_exist {
+            let mut acc = std::string::String::default();
+            for element in &parameters.payload.0 {
+                if let Some(value) = &element.std_primitive_bool_as_postgresql_bool.value {
 
-//                 }
-//             }
-//             // let mut acc = std::string::String::default();
-//                 // let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
-//                 //     Ok(value) => value,
-//                 //     Err(error) => {
-//                 //         todo!()
-//                 //     }
-//                 // };
-//                 // let std_primitive_bool_as_postgresql_bool_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&value, &mut increment) {
-//                 //     Ok(value) => value,
-//                 //     Err(error) => {
-//                 //         todo!()
-//                 //     }
-//                 // };
-//                 // acc.push_str(&format!("WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle} THEN {std_primitive_bool_as_postgresql_bool_increment_handle} "));
-//             // let _ = acc.pop();
-//         }
+                }
+            }
+            // let mut acc = std::string::String::default();
+                // let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
+                //     Ok(value) => value,
+                //     Err(error) => {
+                //         todo!()
+                //     }
+                // };
+                // let std_primitive_bool_as_postgresql_bool_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&value, &mut increment) {
+                //     Ok(value) => value,
+                //     Err(error) => {
+                //         todo!()
+                //     }
+                // };
+                // acc.push_str(&format!("WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle} THEN {std_primitive_bool_as_postgresql_bool_increment_handle} "));
+            // let _ = acc.pop();
+        }
 
 
 
-//             format!(r#"
-//                 std_primitive_bool_as_postgresql_bool = 
-//                     CASE 
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 THEN false
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 2 THEN null
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 3 THEN false
-//                         ELSE std_primitive_bool_as_postgresql_bool  -- Keep the current status if no condition matches
-//                     END,
-//             "#)
-//         // };
-//         //
-//         let primary_keys = {
-//             let mut acc = std::string::String::default();
-//             for element in &parameters.payload.0 {
-//                 match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
-//                     Ok(value) => {
-//                         acc.push_str(&format!("{value},"));
-//                     },
-//                     Err(error) => {
-//                         todo!()
-//                     }
-//                 }
-//             }
-//             let _ = acc.pop();
-//             acc
-//         };
-//         //
-//         format!("
-//             UPDATE dogs
-//             SET 
-//                 std_primitive_bool_as_postgresql_bool = 
-//                     CASE 
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 THEN false
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 2 THEN null
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 3 THEN false
-//                         ELSE std_primitive_bool_as_postgresql_bool  -- Keep the current status if no condition matches
-//                     END,
-//                 std_primitive_i16_as_postgresql_small_int = 
-//                     CASE 
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 4 THEN 10
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 5 THEN null
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 9 THEN 10  -- Reset ship_date to NULL for order_id = 3
-//                         ELSE std_primitive_i16_as_postgresql_small_int  -- Keep the current ship_date if no condition matches
-//                     END
-//             WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key IN ({primary_keys});
-//         ")
-//     };
-        let query_string = "";
+            // format!(r#"
+            //     std_primitive_bool_as_postgresql_bool = 
+            //         CASE 
+            //             WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 THEN false
+            //             WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 2 THEN null
+            //             WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 3 THEN false
+            //             ELSE std_primitive_bool_as_postgresql_bool  -- Keep the current status if no condition matches
+            //         END,
+            // "#)
+        // };
+        //
+        let primary_keys = {
+            let mut acc = std::string::String::default();
+            for element in &parameters.payload.0 {
+                match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
+                    Ok(value) => {
+                        acc.push_str(&format!("{value},"));
+                    },
+                    Err(error) => {
+                        todo!()
+                    }
+                }
+            }
+            let _ = acc.pop();
+            acc
+        };
+        //
+        format!("
+            UPDATE dogs
+            SET 
+                std_primitive_bool_as_postgresql_bool = 
+                    CASE 
+                        WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 THEN false
+                        WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 2 THEN null
+                        WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 3 THEN false
+                        ELSE std_primitive_bool_as_postgresql_bool  -- Keep the current status if no condition matches
+                    END,
+                std_primitive_i16_as_postgresql_small_int = 
+                    CASE 
+                        WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 4 THEN 10
+                        WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 5 THEN null
+                        WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 9 THEN 10  -- Reset ship_date to NULL for order_id = 3
+                        ELSE std_primitive_i16_as_postgresql_small_int  -- Keep the current ship_date if no condition matches
+                    END
+            WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key IN ({primary_keys});
+        ")
+    };
+        // let query_string = "";
     // r#"
     //     update dogs as t 
     //     set 
@@ -774,39 +775,40 @@ DynArcCombinationOfAppStateLogicTraits, >,
     //     t.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key = data.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key 
     //     returning data.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
     // "#;
+    
     //
     println!("{}", query_string);
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         let current_vec_len = parameters.payload.0.len();
-        let (
-            std_primitive_bool_as_postgresql_bool_vec,
-            std_primitive_i16_as_postgresql_small_int_vec,
-            std_primitive_i32_as_postgresql_int_vec,
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec,
-        ) = parameters.payload.0.into_iter().fold(
-            (
-                std::vec::Vec::with_capacity(current_vec_len),
-                std::vec::Vec::with_capacity(current_vec_len),
-                std::vec::Vec::with_capacity(current_vec_len),
-                std::vec::Vec::with_capacity(current_vec_len),
-            ),
-            |mut acc, element| {
-                acc.0.push(element.std_primitive_bool_as_postgresql_bool);
-                acc.1
-                    .push(element.std_primitive_i16_as_postgresql_small_int);
-                acc.2.push(element.std_primitive_i32_as_postgresql_int);
-                acc.3
-                    .push(element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key);
-                acc
-            },
-        );
-        query = query.bind(
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec
-                .into_iter()
-                .map(|element| element.into_inner())
-                .collect::<std::vec::Vec<std::primitive::i64>>(),
-        );
+        // let (
+        //     std_primitive_bool_as_postgresql_bool_vec,
+        //     std_primitive_i16_as_postgresql_small_int_vec,
+        //     std_primitive_i32_as_postgresql_int_vec,
+        //     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec,
+        // ) = parameters.payload.0.into_iter().fold(
+        //     (
+        //         std::vec::Vec::with_capacity(current_vec_len),
+        //         std::vec::Vec::with_capacity(current_vec_len),
+        //         std::vec::Vec::with_capacity(current_vec_len),
+        //         std::vec::Vec::with_capacity(current_vec_len),
+        //     ),
+        //     |mut acc, element| {
+        //         acc.0.push(element.std_primitive_bool_as_postgresql_bool);
+        //         acc.1
+        //             .push(element.std_primitive_i16_as_postgresql_small_int);
+        //         acc.2.push(element.std_primitive_i32_as_postgresql_int);
+        //         acc.3
+        //             .push(element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key);
+        //         acc
+        //     },
+        // );
+        // query = query.bind(
+        //     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec
+        //         .into_iter()
+        //         .map(|element| element.into_inner())
+        //         .collect::<std::vec::Vec<std::primitive::i64>>(),
+        // );
         // query = query.bind(
         //     std_primitive_bool_as_postgresql_bool_vec
         //         .into_iter()
@@ -1397,7 +1399,7 @@ pub async fn try_update_many(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6943,
+                    line: 6949,
                     column: 13,
                 }),
             ),
