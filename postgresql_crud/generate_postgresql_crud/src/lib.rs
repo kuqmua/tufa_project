@@ -3371,8 +3371,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let additional_parameters_order_by_handle_token_stream = {
+                        let order_snake_case = naming_constants::OrderSnakeCase;
+                        let by_snake_case = naming_constants::BySnakeCase;
                         let additional_parameters_order_by_handle_stringified =
-                            format!("\"{{}}{order_by_snake_case} {{}} {{}}\"");
+                            format!("\"{{}}{order_snake_case} {by_snake_case} {{}} {{}}\"");
                         additional_parameters_order_by_handle_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_parameters_order_by_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
@@ -6534,7 +6536,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            #update_many_token_stream
+            // #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
