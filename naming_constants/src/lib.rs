@@ -169,7 +169,9 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "future",
     "field",
     "else",
-    "end"
+    "end",
+    "when",
+    "then"
 );
 
 #[derive(Debug, Clone, Copy)]

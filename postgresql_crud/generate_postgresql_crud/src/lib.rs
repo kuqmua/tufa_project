@@ -4635,12 +4635,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &format!("{update_snake_case} {table_name_stringified} {set_snake_case} "),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let query_snake_case = naming_constants::QuerySnakeCase;
                     let fields_update_assignment_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
-                        println!("{}", &field_ident);
                         let is_field_ident_update_exists_token_stream = {
                             let is_snake_case = naming_constants::IsSnakeCase;
-                            let value = format!("{is_snake_case}{}_update_exist", &field_ident);
+                            let value = format!("{is_snake_case}_{}_update_exist", &field_ident);
                             value.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
@@ -4652,14 +4652,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let else_snake_case = naming_constants::ElseSnakeCase;
                         let end_snake_case = naming_constants::EndSnakeCase;
                         let else_field_ident_end_token_stream = proc_macro_common::generate_quotes::token_stream(
-                            &format!("{else_snake_case} std_primitive_bool_as_postgresql_bool {end_snake_case},"),
+                            &format!("{else_snake_case} {field_ident} {end_snake_case},"),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        let when_primary_key_field_ident_equals_then_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            &format!(
+                                "{} {primary_key_field_ident} = {{}} {} {{}} ",
+                                naming_constants::WhenSnakeCase,
+                                naming_constants::ThenSnakeCase
+                            ),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         quote::quote!{
                             {
                                 let mut #is_field_ident_update_exists_token_stream = false;
                                 for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                    if #element_snake_case.std_primitive_bool_as_postgresql_bool.is_some() {
+                                    if #element_snake_case.#field_ident.is_some() {
                                         #is_field_ident_update_exists_token_stream = true;
                                         break;
                                     }
@@ -4667,10 +4675,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 if #is_field_ident_update_exists_token_stream {
                                     let mut acc = #std_string_string::#from_snake_case(#field_ident_equals_case_token_stream);
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                        if let Some(#value_snake_case) = &#element_snake_case.std_primitive_bool_as_postgresql_bool {
+                                        if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             acc.push_str(&format!(
-                                                "WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {} THEN {} ",
-                                                match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
+                                                #when_primary_key_field_ident_equals_then_token_stream,
+                                                match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut increment) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_snake_case) => {
                                                         todo!()
@@ -4685,7 +4693,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             ));
                                         }
                                     }
-                                    fields_acc.push_str(&format!("{}{}",
+                                    #query_snake_case.push_str(&format!("{}{}",
                                         acc,
                                         #else_field_ident_end_token_stream
                                     ));
@@ -4693,10 +4701,45 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                     });
+                    let where_primary_key_field_ident_in_primary_keys_token_stream = {
+                        let where_primary_key_field_ident_in_primary_keys_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            &format!(
+                                " {} {primary_key_field_ident} {} ({{}});",
+                                naming_constants::WhereSnakeCase,
+                                naming_constants::InSnakeCase,
+                            ),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        quote::quote!{
+                            #query_snake_case.push_str(&format!(
+                                #where_primary_key_field_ident_in_primary_keys_quotes_token_stream,
+                                {
+                                    let mut acc = #std_string_string::default();
+                                    for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                        match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut increment) {
+                                            Ok(#value_snake_case) => {
+                                                acc.push_str(&format!("{value},"));
+                                            },
+                                            Err(#error_snake_case) => {
+                                                todo!()
+                                            }
+                                        }
+                                    }
+                                    let _ = acc.pop();
+                                    acc
+                                }
+                            ));
+                        }
+                    };
                     quote::quote!{
-                        let mut fields_acc = std::string::String::from(#query_start_token_stream);
-                        #(#fields_update_assignment_token_stream)*
-                        //
+                        {
+                            let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
+                            let mut increment: u64 = 0;
+                            #(#fields_update_assignment_token_stream)*
+                            let _ = #query_snake_case.pop();
+                            #where_primary_key_field_ident_in_primary_keys_token_stream
+                            #query_snake_case
+                        }
                     }
                 };
                 // println!("{query_string_token_stream}");
