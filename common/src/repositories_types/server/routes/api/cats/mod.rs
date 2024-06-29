@@ -669,23 +669,9 @@ pub struct Dog {
 //                 .clone()
 //         })
 //         .collect::<std::vec::Vec<postgresql_crud::StdPrimitiveI64>>();
-//     //
 //     let query_string = {
-//         let mut increment = 0;
-//         //
-// // #[derive(Debug)]
-// // pub struct UpdateManyPayloadElement {
-// //     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-// //         postgresql_crud::StdPrimitiveI64,
-// //     pub std_primitive_bool_as_postgresql_bool:
-// //         std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveBool>>,
-// //     pub std_primitive_i16_as_postgresql_small_int:
-// //         std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI16>>,
-// //     pub std_primitive_i32_as_postgresql_int:
-// //         std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI32>>,
-// // }
-//         //
-//         let mut fields_acc = std::string::String::from("update dogs set ");
+//         let mut query = std::string::String::from("update dogs set ");
+//         let mut increment: u64 = 0;
 //         {
 //             let mut is_std_primitive_bool_as_postgresql_bool_update_exist = false;
 //             for element in &parameters.payload.0 {
@@ -695,89 +681,157 @@ pub struct Dog {
 //                 }
 //             }
 //             if is_std_primitive_bool_as_postgresql_bool_update_exist {
-//                 let mut acc = std::string::String::from("std_primitive_bool_as_postgresql_bool = CASE ");
+//                 let mut acc =
+//                     std::string::String::from("std_primitive_bool_as_postgresql_bool = case ");
 //                 for element in &parameters.payload.0 {
 //                     if let Some(value) = &element.std_primitive_bool_as_postgresql_bool {
-//                         let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
-//                             Ok(value) => value,
-//                             Err(error) => {
-//                                 todo!()
-//                             }
-//                         };
-//                         let std_primitive_bool_as_postgresql_bool_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&value.value, &mut increment) {
-//                             Ok(value) => value,
-//                             Err(error) => {
-//                                 todo!()
-//                             }
-//                         };
-//                         acc.push_str(&format!("WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle} THEN {std_primitive_bool_as_postgresql_bool_increment_handle} "));
+//                         acc.push_str(& format!
+//                         ("when std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {} then {} ",
+//                         match postgresql_crud :: BindQuery ::
+//                         try_generate_bind_increments(&
+//                         element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+//                         & mut increment)
+//                         { Ok(value) => value, Err(error) => { todo! () } }, match
+//                         postgresql_crud :: BindQuery ::
+//                         try_generate_bind_increments(& value.value, & mut increment)
+//                         { Ok(value) => value, Err(error) => { todo! () } }));
 //                     }
 //                 }
-//                 fields_acc.push_str(&format!("{acc}ELSE std_primitive_bool_as_postgresql_bool END,"));
+//                 query.push_str(&format!(
+//                     "{}{}",
+//                     acc, "else std_primitive_bool_as_postgresql_bool end,"
+//                 ));
 //             }
 //         }
-//         let _ = fields_acc.pop();
 //         {
-//             let mut acc = std::string::String::default();
+//             let mut is_std_primitive_i16_as_postgresql_small_int_update_exist = false;
 //             for element in &parameters.payload.0 {
-//                 match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
-//                     Ok(value) => {
-//                         acc.push_str(&format!("{value},"));
-//                     },
-//                     Err(error) => {
-//                         todo!()
-//                     }
+//                 if element.std_primitive_i16_as_postgresql_small_int.is_some() {
+//                     is_std_primitive_i16_as_postgresql_small_int_update_exist = true;
+//                     break;
 //                 }
 //             }
-//             let _ = acc.pop();
-//             fields_acc.push(format!(" WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key IN ({acc});"));
+//             if is_std_primitive_i16_as_postgresql_small_int_update_exist {
+//                 let mut acc =
+//                     std::string::String::from("std_primitive_i16_as_postgresql_small_int = case ");
+//                 for element in &parameters.payload.0 {
+//                     if let Some(value) = &element.std_primitive_i16_as_postgresql_small_int {
+//                         acc.push_str(& format!
+//                         ("when std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {} then {} ",
+//                         match postgresql_crud :: BindQuery ::
+//                         try_generate_bind_increments(&
+//                         element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+//                         & mut increment)
+//                         { Ok(value) => value, Err(error) => { todo! () } }, match
+//                         postgresql_crud :: BindQuery ::
+//                         try_generate_bind_increments(& value.value, & mut increment)
+//                         { Ok(value) => value, Err(error) => { todo! () } }));
+//                     }
+//                 }
+//                 query.push_str(&format!(
+//                     "{}{}",
+//                     acc, "else std_primitive_i16_as_postgresql_small_int end,"
+//                 ));
+//             }
 //         }
-//         //
-//         format!("
-//             UPDATE dogs
-//             SET 
-//                 std_primitive_bool_as_postgresql_bool = 
-//                     CASE 
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 THEN false
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 2 THEN null
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 3 THEN false
-//                         ELSE std_primitive_bool_as_postgresql_bool  -- Keep the current status if no condition matches
-//                     END,
-//                 std_primitive_i16_as_postgresql_small_int = 
-//                     CASE 
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 4 THEN 10
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 5 THEN null
-//                         WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 9 THEN 10  -- Reset ship_date to NULL for order_id = 3
-//                         ELSE std_primitive_i16_as_postgresql_small_int  -- Keep the current ship_date if no condition matches
-//                     END
-//             WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key IN ({primary_keys});
-//         ")
+//         {
+//             let mut is_std_primitive_i32_as_postgresql_int_update_exist = false;
+//             for element in &parameters.payload.0 {
+//                 if element.std_primitive_i32_as_postgresql_int.is_some() {
+//                     is_std_primitive_i32_as_postgresql_int_update_exist = true;
+//                     break;
+//                 }
+//             }
+//             if is_std_primitive_i32_as_postgresql_int_update_exist {
+//                 let mut acc =
+//                     std::string::String::from("std_primitive_i32_as_postgresql_int = case ");
+//                 for element in &parameters.payload.0 {
+//                     if let Some(value) = &element.std_primitive_i32_as_postgresql_int {
+//                         acc.push_str(& format!
+//                         ("when std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {} then {} ",
+//                         match postgresql_crud :: BindQuery ::
+//                         try_generate_bind_increments(&
+//                         element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+//                         & mut increment)
+//                         { Ok(value) => value, Err(error) => { todo! () } }, match
+//                         postgresql_crud :: BindQuery ::
+//                         try_generate_bind_increments(& value.value, & mut increment)
+//                         { Ok(value) => value, Err(error) => { todo! () } }));
+//                     }
+//                 }
+//                 query.push_str(&format!(
+//                     "{}{}",
+//                     acc, "else std_primitive_i32_as_postgresql_int end,"
+//                 ));
+//             }
+//         }
+//         let _ = query.pop();
+//         query.push_str(&format!(
+//             " where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key in ({});",
+//             {
+//                 let mut acc = std::string::String::default();
+//                 for element in &parameters.payload.0 {
+//                     match postgresql_crud::BindQuery::try_generate_bind_increments(
+//                         &element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+//                         &mut increment,
+//                     ) {
+//                         Ok(value) => {
+//                             acc.push_str(&format!("{value},"));
+//                         }
+//                         Err(error) => {
+//                             todo!()
+//                         }
+//                     }
+//                 }
+//                 let _ = acc.pop();
+//                 acc
+//             }
+//         ));
+//         query
 //     };
-//         // let query_string = "";
-//     // r#"
-//     //     update dogs as t 
-//     //     set 
-//     //     std_primitive_bool_as_postgresql_bool = data.std_primitive_bool_as_postgresql_bool, 
-//     //     std_primitive_i16_as_postgresql_small_int = data.std_primitive_i16_as_postgresql_small_int, 
-//     //     std_primitive_i32_as_postgresql_int = data.std_primitive_i32_as_postgresql_int 
-//     //     from (select * from unnest($1, $2, $3, $4)) 
-//     //     as 
-//     //     data(
-//     //         std_primitive_bool_as_postgresql_bool, 
-//     //         std_primitive_i16_as_postgresql_small_int, 
-//     //         std_primitive_i32_as_postgresql_int, 
-//     //         sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
-//     //     ) 
-//     //     where 
-//     //     t.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key = data.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key 
-//     //     returning data.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
-//     // "#;
-    
-//     //
 //     println!("{}", query_string);
 //     let binded_query = {
 //         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
-//         let current_vec_len = parameters.payload.0.len();
+//         // let current_vec_len = parameters.payload.0.len();
+//         {
+//             let mut is_std_primitive_bool_as_postgresql_bool_update_exist = false;
+//             for element in &parameters.payload.0 {
+//                 if element.std_primitive_bool_as_postgresql_bool.is_some() {
+//                     is_std_primitive_bool_as_postgresql_bool_update_exist = true;
+//                     break;
+//                 }
+//             }
+//             if is_std_primitive_bool_as_postgresql_bool_update_exist {  
+//                 for element in &parameters.payload.0 {
+//                     if let Some(value) = &element.std_primitive_bool_as_postgresql_bool {
+//                         query = query.bind(element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key.into_inner());
+//                         query = query.bind(value.value.0);
+//                     }
+//                 }
+//             }
+//         }
+//         {
+//             let mut is_std_primitive_i16_as_postgresql_small_int_update_exist = false;
+//             for element in &parameters.payload.0 {
+//                 if element.std_primitive_i16_as_postgresql_small_int.is_some() {
+//                     is_std_primitive_i16_as_postgresql_small_int_update_exist = true;
+//                     break;
+//                 }
+//             }
+//             if is_std_primitive_i16_as_postgresql_small_int_update_exist {  
+//                 for element in &parameters.payload.0 {
+//                     if let Some(value) = &element.std_primitive_i16_as_postgresql_small_int {
+//                         query = query.bind(element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key.into_inner());
+//                         query = query.bind(value.value.0);
+//                     }
+//                 }
+//             }
+//         }
+//         {
+//             for element in &parameters.payload.0 {
+//                 query = query.bind(element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key.into_inner());
+//             }
+//         }
 //         // let (
 //         //     std_primitive_bool_as_postgresql_bool_vec,
 //         //     std_primitive_i16_as_postgresql_small_int_vec,
@@ -1396,15 +1450,14 @@ pub struct Dog {
 //                     file: std::string::String::from(
 //                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
 //                     ),
-//                     line: 6949,
+//                     line: 7001,
 //                     column: 13,
 //                 }),
 //             ),
 //         },
 //     )
 // }
-
-///////////////////////////////
+////////////////////
 #[derive(Debug)]
 pub struct UpdateManyPayloadElement {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
@@ -1986,62 +2039,78 @@ DynArcCombinationOfAppStateLogicTraits, >,
     println!("{}", query_string);
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
-        let current_vec_len = parameters.payload.0.len();
-        // let (
-        //     std_primitive_bool_as_postgresql_bool_vec,
-        //     std_primitive_i16_as_postgresql_small_int_vec,
-        //     std_primitive_i32_as_postgresql_int_vec,
-        //     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec,
-        // ) = parameters.payload.0.into_iter().fold(
-        //     (
-        //         std::vec::Vec::with_capacity(current_vec_len),
-        //         std::vec::Vec::with_capacity(current_vec_len),
-        //         std::vec::Vec::with_capacity(current_vec_len),
-        //         std::vec::Vec::with_capacity(current_vec_len),
-        //     ),
-        //     |mut acc, element| {
-        //         acc.0.push(element.std_primitive_bool_as_postgresql_bool);
-        //         acc.1
-        //             .push(element.std_primitive_i16_as_postgresql_small_int);
-        //         acc.2.push(element.std_primitive_i32_as_postgresql_int);
-        //         acc.3
-        //             .push(element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key);
-        //         acc
-        //     },
-        // );
-        // query = query.bind(
-        //     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_vec
-        //         .into_iter()
-        //         .map(|element| element.into_inner())
-        //         .collect::<std::vec::Vec<std::primitive::i64>>(),
-        // );
-        // query = query.bind(
-        //     std_primitive_bool_as_postgresql_bool_vec
-        //         .into_iter()
-        //         .map(|element| match element.value {
-        //             Some(value) => value.into_inner(),
-        //             None => None,
-        //         })
-        //         .collect::<std::vec::Vec<std::option::Option<std::primitive::bool>>>(),
-        // );
-        // query = query.bind(
-        //     std_primitive_i16_as_postgresql_small_int_vec
-        //         .into_iter()
-        //         .map(|element| match element.value {
-        //             Some(value) => value.into_inner(),
-        //             None => None,
-        //         })
-        //         .collect::<std::vec::Vec<std::option::Option<std::primitive::i16>>>(),
-        // );
-        // query = query.bind(
-        //     std_primitive_i32_as_postgresql_int_vec
-        //         .into_iter()
-        //         .map(|element| match element.value {
-        //             Some(value) => value.into_inner(),
-        //             None => None,
-        //         })
-        //         .collect::<std::vec::Vec<std::option::Option<std::primitive::i32>>>(),
-        // );
+        {
+            let mut is_std_primitive_bool_as_postgresql_bool_update_exist = false;
+            for element in &parameters.payload.0 {
+                if element.std_primitive_bool_as_postgresql_bool.is_some() {
+                    is_std_primitive_bool_as_postgresql_bool_update_exist = true;
+                    break;
+                }
+            }
+            if is_std_primitive_bool_as_postgresql_bool_update_exist {
+                for element in &parameters.payload.0 {
+                    if let Some(value) = &element.std_primitive_bool_as_postgresql_bool {
+                        query = query.bind(
+                            element
+                                .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                                .into_inner(),
+                        );
+                        query = query.bind(value.value.0);
+                    }
+                }
+            }
+        }
+        {
+            let mut is_std_primitive_i16_as_postgresql_small_int_update_exist = false;
+            for element in &parameters.payload.0 {
+                if element.std_primitive_i16_as_postgresql_small_int.is_some() {
+                    is_std_primitive_i16_as_postgresql_small_int_update_exist = true;
+                    break;
+                }
+            }
+            if is_std_primitive_i16_as_postgresql_small_int_update_exist {
+                for element in &parameters.payload.0 {
+                    if let Some(value) = &element.std_primitive_i16_as_postgresql_small_int {
+                        query = query.bind(
+                            element
+                                .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                                .into_inner(),
+                        );
+                        query = query.bind(value.value.0);
+                    }
+                }
+            }
+        }
+        {
+            let mut is_std_primitive_i32_as_postgresql_int_update_exist = false;
+            for element in &parameters.payload.0 {
+                if element.std_primitive_i32_as_postgresql_int.is_some() {
+                    is_std_primitive_i32_as_postgresql_int_update_exist = true;
+                    break;
+                }
+            }
+            if is_std_primitive_i32_as_postgresql_int_update_exist {
+                for element in &parameters.payload.0 {
+                    if let Some(value) = &element.std_primitive_i32_as_postgresql_int {
+                        query = query.bind(
+                            element
+                                .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                                .into_inner(),
+                        );
+                        query = query.bind(value.value.0);
+                    }
+                }
+            }
+        }
+        {
+            for element in &parameters.payload.0 {
+                query = query.bind(
+                    element
+                        .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                        .into_inner(),
+                );
+            }
+        }
         query
     };
     let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
@@ -2605,7 +2674,7 @@ pub async fn try_update_many(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 7001,
+                    line: 7046,
                     column: 13,
                 }),
             ),

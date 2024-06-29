@@ -104,6 +104,7 @@ fn field_type_implements_serialize_deserialize_handle(
             Debug,
             PartialEq,
             #possible_eq_impl_token_stream
+            Clone,
             serde::Serialize,
             serde::Deserialize,
             utoipa::ToSchema,

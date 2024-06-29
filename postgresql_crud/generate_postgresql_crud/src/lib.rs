@@ -4636,7 +4636,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let query_snake_case = naming_constants::QuerySnakeCase;
-                    let fields_update_assignment_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                    let fields_named_excluding_primary_key_update_assignment_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
                         let is_field_ident_update_exists_token_stream = {
                             let is_snake_case = naming_constants::IsSnakeCase;
@@ -4735,7 +4735,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
                             let mut increment: u64 = 0;
-                            #(#fields_update_assignment_token_stream)*
+                            #(#fields_named_excluding_primary_key_update_assignment_token_stream)*
                             let _ = #query_snake_case.pop();
                             #where_primary_key_field_ident_in_primary_keys_token_stream
                             #query_snake_case
@@ -4745,74 +4745,119 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
                     //todo remove () if in fields named only one element
-                    let column_vecs_token_stream = fields_named.iter().map(|element|{
-                        let field_ident_underscore_vec_stringified = format!("{}_{}", &element.field_ident, naming_constants::VecSnakeCase);
-                        field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    });
-                    let column_vecs_with_capacity_token_stream = fields_named.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_snake_case)});
-                    let columns_acc_push_elements_token_stream = fields_named.iter().enumerate().map(|(index, element)|{
+                    // let column_vecs_token_stream = fields_named.iter().map(|element|{
+                    //     let field_ident_underscore_vec_stringified = format!("{}_{}", &element.field_ident, naming_constants::VecSnakeCase);
+                    //     field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // });
+                    // let column_vecs_with_capacity_token_stream = fields_named.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_snake_case)});
+                    // let columns_acc_push_elements_token_stream = fields_named.iter().enumerate().map(|(index, element)|{
+                    //     let field_ident = &element.field_ident;
+                    //     let index_token_stream = {
+                    //         let index_stringified = format!("{index}");
+                    //         index_stringified.parse::<proc_macro2::TokenStream>()
+                    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    //     };
+                    //     quote::quote!{#acc_snake_case.#index_token_stream.push(#element_snake_case.#field_ident);}
+                    // });
+                    // let column_query_bind_primary_key_vec_token_stream = {
+                    //     let field_ident_underscore_vec_token_stream = {
+                    //         let field_ident_underscore_vec_stringified = format!(
+                    //             "{primary_key_field_ident}_{}", naming_constants::VecSnakeCase
+                    //         );
+                    //         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
+                    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    //     };
+                    //     quote::quote! {
+                    //         #query_snake_case = #query_snake_case.bind(
+                    //             #field_ident_underscore_vec_token_stream
+                    //             .into_iter()
+                    //             .map(|#element_snake_case| #element_snake_case.into_inner())
+                    //             .collect::<std::vec::Vec<#primary_key_original_type_token_stream>>()
+                    //         );
+                    //     }
+                    // };
+                    // let column_query_bind_vecs_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                    //     let field_ident_underscore_vec_token_stream = {
+                    //         let field_ident_underscore_vec_stringified = {
+                    //             let field_ident = &element.field_ident;
+                    //             format!("{field_ident}_{}", naming_constants::VecSnakeCase)
+                    //         };
+                    //         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
+                    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    //     };
+                    //     let original_type_token_stream = &element.original_type_token_stream;
+                    //     quote::quote!{
+                    //         //todo this is wrong!!! if OptionField value in None then simpli ignore it, not need to push in vec
+                    //         #query_snake_case = #query_snake_case.bind(
+                    //             #field_ident_underscore_vec_token_stream
+                    //                 .into_iter()
+                    //                 .map(|#element_snake_case| match #element_snake_case.#value_snake_case {
+                    //                     Some(#value_snake_case) => #value_snake_case.into_inner(),
+                    //                     None => None
+                    //                 })
+                    //                 .collect::<std::vec::Vec<#original_type_token_stream>>(),
+                    //         );
+                    //     }
+                    // });
+                    let fields_named_excluding_primary_key_update_assignment_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
-                        let index_token_stream = {
-                            let index_stringified = format!("{index}");
-                            index_stringified.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        let is_field_ident_update_exists_token_stream = {
+                            let is_snake_case = naming_constants::IsSnakeCase;
+                            let value = format!("{is_snake_case}_{}_update_exist", &field_ident);
+                            value.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        quote::quote!{#acc_snake_case.#index_token_stream.push(#element_snake_case.#field_ident);}
+                        let case_snake_case = naming_constants::CaseSnakeCase;
+                        let field_ident_equals_case_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            &format!("{field_ident} = {case_snake_case} "),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        let else_snake_case = naming_constants::ElseSnakeCase;
+                        let end_snake_case = naming_constants::EndSnakeCase;
+                        let else_field_ident_end_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            &format!("{else_snake_case} {field_ident} {end_snake_case},"),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        let when_primary_key_field_ident_equals_then_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            &format!(
+                                "{} {primary_key_field_ident} = {{}} {} {{}} ",
+                                naming_constants::WhenSnakeCase,
+                                naming_constants::ThenSnakeCase
+                            ),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        quote::quote!{
+                            {
+                                let mut #is_field_ident_update_exists_token_stream = false;
+                                for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                    if #element_snake_case.#field_ident.is_some() {
+                                        #is_field_ident_update_exists_token_stream = true;
+                                        break;
+                                    }
+                                }
+                                if #is_field_ident_update_exists_token_stream {  
+                                    for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                        if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
+                                            #query_snake_case = #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.into_inner());
+                                            #query_snake_case = #query_snake_case.bind(#value_snake_case.#value_snake_case.0);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     });
-                    let column_query_bind_primary_key_vec_token_stream = {
-                        let field_ident_underscore_vec_token_stream = {
-                            let field_ident_underscore_vec_stringified = format!(
-                                "{primary_key_field_ident}_{}", naming_constants::VecSnakeCase
-                            );
-                            field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
-                        quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(
-                                #field_ident_underscore_vec_token_stream
-                                .into_iter()
-                                .map(|#element_snake_case| #element_snake_case.into_inner())
-                                .collect::<std::vec::Vec<#primary_key_original_type_token_stream>>()
-                            );
+                    let primary_key_update_assignment_token_stream = quote::quote! {
+                        {
+                            for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                #query_snake_case = #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.into_inner());
+                            }
                         }
                     };
-                    let column_query_bind_vecs_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                        let field_ident_underscore_vec_token_stream = {
-                            let field_ident_underscore_vec_stringified = {
-                                let field_ident = &element.field_ident;
-                                format!("{field_ident}_{}", naming_constants::VecSnakeCase)
-                            };
-                            field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
-                        let original_type_token_stream = &element.original_type_token_stream;
-                        quote::quote!{
-                            //todo this is wrong!!! if OptionField value in None then simpli ignore it, not need to push in vec
-                            #query_snake_case = #query_snake_case.bind(
-                                #field_ident_underscore_vec_token_stream
-                                    .into_iter()
-                                    .map(|#element_snake_case| match #element_snake_case.#value_snake_case {
-                                        Some(#value_snake_case) => #value_snake_case.into_inner(),
-                                        None => None
-                                    })
-                                    .collect::<std::vec::Vec<#original_type_token_stream>>(),
-                            );
-                        }
-                    });
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                        let #current_vec_len_snake_case = #parameters_snake_case.#payload_snake_case.0.len();
-                        let (
-                            #(#column_vecs_token_stream),*
-                        ) = #parameters_snake_case.#payload_snake_case.0.into_iter().fold((
-                            #(#column_vecs_with_capacity_token_stream),*
-                        ), |mut #acc_snake_case, #element_snake_case| {
-                            #(#columns_acc_push_elements_token_stream)*
-                            #acc_snake_case
-                        });
-                        #column_query_bind_primary_key_vec_token_stream
-                        #(#column_query_bind_vecs_token_stream)*
+                        #(#fields_named_excluding_primary_key_update_assignment_token_stream)*
+                        #primary_key_update_assignment_token_stream
                         #query_snake_case
                     }
                 };
