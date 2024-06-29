@@ -733,19 +733,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {pub use #inner_type_token_stream;}
     });
     let value_snake_case = naming_constants::ValueSnakeCase;
-    let option_field_and_option_field_with_serialize_deserialize_token_stream = {
+    let field_and_field_with_serialize_deserialize_token_stream = {
         let derive_debug = token_patterns::DeriveDebug;
         let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
-        let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
-        let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
+        let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
+        let field_with_serialize_deserialize_upper_camel_case = naming_conventions::FieldWithSerializeDeserializeUpperCamelCase;
         quote::quote!{
             #derive_debug
-            pub struct #option_field_upper_camel_case<T> {
-                pub #value_snake_case: std::option::Option<T>
+            pub struct #field_upper_camel_case<T> {
+                pub #value_snake_case: T
             }       
             #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-            pub struct #option_field_with_serialize_deserialize_upper_camel_case<T> {
-                pub #value_snake_case: std::option::Option<T>
+            pub struct #field_with_serialize_deserialize_upper_camel_case<T> {
+                pub #value_snake_case: T
             }
         }
     };
@@ -4232,9 +4232,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         fn generate_option_fields_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
                            let field_ident = &element.field_ident;
                            let inner_type_token_stream = &element.inner_type_token_stream;
-                           let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                           let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
                            quote::quote! {
-                               pub #field_ident: #option_field_upper_camel_case<#inner_type_token_stream>
+                               pub #field_ident: #field_upper_camel_case<#inner_type_token_stream>
                            }
                         }
                         generate_option_fields_token_stream
@@ -4250,9 +4250,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         fn generate_option_field_with_serialize_deserialize_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
                             let field_ident = &element.field_ident;
                             let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
-                            let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
+                            let field_with_serialize_deserialize_upper_camel_case = naming_conventions::FieldWithSerializeDeserializeUpperCamelCase;
                             quote::quote! {
-                                #field_ident: #option_field_with_serialize_deserialize_upper_camel_case<#inner_type_with_serialize_deserialize_token_stream>
+                                #field_ident: #field_with_serialize_deserialize_upper_camel_case<#inner_type_with_serialize_deserialize_token_stream>
                             }
                         }
                         generate_option_field_with_serialize_deserialize_token_stream
@@ -4269,7 +4269,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &operation,
                         &{
                             let primary_key_field_assignment_token_stream = {
-                                let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                                let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
                                 quote::quote! {
                                     let #primary_key_field_ident = #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case.#primary_key_field_ident);
                                 }
@@ -4282,9 +4282,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let inner_type_token_stream = &element.inner_type_token_stream;
                                     let from_snake_case = naming_constants::FromSnakeCase;
                                     let value_snake_case = naming_constants::ValueSnakeCase;
-                                    let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                                    let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
                                     quote::quote! {
-                                        let #field_ident = #option_field_upper_camel_case { 
+                                        let #field_ident = #field_upper_camel_case { 
                                             #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
                                                 Some(#value_snake_case) => Some(#inner_type_token_stream::#from_snake_case(#value_snake_case)),
                                                 None => None
@@ -4339,11 +4339,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 let inner_type_token_stream = &element.inner_type_token_stream;
                                                 let from_snake_case = naming_constants::FromSnakeCase;
                                                 let value_snake_case = naming_constants::ValueSnakeCase;
-                                                let option_field_upper_camel_case = naming_conventions::OptionFieldUpperCamelCase;
+                                                let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
                                                 match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
                                                     postgresql_crud_common::FromOrTryFrom::From => {
                                                         quote::quote!{
-                                                            #option_field_upper_camel_case { 
+                                                            #field_upper_camel_case { 
                                                                 #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
                                                                     Some(#value_snake_case) => Some(#inner_type_token_stream::#from_snake_case(#value_snake_case)),
                                                                     None => None
@@ -4367,7 +4367,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                         };
                                                         quote::quote!{
-                                                            #option_field_upper_camel_case { 
+                                                            #field_upper_camel_case { 
                                                                 #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
                                                                     Some(#value_snake_case) => Some(match #inner_type_token_stream::#try_from_snake_case(#value_snake_case) {
                                                                         Ok(#value_snake_case) => #value_snake_case,
@@ -4528,9 +4528,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
                             let from_snake_case = naming_constants::FromSnakeCase;
                             let value_snake_case = naming_constants::ValueSnakeCase;
-                            let option_field_with_serialize_deserialize_upper_camel_case = naming_conventions::OptionFieldWithSerializeDeserializeUpperCamelCase;
+                            let field_with_serialize_deserialize_upper_camel_case = naming_conventions::FieldWithSerializeDeserializeUpperCamelCase;
                             quote::quote! {
-                                let #field_ident = #option_field_with_serialize_deserialize_upper_camel_case {
+                                let #field_ident = #field_with_serialize_deserialize_upper_camel_case {
                                     #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
                                         Some(#value_snake_case) => Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case)),
                                         None => None
@@ -6516,7 +6516,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream
         #(#reexport_postgresql_sqlx_column_types_token_stream)*
-        #option_field_and_option_field_with_serialize_deserialize_token_stream
+        #field_and_field_with_serialize_deserialize_token_stream
         // #[cfg(test)]
         // mod test_try_create_many {
             // #emulate_crud_api_usage_test_token_stream
