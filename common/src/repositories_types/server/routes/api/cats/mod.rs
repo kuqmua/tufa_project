@@ -215,12 +215,9 @@ pub struct Dog {
 pub struct UpdateManyPayloadElement {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64,
-    pub std_primitive_bool_as_postgresql_bool:
-        OptionField<postgresql_crud::StdOptionOptionStdPrimitiveBool>,
-    pub std_primitive_i16_as_postgresql_small_int:
-        OptionField<postgresql_crud::StdOptionOptionStdPrimitiveI16>,
-    pub std_primitive_i32_as_postgresql_int:
-        OptionField<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
+    pub std_primitive_bool_as_postgresql_bool: std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveBool>>,
+    pub std_primitive_i16_as_postgresql_small_int: std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI16>>,
+    pub std_primitive_i32_as_postgresql_int: std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI32>>,
 }
 #[derive(Debug)]
 pub struct UpdateManyPayload(pub std::vec::Vec<UpdateManyPayloadElement>);
@@ -228,15 +225,15 @@ pub struct UpdateManyPayload(pub std::vec::Vec<UpdateManyPayloadElement>);
 pub struct UpdateManyPayloadElementWithSerializeDeserialize {
     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
-    std_primitive_bool_as_postgresql_bool: OptionFieldWithSerializeDeserialize<
+    std_primitive_bool_as_postgresql_bool: std::option::Option<FieldWithSerializeDeserialize<
         postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
-    >,
-    std_primitive_i16_as_postgresql_small_int: OptionFieldWithSerializeDeserialize<
+    >>,
+    std_primitive_i16_as_postgresql_small_int: std::option::Option<FieldWithSerializeDeserialize<
         postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
-    >,
-    std_primitive_i32_as_postgresql_int: OptionFieldWithSerializeDeserialize<
+    >>,
+    std_primitive_i32_as_postgresql_int: std::option::Option<FieldWithSerializeDeserialize<
         postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
-    >,
+    >>,
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct UpdateManyPayloadWithSerializeDeserialize(
@@ -250,25 +247,29 @@ impl std::convert::From<UpdateManyPayloadElementWithSerializeDeserialize>
             postgresql_crud::StdPrimitiveI64::from(
                 value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             );
-        let std_primitive_bool_as_postgresql_bool = OptionField {
-            value: match value.std_primitive_bool_as_postgresql_bool.value {
-                Some(value) => Some(postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
-                    value,
-                )),
-                None => None,
-            },
+        let std_primitive_bool_as_postgresql_bool = match value.std_primitive_bool_as_postgresql_bool {
+            Some(value) => Some(Field {
+                value: postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
+                    value.value,
+                )
+            }),
+            None => None
         };
-        let std_primitive_i16_as_postgresql_small_int = OptionField {
-            value: match value.std_primitive_i16_as_postgresql_small_int.value {
-                Some(value) => Some(postgresql_crud::StdOptionOptionStdPrimitiveI16::from(value)),
-                None => None,
-            },
+        let std_primitive_i16_as_postgresql_small_int = match value.std_primitive_i16_as_postgresql_small_int {
+            Some(value) => Some(Field {
+                value: postgresql_crud::StdOptionOptionStdPrimitiveI16::from(
+                    value.value,
+                )
+            }),
+            None => None
         };
-        let std_primitive_i32_as_postgresql_int = OptionField {
-            value: match value.std_primitive_i32_as_postgresql_int.value {
-                Some(value) => Some(postgresql_crud::StdOptionOptionStdPrimitiveI32::from(value)),
-                None => None,
-            },
+        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+        Some(value) => Some(Field {
+                value: postgresql_crud::StdOptionOptionStdPrimitiveI32::from(
+                    value.value,
+                )
+            }),
+            None => None
         };
         Self {
             std_primitive_bool_as_postgresql_bool,
@@ -297,35 +298,29 @@ impl std::convert::From<UpdateManyPayloadElement>
             postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
                 value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             );
-        let std_primitive_bool_as_postgresql_bool = OptionFieldWithSerializeDeserialize {
-            value: match value.std_primitive_bool_as_postgresql_bool.value {
-                Some(value) => Some(
-                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
-                        value,
-                    ),
-                ),
-                None => None,
-            },
+        let std_primitive_bool_as_postgresql_bool = match value.std_primitive_bool_as_postgresql_bool {
+            Some(value) => Some(FieldWithSerializeDeserialize {
+                    value: postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+                    value.value,
+                )
+            }),
+            None => None
         };
-        let std_primitive_i16_as_postgresql_small_int = OptionFieldWithSerializeDeserialize {
-            value: match value.std_primitive_i16_as_postgresql_small_int.value {
-                Some(value) => Some(
-                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
-                        value,
-                    ),
-                ),
-                None => None,
-            },
+        let std_primitive_i16_as_postgresql_small_int = match value.std_primitive_i16_as_postgresql_small_int {
+            Some(value) => Some(FieldWithSerializeDeserialize {
+                value: postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
+                    value.value,
+                )
+            }),
+            None => None
         };
-        let std_primitive_i32_as_postgresql_int = OptionFieldWithSerializeDeserialize {
-            value: match value.std_primitive_i32_as_postgresql_int.value {
-                Some(value) => Some(
-                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
-                        value,
-                    ),
-                ),
-                None => None,
-            },
+        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+            Some(value) => Some(FieldWithSerializeDeserialize {
+                value: postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
+                    value.value,
+                )
+            }),
+            None => None
         };
         Self {
             std_primitive_bool_as_postgresql_bool,
@@ -812,33 +807,33 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 .map(|element| element.into_inner())
                 .collect::<std::vec::Vec<std::primitive::i64>>(),
         );
-        query = query.bind(
-            std_primitive_bool_as_postgresql_bool_vec
-                .into_iter()
-                .map(|element| match element.value {
-                    Some(value) => value.into_inner(),
-                    None => None,
-                })
-                .collect::<std::vec::Vec<std::option::Option<std::primitive::bool>>>(),
-        );
-        query = query.bind(
-            std_primitive_i16_as_postgresql_small_int_vec
-                .into_iter()
-                .map(|element| match element.value {
-                    Some(value) => value.into_inner(),
-                    None => None,
-                })
-                .collect::<std::vec::Vec<std::option::Option<std::primitive::i16>>>(),
-        );
-        query = query.bind(
-            std_primitive_i32_as_postgresql_int_vec
-                .into_iter()
-                .map(|element| match element.value {
-                    Some(value) => value.into_inner(),
-                    None => None,
-                })
-                .collect::<std::vec::Vec<std::option::Option<std::primitive::i32>>>(),
-        );
+        // query = query.bind(
+        //     std_primitive_bool_as_postgresql_bool_vec
+        //         .into_iter()
+        //         .map(|element| match element.value {
+        //             Some(value) => value.into_inner(),
+        //             None => None,
+        //         })
+        //         .collect::<std::vec::Vec<std::option::Option<std::primitive::bool>>>(),
+        // );
+        // query = query.bind(
+        //     std_primitive_i16_as_postgresql_small_int_vec
+        //         .into_iter()
+        //         .map(|element| match element.value {
+        //             Some(value) => value.into_inner(),
+        //             None => None,
+        //         })
+        //         .collect::<std::vec::Vec<std::option::Option<std::primitive::i16>>>(),
+        // );
+        // query = query.bind(
+        //     std_primitive_i32_as_postgresql_int_vec
+        //         .into_iter()
+        //         .map(|element| match element.value {
+        //             Some(value) => value.into_inner(),
+        //             None => None,
+        //         })
+        //         .collect::<std::vec::Vec<std::option::Option<std::primitive::i32>>>(),
+        // );
         query
     };
     let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
