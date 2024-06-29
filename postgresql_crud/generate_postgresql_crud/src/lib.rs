@@ -4234,7 +4234,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                            let inner_type_token_stream = &element.inner_type_token_stream;
                            let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
                            quote::quote! {
-                               pub #field_ident: #field_upper_camel_case<#inner_type_token_stream>
+                               pub #field_ident: std::option::Option<#field_upper_camel_case<#inner_type_token_stream>>
                            }
                         }
                         generate_option_fields_token_stream
@@ -4252,7 +4252,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
                             let field_with_serialize_deserialize_upper_camel_case = naming_conventions::FieldWithSerializeDeserializeUpperCamelCase;
                             quote::quote! {
-                                #field_ident: #field_with_serialize_deserialize_upper_camel_case<#inner_type_with_serialize_deserialize_token_stream>
+                                #field_ident: std::option::Option<#field_with_serialize_deserialize_upper_camel_case<#inner_type_with_serialize_deserialize_token_stream>>
                             }
                         }
                         generate_option_field_with_serialize_deserialize_token_stream
@@ -4284,11 +4284,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let value_snake_case = naming_constants::ValueSnakeCase;
                                     let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
                                     quote::quote! {
-                                        let #field_ident = #field_upper_camel_case { 
-                                            #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
-                                                Some(#value_snake_case) => Some(#inner_type_token_stream::#from_snake_case(#value_snake_case)),
-                                                None => None
-                                            }
+                                        let #field_ident = match #value_snake_case.#field_ident {
+                                            Some(#value_snake_case) => Some(#field_upper_camel_case {
+                                                #value_snake_case: #inner_type_token_stream::#from_snake_case(
+                                                    #value_snake_case.#value_snake_case,
+                                                )
+                                            }),
+                                            None => None
                                         };
                                     }
                                 }
@@ -4343,11 +4345,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
                                                     postgresql_crud_common::FromOrTryFrom::From => {
                                                         quote::quote!{
-                                                            #field_upper_camel_case { 
-                                                                #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
-                                                                    Some(#value_snake_case) => Some(#inner_type_token_stream::#from_snake_case(#value_snake_case)),
-                                                                    None => None
-                                                                }
+                                                            match #value_snake_case.#field_ident {
+                                                                Some(#value_snake_case) => Some(#field_upper_camel_case {
+                                                                    #value_snake_case: #inner_type_token_stream::#from_snake_case(
+                                                                        #value_snake_case.#value_snake_case,
+                                                                    )
+                                                                }),
+                                                                None => None
                                                             }
                                                         }
                                                     },
@@ -4367,9 +4371,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                         };
                                                         quote::quote!{
-                                                            #field_upper_camel_case { 
-                                                                #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
-                                                                    Some(#value_snake_case) => Some(match #inner_type_token_stream::#try_from_snake_case(#value_snake_case) {
+                                                            match #value_snake_case.#field_ident {
+                                                                Some(#value_snake_case) => Some(#field_upper_camel_case {
+                                                                    #value_snake_case: match #inner_type_token_stream::#try_from_snake_case(#value_snake_case) {
                                                                         Ok(#value_snake_case) => #value_snake_case,
                                                                         Err(#error_snake_case) => {
                                                                             return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
@@ -4377,9 +4381,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                                                 #field_code_occurence_new_token_stream
                                                                             });
                                                                         }
-                                                                    }),
-                                                                    None => None
-                                                                }
+                                                                    }
+                                                                }),
+                                                                None => None
                                                             }
                                                         }
                                                     }
@@ -4530,11 +4534,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let value_snake_case = naming_constants::ValueSnakeCase;
                             let field_with_serialize_deserialize_upper_camel_case = naming_conventions::FieldWithSerializeDeserializeUpperCamelCase;
                             quote::quote! {
-                                let #field_ident = #field_with_serialize_deserialize_upper_camel_case {
-                                    #value_snake_case: match #value_snake_case.#field_ident.#value_snake_case {
-                                        Some(#value_snake_case) => Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case)),
-                                        None => None
-                                    }
+                                let #field_ident = match #value_snake_case.#field_ident {
+                                    Some(#value_snake_case) => Some(#field_with_serialize_deserialize_upper_camel_case {
+                                        #value_snake_case: #inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
+                                            #value_snake_case.#value_snake_case,
+                                        )
+                                    }),
+                                    None => None
                                 };
                             }
                         }
