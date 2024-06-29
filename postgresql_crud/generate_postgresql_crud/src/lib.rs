@@ -4701,10 +4701,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                     });
-                    let where_primary_key_field_ident_in_primary_keys_token_stream = {
+                    let where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream = {
                         let where_primary_key_field_ident_in_primary_keys_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                             &format!(
-                                " {} {primary_key_field_ident} {} ({{}});",
+                                " {} {primary_key_field_ident} {} ({{}}) {returning_snake_case} {primary_key_field_ident};",
                                 naming_constants::WhereSnakeCase,
                                 naming_constants::InSnakeCase,
                             ),
@@ -4737,7 +4737,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let mut increment: u64 = 0;
                             #(#fields_named_excluding_primary_key_update_assignment_token_stream)*
                             let _ = #query_snake_case.pop();
-                            #where_primary_key_field_ident_in_primary_keys_token_stream
+                            #where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream
                             #query_snake_case
                         }
                     }

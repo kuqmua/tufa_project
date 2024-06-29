@@ -2013,27 +2013,22 @@ DynArcCombinationOfAppStateLogicTraits, >,
             }
         }
         let _ = query.pop();
-        query.push_str(&format!(
-            " where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key in ({});",
+        query.push_str(& format!
+        (" where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key in ({}) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;",
+        {
+            let mut acc = std :: string :: String :: default(); for element in
+            & parameters.payload.0
             {
-                let mut acc = std::string::String::default();
-                for element in &parameters.payload.0 {
-                    match postgresql_crud::BindQuery::try_generate_bind_increments(
-                        &element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-                        &mut increment,
-                    ) {
-                        Ok(value) => {
-                            acc.push_str(&format!("{value},"));
-                        }
-                        Err(error) => {
-                            todo!()
-                        }
-                    }
+                match postgresql_crud :: BindQuery ::
+                try_generate_bind_increments(&
+                element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+                & mut increment)
+                {
+                    Ok(value) => { acc.push_str(& format! ("{value},")); },
+                    Err(error) => { todo! () }
                 }
-                let _ = acc.pop();
-                acc
-            }
-        ));
+            } let _ = acc.pop(); acc
+        }));
         query
     };
     println!("{}", query_string);

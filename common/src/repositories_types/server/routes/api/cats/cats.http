@@ -75,15 +75,15 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     ]
 }
 
-### fix this 
+### fix this  
  
 PATCH http://127.0.0.1:8080/dogs/update_many HTTP/1.1 
 content-type: application/json
-commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
+commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
     {
-        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 7,
+        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
         "std_primitive_bool_as_postgresql_bool": {
             "value": true
         },
@@ -95,7 +95,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         }
     },
     {
-        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 8,
+        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 2,
         "std_primitive_bool_as_postgresql_bool": {
             "value": true
         },
