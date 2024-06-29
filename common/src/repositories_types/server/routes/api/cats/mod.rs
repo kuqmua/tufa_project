@@ -673,51 +673,53 @@ DynArcCombinationOfAppStateLogicTraits, >,
     let query_string = {
         let mut increment = 0;
         //
+// #[derive(Debug)]
+// pub struct UpdateManyPayloadElement {
+//     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+//         postgresql_crud::StdPrimitiveI64,
+//     pub std_primitive_bool_as_postgresql_bool:
+//         std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveBool>>,
+//     pub std_primitive_i16_as_postgresql_small_int:
+//         std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI16>>,
+//     pub std_primitive_i32_as_postgresql_int:
+//         std::option::Option<Field<postgresql_crud::StdOptionOptionStdPrimitiveI32>>,
+// }
         //
         let mut fields_acc = std::string::String::from("update dogs set ");
-        // let std_primitive_bool_as_postgresql_bool_handle = {
-        let is_std_primitive_bool_as_postgresql_bool_update_exist = false;
-        for element in &parameters.payload.0 {
-            if element.std_primitive_bool_as_postgresql_bool.value.is_some() {
-                is_std_primitive_bool_as_postgresql_bool_update_exist = true;
-                break;
-            }
-        }
-        if is_std_primitive_bool_as_postgresql_bool_update_exist {
-            let mut acc = std::string::String::default();
+        {
+            let mut is_std_primitive_bool_as_postgresql_bool_update_exist = false;
             for element in &parameters.payload.0 {
-                if let Some(value) = &element.std_primitive_bool_as_postgresql_bool.value {
-
+                if element.std_primitive_bool_as_postgresql_bool.is_some() {
+                    is_std_primitive_bool_as_postgresql_bool_update_exist = true;
+                    break;
                 }
             }
-            // let mut acc = std::string::String::default();
-                // let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
-                //     Ok(value) => value,
-                //     Err(error) => {
-                //         todo!()
-                //     }
-                // };
-                // let std_primitive_bool_as_postgresql_bool_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&value, &mut increment) {
-                //     Ok(value) => value,
-                //     Err(error) => {
-                //         todo!()
-                //     }
-                // };
-                // acc.push_str(&format!("WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle} THEN {std_primitive_bool_as_postgresql_bool_increment_handle} "));
-            // let _ = acc.pop();
+            if is_std_primitive_bool_as_postgresql_bool_update_exist {
+                let mut acc = std::string::String::from("std_primitive_bool_as_postgresql_bool = CASE ");
+                for element in &parameters.payload.0 {
+                    if let Some(value) = &element.std_primitive_bool_as_postgresql_bool {
+                        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&element.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                todo!()
+                            }
+                        };
+                        let std_primitive_bool_as_postgresql_bool_increment_handle = match postgresql_crud::BindQuery::try_generate_bind_increments(&value.value, &mut increment) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                todo!()
+                            }
+                        };
+                        acc.push_str(&format!("WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_increment_handle} THEN {std_primitive_bool_as_postgresql_bool_increment_handle} "));
+                    }
+                }
+                fields_acc.push_str(&format!("{acc}ELSE std_primitive_bool_as_postgresql_bool END,"));
+            }
         }
 
 
 
-            // format!(r#"
-            //     std_primitive_bool_as_postgresql_bool = 
-            //         CASE 
-            //             WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 THEN false
-            //             WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 2 THEN null
-            //             WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 3 THEN false
-            //             ELSE std_primitive_bool_as_postgresql_bool  -- Keep the current status if no condition matches
-            //         END,
-            // "#)
+
         // };
         //
         let primary_keys = {
