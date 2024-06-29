@@ -716,6 +716,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 fields_acc.push_str(&format!("{acc}ELSE std_primitive_bool_as_postgresql_bool END,"));
             }
         }
+        let _ = fields_acc.pop();
 
 
 

@@ -4642,46 +4642,117 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    }
                 };
                 let query_string_token_stream = {
-                    let column_names = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                        let possible_dot_space = if (
-                            index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
-                        ) == fields_named_len {
-                            ""
-                        }
-                        else {
-                            dot_space
-                        };
-                        acc.push_str(&format!("{}{possible_dot_space}", &element.field_ident));
-                        acc
-                    });
-                    let column_increments = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
-                        let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                        let possible_dot_space = if (incremented_index) == fields_named_len {
-                            ""
-                        }
-                        else {
-                            dot_space
-                        };
-                        acc.push_str(&format!("${incremented_index}{possible_dot_space}"));
-                        acc
-                    });
-                    let declarations = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                    // let column_names = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                    //     let possible_dot_space = if (
+                    //         index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
+                    //     ) == fields_named_len {
+                    //         ""
+                    //     }
+                    //     else {
+                    //         dot_space
+                    //     };
+                    //     acc.push_str(&format!("{}{possible_dot_space}", &element.field_ident));
+                    //     acc
+                    // });
+                    // let column_increments = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
+                    //     let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                    //     let possible_dot_space = if (incremented_index) == fields_named_len {
+                    //         ""
+                    //     }
+                    //     else {
+                    //         dot_space
+                    //     };
+                    //     acc.push_str(&format!("${incremented_index}{possible_dot_space}"));
+                    //     acc
+                    // });
+                    // let declarations = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                    //     let field_ident = &element.field_ident;
+                    //     let possible_dot_space = if (
+                    //         index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
+                    //     ) == fields_named_excluding_primary_key_len {
+                    //         ""
+                    //     }
+                    //     else {
+                    //         dot_space
+                    //     };
+                    //     acc.push_str(&format!("{field_ident} = data.{field_ident}{possible_dot_space}"));
+                    //     acc
+                    // });
+                    // //todo maybe remove unnest - if OptionField value in None then simpli ignore it, not need to push in vec
+                    // let query_stringified = format!("\"{update_snake_case} {table_name_stringified} {as_snake_case} t {set_snake_case} {declarations} {from_snake_case} ({select_snake_case} * {from_snake_case} {unnest_snake_case}({column_increments})) as data({column_names}) where t.{primary_key_field_ident} = data.{primary_key_field_ident} {returning_snake_case} data.{primary_key_field_ident}\"");
+                    // query_stringified.parse::<proc_macro2::TokenStream>()
+                    // .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    //
+                    let query_start_token_stream = {
+                        let value = format!("\"{update_snake_case} {table_name_stringified} {set_snake_case} \"");
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let fields_update_assignment_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
-                        let possible_dot_space = if (
-                            index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
-                        ) == fields_named_excluding_primary_key_len {
-                            ""
-                        }
-                        else {
-                            dot_space
+                        println!("{}", &field_ident);
+                        let is_field_ident_update_exists_token_stream = {
+                            let is_snake_case = naming_constants::IsSnakeCase;
+                            let value = format!("{is_snake_case}{}_update_exist", &field_ident);
+                            value.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        acc.push_str(&format!("{field_ident} = data.{field_ident}{possible_dot_space}"));
-                        acc
+                        let field_ident_equals_case_token_stream = {
+                            let case_snake_case = naming_constants::CaseSnakeCase;
+                            let value = format!("\"{field_ident} = {case_snake_case} \"");
+                            value.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        };
+                        let else_field_ident_end_token_stream = {
+                            let else_snake_case = naming_constants::ElseSnakeCase;
+                            let end_snake_case = naming_constants::EndSnakeCase;
+                            let value = format!("\"{else_snake_case} std_primitive_bool_as_postgresql_bool {end_snake_case},\"");
+                            value.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        };
+                        quote::quote!{
+                            {
+                                let mut #is_field_ident_update_exists_token_stream = false;
+                                for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                    if #element_snake_case.std_primitive_bool_as_postgresql_bool.is_some() {
+                                        #is_field_ident_update_exists_token_stream = true;
+                                        break;
+                                    }
+                                }
+                                if #is_field_ident_update_exists_token_stream {
+                                    let mut acc = #std_string_string::#from_snake_case(#field_ident_equals_case_token_stream);
+                                    for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                        if let Some(#value_snake_case) = &#element_snake_case.std_primitive_bool_as_postgresql_bool {
+                                            acc.push_str(&format!(
+                                                "WHEN std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {} THEN {} ",
+                                                match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, &mut increment) {
+                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Err(#error_snake_case) => {
+                                                        todo!()
+                                                    }
+                                                },
+                                                match postgresql_crud::BindQuery::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut increment) {
+                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Err(#error_snake_case) => {
+                                                        todo!()
+                                                    }
+                                                }
+                                            ));
+                                        }
+                                    }
+                                    fields_acc.push_str(&format!("{}{}",
+                                        acc,
+                                        #else_field_ident_end_token_stream
+                                    ));
+                                }
+                            }
+                        }
                     });
-                    //todo maybe remove unnest - if OptionField value in None then simpli ignore it, not need to push in vec
-                    let query_stringified = format!("\"{update_snake_case} {table_name_stringified} {as_snake_case} t {set_snake_case} {declarations} {from_snake_case} ({select_snake_case} * {from_snake_case} {unnest_snake_case}({column_increments})) as data({column_names}) where t.{primary_key_field_ident} = data.{primary_key_field_ident} {returning_snake_case} data.{primary_key_field_ident}\"");
-                    query_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    quote::quote!{
+                        let mut fields_acc = std::string::String::from(#query_start_token_stream);
+                        #(#fields_update_assignment_token_stream)*
+                        //
+                    }
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {

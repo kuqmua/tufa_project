@@ -167,7 +167,9 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "handle",
     "url",
     "future",
-    "field"
+    "field",
+    "else",
+    "end"
 );
 
 #[derive(Debug, Clone, Copy)]
