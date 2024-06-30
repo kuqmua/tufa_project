@@ -1913,50 +1913,70 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     //
-    // let (
-    //     no_payload_fields_syn_variant,
-    //     no_payload_fields_syn_variant_initialization_token_stream,
-    // ) = {
-    //     let no_payload_fields_upper_camel_case = naming_conventions::NoPayloadFieldsUpperCamelCase;
-    //     let no_payload_fields_snake_case = naming_conventions::NoPayloadFieldsSnakeCase;
-    //     (
-    //         proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-    //             proc_macro_helpers::status_code::StatusCode::BadRequest400,
-    //             &no_payload_fields_upper_camel_case,
-    //             vec![
-    //                 (
-    //                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-    //                     &no_payload_fields_snake_case,
-    //                     std_string_string_syn_punctuated_punctuated.clone()
-    //                 )
-    //             ],
-    //             &proc_macro_name_upper_camel_case_ident_stringified,
-    //         ),
-    //         {
-    //             let no_payload_fields_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-    //                 &format!(
-    //                     "{} {} {}",
-    //                     &naming_constants::NoSnakeCase,
-    //                     &naming_constants::PayloadSnakeCase,
-    //                     &naming_constants::FieldsSnakeCase
-    //                 ),
-    //                 &proc_macro_name_upper_camel_case_ident_stringified,
-    //             );
-    //             let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //                 file!(),
-    //                 line!(),
-    //                 column!(),
-    //                 &proc_macro_name_upper_camel_case_ident_stringified,
-    //             );
-    //             quote::quote! {
-    //                 #no_payload_fields_upper_camel_case {
-    //                     #no_payload_fields_snake_case: #std_string_string::#from_snake_case(#no_payload_fields_quotes_token_stream),
-    //                     #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
-    //                 }
-    //             }
-    //         }
-    //     )
-    // };
+    let (
+        no_payload_fields_syn_variant,
+        no_payload_fields_syn_variant_initialization_token_stream,
+    ) = {
+        let no_payload_fields_upper_camel_case = naming_conventions::NoPayloadFieldsUpperCamelCase;
+        let no_payload_fields_snake_case = naming_conventions::NoPayloadFieldsSnakeCase;
+        (
+            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::BadRequest400,
+                &no_payload_fields_upper_camel_case,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                        &no_payload_fields_snake_case,
+                        {
+                            let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                            value.push_value(syn::PathSegment {
+                                ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                                arguments: syn::PathArguments::None,
+                            });
+                            value.push_punct(syn::token::PathSep {
+                                spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+                            });
+                            value.push_value(syn::PathSegment {
+                                ident: proc_macro2::Ident::new(
+                                    &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
+                                        &postgresql_crud_common::SupportedSqlxPostgresType::from(primary_key_rust_sqlx_map_to_postgres_type_variant)
+                                    ).to_string(),
+                                    proc_macro2::Span::call_site()
+                                ),
+                                arguments: syn::PathArguments::None,
+                            });
+                            value
+                        }
+                    )
+                ],
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            ),
+            {
+                let no_payload_fields_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+                    &format!(
+                        "{} {} {}",
+                        &naming_constants::NoSnakeCase,
+                        &naming_constants::PayloadSnakeCase,
+                        &naming_constants::FieldsSnakeCase
+                    ),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                quote::quote! {
+                    #no_payload_fields_upper_camel_case {
+                        #no_payload_fields_snake_case: #std_string_string::#from_snake_case(#no_payload_fields_quotes_token_stream),
+                        #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
+                    }
+                }
+            }
+        )
+    };
+    println!("{no_payload_fields_syn_variant:#?}");
     //
     let common_additional_error_variants = generate_additional_error_variants(
         &syn_derive_input,
@@ -6601,7 +6621,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            #update_many_token_stream
+            // #update_many_token_stream
             #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
