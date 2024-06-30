@@ -1912,6 +1912,52 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             not_unique_primary_key_syn_variant_status_code,
         )
     };
+    //
+    // let (
+    //     no_payload_fields_syn_variant,
+    //     no_payload_fields_syn_variant_initialization_token_stream,
+    // ) = {
+    //     let no_payload_fields_upper_camel_case = naming_conventions::NoPayloadFieldsUpperCamelCase;
+    //     let no_payload_fields_snake_case = naming_conventions::NoPayloadFieldsSnakeCase;
+    //     (
+    //         proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+    //             proc_macro_helpers::status_code::StatusCode::BadRequest400,
+    //             &no_payload_fields_upper_camel_case,
+    //             vec![
+    //                 (
+    //                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+    //                     &no_payload_fields_snake_case,
+    //                     std_string_string_syn_punctuated_punctuated.clone()
+    //                 )
+    //             ],
+    //             &proc_macro_name_upper_camel_case_ident_stringified,
+    //         ),
+    //         {
+    //             let no_payload_fields_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+    //                 &format!(
+    //                     "{} {} {}",
+    //                     &naming_constants::NoSnakeCase,
+    //                     &naming_constants::PayloadSnakeCase,
+    //                     &naming_constants::FieldsSnakeCase
+    //                 ),
+    //                 &proc_macro_name_upper_camel_case_ident_stringified,
+    //             );
+    //             let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //                 file!(),
+    //                 line!(),
+    //                 column!(),
+    //                 &proc_macro_name_upper_camel_case_ident_stringified,
+    //             );
+    //             quote::quote! {
+    //                 #no_payload_fields_upper_camel_case {
+    //                     #no_payload_fields_snake_case: #std_string_string::#from_snake_case(#no_payload_fields_quotes_token_stream),
+    //                     #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
+    //                 }
+    //             }
+    //         }
+    //     )
+    // };
+    //
     let common_additional_error_variants = generate_additional_error_variants(
         &syn_derive_input,
         GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants,
@@ -4327,52 +4373,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (update_many_token_stream, update_many_test_token_stream) = {
         let operation = Operation::UpdateMany;
         let not_unique_primary_key_syn_variant_initialization_token_stream = generate_not_unique_primary_key_syn_variant_initialization_token_stream(&quote::quote!{#element_snake_case.#primary_key_field_ident.clone()});
-        //
-    // let (
-    //     no_payload_fields_syn_variant,
-    //     no_payload_fields_syn_variant_initialization_token_stream,
-    // ) = {
-    //     let no_payload_fields_upper_camel_case = naming_conventions::NoPayloadFieldsUpperCamelCase;
-    //     let no_payload_fields_snake_case = naming_conventions::NoPayloadFieldsSnakeCase;
-    //     (
-    //         proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-    //             proc_macro_helpers::status_code::StatusCode::BadRequest400,
-    //             &no_payload_fields_upper_camel_case,
-    //             vec![
-    //                 (
-    //                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-    //                     &no_payload_fields_snake_case,
-    //                     std_string_string_syn_punctuated_punctuated.clone()
-    //                 )
-    //             ],
-    //             &proc_macro_name_upper_camel_case_ident_stringified,
-    //         ),
-    //         {
-    //             let no_payload_fields_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-    //                 &format!(
-    //                     "{} {} {}",
-    //                     &naming_constants::NoSnakeCase,
-    //                     &naming_constants::PayloadSnakeCase,
-    //                     &naming_constants::FieldsSnakeCase
-    //                 ),
-    //                 &proc_macro_name_upper_camel_case_ident_stringified,
-    //             );
-    //             let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //                 file!(),
-    //                 line!(),
-    //                 column!(),
-    //                 &proc_macro_name_upper_camel_case_ident_stringified,
-    //             );
-    //             quote::quote! {
-    //                 #no_payload_fields_upper_camel_case {
-    //                     #no_payload_fields_snake_case: #std_string_string::#from_snake_case(#no_payload_fields_quotes_token_stream),
-    //                     #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
-    //                 }
-    //             }
-    //         }
-    //     )
-    // };
-        //
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len());
