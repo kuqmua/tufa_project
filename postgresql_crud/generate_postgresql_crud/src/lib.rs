@@ -1961,7 +1961,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #no_payload_fields_upper_camel_case {
-                        #no_payload_fields_snake_case: #element_snake_case.#primary_key_field_ident,
+                        #no_payload_fields_snake_case: #primary_key_field_ident,
                         #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
                     }
                 }
@@ -4627,6 +4627,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 {
                                     for #element_snake_case in &#value_snake_case.0 {
                                         if let (#(#none_fields_named_excluding_primary_key_token_stream),*) = (#(#match_fields_named_excluding_primary_key_token_stream),*) {
+                                            let #primary_key_field_ident = #element_snake_case.#primary_key_field_ident;
                                             #error_initialization_eprintln_response_creation_token_stream
                                         }
                                     }
@@ -5291,7 +5292,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &json_syn_variant_initialization_token_stream,
                    &json_syn_variant_status_code,
                    &eprintln_error_token_stream,
-                   &proc_macro2::TokenStream::new(),
+                   &{
+                        let filter_no_payload_fields_token_stream = {
+                            let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                                &operation,
+                                &no_payload_fields_syn_variant_initialization_token_stream,
+                                &quote::quote! {#from_snake_case(#error_snake_case)},
+                                &no_payload_fields_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                                &eprintln_error_token_stream,
+                            );
+                            let none_fields_named_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|_|naming_constants::NoneUpperCamelCase);
+                            let match_fields_named_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                                let field_ident = &element.field_ident;
+                                quote::quote! {&#value_snake_case.#field_ident}
+                            });
+                            quote::quote! {
+                                {
+                                    if let (#(#none_fields_named_excluding_primary_key_token_stream),*) = (#(#match_fields_named_excluding_primary_key_token_stream),*) {
+                                        let #primary_key_field_ident = #value_snake_case.#primary_key_field_ident;
+                                        #error_initialization_eprintln_response_creation_token_stream
+                                    }
+                                }
+                            }
+                        };
+                        quote::quote!{
+                            #filter_no_payload_fields_token_stream
+                        }
+                   },
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
@@ -6639,7 +6666,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
