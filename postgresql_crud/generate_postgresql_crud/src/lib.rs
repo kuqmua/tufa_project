@@ -4198,7 +4198,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&non_existing_primary_keys_and_failed_rollback_syn_variant);
                 value.push(&commit_failed_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
-                // value.push(&bind_query_syn_variant);
+                value.push(&bind_query_syn_variant);
                 // value.push(&checked_add_syn_variant);
                 // value.push(&no_payload_fields_syn_variant);
                 value
@@ -4636,6 +4636,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let query_snake_case = naming_constants::QuerySnakeCase;
+                    let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &bind_query_syn_variant_initialization_token_stream,
+                        &quote::quote! {#from_snake_case(#error_snake_case)},
+                        &bind_query_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &eprintln_error_token_stream,
+                    );
                     let fields_named_excluding_primary_key_update_assignment_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
                         let is_field_ident_update_exists_token_stream = {
@@ -4681,13 +4688,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut increment) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_snake_case) => {
-                                                        todo!()
+                                                        #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 },
                                                 match postgresql_crud::BindQuery::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut increment) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_snake_case) => {
-                                                        todo!()
+                                                        #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 }
                                             ));
@@ -4721,7 +4728,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 acc.push_str(&format!("{value},"));
                                             },
                                             Err(#error_snake_case) => {
-                                                todo!()
+                                                #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             }
                                         }
                                     }
@@ -5164,11 +5171,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // try_operation_test_token_stream,
         )
     };
-    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        &proc_macro_name_upper_camel_case,
-        &update_many_token_stream,
-        &proc_macro_name_upper_camel_case_ident_stringified
-    );
+    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     &proc_macro_name_upper_camel_case,
+    //     &update_many_token_stream,
+    //     &proc_macro_name_upper_camel_case_ident_stringified
+    // );
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let (update_one_token_stream, update_one_test_token_stream) = {
         let operation = Operation::UpdateOne;
@@ -6646,7 +6653,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
