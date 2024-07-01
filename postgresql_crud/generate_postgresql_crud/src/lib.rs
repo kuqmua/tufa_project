@@ -5189,7 +5189,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 value.push(&bind_query_syn_variant);
                 value.push(&no_payload_fields_syn_variant);
-                // value.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
                 value
             },
             &fields_named_from_or_try_from,
@@ -5522,7 +5521,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //    .push(&primary_key_from_row_and_failed_rollback_syn_variant);
                 //value.push(&commit_failed_syn_variant);
                 //value.push(&query_and_rollback_failed_syn_variant);
-                //value.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
                 value
             },
             &fields_named_from_or_try_from,
@@ -6196,10 +6194,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (delete_one_token_stream, delete_one_test_token_stream) = {
         let operation = Operation::DeleteOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &{
-                common_route_syn_variants
-                // type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
-            },
+            &common_route_syn_variants,
             &primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
             &operation,
