@@ -4467,9 +4467,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         &primary_key_syn_field,
                                         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                                     );
-                                    let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_primary_key_token_stream(
-                                        &fields_named_excluding_primary_key,
-                                        &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                                    let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
+                                        &fields_named_excluding_primary_key
                                     );
                                     quote::quote! {
                                         #primary_key_variant_token_stream
@@ -4487,13 +4486,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         &operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
                                         &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                                     );
-                                    let fields_named_excluding_primary_key_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = fields_named_excluding_primary_key.iter().map(|element|
+                                    let fields_named_excluding_primary_key_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                                        let field_ident_token_stream = {
+                                            let field_ident = &element.field_ident;
+                                            quote::quote!{#field_ident}
+                                        };
                                         generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
                                             element,
                                             &operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
-                                            &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                                            &field_ident_token_stream,
                                         )
-                                    );
+                                    });
                                     quote::quote! {
                                         match #value_snake_case {
                                             #primary_key_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream
@@ -6634,7 +6637,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            #update_many_token_stream
+            // #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
