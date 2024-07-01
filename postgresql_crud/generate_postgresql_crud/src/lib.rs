@@ -2220,7 +2220,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 quote::quote!{
                                     match #value_snake_case.#field_ident {
                                         Some(#value_snake_case) => Some(#field_upper_camel_case {
-                                            #value_snake_case: match #inner_type_token_stream::#try_from_snake_case(#value_snake_case) {
+                                            #value_snake_case: match #inner_type_token_stream::#try_from_snake_case(#value_snake_case.#value_snake_case) {
                                                 Ok(#value_snake_case) => #value_snake_case,
                                                 Err(#error_snake_case) => {
                                                     return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
@@ -6634,7 +6634,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
