@@ -4568,20 +4568,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         };
         // println!("{parameters_token_stream}");
-        // let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-        //     proc_macro_helpers::status_code::StatusCode::BadRequest400,
-        //     &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
-        //     vec![
-        //         (
-        //             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-        //             &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
-        //             naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-        //                 &operation
-        //             )
-        //         )
-        //     ],
-        //     &proc_macro_name_upper_camel_case_ident_stringified,
-        // );
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                 &operation,
@@ -5195,20 +5181,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let (update_one_token_stream, update_one_test_token_stream) = {
         let operation = Operation::UpdateOne;
-        // let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-        //     proc_macro_helpers::status_code::StatusCode::BadRequest400,
-        //     &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
-        //     vec![
-        //         (
-        //             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-        //             &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
-        //             naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-        //                 &operation
-        //             )
-        //         )
-        //     ],
-        //     &proc_macro_name_upper_camel_case_ident_stringified,
-        // );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -5517,27 +5489,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {},
         )
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &update_one_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &update_one_token_stream,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let (delete_many_token_stream, delete_many_test_token_stream) = {
         let operation = Operation::DeleteMany;
-        // let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-        //     proc_macro_helpers::status_code::StatusCode::BadRequest400,
-        //     &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
-        //     vec![
-        //         (
-        //             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-        //             &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
-        //             naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-        //                 &operation
-        //             )
-        //         )
-        //     ],
-        //     &proc_macro_name_upper_camel_case_ident_stringified,
-        // );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -6237,20 +6195,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (delete_one_token_stream, delete_one_test_token_stream) = {
         let operation = Operation::DeleteOne;
-        // let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-        //     proc_macro_helpers::status_code::StatusCode::BadRequest400,
-        //     &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
-        //     vec![
-        //         (
-        //             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-        //             &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
-        //             naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-        //                 &operation
-        //             )
-        //         )
-        //     ],
-        //     &proc_macro_name_upper_camel_case_ident_stringified,
-        // );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 common_route_syn_variants
@@ -6640,7 +6584,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream
-            #update_one_token_stream
+            // #update_one_token_stream
             #delete_many_token_stream
             #delete_one_token_stream
         // }
