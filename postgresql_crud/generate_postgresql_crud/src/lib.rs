@@ -4403,7 +4403,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&commit_failed_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
                 value.push(&bind_query_syn_variant);
-                // value.push(&checked_add_syn_variant);
                 value.push(&no_payload_fields_syn_variant);
                 value
             },
@@ -5488,11 +5487,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {},
         )
     };
-    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        &proc_macro_name_upper_camel_case,
-        &update_one_token_stream,
-        &proc_macro_name_upper_camel_case_ident_stringified
-    );
+    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     &proc_macro_name_upper_camel_case,
+    //     &update_one_token_stream,
+    //     &proc_macro_name_upper_camel_case_ident_stringified
+    // );
     let (delete_many_token_stream, delete_many_test_token_stream) = {
         let operation = Operation::DeleteMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -5502,16 +5501,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&bind_query_syn_variant);
-                //let mut value = std::vec::Vec::with_capacity(
-                //    common_error_syn_variants.len().checked_add(not_unique_field_vec_syn_variants.len().checked_add(12).unwrap()).unwrap(),
-                //);
-                //for element in &common_error_syn_variants {
-                //    value.push(element);
-                //}
                 //for element in &not_unique_field_vec_syn_variants {
                 //    value.push(element);
                 //}
-                //value.push(&not_unique_primary_keys_syn_variant);
+                value.push(&not_unique_primary_key_syn_variant);
                 //value.push(&no_payload_fields_syn_variant);
                 //value.push(&no_payload_parameters_syn_variant);
                 //value.push(&non_existing_primary_keys_syn_variant);
@@ -6579,7 +6572,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream
-            // #update_one_token_stream
+            #update_one_token_stream
             #delete_many_token_stream
             #delete_one_token_stream
         // }
