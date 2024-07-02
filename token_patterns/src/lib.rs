@@ -132,6 +132,13 @@ impl quote::ToTokens for DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema
     }
 }
 #[derive(Debug, Clone, Copy)]
+pub struct DeriveDebugCloneCopy;
+impl quote::ToTokens for DeriveDebugCloneCopy {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {#[derive(Debug, Clone, Copy)]}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveStrSqlxColumnIndex;
 impl quote::ToTokens for StdPrimitiveStrSqlxColumnIndex {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
