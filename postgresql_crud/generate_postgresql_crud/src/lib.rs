@@ -1913,21 +1913,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let (
-        no_payload_fields_syn_variant,
-        no_payload_fields_syn_variant_initialization_token_stream,
-        no_payload_fields_syn_variant_status_code
+        no_payload_fields_primary_key_syn_variant,
+        no_payload_fields_primary_key_syn_variant_initialization_token_stream,
+        no_payload_fields_primary_key_syn_variant_status_code
     ) = {
-        let no_payload_fields_upper_camel_case = naming_conventions::NoPayloadFieldsUpperCamelCase;
-        let no_payload_fields_snake_case = naming_conventions::NoPayloadFieldsSnakeCase;
-        let no_payload_fields_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
+        let no_payload_fields_primary_key_upper_camel_case = naming_conventions::NoPayloadFieldsPrimaryKeyUpperCamelCase;
+        let no_payload_fields_primary_key_snake_case = naming_conventions::NoPayloadFieldsPrimaryKeySnakeCase;
+        let no_payload_fields_primary_key_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                no_payload_fields_syn_variant_status_code.clone(),
-                &no_payload_fields_upper_camel_case,
+                no_payload_fields_primary_key_syn_variant_status_code.clone(),
+                &no_payload_fields_primary_key_upper_camel_case,
                 vec![
                     (
                         proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &no_payload_fields_snake_case,
+                        &no_payload_fields_primary_key_snake_case,
                         {
                             let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                             value.push_value(syn::PathSegment {
@@ -1960,13 +1960,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 quote::quote! {
-                    #no_payload_fields_upper_camel_case {
-                        #no_payload_fields_snake_case: #primary_key_field_ident,
+                    #no_payload_fields_primary_key_upper_camel_case {
+                        #no_payload_fields_primary_key_snake_case: #primary_key_field_ident,
                         #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
                     }
                 }
             },
-            no_payload_fields_syn_variant_status_code
+            no_payload_fields_primary_key_syn_variant_status_code
         )
     };
     let common_additional_error_variants = generate_additional_error_variants(
@@ -2299,9 +2299,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_filter_no_payload_fields_token_stream = |operation: &Operation, source_token_stream: &proc_macro2::TokenStream|{
         let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
             &operation,
-            &no_payload_fields_syn_variant_initialization_token_stream,
+            &no_payload_fields_primary_key_syn_variant_initialization_token_stream,
             &quote::quote! {#from_snake_case(#error_snake_case)},
-            &no_payload_fields_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &no_payload_fields_primary_key_syn_variant_status_code.to_axum_http_status_code_token_stream(),
             &eprintln_error_token_stream,
         );
         let none_fields_named_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|_|naming_constants::NoneUpperCamelCase);
@@ -4403,7 +4403,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&commit_failed_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
                 value.push(&bind_query_syn_variant);
-                value.push(&no_payload_fields_syn_variant);
+                value.push(&no_payload_fields_primary_key_syn_variant);
                 value
             },
             &fields_named_from_or_try_from,
@@ -5187,7 +5187,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&bind_query_syn_variant);
-                value.push(&no_payload_fields_syn_variant);
+                value.push(&no_payload_fields_primary_key_syn_variant);
                 value
             },
             &fields_named_from_or_try_from,
@@ -6179,11 +6179,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // try_operation_test_token_stream,
         )
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &delete_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &delete_many_token_stream,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let (delete_one_token_stream, delete_one_test_token_stream) = {
         let operation = Operation::DeleteOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -6573,7 +6573,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
-            #delete_many_token_stream
+            // #delete_many_token_stream
             #delete_one_token_stream
         // }
     };
