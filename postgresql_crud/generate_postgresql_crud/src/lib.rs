@@ -5494,6 +5494,36 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (delete_many_token_stream, delete_many_test_token_stream) = {
         let operation = Operation::DeleteMany;
+        let (
+            no_payload_fields_syn_variant,
+            no_payload_fields_syn_variant_initialization_token_stream,
+            no_payload_fields_syn_variant_status_code
+        ) = {
+            let no_payload_fields_upper_camel_case = naming_conventions::NoPayloadFieldsUpperCamelCase;
+            let no_payload_fields_snake_case = naming_conventions::NoPayloadFieldsSnakeCase;
+            let no_payload_fields_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
+            (
+                proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code_only_code_occurence(
+                    no_payload_fields_syn_variant_status_code.clone(),
+                    &no_payload_fields_upper_camel_case,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                {
+                    let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    quote::quote! {
+                        #no_payload_fields_upper_camel_case {
+                            #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
+                        }
+                    }
+                },
+                no_payload_fields_syn_variant_status_code
+            )
+        };
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -5505,7 +5535,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //    value.push(element);
                 //}
                 value.push(&not_unique_primary_key_syn_variant);
-                //value.push(&no_payload_fields_syn_variant);
+                value.push(&no_payload_fields_syn_variant);
                 //value.push(&no_payload_parameters_syn_variant);
                 //value.push(&non_existing_primary_keys_syn_variant);
                 //value
