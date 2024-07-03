@@ -1164,7 +1164,7 @@ pub async fn try_create_many(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
@@ -1766,7 +1766,7 @@ pub async fn try_create_one(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
@@ -2274,7 +2274,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 7475, column : 13,
+                                line : 7495, column : 13,
                             })),
                         };
                         eprintln!("{error}");
@@ -2335,7 +2335,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                     {
                                         file : std :: string :: String ::
                                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line : 3427, column : 41,
+                                        line : 3434, column : 41,
                                     })),
                                 };
                                 eprintln!("{error}");
@@ -2368,7 +2368,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                     {
                                         file : std :: string :: String ::
                                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line : 3427, column : 41,
+                                        line : 3434, column : 41,
                                     })),
                                 };
                                 eprintln!("{error}");
@@ -2401,7 +2401,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                     {
                                         file : std :: string :: String ::
                                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line : 3427, column : 41,
+                                        line : 3434, column : 41,
                                     })),
                                 };
                                 eprintln!("{error}");
@@ -3066,7 +3066,7 @@ pub async fn try_read_many(
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 3843, column : 37,
+                                line : 3850, column : 37,
                             })),
                         });
                     }
@@ -3096,7 +3096,7 @@ pub async fn try_read_many(
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 3843, column : 37,
+                                line : 3850, column : 37,
                             })),
                         });
                     }
@@ -3123,7 +3123,7 @@ pub async fn try_read_many(
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 3843, column : 37,
+                                line : 3850, column : 37,
                             })),
                         });
                     }
@@ -3351,7 +3351,7 @@ pub async fn try_read_many(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
@@ -3400,7 +3400,7 @@ impl std::convert::TryFrom<ReadOnePayloadWithSerializeDeserialize> for ReadOnePa
                                     file: std::string::String::from(
                                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                                     ),
-                                    line: 4067,
+                                    line: 4076,
                                     column: 45,
                                 }),
                             ),
@@ -3628,7 +3628,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 7475, column : 13,
+                                line : 7495, column : 13,
                             })),
                         };
                         eprintln!("{error}");
@@ -4048,7 +4048,7 @@ pub async fn try_read_one(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
@@ -4584,7 +4584,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 7475, column : 13,
+                                line : 7495, column : 13,
                             })),
                         };
                         eprintln!("{error}");
@@ -5655,7 +5655,7 @@ pub async fn try_update_many(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
@@ -6028,7 +6028,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 7475, column : 13,
+                                line : 7495, column : 13,
                             })),
                         };
                         eprintln!("{error}");
@@ -6619,7 +6619,7 @@ pub async fn try_update_one(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
@@ -7036,7 +7036,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 7475, column : 13,
+                                line : 7495, column : 13,
                             })),
                         };
                         eprintln!("{error}");
@@ -7062,7 +7062,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 file: std::string::String::from(
                                     "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                                 ),
-                                line: 5479,
+                                line: 5493,
                                 column: 25,
                             }),
                         ),
@@ -7687,14 +7687,14 @@ pub async fn try_delete_many(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
         },
     )
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct DeleteOnePayload {
     pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key_kekw:
         postgresql_crud::SqlxTypesUuidUuid,
@@ -7753,7 +7753,7 @@ impl std::convert::From<DeleteOnePayload> for DeleteOnePayloadWithSerializeDeser
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct DeleteOneParameters {
     pub payload: DeleteOnePayload,
 }
@@ -7945,7 +7945,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 7475, column : 13,
+                                line : 7495, column : 13,
                             })),
                         };
                         eprintln!("{error}");
@@ -8345,7 +8345,7 @@ pub async fn try_delete_one(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 6977,
+                    line: 6997,
                     column: 13,
                 }),
             ),
