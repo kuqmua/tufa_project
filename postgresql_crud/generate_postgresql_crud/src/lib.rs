@@ -3078,7 +3078,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let not_unique_field_ident_snake_case_stringified = format!(
                 "{}_{}",
                 naming_conventions::NotUniqueSnakeCase,
-                proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element.field_ident.to_string()),
+                &element.field_ident,
             );
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
                 not_unique_primary_key_syn_variant_status_code.clone(),
@@ -3417,7 +3417,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         let value = format!(
                                             "{}_{}",
                                             naming_conventions::NotUniqueSnakeCase,
-                                            proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_field_ident.to_string()),
+                                            &element_field_ident,
                                         );
                                         value.parse::<proc_macro2::TokenStream>()
                                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -3774,7 +3774,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
-            // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
                 #try_operation_route_logic_token_stream
@@ -3834,7 +3833,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let value = format!(
                                         "{}_{}",
                                         naming_conventions::NotUniqueSnakeCase,
-                                        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_field_ident.to_string()),
+                                        &element_field_ident,
                                     );
                                     value.parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -5467,7 +5466,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             no_payload_fields_syn_variant_status_code
         ) = {
             let no_payload_fields_upper_camel_case = naming_conventions::NoPayloadFieldsUpperCamelCase;
-            let no_payload_fields_snake_case = naming_conventions::NoPayloadFieldsSnakeCase;
             let no_payload_fields_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
             (
                 proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code_only_code_occurence(
@@ -6586,11 +6584,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // }
     };
     // if ident == "" {
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &generated,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &generated,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     // }
     generated.into()
 }
