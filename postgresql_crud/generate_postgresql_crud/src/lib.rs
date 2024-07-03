@@ -6096,13 +6096,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &proc_macro2::TokenStream::new(),
-            //         let expected_updated_primary_keys_token_stream = quote::quote! {
-            //             #primary_key_field_ident
-            //             .iter()
-            //             .map(|element| element.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-            //             .collect::<#std_vec_vec_primary_key_inner_type_token_stream>()
-            //         };
+                    &{
+                        quote::quote!{
+                            let expected_primary_keys_to_return = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident.clone();
+                        }
+                    },
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -6234,11 +6232,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // try_operation_test_token_stream,
         )
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &delete_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &delete_many_token_stream,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let (delete_one_token_stream, delete_one_test_token_stream) = {
         let operation = Operation::DeleteOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -6631,7 +6629,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
-            #delete_many_token_stream
+            // #delete_many_token_stream
             #delete_one_token_stream
         // }
     };
