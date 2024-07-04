@@ -1018,192 +1018,181 @@ DynArcCombinationOfAppStateLogicTraits, >,
     };
     //
     //
-    let value = {
-            let mut results_vec = std::vec::Vec::new();//std::vec::Vec::with_capacity(#expected_updated_primary_keys_name_token_stream.len());
-            enum RowError {
-                SqlxError(sqlx::Error),
-                Something,
-            }
-            let mut rows = binded_query.fetch(postgres_transaction.as_mut());
-            let mut option_row_error: Option<RowError> = None;
-            while let (Some(Some(row)), None) = (
-                match {
-                    use futures::TryStreamExt;
-                    rows.try_next()
-                }
-                .await
-                {
-                    Ok(value) => match value {
-                        Some(value) => match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
-                            &value,
-                            "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
-                        ) {
-                            Ok(value) => Some(Some(
-                                postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
-                                    postgresql_crud::SqlxTypesUuidUuid(value),
-                                )
-                            )),
-                            Err(error) => {
-                                option_row_error = Some(RowError::SqlxError(error));
-                                None
-                            }
-                        },
-                        None => None,
-                    },
-                    Err(error) => {
-                        option_row_error = Some(RowError::SqlxError(error));
-                        None
-                    }
-                },
-                &option_row_error,
-            ) {
-                results_vec.push(row);
-            }
-            let f = &postgres_transaction.rollback().await;
-        if let Some(value) = option_row_error {
-            
-            match (value, f) {
-                (
-                    RowError::SqlxError(value),
-                    Ok(_)
-                ) => todo!(),
-                (
-                    RowError::SqlxError(value),
-                    Err(error)
-                ) => todo!(),
-                (
-                    RowError::Something,
-                    Ok(_)
-                ) => todo!(),
-                (
-                    RowError::Something,
-                    Err(error)
-                ) => todo!(),
-            }
-                    // let error = TryDeleteManyRouteLogicErrorNamed::RowAndRollbackError {
-                    //     row: sqlx::Error,
-                    //     rollback: rollback_error,
-                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    // }
-                    
-                    // Postgresql {
-                    //     postgresql: error,
-                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    //         file!().to_owned(),
-                    //         line!(),
-                    //         column!(),
-                    //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    //             file: std::string::String::from(
-                    //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                    //             ),
-                    //             line: 1735,
-                    //             column: 21,
-                    //         }),
-                    //     ),
-                    // };
-                    // eprintln!("{error}");
-                    // let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                    //     TryDeleteManyRouteLogicResponseVariants::from(error),
-                    // ));
-                    // *res.status_mut() = axum::http::StatusCode::CREATED;
-                    // return res;
+    //std::vec::Vec::with_capacity(#expected_updated_primary_keys_name_token_stream.len());
+    // enum RowError {
+    //     SqlxError(sqlx::Error),
+    //     Something,
+    // }
+    let mut option_row_error: Option<sqlx::Error> = None;
+    let results_vec = {
+        let mut results_vec = std::vec::Vec::new();
+        let mut rows = binded_query.fetch(postgres_transaction.as_mut());
+        
+        {
+            //
+    while let (Some(Some(row)), None) = (
+        match {
+            use futures::TryStreamExt;
+            rows.try_next()
         }
+        .await
+        {
+            Ok(value) => match value {
+                Some(value) => Some(Some(value))
+                
+                // match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
+                //     &value,
+                //     "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
+                // ) {
+                //     Ok(value) => Some(Some(
+                //         postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
+                //             postgresql_crud::SqlxTypesUuidUuid(value),
+                //         )
+                //     )),
+                //     Err(error) => {
+                //         option_row_error = Some(RowError::SqlxError(error));
+                //         None
+                //     }
+                // }
+                ,
+                None => None,
+            },
+            Err(error) => {
+
+                option_row_error = Some(error);
+                None
+            }
+        },
+        &option_row_error,
+    ) {
+        results_vec.push(row);
+    }
+    // drop(rows);
+            //
+        }
+
+
+//
         results_vec
     };
-    //
-    //
-    // let value = {
-            // let mut rows = binded_query.fetch(postgres_transaction.as_mut());
-            // let mut vec_values = std::vec::Vec::new();
-            // while let Some(row) = match {
-            //     use futures::TryStreamExt;
-            //     rows.try_next()
-            // }.await
-            // {
-            //     Ok(value) => match value {
-            //         Some(value) => match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
-            //             &value,
-            //             "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
-            //         ) {
-            //             Ok(value) => Some(
-            //                 postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
-            //                     postgresql_crud::SqlxTypesUuidUuid(value),
-            //                 )
-            //             ),
-            //             Err(error) => {
-            //                 let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-            //                     postgresql: error,
-            //                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-            //                         file!().to_owned(),
-            //                         line!(),
-            //                         column!(),
-            //                         Some(error_occurence_lib::code_occurence::MacroOccurence {
-            //                             file: std::string::String::from(
-            //                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-            //                             ),
-            //                             line: 1735,
-            //                             column: 21,
-            //                         }),
-            //                     ),
-            //                 };
-            //                 eprintln!("{error}");
-            //                 let mut res = axum::response::IntoResponse::into_response(axum::Json(
-            //                     TryDeleteManyRouteLogicResponseVariants::from(error),
-            //                 ));
-            //                 *res.status_mut() = axum::http::StatusCode::CREATED;
-            //                 return res;
-            //             }
-            //         },
-            //         None => None,
-            //     },
-            //     Err(error) => {
-            //         //
-            //         match &postgres_transaction.rollback().await {
-            //             Ok(_) => {
-            //                 // #from_log_and_return_error_token_stream;
-            //                 todo!()
-            //             }
-            //             Err(rollback_error) => {
-            //                 // //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
-            //                 // let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_syn_variant_initialization_token_stream;
-            //                 // #error_log_call_token_stream
-            //                 // return #response_variants_token_stream::from(#error_snake_case_token_stream);
-            //                 todo!()
-            //             }
-            //         }
-            //         //
-            //         // let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-            //         //     postgresql: error,
-            //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-            //         //         file!().to_owned(),
-            //         //         line!(),
-            //         //         column!(),
-            //         //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-            //         //             file: std::string::String::from(
-            //         //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-            //         //             ),
-            //         //             line: 1735,
-            //         //             column: 21,
-            //         //         }),
-            //         //     ),
-            //         // };
-            //         // eprintln!("{error}");
-            //         // let mut res = axum::response::IntoResponse::into_response(axum::Json(
-            //         //     TryDeleteManyRouteLogicResponseVariants::from(error),
-            //         // ));
-            //         // *res.status_mut() = axum::http::StatusCode::CREATED;
-            //         // return res;
-            //     }
-            // } {
-            //     vec_values.push(row);
-            // }
-        // vec_values
-    // };
-    let mut response = axum::response::IntoResponse::into_response(axum::Json(
-        TryDeleteManyRouteLogicResponseVariants::Desirable(value),
-    ));
-    *response.status_mut() = axum::http::StatusCode::OK;
-    return response;
+        if let Some(value) = option_row_error {
+            match postgres_transaction.rollback().await {
+                Ok(_) => {
+                    let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                        postgresql: value,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 1735,
+                                column: 21,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                        TryDeleteManyRouteLogicResponseVariants::from(error),
+                    ));
+                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    return res;
+                }
+                Err(error) => {
+                    let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                        postgresql: error,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 1735,
+                                column: 21,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                        TryDeleteManyRouteLogicResponseVariants::from(error),
+                    ));
+                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    return res;
+                }
+            }
+        // match (value, &postgres_transaction.rollback().await) {
+        //     (
+        //         RowError::SqlxError(value),
+        //         Ok(_)
+        //     ) => {
+        //         let error = TryDeleteManyRouteLogicErrorNamed::
+        //         // RowAndRollbackError {
+        //         //     row: sqlx::Error,
+        //         //     rollback: rollback_error,
+        //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //         // }
+
+        //         Postgresql {
+        //             postgresql: value,
+        //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+        //                 file!().to_owned(),
+        //                 line!(),
+        //                 column!(),
+        //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
+        //                     file: std::string::String::from(
+        //                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+        //                     ),
+        //                     line: 1735,
+        //                     column: 21,
+        //                 }),
+        //             ),
+        //         };
+        //         eprintln!("{error}");
+        //         let mut res = axum::response::IntoResponse::into_response(axum::Json(
+        //             TryDeleteManyRouteLogicResponseVariants::from(error),
+        //         ));
+        //         *res.status_mut() = axum::http::StatusCode::CREATED;
+        //         return res;
+        //     },
+        //     (
+        //         RowError::SqlxError(value),
+        //         Err(error)
+        //     ) => todo!(),
+        //     (
+        //         RowError::Something,
+        //         Ok(_)
+        //     ) => todo!(),
+        //     (
+        //         RowError::Something,
+        //         Err(error)
+        //     ) => todo!(),
+        // }
+        }
+
+    let mut vec = vec![];
+    for element in results_vec {
+        match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
+            &element,
+            "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
+        ) {
+            Ok(value) => {
+                vec.push(value);
+            },
+            Err(error) => {
+                
+            }
+        }
+    }
+    // let mut response = axum::response::IntoResponse::into_response(axum::Json(
+    //     TryDeleteManyRouteLogicResponseVariants::Desirable(results_vec),
+    // ));
+    // *response.status_mut() = axum::http::StatusCode::OK;
+    // return response;
+    todo!()
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryDeleteManyErrorNamed {
