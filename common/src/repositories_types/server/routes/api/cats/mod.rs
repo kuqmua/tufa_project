@@ -559,6 +559,20 @@ pub enum TryDeleteManyRouteLogicErrorNamed {
         rollback: sqlx::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    //
+    NotExistingPrimaryKeys {
+        #[eo_vec_to_std_string_string]
+        not_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotExistingPrimaryKeysAndRollback {
+        #[eo_vec_to_std_string_string]
+        not_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
 pub async fn try_delete_many_route_logic(
     app_state : axum :: extract :: State < crate ::
@@ -727,9 +741,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
         },
     };
     println!("{:#?}", parameters);
-    //
-    let expected_deleted_primary_keys = parameters.payload.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key.clone();
-    //
     let query_string = format!
     ("delete from dogs where {} returning sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
     {
@@ -1015,6 +1026,9 @@ DynArcCombinationOfAppStateLogicTraits, >,
             return res;
         }
     };
+    //
+    let expected_deleted_primary_keys = parameters.payload.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key.clone();
+    //
     //std::vec::Vec::with_capacity(#expected_updated_primary_keys_name_token_stream.len());
     enum RowError {
         SqlxError(sqlx::Error),
@@ -1126,6 +1140,69 @@ DynArcCombinationOfAppStateLogicTraits, >,
             // ) => todo!(),
         }
     }
+    //
+    {
+        let not_existing_primary_keys = expected_deleted_primary_keys.into_iter().fold(std::vec::Vec::new(), |mut acc, element| {
+            if let false = results_vec.contains(&element) {
+                acc.push(element);
+            }
+            acc
+        });
+        if let false = not_existing_primary_keys.is_empty() {
+            match postgres_transaction.rollback().await {
+                Ok(_) => {
+                    let error = TryDeleteManyRouteLogicErrorNamed::NotExistingPrimaryKeys {
+                        not_existing_primary_keys,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 1735,
+                                column: 21,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                        TryDeleteManyRouteLogicResponseVariants::from(error),
+                    ));
+                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    return res;
+                }
+                Err(error) => {
+                    //
+                    let error = TryDeleteManyRouteLogicErrorNamed::NotExistingPrimaryKeysAndRollback {
+                        not_existing_primary_keys,
+                        rollback: error,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 1735,
+                                column: 21,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                        TryDeleteManyRouteLogicResponseVariants::from(error),
+                    ));
+                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    return res;
+                    //
+                }
+            }
+        }
+    }
+    //
     let mut response = axum::response::IntoResponse::into_response(axum::Json(
         TryDeleteManyRouteLogicResponseVariants::Desirable(results_vec),
     ));
