@@ -1028,51 +1028,43 @@ DynArcCombinationOfAppStateLogicTraits, >,
         let mut results_vec = std::vec::Vec::new();
         let mut rows = binded_query.fetch(postgres_transaction.as_mut());
         {
-
             while let (Some(Some(row)), None) = (
-                match {
-                    use futures::TryStreamExt;
-                    rows.try_next()
-                }
-                .await
-            {
-                Ok(value) => match value {
-                    Some(value) => 
-                
-                match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
-                    &value,
-                    "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
-                ) {
-                    Ok(value) => Some(Some(
-                        postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
-                            postgresql_crud::SqlxTypesUuidUuid(value),
-                        )
-                    )),
+                    match {
+                        use futures::TryStreamExt;
+                        rows.try_next()
+                    }
+                    .await
+                {
+                    Ok(value) => match value {
+                        Some(value) => match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
+                            &value,
+                            "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
+                        ) {
+                            Ok(value) => Some(Some(
+                                postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
+                                    postgresql_crud::SqlxTypesUuidUuid(value),
+                                )
+                            )),
+                            Err(error) => {
+                                option_row_error = Some(error);
+                                None
+                            }
+                        },
+                        None => None,
+                    },
                     Err(error) => {
                         option_row_error = Some(error);
                         None
                     }
-                }
-                ,
-                None => None,
-            },
-            Err(error) => {
-
-                option_row_error = Some(error);
-                None
+                },
+                &option_row_error,
+            ) {
+                results_vec.push(row);
             }
-        },
-        &option_row_error,
-    ) {
-        results_vec.push(row);
-    }
         }
-
-
-//
         results_vec
     };
-        if let Some(value) = option_row_error {
+    if let Some(value) = option_row_error {
             match postgres_transaction.rollback().await {
                 Ok(_) => {
                     let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
