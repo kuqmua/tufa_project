@@ -551,6 +551,18 @@ pub enum TryDeleteManyRouteLogicErrorNamed {
             DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    //
+    // NoPrimaryKeys {
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    PostgresTryNextAndRollback {
+        #[eo_to_std_string_string]
+        try_next: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
 pub async fn try_delete_many_route_logic(
     app_state : axum :: extract :: State < crate ::
@@ -977,40 +989,41 @@ DynArcCombinationOfAppStateLogicTraits, >,
         }
     };
     //
-    let mut postgres_transaction = match {
-        use sqlx::Acquire;
-        pg_connection.begin()
-    }
-    .await
-    {
-        Ok(value) => value,
-        Err(error) => {
-            let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-                postgresql: error,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1735,
-                        column: 21,
-                    }),
-                ),
-            };
-            eprintln!("{error}");
-            let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                TryDeleteManyRouteLogicResponseVariants::from(error),
-            ));
-            *res.status_mut() = axum::http::StatusCode::CREATED;
-            return res;
+
+        let mut postgres_transaction = match {
+            use sqlx::Acquire;
+            pg_connection.begin()
         }
-    };
-    let value = {
+        .await
+        {
+            Ok(value) => value,
+            Err(error) => {
+                let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                    postgresql: error,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 1735,
+                            column: 21,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                    TryDeleteManyRouteLogicResponseVariants::from(error),
+                ));
+                *res.status_mut() = axum::http::StatusCode::CREATED;
+                return res;
+            }
+        };
         let mut vec_values = std::vec::Vec::new();
         {
+            // let f = postgres_transaction.as_mut();
             let mut rows = binded_query.fetch(postgres_transaction.as_mut());
             while let Some(row) = match {
                 use futures::TryStreamExt;
@@ -1027,76 +1040,116 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 postgresql_crud::SqlxTypesUuidUuid(value),
                             )
                         ),
-                        Err(error) => {
-                            let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-                                postgresql: error,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from(
-                                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                        ),
-                                        line: 1735,
-                                        column: 21,
-                                    }),
-                                ),
-                            };
-                            eprintln!("{error}");
-                            let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                                TryDeleteManyRouteLogicResponseVariants::from(error),
-                            ));
-                            *res.status_mut() = axum::http::StatusCode::CREATED;
-                            return res;
+                        Err(error) => match postgres_transaction.rollback().await {
+                            Ok(_) => {
+                                let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                                    postgresql: error,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from(
+                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                            ),
+                                            line: 1735,
+                                            column: 21,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                                    TryDeleteManyRouteLogicResponseVariants::from(error),
+                                ));
+                                *res.status_mut() = axum::http::StatusCode::CREATED;
+                                return res;
+                            }
+                            Err(rollback_error) => {
+                                //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
+                                let error = TryDeleteManyRouteLogicErrorNamed::PostgresTryNextAndRollback {
+                                    try_next: error,
+                                    rollback: rollback_error,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from(
+                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                            ),
+                                            line: 1735,
+                                            column: 21,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                                    TryDeleteManyRouteLogicResponseVariants::from(error),
+                                ));
+                                *res.status_mut() = axum::http::StatusCode::CREATED;
+                                return res;
+                            }
                         }
                     },
                     None => None,
                 },
-                Err(error) => {
-                    //
-                    // match #postgres_transaction_token_stream.#rollback_token_stream().await {
-                    //     Ok(_) => {
-                    //         #from_log_and_return_error_token_stream;
-                    //     }
-                    //     Err(#rollback_error_name_token_stream) => {
-                    //         //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
-                    //         let #error_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_syn_variant_initialization_token_stream;
-                    //         #error_log_call_token_stream
-                    //         return #response_variants_token_stream::from(#error_snake_case_token_stream);
-                    //     }
-                    // }
-                    //
-                    let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-                        postgresql: error,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_owned(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from(
-                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                ),
-                                line: 1735,
-                                column: 21,
-                            }),
-                        ),
-                    };
-                    eprintln!("{error}");
-                    let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                        TryDeleteManyRouteLogicResponseVariants::from(error),
-                    ));
-                    *res.status_mut() = axum::http::StatusCode::CREATED;
-                    return res;
+                Err(error) => match postgres_transaction.rollback().await {
+                    Ok(_) => {
+                        let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                            postgresql: error,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                file!().to_owned(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from(
+                                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                    ),
+                                    line: 1735,
+                                    column: 21,
+                                }),
+                            ),
+                        };
+                        eprintln!("{error}");
+                        let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                            TryDeleteManyRouteLogicResponseVariants::from(error),
+                        ));
+                        *res.status_mut() = axum::http::StatusCode::CREATED;
+                        return res;
+                    }
+                    Err(rollback_error) => {
+                        //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
+                        let error = TryDeleteManyRouteLogicErrorNamed::PostgresTryNextAndRollback {
+                            try_next: error,
+                            rollback: rollback_error,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                file!().to_owned(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from(
+                                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                    ),
+                                    line: 1735,
+                                    column: 21,
+                                }),
+                            ),
+                        };
+                        eprintln!("{error}");
+                        let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                            TryDeleteManyRouteLogicResponseVariants::from(error),
+                        ));
+                        *res.status_mut() = axum::http::StatusCode::CREATED;
+                        return res;
+                    }
                 }
             } {
                 vec_values.push(row);
             }
         }
-        vec_values
-    };
+        // vec_values
     let mut response = axum::response::IntoResponse::into_response(axum::Json(
-        TryDeleteManyRouteLogicResponseVariants::Desirable(value),
+        TryDeleteManyRouteLogicResponseVariants::Desirable(vec_values),
     ));
     *response.status_mut() = axum::http::StatusCode::OK;
     return response;
