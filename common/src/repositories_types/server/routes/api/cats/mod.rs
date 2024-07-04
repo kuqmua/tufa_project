@@ -1027,33 +1027,32 @@ DynArcCombinationOfAppStateLogicTraits, >,
     let results_vec = {
         let mut results_vec = std::vec::Vec::new();
         let mut rows = binded_query.fetch(postgres_transaction.as_mut());
-        
         {
-            //
-    while let (Some(Some(row)), None) = (
-        match {
-            use futures::TryStreamExt;
-            rows.try_next()
-        }
-        .await
-        {
-            Ok(value) => match value {
-                Some(value) => Some(Some(value))
+
+            while let (Some(Some(row)), None) = (
+                match {
+                    use futures::TryStreamExt;
+                    rows.try_next()
+                }
+                .await
+            {
+                Ok(value) => match value {
+                    Some(value) => 
                 
-                // match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
-                //     &value,
-                //     "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
-                // ) {
-                //     Ok(value) => Some(Some(
-                //         postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
-                //             postgresql_crud::SqlxTypesUuidUuid(value),
-                //         )
-                //     )),
-                //     Err(error) => {
-                //         option_row_error = Some(RowError::SqlxError(error));
-                //         None
-                //     }
-                // }
+                match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
+                    &value,
+                    "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
+                ) {
+                    Ok(value) => Some(Some(
+                        postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
+                            postgresql_crud::SqlxTypesUuidUuid(value),
+                        )
+                    )),
+                    Err(error) => {
+                        option_row_error = Some(error);
+                        None
+                    }
+                }
                 ,
                 None => None,
             },
@@ -1067,8 +1066,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
     ) {
         results_vec.push(row);
     }
-    // drop(rows);
-            //
         }
 
 
@@ -1173,26 +1170,29 @@ DynArcCombinationOfAppStateLogicTraits, >,
         // }
         }
 
-    let mut vec = vec![];
-    for element in results_vec {
-        match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
-            &element,
-            "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
-        ) {
-            Ok(value) => {
-                vec.push(value);
-            },
-            Err(error) => {
-                
-            }
-        }
-    }
-    // let mut response = axum::response::IntoResponse::into_response(axum::Json(
-    //     TryDeleteManyRouteLogicResponseVariants::Desirable(results_vec),
-    // ));
-    // *response.status_mut() = axum::http::StatusCode::OK;
-    // return response;
-    todo!()
+    // let mut vec = vec![];
+    // for element in results_vec {
+    //     match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
+    //         &element,
+    //         "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
+    //     ) {
+    //         Ok(value) => {
+    //             vec.push(
+    //                 postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
+    //                     postgresql_crud::SqlxTypesUuidUuid(value),
+    //                 )
+    //             );
+    //         },
+    //         Err(error) => {
+    //             todo!()
+    //         }
+    //     }
+    // }
+    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+        TryDeleteManyRouteLogicResponseVariants::Desirable(results_vec),
+    ));
+    *response.status_mut() = axum::http::StatusCode::OK;
+    return response;
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryDeleteManyErrorNamed {
