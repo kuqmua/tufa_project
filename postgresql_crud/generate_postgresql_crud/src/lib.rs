@@ -2306,6 +2306,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
+    let generate_commit_token_stream = |operation: &Operation|{
+        let commit_snake_case = naming_constants::CommitSnakeCase;
+        let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+            &operation,
+            &postgresql_syn_variant_initialization_token_stream,
+            &quote::quote! {#from_snake_case(#error_snake_case)},
+            &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &eprintln_error_token_stream,
+        );
+        quote::quote!{
+            if let Err(#error_snake_case) = #postgres_transaction_snake_case.#commit_snake_case().await {
+                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+            }
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -4917,7 +4932,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
                     let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
                     let non_existing_primary_keys_snake_case = naming_conventions::NonExistingPrimaryKeysSnakeCase;
-                    let commit_snake_case = naming_constants::CommitSnakeCase;
+                    let commit_token_stream = generate_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let results_vec = {
@@ -4996,14 +5011,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         }
-                        match #postgres_transaction_snake_case.#commit_snake_case().await {
-                            Ok(_) => #primary_key_vec_name_token_stream.into_iter().map(
-                                |#element_snake_case|#primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
-                            ).collect(),
-                            Err(#error_snake_case) => {
-                                #commit_failed_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                            }
-                        }
+                        #commit_token_stream
+                        #primary_key_vec_name_token_stream.into_iter().map(
+                            |#element_snake_case|#primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
+                        ).collect()
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
@@ -5579,7 +5590,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     quote::quote! {
                         #row_and_rollback_upper_camel_case {
-                            #row_snake_case,
+                            #row_snake_case: #error_snake_case,
                             #rollback_snake_case,
                             #field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream,
                         }
@@ -6070,6 +6081,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
+                    let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &row_and_rollback_syn_variant_initialization_token_stream,
+                        &quote::quote! {#from_snake_case(#error_snake_case)},
+                        &row_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &eprintln_error_token_stream,
+                    );
                     // let filter_unique_parameters_token_stream = {
                     //     let filter_unique_parameters_primary_key_token_stream = quote::quote! {
                     //         if let Some(#primary_key_field_ident) = &#parameters_snake_case.#payload_snake_case_token_stream.#primary_key_field_ident {
@@ -6185,11 +6203,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
+                    let commit_token_stream = generate_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let mut results_vec = std::vec::Vec::new();
                         {
-                            let mut rows = binded_query.fetch(postgres_transaction.as_mut());
+                            let mut rows = binded_query.fetch(#postgres_transaction_snake_case.as_mut());
                             while let Some(row) = 
                                     match {
                                         use futures::TryStreamExt;
@@ -6202,114 +6221,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             &value,
                                             "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
                                         ) {
-                                            Ok(value) => {
-
-                                                Some(postgresql_crud::SqlxTypesUuidUuid(value))
-                                            },
-                                            Err(error) => {
+                                            Ok(value) => Some(postgresql_crud::SqlxTypesUuidUuid(value)),
+                                            Err(#error_snake_case) => {
                                                 drop(rows);
-                                                match postgres_transaction.rollback().await {
+                                                match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                                     Ok(_) => {
-                                                        let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-                                                            postgresql: error,
-                                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                                file!().to_owned(),
-                                                                line!(),
-                                                                column!(),
-                                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                                    file: std::string::String::from(
-                                                                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                                                    ),
-                                                                    line: 1735,
-                                                                    column: 21,
-                                                                }),
-                                                            ),
-                                                        };
-                                                        eprintln!("{error}");
-                                                        let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                                                            TryDeleteManyRouteLogicResponseVariants::from(error),
-                                                        ));
-                                                        *res.status_mut() = axum::http::StatusCode::CREATED;
-                                                        return res;
+                                                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     },
-                                                    Err(value) => {
-                                                        let error = TryDeleteManyRouteLogicErrorNamed::RowAndRollback {
-                                                            row: error,
-                                                            rollback: value,
-                                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                                file!().to_owned(),
-                                                                line!(),
-                                                                column!(),
-                                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                                    file: std::string::String::from(
-                                                                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                                                    ),
-                                                                    line: 1735,
-                                                                    column: 21,
-                                                                }),
-                                                            ),
-                                                        };
-                                                        eprintln!("{error}");
-                                                        let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                                                            TryDeleteManyRouteLogicResponseVariants::from(error),
-                                                        ));
-                                                        *res.status_mut() = axum::http::StatusCode::CREATED;
-                                                        return res;
+                                                    Err(#rollback_snake_case) => {
+                                                        #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 }
                                             }
                                         },
                                         None => None,
                                     },
-                                    Err(error) => {
+                                    Err(#error_snake_case) => {
                                         drop(rows);
-                                        match postgres_transaction.rollback().await {
+                                        match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                             Ok(_) => {
-                                                let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-                                                    postgresql: error,
-                                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                        file!().to_owned(),
-                                                        line!(),
-                                                        column!(),
-                                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                            file: std::string::String::from(
-                                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                                            ),
-                                                            line: 1735,
-                                                            column: 21,
-                                                        }),
-                                                    ),
-                                                };
-                                                eprintln!("{error}");
-                                                let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                                                    TryDeleteManyRouteLogicResponseVariants::from(error),
-                                                ));
-                                                *res.status_mut() = axum::http::StatusCode::CREATED;
-                                                return res;
+                                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             },
-                                            Err(value) => {
-                                                let error = TryDeleteManyRouteLogicErrorNamed::RowAndRollback {
-                                                    row: error,
-                                                    rollback: value,
-                                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                        file!().to_owned(),
-                                                        line!(),
-                                                        column!(),
-                                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                            file: std::string::String::from(
-                                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                                            ),
-                                                            line: 1735,
-                                                            column: 21,
-                                                        }),
-                                                    ),
-                                                };
-                                                eprintln!("{error}");
-                                                let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                                                    TryDeleteManyRouteLogicResponseVariants::from(error),
-                                                ));
-                                                *res.status_mut() = axum::http::StatusCode::CREATED;
-                                                return res;
+                                            Err(#rollback_snake_case) => {
+                                                #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             }
                                         }
                                     }
@@ -6377,34 +6311,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         }
-                        let mut value = std::vec::Vec::new();
-                        for element in results_vec {
-                            value.push(postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(element));
-                        }
-                        if let Err(error) = postgres_transaction.commit().await {
-                            let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
-                                postgresql: error,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from(
-                                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                        ),
-                                        line: 1735,
-                                        column: 21,
-                                    }),
-                                ),
-                            };
-                            eprintln!("{error}");
-                            let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                                TryDeleteManyRouteLogicResponseVariants::from(error),
-                            ));
-                            *res.status_mut() = axum::http::StatusCode::CREATED;
-                            return res;
-                        }
-                        value
+                        #commit_token_stream
+                        results_vec.into_iter().map(
+                            |#element_snake_case|#primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
+                        ).collect()
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
