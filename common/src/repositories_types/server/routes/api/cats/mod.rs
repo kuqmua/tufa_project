@@ -1224,7 +1224,34 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 }
             }
         }
-        results_vec.into_iter().map(|element|postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(element)).collect()
+        let mut value = std::vec::Vec::new();
+        for element in results_vec {
+            value.push(postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(element));
+        }
+        if let Err(error) = postgres_transaction.commit().await {
+            let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                postgresql: error,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1735,
+                        column: 21,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                TryDeleteManyRouteLogicResponseVariants::from(error),
+            ));
+            *res.status_mut() = axum::http::StatusCode::CREATED;
+            return res;
+        }
+        value
     };
     let mut response = axum::response::IntoResponse::into_response(axum::Json(
         TryDeleteManyRouteLogicResponseVariants::Desirable(value),
