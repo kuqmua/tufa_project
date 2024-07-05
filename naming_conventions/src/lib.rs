@@ -104,7 +104,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["not", "unique"],
         ["field", "with", "serialize", "deserialize"],
         ["no", "payload", "fields", "primary", "key"],
-        ["no", "primary", "keys"]
+        ["no", "primary", "keys"],
+        ["row", "and", "rollback"],
+        ["not", "existing", "primary", "keys"],
+        ["not", "existing", "primary", "keys", "and", "rollback"]
     ]
 );
 
