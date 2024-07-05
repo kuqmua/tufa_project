@@ -4636,15 +4636,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let expected_updated_primary_keys_name_token_stream = quote::quote! {expected_updated_primary_keys};
-                let expected_updated_primary_keys_token_stream = {
-                   quote::quote! {
-                       let #expected_updated_primary_keys_name_token_stream = #parameters_snake_case
-                       .#payload_snake_case
-                       .0
-                       .iter()
-                       .map(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-                       .collect::<#std_vec_vec_primary_key_inner_type_token_stream>();
-                   }
+                let expected_updated_primary_keys_token_stream = quote::quote! {
+                    let #expected_updated_primary_keys_name_token_stream = #parameters_snake_case
+                        .#payload_snake_case
+                        .0
+                        .iter()
+                        .map(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
+                        .collect::<#std_vec_vec_primary_key_inner_type_token_stream>();
                 };
                 let query_string_token_stream = {
                     let query_start_token_stream = proc_macro_common::generate_quotes::token_stream(
@@ -6223,45 +6221,40 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let mut results_vec = std::vec::Vec::new();
                         {
                             let mut rows = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
-                            while let Some(row) = 
-                                    match {
-                                        use futures::TryStreamExt;
-                                        rows.try_next()
-                                    }
-                                    .await
-                                {
-                                    Ok(#value_snake_case) => match #value_snake_case {
-                                        Some(#value_snake_case) => match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
-                                            &value,
-                                            "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
-                                        ) {
-                                            Ok(value) => Some(postgresql_crud::SqlxTypesUuidUuid(value)),
-                                            Err(#error_snake_case) => {
-                                                drop(rows);
-                                                match #postgres_transaction_snake_case.#rollback_snake_case().await {
-                                                    Ok(_) => {
-                                                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                                    },
-                                                    Err(#rollback_snake_case) => {
-                                                        #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                                    }
+                            while let Some(row) = match { use futures::TryStreamExt; rows.try_next() }.await
+                            {
+                                Ok(#value_snake_case) => match #value_snake_case {
+                                    Some(#value_snake_case) => match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
+                                        &value,
+                                        "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
+                                    ) {
+                                        Ok(#value_snake_case) => Some(postgresql_crud::SqlxTypesUuidUuid(#value_snake_case)),
+                                        Err(#error_snake_case) => {
+                                            drop(rows);
+                                            match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                                                Ok(_) => {
+                                                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                },
+                                                Err(#rollback_snake_case) => {
+                                                    #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                 }
                                             }
-                                        },
-                                        None => None,
+                                        }
                                     },
-                                    Err(#error_snake_case) => {
-                                        drop(rows);
-                                        match #postgres_transaction_snake_case.#rollback_snake_case().await {
-                                            Ok(_) => {
-                                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                            },
-                                            Err(#rollback_snake_case) => {
-                                                #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                            }
+                                    None => None,
+                                },
+                                Err(#error_snake_case) => {
+                                    drop(rows);
+                                    match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                                        Ok(_) => {
+                                            #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                        },
+                                        Err(#rollback_snake_case) => {
+                                            #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                         }
                                     }
-                                } 
+                                }
+                            } 
                             {
                                 results_vec.push(row);
                             }
