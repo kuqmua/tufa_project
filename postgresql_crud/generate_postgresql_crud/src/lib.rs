@@ -5532,6 +5532,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 no_primary_keys_syn_variant_status_code
             )
         };
+        //
+
+        //
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -6098,7 +6101,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &parameters_logic_token_stream,
                     &{
                         quote::quote!{
-                            let expected_primary_keys_to_return = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident.clone();
+                            let expected_primary_keys = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident.clone();
                         }
                     },
                     &query_string_token_stream,

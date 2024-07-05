@@ -1067,8 +1067,57 @@ DynArcCombinationOfAppStateLogicTraits, >,
                         None => None,
                     },
                     Err(error) => {
-                        option_row_error = Some(RowError::SqlxError(error));
-                        None
+                        drop(rows);
+                        match postgres_transaction.rollback().await {
+                            Ok(_) => {
+                                let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                                    postgresql: error,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from(
+                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                            ),
+                                            line: 1735,
+                                            column: 21,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                                    TryDeleteManyRouteLogicResponseVariants::from(error),
+                                ));
+                                *res.status_mut() = axum::http::StatusCode::CREATED;
+                                return res;
+                            },
+                            Err(error) => {
+                                let error = TryDeleteManyRouteLogicErrorNamed::Postgresql {
+                                    postgresql: error,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from(
+                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                            ),
+                                            line: 1735,
+                                            column: 21,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut res = axum::response::IntoResponse::into_response(axum::Json(
+                                    TryDeleteManyRouteLogicResponseVariants::from(error),
+                                ));
+                                *res.status_mut() = axum::http::StatusCode::CREATED;
+                                return res;
+                            }
+                        }
+                        // option_row_error = Some(RowError::SqlxError(error));
+                        // None
                     }
                 },
                 &option_row_error,
