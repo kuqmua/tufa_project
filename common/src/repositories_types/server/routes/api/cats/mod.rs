@@ -210,374 +210,374 @@ pub struct Dog {
 //     something: std::string::String,
 // }
 ///////////////////////
-#[derive(Debug)]
-pub struct DeleteManyPayload {
-    pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key:
-        std::option::Option<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>>,
-    pub std_primitive_bool_as_postgresql_bool:
-        std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveBool>>,
-    pub std_primitive_i16_as_postgresql_small_int:
-        std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI16>>,
-    pub std_primitive_i32_as_postgresql_int:
-        std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI32>>,
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DeleteManyPayloadWithSerializeDeserialize {
-    sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key: std::option::Option<
-        std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize>,
-    >,
-    std_primitive_bool_as_postgresql_bool: std::option::Option<
-        std::vec::Vec<
-            postgresql_crud::WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
-        >,
-    >,
-    std_primitive_i16_as_postgresql_small_int: std::option::Option<
-        std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI16WithSerializeDeserialize>,
-    >,
-    std_primitive_i32_as_postgresql_int: std::option::Option<
-        std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI32WithSerializeDeserialize>,
-    >,
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamed {
-    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
-        #[eo_error_occurence]
-        sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key:
-            postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<DeleteManyPayloadWithSerializeDeserialize> for DeleteManyPayload {
-    type Error = DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamed;
-    fn try_from(value: DeleteManyPayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key =
-            match value.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key {
-                Some(value) => {
-                    let mut values = std::vec::Vec::with_capacity(value.len());
-                    for element in value {
-                        match postgresql_crud::SqlxTypesUuidUuid::try_from(element) {
-                            Ok(value) => {
-                                values.push(value);
-                            }
-                            Err(error) => {
-                                return
-                            Err(Self :: Error ::
-                            SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey
-                            {
-                                sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
-                                : error, code_occurence : error_occurence_lib ::
-                                code_occurence :: CodeOccurence ::
-                                new(file! ().to_owned(), line! (), column! (),
-                                Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                                {
-                                    file : std :: string :: String ::
-                                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 549, column : 13,
-                                }))
-                            });
-                            }
-                        }
-                    }
-                    Some(values)
-                }
-                None => None,
-            };
-        let std_primitive_bool_as_postgresql_bool =
-            match value.std_primitive_bool_as_postgresql_bool {
-                Some(value) => Some(
-                    value
-                        .into_iter()
-                        .map(|element| {
-                            postgresql_crud::WhereStdOptionOptionStdPrimitiveBool::from(element)
-                        })
-                        .collect(),
-                ),
-                None => None,
-            };
-        let std_primitive_i16_as_postgresql_small_int =
-            match value.std_primitive_i16_as_postgresql_small_int {
-                Some(value) => Some(
-                    value
-                        .into_iter()
-                        .map(|element| {
-                            postgresql_crud::WhereStdOptionOptionStdPrimitiveI16::from(element)
-                        })
-                        .collect(),
-                ),
-                None => None,
-            };
-        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
-            Some(value) => Some(
-                value
-                    .into_iter()
-                    .map(|element| {
-                        postgresql_crud::WhereStdOptionOptionStdPrimitiveI32::from(element)
-                    })
-                    .collect(),
-            ),
-            None => None,
-        };
-        Ok(Self {
-            std_primitive_bool_as_postgresql_bool,
-            std_primitive_i16_as_postgresql_small_int,
-            std_primitive_i32_as_postgresql_int,
-            sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
-        })
-    }
-}
-impl std::convert::From<DeleteManyPayload> for DeleteManyPayloadWithSerializeDeserialize {
-    fn from(value: DeleteManyPayload) -> Self {
-        let sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key =
-            match value.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key {
-                Some(value) => {
-                    Some(
-                        value
-                            .into_iter()
-                            .map(|element| {
-                                postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
-                                    element,
-                                )
-                            })
-                            .collect::<std::vec::Vec<
-                                postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize,
-                            >>(),
-                    )
-                }
-                None => None,
-            };
-        let std_primitive_bool_as_postgresql_bool = match
-        value.std_primitive_bool_as_postgresql_bool
-        {
-            Some(value) =>
-            Some(value.into_iter().map(| element |
-            postgresql_crud::WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
-            :: from(element)).collect()), None => None
-        };
-        let std_primitive_i16_as_postgresql_small_int = match value
-            .std_primitive_i16_as_postgresql_small_int
-        {
-            Some(value) => Some(
-                value
-                    .into_iter()
-                    .map(|element| {
-                        postgresql_crud::WhereStdOptionOptionStdPrimitiveI16WithSerializeDeserialize
-            :: from(element)
-                    })
-                    .collect(),
-            ),
-            None => None,
-        };
-        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
-            Some(value) => Some(
-                value
-                    .into_iter()
-                    .map(|element| {
-                        postgresql_crud::WhereStdOptionOptionStdPrimitiveI32WithSerializeDeserialize
-            :: from(element)
-                    })
-                    .collect(),
-            ),
-            None => None,
-        };
-        Self {
-            std_primitive_bool_as_postgresql_bool,
-            std_primitive_i16_as_postgresql_small_int,
-            std_primitive_i32_as_postgresql_int,
-            sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
-        }
-    }
-}
-#[derive(Debug)]
-pub struct DeleteManyParameters {
-    pub payload: DeleteManyPayload,
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub enum TryDeleteManyRouteLogicResponseVariants {
-    Desirable(std :: vec :: Vec :: <
-    postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize >),
-    CheckBodySize
-    {
-        check_body_size : route_validators :: check_body_size ::
-        CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, Postgresql
-    {
-        postgresql : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, Json
-    {
-        json : std :: string :: String, code_occurence : error_occurence_lib
-        :: code_occurence :: CodeOccurence,
-    }, CheckCommit
-    {
-        check_commit : route_validators :: check_commit ::
-        CheckCommitErrorNamedWithSerializeDeserialize, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, BindQuery
-    {
-        bind_query : postgresql_crud ::
-        TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }, NotUniquePrimaryKey
-    {
-        not_unique_primary_key : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, NoPayloadFields
-    {
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }, NoPrimaryKeys
-    {
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-    {
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
-        : std :: string :: String, code_occurence : error_occurence_lib ::
-        code_occurence :: CodeOccurence,
-    }, DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
-    {
-        delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize
-        :
-        DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }
-}
-impl std::convert::From<TryDeleteManyRouteLogicErrorNamed>
-    for TryDeleteManyRouteLogicResponseVariants
-{
-    fn from(value: TryDeleteManyRouteLogicErrorNamed) -> Self {
-        match value.into_serialize_deserialize_version()
-        {
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            CheckBodySize { check_body_size, code_occurence } => Self ::
-            CheckBodySize { check_body_size, code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            Postgresql { postgresql, code_occurence } => Self :: Postgresql
-            { postgresql, code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize :: Json
-            { json, code_occurence } => Self :: Json { json, code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            CheckCommit { check_commit, code_occurence } => Self ::
-            CheckCommit { check_commit, code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            BindQuery { bind_query, code_occurence } => Self :: BindQuery
-            { bind_query, code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            NotUniquePrimaryKey { not_unique_primary_key, code_occurence } =>
-            Self :: NotUniquePrimaryKey
-            { not_unique_primary_key, code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            NoPayloadFields { code_occurence } => Self :: NoPayloadFields
-            { code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            NoPrimaryKeys { code_occurence } => Self :: NoPrimaryKeys
-            { code_occurence },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            } => Self ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            }, TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
-            {
-                delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
-            {
-                delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
-                code_occurence
-            },
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollbackError { .. } => todo!(),
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize::NotExistingPrimaryKeys {..} => todo!(),
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize::NotExistingPrimaryKeysAndRollback {..} => todo!(),
-        }
-    }
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryDeleteManyRouteLogicErrorNamed {
-    CheckBodySize {
-        #[eo_error_occurence]
-        check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Postgresql {
-        #[eo_to_std_string_string]
-        postgresql: sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Json {
-        #[eo_to_std_string_string]
-        json: axum::extract::rejection::JsonRejection,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckCommit {
-        #[eo_error_occurence]
-        check_commit: route_validators::check_commit::CheckCommitErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        #[eo_error_occurence]
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniquePrimaryKey {
-        #[eo_to_std_string_string]
-        not_unique_primary_key: postgresql_crud::SqlxTypesUuidUuid,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NoPayloadFields {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NoPrimaryKeys {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-    {
-        #[eo_to_std_string_string]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize {
-        #[eo_error_occurence]
-        delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize:
-            DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+// #[derive(Debug)]
+// pub struct DeleteManyPayload {
+//     pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key:
+//         std::option::Option<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>>,
+//     pub std_primitive_bool_as_postgresql_bool:
+//         std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveBool>>,
+//     pub std_primitive_i16_as_postgresql_small_int:
+//         std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI16>>,
+//     pub std_primitive_i32_as_postgresql_int:
+//         std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI32>>,
+// }
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct DeleteManyPayloadWithSerializeDeserialize {
+//     sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key: std::option::Option<
+//         std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize>,
+//     >,
+//     std_primitive_bool_as_postgresql_bool: std::option::Option<
+//         std::vec::Vec<
+//             postgresql_crud::WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+//         >,
+//     >,
+//     std_primitive_i16_as_postgresql_small_int: std::option::Option<
+//         std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI16WithSerializeDeserialize>,
+//     >,
+//     std_primitive_i32_as_postgresql_int: std::option::Option<
+//         std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI32WithSerializeDeserialize>,
+//     >,
+// }
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamed {
+//     SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
+//         #[eo_error_occurence]
+//         sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key:
+//             postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl std::convert::TryFrom<DeleteManyPayloadWithSerializeDeserialize> for DeleteManyPayload {
+//     type Error = DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamed;
+//     fn try_from(value: DeleteManyPayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
+//         let sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key =
+//             match value.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key {
+//                 Some(value) => {
+//                     let mut values = std::vec::Vec::with_capacity(value.len());
+//                     for element in value {
+//                         match postgresql_crud::SqlxTypesUuidUuid::try_from(element) {
+//                             Ok(value) => {
+//                                 values.push(value);
+//                             }
+//                             Err(error) => {
+//                                 return
+//                             Err(Self :: Error ::
+//                             SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey
+//                             {
+//                                 sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key
+//                                 : error, code_occurence : error_occurence_lib ::
+//                                 code_occurence :: CodeOccurence ::
+//                                 new(file! ().to_owned(), line! (), column! (),
+//                                 Some(error_occurence_lib :: code_occurence :: MacroOccurence
+//                                 {
+//                                     file : std :: string :: String ::
+//                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+//                                     line : 549, column : 13,
+//                                 }))
+//                             });
+//                             }
+//                         }
+//                     }
+//                     Some(values)
+//                 }
+//                 None => None,
+//             };
+//         let std_primitive_bool_as_postgresql_bool =
+//             match value.std_primitive_bool_as_postgresql_bool {
+//                 Some(value) => Some(
+//                     value
+//                         .into_iter()
+//                         .map(|element| {
+//                             postgresql_crud::WhereStdOptionOptionStdPrimitiveBool::from(element)
+//                         })
+//                         .collect(),
+//                 ),
+//                 None => None,
+//             };
+//         let std_primitive_i16_as_postgresql_small_int =
+//             match value.std_primitive_i16_as_postgresql_small_int {
+//                 Some(value) => Some(
+//                     value
+//                         .into_iter()
+//                         .map(|element| {
+//                             postgresql_crud::WhereStdOptionOptionStdPrimitiveI16::from(element)
+//                         })
+//                         .collect(),
+//                 ),
+//                 None => None,
+//             };
+//         let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+//             Some(value) => Some(
+//                 value
+//                     .into_iter()
+//                     .map(|element| {
+//                         postgresql_crud::WhereStdOptionOptionStdPrimitiveI32::from(element)
+//                     })
+//                     .collect(),
+//             ),
+//             None => None,
+//         };
+//         Ok(Self {
+//             std_primitive_bool_as_postgresql_bool,
+//             std_primitive_i16_as_postgresql_small_int,
+//             std_primitive_i32_as_postgresql_int,
+//             sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
+//         })
+//     }
+// }
+// impl std::convert::From<DeleteManyPayload> for DeleteManyPayloadWithSerializeDeserialize {
+//     fn from(value: DeleteManyPayload) -> Self {
+//         let sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key =
+//             match value.sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key {
+//                 Some(value) => {
+//                     Some(
+//                         value
+//                             .into_iter()
+//                             .map(|element| {
+//                                 postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
+//                                     element,
+//                                 )
+//                             })
+//                             .collect::<std::vec::Vec<
+//                                 postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize,
+//                             >>(),
+//                     )
+//                 }
+//                 None => None,
+//             };
+//         let std_primitive_bool_as_postgresql_bool = match
+//         value.std_primitive_bool_as_postgresql_bool
+//         {
+//             Some(value) =>
+//             Some(value.into_iter().map(| element |
+//             postgresql_crud::WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+//             :: from(element)).collect()), None => None
+//         };
+//         let std_primitive_i16_as_postgresql_small_int = match value
+//             .std_primitive_i16_as_postgresql_small_int
+//         {
+//             Some(value) => Some(
+//                 value
+//                     .into_iter()
+//                     .map(|element| {
+//                         postgresql_crud::WhereStdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+//             :: from(element)
+//                     })
+//                     .collect(),
+//             ),
+//             None => None,
+//         };
+//         let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+//             Some(value) => Some(
+//                 value
+//                     .into_iter()
+//                     .map(|element| {
+//                         postgresql_crud::WhereStdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+//             :: from(element)
+//                     })
+//                     .collect(),
+//             ),
+//             None => None,
+//         };
+//         Self {
+//             std_primitive_bool_as_postgresql_bool,
+//             std_primitive_i16_as_postgresql_small_int,
+//             std_primitive_i32_as_postgresql_int,
+//             sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key,
+//         }
+//     }
+// }
+// #[derive(Debug)]
+// pub struct DeleteManyParameters {
+//     pub payload: DeleteManyPayload,
+// }
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+// pub enum TryDeleteManyRouteLogicResponseVariants {
+//     Desirable(std :: vec :: Vec :: <
+//     postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize >),
+//     CheckBodySize
+//     {
+//         check_body_size : route_validators :: check_body_size ::
+//         CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence :
+//         error_occurence_lib :: code_occurence :: CodeOccurence,
+//     }, Postgresql
+//     {
+//         postgresql : std :: string :: String, code_occurence :
+//         error_occurence_lib :: code_occurence :: CodeOccurence,
+//     }, Json
+//     {
+//         json : std :: string :: String, code_occurence : error_occurence_lib
+//         :: code_occurence :: CodeOccurence,
+//     }, CheckCommit
+//     {
+//         check_commit : route_validators :: check_commit ::
+//         CheckCommitErrorNamedWithSerializeDeserialize, code_occurence :
+//         error_occurence_lib :: code_occurence :: CodeOccurence,
+//     }, BindQuery
+//     {
+//         bind_query : postgresql_crud ::
+//         TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+//         code_occurence : error_occurence_lib :: code_occurence ::
+//         CodeOccurence,
+//     }, NotUniquePrimaryKey
+//     {
+//         not_unique_primary_key : std :: string :: String, code_occurence :
+//         error_occurence_lib :: code_occurence :: CodeOccurence,
+//     }, NoPayloadFields
+//     {
+//         code_occurence : error_occurence_lib :: code_occurence ::
+//         CodeOccurence,
+//     }, NoPrimaryKeys
+//     {
+//         code_occurence : error_occurence_lib :: code_occurence ::
+//         CodeOccurence,
+//     },
+//     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//     {
+//         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
+//         : std :: string :: String, code_occurence : error_occurence_lib ::
+//         code_occurence :: CodeOccurence,
+//     }, DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
+//     {
+//         delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize
+//         :
+//         DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
+//         code_occurence : error_occurence_lib :: code_occurence ::
+//         CodeOccurence,
+//     }
+// }
+// impl std::convert::From<TryDeleteManyRouteLogicErrorNamed>
+//     for TryDeleteManyRouteLogicResponseVariants
+// {
+//     fn from(value: TryDeleteManyRouteLogicErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version()
+//         {
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             CheckBodySize { check_body_size, code_occurence } => Self ::
+//             CheckBodySize { check_body_size, code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             Postgresql { postgresql, code_occurence } => Self :: Postgresql
+//             { postgresql, code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize :: Json
+//             { json, code_occurence } => Self :: Json { json, code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             CheckCommit { check_commit, code_occurence } => Self ::
+//             CheckCommit { check_commit, code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             BindQuery { bind_query, code_occurence } => Self :: BindQuery
+//             { bind_query, code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             NotUniquePrimaryKey { not_unique_primary_key, code_occurence } =>
+//             Self :: NotUniquePrimaryKey
+//             { not_unique_primary_key, code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             NoPayloadFields { code_occurence } => Self :: NoPayloadFields
+//             { code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             NoPrimaryKeys { code_occurence } => Self :: NoPrimaryKeys
+//             { code_occurence },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//             {
+//                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+//                 code_occurence
+//             } => Self ::
+//             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//             {
+//                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+//                 code_occurence
+//             }, TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//             DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
+//             {
+//                 delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
+//                 code_occurence
+//             } => Self ::
+//             DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
+//             {
+//                 delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
+//                 code_occurence
+//             },
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollbackError { .. } => todo!(),
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize::NotExistingPrimaryKeys {..} => todo!(),
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize::NotExistingPrimaryKeysAndRollback {..} => todo!(),
+//         }
+//     }
+// }
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum TryDeleteManyRouteLogicErrorNamed {
+//     CheckBodySize {
+//         #[eo_error_occurence]
+//         check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Postgresql {
+//         #[eo_to_std_string_string]
+//         postgresql: sqlx::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Json {
+//         #[eo_to_std_string_string]
+//         json: axum::extract::rejection::JsonRejection,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     CheckCommit {
+//         #[eo_error_occurence]
+//         check_commit: route_validators::check_commit::CheckCommitErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     BindQuery {
+//         #[eo_error_occurence]
+//         bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniquePrimaryKey {
+//         #[eo_to_std_string_string]
+//         not_unique_primary_key: postgresql_crud::SqlxTypesUuidUuid,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NoPayloadFields {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NoPrimaryKeys {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//     {
+//         #[eo_to_std_string_string]
+//         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+//             sqlx::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize {
+//         #[eo_error_occurence]
+//         delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize:
+//             DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserializeErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
 
     
-    RowAndRollbackError {
-        #[eo_to_std_string_string]
-        row: sqlx::Error,
-        #[eo_to_std_string_string]
-        rollback: sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-    NotExistingPrimaryKeys {
-        #[eo_vec_to_std_string_string]
-        not_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotExistingPrimaryKeysAndRollback {
-        #[eo_vec_to_std_string_string]
-        not_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
-        #[eo_to_std_string_string]
-        rollback: sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-}
+//     RowAndRollbackError {
+//         #[eo_to_std_string_string]
+//         row: sqlx::Error,
+//         #[eo_to_std_string_string]
+//         rollback: sqlx::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     //
+//     NotExistingPrimaryKeys {
+//         #[eo_vec_to_std_string_string]
+//         not_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotExistingPrimaryKeysAndRollback {
+//         #[eo_vec_to_std_string_string]
+//         not_existing_primary_keys: std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>,
+//         #[eo_to_std_string_string]
+//         rollback: sqlx::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     //
+// }
 pub async fn try_delete_many_route_logic(
     app_state : axum :: extract :: State < crate ::
 repositories_types :: server :: routes :: app_state ::
@@ -1080,7 +1080,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                         return res;
                                     },
                                     Err(value) => {
-                                        let error = TryDeleteManyRouteLogicErrorNamed::RowAndRollbackError {
+                                        let error = TryDeleteManyRouteLogicErrorNamed::RowAndRollback {
                                             row: error,
                                             rollback: value,
                                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
@@ -1135,7 +1135,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 return res;
                             },
                             Err(value) => {
-                                let error = TryDeleteManyRouteLogicErrorNamed::RowAndRollbackError {
+                                let error = TryDeleteManyRouteLogicErrorNamed::RowAndRollback {
                                     row: error,
                                     rollback: value,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
@@ -1232,259 +1232,259 @@ DynArcCombinationOfAppStateLogicTraits, >,
     *response.status_mut() = axum::http::StatusCode::OK;
     return response;
 }
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryDeleteManyErrorNamed {
-    SerdeJsonToString {
-        #[eo_to_std_string_string]
-        serde_json_to_string: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    FailedToGetResponseText {
-        #[eo_to_std_string_string]
-        status_code: http::StatusCode,
-        #[eo_to_std_string_string]
-        headers: reqwest::header::HeaderMap,
-        #[eo_to_std_string_string]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DeserializeResponse {
-        #[eo_to_std_string_string]
-        status_code: http::StatusCode,
-        #[eo_to_std_string_string]
-        headers: reqwest::header::HeaderMap,
-        #[eo_to_std_string_string_serialize_deserialize]
-        response_text: std::string::String,
-        #[eo_to_std_string_string]
-        serde: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Reqwest {
-        #[eo_to_std_string_string]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient
-    {
-        #[eo_error_occurence]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client:
-            postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize {
-        #[eo_to_std_string_string]
-        try_delete_many_route_logic_error_named_with_serialize_deserialize:
-            TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-pub async fn try_delete_many(
-    server_location: &std::primitive::str,
-    parameters: DeleteManyParameters,
-) -> Result<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>, TryDeleteManyErrorNamed> {
-    let payload = {
-        let value = DeleteManyPayloadWithSerializeDeserialize::from(parameters.payload);
-        match serde_json::to_string(&value) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(TryDeleteManyErrorNamed::SerdeJsonToString {
-                    serde_json_to_string: error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 1502,
-                            column: 21,
-                        }),
-                    ),
-                });
-            }
-        }
-    };
-    let url = format!("{}/dogs/delete_many", server_location,);
-    let future = reqwest::Client::new()
-        .delete(&url)
-        .header(
-            &postgresql_crud::CommitSnakeCase.to_string(),
-            git_info::PROJECT_GIT_INFO.commit,
-        )
-        .header(reqwest::header::CONTENT_TYPE, "application/json")
-        .body(payload)
-        .send();
-    let response = match future.await {
-        Ok(value) => value,
-        Err(error) => {
-            return Err(TryDeleteManyErrorNamed::Reqwest {
-                reqwest: error,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1661,
-                        column: 21,
-                    }),
-                ),
-            });
-        }
-    };
-    let status_code = response.status();
-    let headers = response.headers().clone();
-    let response_text = match response.text().await {
-        Ok(value) => value,
-        Err(error) => {
-            return Err(TryDeleteManyErrorNamed::FailedToGetResponseText {
-                status_code,
-                headers,
-                reqwest: error,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1558,
-                        column: 21,
-                    }),
-                ),
-            });
-        }
-    };
-    let expected_response =
-        match serde_json::from_str::<TryDeleteManyRouteLogicResponseVariants>(&response_text) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(TryDeleteManyErrorNamed::DeserializeResponse {
-                    status_code,
-                    headers,
-                    response_text,
-                    serde: error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 1621,
-                            column: 21,
-                        }),
-                    ),
-                });
-            }
-        };
-    let try_delete_many_route_logic_error_named_with_serialize_deserialize
-    = match expected_response
-    {
-        TryDeleteManyRouteLogicResponseVariants :: Desirable(value) =>
-        {
-            let value =
-            {
-                let mut values = std :: vec :: Vec :: new(); for element in
-                value
-                {
-                    match postgresql_crud::SqlxTypesUuidUuid ::
-                    try_from(element)
-                    {
-                        Ok(value) => { values.push(value); }, Err(error) =>
-                        {
-                            return
-                            Err(TryDeleteManyErrorNamed ::
-                            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient
-                            {
-                                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client
-                                : error, code_occurence : error_occurence_lib ::
-                                code_occurence :: CodeOccurence ::
-                                new(file! ().to_owned(), line! (), column! (),
-                                Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                                {
-                                    file : std :: string :: String ::
-                                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 1330, column : 29,
-                                })),
-                            });
-                        }
-                    }
-                } values
-            }; return Ok(value);
-        }, TryDeleteManyRouteLogicResponseVariants :: CheckBodySize
-        { check_body_size, code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        CheckBodySize { check_body_size, code_occurence },
-        TryDeleteManyRouteLogicResponseVariants :: Postgresql
-        { postgresql, code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        Postgresql { postgresql, code_occurence },
-        TryDeleteManyRouteLogicResponseVariants :: Json
-        { json, code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize :: Json
-        { json, code_occurence }, TryDeleteManyRouteLogicResponseVariants ::
-        CheckCommit { check_commit, code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        CheckCommit { check_commit, code_occurence },
-        TryDeleteManyRouteLogicResponseVariants :: BindQuery
-        { bind_query, code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize :: BindQuery
-        { bind_query, code_occurence },
-        TryDeleteManyRouteLogicResponseVariants :: NotUniquePrimaryKey
-        { not_unique_primary_key, code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        NotUniquePrimaryKey { not_unique_primary_key, code_occurence },
-        TryDeleteManyRouteLogicResponseVariants :: NoPayloadFields
-        { code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        NoPayloadFields { code_occurence },
-        TryDeleteManyRouteLogicResponseVariants :: NoPrimaryKeys
-        { code_occurence } =>
-        TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        NoPrimaryKeys { code_occurence },
-        TryDeleteManyRouteLogicResponseVariants ::
-        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-        {
-            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-            code_occurence
-        } => TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-        {
-            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-            code_occurence
-        }, TryDeleteManyRouteLogicResponseVariants ::
-        DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
-        {
-            delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
-            code_occurence
-        } => TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
-        DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
-        {
-            delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
-            code_occurence
-        }
-    };
-    Err(
-        TryDeleteManyErrorNamed::TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize {
-            try_delete_many_route_logic_error_named_with_serialize_deserialize,
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_owned(),
-                line!(),
-                column!(),
-                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    file: std::string::String::from(
-                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                    ),
-                    line: 7029,
-                    column: 13,
-                }),
-            ),
-        },
-    )
-}
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum TryDeleteManyErrorNamed {
+//     SerdeJsonToString {
+//         #[eo_to_std_string_string]
+//         serde_json_to_string: serde_json::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     FailedToGetResponseText {
+//         #[eo_to_std_string_string]
+//         status_code: http::StatusCode,
+//         #[eo_to_std_string_string]
+//         headers: reqwest::header::HeaderMap,
+//         #[eo_to_std_string_string]
+//         reqwest: reqwest::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     DeserializeResponse {
+//         #[eo_to_std_string_string]
+//         status_code: http::StatusCode,
+//         #[eo_to_std_string_string]
+//         headers: reqwest::header::HeaderMap,
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         response_text: std::string::String,
+//         #[eo_to_std_string_string]
+//         serde: serde_json::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Reqwest {
+//         #[eo_to_std_string_string]
+//         reqwest: reqwest::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient
+//     {
+//         #[eo_error_occurence]
+//         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client:
+//             postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize {
+//         #[eo_to_std_string_string]
+//         try_delete_many_route_logic_error_named_with_serialize_deserialize:
+//             TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// pub async fn try_delete_many(
+//     server_location: &std::primitive::str,
+//     parameters: DeleteManyParameters,
+// ) -> Result<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>, TryDeleteManyErrorNamed> {
+//     let payload = {
+//         let value = DeleteManyPayloadWithSerializeDeserialize::from(parameters.payload);
+//         match serde_json::to_string(&value) {
+//             Ok(value) => value,
+//             Err(error) => {
+//                 return Err(TryDeleteManyErrorNamed::SerdeJsonToString {
+//                     serde_json_to_string: error,
+//                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                         file!().to_owned(),
+//                         line!(),
+//                         column!(),
+//                         Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                             file: std::string::String::from(
+//                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                             ),
+//                             line: 1502,
+//                             column: 21,
+//                         }),
+//                     ),
+//                 });
+//             }
+//         }
+//     };
+//     let url = format!("{}/dogs/delete_many", server_location,);
+//     let future = reqwest::Client::new()
+//         .delete(&url)
+//         .header(
+//             &postgresql_crud::CommitSnakeCase.to_string(),
+//             git_info::PROJECT_GIT_INFO.commit,
+//         )
+//         .header(reqwest::header::CONTENT_TYPE, "application/json")
+//         .body(payload)
+//         .send();
+//     let response = match future.await {
+//         Ok(value) => value,
+//         Err(error) => {
+//             return Err(TryDeleteManyErrorNamed::Reqwest {
+//                 reqwest: error,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                     file!().to_owned(),
+//                     line!(),
+//                     column!(),
+//                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                         file: std::string::String::from(
+//                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                         ),
+//                         line: 1661,
+//                         column: 21,
+//                     }),
+//                 ),
+//             });
+//         }
+//     };
+//     let status_code = response.status();
+//     let headers = response.headers().clone();
+//     let response_text = match response.text().await {
+//         Ok(value) => value,
+//         Err(error) => {
+//             return Err(TryDeleteManyErrorNamed::FailedToGetResponseText {
+//                 status_code,
+//                 headers,
+//                 reqwest: error,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                     file!().to_owned(),
+//                     line!(),
+//                     column!(),
+//                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                         file: std::string::String::from(
+//                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                         ),
+//                         line: 1558,
+//                         column: 21,
+//                     }),
+//                 ),
+//             });
+//         }
+//     };
+//     let expected_response =
+//         match serde_json::from_str::<TryDeleteManyRouteLogicResponseVariants>(&response_text) {
+//             Ok(value) => value,
+//             Err(error) => {
+//                 return Err(TryDeleteManyErrorNamed::DeserializeResponse {
+//                     status_code,
+//                     headers,
+//                     response_text,
+//                     serde: error,
+//                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                         file!().to_owned(),
+//                         line!(),
+//                         column!(),
+//                         Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                             file: std::string::String::from(
+//                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                             ),
+//                             line: 1621,
+//                             column: 21,
+//                         }),
+//                     ),
+//                 });
+//             }
+//         };
+//     let try_delete_many_route_logic_error_named_with_serialize_deserialize
+//     = match expected_response
+//     {
+//         TryDeleteManyRouteLogicResponseVariants :: Desirable(value) =>
+//         {
+//             let value =
+//             {
+//                 let mut values = std :: vec :: Vec :: new(); for element in
+//                 value
+//                 {
+//                     match postgresql_crud::SqlxTypesUuidUuid ::
+//                     try_from(element)
+//                     {
+//                         Ok(value) => { values.push(value); }, Err(error) =>
+//                         {
+//                             return
+//                             Err(TryDeleteManyErrorNamed ::
+//                             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient
+//                             {
+//                                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client
+//                                 : error, code_occurence : error_occurence_lib ::
+//                                 code_occurence :: CodeOccurence ::
+//                                 new(file! ().to_owned(), line! (), column! (),
+//                                 Some(error_occurence_lib :: code_occurence :: MacroOccurence
+//                                 {
+//                                     file : std :: string :: String ::
+//                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+//                                     line : 1330, column : 29,
+//                                 })),
+//                             });
+//                         }
+//                     }
+//                 } values
+//             }; return Ok(value);
+//         }, TryDeleteManyRouteLogicResponseVariants :: CheckBodySize
+//         { check_body_size, code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         CheckBodySize { check_body_size, code_occurence },
+//         TryDeleteManyRouteLogicResponseVariants :: Postgresql
+//         { postgresql, code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         Postgresql { postgresql, code_occurence },
+//         TryDeleteManyRouteLogicResponseVariants :: Json
+//         { json, code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize :: Json
+//         { json, code_occurence }, TryDeleteManyRouteLogicResponseVariants ::
+//         CheckCommit { check_commit, code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         CheckCommit { check_commit, code_occurence },
+//         TryDeleteManyRouteLogicResponseVariants :: BindQuery
+//         { bind_query, code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize :: BindQuery
+//         { bind_query, code_occurence },
+//         TryDeleteManyRouteLogicResponseVariants :: NotUniquePrimaryKey
+//         { not_unique_primary_key, code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         NotUniquePrimaryKey { not_unique_primary_key, code_occurence },
+//         TryDeleteManyRouteLogicResponseVariants :: NoPayloadFields
+//         { code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         NoPayloadFields { code_occurence },
+//         TryDeleteManyRouteLogicResponseVariants :: NoPrimaryKeys
+//         { code_occurence } =>
+//         TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         NoPrimaryKeys { code_occurence },
+//         TryDeleteManyRouteLogicResponseVariants ::
+//         OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//         {
+//             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+//             code_occurence
+//         } => TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//         {
+//             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+//             code_occurence
+//         }, TryDeleteManyRouteLogicResponseVariants ::
+//         DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
+//         {
+//             delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
+//             code_occurence
+//         } => TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize ::
+//         DeleteManyPayloadTryFromDeleteManyPayloadWithSerializeDeserialize
+//         {
+//             delete_many_payload_try_from_delete_many_payload_with_serialize_deserialize,
+//             code_occurence
+//         }
+//     };
+//     Err(
+//         TryDeleteManyErrorNamed::TryDeleteManyRouteLogicErrorNamedWithSerializeDeserialize {
+//             try_delete_many_route_logic_error_named_with_serialize_deserialize,
+//             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+//                 file!().to_owned(),
+//                 line!(),
+//                 column!(),
+//                 Some(error_occurence_lib::code_occurence::MacroOccurence {
+//                     file: std::string::String::from(
+//                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+//                     ),
+//                     line: 7029,
+//                     column: 13,
+//                 }),
+//             ),
+//         },
+//     )
+// }
