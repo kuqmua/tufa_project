@@ -5461,6 +5461,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (delete_many_token_stream, delete_many_test_token_stream) = {
         let operation = Operation::DeleteMany;
+        let not_unique_primary_key_syn_variant_initialization_token_stream = generate_not_unique_primary_key_syn_variant_initialization_token_stream(&quote::quote!{#element_snake_case.clone()});
         let (
             no_payload_fields_syn_variant,
             no_payload_fields_syn_variant_initialization_token_stream,
@@ -5527,12 +5528,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&bind_query_syn_variant);
-                value.push(&not_unique_primary_key_syn_variant);
                 value.push(&no_payload_fields_syn_variant);
                 value.push(&no_primary_keys_syn_variant);
                 value.push(&row_and_rollback_syn_variant);
                 value.push(&non_existing_primary_keys_syn_variant);
                 value.push(&non_existing_primary_keys_and_rollback_syn_variant);
+                value.push(&not_unique_primary_key_syn_variant);
                 not_unique_fields_syn_variants.iter().for_each(|element|{
                     value.push(&element);
                 });
@@ -5765,9 +5766,107 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         };
+                        let filter_not_unique_fields_token_stream = {
+                            let filter_not_unique_primary_key_token_stream = {
+                                let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                                    &operation,
+                                    &not_unique_primary_key_syn_variant_initialization_token_stream,
+                                    &quote::quote! {#from_snake_case(#error_snake_case)},
+                                    &not_unique_primary_key_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                                    &eprintln_error_token_stream,
+                                );
+                                quote::quote! {
+                                    if let Some(#primary_key_field_ident) = &#value_snake_case.#primary_key_field_ident {
+                                        let mut #acc_snake_case = std::vec::Vec::new();
+                                        for #element_snake_case in #primary_key_field_ident {
+                                            if !#acc_snake_case.contains(&#element_snake_case) {
+                                                #acc_snake_case.push(&#element_snake_case);
+                                            }
+                                            else {
+                                                #error_initialization_eprintln_response_creation_token_stream
+                                            }
+                                        }
+                                    }
+                                }
+                            };
+                            let filter_not_unique_fields_named_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| {
+                                let element_field_ident = &element.field_ident;
+                                let not_unique_fields_syn_variant_initialization_token_stream = {
+                                    let not_unique_field_ident_upper_camel_case_token_stream = {
+                                        let value = format!(
+                                            "{}{}",
+                                            naming_conventions::NotUniqueUpperCamelCase,
+                                            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_field_ident.to_string()),
+                                        );
+                                        value.parse::<proc_macro2::TokenStream>()
+                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    };
+                                    let not_unique_field_ident_snake_case_token_stream = {
+                                        let value = format!(
+                                            "{}_{}",
+                                            naming_conventions::NotUniqueSnakeCase,
+                                            &element_field_ident,
+                                        );
+                                        value.parse::<proc_macro2::TokenStream>()
+                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    };
+                                    let field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                                        file!(),
+                                        line!(),
+                                        column!(),
+                                        &proc_macro_name_upper_camel_case_ident_stringified,
+                                    );
+                                    let field_ident_token_stream = {
+                                        let value = format!(
+                                            "{}::{}",
+                                            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+                                            postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
+                                                &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
+                                            ),
+                                            // naming_conventions::WithSerializeDeserializeUpperCamelCase
+                                        );
+                                        value.parse::<proc_macro2::TokenStream>()
+                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    };
+                                    quote::quote! {
+                                        #not_unique_field_ident_upper_camel_case_token_stream {
+                                            #not_unique_field_ident_snake_case_token_stream: #field_ident_token_stream(#value_snake_case.clone()),
+                                            #field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream,
+                                        }
+                                    }
+                                };
+                                let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                                    &operation,
+                                    &not_unique_fields_syn_variant_initialization_token_stream,
+                                    &quote::quote! {#from_snake_case(#error_snake_case)},
+                                    &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                                    &eprintln_error_token_stream,
+                                );
+                                quote::quote!{
+                                    if let Some(#value_snake_case) = &#value_snake_case.#element_field_ident {
+                                        let mut #acc_snake_case = std::vec::Vec::new();
+                                        for #element_snake_case in #value_snake_case {
+                                            if let Some(#value_snake_case) = &#element_snake_case.#value_snake_case.0 {
+                                                if !#acc_snake_case.contains(&#value_snake_case) {
+                                                    #acc_snake_case.push(&#value_snake_case);
+                                                }
+                                                else {
+                                                    #error_initialization_eprintln_response_creation_token_stream
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                            quote::quote! {
+                                #filter_not_unique_primary_key_token_stream
+                                #(#filter_not_unique_fields_named_excluding_primary_key_token_stream)*
+                            }
+                        };
                         quote::quote!{
                             #filter_no_payload_fields_token_stream
                             #filter_no_primary_keys_token_stream
+                            #filter_not_unique_fields_token_stream
                         }
                     },
                     &proc_macro_name_upper_camel_case_ident_stringified,
