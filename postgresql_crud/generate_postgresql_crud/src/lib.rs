@@ -5542,7 +5542,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&row_and_rollback_syn_variant);
                 value.push(&non_existing_primary_keys_syn_variant);
                 value.push(&non_existing_primary_keys_and_rollback_syn_variant);
-                //value.push(&non_existing_primary_keys_and_rollback_syn_variant);
                 value
             },
             &fields_named_from_or_try_from,
