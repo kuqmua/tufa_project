@@ -1131,7 +1131,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #non_existing_primary_keys_upper_camel_case {
-                        #non_existing_primary_keys_snake_case,
+                        #non_existing_primary_keys_snake_case: #value_snake_case,
                         #field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream,
                     }
                 }
@@ -1174,7 +1174,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #non_existing_primary_keys_and_rollback_upper_camel_case {
-                        #non_existing_primary_keys_snake_case,
+                        #non_existing_primary_keys_snake_case: #value_snake_case,
                         #rollback_snake_case: #error_snake_case,
                         #field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream,
                     }
@@ -4976,16 +4976,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             results_vec
                         };
                         {
-                            let non_existing_primary_keys = #expected_primary_keys_snake_case.into_iter().fold(
+                            let #value_snake_case = #expected_primary_keys_snake_case.into_iter().fold(
                                 std::vec::Vec::new(),
-                                |mut acc, element| {
-                                    if let false = results_vec.contains(&element) {
-                                        acc.push(element);
+                                |mut acc, #element_snake_case| {
+                                    if let false = results_vec.contains(&#element_snake_case) {
+                                        acc.push(#element_snake_case);
                                     }
                                     acc
                                 },
                             );
-                            if let false = non_existing_primary_keys.is_empty() {
+                            if let false = #value_snake_case.is_empty() {
                                 match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                     Ok(_) => {
                                         #non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -5031,7 +5031,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_route_logic_token_stream
             }
         };
-        // println!("{try_operation_route_logic_token_stream}");
+        // println!(" {try_operation_route_logic_token_stream}");
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
@@ -6165,13 +6165,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             results_vec
                         };
                         if let Some(#value_snake_case) = #expected_primary_keys_snake_case {
-                            let non_existing_primary_keys = #value_snake_case.into_iter().fold(std::vec::Vec::new(), |mut acc, #element_snake_case| {
+                            let #value_snake_case = #value_snake_case.into_iter().fold(std::vec::Vec::new(), |mut acc, #element_snake_case| {
                                 if let false = results_vec.contains(&#element_snake_case) {
                                     acc.push(#element_snake_case);
                                 }
                                 acc
                             });
-                            if let false = non_existing_primary_keys.is_empty() {
+                            if let false = #value_snake_case.is_empty() {
                                 match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                     Ok(_) => {
                                         #non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream
