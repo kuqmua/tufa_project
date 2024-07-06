@@ -2322,6 +2322,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let expected_primary_keys_snake_case = naming_conventions::ExpectedPrimaryKeysSnakeCase;
+    let rows_snake_case = naming_constants::RowsSnakeCase;
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2634,12 +2635,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &eprintln_error_token_stream,
                     );
                     quote::quote! {
-                        let mut rows = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
-                        let mut vec_values = std::vec::Vec::new();
-                        while let Some(value) = {
+                        let mut #rows_snake_case = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
+                        let mut results_vec = std::vec::Vec::new();
+                        while let Some(#value_snake_case) = {
                             match {
                                 use futures::TryStreamExt;
-                                rows.try_next()
+                                #rows_snake_case.try_next()
                             }
                             .await
                             {
@@ -2651,7 +2652,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         } {
                             match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&value, #primary_key_field_ident_quotes_token_stream) {
                                 Ok(#value_snake_case) => {
-                                    vec_values.push(
+                                    results_vec.push(
                                         #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
                                             #primary_key_inner_type_token_stream(#value_snake_case)
                                         ),
@@ -2662,7 +2663,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         }
-                        vec_values
+                        results_vec
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
@@ -3769,13 +3770,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &eprintln_error_token_stream,
                     );
                     quote::quote! {
-                        let mut rows = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
+                        let mut #rows_snake_case = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
                         let mut vec_values = std::vec::Vec::new();
                         let #wrapper_vec_column_snake_case = #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case);
                         while let Some(row) = {
                             match {
                                 #use_futures_try_stream_ext_token_stream;
-                                rows.try_next()
+                                #rows_snake_case.try_next()
                             }
                             .await
                             {
@@ -4934,11 +4935,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let results_vec = {
-                            let mut rows = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
+                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
                             let mut results_vec = std::vec::Vec::new();
                             while let Some(row) = match {
                                     #use_futures_try_stream_ext_token_stream;
-                                    rows.try_next()
+                                    #rows_snake_case.try_next()
                                 }
                                 .await
                                 {
@@ -4960,7 +4961,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         None => None,
                                     },
                                     Err(#error_snake_case) => {
-                                        drop(rows);
+                                        drop(#rows_snake_case);
                                         match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                             Ok(_) => {
                                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -6076,9 +6077,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let results_vec = {
-                            let mut rows = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
+                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
                             let mut results_vec = std::vec::Vec::new();
-                            while let Some(row) = match { use futures::TryStreamExt; rows.try_next() }.await
+                            while let Some(row) = match { use futures::TryStreamExt; #rows_snake_case.try_next() }.await
                             {
                                 Ok(#value_snake_case) => match #value_snake_case {
                                     Some(#value_snake_case) => match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
@@ -6087,7 +6088,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ) {
                                         Ok(#value_snake_case) => Some(postgresql_crud::SqlxTypesUuidUuid(#value_snake_case)),
                                         Err(#error_snake_case) => {
-                                            drop(rows);
+                                            drop(#rows_snake_case);
                                             match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                                 Ok(_) => {
                                                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -6101,7 +6102,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     None => None,
                                 },
                                 Err(#error_snake_case) => {
-                                    drop(rows);
+                                    drop(#rows_snake_case);
                                     match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                         Ok(_) => {
                                             #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
