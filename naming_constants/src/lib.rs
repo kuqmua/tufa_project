@@ -172,7 +172,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "end",
     "when",
     "then",
-    "rows"
+    "rows",
+    "results"
 );
 
 #[derive(Debug, Clone, Copy)]

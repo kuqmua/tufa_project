@@ -105,7 +105,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["no", "primary", "keys"],
         ["row", "and", "rollback"],
         ["postgres", "transaction"],
-        ["expected", "primary", "keys"]
+        ["expected", "primary", "keys"],
+        ["results", "vec"]
     ]
 );
 
