@@ -43,7 +43,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["query", "and", "rollback", "failed"],
         ["primary", "key", "from", "row", "and", "failed", "rollback"],
         ["non", "existing", "primary", "keys"],
-        ["non", "existing", "primary", "keys", "and", "failed", "rollback"],
+        ["non", "existing", "primary", "keys", "and", "rollback"],
         ["commit", "failed"],
         ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed"],
         ["app", "state"],
@@ -106,8 +106,6 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["no", "payload", "fields", "primary", "key"],
         ["no", "primary", "keys"],
         ["row", "and", "rollback"],
-        ["not", "existing", "primary", "keys"],
-        ["not", "existing", "primary", "keys", "and", "rollback"],
         ["postgres", "transaction"],
         ["expected", "primary", "keys"]
     ]
