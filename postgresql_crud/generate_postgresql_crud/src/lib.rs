@@ -36,6 +36,7 @@ mod type_variants_from_request_response_generator;
 //todo add transaction isolation level (see postgresql docs)
 //todo check on postgresql max length value of type
 //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
+//todo update one and delete one must be a transaction
 
 #[proc_macro_attribute]
 pub fn create_many_additional_error_variants(
@@ -9029,5 +9030,31 @@ fn generate_impl_std_convert_from_operation_payload_element_for_operation_payloa
     quote::quote! {
         #impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream
         #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
+    }
+}
+
+struct ErrorSynVariant {
+    variant: syn::Variant,
+    status_code: proc_macro_helpers::status_code::StatusCode,
+}
+impl ErrorSynVariant {
+    pub(crate) fn new(
+        variant: syn::Variant, 
+        status_code: proc_macro_helpers::status_code::StatusCode
+    ) -> Self {
+        Self {
+            variant,
+            status_code,
+        }
+    }
+    pub(crate) fn get_syn_variant(&self) -> &syn::Variant {
+        &self.variant
+    }
+    pub(crate) fn get_status_code(&self) -> &proc_macro_helpers::status_code::StatusCode {
+        &self.status_code
+    }
+    pub(crate) fn generate_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        println!("{:#?}", self.variant);
+        quote::quote!()
     }
 }
