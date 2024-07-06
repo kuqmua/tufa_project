@@ -2321,6 +2321,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let expected_primary_keys_snake_case = naming_conventions::ExpectedPrimaryKeysSnakeCase;
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -4635,9 +4636,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    },
                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
-                let expected_updated_primary_keys_name_token_stream = quote::quote! {expected_updated_primary_keys};
-                let expected_updated_primary_keys_token_stream = quote::quote! {
-                    let #expected_updated_primary_keys_name_token_stream = #parameters_snake_case
+                let expected_primary_keys_token_stream = quote::quote! {
+                    let #expected_primary_keys_snake_case = #parameters_snake_case
                         .#payload_snake_case
                         .0
                         .iter()
@@ -4933,87 +4933,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let commit_token_stream = generate_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
-
-                        // let results_vec = {
-                        //     let mut results_vec = std::vec::Vec::with_capacity(#expected_updated_primary_keys_name_token_stream.len());
-                        //     let mut option_error: Option<sqlx::Error> = None;
-                        //     {
-                        //         let mut rows = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
-                        //         while let (Some(Some(row)), None) = (
-                        //             match {
-                        //                 #use_futures_try_stream_ext_token_stream;
-                        //                 rows.try_next()
-                        //             }
-                        //             .await
-                        //             {
-                        //                 Ok(#value_snake_case) => Some(#value_snake_case),
-                        //                 Err(#error_snake_case) => {
-                        //                     option_error = Some(#error_snake_case);
-                        //                     None
-                        //                 }
-                        //             },
-                        //             &option_error,
-                        //         ) {
-                        //             results_vec.push(row);
-                        //         }
-                        //     }
-                        //     if let Some(#error_snake_case) = option_error {
-                        //         match #postgres_transaction_snake_case.#rollback_snake_case().await {
-                        //             Ok(_) => {
-                        //                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                        //             }
-                        //             Err(#rollback_error_snake_case) => {
-                        //                 //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
-                        //                 #query_and_rollback_failed_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                        //             }
-                        //         }
-                        //     }
-                        //     results_vec
-                        // };
-                        // let #primary_key_vec_name_token_stream = {
-                        //     let mut #primary_key_vec_name_token_stream = std::vec::Vec::with_capacity(#expected_updated_primary_keys_name_token_stream.len());
-                        //     for #element_snake_case in results_vec {
-                        //         match #primary_key_try_from_sqlx_row_snake_case(&#element_snake_case) {
-                        //             Ok(primary_key) => {
-                        //                 #primary_key_vec_name_token_stream.push(primary_key);
-                        //             }
-                        //             Err(#error_snake_case) => match #postgres_transaction_snake_case.#rollback_snake_case().await {
-                        //                 Ok(_) => {
-                        //                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                        //                 }
-                        //                 Err(#rollback_error_snake_case) => {
-                        //                     #primary_key_from_row_and_failed_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                        //                 }
-                        //             },
-                        //         }
-                        //     }
-                        //     #primary_key_vec_name_token_stream
-                        // };
-                        // {
-                        //     let #non_existing_primary_keys_snake_case = {
-                        //         let len = #expected_updated_primary_keys_name_token_stream.len();
-                        //         #expected_updated_primary_keys_name_token_stream.into_iter().fold(std::vec::Vec::with_capacity(len), |mut acc, #element_snake_case| {
-                        //             if let false = #primary_key_vec_name_token_stream.contains(&#element_snake_case) {
-                        //                 acc.push(#element_snake_case);
-                        //             }
-                        //             acc
-                        //         })
-                        //     };
-                        //     if let false = #non_existing_primary_keys_snake_case.is_empty() {
-                        //         match #postgres_transaction_snake_case.#rollback_snake_case().await {
-                        //             Ok(_) => {
-                        //                 #non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                        //             }
-                        //             Err(#error_snake_case) => {
-                        //                 #non_existing_primary_keys_and_failed_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                        //             }
-                        //         }
-                        //     }
-                        // }
-
                         let results_vec = {
                             let mut rows = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
-                            let mut results_vec = std::vec::Vec::with_capacity(expected_updated_primary_keys.len());
+                            let mut results_vec = std::vec::Vec::new();
                             while let Some(row) = match {
                                     #use_futures_try_stream_ext_token_stream;
                                     rows.try_next()
@@ -5054,7 +4976,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             results_vec
                         };
                         {
-                            let non_existing_primary_keys = expected_updated_primary_keys.into_iter().fold(
+                            let non_existing_primary_keys = #expected_primary_keys_snake_case.into_iter().fold(
                                 std::vec::Vec::new(),
                                 |mut acc, element| {
                                     if let false = results_vec.contains(&element) {
@@ -5093,7 +5015,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &expected_updated_primary_keys_token_stream,
+                    &expected_primary_keys_token_stream,
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -6004,6 +5926,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     },
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
+                let expected_primary_keys_token_stream = quote::quote! {
+                    let #expected_primary_keys_snake_case = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident.clone();
+                };
                 let query_string_token_stream = {
                     let additional_parameters_modification_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
@@ -6325,7 +6250,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                             results_vec
                         };
-                        if let Some(#value_snake_case) = expected_primary_keys {
+                        if let Some(#value_snake_case) = #expected_primary_keys_snake_case {
                             let not_existing_primary_keys = #value_snake_case.into_iter().fold(std::vec::Vec::new(), |mut acc, #element_snake_case| {
                                 if let false = results_vec.contains(&#element_snake_case) {
                                     acc.push(#element_snake_case);
@@ -6362,11 +6287,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &{
-                        quote::quote!{
-                            let expected_primary_keys = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident.clone();
-                        }
-                    },
+                    &expected_primary_keys_token_stream,
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
