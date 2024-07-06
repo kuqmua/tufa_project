@@ -5041,7 +5041,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
-                #try_operation_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
             }
         };
         // println!("{try_operation_route_logic_token_stream}");
@@ -6218,9 +6218,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let commit_token_stream = generate_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
-                        let mut results_vec = std::vec::Vec::new();
-                        {
+                        let results_vec = {
                             let mut rows = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
+                            let mut results_vec = std::vec::Vec::new();
                             while let Some(row) = match { use futures::TryStreamExt; rows.try_next() }.await
                             {
                                 Ok(#value_snake_case) => match #value_snake_case {
@@ -6258,7 +6258,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             {
                                 results_vec.push(row);
                             }
-                        }
+                            results_vec
+                        };
                         if let Some(#value_snake_case) = expected_primary_keys {
                             let not_existing_primary_keys = #value_snake_case.into_iter().fold(std::vec::Vec::new(), |mut acc, #element_snake_case| {
                                 if let false = results_vec.contains(&#element_snake_case) {
