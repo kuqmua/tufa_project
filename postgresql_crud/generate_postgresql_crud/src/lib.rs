@@ -2279,6 +2279,47 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let expected_primary_keys_snake_case = naming_conventions::ExpectedPrimaryKeysSnakeCase;
     let results_vec_snake_case = naming_conventions::ResultsVecSnakeCase;
     let rows_snake_case = naming_constants::RowsSnakeCase;
+    let generate_non_existing_primary_keys_check_token_stream = |
+        operation: &Operation,
+        expected_primary_keys_token_stream: &dyn quote::ToTokens,
+        non_existing_primary_keys_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+        non_existing_primary_keys_syn_variant_status_code: &proc_macro_helpers::status_code::StatusCode,
+        non_existing_primary_keys_and_rollback_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+        non_existing_primary_keys_and_rollback_syn_variant_status_code: &proc_macro_helpers::status_code::StatusCode,
+    |{
+        let non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+            &operation,
+            &non_existing_primary_keys_syn_variant_initialization_token_stream,
+            &quote::quote! {#from_snake_case(#error_snake_case)},
+            &non_existing_primary_keys_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &eprintln_error_token_stream,
+        );
+        let non_existing_primary_keys_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+            &operation,
+            &non_existing_primary_keys_and_rollback_syn_variant_initialization_token_stream,
+            &quote::quote! {#from_snake_case(#error_snake_case)},
+            &non_existing_primary_keys_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &eprintln_error_token_stream,
+        );
+        quote::quote!{
+            let #value_snake_case = #expected_primary_keys_token_stream.into_iter().fold(std::vec::Vec::new(),|mut acc, #element_snake_case| {
+                if let false = #results_vec_snake_case.contains(&#element_snake_case) {
+                    acc.push(#element_snake_case);
+                }
+                acc
+            });
+            if let false = #value_snake_case.is_empty() {
+                match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                    Ok(_) => {
+                        #non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                    }
+                    Err(#error_snake_case) => {
+                        #non_existing_primary_keys_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                    }
+                }
+            }
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -4861,20 +4902,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &row_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
-                    let non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                        &operation,
-                        &non_existing_primary_keys_syn_variant_initialization_token_stream,
-                        &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &non_existing_primary_keys_syn_variant_status_code.to_axum_http_status_code_token_stream(),
-                        &eprintln_error_token_stream,
-                    );
-                    let non_existing_primary_keys_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                        &operation,
-                        &non_existing_primary_keys_and_rollback_syn_variant_initialization_token_stream,
-                        &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &non_existing_primary_keys_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
-                        &eprintln_error_token_stream,
-                    );
+                    // let non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                    //     &operation,
+                    //     &non_existing_primary_keys_syn_variant_initialization_token_stream,
+                    //     &quote::quote! {#from_snake_case(#error_snake_case)},
+                    //     &non_existing_primary_keys_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                    //     &eprintln_error_token_stream,
+                    // );
+                    // let non_existing_primary_keys_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
+                    //     &operation,
+                    //     &non_existing_primary_keys_and_rollback_syn_variant_initialization_token_stream,
+                    //     &quote::quote! {#from_snake_case(#error_snake_case)},
+                    //     &non_existing_primary_keys_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                    //     &eprintln_error_token_stream,
+                    // );
                     let commit_failed_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
                         &commit_failed_syn_variant_initialization_token_stream,
@@ -4887,6 +4928,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
                     let non_existing_primary_keys_snake_case = naming_conventions::NonExistingPrimaryKeysSnakeCase;
                     let commit_token_stream = generate_commit_token_stream(&operation);
+                    let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
+                        &operation,
+                        &expected_primary_keys_snake_case,
+                        &non_existing_primary_keys_syn_variant_initialization_token_stream,
+                        &non_existing_primary_keys_syn_variant_status_code,
+                        &non_existing_primary_keys_and_rollback_syn_variant_initialization_token_stream,
+                        &non_existing_primary_keys_and_rollback_syn_variant_status_code,
+                    );
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #results_vec_snake_case = {
@@ -4932,25 +4981,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #results_vec_snake_case
                         };
                         {
-                            let #value_snake_case = #expected_primary_keys_snake_case.into_iter().fold(
-                                std::vec::Vec::new(),
-                                |mut acc, #element_snake_case| {
-                                    if let false = #results_vec_snake_case.contains(&#element_snake_case) {
-                                        acc.push(#element_snake_case);
-                                    }
-                                    acc
-                                },
-                            );
-                            if let false = #value_snake_case.is_empty() {
-                                match #postgres_transaction_snake_case.#rollback_snake_case().await {
-                                    Ok(_) => {
-                                        #non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                    Err(#error_snake_case) => {
-                                        #non_existing_primary_keys_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                }
-                            }
+                            #non_existing_primary_keys_check_token_stream
                         }
                         #commit_token_stream
                         #results_vec_snake_case.into_iter().map(
@@ -6028,6 +6059,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &eprintln_error_token_stream,
                     );
                     let commit_token_stream = generate_commit_token_stream(&operation);
+                    let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
+                        &operation,
+                        &value_snake_case,
+                        &non_existing_primary_keys_syn_variant_initialization_token_stream,
+                        &non_existing_primary_keys_syn_variant_status_code,
+                        &non_existing_primary_keys_and_rollback_syn_variant_initialization_token_stream,
+                        &non_existing_primary_keys_and_rollback_syn_variant_status_code,
+                    );
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #results_vec_snake_case = {
@@ -6073,22 +6112,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #results_vec_snake_case
                         };
                         if let Some(#value_snake_case) = #expected_primary_keys_snake_case {
-                            let #value_snake_case = #value_snake_case.into_iter().fold(std::vec::Vec::new(), |mut acc, #element_snake_case| {
-                                if let false = #results_vec_snake_case.contains(&#element_snake_case) {
-                                    acc.push(#element_snake_case);
-                                }
-                                acc
-                            });
-                            if let false = #value_snake_case.is_empty() {
-                                match #postgres_transaction_snake_case.#rollback_snake_case().await {
-                                    Ok(_) => {
-                                        #non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                    Err(#error_snake_case) => {
-                                        #non_existing_primary_keys_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                }
-                            }
+                            #non_existing_primary_keys_check_token_stream
                         }
                         #commit_token_stream
                         #results_vec_snake_case.into_iter().map(
