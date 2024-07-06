@@ -2320,6 +2320,49 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let not_unique_fields_syn_variants = fields_named_excluding_primary_key.iter().map(|element|{
+        let not_unique_field_ident_upper_camel_case_stringified = format!(
+            "{}{}",
+            naming_conventions::NotUniqueUpperCamelCase,
+            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
+        );
+        let not_unique_field_ident_snake_case_stringified = format!(
+            "{}_{}",
+            naming_conventions::NotUniqueSnakeCase,
+            &element.field_ident,
+        );
+        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
+            not_unique_primary_key_syn_variant_status_code.clone(),
+            &not_unique_field_ident_upper_camel_case_stringified,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &not_unique_field_ident_snake_case_stringified,
+                    {
+                        let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                        value.push_value(syn::PathSegment {
+                            ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                            arguments: syn::PathArguments::None,
+                        });
+                        value.push_punct(syn::token::PathSep {
+                            spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+                        });
+                        value.push_value(syn::PathSegment {
+                            ident: proc_macro2::Ident::new(
+                                &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
+                                    &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
+                                ).to_string(),
+                                proc_macro2::Span::call_site()
+                            ),
+                            arguments: syn::PathArguments::None,
+                        });
+                        value
+                    }
+                )
+            ],
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        )
+    }).collect::<std::vec::Vec<syn::Variant>>();
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -3110,49 +3153,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (read_many_token_stream, read_many_test_token_stream) = {
         let operation = Operation::ReadMany;
         let not_unique_primary_key_syn_variant_initialization_token_stream = generate_not_unique_primary_key_syn_variant_initialization_token_stream(&quote::quote!{#element_snake_case.clone()});
-        let not_unique_fields_syn_variants = fields_named_excluding_primary_key.iter().map(|element|{
-            let not_unique_field_ident_upper_camel_case_stringified = format!(
-                "{}{}",
-                naming_conventions::NotUniqueUpperCamelCase,
-                proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
-            );
-            let not_unique_field_ident_snake_case_stringified = format!(
-                "{}_{}",
-                naming_conventions::NotUniqueSnakeCase,
-                &element.field_ident,
-            );
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                not_unique_primary_key_syn_variant_status_code.clone(),
-                &not_unique_field_ident_upper_camel_case_stringified,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &not_unique_field_ident_snake_case_stringified,
-                        {
-                            let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                            value.push_value(syn::PathSegment {
-                                ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
-                                arguments: syn::PathArguments::None,
-                            });
-                            value.push_punct(syn::token::PathSep {
-                                spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                            });
-                            value.push_value(syn::PathSegment {
-                                ident: proc_macro2::Ident::new(
-                                    &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
-                                        &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
-                                    ).to_string(),
-                                    proc_macro2::Span::call_site()
-                                ),
-                                arguments: syn::PathArguments::None,
-                            });
-                            value
-                        }
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            )
-        }).collect::<std::vec::Vec<syn::Variant>>();
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 2);
@@ -3162,10 +3162,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&checked_add_syn_variant);
                 value.push(&bind_query_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
+                value.push(&not_unique_column_syn_variant);
                 not_unique_fields_syn_variants.iter().for_each(|element|{
                     value.push(&element);
                 });
-                value.push(&not_unique_column_syn_variant);
                 value
             },
             &fields_named_from_or_try_from,
@@ -4826,13 +4826,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             value.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        // let case_snake_case = naming_constants::CaseSnakeCase;
-                        // let field_ident_equals_case_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        //     &format!("{field_ident} = {case_snake_case} "),
-                        //     &proc_macro_name_upper_camel_case_ident_stringified,
-                        // );
-                        // let else_snake_case = naming_constants::ElseSnakeCase;
-                        // let end_snake_case = naming_constants::EndSnakeCase;
                         // let else_field_ident_end_token_stream = proc_macro_common::generate_quotes::token_stream(
                         //     &format!("{else_snake_case} {field_ident} {end_snake_case},"),
                         //     &proc_macro_name_upper_camel_case_ident_stringified,
@@ -5526,6 +5519,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 no_primary_keys_syn_variant_status_code
             )
         };
+        // let not_unique_field_vec_syn_variants = fields_named_excluding_primary_key
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -5533,15 +5527,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&bind_query_syn_variant);
-                //for element in &not_unique_field_vec_syn_variants {
-                //    value.push(element);
-                //}
                 value.push(&not_unique_primary_key_syn_variant);
                 value.push(&no_payload_fields_syn_variant);
                 value.push(&no_primary_keys_syn_variant);
                 value.push(&row_and_rollback_syn_variant);
                 value.push(&non_existing_primary_keys_syn_variant);
                 value.push(&non_existing_primary_keys_and_rollback_syn_variant);
+                not_unique_fields_syn_variants.iter().for_each(|element|{
+                    value.push(&element);
+                });
                 value
             },
             &fields_named_from_or_try_from,
