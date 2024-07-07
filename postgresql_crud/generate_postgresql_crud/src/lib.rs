@@ -1033,42 +1033,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     //todo maybe instead primary key put upper camel case RustSqlxMapToPostgresTypeVariant variant
-    let (
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_initialization_token_stream,
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code,
-    ) = {
-        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case = naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerUpperCamelCase;
-        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case = naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerSnakeCase;
-        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code.clone(), //todo - is it right status code for this case?
-                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case,
-                vec![(
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case,
-                    sqlx_error_syn_punctuated_punctuated.clone(),
-                )],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            {
-                let field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case {
-                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_snake_case: #error_snake_case,
-                        #field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream,
-                    }
-                }
-            },
-            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code
-        )
-    };
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+        vec![(
+            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+            &naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerSnakeCase,
+            sqlx_error_syn_punctuated_punctuated.clone(),
+        )],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     //todo maybe first convert to type what can be primary key ?
     let (
         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_syn_variant_option,
@@ -2214,7 +2188,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
             &fields_named_excluding_primary_key_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -2705,7 +2679,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
             &fields_named_excluding_primary_key_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3035,7 +3009,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value
             },
             &fields_named_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3907,7 +3881,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value
             },
             &primary_key_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -4310,7 +4284,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value
             },
             &fields_named_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -5069,7 +5043,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value
             },
             &fields_named_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -5249,9 +5223,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = {
                     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_initialization_token_stream,
+                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
@@ -5464,7 +5443,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value
             },
             &fields_named_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -6089,9 +6068,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     // };
                     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_initialization_token_stream,
+                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
@@ -6326,7 +6310,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
             &primary_key_from_or_try_from,
-            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -6486,9 +6470,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = {
                     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_initialization_token_stream,
+                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
@@ -8712,7 +8701,7 @@ fn generate_try_operation_error_named_token_stream(
 fn generate_type_variants_from_request_response_syn_variants(
     syn_variants: &std::vec::Vec<&syn::Variant>,
     from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant: &syn::Variant,
+    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
     operation: &Operation,
     syn_derive_input: &syn::DeriveInput,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
@@ -8729,7 +8718,7 @@ fn generate_type_variants_from_request_response_syn_variants(
     for element in operation_additional_error_variants {
         type_variants_from_request_response_syn_variants.push(element.clone());
     }
-    type_variants_from_request_response_syn_variants.push(operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant.clone());
+    type_variants_from_request_response_syn_variants.push(operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.get_syn_variant().clone());
     if *from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
             &proc_macro_name_upper_camel_case_ident_stringified,
