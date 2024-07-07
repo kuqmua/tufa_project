@@ -799,53 +799,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &["sqlx","Error"],
         &proc_macro_name_upper_camel_case_ident_stringified
     );
-    // let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
-    let (
-        checked_add_syn_variant, 
-        checked_add_syn_variant_initialization_token_stream,
-        checked_add_syn_variant_status_code
-    ) = {
-        let checked_add_upper_camel_case= naming_conventions::CheckedAddUpperCamelCase;
-        let checked_add_snake_case = naming_conventions::CheckedAddSnakeCase;
-        let checked_add_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                checked_add_syn_variant_status_code.clone(),
-                &checked_add_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                        &checked_add_snake_case,
-                        std_string_string_syn_punctuated_punctuated.clone()
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            {
-                let checked_is_none_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-                    &format!(
-                        "{checked_add_snake_case} {} {}",
-                        naming_constants::IsSnakeCase,
-                        naming_constants::NoneUpperCamelCase
-                    ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #checked_add_upper_camel_case { //todo remove it? refactor it?
-                        #checked_add_snake_case: #std_string_string::#from_snake_case(#checked_is_none_quotes_token_stream),
-                        #field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream,
-                    }
-                }
-            },
-            checked_add_syn_variant_status_code
-        )
-    };
+    let checked_add_error_syn_variant = proc_macro_helpers::construct_syn_variant::ErrorSynVariant::new(
+        &naming_conventions::CheckedAddUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
+        std::vec::Vec::<(
+            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute,
+            &'static dyn std::fmt::Display,
+            syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
+        )>::default(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let (
         row_and_rollback_syn_variant, 
         row_and_rollback_syn_variant_initialization_token_stream, 
@@ -3160,7 +3123,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
-                value.push(&checked_add_syn_variant);
+                value.push(&checked_add_error_syn_variant.get_syn_variant());
                 value.push(&bind_query_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
                 value.push(&not_unique_column_syn_variant);
@@ -3540,9 +3503,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
-                            &checked_add_syn_variant_initialization_token_stream,
+                            &checked_add_error_syn_variant.generate_initialization_token_stream(
+                                file!(),
+                                line!(),
+                                column!(),
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                            ),
                             &quote::quote! {#from_snake_case(#error_snake_case)},
-                            &checked_add_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                            &checked_add_error_syn_variant.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),//checked_add_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                             &eprintln_error_token_stream,
                         );
                         quote::quote! {
@@ -9030,31 +8998,5 @@ fn generate_impl_std_convert_from_operation_payload_element_for_operation_payloa
     quote::quote! {
         #impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream
         #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
-    }
-}
-
-struct ErrorSynVariant {
-    variant: syn::Variant,
-    status_code: proc_macro_helpers::status_code::StatusCode,
-}
-impl ErrorSynVariant {
-    pub(crate) fn new(
-        variant: syn::Variant, 
-        status_code: proc_macro_helpers::status_code::StatusCode
-    ) -> Self {
-        Self {
-            variant,
-            status_code,
-        }
-    }
-    pub(crate) fn get_syn_variant(&self) -> &syn::Variant {
-        &self.variant
-    }
-    pub(crate) fn get_status_code(&self) -> &proc_macro_helpers::status_code::StatusCode {
-        &self.status_code
-    }
-    pub(crate) fn generate_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        println!("{:#?}", self.variant);
-        quote::quote!()
     }
 }
