@@ -1234,43 +1234,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let axum_response_into_response_token_stream = quote::quote!{axum::response::IntoResponse};
     // let axum_response_response_token_stream = quote::quote!{axum::response::Response};
     // let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-    let (
-        serde_json_to_string_syn_variant,
-        serde_json_to_string_syn_variant_initialization_token_stream
-     ) = {
-        let serde_json_to_string_upper_camel_case = naming_conventions::SerdeJsonToStringUpperCamelCase;
-        let serde_json_to_string_snake_case = naming_conventions::SerdeJsonToStringSnakeCase;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                &serde_json_to_string_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &serde_json_to_string_snake_case,
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["serde_json","Error"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            {
-                let field_code_occurence_new_27b49c75_24b2_4480_ac4d_62a1f75f5646_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #serde_json_to_string_upper_camel_case {
-                        #serde_json_to_string_snake_case: #error_snake_case,
-                        #field_code_occurence_new_27b49c75_24b2_4480_ac4d_62a1f75f5646_token_stream,
-                    }
-                }
-            }
-        )
-    };
+    let serde_json_to_string_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::SerdeJsonToStringUpperCamelCase,
+        None,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::SerdeJsonToStringSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["serde_json","Error"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let (
         failed_to_get_response_text_syn_variant,
         failed_to_get_response_text_syn_variant_initialization_token_stream,
@@ -1432,7 +1410,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let common_http_request_syn_variants = {
         vec![
-            serde_json_to_string_syn_variant,
+            serde_json_to_string_syn_variant_wrapper.get_syn_variant().clone(),
             failed_to_get_response_text_syn_variant,
             deserialize_response_syn_variant,
             reqwest_syn_variant,
@@ -2599,7 +2577,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             // let try_operation_test_token_stream = {
             //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -2917,7 +2900,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             // let try_operation_test_token_stream = {
             //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -3794,7 +3782,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             // println!("{try_operation_token_stream}");
             // // let try_operation_test_token_stream = {
@@ -4143,7 +4136,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             // let try_operation_test_token_stream = {
             //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -4956,7 +4954,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             // println!("{try_operation_token_stream}");
             // let try_operation_test_token_stream = {
@@ -5320,7 +5323,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             (
                 quote::quote! {
@@ -6219,7 +6227,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             // println!("{try_operation_token_stream}");
             // let try_operation_test_token_stream = {
@@ -6567,7 +6580,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_syn_variant_initialization_token_stream,
                 &deserialize_response_syn_variant_initialization_token_stream,
                 &failed_to_get_response_text_syn_variant_initialization_token_stream,
-                &serde_json_to_string_syn_variant_initialization_token_stream,
+                &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
             );
             // let try_operation_test_token_stream = {
             //     let test_content_token_stream = quote::quote! {
@@ -6695,7 +6713,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
-            #update_many_token_stream
+            // #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
@@ -6955,7 +6973,7 @@ fn generate_try_operation_token_stream(
                 let #value_snake_case = #operation_payload_with_serialize_deserialize_initialization_token_stream;
                 match serde_json::to_string(&#value_snake_case) {
                     Ok(#value_snake_case) => #value_snake_case,
-                    Err(#error_snake_case) => {
+                    Err(error_0) => {
                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#serde_json_to_string_syn_variant_initialization_token_stream);
                     }
                 }
