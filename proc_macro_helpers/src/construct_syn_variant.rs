@@ -190,11 +190,11 @@ pub fn construct_syn_variant_with_status_code_only_code_occurence(
 }
 
 #[derive(Debug)]
-pub struct ErrorSynVariant {
+pub struct SynVariantWrapper {
     variant: syn::Variant,
     status_code: std::option::Option<crate::status_code::StatusCode>,
 }
-impl ErrorSynVariant {
+impl SynVariantWrapper {
     pub fn new(
         variant_name: &dyn std::fmt::Display,
         status_code: std::option::Option<crate::status_code::StatusCode>,
@@ -331,45 +331,3 @@ impl ErrorSynVariant {
         }
     }
 }
-
-//
-    // let (
-    //     bind_query_syn_variant, 
-    //     bind_query_syn_variant_initialization_token_stream,
-    //     bind_query_syn_variant_status_code
-    // ) = {
-    //     let bind_query_upper_camel_case = naming_conventions::BindQueryUpperCamelCase;
-    //     let bind_query_snake_case = naming_conventions::BindQuerySnakeCase;
-    //     let bind_query_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
-    //     (
-    //         proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-    //             bind_query_syn_variant_status_code.clone(),
-    //             &bind_query_upper_camel_case,
-    //             vec![(
-    //                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-    //                 &bind_query_snake_case,
-    //                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-    //                     &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, &naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()],
-    //                     &proc_macro_name_upper_camel_case_ident_stringified
-    //                 ),
-    //             )],
-    //             &proc_macro_name_upper_camel_case_ident_stringified,
-    //         ),
-    //         {
-    //             let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //                 file!(),
-    //                 line!(),
-    //                 column!(),
-    //                 &proc_macro_name_upper_camel_case_ident_stringified,
-    //             );
-    //             quote::quote! {
-    //                 #bind_query_upper_camel_case {
-    //                     #bind_query_snake_case: #error_snake_case,
-    //                     #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
-    //                 }
-    //             }
-    //         },
-    //         bind_query_syn_variant_status_code
-    //     )
-    // };
-//

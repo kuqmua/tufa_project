@@ -799,7 +799,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &["sqlx","Error"],
         &proc_macro_name_upper_camel_case_ident_stringified
     );
-    let checked_add_error_syn_variant = proc_macro_helpers::construct_syn_variant::ErrorSynVariant::new(
+    let checked_add_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::CheckedAddUpperCamelCase,
         Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
         std::vec::Vec::<(
@@ -3123,7 +3123,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
-                value.push(&checked_add_error_syn_variant.get_syn_variant());
+                value.push(&checked_add_syn_variant_wrapper.get_syn_variant());
                 value.push(&bind_query_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
                 value.push(&not_unique_column_syn_variant);
@@ -3503,14 +3503,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
-                            &checked_add_error_syn_variant.generate_initialization_token_stream(
+                            &checked_add_syn_variant_wrapper.generate_initialization_token_stream(
                                 file!(),
                                 line!(),
                                 column!(),
                                 &proc_macro_name_upper_camel_case_ident_stringified,
                             ),
                             &quote::quote! {#from_snake_case(#error_snake_case)},
-                            &checked_add_error_syn_variant.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),//checked_add_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                            &checked_add_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),//checked_add_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                             &eprintln_error_token_stream,
                         );
                         quote::quote! {
