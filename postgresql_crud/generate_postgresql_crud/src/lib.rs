@@ -1945,9 +1945,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             naming_conventions::NotUniqueSnakeCase,
             &element.field_ident,
         );
-        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-            not_unique_primary_key_syn_variant_status_code.clone(),
+        proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
             &not_unique_field_ident_upper_camel_case_stringified,
+            Some(not_unique_primary_key_syn_variant_status_code.clone()),
             vec![
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
@@ -1975,7 +1975,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             ],
             &proc_macro_name_upper_camel_case_ident_stringified,
-        )
+        ).get_syn_variant().clone()
     }).collect::<std::vec::Vec<syn::Variant>>();
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
