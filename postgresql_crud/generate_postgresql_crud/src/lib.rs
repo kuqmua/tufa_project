@@ -1210,47 +1210,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //todo reuse naming
     // let not_unique_column_upper_camel_case = naming_conventions::NotUniqueColumnUpperCamelCase;
     // let not_unique_column_snake_case = naming_conventions::NotUniqueColumnSnakeCase;
-    let (
-        not_unique_column_syn_variant,
-        not_unique_column_syn_variant_initialization_token_stream,
-        not_unique_column_syn_variant_status_code,
-     ) = {
-        let not_unique_column_upper_camel_case = naming_conventions::NotUniqueColumnUpperCamelCase;
-        let not_unique_column_snake_case = naming_conventions::NotUniqueColumnSnakeCase;
-        let not_unique_column_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                not_unique_column_status_code.clone(),
-                &not_unique_column_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                        &not_unique_column_snake_case,
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &[&ident_column_upper_camel_case_stringified],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        )
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            {
-                let field_code_occurence_new_ce1f22e2_2619_43b3_9d5e_8fbe72845431_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #not_unique_column_upper_camel_case {
-                        #not_unique_column_snake_case: *#element_snake_case,
-                        #field_code_occurence_new_ce1f22e2_2619_43b3_9d5e_8fbe72845431_token_stream
-                    }
-                }
-            },
-            not_unique_column_status_code,
-        )
-    };
+    let not_unique_column_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::NotUniqueColumnUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                &naming_conventions::NotUniqueColumnSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &[&ident_column_upper_camel_case_stringified],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                )
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     // let axum_http_status_code_token_stream = quote::quote!{axum::http::StatusCode};
     // let postgresql_crud_get_axum_http_status_code_token_stream = quote::quote!{postgresql_crud::GetAxumHttpStatusCode};
     // let get_axum_http_status_code_snake_case = naming_conventions::GetAxumHttpStatusCodeSnakeCase;
@@ -1793,9 +1767,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_filter_not_unique_column_route_logic_token_stream = |operation: &Operation|{
         let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
             &operation,
-            &not_unique_column_syn_variant_initialization_token_stream,
+            &not_unique_column_syn_variant_wrapper.generate_initialization_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            ),
             &quote::quote! {#from_snake_case(#error_snake_case)},
-            &not_unique_column_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &not_unique_column_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
             &eprintln_error_token_stream,
         );
         quote::quote!{
@@ -1812,11 +1791,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let generate_filter_not_unique_column_http_request_token_stream = |operation: &Operation|{
          let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+         let not_unique_column_syn_variant_wrapper_initialization_token_stream = &not_unique_column_syn_variant_wrapper.generate_initialization_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
         quote::quote!{
             let mut #acc_snake_case = std::vec::Vec::new();
             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.#select_snake_case {
                 if #acc_snake_case.contains(&#element_snake_case) {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_initialization_token_stream);
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_wrapper_initialization_token_stream);
                 } else {
                     #acc_snake_case.push(#element_snake_case);
                 }
@@ -3002,7 +2987,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&checked_add_syn_variant_wrapper.get_syn_variant());
                 value.push(&bind_query_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
-                value.push(&not_unique_column_syn_variant);
+                value.push(&not_unique_column_syn_variant_wrapper.get_syn_variant());
                 not_unique_fields_syn_variants.iter().for_each(|element|{
                     value.push(&element);
                 });
@@ -3688,7 +3673,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     not_unique_fields_syn_variants.iter().for_each(|element|{
                         value.push(element.clone());
                     });
-                    value.push(not_unique_column_syn_variant.clone());
+                    value.push(not_unique_column_syn_variant_wrapper.get_syn_variant().clone());
                     value
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3877,7 +3862,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = common_route_syn_variants.clone();
-                value.push(&not_unique_column_syn_variant);
+                value.push(&not_unique_column_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &primary_key_from_or_try_from,
@@ -4132,7 +4117,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &{
                     let mut value = common_http_request_syn_variants.clone();
-                    value.push(not_unique_column_syn_variant);
+                    value.push(not_unique_column_syn_variant_wrapper.get_syn_variant().clone());
                     value
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
