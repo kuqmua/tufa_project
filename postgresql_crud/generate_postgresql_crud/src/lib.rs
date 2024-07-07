@@ -1339,39 +1339,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             reqwest_syn_variant_wrapper.get_syn_variant().clone(),
         ]
     };
-    let (check_body_size_syn_variant, check_body_size_syn_variant_initialization_token_stream) = {
-        let check_body_size_upper_camel_case = naming_conventions::CheckBodySizeUpperCamelCase;
-        let check_body_size_snake_case = naming_conventions::CheckBodySizeSnakeCase;
-        let field_code_occurence_new_1b7ff451_4836_40a6_a477_00c30fa61894_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                proc_macro_helpers::status_code::StatusCode::BadRequest400,
-                &check_body_size_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                        &check_body_size_snake_case,
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["route_validators", "check_body_size", &naming_conventions::CheckBodySizeErrorNamedUpperCamelCase.to_string()],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            quote::quote! {
-                #check_body_size_upper_camel_case {
-                    #check_body_size_snake_case: #error_snake_case,
-                    #field_code_occurence_new_1b7ff451_4836_40a6_a477_00c30fa61894_token_stream,
-                }
-            }
-        )
-    };
+    let check_body_size_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::CheckBodySizeUpperCamelCase,
+        None,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                &naming_conventions::CheckBodySizeSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["route_validators", "check_body_size", &naming_conventions::CheckBodySizeErrorNamedUpperCamelCase.to_string()],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let postgresql_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_constants::PostgresqlUpperCamelCase,
         Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
@@ -1582,7 +1564,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_route_syn_variants = {
         let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
         let mut value = std::vec::Vec::with_capacity(common_additional_error_variants_vec.len() + common_additional_error_variants_vec.len());
-        value.push(&check_body_size_syn_variant);
+        value.push(check_body_size_syn_variant_wrapper.get_syn_variant());
         value.push(&postgresql_syn_variant_wrapper.get_syn_variant());
         value.push(&json_syn_variant);
         // value.push(&bind_query_syn_variant);
@@ -2435,7 +2417,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -2786,7 +2773,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -3589,7 +3581,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -4056,7 +4053,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -4849,7 +4851,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -5268,7 +5275,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -6174,7 +6186,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -6555,7 +6572,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
-                    &check_body_size_syn_variant_initialization_token_stream,
+                    &check_body_size_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
                         file!(),
                         line!(),
@@ -8618,8 +8640,8 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
             let headers = parts.headers;
             let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
                 Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_snake_case) => {
-                    let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_snake_case);
+                Err(error_0) => {
+                    let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error_0);
                     #error_initialization_eprintln_response_creation_token_stream
                 }
             };
