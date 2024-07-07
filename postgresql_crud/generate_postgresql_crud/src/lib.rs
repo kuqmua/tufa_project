@@ -1401,7 +1401,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generate_not_unique_primary_key_syn_variant_initialization_token_stream,
         not_unique_primary_key_syn_variant_status_code,
      ) = {
-
         let not_unique_primary_key_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
         (
             proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
@@ -1478,7 +1477,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    //
     let common_additional_error_variants = generate_additional_error_variants(
         &syn_derive_input,
         GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants,
@@ -7643,25 +7641,6 @@ impl Operation {
             Self::DeleteOne => proc_macro_helpers::status_code::StatusCode::Ok200,
         }
     }
-    fn operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
-        &self,
-        proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-    ) -> syn::Variant {
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self);
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_stringified = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(self);
-        proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-            Self::OPERATION_PAYLOAD_TRY_FROM_OPERATION_PAYLOAD_WITH_SERIALIZE_DESERIALIZE_STATUS_CODE.clone(),
-            &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_stringified,
-                    self.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
-         )
-    }
     fn operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant_initialization_token_stream(
         &self,
         proc_macro_name_upper_camel_case_ident_stringified: &str,
@@ -8786,10 +8765,18 @@ fn generate_type_variants_from_request_response_syn_variants(
     }
     type_variants_from_request_response_syn_variants.push(operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper.get_syn_variant().clone());
     if *from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant(
+        type_variants_from_request_response_syn_variants.push(proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(operation),
+            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(operation),
+                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
+                )
+            ],
             &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        type_variants_from_request_response_syn_variants.push(operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant.clone());
+        ).get_syn_variant().clone());
     }
     type_variants_from_request_response_syn_variants
 }
