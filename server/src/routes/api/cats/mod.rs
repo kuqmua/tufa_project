@@ -28,24 +28,24 @@ fn crud(
         //     axum::routing::get(get_root),
         // )
         //todo generate axum::Router and make it pub instead of create_many -like router handlers
-        .route(
-            "/create_many",
-            axum::routing::post(
-                // common::repositories_types::server::routes::api::cats::create_many
-                common::repositories_types::server::routes::api::cats::try_create_many_route_logic
-            ),
+        // .route(
+        //     "/create_many",
+        //     axum::routing::post(
+        //         // common::repositories_types::server::routes::api::cats::create_many
+        //         common::repositories_types::server::routes::api::cats::try_create_many_route_logic
+        //     ),
             
-        )
+        // )
         // .route(
         //     "/create_one",
         //     axum::routing::post(common::repositories_types::server::routes::api::cats::try_create_one_route_logic),
         // )
-        .route(
-            "/read_many",
-            axum::routing::post(
-                common::repositories_types::server::routes::api::cats::try_read_many_route_logic
-            ),
-        )
+        // .route(
+        //     "/read_many",
+        //     axum::routing::post(
+        //         common::repositories_types::server::routes::api::cats::try_read_many_route_logic
+        //     ),
+        // )
         // .route(
         //     "/read_one",
         //     axum::routing::post(common::repositories_types::server::routes::api::cats::read_one),

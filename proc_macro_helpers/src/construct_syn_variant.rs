@@ -301,7 +301,7 @@ impl SynVariantWrapper {
     ) -> proc_macro2::TokenStream {
         let variant_ident = &self.variant.ident;
         let fields_token_stream = if let syn::Fields::Named(value) = &self.variant.fields {
-            value.named.iter().map(|element|{
+            value.named.iter().enumerate().map(|(index, element)|{
                 let field_ident = &element.ident;
                 if &field_ident.as_ref().unwrap_or_else(|| {
                     panic!(
@@ -317,7 +317,12 @@ impl SynVariantWrapper {
                     )
                 }
                 else {
-                    quote::quote!{#field_ident}
+                    let error_increment_token_stream = {
+                        let value = format!("{}_{index}", naming_constants::ErrorSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{#field_ident: #error_increment_token_stream}
                 }
             })
         }

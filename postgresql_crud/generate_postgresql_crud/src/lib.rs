@@ -809,50 +809,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )>::default(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let (
-        row_and_rollback_syn_variant, 
-        row_and_rollback_syn_variant_initialization_token_stream, 
-        row_and_rollback_syn_variant_status_code
-    ) = {
-        let row_and_rollback_upper_camel_case = naming_conventions::RowAndRollbackUpperCamelCase;
-        let rollback_snake_case = naming_constants::RollbackSnakeCase;
-        let row_and_rollback_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                row_and_rollback_syn_variant_status_code.clone(),
-                &row_and_rollback_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &quote::quote!{#row_snake_case},
-                        sqlx_error_syn_punctuated_punctuated.clone(),
-                    ),
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &quote::quote!{#rollback_snake_case},
-                        sqlx_error_syn_punctuated_punctuated.clone(),
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
+    let row_and_rollback_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::RowAndRollbackUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &row_snake_case,
+                sqlx_error_syn_punctuated_punctuated.clone(),
             ),
-            {
-                let field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #row_and_rollback_upper_camel_case {
-                        #row_snake_case: #error_snake_case,
-                        #rollback_snake_case,
-                        #field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream,
-                    }
-                }
-            },
-            row_and_rollback_syn_variant_status_code
-        )
-    };
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &rollback_snake_case,
+                sqlx_error_syn_punctuated_punctuated.clone(),
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated = {
         let panic_message = format!("primary key functionality is not implemented for {primary_key_rust_sqlx_map_to_postgres_type_variant} in {proc_macro_name_upper_camel_case_ident_stringified} logic");
         let name = match primary_key_rust_sqlx_map_to_postgres_type_variant {
@@ -1629,40 +1602,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let (postgresql_syn_variant, postgresql_syn_variant_initialization_token_stream, postgresql_syn_variant_status_code) = {
-        let postgresql_upper_camel_case = naming_constants::PostgresqlUpperCamelCase;
-        let postgresql_snake_case = naming_constants::PostgresqlSnakeCase;
-        let postgresql_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::InternalServerError500;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                postgresql_syn_variant_status_code.clone(),
-                &postgresql_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &postgresql_snake_case,
-                        sqlx_error_syn_punctuated_punctuated.clone(),
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            {
-                let field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #postgresql_upper_camel_case {
-                        #postgresql_snake_case: error,//todo reuse error_snake_case_token_stream
-                        #field_code_occurence_new_d63fbe34_868a_43f7_b3ae_1fe88f0b9665_token_stream,
-                    }
-                }
-            },
-            postgresql_syn_variant_status_code
-        )
-    };
+    let postgresql_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_constants::PostgresqlUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_constants::PostgresqlSnakeCase,
+                sqlx_error_syn_punctuated_punctuated.clone(),
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let (
         json_syn_variant,
         json_syn_variant_initialization_token_stream,
@@ -1862,7 +1813,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
         let mut value = std::vec::Vec::with_capacity(common_additional_error_variants_vec.len() + common_additional_error_variants_vec.len());
         value.push(&check_body_size_syn_variant);
-        value.push(&postgresql_syn_variant);
+        value.push(&postgresql_syn_variant_wrapper.get_syn_variant());
         value.push(&json_syn_variant);
         // value.push(&bind_query_syn_variant);
         for element in common_additional_error_variants_vec {
@@ -2201,14 +2152,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let postgres_transaction_snake_case = naming_conventions::PostgresTransactionSnakeCase;
-    let generate_postgres_transaction_token_stream = |operation: &Operation|{
+    let generate_postgres_transaction_begin_token_stream = |operation: &Operation|{
         let sqlx_acquire = token_patterns::SqlxAcquire;
         let begin_snake_case = naming_constants::BeginSnakeCase;
         let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
             &operation,
-            &postgresql_syn_variant_initialization_token_stream,
+            &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            ),
             &quote::quote! {#from_snake_case(#error_snake_case)},
-            &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
             &eprintln_error_token_stream,
         );
         quote::quote! {
@@ -2219,23 +2175,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .await
             {
                 Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_snake_case) => {
+                Err(error_0) => {
                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                 }
             };
         }
     };
-    let generate_commit_token_stream = |operation: &Operation|{
+    let generate_postgres_transaction_commit_token_stream = |operation: &Operation|{
         let commit_snake_case = naming_constants::CommitSnakeCase;
         let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
             &operation,
-            &postgresql_syn_variant_initialization_token_stream,
+            &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            ),
             &quote::quote! {#from_snake_case(#error_snake_case)},
-            &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
             &eprintln_error_token_stream,
         );
         quote::quote!{
-            if let Err(#error_snake_case) = #postgres_transaction_snake_case.#commit_snake_case().await {
+            if let Err(error_0) = #postgres_transaction_snake_case.#commit_snake_case().await {
                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
             }
         }
@@ -2633,9 +2594,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = {
                     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     quote::quote! {
@@ -2689,7 +2655,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -2970,9 +2941,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = {
                     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     quote::quote! {
@@ -3010,7 +2986,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -3459,7 +3440,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &operation,
                                     &not_unique_fields_syn_variant_initialization_token_stream,
                                     &quote::quote! {#from_snake_case(#error_snake_case)},
-                                    &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                                    &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                                     &eprintln_error_token_stream,
                                 );
                                 quote::quote!{
@@ -3730,9 +3711,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = {
                     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     quote::quote! {
@@ -3783,7 +3769,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -4182,9 +4173,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = {
                     let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     quote::quote!{
@@ -4220,7 +4216,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -4378,7 +4379,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
-                value.push(&row_and_rollback_syn_variant);
+                value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(&non_existing_primary_keys_syn_variant);
                 value.push(&non_existing_primary_keys_and_rollback_syn_variant);
                 value.push(&commit_failed_syn_variant);
@@ -4842,26 +4843,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 let postgresql_logic_token_stream = {
-                    let postgres_transaction_token_stream = generate_postgres_transaction_token_stream(&operation);
+                    let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &row_and_rollback_syn_variant_initialization_token_stream,
+                        &row_and_rollback_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &row_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
-                        &eprintln_error_token_stream,
-                    );
-                    let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                        &operation,
-                        &row_and_rollback_syn_variant_initialization_token_stream,
-                        &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &row_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &row_and_rollback_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     // let non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
@@ -4889,7 +4893,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
                     let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
                     let non_existing_primary_keys_snake_case = naming_conventions::NonExistingPrimaryKeysSnakeCase;
-                    let commit_token_stream = generate_commit_token_stream(&operation);
+                    let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
                         &operation,
                         &expected_primary_keys_snake_case,
@@ -4912,13 +4916,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     Ok(#value_snake_case) => match #value_snake_case {
                                         Some(#value_snake_case) => match primary_key_try_from_sqlx_row(&#value_snake_case) {
                                             Ok(#value_snake_case) => Some(#value_snake_case),
-                                            Err(#error_snake_case) => {
+                                            Err(error_0) => {
                                                 drop(#rows_snake_case);
                                                 match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                                     Ok(_) => {
                                                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
-                                                    Err(#rollback_snake_case) => {
+                                                    Err(error_1) => {
                                                         #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 }
@@ -4926,13 +4930,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         },
                                         None => None,
                                     },
-                                    Err(#error_snake_case) => {
+                                    Err(error_0) => {
                                         drop(#rows_snake_case);
                                         match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                             Ok(_) => {
                                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             }
-                                            Err(#rollback_snake_case) => {
+                                            Err(error_1) => {
                                                 #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             }
                                         }
@@ -4970,7 +4974,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -5105,11 +5114,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // try_operation_test_token_stream,
         )
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &update_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &update_many_token_stream,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let (update_one_token_stream, update_one_test_token_stream) = {
         let operation = Operation::UpdateOne;
@@ -5311,9 +5320,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     quote::quote! {
@@ -5354,7 +5368,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -5499,7 +5518,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&bind_query_syn_variant);
                 value.push(&no_payload_fields_syn_variant);
                 value.push(&no_primary_keys_syn_variant);
-                value.push(&row_and_rollback_syn_variant);
+                value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(&non_existing_primary_keys_syn_variant);
                 value.push(&non_existing_primary_keys_and_rollback_syn_variant);
                 value.push(&not_unique_primary_key_syn_variant);
@@ -5808,7 +5827,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &operation,
                                     &not_unique_fields_syn_variant_initialization_token_stream,
                                     &quote::quote! {#from_snake_case(#error_snake_case)},
-                                    &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                                    &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                                     &eprintln_error_token_stream,
                                 );
                                 quote::quote!{
@@ -5975,19 +5994,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 let postgresql_logic_token_stream = {
-                    let postgres_transaction_token_stream = generate_postgres_transaction_token_stream(&operation);
+                    let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &row_and_rollback_syn_variant_initialization_token_stream,
+                        &row_and_rollback_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &row_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &row_and_rollback_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     let non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
@@ -6119,7 +6148,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
-                    let commit_token_stream = generate_commit_token_stream(&operation);
+                    let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
                         &operation,
                         &value_snake_case,
@@ -6200,7 +6229,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -6503,9 +6537,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
-                        &postgresql_syn_variant_initialization_token_stream,
+                        &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ),
                         &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &postgresql_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+                        &postgresql_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
                         &eprintln_error_token_stream,
                     );
                     quote::quote! {
@@ -6546,7 +6585,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgresql_logic_token_stream,
                     &eprintln_error_token_stream,
                     &check_body_size_syn_variant_initialization_token_stream,
-                    &postgresql_syn_variant_initialization_token_stream,
+                    &postgresql_syn_variant_wrapper.generate_initialization_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -6717,14 +6761,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream
 
-            #create_many_token_stream
-            #create_one_token_stream
-            #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
-            #update_one_token_stream
-            #delete_many_token_stream
-            #delete_one_token_stream
+            // #create_many_token_stream
+            // #create_one_token_stream
+            // #read_many_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
+            // #update_one_token_stream
+            // #delete_many_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
@@ -7716,46 +7760,6 @@ enum OperationHttpMethod {
 //     }
 // }
 
-fn acquire_pool_and_connection(
-    operation: &Operation,
-    postgresql_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    eprintln_error_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-    let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    let error_snake_case = naming_constants::ErrorSnakeCase;
-    let from_snake_case = naming_constants::FromSnakeCase;
-    let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-    let pg_connection_snake_case = naming_conventions::PgConnectionSnakeCase;
-    quote::quote! {
-        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
-            Ok(#value_snake_case) => #value_snake_case,
-            Err(#error_snake_case) => {
-                let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_initialization_token_stream;
-                #eprintln_error_token_stream;//todo reuse it as token_stream
-
-                let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                *res.status_mut() = axum::http::StatusCode::CREATED;
-                // *res.headers_mut() = axum::http::HeaderMap::new();
-                return res;
-            }
-        };
-        let #pg_connection_snake_case = match sqlx::Acquire::acquire(&mut pool_connection).await {
-            Ok(#value_snake_case) => #value_snake_case,
-            Err(#error_snake_case) => {
-                let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_initialization_token_stream;
-                #eprintln_error_token_stream;
-
-                let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                *res.status_mut() = axum::http::StatusCode::CREATED;
-                // *res.headers_mut() = axum::http::HeaderMap::new();
-                return res;
-            }
-        };
-    }
-}
-
 fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())
 }
@@ -8596,7 +8600,7 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     postgresql_logic_token_stream: &proc_macro2::TokenStream,
     eprintln_error_token_stream: &proc_macro2::TokenStream,
     check_body_size_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    postgresql_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    postgresql_syn_variant_wrapper_initialization_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
@@ -8641,11 +8645,41 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
             #operation_additional_route_logic_token_stream
         }
     };
-    let acquire_pool_and_connection_token_stream = acquire_pool_and_connection(
-        &operation,
-        &postgresql_syn_variant_initialization_token_stream,
-        &eprintln_error_token_stream,
-    );
+    let acquire_pool_and_connection_token_stream = {
+        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        let error_snake_case = naming_constants::ErrorSnakeCase;
+        let from_snake_case = naming_constants::FromSnakeCase;
+        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+        let pg_connection_snake_case = naming_conventions::PgConnectionSnakeCase;
+        quote::quote! {
+            let mut pool_connection = match app_state.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(error_0) => {
+                    let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
+                    #eprintln_error_token_stream;//todo reuse it as token_stream    
+
+                    let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
+                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    // *res.headers_mut() = axum::http::HeaderMap::new();
+                    return res;
+                }
+            };
+            let #pg_connection_snake_case = match sqlx::Acquire::acquire(&mut pool_connection).await {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(error_0) => {
+                    let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
+                    #eprintln_error_token_stream;   
+
+                    let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
+                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    // *res.headers_mut() = axum::http::HeaderMap::new();
+                    return res;
+                }
+            };
+        }
+    };
     let desirable_response_creation_token_stream = {
         let response_snake_case = naming_constants::ResponseSnakeCase;
         let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
