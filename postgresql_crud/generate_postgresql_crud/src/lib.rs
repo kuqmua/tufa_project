@@ -1447,63 +1447,38 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             not_unique_primary_key_syn_variant_status_code,
         )
     };
-    let (
-        no_payload_fields_primary_key_syn_variant,
-        no_payload_fields_primary_key_syn_variant_initialization_token_stream,
-        no_payload_fields_primary_key_syn_variant_status_code
-    ) = {
-        let no_payload_fields_primary_key_upper_camel_case = naming_conventions::NoPayloadFieldsPrimaryKeyUpperCamelCase;
-        let no_payload_fields_primary_key_snake_case = naming_conventions::NoPayloadFieldsPrimaryKeySnakeCase;
-        let no_payload_fields_primary_key_syn_variant_status_code = proc_macro_helpers::status_code::StatusCode::BadRequest400;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                no_payload_fields_primary_key_syn_variant_status_code.clone(),
-                &no_payload_fields_primary_key_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &no_payload_fields_primary_key_snake_case,
-                        {
-                            let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                            value.push_value(syn::PathSegment {
-                                ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
-                                arguments: syn::PathArguments::None,
-                            });
-                            value.push_punct(syn::token::PathSep {
-                                spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                            });
-                            value.push_value(syn::PathSegment {
-                                ident: proc_macro2::Ident::new(
-                                    &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
-                                        &postgresql_crud_common::SupportedSqlxPostgresType::from(primary_key_rust_sqlx_map_to_postgres_type_variant)
-                                    ).to_string(),
-                                    proc_macro2::Span::call_site()
-                                ),
-                                arguments: syn::PathArguments::None,
-                            });
-                            value
-                        }
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            {
-                let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #no_payload_fields_primary_key_upper_camel_case {
-                        #no_payload_fields_primary_key_snake_case: #primary_key_field_ident,
-                        #field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream
-                    }
+    let no_payload_fields_primary_key_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::NoPayloadFieldsPrimaryKeyUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::NoPayloadFieldsPrimaryKeySnakeCase,
+                {
+                    let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                    value.push_value(syn::PathSegment {
+                        ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                        arguments: syn::PathArguments::None,
+                    });
+                    value.push_punct(syn::token::PathSep {
+                        spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+                    });
+                    value.push_value(syn::PathSegment {
+                        ident: proc_macro2::Ident::new(
+                            &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
+                                &postgresql_crud_common::SupportedSqlxPostgresType::from(primary_key_rust_sqlx_map_to_postgres_type_variant)
+                            ).to_string(),
+                            proc_macro2::Span::call_site()
+                        ),
+                        arguments: syn::PathArguments::None,
+                    });
+                    value
                 }
-            },
-            no_payload_fields_primary_key_syn_variant_status_code
-        )
-    };
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    //
     let common_additional_error_variants = generate_additional_error_variants(
         &syn_derive_input,
         GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants,
@@ -1845,9 +1820,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_filter_no_payload_fields_token_stream = |operation: &Operation, source_token_stream: &proc_macro2::TokenStream|{
         let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
             &operation,
-            &no_payload_fields_primary_key_syn_variant_initialization_token_stream,
+            &no_payload_fields_primary_key_syn_variant_wrapper.generate_initialization_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            ),
             &quote::quote! {#from_snake_case(#error_snake_case)},
-            &no_payload_fields_primary_key_syn_variant_status_code.to_axum_http_status_code_token_stream(),
+            &no_payload_fields_primary_key_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
             &eprintln_error_token_stream,
         );
         let none_fields_named_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|_|naming_constants::NoneUpperCamelCase);
@@ -1857,7 +1837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         });
         quote::quote! {
             if let (#(#none_fields_named_excluding_primary_key_token_stream),*) = (#(#match_fields_named_excluding_primary_key_token_stream),*) {
-                let #primary_key_field_ident = #source_token_stream.#primary_key_field_ident;
+                let error_0 = #source_token_stream.#primary_key_field_ident;
                 #error_initialization_eprintln_response_creation_token_stream
             }
         }
@@ -4226,7 +4206,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&commit_failed_syn_variant_wrapper.get_syn_variant());
                 value.push(&not_unique_primary_key_syn_variant);
                 value.push(&bind_query_syn_variant_wrapper.get_syn_variant());
-                value.push(&no_payload_fields_primary_key_syn_variant);
+                value.push(&no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &fields_named_from_or_try_from,
@@ -5020,7 +5000,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&bind_query_syn_variant_wrapper.get_syn_variant());
-                value.push(&no_payload_fields_primary_key_syn_variant);
+                value.push(&no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &fields_named_from_or_try_from,
