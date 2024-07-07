@@ -1249,128 +1249,73 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let (
-        failed_to_get_response_text_syn_variant,
-        failed_to_get_response_text_syn_variant_initialization_token_stream,
-    ) = {
-        let failed_to_get_response_text_upper_camel_case = naming_conventions::FailedToGetResponseTextUpperCamelCase;
-        let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
-        let headers_snake_case = naming_constants::HeadersSnakeCase;
-        let reqwest_snake_case = naming_constants::ReqwestSnakeCase;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant_with_status_code(
-                proc_macro_helpers::status_code::StatusCode::BadRequest400,
-                &failed_to_get_response_text_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &status_code_snake_case.to_string(),
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["http","StatusCode"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    ),
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &headers_snake_case.to_string(),
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["reqwest","header","HeaderMap"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    ),
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &reqwest_snake_case.to_string(),
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["reqwest","Error"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
+    let failed_to_get_response_text_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::FailedToGetResponseTextUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::StatusCodeSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["http","StatusCode"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
             ),
-            {
-                let field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #failed_to_get_response_text_upper_camel_case {
-                        #status_code_snake_case,
-                        #headers_snake_case,
-                        #reqwest_snake_case: #error_snake_case,
-                        #field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream
-                    }
-                }
-            }
-        )
-    };
-    let (
-        deserialize_response_syn_variant,
-        deserialize_response_syn_variant_initialization_token_stream
-    ) = {
-        let deserialize_response_upper_camel_case = naming_conventions::DeserializeResponseUpperCamelCase;
-        let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
-        let headers_snake_case = naming_constants::HeadersSnakeCase;
-        let response_text_snake_case = naming_conventions::ResponseTextSnakeCase;
-        let serde_snake_case = naming_constants::SerdeSnakeCase;
-        (
-            proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                &deserialize_response_upper_camel_case,
-                vec![
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &status_code_snake_case.to_string(),
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["http","StatusCode"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    ),
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &headers_snake_case.to_string(),
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["reqwest","header", "HeaderMap"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    ),
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                        &response_text_snake_case.to_string(),
-                        std_string_string_syn_punctuated_punctuated.clone(),
-                    ),
-                    (
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                        &serde_snake_case.to_string(),
-                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                            &["serde_json","Error"],
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ),
-                    )
-                ],
-                &proc_macro_name_upper_camel_case_ident_stringified,
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_constants::HeadersSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["reqwest","header","HeaderMap"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
             ),
-            {
-                let field_code_occurence_new_e04ccb06_5ef1_4e32_82c7_a0aa1e48e5ad_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {
-                    #deserialize_response_upper_camel_case {
-                        #status_code_snake_case,
-                        #headers_snake_case,
-                        #response_text_snake_case,
-                        #serde_snake_case: #error_snake_case,
-                        #field_code_occurence_new_e04ccb06_5ef1_4e32_82c7_a0aa1e48e5ad_token_stream,
-                    }
-                }
-            }
-        )
-    };
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_constants::ReqwestSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["reqwest","Error"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let deserialize_response_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::DeserializeResponseUpperCamelCase,
+        None,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::StatusCodeSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["http","StatusCode"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            ),
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_constants::HeadersSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["reqwest","header", "HeaderMap"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            ),
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                &naming_conventions::ResponseTextSnakeCase,
+                std_string_string_syn_punctuated_punctuated.clone(),
+            ),
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_constants::SerdeSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["serde_json","Error"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let (
         reqwest_syn_variant,
         reqwest_syn_variant_initialization_token_stream,
@@ -1411,8 +1356,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_http_request_syn_variants = {
         vec![
             serde_json_to_string_syn_variant_wrapper.get_syn_variant().clone(),
-            failed_to_get_response_text_syn_variant,
-            deserialize_response_syn_variant,
+            failed_to_get_response_text_syn_variant_wrapper.get_syn_variant().clone(),
+            deserialize_response_syn_variant_wrapper.get_syn_variant().clone(),
             reqwest_syn_variant,
         ]
     };
@@ -2575,8 +2520,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -2898,8 +2853,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -3780,8 +3745,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -4134,8 +4109,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -4952,8 +4937,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -5321,8 +5316,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -6225,8 +6230,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -6578,8 +6593,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &reqwest_syn_variant_initialization_token_stream,
-                &deserialize_response_syn_variant_initialization_token_stream,
-                &failed_to_get_response_text_syn_variant_initialization_token_stream,
+                &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
+                &failed_to_get_response_text_syn_variant_wrapper.generate_initialization_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                ),
                 &serde_json_to_string_syn_variant_wrapper.generate_initialization_token_stream(
                     file!(),
                     line!(),
@@ -6713,7 +6738,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
@@ -7037,13 +7062,13 @@ fn generate_try_operation_token_stream(
     let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
     let status_code_token_stream = {
         quote::quote! {
-            let #status_code_snake_case = #response_snake_case.status();
+            let error_0 = #response_snake_case.status();
         }
     };
     let headers_snake_case = naming_constants::HeadersSnakeCase;
     let headers_token_stream = {
         quote::quote! {
-            let #headers_snake_case = #response_snake_case.headers().clone();
+            let error_1 = #response_snake_case.headers().clone();
         }
     };
     let response_text_snake_case = naming_conventions::ResponseTextSnakeCase;
@@ -7051,9 +7076,9 @@ fn generate_try_operation_token_stream(
         let value_snake_case = naming_constants::ValueSnakeCase;
         let error_snake_case = naming_constants::ErrorSnakeCase;
         quote::quote! {
-            let #response_text_snake_case = match #response_snake_case.text().await {
+            let error_2 = match #response_snake_case.text().await {
                 Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_snake_case) => {
+                Err(error_2) => {
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_syn_variant_initialization_token_stream);
                 }
             };
@@ -7065,9 +7090,9 @@ fn generate_try_operation_token_stream(
         let value_snake_case = naming_constants::ValueSnakeCase;
         let error_snake_case = naming_constants::ErrorSnakeCase;
         quote::quote! {
-            let #expected_response_snake_case = match serde_json::from_str::<#try_operation_route_logic_response_variants_upper_camel_case_token_stream>(&#response_text_snake_case) {
+            let #expected_response_snake_case = match serde_json::from_str::<#try_operation_route_logic_response_variants_upper_camel_case_token_stream>(&error_2) {
                 Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_snake_case) => {
+                Err(error_3) => {
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_syn_variant_initialization_token_stream);
                 }
             };
