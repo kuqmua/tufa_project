@@ -2272,7 +2272,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             .await
                             {
                                 Ok(#value_snake_case) => #value_snake_case,
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
@@ -2285,7 +2285,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         ),
                                     );
                                 }
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
@@ -2644,11 +2644,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
                                     #primary_key_inner_type_token_stream(#value_snake_case)
                                 ),
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 }
                             },
-                            Err(#error_snake_case) => {
+                            Err(error_0) => {
                                 #error_initialization_eprintln_response_creation_token_stream
                             }
                         }
@@ -6665,8 +6665,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream
 
-            // #create_many_token_stream
-            // #create_one_token_stream
+            #create_many_token_stream
+            #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
             #update_many_token_stream
