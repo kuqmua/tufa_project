@@ -1861,7 +1861,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         operation: &Operation,
         expected_primary_keys_token_stream: &dyn quote::ToTokens,
         non_existing_primary_keys_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
-        non_existing_primary_keys_syn_variant_status_code: &proc_macro_helpers::status_code::StatusCode,
         non_existing_primary_keys_and_rollback_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
         non_existing_primary_keys_and_rollback_syn_variant_status_code: &proc_macro_helpers::status_code::StatusCode,
     |{
@@ -4704,7 +4703,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             column!(),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         ),
-                        &non_existing_primary_keys_syn_variant_wrapper.get_option_status_code().unwrap(),
                         &non_existing_primary_keys_and_rollback_syn_variant_wrapper.generate_initialization_token_stream(
                             file!(),
                             line!(),
@@ -6048,7 +6046,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             column!(),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         ),
-                        &non_existing_primary_keys_syn_variant_wrapper.get_option_status_code().unwrap(),
                         &non_existing_primary_keys_and_rollback_syn_variant_wrapper.generate_initialization_token_stream(
                             file!(),
                             line!(),
