@@ -1022,16 +1022,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let commit_failed_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-        &naming_conventions::CommitFailedUpperCamelCase,
-        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
-        vec![(
-            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-            &naming_conventions::CommitFailedSnakeCase,
-            sqlx_error_syn_punctuated_punctuated.clone(),
-        )],
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
     //todo maybe instead primary key put upper camel case RustSqlxMapToPostgresTypeVariant variant
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerUpperCamelCase,
@@ -4185,7 +4175,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(&non_existing_primary_keys_syn_variant_wrapper.get_syn_variant());
                 value.push(&non_existing_primary_keys_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value.push(&commit_failed_syn_variant_wrapper.get_syn_variant());
                 value.push(&not_unique_primary_key_syn_variant_wrapper.get_syn_variant());
                 value.push(&bind_query_syn_variant_wrapper.get_syn_variant());
                 value.push(&no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
@@ -4701,18 +4690,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     //     &non_existing_primary_keys_and_rollback_syn_variant_status_code.to_axum_http_status_code_token_stream(),
                     //     &eprintln_error_token_stream,
                     // );
-                    let commit_failed_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-                        &operation,
-                        &commit_failed_syn_variant_wrapper.generate_initialization_token_stream(
-                            file!(),
-                            line!(),
-                            column!(),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        ),
-                        &quote::quote! {#from_snake_case(#error_snake_case)},
-                        &commit_failed_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
-                        &eprintln_error_token_stream,
-                    );
                     let primary_key_vec_name_token_stream = quote::quote! {primary_key_vec};
                     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
                     let rollback_error_snake_case = naming_conventions::RollbackErrorSnakeCase;
