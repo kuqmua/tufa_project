@@ -3959,11 +3959,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         match #binded_query_snake_case.fetch_one(#pg_connection_snake_case.as_mut()).await {
                             Ok(#row_snake_case) => match #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case).#options_try_from_sqlx_row_snake_case(&#row_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 },
                             },
-                            Err(#error_snake_case) => {
+                            Err(error_0) => {
                                 #error_initialization_eprintln_response_creation_token_stream
                             },
                         }
@@ -6672,7 +6672,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_many_token_stream
             #create_one_token_stream
             #read_many_token_stream
-            // #read_one_token_stream
+            #read_one_token_stream
             #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
