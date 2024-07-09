@@ -6440,11 +6440,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
                                     #primary_key_inner_type_token_stream(#value_snake_case)
                                 ),
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             },
-                            Err(#error_snake_case) => {
+                            Err(error_0) => {
                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                             }
                         }
@@ -6677,7 +6677,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream
-            // #delete_one_token_stream
+            #delete_one_token_stream
         // }
     };
     // if ident == "" {
