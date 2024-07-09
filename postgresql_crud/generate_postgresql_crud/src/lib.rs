@@ -331,13 +331,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let debug_upper_camel_case = naming_constants::DebugUpperCamelCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     // let app_state_snake_case = naming_conventions::AppStateSnakeCase;
-    let eprintln_error_token_stream = {
-        let error_snake_case_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-            &format!("{{{error_snake_case}}}"),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote!{eprintln!(#error_snake_case_quotes_token_stream);}
-    };
+    let eprintln_error_token_stream = proc_macro_common::eprintln_error_token_stream();
     let serde_serialize = token_patterns::SerdeSerialize;
     let serde_deserialize = token_patterns::SerdeDeserialize;
     // let derive_debug = token_patterns::DeriveDebug;
@@ -8238,6 +8232,37 @@ fn generate_error_initialization_eprintln_response_creation_token_stream(
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let response_snake_case = naming_constants::ResponseSnakeCase;
     let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+    quote::quote! {
+        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
+        #eprintln_error_token_stream
+        let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#try_operation_route_logic_response_variants_initialization_token_stream));
+        *#response_snake_case.status_mut() = #status_code_token_stream;
+        return #response_snake_case;
+    }
+}
+
+fn generate_error_initialization_eprintln_response_creation_token_streammm(
+    operation: &Operation,
+    syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
+    try_operation_route_logic_response_variants_initialization_token_stream: &proc_macro2::TokenStream,
+    file: &'static str,
+    line: std::primitive::u32,
+    column: std::primitive::u32,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> proc_macro2::TokenStream {
+    let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+    let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+    let error_snake_case = naming_constants::ErrorSnakeCase;
+    let response_snake_case = naming_constants::ResponseSnakeCase;
+    let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+    let eprintln_error_token_stream = proc_macro_common::eprintln_error_token_stream();
+    let syn_variant_initialization_token_stream = syn_variant_wrapper.generate_initialization_token_stream(
+        &file,
+        line,
+        column,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream();
     quote::quote! {
         let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
         #eprintln_error_token_stream
