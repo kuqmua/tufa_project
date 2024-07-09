@@ -6677,7 +6677,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream
-            #delete_one_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
