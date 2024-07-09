@@ -8131,16 +8131,16 @@ fn generate_error_occurence_variant_token_stream(
 
 fn construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
     value: &Operation,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> syn::Variant {
     let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified(*&value);
-    let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_stringified = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_stringified(*&value);
-    proc_macro_helpers::construct_syn_variant::construct_syn_variant(
+    proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified,
+        None,
         vec![
             (
                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_stringified,
+                &naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_stringified(*&value),
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &[&try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified],
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -8148,7 +8148,7 @@ fn construct_try_operation_route_logic_error_named_with_serialize_deserialize_sy
             )
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
-    )
+    ).get_syn_variant().clone()
 }
 
 #[derive(Debug, strum_macros::Display)]
