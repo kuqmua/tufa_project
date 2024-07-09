@@ -6014,11 +6014,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             while let Some(#row_snake_case) = match { use futures::TryStreamExt; #rows_snake_case.try_next() }.await
                             {
                                 Ok(#value_snake_case) => match #value_snake_case {
-                                    Some(#value_snake_case) => match sqlx::Row::try_get::<sqlx::types::uuid::Uuid, &std::primitive::str>(
-                                        &#value_snake_case,
-                                        "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
-                                    ) {
-                                        Ok(#value_snake_case) => Some(postgresql_crud::SqlxTypesUuidUuid(#value_snake_case)),
+                                    Some(#value_snake_case) => match primary_key_try_from_sqlx_row(&#value_snake_case) {
+                                        Ok(#value_snake_case) => Some(#value_snake_case),
                                         Err(error_0) => {
                                             drop(#rows_snake_case);
                                             match #postgres_transaction_snake_case.#rollback_snake_case().await {
