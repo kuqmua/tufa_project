@@ -5014,7 +5014,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &token_patterns::DeriveDebug,
             )
         };
-        // println!("{parameters_token_stream}");
+        //  println!("{parameters_token_stream}");
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                 &operation,
@@ -5088,7 +5088,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     Ok(_) => {
                                         #query_snake_case.push_str(&format!(#field_ident_equals_dollar_increment_token_stream, increment));
                                     }
-                                    Err(#error_snake_case) => {
+                                    Err(error_0) => {
                                         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
                                 }
@@ -5105,7 +5105,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Ok(_) => {
                                     #query_snake_case.push_str(&format!(#query_part_token_stream));
                                 },
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 },
                             }
@@ -5182,11 +5182,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
                                     #primary_key_inner_type_token_stream(#value_snake_case)
                                 ),
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             },
-                            Err(#error_snake_case) => {
+                            Err(error_0) => {
                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                             }
                         }
@@ -5621,6 +5621,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 #acc_snake_case.push(&#element_snake_case);
                                             }
                                             else {
+                                                let error_0 = *element;
                                                 #error_initialization_eprintln_response_creation_token_stream
                                             }
                                         }
@@ -5749,7 +5750,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 },
                                             }
                                         },
-                                        Err(#error_snake_case) => {
+                                        Err(error_0) => {
                                             #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                         },
                                     }
@@ -5798,7 +5799,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 Ok(_) => {
                                                     additional_parameters.push_str(&format!("${increment},"));
                                                 }
-                                                Err(#error_snake_case) => {
+                                                Err(error_0) => {
                                                     #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                 }
                                             }
@@ -6018,13 +6019,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null_primary_key",
                                     ) {
                                         Ok(#value_snake_case) => Some(postgresql_crud::SqlxTypesUuidUuid(#value_snake_case)),
-                                        Err(#error_snake_case) => {
+                                        Err(error_0) => {
                                             drop(#rows_snake_case);
                                             match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                                 Ok(_) => {
                                                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                 },
-                                                Err(#rollback_snake_case) => {
+                                                Err(error_1) => {
                                                     #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                 }
                                             }
@@ -6032,13 +6033,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     },
                                     None => None,
                                 },
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     drop(#rows_snake_case);
                                     match #postgres_transaction_snake_case.#rollback_snake_case().await {
                                         Ok(_) => {
                                             #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                         },
-                                        Err(#rollback_snake_case) => {
+                                        Err(error_1) => {
                                             #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                         }
                                     }
@@ -6674,8 +6675,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream
-            // #update_one_token_stream
-            // #delete_many_token_stream
+            #update_one_token_stream
+            #delete_many_token_stream
             // #delete_one_token_stream
         // }
     };
