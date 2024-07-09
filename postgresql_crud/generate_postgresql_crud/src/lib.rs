@@ -1549,6 +1549,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let mut #acc_snake_case = std::vec::Vec::new();
             for #element_snake_case in &#value_snake_case.#select_snake_case {
                 if #acc_snake_case.contains(&#element_snake_case) {
+                    let error_0 = *#element_snake_case;
                     #error_initialization_eprintln_response_creation_token_stream
                 }
                 else {
@@ -1569,6 +1570,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let mut #acc_snake_case = std::vec::Vec::new();
             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.#select_snake_case {
                 if #acc_snake_case.contains(&#element_snake_case) {
+                    let error_0 = *#element_snake_case;
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_wrapper_initialization_token_stream);
                 } else {
                     #acc_snake_case.push(#element_snake_case);
@@ -3106,6 +3108,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 #acc_snake_case.push(&#element_snake_case);
                                             }
                                             else {
+                                                let error_0 = *#element_snake_case;
                                                 #error_initialization_eprintln_response_creation_token_stream
                                             }
                                         }
@@ -3289,7 +3292,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                     },
                                                 }
                                             },
-                                            Err(#error_snake_case) => {
+                                            Err(error_0) => {
                                                 #error_initialization_eprintln_response_creation_token_stream
                                             },
                                         }
@@ -3371,7 +3374,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         &mut increment
                                     ) {
                                         Ok(#value_snake_case) => #value_snake_case,
-                                        Err(#error_snake_case) => {
+                                        Err(error_0) => {
                                             #error_initialization_eprintln_response_creation_token_stream
                                         },
                                     };
@@ -3391,7 +3394,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         &mut increment
                                     ) {
                                         Ok(#value_snake_case) => #value_snake_case,
-                                        Err(#error_snake_case) => {
+                                        Err(error_0) => {
                                             #error_initialization_eprintln_response_creation_token_stream
                                         },
                                     };
@@ -3465,7 +3468,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             .await
                             {
                                 Ok(#value_snake_case) => #value_snake_case,
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
@@ -3474,7 +3477,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Ok(#value_snake_case) => {
                                     vec_values.push(#value_snake_case);
                                 }
-                                Err(#error_snake_case) => {
+                                Err(error_0) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
@@ -3558,6 +3561,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         if !#acc_snake_case.contains(&#element_snake_case) {
                                             #acc_snake_case.push(&#element_snake_case);
                                         } else {
+                                            let error_0 = *#element_snake_case;
                                             return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_primary_key_syn_variant_initialization_token_stream);
                                         }
                                     }
@@ -6667,7 +6671,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             // #read_one_token_stream
             #update_many_token_stream
             // #update_one_token_stream
