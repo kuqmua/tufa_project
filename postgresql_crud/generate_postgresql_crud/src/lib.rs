@@ -1527,17 +1527,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let generate_filter_not_unique_column_route_logic_token_stream = |operation: &Operation|{
-        let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-            &operation,
-            &not_unique_column_syn_variant_wrapper.generate_initialization_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            &quote::quote! {#from_snake_case(#error_snake_case)},
-            &not_unique_column_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
-            &eprintln_error_token_stream,
+        let error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
+            &not_unique_column_syn_variant_wrapper,
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote!{
             let mut #acc_snake_case = std::vec::Vec::new();
@@ -1776,17 +1771,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let generate_filter_no_payload_fields_token_stream = |operation: &Operation, source_token_stream: &proc_macro2::TokenStream|{
-        let error_initialization_eprintln_response_creation_token_stream = generate_error_initialization_eprintln_response_creation_token_stream(
-            &operation,
-            &no_payload_fields_primary_key_syn_variant_wrapper.generate_initialization_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ),
-            &quote::quote! {#from_snake_case(#error_snake_case)},
-            &no_payload_fields_primary_key_syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream(),
-            &eprintln_error_token_stream,
+        let error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
+            &no_payload_fields_primary_key_syn_variant_wrapper,
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let none_fields_named_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|_|naming_constants::NoneUpperCamelCase);
         let match_fields_named_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -7572,6 +7562,36 @@ impl Operation {
             Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
         }
     }
+    fn generate_error_initialization_eprintln_response_creation_token_streammm(
+        &self,
+        syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
+        file: &'static str,
+        line: std::primitive::u32,
+        column: std::primitive::u32,
+        proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+    ) -> proc_macro2::TokenStream {
+        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(self);
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(self);
+        let from_snake_case = naming_constants::FromSnakeCase;
+        let error_snake_case = naming_constants::ErrorSnakeCase;
+        let response_snake_case = naming_constants::ResponseSnakeCase;
+        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+        let eprintln_error_token_stream = proc_macro_common::eprintln_error_token_stream();
+        let syn_variant_initialization_token_stream = syn_variant_wrapper.generate_initialization_token_stream(
+            &file,
+            line,
+            column,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream();
+        quote::quote! {
+            let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
+            #eprintln_error_token_stream
+            let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
+            *#response_snake_case.status_mut() = #status_code_token_stream;
+            return #response_snake_case;
+        }
+    }
 }
 
 #[derive(proc_macro_assistants::ToSnakeCaseStringified)]
@@ -8229,49 +8249,18 @@ fn generate_error_initialization_eprintln_response_creation_token_stream(
 ) -> proc_macro2::TokenStream {
     let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
     let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+    let from_snake_case = naming_constants::FromSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
     let response_snake_case = naming_constants::ResponseSnakeCase;
     let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
     quote::quote! {
         let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
         #eprintln_error_token_stream
-        let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#try_operation_route_logic_response_variants_initialization_token_stream));
+        let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
         *#response_snake_case.status_mut() = #status_code_token_stream;
         return #response_snake_case;
     }
 }
-
-fn generate_error_initialization_eprintln_response_creation_token_streammm(
-    operation: &Operation,
-    syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
-    try_operation_route_logic_response_variants_initialization_token_stream: &proc_macro2::TokenStream,
-    file: &'static str,
-    line: std::primitive::u32,
-    column: std::primitive::u32,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-    let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-    let error_snake_case = naming_constants::ErrorSnakeCase;
-    let response_snake_case = naming_constants::ResponseSnakeCase;
-    let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-    let eprintln_error_token_stream = proc_macro_common::eprintln_error_token_stream();
-    let syn_variant_initialization_token_stream = syn_variant_wrapper.generate_initialization_token_stream(
-        &file,
-        line,
-        column,
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream();
-    quote::quote! {
-        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
-        #eprintln_error_token_stream
-        let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#try_operation_route_logic_response_variants_initialization_token_stream));
-        *#response_snake_case.status_mut() = #status_code_token_stream;
-        return #response_snake_case;
-    }
-}
-
 
 fn generate_operation_many_payload_element_token_stream(
     operation: &Operation,
