@@ -688,10 +688,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let order_by_upper_camel_case = naming_conventions::OrderByUpperCamelCase;
     let postgresql_crud_order_by_token_stream = quote::quote! {postgresql_crud::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {postgresql_crud::Order};
-    // let limit_snake_case = naming_constants::LimitSnakeCase;
-    // let offset_snake_case = naming_constants::OffsetSnakeCase;
-    // let order_snake_case = naming_constants::OrderSnakeCase;
-    // let column_snake_case = naming_constants::ColumnSnakeCase;
     let allow_methods_token_stream = {
         let http_method_token_stream = quote::quote!{http::Method};
         quote::quote! {
@@ -750,17 +746,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_snake_case = naming_constants::PayloadSnakeCase;
-    // let query_upper_camel_case = naming_constants::QueryUpperCamelCase;
-    // let rollback_upper_camel_case = naming_constants::RollbackUpperCamelCase;
-    // let rollback_snake_case = naming_constants::RollbackSnakeCase;
     let pg_connection_snake_case = naming_conventions::PgConnectionSnakeCase;
     let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
     let current_vec_len_snake_case = naming_conventions::CurrentVecLenSnakeCase;
-    // let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
-    // let select_snake_case = naming_constants::SelectSnakeCase;
-    // let limit_snake_case = naming_constants::LimitSnakeCase;
-    // let offset_snake_case = naming_constants::OffsetSnakeCase;
     let rollback_snake_case = naming_constants::RollbackSnakeCase;
     let query_snake_case = naming_constants::QuerySnakeCase;
     let update_snake_case = naming_constants::UpdateSnakeCase;
@@ -772,10 +761,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let values_snake_case = naming_constants::ValuesSnakeCase;
     let delete_snake_case = naming_constants::DeleteSnakeCase;
     let where_snake_case = naming_constants::WhereSnakeCase;
-    // let payload_extraction_result_snake_case = naming_conventions::ExtractionResultSnakeCase;
     let use_futures_try_stream_ext_token_stream = quote::quote! {use futures::TryStreamExt};
-    // let serde_json_to_string_token_stream = quote::quote! {serde_json::to_string};
-    // let payload_element_upper_camel_case_stringified = format!("{payload_upper_camel_case_stringified}Element");
     let returning_snake_case = naming_constants::ReturningSnakeCase;
     let returning_primary_key_stringified = format!(" {returning_snake_case} {primary_key_field_ident}");
     let returning_primary_key_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
@@ -783,8 +769,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     let postgresql_crud_snake_case = naming_conventions::PostgresqlCrudSnakeCase;
-    // let app_state_path = quote::quote! {#postgresql_crud_snake_case::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
-    // let serde_json_error_token_stream = quote::quote! {serde_json::Error};
     let std_string_string_syn_punctuated_punctuated = proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
         &["std","string","String"],
         &proc_macro_name_upper_camel_case_ident_stringified
@@ -2230,7 +2214,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let mut #results_vec_snake_case = std::vec::Vec::new();
                         while let Some(#value_snake_case) = {
                             match {
-                                use futures::TryStreamExt;
+                                #use_futures_try_stream_ext_token_stream;
                                 #rows_snake_case.try_next()
                             }
                             .await
@@ -2421,11 +2405,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {}
         )
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &create_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
+    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        &proc_macro_name_upper_camel_case,
+        &create_many_token_stream,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -5851,7 +5835,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let #results_vec_snake_case = {
                             let mut #rows_snake_case = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
                             let mut #results_vec_snake_case = std::vec::Vec::new();
-                            while let Some(#row_snake_case) = match { use futures::TryStreamExt; #rows_snake_case.try_next() }.await
+                            while let Some(#row_snake_case) = match { #use_futures_try_stream_ext_token_stream; #rows_snake_case.try_next() }.await
                             {
                                 Ok(#value_snake_case) => match #value_snake_case {
                                     Some(#value_snake_case) => match primary_key_try_from_sqlx_row(&#value_snake_case) {
