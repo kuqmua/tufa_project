@@ -1870,24 +1870,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let not_unique_fields_syn_variants = fields_named_excluding_primary_key.iter().map(|element|{
-        let not_unique_field_ident_upper_camel_case_stringified = format!(
-            "{}{}",
-            naming_conventions::NotUniqueUpperCamelCase,
-            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
-        );
-        let not_unique_field_ident_snake_case_stringified = format!(
-            "{}_{}",
-            naming_conventions::NotUniqueSnakeCase,
-            &element.field_ident,
-        );
+    let not_unique_fields_syn_variants = fields_named_excluding_primary_key.iter().map(|element|
         proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &not_unique_field_ident_upper_camel_case_stringified,
+            &format!(
+                "{}{}",
+                naming_conventions::NotUniqueUpperCamelCase,
+                proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
+            ),
             Some(not_unique_primary_key_syn_variant_wrapper.get_option_status_code().unwrap()),
             vec![
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                    &not_unique_field_ident_snake_case_stringified,
+                    &format!(
+                        "{}_{}",
+                        naming_conventions::NotUniqueSnakeCase,
+                        &element.field_ident,
+                    ),
                     {
                         let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                         value.push_value(syn::PathSegment {
@@ -1912,7 +1910,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ],
             &proc_macro_name_upper_camel_case_ident_stringified,
         ).get_syn_variant().clone()
-    }).collect::<std::vec::Vec<syn::Variant>>();
+    ).collect::<std::vec::Vec<syn::Variant>>();
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
