@@ -1918,17 +1918,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     }).collect::<std::vec::Vec<syn::Variant>>();
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
@@ -2441,17 +2432,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
@@ -2789,17 +2771,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (read_many_token_stream, read_many_test_token_stream) = {
         let operation = Operation::ReadMany;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
@@ -3713,17 +3686,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         read_one_http_request_test_expect_fail_token_stream,
     ) = {
         let operation = Operation::ReadOne;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
@@ -4138,17 +4102,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (update_many_token_stream, update_many_test_token_stream) = {
         let operation = Operation::UpdateMany;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
@@ -4906,17 +4861,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let (update_one_token_stream, update_one_test_token_stream) = {
         let operation = Operation::UpdateOne;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
@@ -5265,17 +5211,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (delete_many_token_stream, delete_many_test_token_stream) = {
         let operation = Operation::DeleteMany;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         // let not_unique_primary_key_syn_variant_initialization_token_stream = generate_not_unique_primary_key_syn_variant_initialization_token_stream(&quote::quote!{#element_snake_case.clone()});
         let no_payload_fields_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
@@ -6179,17 +6116,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let (delete_one_token_stream, delete_one_test_token_stream) = {
         let operation = Operation::DeleteOne;
-        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: proc_macro_helpers::construct_syn_variant::SynVariantWrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation),
-            Some(operation.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(&operation),
-                    operation.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
+        let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &common_route_syn_variants,
@@ -7525,6 +7453,23 @@ impl Operation {
             *#response_snake_case.status_mut() = #status_code_token_stream;
             return #response_snake_case;
         }
+    }
+    fn generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+        &self,
+        proc_macro_name_upper_camel_case_ident_stringified: &str
+    ) -> proc_macro_helpers::construct_syn_variant::SynVariantWrapper {
+        proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self),
+            Some(self.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(self),
+                    self.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
+                )
+            ],
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        )
     }
 }
 
