@@ -6667,8 +6667,6 @@ const CHECKED_ADD_IS_NONE: &str = "checked_add is None";
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
-        #[eo_to_std_string_string_serialize_deserialize]
-        checked_add: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

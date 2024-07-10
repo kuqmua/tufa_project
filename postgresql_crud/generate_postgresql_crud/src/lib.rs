@@ -2119,7 +2119,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column_increments
                     };
                     let query_stringified = format!(
-                        "\"{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {select_snake_case} {column_names} {from_snake_case} {unnest_snake_case}({column_increments}) {as_snake_case} a({column_names}){returning_primary_key_stringified}\""
+                        "\"{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case}  {returning_primary_key_stringified}\""
                     );
                     query_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -6481,14 +6481,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream
 
-            #create_many_token_stream
-            #create_one_token_stream
-            #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
-            #update_one_token_stream
-            #delete_many_token_stream
-            #delete_one_token_stream
+            // #create_many_token_stream
+            // #create_one_token_stream
+            // #read_many_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
+            // #update_one_token_stream
+            // #delete_many_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
