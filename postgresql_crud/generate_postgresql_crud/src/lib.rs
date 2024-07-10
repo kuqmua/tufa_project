@@ -1870,7 +1870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let not_unique_fields_syn_variants = fields_named_excluding_primary_key.iter().map(|element|
+    let not_unique_fields_syn_variants_wrappers = fields_named_excluding_primary_key.iter().map(|element|
         proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
             &format!(
                 "{}{}",
@@ -1909,8 +1909,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             ],
             &proc_macro_name_upper_camel_case_ident_stringified,
-        ).get_syn_variant().clone()
-    ).collect::<std::vec::Vec<syn::Variant>>();
+        )
+    ).collect::<std::vec::Vec<proc_macro_helpers::construct_syn_variant::SynVariantWrapper>>();
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -2781,8 +2781,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&bind_query_syn_variant_wrapper.get_syn_variant());
                 value.push(&not_unique_primary_key_syn_variant_wrapper.get_syn_variant());
                 value.push(&not_unique_column_syn_variant_wrapper.get_syn_variant());
-                not_unique_fields_syn_variants.iter().for_each(|element|{
-                    value.push(&element);
+                not_unique_fields_syn_variants_wrappers.iter().for_each(|element|{
+                    value.push(element.get_syn_variant());
                 });
                 value
             },
@@ -3467,8 +3467,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &{
                     let mut value = common_http_request_syn_variants.clone();
                     value.push(not_unique_primary_key_syn_variant_wrapper.get_syn_variant().clone());
-                    not_unique_fields_syn_variants.iter().for_each(|element|{
-                        value.push(element.clone());
+                    not_unique_fields_syn_variants_wrappers.iter().for_each(|element|{
+                        value.push(element.get_syn_variant().clone());
                     });
                     value.push(not_unique_column_syn_variant_wrapper.get_syn_variant().clone());
                     value
@@ -5236,8 +5236,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&non_existing_primary_keys_syn_variant_wrapper.get_syn_variant());
                 value.push(&non_existing_primary_keys_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(&not_unique_primary_key_syn_variant_wrapper.get_syn_variant());
-                not_unique_fields_syn_variants.iter().for_each(|element|{
-                    value.push(&element);
+                not_unique_fields_syn_variants_wrappers.iter().for_each(|element|{
+                    value.push(element.get_syn_variant());
                 });
                 value
             },
