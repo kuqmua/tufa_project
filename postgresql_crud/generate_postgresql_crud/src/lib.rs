@@ -1365,6 +1365,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let serde_json_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+        &naming_conventions::SerdeJsonUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::SerdeJsonSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["serde_json","Error"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )
+        ],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let bind_query_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::BindQueryUpperCamelCase,
         Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
@@ -1446,6 +1461,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value.push(check_body_size_syn_variant_wrapper.get_syn_variant());
         value.push(&postgresql_syn_variant_wrapper.get_syn_variant());
         value.push(&json_syn_variant_wrapper.get_syn_variant());
+        value.push(&serde_json_syn_variant_wrapper.get_syn_variant());
         // value.push(&bind_query_syn_variant);
         for element in common_additional_error_variants_vec {
             value.push(element);
@@ -2106,7 +2122,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
                     &fields_named_excluding_primary_key_from_or_try_from,
-                    &json_syn_variant_wrapper,
+                    &serde_json_syn_variant_wrapper,
                     &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &proc_macro2::TokenStream::new(),
                     &proc_macro_name_upper_camel_case_ident_stringified,
@@ -6498,13 +6514,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             #create_many_token_stream
-            #create_one_token_stream
-            #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
-            #update_one_token_stream
-            #delete_many_token_stream
-            #delete_one_token_stream
+            // #create_one_token_stream
+            // #read_many_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
+            // #update_one_token_stream
+            // #delete_many_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
@@ -8238,7 +8254,7 @@ fn generate_try_operation_route_logic_error_named_token_stream(
 fn generate_parameters_logic_token_stream(
     operation: &Operation,
     from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-    json_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
+    serde_json_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
     self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
     operation_payload_with_serialize_deserialize_check_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
@@ -8272,8 +8288,8 @@ fn generate_parameters_logic_token_stream(
             },
         }
     };
-    let error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
-        &json_syn_variant_wrapper,
+    let serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
+        &serde_json_syn_variant_wrapper,
         file!(),
         line!(),
         column!(),
@@ -8284,16 +8300,16 @@ fn generate_parameters_logic_token_stream(
     quote::quote! {
         let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
             //todo maybe use serde json parsing instead of axum. (coz less info)
-            #payload_snake_case: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
+            #payload_snake_case: match serde_json::from_slice::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>(
                 &#body_bytes_snake_case,
             ) {
-                Ok(axum::Json(#value_snake_case)) => {
+                Ok(#value_snake_case) => {
                     let #value_snake_case = #try_or_try_from_operation_payload_upper_camel_case_token_stream;
                     #operation_payload_with_serialize_deserialize_check_token_stream
                     #value_snake_case
                 },
                 Err(error_0) => {
-                    #error_initialization_eprintln_response_creation_token_stream
+                    #serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                 }
             },
         };
