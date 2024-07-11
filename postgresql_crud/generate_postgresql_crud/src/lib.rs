@@ -1901,7 +1901,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &common_route_syn_variants,
+            &{
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+                common_route_syn_variants.iter().for_each(|element|{
+                    value.push(*element);
+                });
+                value.push(&checked_add_syn_variant_wrapper.get_syn_variant());
+                value
+            },
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
@@ -2108,21 +2115,71 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                         acc
                     });
-                    let column_increments = {
-                        let mut column_increments = fields_named_excluding_primary_key.iter()
-                            .enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
-                                acc.push_str(&format!("${}, ", index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))));
-                                acc
-                            });
-                        let _: std::option::Option<std::primitive::char> = column_increments.pop();
-                        let _: std::option::Option<std::primitive::char> = column_increments.pop();
-                        column_increments
-                    };
-                    let query_stringified = format!(
-                        "\"{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case}  {returning_primary_key_stringified}\""
-                    );
-                    query_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // let column_increments = {
+                    //     let mut column_increments = fields_named_excluding_primary_key.iter()
+                    //         .enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
+                    //             acc.push_str(&format!("${}, ", index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))));
+                    //             acc
+                    //         });
+                    //     let _: std::option::Option<std::primitive::char> = column_increments.pop();
+                    //     let _: std::option::Option<std::primitive::char> = column_increments.pop();
+                    //     column_increments
+                    // };
+                    // let query_stringified = format!(
+                    //     "\"{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case}  {returning_primary_key_stringified}\""
+                    // );
+                    // query_stringified.parse::<proc_macro2::TokenStream>()
+                    // .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    quote::quote!{
+                        {
+                            #increment_initialization_token_stream
+                            let mut values = #std_string_string::default();
+                            for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                let mut #value_snake_case = #std_string_string::default();
+                                match postgresql_crud::BindQuery::try_increment(
+                                    &#element_snake_case.std_primitive_bool_as_postgresql_bool,
+                                    &mut increment,
+                                ) {
+                                    Ok(_) => {
+                                        #value_snake_case.push_str(&format!("${},", increment));
+                                    }
+                                    Err(_) => {
+                                        todo!()
+
+                                    }
+                                }
+                                match postgresql_crud::BindQuery::try_increment(
+                                    &element.std_primitive_i16_as_postgresql_small_int,
+                                    &mut increment,
+                                ) {
+                                    Ok(_) => {
+                                        value.push_str(&format!("${},", increment));
+                                    }
+                                    Err(_) => {
+                                        todo!()
+
+                                    }
+                                }
+                                match postgresql_crud::BindQuery::try_increment(
+                                    &element.std_primitive_i32_as_postgresql_int,
+                                    &mut increment,
+                                ) {
+                                    Ok(_) => {
+                                        value.push_str(&format!("${},", increment));
+                                    }
+                                    Err(_) => {
+                                        todo!()
+
+                                    }
+                                }
+                                let _ = #value_snake_case.pop();
+                                values.push_str(&format!("({value}),"));
+                            }
+                            let _ = values.pop();
+                            format!("insert into dogs (std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) values {values} returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")
+                            //
+                        }
+                    }
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {

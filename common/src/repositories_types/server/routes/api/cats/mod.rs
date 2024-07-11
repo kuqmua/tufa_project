@@ -469,26 +469,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
     let query_string = {
         let mut increment: u64 = 0;
         let mut values = std::string::String::default();
-                    // let error = TryCreateManyRouteLogicErrorNamed::CheckedAdd {
-                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    //         file!().to_owned(),
-                    //         line!(),
-                    //         column!(),
-                    //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    //             file: std::string::String::from(
-                    //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                    //             ),
-                    //             line: 2271,
-                    //             column: 25,
-                    //         }),
-                    //     ),
-                    // };
-                    // eprintln!("{error}");
-                    // let mut res = axum::response::IntoResponse::into_response(axum::Json(
-                    //     TryCreateManyRouteLogicResponseVariants::from(error),
-                    // ));
-                    // *res.status_mut() = axum::http::StatusCode::CREATED;
-                    // return res;
         for element in &parameters.payload.0 {
             let mut value = std::string::String::default();
             match postgresql_crud::BindQuery::try_increment(
@@ -541,40 +521,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
             query = query.bind(element.std_primitive_i16_as_postgresql_small_int.0);
             query = query.bind(element.std_primitive_i32_as_postgresql_int.0);
         }
-        // let current_vec_len = parameters.payload.0.len();
-        // let (
-        //     std_primitive_bool_as_postgresql_bool_vec,
-        //     std_primitive_i16_as_postgresql_small_int_vec,
-        //     std_primitive_i32_as_postgresql_int_vec,
-        // ) = parameters.payload.0.into_iter().fold(
-        //     (
-        //         std::vec::Vec::with_capacity(current_vec_len),
-        //         std::vec::Vec::with_capacity(current_vec_len),
-        //         std::vec::Vec::with_capacity(current_vec_len),
-        //     ),
-        //     |mut acc, element| {
-        //         acc.0.push(element.std_primitive_bool_as_postgresql_bool);
-        //         acc.1
-        //             .push(element.std_primitive_i16_as_postgresql_small_int);
-        //         acc.2.push(element.std_primitive_i32_as_postgresql_int);
-        //         acc
-        //     },
-        // );
-        // query = query.bind(
-        //     postgresql_crud::StdOptionOptionStdPrimitiveBool::into_inner_type_vec(
-        //         std_primitive_bool_as_postgresql_bool_vec,
-        //     ),
-        // );
-        // query = query.bind(
-        //     postgresql_crud::StdOptionOptionStdPrimitiveI16::into_inner_type_vec(
-        //         std_primitive_i16_as_postgresql_small_int_vec,
-        //     ),
-        // );
-        // query = query.bind(
-        //     postgresql_crud::StdOptionOptionStdPrimitiveI32::into_inner_type_vec(
-        //         std_primitive_i32_as_postgresql_int_vec,
-        //     ),
-        // );
         query
     };
     let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
