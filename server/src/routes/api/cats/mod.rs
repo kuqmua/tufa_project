@@ -65,12 +65,12 @@ fn crud(
                 common::repositories_types::server::routes::api::cats::try_delete_many_route_logic,
             ),
         )
-        // .route(
-        //     "/delete_one",
-        //     axum::routing::delete(
-        //         common::repositories_types::server::routes::api::cats::delete_one,
-        //     ),
-        // )
+        .route(
+            "/delete_one",
+            axum::routing::delete(
+                common::repositories_types::server::routes::api::cats::try_delete_one_route_logic,
+            ),
+        )
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
         //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,
         // ))
