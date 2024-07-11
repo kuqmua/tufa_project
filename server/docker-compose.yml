@@ -29,14 +29,19 @@ services:
   ##   volumes:
   ##     - ./volumes/mongodb_volume:/data/db
   #     # maybe instead of local folder create server folder for only this service like /var/lib/docker/volumes/server/mongo_volume:/data/db
-  redis_service:
-    container_name: redis_container
-    image: 'redis:latest'
-    restart: always
-    ports:
-      - 6379:6379
-    environment:
-      ALLOW_EMPTY_PASSWORD: "yes"
+
+
+  # redis_service:
+  #   container_name: redis_container
+  #   image: 'redis:latest'
+  #   restart: always
+  #   ports:
+  #     - 6379:6379
+  #   environment:
+  #     ALLOW_EMPTY_PASSWORD: "yes"
+
+
+
     # volumes:
     #   - ./volumes/redis_volume/:/data
       # maybe instead of local folder create server folder for only this service like /var/lib/docker/volumes/server/redis_volume:/data/db
