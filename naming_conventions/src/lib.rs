@@ -1,3 +1,4 @@
+//todo make it reuse naming_constants
 naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants!(
     [
         ["primary", "key"],
@@ -107,7 +108,11 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["postgres", "transaction"],
         ["expected", "primary", "keys"],
         ["results", "vec"],
-        ["serde", "json"]
+        ["serde", "json"],
+        ["unexpected", "rows", "length"],
+        ["unexpected", "rows", "length", "and", "rollback"],
+        ["expected", "length"],
+        ["got", "length"]
     ]
 );
 

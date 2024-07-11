@@ -1900,6 +1900,60 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
             &proc_macro_name_upper_camel_case_ident_stringified
         );
+        let expected_length_snake_case = naming_conventions::ExpectedLengthSnakeCase;
+        let got_length_snake_case = naming_conventions::GotLengthSnakeCase;
+        let unexpected_rows_length_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+            &naming_conventions::UnexpectedRowsLengthUpperCamelCase,
+            Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &expected_length_snake_case,
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["std", "primitive", "usize"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                ),
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &got_length_snake_case,
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["std", "primitive", "usize"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ],
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let unexpected_rows_length_and_rollback_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+            &naming_conventions::UnexpectedRowsLengthAndRollbackUpperCamelCase,
+            Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &expected_length_snake_case,
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["std", "primitive", "usize"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                ),
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &got_length_snake_case,
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["std", "primitive", "usize"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                ),
+                //todo reuse vec elements
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &rollback_snake_case,
+                    sqlx_error_syn_punctuated_punctuated.clone(),
+                ),
+            ],
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -1908,6 +1962,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 value.push(&checked_add_syn_variant_wrapper.get_syn_variant());
                 value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
+                value.push(&unexpected_rows_length_syn_variant_wrapper.get_syn_variant());
+                value.push(&unexpected_rows_length_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &fields_named_excluding_primary_key_from_or_try_from,
@@ -2195,6 +2251,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
+                        &unexpected_rows_length_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let unexpected_rows_length_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
+                        &unexpected_rows_length_and_rollback_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
@@ -2222,7 +2292,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 }
                             } {
-                                match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&value,  #primary_key_field_ident_quotes_token_stream) {
+                                //todo reuse #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>
+                                match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
                                     Ok(#value_snake_case) => {
                                         #results_vec_snake_case.push(
                                             #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
@@ -2245,7 +2316,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                             #results_vec_snake_case
                         };
-                        //todo check results_vec length equals payload length
+                        {
+                            let error_1 = #results_vec_snake_case.len();
+                            if error_0 != error_1 {
+                                match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                                    Ok(_) => {
+                                        #unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
+                                    Err(error_2) => {
+                                        #unexpected_rows_length_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
+                                }
+                            }
+                        }
                         #commit_token_stream
                         #results_vec_snake_case
                     }
@@ -2263,7 +2346,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &proc_macro2::TokenStream::new(),
+                    &{
+                        quote::quote! {
+                            let error_0 = #parameters_snake_case.#payload_snake_case.0.len();
+                        }
+                    },
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
