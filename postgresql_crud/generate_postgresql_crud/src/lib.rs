@@ -4928,7 +4928,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         //     )
                         // };
                         let field_ident_equals_dollar_increment_token_stream = proc_macro_common::generate_quotes::token_stream(
-                            &format!("{field_ident} = ${{}}, "),
+                            &format!("{field_ident} = ${{}},"),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         quote::quote!{
@@ -4968,6 +4968,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #increment_initialization_token_stream
                             let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
                             #(#additional_parameters_modification_token_stream)*
+                            let _ = #query_snake_case.pop();
                             #additional_parameters_primary_key_modification_token_stream
                             #query_snake_case.push_str(&format!(#returning_primary_key_quotes_token_stream));
                             #query_snake_case

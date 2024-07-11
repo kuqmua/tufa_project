@@ -115,14 +115,16 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 8,
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 9,
     "std_primitive_bool_as_postgresql_bool": {
         "value": true
     },
     "std_primitive_i16_as_postgresql_small_int": {
         "value": null
     },
-    "std_primitive_i32_as_postgresql_int": null
+    "std_primitive_i32_as_postgresql_int": {
+        "value": 90
+    }
 }
 
 ####"^first_test_name_create$"  
