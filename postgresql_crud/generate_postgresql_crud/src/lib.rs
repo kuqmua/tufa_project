@@ -1902,6 +1902,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let expected_length_snake_case = naming_conventions::ExpectedLengthSnakeCase;
         let got_length_snake_case = naming_conventions::GotLengthSnakeCase;
+        let std_primitive_usize_syn_punctuated_punctuated = proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+            &["std", "primitive", "usize"],
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
         let unexpected_rows_length_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
             &naming_conventions::UnexpectedRowsLengthUpperCamelCase,
             Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
@@ -1909,18 +1913,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &expected_length_snake_case,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &["std", "primitive", "usize"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
+                    std_primitive_usize_syn_punctuated_punctuated.clone(),
                 ),
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &got_length_snake_case,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &["std", "primitive", "usize"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
+                    std_primitive_usize_syn_punctuated_punctuated.clone(),
                 )
             ],
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -1932,18 +1930,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &expected_length_snake_case,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &["std", "primitive", "usize"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
+                    std_primitive_usize_syn_punctuated_punctuated.clone(),
                 ),
                 (
                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &got_length_snake_case,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &["std", "primitive", "usize"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
+                    std_primitive_usize_syn_punctuated_punctuated.clone(),
                 ),
                 //todo reuse vec elements
                 (
