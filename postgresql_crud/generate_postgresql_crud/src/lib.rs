@@ -2829,6 +2829,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &create_one_token_stream,
     //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
+    //todo add additional filters
     let (read_many_token_stream, read_many_test_token_stream) = {
         let operation = Operation::ReadMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -5755,114 +5756,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = {
                     let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-                    // let filter_unique_parameters_token_stream = {
-                    //     let filter_unique_parameters_primary_key_token_stream = quote::quote! {
-                    //         if let Some(#primary_key_field_ident) = &#parameters_snake_case.#payload_snake_case_token_stream.#primary_key_field_ident {
-                    //             let #not_unique_primary_keys_name_token_stream = {
-                    //                 let mut vec = std::vec::Vec::with_capacity(#primary_key_field_ident.len());
-                    //                 let mut #not_unique_primary_keys_name_token_stream = std::vec::Vec::with_capacity(#primary_key_field_ident.len());
-                    //                 for element in #primary_key_field_ident {
-                    //                     let handle = element;
-                    //                     match vec.contains(&handle) {
-                    //                         true => {
-                    //                             #not_unique_primary_keys_name_token_stream.push(element.clone());
-                    //                         },
-                    //                         false => {
-                    //                             vec.push(element);
-                    //                         }
-                    //                     }
-                    //                 }
-                    //                 #not_unique_primary_keys_name_token_stream
-                    //             };
-                    //             if let false = #not_unique_primary_keys_name_token_stream.is_empty() {
-                    //                 let #error_snake_case = #try_operation_upper_camel_case_token_stream::#not_unique_primary_keys_syn_variant_initialization_token_stream;
-                    //                 #eprintln_error_token_stream
-                    //                 return #try_operation_response_variants_token_stream::#from_snake_case(#error_snake_case);
-                    //             }
-                    //         }
-                    //     };
-                    //     let filter_unique_parameters_other_columns_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    //         let field_ident = &element.field_ident;
-                    //         let field_handle_token_stream = {
-                    //             let field_handle_stringified = format!("{field_ident}_handle");
-                    //             field_handle_stringified.parse::<proc_macro2::TokenStream>()
-                    //             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    //         };
-                    //         let not_unique_field_vec_snake_case_token_stream = {
-                    //             let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
-                    //             not_unique_field_vec_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-                    //             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    //         };
-                    //         let not_unique_field_vec_vec_upper_camel_token_stream = {
-                    //             let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
-                    //             not_unique_field_vec_upper_camel_stringified.parse::<proc_macro2::TokenStream>()
-                    //             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_upper_camel_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    //         };
-                    //         let field_code_occurence_new_a4cd6c7d_3d82_4ee7_84f0_ca63ddb894e1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                    //             file!(),
-                    //             line!(),
-                    //             column!(),
-                    //             &proc_macro_name_upper_camel_case_ident_stringified,
-                    //         );
-                    //         let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
-                    //         quote::quote!{
-                    //             let #field_handle_token_stream = match #parameters_snake_case.#payload_snake_case_token_stream.#field_ident {
-                    //                 Some(value) => {
-                    //                     let is_unique = {
-                    //                         let mut vec = std::vec::Vec::with_capacity(value.len());
-                    //                         let mut is_unique = true;
-                    //                         for element in &value {
-                    //                             match vec.contains(&element) {
-                    //                                 true => {
-                    //                                     is_unique = false;
-                    //                                     break;
-                    //                                 }
-                    //                                 false => {
-                    //                                     vec.push(element);
-                    //                                 }
-                    //                             }
-                    //                         }
-                    //                         is_unique
-                    //                     };
-                    //                     match is_unique {
-                    //                         true => Some(value),
-                    //                         false => {
-                    //                             let #not_unique_field_vec_snake_case_token_stream = {
-                    //                                 let mut vec = std::vec::Vec::with_capacity(value.len());
-                    //                                 let mut #not_unique_field_vec_snake_case_token_stream = std::vec::Vec::with_capacity(value.len());
-                    //                                 for element in value {
-                    //                                     match vec.contains(&element) {
-                    //                                         true => {
-                    //                                             #not_unique_field_vec_snake_case_token_stream.push(element);
-                    //                                         }
-                    //                                         false => {
-                    //                                             vec.push(element);
-                    //                                         }
-                    //                                     }
-                    //                                 }
-                    //                                 #not_unique_field_vec_snake_case_token_stream
-                    //                                     .into_iter()
-                    //                                     .map(|element|#where_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(element))
-                    //                                     .collect()
-                    //                             };
-                    //                             let #error_snake_case = #try_operation_upper_camel_case_token_stream::#not_unique_field_vec_vec_upper_camel_token_stream {
-                    //                                 #not_unique_field_vec_snake_case_token_stream,
-                    //                                 #field_code_occurence_new_a4cd6c7d_3d82_4ee7_84f0_ca63ddb894e1_token_stream,
-                    //                             };
-                    //                             #eprintln_error_token_stream
-                    //                             return #try_operation_response_variants_token_stream::#from_snake_case(#error_snake_case);
-                    //                         }
-                    //                     }
-                    //                 },
-                    //                 None => None
-                    //             };
-                    //         }
-                    //     });
-                    //     quote::quote! {
-                    //         #filter_unique_parameters_primary_key_token_stream
-                    //         #(#filter_unique_parameters_other_columns_token_stream)*
-                    //     }
-                    // };
                     let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_handle_token_stream(
                         &operation,
                         file!(),
