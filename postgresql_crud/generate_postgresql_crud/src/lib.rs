@@ -2504,7 +2504,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &common_route_syn_variants,
+            &{
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+                common_route_syn_variants.iter().for_each(|element|{
+                    value.push(*element);
+                });
+                value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
+                value
+            },
             &fields_named_excluding_primary_key_from_or_try_from,
             &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant_wrapper,
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
@@ -2661,27 +2668,55 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{binded_query_token_stream}");
                 let postgresql_logic_token_stream = {
-                    let error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
+                    let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
+                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
                         &postgresql_syn_variant_wrapper,
                         file!(),
                         line!(),
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_streammm(
+                        &row_and_rollback_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
-                        match #binded_query_snake_case.fetch_one(#pg_connection_snake_case.as_mut()).await {
-                            Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, &str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
-                                Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
-                                    #primary_key_inner_type_token_stream(#value_snake_case)
-                                ),
+                        #postgres_transaction_token_stream
+                        let #value_snake_case = {
+                            match #binded_query_snake_case.fetch_one(#postgres_transaction_snake_case.as_mut()).await {
+                                Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, &str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                                    Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
+                                        #primary_key_inner_type_token_stream(#value_snake_case)
+                                    ),
+                                    Err(error_0) => {
+                                        match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                                            Ok(_) => {
+                                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                            }
+                                            Err(error_1) => {
+                                                #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                            }
+                                        }
+                                    }
+                                },
                                 Err(error_0) => {
-                                    #error_initialization_eprintln_response_creation_token_stream
+                                    match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                                        Ok(_) => {
+                                            #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                        }
+                                        Err(error_1) => {
+                                            #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                        }
+                                    }
                                 }
-                            },
-                            Err(error_0) => {
-                                #error_initialization_eprintln_response_creation_token_stream
                             }
-                        }
+                        };
+                        #commit_token_stream
+                        #value_snake_case
                     }
                 };
                 // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
