@@ -2273,7 +2273,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 }
                             } {
-                                //todo reuse #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>
                                 match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
                                     Ok(#value_snake_case) => {
                                         #results_vec_snake_case.push(
@@ -3460,7 +3459,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     quote::quote! {
                         let mut #rows_snake_case = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
-                        let mut vec_values = std::vec::Vec::new();
+                        let mut #results_vec_snake_case = std::vec::Vec::new();
                         let #wrapper_vec_column_snake_case = #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case);
                         while let Some(#row_snake_case) = {
                             match {
@@ -3477,14 +3476,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         } {
                             match #wrapper_vec_column_snake_case.#options_try_from_sqlx_row_snake_case(&#row_snake_case) {
                                 Ok(#value_snake_case) => {
-                                    vec_values.push(#value_snake_case);
+                                    #results_vec_snake_case.push(#value_snake_case);
                                 }
                                 Err(error_0) => {
                                     #error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         }
-                        vec_values
+                        #results_vec_snake_case
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
