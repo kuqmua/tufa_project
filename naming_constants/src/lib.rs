@@ -173,7 +173,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "when",
     "then",
     "rows",
-    "results"
+    "results",
+    "executor"
 );
 
 #[derive(Debug, Clone, Copy)]

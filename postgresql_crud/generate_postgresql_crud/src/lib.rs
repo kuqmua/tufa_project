@@ -724,7 +724,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
     let payload_snake_case = naming_constants::PayloadSnakeCase;
-    let pg_connection_snake_case = naming_conventions::PgConnectionSnakeCase;
     let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
     let rollback_snake_case = naming_constants::RollbackSnakeCase;
@@ -1739,7 +1738,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let postgres_transaction_snake_case = naming_conventions::PostgresTransactionSnakeCase;
+    let executor_snake_case = naming_constants::ExecutorSnakeCase;
     let generate_postgres_transaction_begin_token_stream = |operation: &Operation|{
         let sqlx_acquire = token_patterns::SqlxAcquire;
         let begin_snake_case = naming_constants::BeginSnakeCase;
@@ -1751,9 +1750,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
-            let mut #postgres_transaction_snake_case = match {
+            let mut #executor_snake_case = match {
                 use #sqlx_acquire;
-                #pg_connection_snake_case.#begin_snake_case()
+                #executor_snake_case.#begin_snake_case()
             }
             .await
             {
@@ -1774,7 +1773,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote!{
-            if let Err(error_0) = #postgres_transaction_snake_case.#commit_snake_case().await {
+            if let Err(error_0) = #executor_snake_case.#commit_snake_case().await {
                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
             }
         }
@@ -1805,7 +1804,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote!{
-            match #postgres_transaction_snake_case.#rollback_snake_case().await {
+            match #executor_snake_case.#rollback_snake_case().await {
                 Ok(_) => {
                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                 }
@@ -1844,7 +1843,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #acc_snake_case
             });
             if let false = error_0.is_empty() {
-                match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                match #executor_snake_case.#rollback_snake_case().await {
                     Ok(_) => {
                         #non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream
                     }
@@ -2257,7 +2256,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #results_vec_snake_case = {
-                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
+                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                             let mut #results_vec_snake_case = std::vec::Vec::new();
                             while let Some(#value_snake_case) = match {
                                 #use_futures_try_stream_ext_token_stream;
@@ -2286,7 +2285,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             let error_1 = #results_vec_snake_case.len();
                             if error_0 != error_1 {
-                                match #postgres_transaction_snake_case.#rollback_snake_case().await {
+                                match #executor_snake_case.#rollback_snake_case().await {
                                     Ok(_) => {
                                         #unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
@@ -2659,7 +2658,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #value_snake_case = {
-                            match #binded_query_snake_case.fetch_one(#postgres_transaction_snake_case.as_mut()).await {
+                            match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
                                 Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
                                     Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
                                         #primary_key_inner_type_token_stream(#value_snake_case)
@@ -3455,7 +3454,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
-                        let mut #rows_snake_case = #binded_query_snake_case.fetch(#pg_connection_snake_case.as_mut());
+                        let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                         let mut #results_vec_snake_case = std::vec::Vec::new();
                         let #wrapper_vec_column_snake_case = #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case);
                         while let Some(#row_snake_case) = match {
@@ -3945,7 +3944,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote!{
-                        match #binded_query_snake_case.fetch_one(#pg_connection_snake_case.as_mut()).await {
+                        match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
                             Ok(#row_snake_case) => match #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case).#options_try_from_sqlx_row_snake_case(&#row_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(error_0) => {
@@ -4651,7 +4650,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #results_vec_snake_case = {
-                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
+                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                             let mut #results_vec_snake_case = std::vec::Vec::new();
                             while let Some(#row_snake_case) = match {
                                 #use_futures_try_stream_ext_token_stream;
@@ -5095,7 +5094,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #value_snake_case = {
-                            match #binded_query_snake_case.fetch_one(#postgres_transaction_snake_case.as_mut()).await {
+                            match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
                                 Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
                                     Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
                                         #primary_key_inner_type_token_stream(#value_snake_case)
@@ -5772,7 +5771,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #results_vec_snake_case = {
-                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#postgres_transaction_snake_case.as_mut());
+                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                             let mut #results_vec_snake_case = std::vec::Vec::new();
                             while let Some(#row_snake_case) = match { 
                                 #use_futures_try_stream_ext_token_stream; 
@@ -6178,7 +6177,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #postgres_transaction_token_stream
                         let #value_snake_case = {
-                            match #binded_query_snake_case.fetch_one(#postgres_transaction_snake_case.as_mut()).await {
+                            match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
                                 Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
                                     Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
                                         #primary_key_inner_type_token_stream(#value_snake_case)
@@ -8230,17 +8229,19 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
-    let axum_response_response_token_stream = quote::quote!{axum::response::Response};
+    let request_snake_case = naming_constants::RequestSnakeCase;
+    let body_snake_case = naming_constants::BodySnakeCase;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
+    let app_state_snake_case = naming_conventions::AppStateSnakeCase;
     let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
     let value_snake_case = naming_constants::ValueSnakeCase;
     let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
     let request_parts_preparation_token_stream = {
         quote::quote! {
-            let (parts, body) = request.into_parts();
+            let (parts, #body_snake_case) = #request_snake_case.into_parts();
             let headers = parts.headers;
-            let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            let body_bytes = match route_validators::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
                 Ok(#value_snake_case) => #value_snake_case,
                 Err(error_0) => {
                     let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error_0);
@@ -8266,27 +8267,26 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
         let value_snake_case = naming_constants::ValueSnakeCase;
         let error_snake_case = naming_constants::ErrorSnakeCase;
         let from_snake_case = naming_constants::FromSnakeCase;
+        let executor_snake_case = naming_constants::ExecutorSnakeCase;
+        let pool_connection_snake_case = naming_conventions::PoolConnectionSnakeCase;
         let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-        let pg_connection_snake_case = naming_conventions::PgConnectionSnakeCase;
         quote::quote! {
-            let mut pool_connection = match app_state.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
+            let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
                 Ok(#value_snake_case) => #value_snake_case,
                 Err(error_0) => {
                     let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
                     #eprintln_error_token_stream;//todo reuse it as token_stream    
-
                     let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
                     *res.status_mut() = axum::http::StatusCode::CREATED;
                     // *res.headers_mut() = axum::http::HeaderMap::new();
                     return res;
                 }
             };
-            let #pg_connection_snake_case = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            let #executor_snake_case = match sqlx::Acquire::acquire(&mut #pool_connection_snake_case).await {
                 Ok(#value_snake_case) => #value_snake_case,
                 Err(error_0) => {
                     let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
                     #eprintln_error_token_stream;   
-
                     let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
                     *res.status_mut() = axum::http::StatusCode::CREATED;
                     // *res.headers_mut() = axum::http::HeaderMap::new();
@@ -8314,11 +8314,11 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
     quote::quote! {
         // // #swagger_open_api_token_stream
         pub async fn #try_operation_route_logic_snake_case_token_stream(
-            app_state: axum::extract::State<
+            #app_state_snake_case: axum::extract::State<
                 crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
             >,
-            request: axum::extract::Request,
-        ) -> #axum_response_response_token_stream {
+            #request_snake_case: axum::extract::Request,
+        ) -> axum::response::Response {
             #request_parts_preparation_token_stream
             #additional_validators_token_stream
             #parameters_logic_token_stream

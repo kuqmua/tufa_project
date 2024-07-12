@@ -112,7 +112,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_
         ["unexpected", "rows", "length"],
         ["unexpected", "rows", "length", "and", "rollback"],
         ["expected", "length"],
-        ["got", "length"]
+        ["got", "length"],
+        ["pool", "connection"]
     ]
 );
 
