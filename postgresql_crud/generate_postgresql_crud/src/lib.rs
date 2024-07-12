@@ -748,11 +748,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let pg_connection_snake_case = naming_conventions::PgConnectionSnakeCase;
     let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
-    let current_vec_len_snake_case = naming_conventions::CurrentVecLenSnakeCase;
     let rollback_snake_case = naming_constants::RollbackSnakeCase;
     let query_snake_case = naming_constants::QuerySnakeCase;
     let update_snake_case = naming_constants::UpdateSnakeCase;
-    let as_snake_case = naming_constants::AsSnakeCase;
     let set_snake_case = naming_constants::SetSnakeCase;
     let from_snake_case = naming_constants::FromSnakeCase;
     let insert_snake_case = naming_constants::InsertSnakeCase;
@@ -1117,7 +1115,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let response_snake_case = naming_constants::ResponseSnakeCase;
     // let primary_keys_snake_case = naming_conventions::PrimaryKeysSnakeCase;
     // let primary_key_snake_case = naming_conventions::PrimaryKeySnakeCase;
-    let into_inner_type_vec_snake_case = naming_conventions::IntoInnerTypeVecSnakeCase;
+    // let into_inner_type_vec_snake_case = naming_conventions::IntoInnerTypeVecSnakeCase;
     // let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
     // let expected_type_upper_camel_case = naming_conventions::ExpectedTypeUpperCamelCase;
     // let expected_type_snake_case = naming_conventions::ExpectedTypeSnakeCase;
