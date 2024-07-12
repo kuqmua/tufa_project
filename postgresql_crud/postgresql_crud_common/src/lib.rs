@@ -6663,7 +6663,6 @@ pub trait AsPostgresqlVarBit {}
 pub trait AsPostgresqlJson {}
 pub trait AsPostgresqlJsonB {}
 
-const CHECKED_ADD_IS_NONE: &str = "checked_add is None";
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
