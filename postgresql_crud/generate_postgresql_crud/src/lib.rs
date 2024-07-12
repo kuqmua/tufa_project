@@ -2273,11 +2273,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             } {
                                 match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
                                     Ok(#value_snake_case) => {
-                                        #results_vec_snake_case.push(
-                                            #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
-                                                #primary_key_inner_type_token_stream(#value_snake_case)
-                                            ),
-                                        );
+                                        #results_vec_snake_case.push(#primary_key_inner_type_token_stream(#value_snake_case));
                                     }
                                     Err(error_0) => {
                                         drop(#rows_snake_case);
@@ -2301,7 +2297,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                         #commit_token_stream
-                        #results_vec_snake_case
+                        #results_vec_snake_case.into_iter().map(
+                            |#element_snake_case|#primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
+                        ).collect()
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
