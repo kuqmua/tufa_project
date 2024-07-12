@@ -663,27 +663,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{options_try_from_sqlx_row_token_stream}");
-    //todo reuse path
-    let primary_key_try_from_sqlx_row_snake_case = naming_conventions::PrimaryKeyTryFromSqlxRowSnakeCase;
-    let primary_key_try_get_sqlx_row_token_stream = {
-        let primary_key_str_token_stream = proc_macro_common::generate_quotes::token_stream(
-            &primary_key_field_ident.to_string(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        let primary_key_name = naming_conventions::PrimaryKeySnakeCase;
-        quote::quote! {
-            fn #primary_key_try_from_sqlx_row_snake_case<'a, R: #sqlx_row>(#row_snake_case: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
-            where
-                #std_primitive_str_sqlx_column_index
-                #primary_key_original_type_token_stream: #sqlx_decode_decode_database,
-                #primary_key_original_type_token_stream: #sqlx_types_type_database,
-            {
-                let #primary_key_name: #primary_key_original_type_token_stream = #row_snake_case.try_get(#primary_key_str_token_stream)?;
-                Ok(#primary_key_inner_type_token_stream(#primary_key_name))
-            }
-        }
-    };
-    // println!("{primary_key_try_get_sqlx_row_token_stream}");
     let order_by_upper_camel_case = naming_conventions::OrderByUpperCamelCase;
     let postgresql_crud_order_by_token_stream = quote::quote! {postgresql_crud::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {postgresql_crud::Order};
@@ -4687,8 +4666,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 .await
                                 {
                                     Ok(#value_snake_case) => match #value_snake_case {
-                                        Some(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case) {
-                                            Ok(#value_snake_case) => Some(#value_snake_case),
+                                        Some(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                                            Ok(#value_snake_case) => Some(#primary_key_inner_type_token_stream(#value_snake_case)),
                                             Err(error_0) => {
                                                 drop(#rows_snake_case);
                                                 #match_postgres_transaction_rollback_await_token_stream
@@ -5912,8 +5891,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             while let Some(#row_snake_case) = match { #use_futures_try_stream_ext_token_stream; #rows_snake_case.try_next() }.await
                             {
                                 Ok(#value_snake_case) => match #value_snake_case {
-                                    Some(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case) {
-                                        Ok(#value_snake_case) => Some(#value_snake_case),
+                                    Some(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                                        Ok(#value_snake_case) => Some(#primary_key_inner_type_token_stream(#value_snake_case)),
                                         Err(error_0) => {
                                             drop(#rows_snake_case);
                                             #match_postgres_transaction_rollback_await_token_stream
@@ -6516,7 +6495,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #column_token_stream
         #generate_query_vec_column_token_stream
         #options_try_from_sqlx_row_token_stream
-        #primary_key_try_get_sqlx_row_token_stream
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream
         #(#reexport_postgresql_sqlx_column_types_token_stream)*
@@ -6547,9 +6525,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            // #update_many_token_stream
-            // #update_one_token_stream
-            // #delete_many_token_stream
+            #update_many_token_stream
+            #update_one_token_stream
+            #delete_many_token_stream
             #delete_one_token_stream
         // }
     };
