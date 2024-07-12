@@ -5799,8 +5799,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                             #results_vec_snake_case
                         };
-                        if let Some(#value_snake_case) = #expected_primary_keys_snake_case {
-                            #non_existing_primary_keys_check_token_stream
+                        {
+                            if let Some(#value_snake_case) = #expected_primary_keys_snake_case {
+                                #non_existing_primary_keys_check_token_stream
+                            }
                         }
                         #commit_token_stream
                         #results_vec_snake_case.into_iter().map(
