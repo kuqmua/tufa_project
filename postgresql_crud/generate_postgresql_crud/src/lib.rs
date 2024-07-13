@@ -2307,27 +2307,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{binded_query_token_stream}");
                 let postgresql_logic_token_stream = {
                     let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-                    let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(
-                        &operation,
-                        file!(),
-                        line!(),
-                        column!(),
-                        file!(),
-                        line!(),
-                        column!(),
-                    );
                     let results_vec_token_stream = generate_fetch_token_stream(
                         &generate_sqlx_row_try_get_primary_key_token_stream(
                             &quote::quote!{Some(#primary_key_inner_type_token_stream(#value_snake_case))},
-                            &quote::quote!{
-                                drop(#rows_snake_case);
-                                #match_postgres_transaction_rollback_await_token_stream
-                            },
+                            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
+                                &operation,
+                                file!(),
+                                line!(),
+                                column!(),
+                                file!(),
+                                line!(),
+                                column!(),
+                            )
                         ),
-                        &quote::quote!{
-                            drop(#rows_snake_case);
-                            #match_postgres_transaction_rollback_await_token_stream
-                        },
+                        &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
+                            &operation,
+                            file!(),
+                            line!(),
+                            column!(),
+                            file!(),
+                            line!(),
+                            column!(),
+                        )
                     );
                     let unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &unexpected_rows_length_syn_variant_wrapper,
@@ -2710,21 +2711,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{binded_query_token_stream}");
                 let postgresql_logic_token_stream = {
                     let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-                    let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(
-                        &operation,
-                        file!(),
-                        line!(),
-                        column!(),
-                        file!(),
-                        line!(),
-                        column!(),
-                    );
                     let result_token_stream = generate_fetch_one_token_stream(
                         &generate_sqlx_row_try_get_primary_key_token_stream(
                             &quote::quote!{#primary_key_inner_type_token_stream(#value_snake_case)},
-                            &match_postgres_transaction_rollback_await_token_stream,
+                            &generate_match_postgres_transaction_rollback_await_token_stream(
+                                &operation,
+                                file!(),
+                                line!(),
+                                column!(),
+                                file!(),
+                                line!(),
+                                column!(),
+                            ),
                         ),
-                        &match_postgres_transaction_rollback_await_token_stream
+                        &generate_match_postgres_transaction_rollback_await_token_stream(
+                            &operation,
+                            file!(),
+                            line!(),
+                            column!(),
+                            file!(),
+                            line!(),
+                            column!(),
+                        )
                     );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
@@ -4678,27 +4686,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = {
                     let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-                    let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(
-                        &operation,
-                        file!(),
-                        line!(),
-                        column!(),
-                        file!(),
-                        line!(),
-                        column!(),
-                    );
                     let results_vec_token_stream = generate_fetch_token_stream(
                         &generate_sqlx_row_try_get_primary_key_token_stream(
                             &quote::quote!{Some(#primary_key_inner_type_token_stream(#value_snake_case))},
-                            &quote::quote!{
-                                drop(#rows_snake_case);
-                                #match_postgres_transaction_rollback_await_token_stream
-                            }
+                            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
+                                &operation,
+                                file!(),
+                                line!(),
+                                column!(),
+                                file!(),
+                                line!(),
+                                column!(),
+                            )
                         ),
-                        &quote::quote!{
-                            drop(#rows_snake_case);
-                            #match_postgres_transaction_rollback_await_token_stream
-                        },
+                        &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
+                            &operation,
+                            file!(),
+                            line!(),
+                            column!(),
+                            file!(),
+                            line!(),
+                            column!(),
+                        )
                     );
                     let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
                         &operation,
@@ -5111,21 +5120,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = {
                     let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-                    let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(
-                        &operation,
-                        file!(),
-                        line!(),
-                        column!(),
-                        file!(),
-                        line!(),
-                        column!(),
-                    );
                     let result_token_stream = generate_fetch_one_token_stream(
                         &generate_sqlx_row_try_get_primary_key_token_stream(
                             &quote::quote!{#primary_key_inner_type_token_stream(#value_snake_case)},
-                            &match_postgres_transaction_rollback_await_token_stream
+                            &generate_match_postgres_transaction_rollback_await_token_stream(
+                                &operation,
+                                file!(),
+                                line!(),
+                                column!(),
+                                file!(),
+                                line!(),
+                                column!(),
+                            )
                         ),
-                        &match_postgres_transaction_rollback_await_token_stream
+                        &generate_match_postgres_transaction_rollback_await_token_stream(
+                           &operation,
+                           file!(),
+                           line!(),
+                           column!(),
+                           file!(),
+                           line!(),
+                           column!(),
+                        )
                     );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
@@ -5780,27 +5796,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = {
                     let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-                    let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(
-                        &operation,
-                        file!(),
-                        line!(),
-                        column!(),
-                        file!(),
-                        line!(),
-                        column!(),
-                    );
                     let results_vec_token_stream = generate_fetch_token_stream(
                         &generate_sqlx_row_try_get_primary_key_token_stream(
                             &quote::quote!{Some(#primary_key_inner_type_token_stream(#value_snake_case))},
-                            &quote::quote!{
-                                drop(#rows_snake_case);
-                                #match_postgres_transaction_rollback_await_token_stream
-                            }
+                            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
+                                &operation,
+                                file!(),
+                                line!(),
+                                column!(),
+                                file!(),
+                                line!(),
+                                column!(),
+                            )
                         ),
-                        &quote::quote!{
-                            drop(#rows_snake_case);
-                            #match_postgres_transaction_rollback_await_token_stream
-                        },
+                        &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
+                            &operation,
+                            file!(),
+                            line!(),
+                            column!(),
+                            file!(),
+                            line!(),
+                            column!(),
+                        )
                     );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
@@ -6175,21 +6192,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = {
                     let postgres_transaction_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-                    let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(
-                        &operation,
-                        file!(),
-                        line!(),
-                        column!(),
-                        file!(),
-                        line!(),
-                        column!(),
-                    );
                     let result_token_stream = generate_fetch_one_token_stream(
                         &generate_sqlx_row_try_get_primary_key_token_stream(
                             &quote::quote!{#primary_key_inner_type_token_stream(#value_snake_case)},
-                            &match_postgres_transaction_rollback_await_token_stream
+                            &generate_match_postgres_transaction_rollback_await_token_stream(
+                                &operation,
+                                file!(),
+                                line!(),
+                                column!(),
+                                file!(),
+                                line!(),
+                                column!(),
+                            )
                         ),
-                        &match_postgres_transaction_rollback_await_token_stream
+                        &generate_match_postgres_transaction_rollback_await_token_stream(
+                            &operation,
+                            file!(),
+                            line!(),
+                            column!(),
+                            file!(),
+                            line!(),
+                            column!(),
+                        )
                     );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
