@@ -3460,23 +3460,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     let options_try_from_sqlx_row_token_stream = generate_options_try_from_sqlx_row_token_stream(&operation);
                     quote::quote! {
-                        let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
-                        let mut #results_vec_snake_case = std::vec::Vec::new();
-                        while let Some(#row_snake_case) = match {
-                            #use_futures_try_stream_ext_token_stream;
-                            #rows_snake_case.try_next()
-                        }
-                        .await
-                        {
-                            Ok(#value_snake_case) => #value_snake_case,
-                            Err(error_0) => {
-                                #error_initialization_eprintln_response_creation_token_stream
+                        let #results_vec_snake_case = {
+                            let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
+                            let mut #results_vec_snake_case = std::vec::Vec::new();
+                            while let Some(#row_snake_case) = match {
+                                #use_futures_try_stream_ext_token_stream;
+                                #rows_snake_case.try_next()
                             }
-                        } {
-                            #results_vec_snake_case.push({
-                                #options_try_from_sqlx_row_token_stream
-                            });
-                        }
+                            .await
+                            {
+                                Ok(#value_snake_case) => #value_snake_case,
+                                Err(error_0) => {
+                                    #error_initialization_eprintln_response_creation_token_stream
+                                }
+                            } {
+                                #results_vec_snake_case.push({
+                                    #options_try_from_sqlx_row_token_stream
+                                });
+                            }
+                            #results_vec_snake_case
+                        };
                         #results_vec_snake_case
                     }
                 };
