@@ -8069,72 +8069,6 @@ fn generate_try_operation_route_logic_response_variants_token_stream(
     }
 }
 
-fn generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream(
-    operation: &Operation,
-    type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
-        let variant_ident = &element.ident;
-        let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
-            fields_named
-        }
-        else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
-        };
-        let fields_mapped_into_token_stream = {
-            let fields_token_stream = fields_named.named.iter().map(|field|{
-                &field.ident
-            });
-            quote::quote! {#(#fields_token_stream),*}
-        };
-        let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-        quote::quote! {
-            #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::#variant_ident {
-                #fields_mapped_into_token_stream
-            } => Self::#variant_ident {
-                #fields_mapped_into_token_stream
-            }
-        }
-    });
-    let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-    let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-    let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-        &try_operation_route_logic_error_named_upper_camel_case_token_stream,
-        &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
-        &quote::quote!{
-            match #value_snake_case.#into_serialize_deserialize_version_snake_case() {
-                #(#variants_token_stream),*
-            }
-        }
-    )
-}
-
-
-fn generate_try_operation_route_logic_error_named_token_stream(
-    operation: &Operation,
-    type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-    let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
-        &element,
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    ));
-    quote::quote! {
-        #[derive(
-            Debug,
-            thiserror::Error,
-            error_occurence_lib::ErrorOccurence,
-        )]
-        pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
-            #(#variants_token_stream),*
-        }
-    }
-}
-
 fn generate_parameters_logic_token_stream(
     operation: &Operation,
     from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
@@ -8263,7 +8197,7 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
                     let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
                     #eprintln_error_token_stream;//todo reuse it as token_stream    
                     let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    *res.status_mut() = axum::http::StatusCode::CREATED;//todo
                     // *res.headers_mut() = axum::http::HeaderMap::new();
                     return res;
                 }
@@ -8274,7 +8208,7 @@ fn generate_try_operation_route_logic_snake_case_token_stream(
                     let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
                     #eprintln_error_token_stream;   
                     let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                    *res.status_mut() = axum::http::StatusCode::CREATED;
+                    *res.status_mut() = axum::http::StatusCode::CREATED;//todo
                     // *res.headers_mut() = axum::http::HeaderMap::new();
                     return res;
                 }
@@ -8380,7 +8314,6 @@ fn generate_type_variants_from_request_response_syn_variants(
     type_variants_from_request_response_syn_variants
 }
 
-///////////////////////
 fn generate_operation_payload_token_stream(
     operation: &Operation,
     derive_token_stream: &impl quote::ToTokens,
@@ -8562,17 +8495,6 @@ fn generate_impl_std_convert_try_from_operation_payload_element_with_serialize_d
     )
 }
 
-fn generate_impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream(
-    operation: &Operation,
-    content_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-        &naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation),
-        &naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation),
-        &content_token_stream,
-    )
-}
-
 fn generate_impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream(
     operation: &Operation,
     content_token_stream: &proc_macro2::TokenStream,
@@ -8596,16 +8518,57 @@ fn generate_try_operation_route_logic_response_variants_impl_std_convert_from_tr
         &type_variants_from_request_response_syn_variants,
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = generate_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream(
-        &operation,
-        &type_variants_from_request_response_syn_variants,
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_error_named_token_stream(
-        &operation,
-        &type_variants_from_request_response_syn_variants,
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
+    let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = {
+        let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
+            let variant_ident = &element.ident;
+            let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
+                fields_named
+            }
+            else {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+            };
+            let fields_mapped_into_token_stream = {
+                let fields_token_stream = fields_named.named.iter().map(|field|{
+                    &field.ident
+                });
+                quote::quote! {#(#fields_token_stream),*}
+            };
+            let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+            quote::quote! {
+                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::#variant_ident {
+                    #fields_mapped_into_token_stream
+                } => Self::#variant_ident {
+                    #fields_mapped_into_token_stream
+                }
+            }
+        });
+        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+        let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+            &try_operation_route_logic_error_named_upper_camel_case_token_stream,
+            &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
+            &quote::quote!{
+                match #value_snake_case.#into_serialize_deserialize_version_snake_case() {
+                    #(#variants_token_stream),*
+                }
+            }
+        )
+    };
+    let try_operation_route_logic_error_named_token_stream = {
+        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+        let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
+            &element,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        ));
+        quote::quote! {
+            #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+            pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
+                #(#variants_token_stream),*
+            }
+        }
+    };
     quote::quote! {
         #try_operation_route_logic_response_variants_token_stream
         #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
@@ -8618,8 +8581,9 @@ fn generate_impl_std_convert_from_operation_payload_element_for_operation_payloa
     impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_content_token_stream: &proc_macro2::TokenStream,
     impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_content_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
-    let impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream(
-        &operation,
+    let impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream = proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+        &naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation),
+        &naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation),
         &impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_content_token_stream,
     );
     let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream(
