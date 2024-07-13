@@ -1928,6 +1928,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
+    let generate_result_token_stream = |
+        value_handle_token_stream: &proc_macro2::TokenStream,
+        fetch_one_error_initialization_token_stream: &proc_macro2::TokenStream
+    |{
+        quote::quote!{
+            let #value_snake_case = {
+                match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
+                    Ok(#value_snake_case) => {
+                        #value_handle_token_stream
+                    },
+                    Err(error_0) => {
+                        #fetch_one_error_initialization_token_stream
+                    }
+                }
+            };
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -2677,20 +2694,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let result_token_stream = generate_result_token_stream(
+                        &quote::quote!{
+                            match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                                Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
+                                    #primary_key_inner_type_token_stream(#value_snake_case)
+                                ),
+                                Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
+                            }
+                        },
+                        &match_postgres_transaction_rollback_await_token_stream
+                    );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
-                        let #value_snake_case = {
-                            match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                                Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
-                                    Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
-                                        #primary_key_inner_type_token_stream(#value_snake_case)
-                                    ),
-                                    Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
-                                },
-                                Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
-                            }
-                        };
+                        #result_token_stream
                         #commit_token_stream
                         #value_snake_case
                     }
@@ -3950,23 +3968,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{binded_query_token_stream}");
                 let postgresql_logic_token_stream = {
-                    let postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
-                        &postgresql_syn_variant_wrapper,
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    let result_token_stream = generate_result_token_stream(
+                        &generate_options_try_from_sqlx_row_token_stream(&operation),
+                        &operation.generate_error_initialization_eprintln_response_creation_token_stream(
+                            &postgresql_syn_variant_wrapper,
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        )
                     );
-                    let options_try_from_sqlx_row_token_stream = generate_options_try_from_sqlx_row_token_stream(&operation);
                     quote::quote!{
-                        match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                            Ok(#value_snake_case) => {
-                                #options_try_from_sqlx_row_token_stream
-                            },
-                            Err(error_0) => {
-                                #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-                            },
-                        }
+                        #result_token_stream
+                        #value_snake_case
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
@@ -5089,20 +5103,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let result_token_stream = generate_result_token_stream(
+                        &quote::quote! {
+                            match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                                Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
+                                    #primary_key_inner_type_token_stream(#value_snake_case)
+                                ),
+                                Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
+                            }
+                        },
+                        &match_postgres_transaction_rollback_await_token_stream
+                    );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
-                        let #value_snake_case = {
-                            match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                                Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
-                                    Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
-                                        #primary_key_inner_type_token_stream(#value_snake_case)
-                                    ),
-                                    Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
-                                },
-                                Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
-                            }
-                        };
+                        #result_token_stream
                         #commit_token_stream
                         #value_snake_case
                     }
@@ -6160,20 +6175,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let result_token_stream = generate_result_token_stream(
+                        &quote::quote! {
+                            match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                                Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
+                                    #primary_key_inner_type_token_stream(#value_snake_case)
+                                ),
+                                Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
+                            }
+                        },
+                        &match_postgres_transaction_rollback_await_token_stream
+                    );
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     quote::quote! {
                         #postgres_transaction_token_stream
-                        let #value_snake_case = {
-                            match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                                Ok(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
-                                    Ok(#value_snake_case) => #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(
-                                        #primary_key_inner_type_token_stream(#value_snake_case)
-                                    ),
-                                    Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
-                                },
-                                Err(error_0) => #match_postgres_transaction_rollback_await_token_stream
-                            }
-                        };
+                        #result_token_stream
                         #commit_token_stream
                         #value_snake_case
                     }
