@@ -572,116 +572,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let options_try_from_sqlx_row_token_stream = {
-        let declaration_primary_key_token_stream = {
-            let inner_type_with_serialize_deserialize_token_stream =
-                &primary_key_syn_field
-                    .inner_type_with_serialize_deserialize_token_stream;
-            quote::quote! {
-                let mut #primary_key_field_ident: std::option::Option<
-                    postgresql_crud::Value<#inner_type_with_serialize_deserialize_token_stream>
-                > = None;
-            }
-        };
-        let declaration_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-            let field_ident = &element.field_ident;
-            let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
-            quote::quote! {
-                let mut #field_ident: std::option::Option<
-                    postgresql_crud::Value<#inner_type_with_serialize_deserialize_token_stream>,
-                > = None;
-            }
-        });
-        let assignment_variant_primary_key_token_stream = {
-            let primary_key_field_ident_upper_camel_case_token_stream = {
-                let value = convert_case::Casing::to_case(&primary_key_field_ident.to_string(), convert_case::Case::UpperCamel);
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let primary_key_field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-                &primary_key_field_ident.to_string(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            quote::quote! {
-                #ident_column_upper_camel_case_token_stream::#primary_key_field_ident_upper_camel_case_token_stream => {
-                    #primary_key_field_ident = {
-                        let #value_snake_case: std::option::Option<#primary_key_original_type_token_stream> = #row_snake_case.try_get(#primary_key_field_ident_string_quotes_token_stream)?;
-                        #value_snake_case.map(|#value_snake_case|postgresql_crud::Value{ #value_snake_case: #primary_key_inner_type_with_serialize_deserialize_token_stream::from(#primary_key_inner_type_token_stream(#value_snake_case))})
-                    };
-                }
-            }
-        };
-        let assignment_variants_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-            let field_ident = &element.field_ident;
-            let field_ident_upper_camel_case_token_stream = {
-                let value = convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::UpperCamel);
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let original_type_token_stream = &element.original_type_token_stream;
-            let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-                &element.field_ident.to_string(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
-            let inner_type_token_stream = &element.inner_type_token_stream;
-            quote::quote! {
-                #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => {
-                    #field_ident = {
-                        let #value_snake_case: std::option::Option<#original_type_token_stream> = #row_snake_case.try_get(#field_ident_string_quotes_token_stream)?;
-                        #value_snake_case.map(|#value_snake_case|postgresql_crud::Value{ #value_snake_case: #inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#inner_type_token_stream(#value_snake_case))})
-                    };
-                }
-            }
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        let option_fields_initiation_token_stream = generate_self_fields_token_stream(
-            &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        let sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream = {
-            quote::quote! {
-                std::option::Option<#primary_key_original_type_token_stream>: #sqlx_decode_decode_database,
-                std::option::Option<#primary_key_original_type_token_stream>: #sqlx_types_type_database,
-            }
-        };
-        let sqlx_decode_decode_and_sqlx_types_type_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| {
-            let original_type_token_stream = &element.original_type_token_stream;
-            quote::quote!{
-                std::option::Option<#original_type_token_stream>: #sqlx_decode_decode_database,
-                std::option::Option<#original_type_token_stream>: #sqlx_types_type_database,
-            }
-        });
-        quote::quote! {
-            #[derive(Debug)]
-            struct #wrapper_vec_column_upper_camel_case(std::vec::Vec<#ident_column_upper_camel_case_token_stream>);
-            impl #wrapper_vec_column_upper_camel_case {
-                fn #options_try_from_sqlx_row_snake_case<'a, R: #sqlx_row>(
-                    &self, 
-                    #row_snake_case: &'a R
-                ) -> sqlx::Result<#struct_options_ident_token_stream>
-                where
-                    #std_primitive_str_sqlx_column_index
-                    #sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream
-                    #(#sqlx_decode_decode_and_sqlx_types_type_with_excluded_primary_key_token_stream)*
-                {
-                    #declaration_primary_key_token_stream
-                    #(#declaration_excluding_primary_key_token_stream)*
-                    //assuming all enum variants are unique
-                    for element in &self.0 {
-                        match element {
-                            #assignment_variant_primary_key_token_stream,
-                            #(#assignment_variants_excluding_primary_key_token_stream),*
-                        }
-                    }
-                    //todo maybe it must be not DogOptions but DogOptionWithPrimaryKeyNotNone
-                    Ok(#struct_options_ident_token_stream {
-                        #(#option_fields_initiation_token_stream),*
-                    })
-                }
-            }
-        }
-    };
-    // println!("{options_try_from_sqlx_row_token_stream}");
     let generate_options_try_from_sqlx_row_token_stream = |
         operation: &Operation
     |{
@@ -791,9 +681,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #(#assignment_variants_excluding_primary_key_token_stream),*
                 }
             }
-            results_vec.push(#struct_options_ident_token_stream {
+            #struct_options_ident_token_stream {
                 #(#option_fields_initiation_token_stream),*
-            });
+            }
         }
     };
     let order_by_upper_camel_case = naming_conventions::OrderByUpperCamelCase;
@@ -3583,7 +3473,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #error_initialization_eprintln_response_creation_token_stream
                             }
                         } {
-                            #options_try_from_sqlx_row_token_stream
+                            #results_vec_snake_case.push({
+                                #options_try_from_sqlx_row_token_stream
+                            });
                         }
                         #results_vec_snake_case
                     }
@@ -4051,13 +3943,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let options_try_from_sqlx_row_token_stream = generate_options_try_from_sqlx_row_token_stream(&operation);
                     quote::quote!{
                         match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                            Ok(#row_snake_case) => match #wrapper_vec_column_upper_camel_case(#parameters_snake_case.#payload_snake_case.#select_snake_case).#options_try_from_sqlx_row_snake_case(&#row_snake_case) {
-                                Ok(#value_snake_case) => #value_snake_case,
-                                Err(error_0) => {
-                                    #error_initialization_eprintln_response_creation_token_stream
-                                },
+                            Ok(#row_snake_case) => {
+                                #options_try_from_sqlx_row_token_stream
                             },
                             Err(error_0) => {
                                 #error_initialization_eprintln_response_creation_token_stream
@@ -6492,7 +6382,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // // #(#impl_std_convert_try_from_ident_options_for_struct_variants_token_stream)*
         #column_token_stream
         #generate_query_vec_column_token_stream
-        #options_try_from_sqlx_row_token_stream
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream
         #(#reexport_postgresql_sqlx_column_types_token_stream)*
