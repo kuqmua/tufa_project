@@ -4665,7 +4665,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let #results_vec_snake_case = {
                             let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                             let mut #results_vec_snake_case = std::vec::Vec::new();
-                            while let Some(#row_snake_case) = match {
+                            while let Some(#value_snake_case) = match {
                                 #use_futures_try_stream_ext_token_stream;
                                 #rows_snake_case.try_next()
                             }
@@ -4686,7 +4686,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #match_postgres_transaction_rollback_await_token_stream
                                 }
                             } {
-                                #results_vec_snake_case.push(#row_snake_case);
+                                #results_vec_snake_case.push(#value_snake_case);
                             }
                             #results_vec_snake_case
                         };
@@ -5786,7 +5786,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let #results_vec_snake_case = {
                             let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                             let mut #results_vec_snake_case = std::vec::Vec::new();
-                            while let Some(#row_snake_case) = match { 
+                            while let Some(#value_snake_case) = match { 
                                 #use_futures_try_stream_ext_token_stream; 
                                 #rows_snake_case.try_next() 
                             }.await
@@ -5807,7 +5807,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             } 
                             {
-                                #results_vec_snake_case.push(#row_snake_case);
+                                #results_vec_snake_case.push(#value_snake_case);
                             }
                             #results_vec_snake_case
                         };
