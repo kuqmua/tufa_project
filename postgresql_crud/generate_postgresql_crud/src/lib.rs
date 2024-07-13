@@ -1772,6 +1772,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
+        //todo - must use rollback here
         quote::quote!{
             if let Err(error_0) = #executor_snake_case.#commit_snake_case().await {
                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
