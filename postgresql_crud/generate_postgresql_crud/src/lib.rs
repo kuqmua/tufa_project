@@ -2269,21 +2269,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                             .await
                             {
-                                Ok(#value_snake_case) => #value_snake_case,
+                                Ok(#value_snake_case) => match #value_snake_case {
+                                    Some(#value_snake_case) => match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
+                                        Ok(#value_snake_case) => Some(#primary_key_inner_type_token_stream(#value_snake_case)),
+                                        Err(error_0) => {
+                                            drop(#rows_snake_case);
+                                            #match_postgres_transaction_rollback_await_token_stream
+                                        }
+                                    },
+                                    None => None,
+                                },
                                 Err(error_0) => {
                                     drop(#rows_snake_case);
                                     #match_postgres_transaction_rollback_await_token_stream
                                 }
                             } {
-                                match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_quotes_token_stream) {
-                                    Ok(#value_snake_case) => {
-                                        #results_vec_snake_case.push(#primary_key_inner_type_token_stream(#value_snake_case));
-                                    }
-                                    Err(error_0) => {
-                                        drop(#rows_snake_case);
-                                        #match_postgres_transaction_rollback_await_token_stream
-                                    }
-                                }
+                                #results_vec_snake_case.push(#value_snake_case);
                             }
                             #results_vec_snake_case
                         };
@@ -2349,6 +2350,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_route_logic_token_stream
             }
         };
+        // println!("{try_operation_route_logic_token_stream}");
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
