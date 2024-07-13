@@ -610,7 +610,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     std::option::Option<#primary_key_original_type_token_stream>, 
                     &std::primitive::str
                 >(
-                    &#row_snake_case, 
+                    &#value_snake_case, 
                     #primary_key_field_ident_string_quotes_token_stream
                 ) {
                     Ok(#value_snake_case) => {
@@ -652,7 +652,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     std::option::Option<#original_type_token_stream>, 
                     &std::primitive::str
                 >(
-                    &#row_snake_case, 
+                    &#value_snake_case, 
                     #field_ident_string_quotes_token_stream
                 ) {
                     Ok(#value_snake_case) => {
@@ -3472,20 +3472,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let #results_vec_snake_case = {
                             let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                             let mut #results_vec_snake_case = std::vec::Vec::new();
-                            while let Some(#row_snake_case) = match {
+                            while let Some(#value_snake_case) = match {
                                 #use_futures_try_stream_ext_token_stream;
                                 #rows_snake_case.try_next()
                             }
                             .await
                             {
-                                Ok(#value_snake_case) => #value_snake_case,
+                                Ok(#value_snake_case) => match #value_snake_case {
+                                    Some(#value_snake_case) => Some({
+                                        #options_try_from_sqlx_row_token_stream
+                                    }),
+                                    None => None,
+                                },
                                 Err(error_0) => {
                                     #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                                 }
                             } {
-                                #results_vec_snake_case.push({
-                                    #options_try_from_sqlx_row_token_stream
-                                });
+                                #results_vec_snake_case.push(#value_snake_case);
                             }
                             #results_vec_snake_case
                         };
@@ -3958,7 +3961,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let options_try_from_sqlx_row_token_stream = generate_options_try_from_sqlx_row_token_stream(&operation);
                     quote::quote!{
                         match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                            Ok(#row_snake_case) => {
+                            Ok(#value_snake_case) => {
                                 #options_try_from_sqlx_row_token_stream
                             },
                             Err(error_0) => {
