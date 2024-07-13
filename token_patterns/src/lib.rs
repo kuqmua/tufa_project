@@ -173,7 +173,34 @@ impl quote::ToTokens for CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCo
         quote::quote! {code_occurence: error_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens)
     }
 }
-
+#[derive(Debug, Clone, Copy)]
+pub struct Error0;
+impl quote::ToTokens for Error0 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{error_0}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct Error1;
+impl quote::ToTokens for Error1 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{error_1}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct Error2;
+impl quote::ToTokens for Error2 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{error_2}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct Error3;
+impl quote::ToTokens for Error3 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{error_3}.to_tokens(tokens)
+    }
+}
     
     // let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {
     //     #code_occurence_snake_case: #error_occurence_lib_code_occurence_code_occurence_token_stream
