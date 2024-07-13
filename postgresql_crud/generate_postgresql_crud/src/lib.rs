@@ -1737,46 +1737,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let executor_snake_case = naming_constants::ExecutorSnakeCase;
-    let generate_postgres_transaction_begin_token_stream = |operation: &Operation|{
-        let sqlx_acquire = token_patterns::SqlxAcquire;
-        let begin_snake_case = naming_constants::BeginSnakeCase;
-        let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
-            &postgresql_syn_variant_wrapper,
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote! {
-            let mut #executor_snake_case = match {
-                use #sqlx_acquire;
-                #executor_snake_case.#begin_snake_case()
-            }
-            .await
-            {
-                Ok(#value_snake_case) => #value_snake_case,
-                Err(error_0) => {
-                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                }
-            };
-        }
-    };
-    let generate_postgres_transaction_commit_token_stream = |operation: &Operation|{
-        let commit_snake_case = naming_constants::CommitSnakeCase;
-        let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
-            &postgresql_syn_variant_wrapper,
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        //todo - must use rollback here
-        quote::quote!{
-            if let Err(error_0) = #executor_snake_case.#commit_snake_case().await {
-                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-            }
-        }
-    };
     let generate_match_postgres_transaction_rollback_await_token_stream = |
         operation: &Operation,
         postgresql_file: &'static str,
@@ -1978,8 +1938,45 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         operation: &Operation,
         content_token_stream: &proc_macro2::TokenStream,
     |{
-        let postgres_transaction_begin_token_stream = generate_postgres_transaction_begin_token_stream(&operation);
-        let postgres_transaction_commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
+        let postgres_transaction_begin_token_stream = {
+            let sqlx_acquire = token_patterns::SqlxAcquire;
+            let begin_snake_case = naming_constants::BeginSnakeCase;
+            let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
+                &postgresql_syn_variant_wrapper,
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            quote::quote! {
+                let mut #executor_snake_case = match {
+                    use #sqlx_acquire;
+                    #executor_snake_case.#begin_snake_case()
+                }
+                .await
+                {
+                    Ok(#value_snake_case) => #value_snake_case,
+                    Err(error_0) => {
+                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                    }
+                };
+            }
+        };
+        let postgres_transaction_commit_token_stream = {
+            let commit_snake_case = naming_constants::CommitSnakeCase;
+            let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
+                &postgresql_syn_variant_wrapper,
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            quote::quote!{
+                if let Err(error_0) = #executor_snake_case.#commit_snake_case().await {
+                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                }
+            }
+        };
         quote::quote! {
             #postgres_transaction_begin_token_stream
             #content_token_stream
