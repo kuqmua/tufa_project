@@ -1842,7 +1842,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote!{
             let error_0 = #expected_primary_keys_token_stream.into_iter().fold(std::vec::Vec::new(),|mut #acc_snake_case, #element_snake_case| {
-                if let false = #results_vec_snake_case.contains(&#element_snake_case) {
+                if let false = #value_snake_case.contains(&#element_snake_case) {
                     #acc_snake_case.push(#element_snake_case);
                 }
                 #acc_snake_case
@@ -1905,7 +1905,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         try_next_error_initialization_token_stream: &proc_macro2::TokenStream
     |{
         quote::quote!{
-            let #results_vec_snake_case = {
+            let #value_snake_case = {
                 let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                 let mut #results_vec_snake_case = std::vec::Vec::new();
                 while let Some(#value_snake_case) = match { 
@@ -2322,7 +2322,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #postgres_transaction_token_stream
                         #results_vec_token_stream
                         {
-                            let error_1 = #results_vec_snake_case.len();
+                            let error_1 = #value_snake_case.len();
                             if error_0 != error_1 {
                                 match #executor_snake_case.#rollback_snake_case().await {
                                     Ok(_) => {
@@ -2335,7 +2335,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                         #commit_token_stream
-                        #results_vec_snake_case.into_iter().map(
+                        #value_snake_case.into_iter().map(
                             |#element_snake_case|#primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
                         ).collect()
                     }
@@ -3509,7 +3509,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     quote::quote! {
                         #results_vec_token_stream
-                        #results_vec_snake_case
+                        #value_snake_case
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
@@ -4694,7 +4694,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #non_existing_primary_keys_check_token_stream
                         }
                         #commit_token_stream
-                        #results_vec_snake_case.into_iter().map(
+                        #value_snake_case.into_iter().map(
                             |#element_snake_case|#primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
                         ).collect()
                     }
@@ -5795,18 +5795,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let commit_token_stream = generate_postgres_transaction_commit_token_stream(&operation);
                     let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
                         &operation,
-                        &value_snake_case,
+                        &error_snake_case,
                     );
                     quote::quote! {
                         #postgres_transaction_token_stream
                         #results_vec_token_stream
                         {
-                            if let Some(#value_snake_case) = #expected_primary_keys_snake_case {
+                            if let Some(#error_snake_case) = #expected_primary_keys_snake_case {
                                 #non_existing_primary_keys_check_token_stream
                             }
                         }
                         #commit_token_stream
-                        #results_vec_snake_case.into_iter().map(
+                        #value_snake_case.into_iter().map(
                             |#element_snake_case|#primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#element_snake_case)
                         ).collect()
                     }
