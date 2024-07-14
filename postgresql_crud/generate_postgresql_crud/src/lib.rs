@@ -2256,6 +2256,32 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             payload_with_serialize_deserialize_token_stream
         )
     };
+    let generate_operation_payload_token_stream = |
+        operation: &Operation,
+        fields_token_stream: &proc_macro2::TokenStream,
+    | -> proc_macro2::TokenStream {
+        let derive_debug = token_patterns::DeriveDebug;
+        let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
+        quote::quote! {
+            #derive_debug
+            pub struct #operation_payload_upper_camel_case_token_stream {
+                #fields_token_stream
+            }
+        }
+    };
+    let generate_payload_with_serialize_deserialize_token_stream = |
+        operation: &Operation,
+        fields_token_stream: &proc_macro2::TokenStream,
+    | -> proc_macro2::TokenStream {
+        let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+        let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
+        quote::quote! {
+            #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+            pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+                #fields_token_stream
+            }
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -2813,19 +2839,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {}
         )
     };
-    let generate_payload_with_serialize_deserialize_token_stream = |
-        operation: &Operation,
-        fields_token_stream: &proc_macro2::TokenStream,
-    | -> proc_macro2::TokenStream {
-        let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-        let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
-        quote::quote! {
-            #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-            pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-                #fields_token_stream
-            }
-        }
-    };
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -2849,7 +2862,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
-                &token_patterns::DeriveDebug,
                 &generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream),
             );
             let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
@@ -3227,7 +3239,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let payload_token_stream = generate_operation_payload_token_stream(
                     &operation,
-                    &token_patterns::DeriveDebug,
                     &generate_fields_token_stream(true)
                 );
                 // println!("{payload_token_stream}");
@@ -4109,7 +4120,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let payload_token_stream = generate_operation_payload_token_stream(
                     &operation,
-                    &token_patterns::DeriveDebug,
                     &generate_fields_token_stream(true)
                 );
                 // println!("{payload_token_stream}");
@@ -5234,7 +5244,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
-                &token_patterns::DeriveDebug,
                 &update_fields_token_stream,
             );
             let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
@@ -5622,7 +5631,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let payload_token_stream = generate_operation_payload_token_stream(
                     &operation,
-                    &token_patterns::DeriveDebug,
                     &generate_fields_token_stream(true),
                 );
                 // println!("{payload_token_stream}");
@@ -6329,7 +6337,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let payload_token_stream = generate_operation_payload_token_stream(
                     &operation,
-                    &token_patterns::DeriveDebug,
                     &generate_fields_token_stream(true)
                 );
                 // println!("{payload_token_stream}");
@@ -8025,18 +8032,4 @@ fn generate_type_variants_from_request_response_syn_variants(
         type_variants_from_request_response_syn_variants.push(self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper.get_syn_variant().clone());
     }
     type_variants_from_request_response_syn_variants
-}
-
-fn generate_operation_payload_token_stream(
-    operation: &Operation,
-    derive_token_stream: &impl quote::ToTokens,
-    fields_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
-    quote::quote! {
-        #derive_token_stream
-        pub struct #operation_payload_upper_camel_case_token_stream {
-            #fields_token_stream
-        }
-    }
 }
