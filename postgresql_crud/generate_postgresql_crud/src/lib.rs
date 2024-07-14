@@ -1549,7 +1549,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let body_bytes_bytes_bytes_token_stream = quote::quote!{#body_bytes_snake_case: bytes::Bytes,};
     // let axum_response_into_response_token_stream = quote::quote!{axum::response::IntoResponse};
     // let axum_response_response_token_stream = quote::quote!{axum::response::Response};
-    // let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+    let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
     let serde_json_to_string_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::SerdeJsonToStringUpperCamelCase,
         None,
@@ -2862,19 +2862,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         query_string_token_stream: &proc_macro2::TokenStream,
         binded_query_token_stream: &proc_macro2::TokenStream,
         postgresql_logic_token_stream: &proc_macro2::TokenStream,
-        eprintln_error_token_stream: &proc_macro2::TokenStream,
         check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream: &proc_macro2::TokenStream,
         postgresql_syn_variant_wrapper_initialization_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
         let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
         let request_snake_case = naming_constants::RequestSnakeCase;
-        let parameters_snake_case = naming_constants::ParametersSnakeCase;
         let app_state_snake_case = naming_conventions::AppStateSnakeCase;
-        let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
-        let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
-        let value_snake_case = naming_constants::ValueSnakeCase;
         let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
-        let error_0_token_stream = token_patterns::Error0;
         let request_parts_preparation_token_stream = {
             quote::quote! {
                 let (parts, #body_snake_case) = #request_snake_case.into_parts();
@@ -2899,15 +2893,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #operation_additional_route_logic_token_stream
             }
         };
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
         let acquire_pool_and_connection_token_stream = {
             let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-            let value_snake_case = naming_constants::ValueSnakeCase;
-            let error_snake_case = naming_constants::ErrorSnakeCase;
-            let from_snake_case = naming_constants::FromSnakeCase;
-            let executor_snake_case = naming_constants::ExecutorSnakeCase;
             let pool_connection_snake_case = naming_conventions::PoolConnectionSnakeCase;
-            let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
             quote::quote! {
                 let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
                     Ok(#value_snake_case) => #value_snake_case,
@@ -2934,8 +2923,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let desirable_response_creation_token_stream = {
-            let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
             let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
             quote::quote! {
                 let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(
@@ -3718,7 +3705,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
@@ -4063,7 +4049,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
@@ -4832,7 +4817,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
@@ -5285,7 +5269,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
@@ -6009,7 +5992,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
@@ -6423,7 +6405,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
@@ -7082,7 +7063,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
@@ -7456,7 +7436,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
-                    &eprintln_error_token_stream,
                     &operation.generate_error_initialization_eprintln_response_creation_token_stream(
                         &check_body_size_syn_variant_wrapper,
                         file!(),
