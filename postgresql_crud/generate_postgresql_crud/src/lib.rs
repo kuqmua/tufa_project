@@ -893,10 +893,77 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "StdPrimitiveI64",
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => "SqlxTypesUuidUuid",
         };
-        generate_std_vec_vec_syn_punctuated_punctuated(
-            &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, name],
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        )
+        let generate_std_vec_vec_syn_punctuated_punctuated = |parts_vec: &[&str]| -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
+            let parts_vec_len = parts_vec.len();
+            if parts_vec_len >= 1 {
+                let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                handle.push_value(
+                    syn::PathSegment {
+                        ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
+                        arguments: syn::PathArguments::None,
+                    }
+                );
+                handle.push_punct(syn::token::PathSep{
+                    spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
+                });
+                handle.push_value(
+                    syn::PathSegment {
+                        ident: proc_macro2::Ident::new("vec", proc_macro2::Span::call_site()),
+                        arguments: syn::PathArguments::None,
+                    }
+                );
+                handle.push_punct(syn::token::PathSep{
+                    spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
+                });
+                handle.push_value(
+                    syn::PathSegment {
+                        ident: proc_macro2::Ident::new("Vec", proc_macro2::Span::call_site()),
+                        arguments: syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments{
+                            colon2_token: None,
+                            lt_token: syn::token::Lt{
+                                spans: [proc_macro2::Span::call_site()],
+                            },
+                            args: {
+                                let mut handle = syn::punctuated::Punctuated::<syn::GenericArgument, syn::token::Comma>::new();
+                                handle.push(syn::GenericArgument::Type(syn::Type::Path(syn::TypePath{
+                                    qself: None,
+                                    path: syn::Path {
+                                        leading_colon: None,
+                                        segments: {
+                                            let parts_vec_len_minus_one = parts_vec_len.checked_sub(1).unwrap();
+                                            let mut std_vec_vec_generic_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                                            for (index, element) in parts_vec.iter().enumerate() {
+                                                std_vec_vec_generic_type.push_value(
+                                                    syn::PathSegment {
+                                                        ident: proc_macro2::Ident::new(element, proc_macro2::Span::call_site()),
+                                                        arguments: syn::PathArguments::None,
+                                                    }
+                                                );
+                                                if index < parts_vec_len_minus_one {
+                                                    std_vec_vec_generic_type.push_punct(syn::token::PathSep{
+                                                        spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
+                                                    });
+                                                }
+                                            }
+                                            std_vec_vec_generic_type
+                                        },
+                                    },
+                                })));
+                                handle
+                            },
+                            gt_token: syn::token::Gt {
+                                spans: [proc_macro2::Span::call_site()],
+                            },
+                        }),
+                    }
+                );
+                handle
+            }
+            else {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}")
+            }
+        };
+        generate_std_vec_vec_syn_punctuated_punctuated(&[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, name])
     };
     let non_existing_primary_keys_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::NonExistingPrimaryKeysUpperCamelCase,
@@ -7323,80 +7390,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     // }
     generated.into()
-}
-
-fn generate_std_vec_vec_syn_punctuated_punctuated(
-    parts_vec: &[&str],
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
-    let parts_vec_len = parts_vec.len();
-    if parts_vec_len >= 1 {
-        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-        handle.push_value(
-            syn::PathSegment {
-                ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
-                arguments: syn::PathArguments::None,
-            }
-        );
-        handle.push_punct(syn::token::PathSep{
-            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-        });
-        handle.push_value(
-            syn::PathSegment {
-                ident: proc_macro2::Ident::new("vec", proc_macro2::Span::call_site()),
-                arguments: syn::PathArguments::None,
-            }
-        );
-        handle.push_punct(syn::token::PathSep{
-            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-        });
-        handle.push_value(
-            syn::PathSegment {
-                ident: proc_macro2::Ident::new("Vec", proc_macro2::Span::call_site()),
-                arguments: syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments{
-                    colon2_token: None,
-                    lt_token: syn::token::Lt{
-                        spans: [proc_macro2::Span::call_site()],
-                    },
-                    args: {
-                        let mut handle = syn::punctuated::Punctuated::<syn::GenericArgument, syn::token::Comma>::new();
-                        handle.push(syn::GenericArgument::Type(syn::Type::Path(syn::TypePath{
-                            qself: None,
-                            path: syn::Path {
-                                leading_colon: None,
-                                segments: {
-                                    let parts_vec_len_minus_one = parts_vec_len.checked_sub(1).unwrap();
-                                    let mut std_vec_vec_generic_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                                    for (index, element) in parts_vec.iter().enumerate() {
-                                        std_vec_vec_generic_type.push_value(
-                                            syn::PathSegment {
-                                                ident: proc_macro2::Ident::new(element, proc_macro2::Span::call_site()),
-                                                arguments: syn::PathArguments::None,
-                                            }
-                                        );
-                                        if index < parts_vec_len_minus_one {
-                                            std_vec_vec_generic_type.push_punct(syn::token::PathSep{
-                                                spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-                                            });
-                                        }
-                                    }
-                                    std_vec_vec_generic_type
-                                },
-                            },
-                        })));
-                        handle
-                    },
-                    gt_token: syn::token::Gt {
-                        spans: [proc_macro2::Span::call_site()],
-                    },
-                }),
-            }
-        );
-        handle
-    }
-    else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}")
-    }
 }
 
 // fn generate_swagger_open_api_token_stream(
