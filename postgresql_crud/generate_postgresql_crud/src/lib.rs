@@ -2348,6 +2348,129 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let generate_try_operation_route_logic_token_stream = |
+        operation: &Operation,
+        syn_derive_input: &syn::DeriveInput,
+        common_additional_route_logic_token_stream: &proc_macro2::TokenStream,
+        parameters_logic_token_stream: &proc_macro2::TokenStream,
+        expected_updated_primary_keys_token_stream: &proc_macro2::TokenStream,
+        query_string_token_stream: &proc_macro2::TokenStream,
+        binded_query_token_stream: &proc_macro2::TokenStream,
+        postgresql_logic_token_stream: &proc_macro2::TokenStream,
+        eprintln_error_token_stream: &proc_macro2::TokenStream,
+        check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream: &proc_macro2::TokenStream,
+        postgresql_syn_variant_wrapper_initialization_token_stream: &proc_macro2::TokenStream,
+    | -> proc_macro2::TokenStream {
+        let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
+        let request_snake_case = naming_constants::RequestSnakeCase;
+        let body_snake_case = naming_constants::BodySnakeCase;
+        let parameters_snake_case = naming_constants::ParametersSnakeCase;
+        let app_state_snake_case = naming_conventions::AppStateSnakeCase;
+        let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
+        let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
+        let value_snake_case = naming_constants::ValueSnakeCase;
+        let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
+        let error_0_token_stream = token_patterns::Error0;
+        let request_parts_preparation_token_stream = {
+            quote::quote! {
+                let (parts, #body_snake_case) = #request_snake_case.into_parts();
+                let headers = parts.headers;
+                let body_bytes = match route_validators::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
+                    Ok(#value_snake_case) => #value_snake_case,
+                    Err(#error_0_token_stream) => {
+                        let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_0_token_stream);
+                        #check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                    }
+                };
+            }
+        };
+        let additional_validators_token_stream = {
+            let operation_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+                &syn_derive_input.attrs,
+                &operation.to_additional_route_logic().generate_path_to_attribute(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            quote::quote! {
+                #common_additional_route_logic_token_stream
+                #operation_additional_route_logic_token_stream
+            }
+        };
+        let acquire_pool_and_connection_token_stream = {
+            let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+            let value_snake_case = naming_constants::ValueSnakeCase;
+            let error_snake_case = naming_constants::ErrorSnakeCase;
+            let from_snake_case = naming_constants::FromSnakeCase;
+            let executor_snake_case = naming_constants::ExecutorSnakeCase;
+            let pool_connection_snake_case = naming_conventions::PoolConnectionSnakeCase;
+            let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+            quote::quote! {
+                let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
+                    Ok(#value_snake_case) => #value_snake_case,
+                    Err(#error_0_token_stream) => {
+                        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
+                        #eprintln_error_token_stream;//todo reuse it as token_stream    
+                        let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
+                        *res.status_mut() = axum::http::StatusCode::CREATED;//todo
+                        // *res.headers_mut() = axum::http::HeaderMap::new();
+                        return res;
+                    }
+                };
+                let #executor_snake_case = match sqlx::Acquire::acquire(&mut #pool_connection_snake_case).await {
+                    Ok(#value_snake_case) => #value_snake_case,
+                    Err(#error_0_token_stream) => {
+                        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
+                        #eprintln_error_token_stream;   
+                        let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
+                        *res.status_mut() = axum::http::StatusCode::CREATED;//todo
+                        // *res.headers_mut() = axum::http::HeaderMap::new();
+                        return res;
+                    }
+                };
+            }
+        };
+        let desirable_response_creation_token_stream = {
+            let response_snake_case = naming_constants::ResponseSnakeCase;
+            let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+            let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
+            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+            let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
+            quote::quote! {
+                let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(
+                    axum::Json(
+                        #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(#value_snake_case)
+                    )
+                );
+                *#response_snake_case.status_mut() = #status_code_token_stream;
+                return #response_snake_case;
+            }
+        };
+        quote::quote! {
+            // // #swagger_open_api_token_stream
+            pub async fn #try_operation_route_logic_snake_case_token_stream(
+                #app_state_snake_case: axum::extract::State<
+                    crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
+                >,
+                #request_snake_case: axum::extract::Request,
+            ) -> axum::response::Response {
+                #request_parts_preparation_token_stream
+                #additional_validators_token_stream
+                #parameters_logic_token_stream
+                println!("{:#?}", #parameters_snake_case);
+                #expected_updated_primary_keys_token_stream
+                let #query_string_snake_case = #query_string_token_stream;
+                println!("{}", #query_string_snake_case);
+                let #binded_query_snake_case = {
+                    #binded_query_token_stream
+                };
+                #acquire_pool_and_connection_token_stream
+                let #value_snake_case = {
+                    #postgresql_logic_token_stream
+                };
+                #desirable_response_creation_token_stream
+            }
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -2743,7 +2866,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -2770,7 +2893,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             quote::quote! {
@@ -3104,7 +3226,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // //     &operation_payload_upper_camel_case_token_stream,
                 // //     &operation,
                 // // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -3127,7 +3249,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             quote::quote! {
@@ -3897,7 +4018,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -3920,7 +4041,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             quote::quote! {
@@ -4354,7 +4474,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -4377,7 +4497,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             // println!("{try_operation_route_logic_token_stream}");
@@ -5086,7 +5205,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -5109,7 +5228,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             // println!("{try_operation_route_logic_token_stream}");
@@ -5504,7 +5622,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -5527,7 +5645,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             quote::quote! {
@@ -6184,7 +6301,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -6207,7 +6324,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             // println!("{try_operation_route_logic_token_stream}");
@@ -6562,7 +6678,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     &operation_payload_upper_camel_case_token_stream,
                 //     &operation,
                 // );
-                generate_try_operation_route_logic_snake_case_token_stream(
+                generate_try_operation_route_logic_token_stream(
                     &operation,
                     &syn_derive_input,
                     &common_additional_route_logic_token_stream,
@@ -6585,7 +6701,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     ),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
             // println!("{try_operation_route_logic_token_stream}");
@@ -7886,130 +8001,5 @@ fn generate_parameters_logic_token_stream(
                 }
             },
         };
-    }
-}
-
-fn generate_try_operation_route_logic_snake_case_token_stream(
-    operation: &Operation,
-    syn_derive_input: &syn::DeriveInput,
-    common_additional_route_logic_token_stream: &proc_macro2::TokenStream,
-    parameters_logic_token_stream: &proc_macro2::TokenStream,
-    expected_updated_primary_keys_token_stream: &proc_macro2::TokenStream,
-    query_string_token_stream: &proc_macro2::TokenStream,
-    binded_query_token_stream: &proc_macro2::TokenStream,
-    postgresql_logic_token_stream: &proc_macro2::TokenStream,
-    eprintln_error_token_stream: &proc_macro2::TokenStream,
-    check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream: &proc_macro2::TokenStream,
-    postgresql_syn_variant_wrapper_initialization_token_stream: &proc_macro2::TokenStream,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
-    let request_snake_case = naming_constants::RequestSnakeCase;
-    let body_snake_case = naming_constants::BodySnakeCase;
-    let parameters_snake_case = naming_constants::ParametersSnakeCase;
-    let app_state_snake_case = naming_conventions::AppStateSnakeCase;
-    let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
-    let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
-    let error_0_token_stream = token_patterns::Error0;
-    let request_parts_preparation_token_stream = {
-        quote::quote! {
-            let (parts, #body_snake_case) = #request_snake_case.into_parts();
-            let headers = parts.headers;
-            let body_bytes = match route_validators::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
-                Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_0_token_stream) => {
-                    let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_0_token_stream);
-                    #check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-                }
-            };
-        }
-    };
-    let additional_validators_token_stream = {
-        let operation_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-            &syn_derive_input.attrs,
-            &operation.to_additional_route_logic().generate_path_to_attribute(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote! {
-            #common_additional_route_logic_token_stream
-            #operation_additional_route_logic_token_stream
-        }
-    };
-    let acquire_pool_and_connection_token_stream = {
-        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-        let value_snake_case = naming_constants::ValueSnakeCase;
-        let error_snake_case = naming_constants::ErrorSnakeCase;
-        let from_snake_case = naming_constants::FromSnakeCase;
-        let executor_snake_case = naming_constants::ExecutorSnakeCase;
-        let pool_connection_snake_case = naming_conventions::PoolConnectionSnakeCase;
-        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-        quote::quote! {
-            let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
-                Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_0_token_stream) => {
-                    let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
-                    #eprintln_error_token_stream;//todo reuse it as token_stream    
-                    let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                    *res.status_mut() = axum::http::StatusCode::CREATED;//todo
-                    // *res.headers_mut() = axum::http::HeaderMap::new();
-                    return res;
-                }
-            };
-            let #executor_snake_case = match sqlx::Acquire::acquire(&mut #pool_connection_snake_case).await {
-                Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_0_token_stream) => {
-                    let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
-                    #eprintln_error_token_stream;   
-                    let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                    *res.status_mut() = axum::http::StatusCode::CREATED;//todo
-                    // *res.headers_mut() = axum::http::HeaderMap::new();
-                    return res;
-                }
-            };
-        }
-    };
-    let desirable_response_creation_token_stream = {
-        let response_snake_case = naming_constants::ResponseSnakeCase;
-        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-        let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
-        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-        let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
-        quote::quote! {
-            let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(
-                axum::Json(
-                    #try_operation_route_logic_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case(#value_snake_case)
-                )
-            );
-            *#response_snake_case.status_mut() = #status_code_token_stream;
-            return #response_snake_case;
-        }
-    };
-    quote::quote! {
-        // // #swagger_open_api_token_stream
-        pub async fn #try_operation_route_logic_snake_case_token_stream(
-            #app_state_snake_case: axum::extract::State<
-                crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
-            >,
-            #request_snake_case: axum::extract::Request,
-        ) -> axum::response::Response {
-            #request_parts_preparation_token_stream
-            #additional_validators_token_stream
-            #parameters_logic_token_stream
-            println!("{:#?}", #parameters_snake_case);
-            #expected_updated_primary_keys_token_stream
-            let #query_string_snake_case = #query_string_token_stream;
-            println!("{}", #query_string_snake_case);
-            let #binded_query_snake_case = {
-                #binded_query_token_stream
-            };
-            #acquire_pool_and_connection_token_stream
-            let #value_snake_case = {
-                #postgresql_logic_token_stream
-            };
-            #desirable_response_creation_token_stream
-        }
     }
 }
