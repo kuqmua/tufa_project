@@ -1488,7 +1488,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let unexpected_status_code_upper_camel_case = naming_conventions::UnexpectedStatusCodeUpperCamelCase;
     // let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
     // let headers_snake_case = naming_constants::HeadersSnakeCase;
-    // let body_snake_case = naming_constants::BodySnakeCase;
+    let body_snake_case = naming_constants::BodySnakeCase;
     // let response_text_result_snake_case = naming_conventions::ResponseTextResultSnakeCase;
     // let response_text_snake_case = naming_conventions::ResponseTextSnakeCase;
     let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(&syn_field_with_additional_info_fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>())
@@ -2870,7 +2870,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     | -> proc_macro2::TokenStream {
         let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
         let request_snake_case = naming_constants::RequestSnakeCase;
-        let body_snake_case = naming_constants::BodySnakeCase;
         let parameters_snake_case = naming_constants::ParametersSnakeCase;
         let app_state_snake_case = naming_conventions::AppStateSnakeCase;
         let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
@@ -3208,7 +3207,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(
                 &operation.http_method(),
             );
-            let body_snake_case = naming_constants::BodySnakeCase;
             let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
             let commit_header_addition_token_stream = quote::quote! {
                 .header(
