@@ -1546,7 +1546,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let postgresql_crud_get_axum_http_status_code_token_stream = quote::quote!{postgresql_crud::GetAxumHttpStatusCode};
     // let get_axum_http_status_code_snake_case = naming_conventions::GetAxumHttpStatusCodeSnakeCase;
     // let app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream = quote::quote!{#app_state_snake_case: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,};
-    // let body_bytes_snake_case = naming_conventions::BodyBytesSnakeCase;
     // let body_bytes_bytes_bytes_token_stream = quote::quote!{#body_bytes_snake_case: bytes::Bytes,};
     // let axum_response_into_response_token_stream = quote::quote!{axum::response::IntoResponse};
     // let axum_response_response_token_stream = quote::quote!{axum::response::Response};
@@ -2977,7 +2976,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_parameters_logic_token_stream = |
         operation: &Operation,
         from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-        serde_json_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
         self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
         operation_payload_with_serialize_deserialize_check_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
@@ -3559,7 +3557,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
                     &fields_named_excluding_primary_key_from_or_try_from,
-                    &serde_json_syn_variant_wrapper,
                     &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &proc_macro2::TokenStream::new(),
                 );
@@ -3975,7 +3972,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
                     &fields_named_excluding_primary_key_from_or_try_from,
-                    &serde_json_syn_variant_wrapper,
                     &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &proc_macro2::TokenStream::new(),
                 );
@@ -4447,7 +4443,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
                    &fields_named_from_or_try_from,
-                   &serde_json_syn_variant_wrapper,
                    &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                    &{
                         let filter_not_unique_fields_token_stream = {
@@ -5225,7 +5220,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
                     &primary_key_from_or_try_from,
-                    &serde_json_syn_variant_wrapper,
                     &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &{
                          let filter_not_unique_column_token_stream = generate_filter_not_unique_column_route_logic_token_stream(&operation);
@@ -5679,7 +5673,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
                    &fields_named_from_or_try_from,
-                   &serde_json_syn_variant_wrapper,
                    &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                    &{
                         let filter_not_unique_primary_key_token_stream = {
@@ -6271,7 +6264,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
                    &fields_named_from_or_try_from,
-                   &serde_json_syn_variant_wrapper,
                    &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                    &{
                         let filter_no_payload_fields_token_stream = generate_filter_no_payload_fields_token_stream(&operation, &quote::quote! {#value_snake_case});
@@ -6743,7 +6735,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
                     &fields_named_from_or_try_from,
-                    &serde_json_syn_variant_wrapper,
                     &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &{
                         let filter_no_payload_fields_token_stream = {
@@ -7376,7 +7367,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
                    &primary_key_from_or_try_from,
-                   &serde_json_syn_variant_wrapper,
                    &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                    &proc_macro2::TokenStream::new(),
                 );
