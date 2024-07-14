@@ -2636,11 +2636,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &content_token_stream,
         )
     };
+    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
     let generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream = |
         operation: &Operation,
         content_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
-        let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream =     naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
         quote::quote! {
             #derive_debug_thiserror_error_occurence
@@ -2820,7 +2820,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         operation: &Operation,
         common_http_request_syn_variants: &std::vec::Vec<syn::Variant>,
     | -> proc_macro2::TokenStream {
-        let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
         let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
         let syn_variants = {
             let mut value = std::vec::Vec::with_capacity(common_http_request_syn_variants.len() + 1);
@@ -3037,7 +3036,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         operation: &Operation,
         variants_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
-        let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream =     naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
         quote::quote! {
             #derive_debug_thiserror_error_occurence
