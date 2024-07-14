@@ -3083,10 +3083,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let #field_ident = #inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case.#field_ident);//todo from or try_from
         }
     };
-    let generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream = |
-        value: &SynFieldWithAdditionalInfo<'_>,
-        primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
-    | -> proc_macro2::TokenStream {
+    let generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream = |value: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
         let field_ident = &value.field_ident;
         let inner_token_stream = quote::quote! {value.#field_ident};
         let where_inner_type_token_stream = &value.where_inner_type_token_stream;
@@ -3116,7 +3113,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                     Err(#error_snake_case) => {
                                         return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                            #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #error_snake_case,
+                                            #primary_key_field_ident_token_stream: #error_snake_case,
                                             #field_code_occurence_new_68674e53_54cf_4cfe_b532_2e4aecda32c5_token_stream,
                                         });
                                     }
@@ -4302,11 +4299,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 };
                             }
                         };
-                        let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter()
-                            .map(|element| generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
-                                element,
-                                &primary_key_field_ident_token_stream,
-                            ));
+                        let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream);
                         quote::quote! {
                             #primary_key_field_assignment_token_stream
                             #(#fields_assignment_excluding_primary_key_token_stream)*
@@ -4379,11 +4372,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     };
                                 }
                             };
-                            let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter()
-                                .map(|element| generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
-                                    element,
-                                    &primary_key_field_ident_token_stream,
-                                ));
+                            let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream);
                             quote::quote! {
                                 #primary_key_field_assignment_token_stream
                                 #(#fields_assignment_excluding_primary_key_token_stream)*
@@ -6707,11 +6696,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let #primary_key_field_ident = #initialization_token_stream;
                                 }
                             };
-                            let fields_assignments_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter()
-                                .map(|element| generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
-                                    element,
-                                    &primary_key_field_ident_token_stream,
-                                ));
+                            let fields_assignments_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream);
                             quote::quote! {
                                 #primary_key_let_field_ident_value_field_ident_try_from_token_stream
                                 #(#fields_assignments_token_stream)*
