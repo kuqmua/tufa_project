@@ -1478,7 +1478,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let in_snake_case = naming_constants::InSnakeCase;
     let unnest_snake_case = naming_constants::UnnestSnakeCase;
     let error_snake_case = naming_constants::ErrorSnakeCase;
-    // let response_snake_case = naming_constants::ResponseSnakeCase;
+    let response_snake_case = naming_constants::ResponseSnakeCase;
     // let primary_keys_snake_case = naming_conventions::PrimaryKeysSnakeCase;
     // let primary_key_snake_case = naming_conventions::PrimaryKeySnakeCase;
     // let into_inner_type_vec_snake_case = naming_conventions::IntoInnerTypeVecSnakeCase;
@@ -2937,7 +2937,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let desirable_response_creation_token_stream = {
-            let response_snake_case = naming_constants::ResponseSnakeCase;
             let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
             let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
             let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
@@ -3234,7 +3233,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .send();
             }
         };
-        let response_snake_case = naming_constants::ResponseSnakeCase;
         let response_token_stream = quote::quote! {
             let #response_snake_case = match #future_snake_case.await {
                 Ok(#value_snake_case) => #value_snake_case,
