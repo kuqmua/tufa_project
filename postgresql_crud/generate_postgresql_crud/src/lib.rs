@@ -681,6 +681,52 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         })
         .collect()
     };
+    #[derive(Debug, strum_macros::Display)]
+    enum GeneratePostgresqlCrudAttribute {
+        CreateManyAdditionalErrorVariants,
+        CreateOneAdditionalErrorVariants,
+        ReadManyAdditionalErrorVariants,
+        ReadOneAdditionalErrorVariants,
+        UpdateManyAdditionalErrorVariants,
+        UpdateOneAdditionalErrorVariants,
+        DeleteManyAdditionalErrorVariants,
+        DeleteOneAdditionalErrorVariants,
+        CommonAdditionalErrorVariants,
+        CreateManyAdditionalRouteLogic,
+        CreateOneAdditionalRouteLogic,
+        ReadManyAdditionalRouteLogic,
+        ReadOneAdditionalRouteLogic,
+        UpdateManyAdditionalRouteLogic,
+        UpdateOneAdditionalRouteLogic,
+        DeleteManyAdditionalRouteLogic,
+        DeleteOneAdditionalRouteLogic,
+        CommonAdditionalRouteLogic,
+    }
+    impl GeneratePostgresqlCrudAttribute {
+        fn generate_path_to_attribute(self) -> std::string::String {
+            let value = match self {
+                Self::CreateManyAdditionalErrorVariants => naming_conventions::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateOneAdditionalErrorVariants => naming_conventions::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadManyAdditionalErrorVariants => naming_conventions::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadOneAdditionalErrorVariants => naming_conventions::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateManyAdditionalErrorVariants => naming_conventions::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateOneAdditionalErrorVariants => naming_conventions::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteManyAdditionalErrorVariants => naming_conventions::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteOneAdditionalErrorVariants => naming_conventions::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CommonAdditionalErrorVariants => naming_conventions::CommonAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateManyAdditionalRouteLogic => naming_conventions::CreateManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::CreateOneAdditionalRouteLogic => naming_conventions::CreateOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::ReadManyAdditionalRouteLogic => naming_conventions::ReadManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::ReadOneAdditionalRouteLogic => naming_conventions::ReadOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::UpdateManyAdditionalRouteLogic => naming_conventions::UpdateManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::UpdateOneAdditionalRouteLogic => naming_conventions::UpdateOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::DeleteManyAdditionalRouteLogic => naming_conventions::DeleteManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::DeleteOneAdditionalRouteLogic => naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::CommonAdditionalRouteLogic => naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
+            };
+            format!("{}::{value}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE)
+        }
+    }
     #[derive(
         Debug,
         proc_macro_assistants::ToUpperCamelCaseStringified,
@@ -7810,52 +7856,3 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 //         }
 //     }
 // }
-
-#[derive(Debug, strum_macros::Display)]
-enum GeneratePostgresqlCrudAttribute {
-    CreateManyAdditionalErrorVariants,
-    CreateOneAdditionalErrorVariants,
-    ReadManyAdditionalErrorVariants,
-    ReadOneAdditionalErrorVariants,
-    UpdateManyAdditionalErrorVariants,
-    UpdateOneAdditionalErrorVariants,
-    DeleteManyAdditionalErrorVariants,
-    DeleteOneAdditionalErrorVariants,
-    CommonAdditionalErrorVariants,
-    CreateManyAdditionalRouteLogic,
-    CreateOneAdditionalRouteLogic,
-    ReadManyAdditionalRouteLogic,
-    ReadOneAdditionalRouteLogic,
-    UpdateManyAdditionalRouteLogic,
-    UpdateOneAdditionalRouteLogic,
-    DeleteManyAdditionalRouteLogic,
-    DeleteOneAdditionalRouteLogic,
-    CommonAdditionalRouteLogic,
-}
-impl GeneratePostgresqlCrudAttribute {
-    fn generate_path_to_attribute(self) -> std::string::String {
-        let value = match self {
-            Self::CreateManyAdditionalErrorVariants => naming_conventions::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::CreateOneAdditionalErrorVariants => naming_conventions::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::ReadManyAdditionalErrorVariants => naming_conventions::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::ReadOneAdditionalErrorVariants => naming_conventions::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::UpdateManyAdditionalErrorVariants => naming_conventions::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::UpdateOneAdditionalErrorVariants => naming_conventions::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::DeleteManyAdditionalErrorVariants => naming_conventions::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::DeleteOneAdditionalErrorVariants => naming_conventions::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::CommonAdditionalErrorVariants => naming_conventions::CommonAdditionalErrorVariantsSnakeCase.to_string(),
-            Self::CreateManyAdditionalRouteLogic => naming_conventions::CreateManyAdditionalRouteLogicSnakeCase.to_string(),
-            Self::CreateOneAdditionalRouteLogic => naming_conventions::CreateOneAdditionalRouteLogicSnakeCase.to_string(),
-            Self::ReadManyAdditionalRouteLogic => naming_conventions::ReadManyAdditionalRouteLogicSnakeCase.to_string(),
-            Self::ReadOneAdditionalRouteLogic => naming_conventions::ReadOneAdditionalRouteLogicSnakeCase.to_string(),
-            Self::UpdateManyAdditionalRouteLogic => naming_conventions::UpdateManyAdditionalRouteLogicSnakeCase.to_string(),
-            Self::UpdateOneAdditionalRouteLogic => naming_conventions::UpdateOneAdditionalRouteLogicSnakeCase.to_string(),
-            Self::DeleteManyAdditionalRouteLogic => naming_conventions::DeleteManyAdditionalRouteLogicSnakeCase.to_string(),
-            Self::DeleteOneAdditionalRouteLogic => naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
-            Self::CommonAdditionalRouteLogic => naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
-        };
-        format!("{}::{value}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE)
-    }
-}
-
-
