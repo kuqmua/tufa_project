@@ -2529,6 +2529,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
+    let generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = |
+        operation: &Operation,
+        variants_token_stream: &proc_macro2::TokenStream,
+    | -> proc_macro2::TokenStream {
+        let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
+        let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream =     naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
+        quote::quote! {
+            #derive_debug_thiserror_error_occurence
+            pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
+                #variants_token_stream
+            }
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -7971,18 +7984,4 @@ fn generate_additional_error_variants(
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.data is not syn::Data::Enum");
     };
     variants.into_iter().collect()
-}
-
-fn generate_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream(
-    operation: &Operation,
-    variants_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
-    let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream = naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation);
-    quote::quote! {
-        #derive_debug_thiserror_error_occurence
-        pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
-            #variants_token_stream
-        }
-    }
 }
