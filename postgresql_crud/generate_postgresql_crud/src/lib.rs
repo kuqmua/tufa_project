@@ -1036,18 +1036,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     });
     let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let derive_debug = token_patterns::DeriveDebug;
+    let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
     let field_with_serialize_deserialize_upper_camel_case = naming_conventions::FieldWithSerializeDeserializeUpperCamelCase;
-    let field_and_field_with_serialize_deserialize_token_stream = {
-        let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
-        quote::quote!{
-            #derive_debug
-            pub struct #field_upper_camel_case<T> {
-                pub #value_snake_case: T
-            }       
-            #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-            pub struct #field_with_serialize_deserialize_upper_camel_case<T> {
-                pub #value_snake_case: T
-            }
+    let field_and_field_with_serialize_deserialize_token_stream = quote::quote!{
+        #derive_debug
+        pub struct #field_upper_camel_case<T> {
+            pub #value_snake_case: T
+        }       
+        #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+        pub struct #field_with_serialize_deserialize_upper_camel_case<T> {
+            pub #value_snake_case: T
         }
     };
     let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
@@ -1908,7 +1906,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWithAdditionalInfo<'_>| {
            let field_ident = &element.field_ident;
            let inner_type_token_stream = &element.inner_type_token_stream;
-           let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
            quote::quote! {
                pub #field_ident: std::option::Option<#field_upper_camel_case<#inner_type_token_stream>>
            }
@@ -1939,7 +1936,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_assignments_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element: &SynFieldWithAdditionalInfo<'_>| {
             let field_ident = &element.field_ident;
             let inner_type_token_stream = &element.inner_type_token_stream;
-            let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
             quote::quote! {
                 let #field_ident = match #value_snake_case.#field_ident {
                     Some(#value_snake_case) => Some(#field_upper_camel_case {
@@ -2048,7 +2044,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_ident = &element.field_ident;
             let initialization_token_stream = {
                 let inner_type_token_stream = &element.inner_type_token_stream;
-                let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
                 match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
                     postgresql_crud_common::FromOrTryFrom::From => {
                         quote::quote!{
