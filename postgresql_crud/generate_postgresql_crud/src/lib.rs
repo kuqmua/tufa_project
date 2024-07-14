@@ -2282,6 +2282,30 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let generate_type_variants_from_request_response_syn_variants = |
+        syn_variants: &std::vec::Vec<&syn::Variant>,
+        from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
+        self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
+        operation: &Operation,
+        syn_derive_input: &syn::DeriveInput,
+    | -> std::vec::Vec<syn::Variant> {
+        let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
+        for element in syn_variants {
+            type_variants_from_request_response_syn_variants.push((*element).clone());
+        }
+        let operation_additional_error_variants = generate_additional_error_variants(
+            &syn_derive_input,
+            operation.to_additional_error_variants(),
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
+        for element in operation_additional_error_variants {
+            type_variants_from_request_response_syn_variants.push(element.clone());
+        }
+        if *from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
+            type_variants_from_request_response_syn_variants.push(self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper.get_syn_variant().clone());
+        }
+        type_variants_from_request_response_syn_variants
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -2349,7 +2373,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let (
@@ -2857,7 +2880,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
@@ -3212,7 +3234,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let (
@@ -4103,7 +4124,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let (
@@ -4509,7 +4529,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let (
@@ -5239,7 +5258,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
@@ -5614,7 +5632,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let (
@@ -6322,7 +6339,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
             &operation,
             &syn_derive_input,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
             let (
@@ -8006,30 +8022,4 @@ fn generate_try_operation_error_named_token_stream(
             #(#variants_token_stream),*
         }
     }
-}
-
-fn generate_type_variants_from_request_response_syn_variants(
-    syn_variants: &std::vec::Vec<&syn::Variant>,
-    from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-    self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
-    operation: &Operation,
-    syn_derive_input: &syn::DeriveInput,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> std::vec::Vec<syn::Variant> {
-    let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
-    for element in syn_variants {
-        type_variants_from_request_response_syn_variants.push((*element).clone());
-    }
-    let operation_additional_error_variants = generate_additional_error_variants(
-        &syn_derive_input,
-        operation.to_additional_error_variants(),
-        &proc_macro_name_upper_camel_case_ident_stringified
-    );
-    for element in operation_additional_error_variants {
-        type_variants_from_request_response_syn_variants.push(element.clone());
-    }
-    if *from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        type_variants_from_request_response_syn_variants.push(self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper.get_syn_variant().clone());
-    }
-    type_variants_from_request_response_syn_variants
 }
