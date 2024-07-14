@@ -3076,12 +3076,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
-    let generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream = |element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
-        let field_ident = &element.field_ident;
-        let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
-        quote::quote! {
-            let #field_ident = #inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case.#field_ident);//todo from or try_from
-        }
+    let let_field_ident_value_inner_type_with_serialize_deserialize_from_fields_named_excluding_primary_key_token_stream = {
+        let value = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
+            let field_ident = &element.field_ident;
+            let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
+            quote::quote! {
+                let #field_ident = #inner_type_with_serialize_deserialize_token_stream::#from_snake_case(#value_snake_case.#field_ident);//todo from or try_from
+            }
+        });
+        quote::quote!{#(#value)*}
     };
     let option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_fields_named_excluding_primary_key = {
         let value = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|value: &SynFieldWithAdditionalInfo<'_>| {
@@ -3517,13 +3520,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_and_from_operation_payload_upper_camel_case_token_stream_for_operation_payload_with_serialize_deserialize_token_stream(
                 &operation,
-                &{
-                    let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream);
-                    quote::quote!{
-                        #(#fields_assignment_excluding_primary_key_token_stream)*
-                        Self{
-                            #(#fields_idents_excluding_primary_key_token_stream),*
-                        }
+                &quote::quote!{
+                    #let_field_ident_value_inner_type_with_serialize_deserialize_from_fields_named_excluding_primary_key_token_stream
+                    Self{
+                        #(#fields_idents_excluding_primary_key_token_stream),*
                     }
                 },
                 &{
@@ -3947,13 +3947,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = generate_impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream(
                 &operation,
-                &{
-                    let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream);
-                    quote::quote! {
-                        #(#fields_assignment_excluding_primary_key_token_stream)*
-                        Self{
-                            #(#fields_idents_excluding_primary_key_token_stream),*
-                        }
+                &quote::quote! {
+                    #let_field_ident_value_inner_type_with_serialize_deserialize_from_fields_named_excluding_primary_key_token_stream
+                    Self{
+                        #(#fields_idents_excluding_primary_key_token_stream),*
                     }
                 },
             );
