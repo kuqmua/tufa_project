@@ -2061,6 +2061,59 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
         }
     };
+    let generate_error_occurence_variant_token_stream = |error_variant: &syn::Variant| -> proc_macro2::TokenStream {
+        let variant_ident = &error_variant.ident;
+        let fields_named = if let syn::Fields::Named(fields_named) = &error_variant.fields {
+            fields_named
+        }
+        else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+        };
+        let fields_mapped_into_token_stream = fields_named.named.iter().map(|field|{
+            let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_constants::FIELD_IDENT_IS_NONE
+                )
+            });
+            let error_occurence_attribute = if *field_ident == *naming_conventions::CodeOccurenceSnakeCase.to_string() {
+                proc_macro2::TokenStream::new()
+            }
+            else {
+                let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute> = None;
+                for element in &field.attrs {
+                    if element.path().segments.len() == 1 {
+                        let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
+                        if let Ok(value) = {
+                            use std::str::FromStr;
+                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from_str(&segment.ident.to_string())
+                        } {
+                            match error_occurence_attribute {
+                                Some(value) => panic!(
+                                    "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", 
+                                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
+                                ),
+                                None => {
+                                    error_occurence_attribute = Some(value);
+                                }
+                            }
+                        }
+                    }
+                }
+                error_occurence_attribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"), |value| value.to_attribute_view_token_stream())
+            };
+            let field_type = &field.ty;
+            quote::quote! {
+                #error_occurence_attribute
+                #field_ident: #field_type
+            }
+        });
+        quote::quote! {
+            #variant_ident {
+                #(#fields_mapped_into_token_stream),*
+            }
+        }
+    };
     let generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = |
         operation: &Operation,
         desirable_type_token_stream: &proc_macro2::TokenStream,
@@ -2122,10 +2175,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let try_operation_route_logic_error_named_token_stream = {
             let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-            let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
-                &element,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            ));
+            let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(generate_error_occurence_variant_token_stream);
             quote::quote! {
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
@@ -2361,10 +2411,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             value
         };
-        let variants_token_stream = syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
-            &element,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        ));
+        let variants_token_stream = syn_variants.iter().map(generate_error_occurence_variant_token_stream);
         quote::quote! {
             #derive_debug_thiserror_error_occurence
             pub enum #try_operation_error_named_upper_camel_case_token_stream {
@@ -7876,63 +7923,6 @@ fn generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_de
             }
         }
     }).collect()
-}
-
-fn generate_error_occurence_variant_token_stream(
-    error_variant: &syn::Variant,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let variant_ident = &error_variant.ident;
-    let fields_named = if let syn::Fields::Named(fields_named) = &error_variant.fields {
-        fields_named
-    }
-    else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
-    };
-    let fields_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
-            panic!(
-                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                naming_constants::FIELD_IDENT_IS_NONE
-            )
-        });
-        let error_occurence_attribute = if *field_ident == *naming_conventions::CodeOccurenceSnakeCase.to_string() {
-            proc_macro2::TokenStream::new()
-        }
-        else {
-            let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute> = None;
-            for element in &field.attrs {
-                if element.path().segments.len() == 1 {
-                    let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
-                    if let Ok(value) = {
-                        use std::str::FromStr;
-                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from_str(&segment.ident.to_string())
-                    } {
-                        match error_occurence_attribute {
-                            Some(value) => panic!(
-                                "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", 
-                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
-                            ),
-                            None => {
-                                error_occurence_attribute = Some(value);
-                            }
-                        }
-                    }
-                }
-            }
-            error_occurence_attribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"), |value| value.to_attribute_view_token_stream())
-        };
-        let field_type = &field.ty;
-        quote::quote! {
-            #error_occurence_attribute
-            #field_ident: #field_type
-        }
-    });
-    quote::quote! {
-        #variant_ident {
-            #(#fields_mapped_into_token_stream),*
-        }
-    }
 }
 
 #[derive(Debug, strum_macros::Display)]
