@@ -3140,13 +3140,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let #field_ident = #inner_type_token_stream::#from_snake_case(#value_snake_case.#field_ident);
         }
     };
-    let generate_field_ident_field_type_with_serialize_deserialize_token_stream = |element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
+    let field_ident_field_type_with_serialize_deserialize_fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(|element: &SynFieldWithAdditionalInfo<'_>| {
         let field_ident = &element.field_ident;
         let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
         quote::quote! {
             #field_ident: #inner_type_with_serialize_deserialize_token_stream
         }
-    };
+    });
     let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(|element: &SynFieldWithAdditionalInfo<'_>| {
         let field_ident = &element.field_ident;
         let inner_type_token_stream = &element.inner_type_token_stream;
@@ -3390,7 +3390,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
                     &operation,
                     &pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream,
-                    &generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
+                    &field_ident_field_type_with_serialize_deserialize_fields_named_excluding_primary_key_token_stream,
                 )
             };
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &fields_named_excluding_primary_key_from_or_try_from {
@@ -3891,7 +3891,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             );
             let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
                 &operation,
-                &generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
+                &field_ident_field_type_with_serialize_deserialize_fields_named_excluding_primary_key_token_stream,
             );
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
