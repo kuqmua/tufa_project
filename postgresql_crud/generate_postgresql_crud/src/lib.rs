@@ -2471,6 +2471,64 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let generate_parameters_logic_token_stream = |
+        operation: &Operation,
+        from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
+        serde_json_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
+        self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
+        operation_payload_with_serialize_deserialize_check_token_stream: &proc_macro2::TokenStream,
+    | -> proc_macro2::TokenStream {
+        let body_bytes_snake_case = naming_conventions::BodyBytesSnakeCase;
+        let try_or_try_from_operation_payload_upper_camel_case_token_stream = {
+            let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
+            match from_or_try_from {
+                postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#operation_payload_upper_camel_case_token_stream::#from_snake_case(#value_snake_case)},
+                postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                    let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
+                        &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    quote::quote! {
+                        match #operation_payload_upper_camel_case_token_stream::#try_from_snake_case(#value_snake_case) {
+                            Ok(#value_snake_case) => #value_snake_case,
+                            Err(#error_0_token_stream) => {
+                                #self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                            }
+                        }
+                    }
+                },
+            }
+        };
+        let serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
+            &serde_json_syn_variant_wrapper,
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
+        let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
+        quote::quote! {
+            let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
+                //todo maybe use serde json parsing instead of axum. (coz less info)
+                #payload_snake_case: match serde_json::from_slice::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>(
+                    &#body_bytes_snake_case,
+                ) {
+                    Ok(#value_snake_case) => {
+                        let #value_snake_case = #try_or_try_from_operation_payload_upper_camel_case_token_stream;
+                        #operation_payload_with_serialize_deserialize_check_token_stream
+                        #value_snake_case
+                    },
+                    Err(#error_0_token_stream) => {
+                        #serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                    }
+                },
+            };
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -2719,7 +2777,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &serde_json_syn_variant_wrapper,
                     &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &proc_macro2::TokenStream::new(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
@@ -3145,7 +3202,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &serde_json_syn_variant_wrapper,
                     &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &proc_macro2::TokenStream::new(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
                     let (column_names, column_increments) = {
@@ -3751,7 +3807,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #filter_not_unique_column_token_stream
                         }
                    },
-                   &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
                     let additional_parameters_primary_key_modification_token_stream = {
@@ -4424,7 +4479,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                              #filter_not_unique_column_token_stream
                          }
                     },
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
                     let query_token_stream = proc_macro_common::generate_quotes::token_stream(
@@ -4915,7 +4969,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #filter_no_payload_fields_token_stream
                         }
                    },
-                   &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let expected_primary_keys_token_stream = quote::quote! {
                     let #expected_primary_keys_snake_case = #parameters_snake_case
@@ -5478,7 +5531,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #filter_no_payload_fields_token_stream
                         }
                    },
-                   &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
                     let query_start_token_stream = proc_macro_common::generate_quotes::token_stream(
@@ -6114,7 +6166,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #filter_not_unique_fields_token_stream
                         }
                     },
-                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let expected_primary_keys_token_stream = quote::quote! {
                     let #expected_primary_keys_snake_case = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident.clone();
@@ -6599,7 +6650,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &serde_json_syn_variant_wrapper,
                    &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                    &proc_macro2::TokenStream::new(),
-                   &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let query_string_token_stream = {
                     let additional_parameters_primary_key_modification_token_stream = {
@@ -7934,72 +7984,5 @@ fn generate_operation_payload_try_from_operation_payload_with_serialize_deserial
         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
             #variants_token_stream
         }
-    }
-}
-
-fn generate_parameters_logic_token_stream(
-    operation: &Operation,
-    from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-    serde_json_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
-    self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
-    operation_payload_with_serialize_deserialize_check_token_stream: &proc_macro2::TokenStream,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    let value_snake_case = naming_constants::ValueSnakeCase;
-    let parameters_snake_case = naming_constants::ParametersSnakeCase;
-    let payload_snake_case = naming_constants::PayloadSnakeCase;
-    let from_snake_case = naming_constants::FromSnakeCase;
-    let body_bytes_snake_case = naming_conventions::BodyBytesSnakeCase;
-    let try_from_snake_case = naming_conventions::TryFromSnakeCase;
-    let try_or_try_from_operation_payload_upper_camel_case_token_stream = {
-        let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
-        match from_or_try_from {
-            postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#operation_payload_upper_camel_case_token_stream::#from_snake_case(#value_snake_case)},
-            postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
-                    &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
-                    file!(),
-                    line!(),
-                    column!(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                let error_0_token_stream = token_patterns::Error0;
-                quote::quote! {
-                    match #operation_payload_upper_camel_case_token_stream::#try_from_snake_case(#value_snake_case) {
-                        Ok(#value_snake_case) => #value_snake_case,
-                        Err(#error_0_token_stream) => {
-                            #self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-                        }
-                    }
-                }
-            },
-        }
-    };
-    let serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = operation.generate_error_initialization_eprintln_response_creation_token_stream(
-        &serde_json_syn_variant_wrapper,
-        file!(),
-        line!(),
-        column!(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
-    let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let error_0_token_stream = token_patterns::Error0;
-    quote::quote! {
-        let #parameters_snake_case = #operation_parameters_upper_camel_case_token_stream {
-            //todo maybe use serde json parsing instead of axum. (coz less info)
-            #payload_snake_case: match serde_json::from_slice::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>(
-                &#body_bytes_snake_case,
-            ) {
-                Ok(#value_snake_case) => {
-                    let #value_snake_case = #try_or_try_from_operation_payload_upper_camel_case_token_stream;
-                    #operation_payload_with_serialize_deserialize_check_token_stream
-                    #value_snake_case
-                },
-                Err(#error_0_token_stream) => {
-                    #serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-                }
-            },
-        };
     }
 }
