@@ -1484,7 +1484,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let expected_type_upper_camel_case = naming_conventions::ExpectedTypeUpperCamelCase;
     // let expected_type_snake_case = naming_conventions::ExpectedTypeSnakeCase;
     // let unexpected_status_code_upper_camel_case = naming_conventions::UnexpectedStatusCodeUpperCamelCase;
-    // let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
+    let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
     // let headers_snake_case = naming_constants::HeadersSnakeCase;
     let body_snake_case = naming_constants::BodySnakeCase;
     // let response_text_result_snake_case = naming_conventions::ResponseTextResultSnakeCase;
@@ -1569,7 +1569,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         vec![
             (
                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &naming_conventions::StatusCodeSnakeCase,
+                &status_code_snake_case,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["http","StatusCode"],
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -1600,7 +1600,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         vec![
             (
                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                &naming_conventions::StatusCodeSnakeCase,
+                &status_code_snake_case,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["http","StatusCode"],
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -2514,8 +2514,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         desirable_type_token_stream: &proc_macro2::TokenStream,
         type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>,
     | -> proc_macro2::TokenStream {
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
         let try_operation_route_logic_response_variants_token_stream = {
-            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|proc_macro_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(
                 &element,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -2553,7 +2553,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             });
-            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
             let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
             proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                 &try_operation_route_logic_error_named_upper_camel_case_token_stream,
@@ -2816,7 +2815,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_route_logic_snake_case_token_stream = naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(operation);
         let request_snake_case = naming_constants::RequestSnakeCase;
         let app_state_snake_case = naming_conventions::AppStateSnakeCase;
-        let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
         let request_parts_preparation_token_stream = {
             quote::quote! {
                 let (parts, #body_snake_case) = #request_snake_case.into_parts();
