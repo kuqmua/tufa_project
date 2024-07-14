@@ -3049,8 +3049,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream = |
         value: &[SynFieldWithAdditionalInfo<'_>],
         code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence: &token_patterns::CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence,
-        primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
-        eo_error_occurence_attribute_token_stream: &proc_macro2::TokenStream,
     | -> std::vec::Vec<proc_macro2::TokenStream> {
         value.iter().map(|element| {
             match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
@@ -3065,7 +3063,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote!{
                         #field_ident_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
-                            #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #where_with_serialize_deserialize_error_named_token_stream,
+                            #primary_key_field_ident_token_stream: #where_with_serialize_deserialize_error_named_token_stream,
                             #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
                         },//must use comma here
                     }
@@ -4352,8 +4350,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
                                 &syn_field_with_additional_info_fields_named_excluding_primary_key,
                                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-                                &primary_key_field_ident_token_stream,
-                                &eo_error_occurence_attribute_token_stream,
                             );
                             quote::quote! {
                                 #primary_key_variant_token_stream
@@ -6684,8 +6680,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
                                 &syn_field_with_additional_info_fields_named_excluding_primary_key,
                                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence,
-                                &primary_key_field_ident_token_stream,
-                                &eo_error_occurence_attribute_token_stream,
                             );
                             quote::quote! {
                                 #primary_key_variant_token_stream
