@@ -1310,10 +1310,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let generate_additional_error_variants = |
+        syn_derive_input: &syn::DeriveInput,
+        generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute,
+    | -> std::vec::Vec<syn::Variant> {
+        let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
+        let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+            &syn_derive_input.attrs,
+            &generate_postgresql_crud_attribute.generate_path_to_attribute(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
+            panic!(
+                "{proc_macro_name_upper_camel_case_ident_stringified} {}: {error}",
+                proc_macro_common::constants::AST_PARSE_FAILED
+            )
+        });
+        let value_ident_stringified = value.ident.to_string();
+        assert!(value_ident_stringified == generate_postgresql_crud_attribute_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} {value_ident_stringified} is not equal to {generate_postgresql_crud_attribute_stringified}");
+        let variants = if let syn::Data::Enum(data_enum) = value.data {
+            data_enum.variants
+        }
+        else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.data is not syn::Data::Enum");
+        };
+        variants.into_iter().collect()
+    };
     let common_additional_error_variants = generate_additional_error_variants(
         &syn_derive_input,
         GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants,
-        &proc_macro_name_upper_camel_case_ident_stringified
     );
     let common_route_syn_variants = {
         let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
@@ -2296,7 +2321,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation_additional_error_variants = generate_additional_error_variants(
             &syn_derive_input,
             operation.to_additional_error_variants(),
-            &proc_macro_name_upper_camel_case_ident_stringified
         );
         for element in operation_additional_error_variants {
             type_variants_from_request_response_syn_variants.push(element.clone());
@@ -7958,30 +7982,4 @@ impl GeneratePostgresqlCrudAttribute {
     }
 }
 
-fn generate_additional_error_variants(
-    syn_derive_input: &syn::DeriveInput,
-    generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> std::vec::Vec<syn::Variant> {
-    let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
-    let common_additional_error_variants_attribute_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-        &syn_derive_input.attrs,
-        &generate_postgresql_crud_attribute.generate_path_to_attribute(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case_ident_stringified} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    let value_ident_stringified = value.ident.to_string();
-    assert!(value_ident_stringified == generate_postgresql_crud_attribute_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} {value_ident_stringified} is not equal to {generate_postgresql_crud_attribute_stringified}");
-    let variants = if let syn::Data::Enum(data_enum) = value.data {
-        data_enum.variants
-    }
-    else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.data is not syn::Data::Enum");
-    };
-    variants.into_iter().collect()
-}
+
