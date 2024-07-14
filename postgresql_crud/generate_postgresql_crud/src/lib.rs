@@ -2722,6 +2722,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let #field_ident = #inner_type_token_stream::#from_snake_case(#value_snake_case.#field_ident);
         }
     };
+    let generate_field_ident_field_type_with_serialize_deserialize_token_stream = |element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
+        let field_ident = &element.field_ident;
+        let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
+        quote::quote! {
+            #field_ident: #inner_type_with_serialize_deserialize_token_stream
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -7891,14 +7898,6 @@ fn generate_pub_field_ident_field_type_token_stream(element: &SynFieldWithAdditi
     let inner_type_token_stream = &element.inner_type_token_stream;
     quote::quote! {
         pub #field_ident: #inner_type_token_stream
-    }
-}
-
-fn generate_field_ident_field_type_with_serialize_deserialize_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
-    let field_ident = &element.field_ident;
-    let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
-    quote::quote! {
-        #field_ident: #inner_type_with_serialize_deserialize_token_stream
     }
 }
 
