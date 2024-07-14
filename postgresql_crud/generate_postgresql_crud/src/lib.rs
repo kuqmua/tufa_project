@@ -3175,7 +3175,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         failed_to_get_response_text_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
         serde_json_to_string_syn_variant_initialization_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
-        let str_ref_token_stream = token_patterns::RefStdPrimitiveStr;
         let try_operation_snake_case_token_stream = naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
         let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
         let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
@@ -3306,7 +3305,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         quote::quote! {
             pub async fn #try_operation_snake_case_token_stream(
-                #server_location_snake_case: #str_ref_token_stream,//todo rename as endpoint location
+                #server_location_snake_case: #ref_std_primitive_str,//todo rename as endpoint location
                 #parameters_snake_case: #operation_parameters_upper_camel_case_token_stream,
             ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
                 #payload_token_stream
