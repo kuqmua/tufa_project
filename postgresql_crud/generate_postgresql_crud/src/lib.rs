@@ -2159,6 +2159,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &content_token_stream,
         )
     };
+    let generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream = |
+        operation: &Operation,
+        content_token_stream: &proc_macro2::TokenStream,
+    | -> proc_macro2::TokenStream {
+        proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+            &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation),
+            &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation),
+            &content_token_stream,
+        )
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -8056,15 +8066,4 @@ fn generate_parameters_pattern_token_stream(
         #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
         #parameters_token_stream
     }
-}
-
-fn generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
-    operation: &Operation,
-    content_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation),
-        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation),
-        &content_token_stream,
-    )
 }
