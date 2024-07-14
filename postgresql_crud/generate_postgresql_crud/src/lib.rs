@@ -2549,6 +2549,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
     let generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = |
         operation: &Operation,
         desirable_type_token_stream: &proc_macro2::TokenStream,
@@ -2557,7 +2558,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_route_logic_response_variants_token_stream = {
             let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
             let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-            let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|proc_macro_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(
                 &element,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -2938,7 +2938,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let desirable_response_creation_token_stream = {
             let response_snake_case = naming_constants::ResponseSnakeCase;
             let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-            let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
             let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
             let status_code_token_stream = &operation.desirable_status_code().to_axum_http_status_code_token_stream();
             quote::quote! {
@@ -3288,7 +3287,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     } => #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::#variant_ident { #fields_idents_token_stream }
                 }
             });
-            let desirable_upper_camel_case = naming_constants::DesirableUpperCamelCase;
             let expected_response_snake_case = naming_conventions::ExpectedResponseSnakeCase;
             quote::quote! {
                 let #try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = match #expected_response_snake_case {
