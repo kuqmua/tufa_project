@@ -2063,12 +2063,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     },
                     postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                        let field_ident_upper_camel_case_token_stream = {
-                            //todo fix syn_ident_to_upper_camel_case_token_stream error[E0434]: can't capture dynamic environment in a fn item
-                            let value = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
-                            value.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{value} {proc_macro_name_upper_camel_case_ident_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        let field_ident_upper_camel_case_token_stream = syn_ident_to_upper_camel_case_token_stream(&element.field_ident);
                         let field_ident_snake_case_token_stream = {
                             //todo its a temporal naming desicion. maybe it can be better
                             let value = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element.field_ident.to_string());
