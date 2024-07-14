@@ -2729,6 +2729,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #field_ident: #inner_type_with_serialize_deserialize_token_stream
         }
     };
+    let generate_pub_field_ident_field_type_token_stream = |element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
+        let field_ident = &element.field_ident;
+        let inner_type_token_stream = &element.inner_type_token_stream;
+        quote::quote! {
+            pub #field_ident: #inner_type_token_stream
+        }
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -7890,14 +7897,6 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             where_inner_type_token_stream,
             where_inner_type_with_serialize_deserialize_token_stream,
         })
-    }
-}
-
-fn generate_pub_field_ident_field_type_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
-    let field_ident = &element.field_ident;
-    let inner_type_token_stream = &element.inner_type_token_stream;
-    quote::quote! {
-        pub #field_ident: #inner_type_token_stream
     }
 }
 
