@@ -1034,9 +1034,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let inner_type_token_stream = &element.inner_type_token_stream;
         quote::quote! {pub use #inner_type_token_stream;}
     });
+    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let field_and_field_with_serialize_deserialize_token_stream = {
         let derive_debug = token_patterns::DeriveDebug;
-        let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
         let field_upper_camel_case = naming_constants::FieldUpperCamelCase;
         let field_with_serialize_deserialize_upper_camel_case = naming_conventions::FieldWithSerializeDeserializeUpperCamelCase;
         quote::quote!{
@@ -2738,7 +2738,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let payload_with_serialize_deserialize_token_stream = {
             let operation_payload_element_with_serialize_deserialize_token_stream = {
-                let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
                 let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation);
                 quote::quote! {
                     #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
@@ -2748,7 +2747,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             let operation_payload_with_serialize_deserialize_token_stream = {
-                let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
                 let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
                 let std_vec_vec_operation_payload_element_with_serialize_deserialize_token_stream = operation.std_vec_vec_self_payload_element_with_serialize_deserialize_token_stream();
                 quote::quote! {
@@ -2784,7 +2782,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         fields_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
         let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-        let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
         quote::quote! {
             #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
             pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
