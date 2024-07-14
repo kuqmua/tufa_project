@@ -681,6 +681,156 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         })
         .collect()
     };
+    #[derive(
+        Debug,
+        proc_macro_assistants::ToUpperCamelCaseStringified,
+        proc_macro_assistants::ToSnakeCaseStringified,
+    )]
+    enum Operation {
+        CreateMany,
+        CreateOne,
+        ReadMany,
+        ReadOne,
+        UpdateMany,
+        UpdateOne,
+        DeleteMany,
+        DeleteOne,
+    }
+    impl Operation {
+        const OPERATION_PAYLOAD_TRY_FROM_OPERATION_PAYLOAD_WITH_SERIALIZE_DESERIALIZE_STATUS_CODE: proc_macro_helpers::status_code::StatusCode = proc_macro_helpers::status_code::StatusCode::BadRequest400;
+        const fn http_method(&self) -> OperationHttpMethod {
+            match self {
+                Self::CreateMany |
+                Self::CreateOne |
+                Self::ReadMany |
+                Self::ReadOne => OperationHttpMethod::Post,
+                Self::UpdateMany |
+                Self::UpdateOne => OperationHttpMethod::Patch,
+                Self::DeleteMany |
+                Self::DeleteOne => OperationHttpMethod::Delete,
+            }
+        }
+        fn std_vec_vec_self_payload_element_token_stream(&self) -> proc_macro2::TokenStream {
+            let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(self);
+            quote::quote!{std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>}
+        }
+        fn std_vec_vec_self_payload_element_with_serialize_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
+            let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(self);
+            quote::quote!{std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>}
+        }
+        fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
+            &self,
+        ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
+            let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+            handle.push_value(
+                syn::PathSegment {
+                    ident: proc_macro2::Ident::new(
+                        &format!(
+                            "{}{}{}",
+                            naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self),
+                            naming_constants::ErrorUpperCamelCase,
+                            naming_constants::NamedUpperCamelCase,
+                        ),
+                        proc_macro2::Span::call_site()
+                    ),
+                    arguments: syn::PathArguments::None,
+                }
+            );
+            handle
+        }
+        const fn desirable_status_code(&self) -> proc_macro_helpers::status_code::StatusCode {
+            match self {
+                Self::CreateMany |
+                Self::CreateOne => proc_macro_helpers::status_code::StatusCode::Created201,
+                Self::ReadMany |
+                Self::ReadOne |
+                Self::UpdateMany |
+                Self::UpdateOne |
+                Self::DeleteMany |
+                Self::DeleteOne => proc_macro_helpers::status_code::StatusCode::Ok200,
+            }
+        }
+        fn operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code(&self) -> proc_macro_helpers::status_code::StatusCode {
+            Self::OPERATION_PAYLOAD_TRY_FROM_OPERATION_PAYLOAD_WITH_SERIALIZE_DESERIALIZE_STATUS_CODE.clone()
+        }
+        fn to_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
+                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
+                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalErrorVariants,
+                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalErrorVariants,
+                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalErrorVariants,
+                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalErrorVariants,
+                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalErrorVariants,
+                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
+            }
+        }
+        fn to_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
+                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
+                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalRouteLogic,
+                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalRouteLogic,
+                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalRouteLogic,
+                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalRouteLogic,
+                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalRouteLogic,
+                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
+            }
+        }
+        fn generate_error_initialization_eprintln_response_creation_token_stream(
+            &self,
+            syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
+            file: &'static str,
+            line: std::primitive::u32,
+            column: std::primitive::u32,
+            proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+        ) -> proc_macro2::TokenStream {
+            let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(self);
+            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(self);
+            let from_snake_case = naming_constants::FromSnakeCase;
+            let error_snake_case = naming_constants::ErrorSnakeCase;
+            let response_snake_case = naming_constants::ResponseSnakeCase;
+            let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+            let eprintln_error_token_stream = proc_macro_common::eprintln_error_token_stream();
+            let syn_variant_initialization_token_stream = syn_variant_wrapper.generate_initialization_token_stream(
+                &file,
+                line,
+                column,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream();
+            quote::quote! {
+                let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
+                #eprintln_error_token_stream
+                let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
+                *#response_snake_case.status_mut() = #status_code_token_stream;
+                return #response_snake_case;
+            }
+        }
+        fn generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
+            &self,
+            proc_macro_name_upper_camel_case_ident_stringified: &str
+        ) -> proc_macro_helpers::construct_syn_variant::SynVariantWrapper {
+            proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
+                &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self),
+                Some(self.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+                        &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(self),
+                        self.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
+                    )
+                ],
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            )
+        }
+    }
+    #[derive(proc_macro_assistants::ToSnakeCaseStringified)]
+    enum OperationHttpMethod {
+        Post,
+        Patch,
+        Delete,
+    }
     let generate_options_try_from_sqlx_row_token_stream = |
         operation: &Operation
     |{
@@ -7607,159 +7757,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 //         )]
 //     }
 // }
-
-#[derive(
-    Debug,
-    proc_macro_assistants::ToUpperCamelCaseStringified,
-    proc_macro_assistants::ToSnakeCaseStringified,
-)]
-enum Operation {
-    CreateMany,
-    CreateOne,
-    ReadMany,
-    ReadOne,
-    UpdateMany,
-    UpdateOne,
-    DeleteMany,
-    DeleteOne,
-}
-
-impl Operation {
-    const OPERATION_PAYLOAD_TRY_FROM_OPERATION_PAYLOAD_WITH_SERIALIZE_DESERIALIZE_STATUS_CODE: proc_macro_helpers::status_code::StatusCode = proc_macro_helpers::status_code::StatusCode::BadRequest400;
-    const fn http_method(&self) -> OperationHttpMethod {
-        match self {
-            Self::CreateMany |
-            Self::CreateOne |
-            Self::ReadMany |
-            Self::ReadOne => OperationHttpMethod::Post,
-            Self::UpdateMany |
-            Self::UpdateOne => OperationHttpMethod::Patch,
-            Self::DeleteMany |
-            Self::DeleteOne => OperationHttpMethod::Delete,
-        }
-    }
-    fn std_vec_vec_self_payload_element_token_stream(&self) -> proc_macro2::TokenStream {
-        let operation_payload_element_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(self);
-        quote::quote!{std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>}
-    }
-    fn std_vec_vec_self_payload_element_with_serialize_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
-        let operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream = naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(self);
-        quote::quote!{std::vec::Vec<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream>}
-    }
-    fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
-        &self,
-    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
-        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-        handle.push_value(
-            syn::PathSegment {
-                ident: proc_macro2::Ident::new(
-                    &format!(
-                        "{}{}{}",
-                        naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self),
-                        naming_constants::ErrorUpperCamelCase,
-                        naming_constants::NamedUpperCamelCase,
-                    ),
-                    proc_macro2::Span::call_site()
-                ),
-                arguments: syn::PathArguments::None,
-            }
-        );
-        handle
-    }
-    const fn desirable_status_code(&self) -> proc_macro_helpers::status_code::StatusCode {
-        match self {
-            Self::CreateMany |
-            Self::CreateOne => proc_macro_helpers::status_code::StatusCode::Created201,
-            Self::ReadMany |
-            Self::ReadOne |
-            Self::UpdateMany |
-            Self::UpdateOne |
-            Self::DeleteMany |
-            Self::DeleteOne => proc_macro_helpers::status_code::StatusCode::Ok200,
-        }
-    }
-    fn operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code(&self) -> proc_macro_helpers::status_code::StatusCode {
-        Self::OPERATION_PAYLOAD_TRY_FROM_OPERATION_PAYLOAD_WITH_SERIALIZE_DESERIALIZE_STATUS_CODE.clone()
-    }
-    fn to_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
-        match self {
-            Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
-            Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
-            Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalErrorVariants,
-            Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalErrorVariants,
-            Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalErrorVariants,
-            Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalErrorVariants,
-            Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalErrorVariants,
-            Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
-        }
-    }
-    fn to_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
-        match self {
-            Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
-            Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
-            Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalRouteLogic,
-            Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalRouteLogic,
-            Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalRouteLogic,
-            Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalRouteLogic,
-            Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalRouteLogic,
-            Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
-        }
-    }
-    fn generate_error_initialization_eprintln_response_creation_token_stream(
-        &self,
-        syn_variant_wrapper: &proc_macro_helpers::construct_syn_variant::SynVariantWrapper,
-        file: &'static str,
-        line: std::primitive::u32,
-        column: std::primitive::u32,
-        proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-    ) -> proc_macro2::TokenStream {
-        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(self);
-        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(self);
-        let from_snake_case = naming_constants::FromSnakeCase;
-        let error_snake_case = naming_constants::ErrorSnakeCase;
-        let response_snake_case = naming_constants::ResponseSnakeCase;
-        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-        let eprintln_error_token_stream = proc_macro_common::eprintln_error_token_stream();
-        let syn_variant_initialization_token_stream = syn_variant_wrapper.generate_initialization_token_stream(
-            &file,
-            line,
-            column,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream();
-        quote::quote! {
-            let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
-            #eprintln_error_token_stream
-            let mut #response_snake_case = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-            *#response_snake_case.status_mut() = #status_code_token_stream;
-            return #response_snake_case;
-        }
-    }
-    fn generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
-        &self,
-        proc_macro_name_upper_camel_case_ident_stringified: &str
-    ) -> proc_macro_helpers::construct_syn_variant::SynVariantWrapper {
-        proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
-            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(self),
-            Some(self.operation_payload_try_from_operation_payload_with_serialize_deserialize_status_code()),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-                    &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified(self),
-                    self.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated()
-                )
-            ],
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        )
-    }
-}
-
-#[derive(proc_macro_assistants::ToSnakeCaseStringified)]
-enum OperationHttpMethod {
-    Post,
-    Patch,
-    Delete,
-}
 
 // fn generate_async_test_wrapper_token_stream(
 //     operation_name_snake_case_stringified: &str,
