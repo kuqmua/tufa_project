@@ -31,7 +31,6 @@ fn crud(
         .route(
             "/create_many",
             axum::routing::post(
-                // common::repositories_types::server::routes::api::cats::create_many
                 common::repositories_types::server::routes::api::cats::try_create_many_route_logic
             ),
         )

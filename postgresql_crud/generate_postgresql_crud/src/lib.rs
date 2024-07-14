@@ -183,13 +183,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let table_name_stringified = pluralizer::pluralize(&ident_snake_case_stringified, 2, false);
-    let table_name_quotes_token_stream =
-        proc_macro_common::generate_quotes::token_stream(
-            &table_name_stringified,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
+    let table_name_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+        &table_name_stringified,
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
-    let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;};
     let fields_named = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             fields_named.named
@@ -965,7 +963,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
         vec![
             (
-                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,//todo display with serialize deserialize
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
                 &naming_conventions::NonExistingPrimaryKeysSnakeCase,
                 primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
             )
@@ -977,7 +975,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
         vec![
             (
-                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,//todo display with serialize deserialize
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
                 &naming_conventions::NonExistingPrimaryKeysSnakeCase, 
                 primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
             ),
@@ -6416,7 +6414,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // };
     // println!("{emulate_crud_api_usage_test_token_stream}");
     let common_token_stream = quote::quote! {
-        #table_name_declaration_token_stream
+        pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;
         #struct_options_token_stream
         #from_ident_for_ident_options_token_stream
         // // #(#structs_variants_token_stream)*
