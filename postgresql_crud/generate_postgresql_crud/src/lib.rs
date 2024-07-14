@@ -2570,6 +2570,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
+        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
         let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
                 let variant_ident = &element.ident;
@@ -2594,7 +2595,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             });
-            let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
             let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
             let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
             let value_snake_case = naming_constants::ValueSnakeCase;
@@ -2609,7 +2609,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         };
         let try_operation_route_logic_error_named_token_stream = {
-            let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(generate_error_occurence_variant_token_stream);
             quote::quote! {
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -2689,7 +2688,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
             let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
-            let payload_snake_case = naming_constants::PayloadSnakeCase;
             quote::quote! {
                 #derive_debug
                 pub struct #operation_parameters_upper_camel_case_token_stream {//todo maybe not need additional info, so parameters wrapper potentially can be removed
