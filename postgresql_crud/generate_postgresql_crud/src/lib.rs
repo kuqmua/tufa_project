@@ -1512,10 +1512,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream = |
+        value: &[SynFieldWithAdditionalInfo<'_>],
+    | {
+        value.iter().map(|element| {
+            let field_ident = element.field_ident;
+            generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
+                element,
+                &quote::quote!{#field_ident},
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            )
+        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>()
+    };
     let update_try_from_update_with_serialize_deserialize_error_named_token_stream = {
         let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
             &syn_field_with_additional_info_fields_named,
-            &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
@@ -4258,7 +4269,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     );
                                     let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
                                         &syn_field_with_additional_info_fields_named_excluding_primary_key,
-                                        &proc_macro_name_upper_camel_case_ident_stringified,
                                     );
                                     quote::quote! {
                                         #primary_key_variant_token_stream
@@ -7328,21 +7338,6 @@ fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_er
         &proc_macro_name_upper_camel_case_ident_stringified,
     )).collect()
 }
-
-fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
-    value: &[SynFieldWithAdditionalInfo<'_>],
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> std::vec::Vec<proc_macro2::TokenStream> {
-    value.iter().map(|element| {
-        let field_ident = element.field_ident;
-        generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
-            element,
-            &quote::quote!{#field_ident},
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        )
-    }).collect()
-}
-
 
 fn generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
     value: &[SynFieldWithAdditionalInfo<'_>],
