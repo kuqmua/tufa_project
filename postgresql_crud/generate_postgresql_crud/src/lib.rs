@@ -2597,7 +2597,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
             let into_serialize_deserialize_version_snake_case = naming_conventions::IntoSerializeDeserializeVersionSnakeCase;
-            let value_snake_case = naming_constants::ValueSnakeCase;
             proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                 &try_operation_route_logic_error_named_upper_camel_case_token_stream,
                 &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
