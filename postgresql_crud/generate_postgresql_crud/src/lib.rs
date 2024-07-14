@@ -3130,6 +3130,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let #field_ident = #initialization_token_stream;
         }
     };
+    let option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_fields_named_excluding_primary_key = {
+        let value = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream);
+        quote::quote!{#(#value)*}
+    };
     let let_field_ident_value_inner_type_from_fields_named_excluding_primary_key_token_stream = {
         let value = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element: &SynFieldWithAdditionalInfo<'_>| {
             let field_ident = &element.field_ident;
@@ -4299,10 +4303,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 };
                             }
                         };
-                        let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream);
                         quote::quote! {
                             #primary_key_field_assignment_token_stream
-                            #(#fields_assignment_excluding_primary_key_token_stream)*
+                            #option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_fields_named_excluding_primary_key
                             let #select_snake_case = #value_snake_case.#select_snake_case;
                             let #order_by_snake_case = #value_snake_case.#order_by_snake_case;
                             let #limit_snake_case = #limit_and_offset_type_token_stream::#from_snake_case(#value_snake_case.#limit_snake_case);
@@ -4372,10 +4375,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     };
                                 }
                             };
-                            let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream);
                             quote::quote! {
                                 #primary_key_field_assignment_token_stream
-                                #(#fields_assignment_excluding_primary_key_token_stream)*
+                                #option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_fields_named_excluding_primary_key
                                 let #select_snake_case = #value_snake_case.#select_snake_case;
                                 let #order_by_snake_case = #value_snake_case.#order_by_snake_case;
                                 let #limit_snake_case = #limit_and_offset_type_token_stream::#from_snake_case(#value_snake_case.#limit_snake_case);
@@ -6696,10 +6698,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let #primary_key_field_ident = #initialization_token_stream;
                                 }
                             };
-                            let fields_assignments_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream);
                             quote::quote! {
                                 #primary_key_let_field_ident_value_field_ident_try_from_token_stream
-                                #(#fields_assignments_token_stream)*
+                                #option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_fields_named_excluding_primary_key
                                 Ok(Self {
                                     #(#self_init_fields_token_stream),*
                                 })
