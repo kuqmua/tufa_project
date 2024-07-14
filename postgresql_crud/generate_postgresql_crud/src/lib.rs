@@ -2138,6 +2138,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let generate_impl_std_convert_try_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream =|
+        operation: &Operation,
+        content_token_stream: &proc_macro2::TokenStream,
+    | -> proc_macro2::TokenStream {
+        proc_macro_helpers::generate_impl_std_convert_try_from_token_stream::generate_impl_std_convert_try_from_token_stream(
+            &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation),
+            &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation),
+            &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation),
+            &content_token_stream,
+        )
+    };
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
@@ -8055,18 +8066,6 @@ fn generate_impl_std_convert_from_self_payload_element_with_serialize_deserializ
     proc_macro_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
         &naming_conventions::SelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(operation),
         &naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(operation),
-        &content_token_stream,
-    )
-}
-
-fn generate_impl_std_convert_try_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
-    operation: &Operation,
-    content_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    proc_macro_helpers::generate_impl_std_convert_try_from_token_stream::generate_impl_std_convert_try_from_token_stream(
-        &naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(operation),
-        &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation),
-        &naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(operation),
         &content_token_stream,
     )
 }
