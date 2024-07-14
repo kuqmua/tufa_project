@@ -3133,12 +3133,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let #field_ident = #initialization_token_stream;
         }
     };
-    let generate_let_field_ident_value_inner_type_from_token_stream = |element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
-        let field_ident = &element.field_ident;
-        let inner_type_token_stream = &element.inner_type_token_stream;
-        quote::quote! {
-            let #field_ident = #inner_type_token_stream::#from_snake_case(#value_snake_case.#field_ident);
-        }
+    let let_field_ident_value_inner_type_from_fields_named_excluding_primary_key_token_stream = {
+        let value = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element: &SynFieldWithAdditionalInfo<'_>| {
+            let field_ident = &element.field_ident;
+            let inner_type_token_stream = &element.inner_type_token_stream;
+            quote::quote! {
+                let #field_ident = #inner_type_token_stream::#from_snake_case(#value_snake_case.#field_ident);
+            }
+        });
+        quote::quote!{#(#value)*}
     };
     let field_ident_field_type_with_serialize_deserialize_fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(|element: &SynFieldWithAdditionalInfo<'_>| {
         let field_ident = &element.field_ident;
@@ -3397,13 +3400,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 postgresql_crud_common::FromOrTryFrom::From => {
                     let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = generate_impl_std_convert_from_self_payload_element_with_serialize_deserialize_for_self_payload_element_token_stream(
                         &operation,
-                        &{
-                            let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(generate_let_field_ident_value_inner_type_from_token_stream);
-                            quote::quote! {
-                                #(#fields_assignment_excluding_primary_key_token_stream)*
-                                Self {
-                                    #(#fields_idents_excluding_primary_key_token_stream),*
-                                }
+                        &quote::quote! {
+                            #let_field_ident_value_inner_type_from_fields_named_excluding_primary_key_token_stream
+                            Self {
+                                #(#fields_idents_excluding_primary_key_token_stream),*
                             }
                         },
                     );
@@ -3896,14 +3896,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => generate_impl_std_convert_from_self_payload_with_serialize_deserialize_for_self_payload_token_stream(
                     &operation,
-                    &{
-                        let fields_assignment_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter()
-                        .map(generate_let_field_ident_value_inner_type_from_token_stream);
-                        quote::quote! {
-                            #(#fields_assignment_excluding_primary_key_token_stream)*
-                            Self {
-                                #(#fields_idents_excluding_primary_key_token_stream),*
-                            }
+                    &quote::quote! {
+                        #let_field_ident_value_inner_type_from_fields_named_excluding_primary_key_token_stream
+                        Self {
+                            #(#fields_idents_excluding_primary_key_token_stream),*
                         }
                     },
                 ),
