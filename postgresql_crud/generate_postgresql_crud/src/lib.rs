@@ -3147,13 +3147,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #field_ident: #inner_type_with_serialize_deserialize_token_stream
         }
     };
-    let generate_pub_field_ident_field_type_token_stream = |element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
+    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(|element: &SynFieldWithAdditionalInfo<'_>| {
         let field_ident = &element.field_ident;
         let inner_type_token_stream = &element.inner_type_token_stream;
         quote::quote! {
             pub #field_ident: #inner_type_token_stream
         }
-    };
+    });
     let expected_response_snake_case = naming_conventions::ExpectedResponseSnakeCase;
     let generate_try_operation_token_stream = |
         operation: &Operation,
@@ -3389,7 +3389,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ) = {
                 generate_payload_and_payload_with_serialize_deserialize_create_many_or_update_many(
                     &operation,
-                    &generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream),
+                    &pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream,
                     &generate_fields_named_excluding_primary_key_token_stream(generate_field_ident_field_type_with_serialize_deserialize_token_stream),
                 )
             };
@@ -3887,7 +3887,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = generate_operation_payload_token_stream(
                 &operation,
-                &generate_fields_named_excluding_primary_key_token_stream(generate_pub_field_ident_field_type_token_stream),
+                &pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream,
             );
             let payload_with_serialize_deserialize_token_stream = generate_payload_with_serialize_deserialize_token_stream(
                 &operation,
