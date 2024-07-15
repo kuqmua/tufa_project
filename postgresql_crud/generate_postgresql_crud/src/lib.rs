@@ -1520,9 +1520,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let fields_idents_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| element.field_ident).collect::<std::vec::Vec<&syn::Ident>>();
     let std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream = quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>};
     let std_vec_vec_struct_options_ident_token_stream = quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>};
-    //todo reuse naming
-    // let not_unique_column_upper_camel_case = naming_conventions::NotUniqueColumnUpperCamelCase;
-    // let not_unique_column_snake_case = naming_conventions::NotUniqueColumnSnakeCase;
     let not_unique_column_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::NotUniqueColumnUpperCamelCase,
         Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
@@ -1538,13 +1535,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    // let axum_http_status_code_token_stream = quote::quote!{axum::http::StatusCode};
-    // let postgresql_crud_get_axum_http_status_code_token_stream = quote::quote!{postgresql_crud::GetAxumHttpStatusCode};
-    // let get_axum_http_status_code_snake_case = naming_conventions::GetAxumHttpStatusCodeSnakeCase;
-    // let app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream = quote::quote!{#app_state_snake_case: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,};
-    // let body_bytes_bytes_bytes_token_stream = quote::quote!{#body_bytes_snake_case: bytes::Bytes,};
-    // let axum_response_into_response_token_stream = quote::quote!{axum::response::IntoResponse};
-    // let axum_response_response_token_stream = quote::quote!{axum::response::Response};
     let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
     let serde_json_to_string_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::SerdeJsonToStringUpperCamelCase,
@@ -1643,14 +1633,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let common_http_request_syn_variants = {
-        vec![
-            serde_json_to_string_syn_variant_wrapper.get_syn_variant().clone(),
-            failed_to_get_response_text_syn_variant_wrapper.get_syn_variant().clone(),
-            deserialize_response_syn_variant_wrapper.get_syn_variant().clone(),
-            reqwest_syn_variant_wrapper.get_syn_variant().clone(),
-        ]
-    };
     let check_body_size_syn_variant_wrapper = proc_macro_helpers::construct_syn_variant::SynVariantWrapper::new(
         &naming_conventions::CheckBodySizeUpperCamelCase,
         Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
@@ -1751,6 +1733,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let common_http_request_syn_variants = {
+        vec![
+            serde_json_to_string_syn_variant_wrapper.get_syn_variant().clone(),
+            failed_to_get_response_text_syn_variant_wrapper.get_syn_variant().clone(),
+            deserialize_response_syn_variant_wrapper.get_syn_variant().clone(),
+            reqwest_syn_variant_wrapper.get_syn_variant().clone(),
+        ]
+    };
     let generate_additional_error_variants = |
         syn_derive_input: &syn::DeriveInput,
         generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute,
