@@ -178,9 +178,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     });
     // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
-    let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-        &ident.to_string()
-    );
+    let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let table_name_stringified = pluralizer::pluralize(&ident_snake_case_stringified, 2, false);
     let table_name_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
@@ -3068,7 +3066,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let expected_response_snake_case = naming_conventions::ExpectedResponseSnakeCase;
     let generate_try_operation_token_stream = |
         operation: &Operation,
-        table_name_stringified: &std::primitive::str,
         type_variants_from_request_response_syn_variants: &[syn::Variant],
         result_ok_type_token_stream: &proc_macro2::TokenStream,
         payload_check_token_stream: &proc_macro2::TokenStream,
@@ -3097,7 +3094,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let url_snake_case = naming_constants::UrlSnakeCase;
         let server_location_snake_case = naming_conventions::ServerLocationSnakeCase;
         let url_token_stream = {
-            let url_handle_token_stream = naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, table_name_stringified);
+            let url_handle_token_stream = naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, &table_name_stringified);
             quote::quote! {
                 let #url_snake_case = format!(
                     #url_handle_token_stream,
@@ -3645,7 +3642,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
@@ -3982,7 +3978,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
@@ -4759,7 +4754,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_struct_options_ident_token_stream,
                 &{
@@ -5208,7 +5202,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &struct_options_ident_token_stream,
                 &{
@@ -5931,7 +5924,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_token_stream,
                 &{
@@ -6339,7 +6331,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
@@ -6997,7 +6988,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
@@ -7370,7 +7360,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &table_name_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
