@@ -4053,7 +4053,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 2);
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 4 + not_unique_fields_syn_variants_wrappers.len());
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
@@ -4886,7 +4886,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = common_route_syn_variants.clone();
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+                common_route_syn_variants.iter().for_each(|element|{
+                    value.push(*element);
+                });
                 value.push(&not_unique_column_syn_variant_wrapper.get_syn_variant());
                 value
             },
@@ -5237,7 +5240,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len());
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 6);
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
@@ -5919,7 +5922,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 3);
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
@@ -6240,7 +6243,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // let not_unique_field_vec_syn_variants = fields_named_excluding_primary_key
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 7 + not_unique_fields_syn_variants_wrappers.len());
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
