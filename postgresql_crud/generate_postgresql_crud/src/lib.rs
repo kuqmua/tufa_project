@@ -1902,7 +1902,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let update_fields_token_stream = {
-        let primary_key_field_named_token_stream = quote::quote! {pub #primary_key_field_ident: #primary_key_inner_type_token_stream};
         let fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWithAdditionalInfo<'_>| {
            let field_ident = &element.field_ident;
            let inner_type_token_stream = &element.inner_type_token_stream;
@@ -1911,7 +1910,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
            }
         });
         quote::quote! {
-            #primary_key_field_named_token_stream,
+            pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
             #fields_named_excluding_primary_key_token_stream
         }
     };
