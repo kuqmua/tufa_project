@@ -3063,7 +3063,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             pub #field_ident: #inner_type_token_stream
         }
     });
-    let expected_response_snake_case = naming_conventions::ExpectedResponseSnakeCase;
     let generate_try_operation_token_stream = |
         operation: &Operation,
         type_variants_from_request_response_syn_variants: &[syn::Variant],
@@ -3173,6 +3172,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+        let expected_response_snake_case = naming_conventions::ExpectedResponseSnakeCase;
         let expected_response_token_stream = {
             let deserialize_response_syn_variant_initialization_token_stream = &deserialize_response_syn_variant_wrapper.generate_initialization_token_stream(
                 file!(),
@@ -3759,6 +3759,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {}
         )
     };
+    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     &proc_macro_name_upper_camel_case,
+    //     &create_many_token_stream,
+    //     &proc_macro_name_upper_camel_case_ident_stringified
+    // );
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper = operation.generate_self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper(
