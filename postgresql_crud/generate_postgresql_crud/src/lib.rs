@@ -3111,7 +3111,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(
                 &operation.http_method(),
             );
-            let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
             let commit_header_addition_token_stream = quote::quote! {
                 .header(
                     &postgresql_crud::CommitSnakeCase.to_string(),//todo remove it
@@ -3127,7 +3126,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
             };
             quote::quote! {
-                let #future_snake_case = #reqwest_client_new_token_stream
+                let #future_snake_case = reqwest::Client::new()
                     .#operation_http_method_snake_case_token_stream(&#url_snake_case)
                     #commit_header_addition_token_stream
                     #content_type_application_json_header_addition_token_stream
