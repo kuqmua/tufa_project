@@ -1,7 +1,8 @@
-pub const POSTGRESQL_CRUD_SNAKE_CASE: &str = "postgresql_crud";
-
 fn add_path(value: &str) -> std::string::String {
-    format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
+    format!(
+        "{}::{value}",
+        naming_conventions::PostgresqlCrudSnakeCase
+    )
 }
 
 #[derive(Debug, Clone, Copy)]

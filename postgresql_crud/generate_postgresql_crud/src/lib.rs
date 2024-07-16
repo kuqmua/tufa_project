@@ -215,7 +215,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 return Err(std::string::String::from("no first value in punctuated"));
                             }
                         };
-                        if first.ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                        if first.ident != &naming_conventions::PostgresqlCrudSnakeCase.to_string() {
                             return Err(format!("{name} field_type is not syn::Type::Path"));
                         }
                         match first.arguments {
@@ -365,13 +365,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
+    let postgresql_snake_case_stringified = &naming_conventions::PostgresqlCrudSnakeCase.to_string();
     let primary_key_syn_field_with_additional_info = {
         let mut primary_key_field_option = None;
         for element in &syn_field_with_additional_info_fields_named {
             match &element.field.ty {
                 syn::Type::Path(value) => {
                     if value.path.segments.len() == 2 {
-                        assert!(value.path.segments.first().expect("no first value in punctuated").ident == postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, "{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
+                        assert!(value.path.segments.first().expect("no first value in punctuated").ident == postgresql_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
                         match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(&value.path.segments.iter().nth(1).expect("no second element").ident.to_string()) {
                             Ok(value) => {
                                 if postgresql_crud_common::RustSqlxMapToPostgresTypeVariantPrimaryKey::try_from(&value).is_ok() {
@@ -862,7 +863,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteOneAdditionalRouteLogic => naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
                 Self::CommonAdditionalRouteLogic => naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
             };
-            format!("{}::{value}", postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE)
+            format!("{}::{value}", naming_conventions::PostgresqlCrudSnakeCase)
         }
     }
     #[derive(
@@ -1457,7 +1458,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}")
             }
         };
-        generate_std_vec_vec_syn_punctuated_punctuated(&[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, name])
+        generate_std_vec_vec_syn_punctuated_punctuated(&[postgresql_snake_case_stringified, name])
     };
     let non_existing_primary_keys_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming_conventions::NonExistingPrimaryKeysUpperCamelCase,
@@ -1758,7 +1759,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
             &naming_conventions::BindQuerySnakeCase,
             proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, &naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()],
+                &[&postgresql_snake_case_stringified, &naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()],
                 &proc_macro_name_upper_camel_case_ident_stringified
             ),
         )],
@@ -1773,7 +1774,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 {
                     let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                     value.push_value(syn::PathSegment {
-                        ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                        ident: proc_macro2::Ident::new(&postgresql_snake_case_stringified.to_string(), proc_macro2::Span::call_site()),
                         arguments: syn::PathArguments::None,
                     });
                     value.push_punct(syn::token::PathSep {
@@ -1798,7 +1799,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 {
                     let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                     value.push_value(syn::PathSegment {
-                        ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                        ident: proc_macro2::Ident::new(&postgresql_snake_case_stringified.to_string(), proc_macro2::Span::call_site()),
                         arguments: syn::PathArguments::None,
                     });
                     value.push_punct(syn::token::PathSep {
@@ -2341,7 +2342,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     {
                         let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                         value.push_value(syn::PathSegment {
-                            ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                            ident: proc_macro2::Ident::new(&postgresql_snake_case_stringified.to_string(), proc_macro2::Span::call_site()),
                             arguments: syn::PathArguments::None,
                         });
                         value.push_punct(syn::token::PathSep {
@@ -4387,8 +4388,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let element_field_ident = &element.field_ident;
                                 let field_ident_token_stream = {
                                     let value = format!(
-                                        "{}::{}",
-                                        postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+                                        "{postgresql_snake_case_stringified}::{}",
                                         postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
                                             &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
                                         ),
@@ -4415,7 +4415,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             {
                                                 let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                                                 value.push_value(syn::PathSegment {
-                                                    ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                                                    ident: proc_macro2::Ident::new(&postgresql_snake_case_stringified, proc_macro2::Span::call_site()),
                                                     arguments: syn::PathArguments::None,
                                                 });
                                                 value.push_punct(syn::token::PathSep {
@@ -4823,8 +4823,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 );
                                 let field_ident_token_stream = {
                                     let value = format!(
-                                        "{}::{}",
-                                        postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+                                        "{postgresql_snake_case_stringified}::{}",
                                         postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
                                             &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
                                         ),
@@ -6545,8 +6544,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let element_field_ident = &element.field_ident;
                                 let field_ident_token_stream = {
                                     let value = format!(
-                                        "{}::{}",
-                                        postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,
+                                        "{postgresql_snake_case_stringified}::{}",
                                         postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
                                             &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
                                         ),
@@ -6573,7 +6571,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             {
                                                 let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                                                 value.push_value(syn::PathSegment {
-                                                    ident: proc_macro2::Ident::new(&postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, proc_macro2::Span::call_site()),
+                                                    ident: proc_macro2::Ident::new(&postgresql_snake_case_stringified, proc_macro2::Span::call_site()),
                                                     arguments: syn::PathArguments::None,
                                                 });
                                                 value.push_punct(syn::token::PathSep {
