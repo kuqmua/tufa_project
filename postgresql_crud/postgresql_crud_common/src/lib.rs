@@ -6799,21 +6799,17 @@ impl<'de> serde::Deserialize<'de> for Meow {
         D: serde::Deserializer<'de>,
     {
         enum Field { Months, Days, Microseconds }
-
         impl<'de> serde::Deserialize<'de> for Field {
             fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
                 struct FieldVisitor;
-
                 impl serde::de::Visitor<'_> for FieldVisitor {
                     type Value = Field;
-
                     fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         formatter.write_str("`months` or `days` or `microseconds`")
                     }
-
                     fn visit_str<E>(self, value: &str) -> Result<Field, E>
                     where
                         E: serde::de::Error,
@@ -6826,20 +6822,15 @@ impl<'de> serde::Deserialize<'de> for Meow {
                         }
                     }
                 }
-
                 deserializer.deserialize_identifier(FieldVisitor)
             }
         }
-
         struct MeowVisitor;
-
         impl<'de> serde::de::Visitor<'de> for MeowVisitor {
             type Value = Meow;
-
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 formatter.write_str("struct Meow")
             }
-
             fn visit_seq<V>(self, mut seq: V) -> Result<Meow, V::Error>
             where
                 V: serde::de::SeqAccess<'de>,
@@ -6856,7 +6847,6 @@ impl<'de> serde::Deserialize<'de> for Meow {
                     microseconds,
                 }))
             }
-
             fn visit_map<V>(self, mut map: V) -> Result<Meow, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -6896,45 +6886,7 @@ impl<'de> serde::Deserialize<'de> for Meow {
                 }))
             }
         }
-
         const FIELDS: &[&str] = &["months", "days", "microseconds"];
         deserializer.deserialize_struct("Meow", FIELDS, MeowVisitor)
     }
 }
-
-// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-// #[derive(Debug, Clone, Copy)]
-// pub struct MeowWithSerializeDeserialize {
-//     months: std::primitive::i32,
-//     days: std::primitive::i32,
-//     microseconds: std::primitive::i64,
-// }
-// impl std::convert::From<MeowWithSerializeDeserialize> for Meow {
-//     fn from(value: MeowWithSerializeDeserialize) -> Self {
-//         Self(sqlx::postgres::types::PgInterval {
-//             months: value.months,
-//             days: value.days,
-//             microseconds: value.microseconds,
-//         })
-//     }
-// }
-
-
-// impl std::convert::From<Meow>
-//     for MeowWithSerializeDeserialize
-// {
-//     fn from(value: Meow) -> Self {
-//         Self {
-//             months: value.0.months,
-//             days: value.0.days,
-//             microseconds: value.0.microseconds,
-//         }
-//     }
-// }
-// impl std::fmt::Display for MeowWithSerializeDeserialize {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(formatter, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
-//     }
-// }
-// impl AsPostgresqlInterval for Meow {}
-// impl PostgresqlOrder for Meow {}
