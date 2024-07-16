@@ -1443,25 +1443,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    // let axum_response_into_response = token_patterns::AxumResponseIntoResponse;
-    // let axum_extract_rejection_json_rejection = token_patterns::AxumExtractRejectionJsonRejection;
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
-    // let axum_extract_state_token_stream = quote::quote! {axum::extract::State};
-    // let axum_json_token_stream = quote::quote! {axum::Json};
-    //todo remove it after refactor to not support middleware
-    // let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote! {crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
     //todo reuse BindQuery path
     let postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::bind_value_to_query};
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
     let postgresql_crud_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_increment};
     let increment_initialization_token_stream = quote::quote! {let mut increment: u64 = 0;};
-    // let http_status_code = token_patterns::HttpStatusCode;
-    // let reqwest_header_header_map = token_patterns::ReqwestHeaderHeaderMap;
-    // let reqwest_error = token_patterns::ReqwestError;
-    // let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
-    // let try_extract_value_snake_case = naming_conventions::TryExtractValueSnakeCase;
     let dot_space = ", ";
-    // let pg_temp_stringified = "pg_temp";
     let where_snake_case_qoutes_token_stream = proc_macro_common::generate_quotes::token_stream(
         &where_snake_case.to_string(),
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -1473,30 +1461,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let in_snake_case = naming_constants::InSnakeCase;
     let unnest_snake_case = naming_constants::UnnestSnakeCase;
     let response_snake_case = naming_constants::ResponseSnakeCase;
-    // let primary_keys_snake_case = naming_conventions::PrimaryKeysSnakeCase;
-    // let primary_key_snake_case = naming_conventions::PrimaryKeySnakeCase;
-    // let into_inner_type_vec_snake_case = naming_conventions::IntoInnerTypeVecSnakeCase;
-    // let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
-    // let expected_type_upper_camel_case = naming_conventions::ExpectedTypeUpperCamelCase;
-    // let expected_type_snake_case = naming_conventions::ExpectedTypeSnakeCase;
-    // let unexpected_status_code_upper_camel_case = naming_conventions::UnexpectedStatusCodeUpperCamelCase;
     let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
-    // let headers_snake_case = naming_constants::HeadersSnakeCase;
     let body_snake_case = naming_constants::BodySnakeCase;
-    // let response_text_result_snake_case = naming_conventions::ResponseTextResultSnakeCase;
-    // let response_text_snake_case = naming_conventions::ResponseTextSnakeCase;
     let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(&syn_field_with_additional_info_fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>())
         .iter()
         .map(|element| quote::quote! {#element,})
         .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    // let select_full_variant_token_stream = {
-    //     let value = fields_named.iter().fold(std::string::String::default(), |mut #acc_snake_case, element| {
-    //         #acc_snake_case.push_str(&convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::UpperCamel));
-    //         #acc_snake_case
-    //     });
-    //     value.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
     let (
         limit_and_offset_type_token_stream,
         limit_and_offset_type_with_serialize_deserialize_token_stream,
