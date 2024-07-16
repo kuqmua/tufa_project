@@ -2901,9 +2901,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
         let acquire_pool_and_connection_token_stream = {
-            let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
             let pool_connection_snake_case = naming_conventions::PoolConnectionSnakeCase;
-            let postgresql_syn_variant_wrapper_initialization_token_stream = generate_initialization_token_stream(
+            let postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                &operation,
                 &postgresql_syn_variant_wrapper,
                 file!(),
                 line!(),
@@ -2913,23 +2913,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_0_token_stream) => {
-                        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
-                        #eprintln_error_token_stream;//todo reuse it as token_stream    
-                        let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                        *res.status_mut() = axum::http::StatusCode::CREATED;//todo
-                        // *res.headers_mut() = axum::http::HeaderMap::new();
-                        return res;
+                        #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                     }
                 };
                 let #executor_snake_case = match sqlx::Acquire::acquire(&mut #pool_connection_snake_case).await {
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_0_token_stream) => {
-                        let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#postgresql_syn_variant_wrapper_initialization_token_stream;
-                        #eprintln_error_token_stream;   
-                        let mut res = axum::response::IntoResponse::#into_response_snake_case(axum::Json(#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)));
-                        *res.status_mut() = axum::http::StatusCode::CREATED;//todo
-                        // *res.headers_mut() = axum::http::HeaderMap::new();
-                        return res;
+                        #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                     }
                 };
             }
