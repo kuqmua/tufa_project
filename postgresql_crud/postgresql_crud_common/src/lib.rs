@@ -6719,3 +6719,78 @@ pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
+
+/////////////////////////////////////////////
+// #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFromWithEqImpl)]
+#[derive(Debug, Clone)]
+pub struct Meow(pub sqlx::postgres::types::PgInterval);
+impl serde::Serialize for Meow {
+    fn serialize<S>(
+        &self,
+        serializer: S,
+    ) -> serde::__private::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let mut serde_state = serde::Serializer::serialize_struct(
+            serializer,
+            "Meow",
+            false as usize + 1 + 1 + 1,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "months",
+            &self.0.months,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "days",
+            &self.0.days,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "microseconds",
+            &self.0.microseconds,
+        )?;
+        serde::ser::SerializeStruct::end(serde_state)
+    }
+}
+
+
+
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy)]
+pub struct MeowWithSerializeDeserialize {
+    months: std::primitive::i32,
+    days: std::primitive::i32,
+    microseconds: std::primitive::i64,
+}
+impl std::convert::From<MeowWithSerializeDeserialize>
+    for Meow
+{
+    fn from(value: MeowWithSerializeDeserialize) -> Self {
+        Self(sqlx::postgres::types::PgInterval {
+            months: value.months,
+            days: value.days,
+            microseconds: value.microseconds,
+        })
+    }
+}
+// impl std::convert::From<Meow>
+//     for MeowWithSerializeDeserialize
+// {
+//     fn from(value: Meow) -> Self {
+//         Self {
+//             months: value.0.months,
+//             days: value.0.days,
+//             microseconds: value.0.microseconds,
+//         }
+//     }
+// }
+// impl std::fmt::Display for MeowWithSerializeDeserialize {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
+//     }
+// }
+// impl AsPostgresqlInterval for Meow {}
+// impl PostgresqlOrder for Meow {}
