@@ -857,7 +857,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             column,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap().to_axum_http_status_code_token_stream();
+        let status_code_token_stream = syn_variant_wrapper.get_option_status_code()
+            .unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_status_code is None"))
+            .to_axum_http_status_code_token_stream();
         quote::quote! {
             let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
             #eprintln_error_token_stream
