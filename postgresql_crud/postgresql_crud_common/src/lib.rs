@@ -6535,7 +6535,7 @@ impl<T> std::convert::From<WhereStdOptionOptionSqlxTypesJsonWithSerializeDeseria
         }
     }
 }
-//
+
 #[derive(
     Debug,
     PartialEq,
@@ -6560,20 +6560,12 @@ impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for StdOptionOptionS
         value.0.map_or_else(|| Self(None), |value| Self(Some(SqlxTypesJsonWithSerializeDeserialize::from(SqlxTypesJson(value)))))
     }
 }
-//
 
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SerdeJsonValue(pub serde_json::Value);
 impl AsPostgresqlJson for SerdeJsonValue {}
 impl AsPostgresqlJsonB for SerdeJsonValue {}
-
-// pub async fn something() {
-    // let mut query = sqlx::query::<sqlx::Postgres>("test");
-    // query = query.bind(Into::<bool>::into(StdPrimitiveBool(false)));
-    // query = query.bind(StdPrimitiveBool(false).into_inner());
-    // let _query = query.bind(StdPrimitiveBool(false));
-// }
 
 pub fn test_check_supported_postgresql_column_type() {
     //todo check if init functions are not panics. change to not panic init functions
@@ -6726,62 +6718,3 @@ pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
-
-
-
-// impl axum::response::IntoResponse for axum::extract::rejection::JsonRejection {
-//     fn into_response(self) -> axum::response::Response {
-//         // match &self {
-
-//         // }
-//         todo!()
-//     }
-// }
-
-//
-// #[derive(
-//     Debug,
-//     thiserror::Error,
-//     error_occurence_lib::ErrorOccurence,
-// )]
-// pub enum JsonExtractorErrorNamed {
-//     JsonDataError {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         json_data_error: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     JsonSyntaxError {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         json_syntax_error: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     MissingJsonContentType {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         missing_json_content_type: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     BytesRejection {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         bytes_rejection: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NonExhaustiveCase {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         unexpected_case: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
-
-// impl std::convert::From<axum::extract::rejection::JsonRejection> for JsonExtractorErrorNamed {
-//     fn from(value: axum::extract::rejection::JsonRejection) -> Self {
-//                 let f = match e {
-//                     axum::extract::rejection::JsonRejectionJsonDataError(value),
-//                     axum::extract::rejection::JsonRejectionJsonSyntaxError(JsonSyntaxError),
-//                     axum::extract::rejection::JsonRejectionMissingJsonContentType(MissingJsonContentType),
-//                     axum::extract::rejection::JsonRejectionBytesRejection(BytesRejection),
-//                 };
-//     }
-// }
-
-
-//
