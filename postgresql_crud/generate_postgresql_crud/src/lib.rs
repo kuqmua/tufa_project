@@ -876,9 +876,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         Patch,
         Delete,
     }
-    let generate_options_try_from_sqlx_row_token_stream = |
-        operation: &Operation
-    |{
+    let generate_options_try_from_sqlx_row_token_stream = |operation: &Operation|{
         let declaration_primary_key_token_stream = {
             let inner_type_with_serialize_deserialize_token_stream = &primary_key_inner_type_with_serialize_deserialize_token_stream;
             quote::quote! {
