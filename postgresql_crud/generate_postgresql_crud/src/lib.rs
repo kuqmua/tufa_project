@@ -1,7 +1,6 @@
-//todo generate for each create update delete body length checked and for path query headers too
+//todo checked and for path query headers too
 //todo how to write filter logic for sqlx rust postgresql types?
 //todo decide where to do error log (maybe add in some places)
-//todo validate uuid
 //todo add regex filter to query parameters - now supports only in body variants
 //todo regex filter support only for string-like types postgresql
 //todo generate route what will return columns of the table and their rust and postgersql types
