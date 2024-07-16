@@ -4223,6 +4223,131 @@ impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFromWithEqImpl)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
+impl serde::Serialize for SqlxPostgresTypesPgInterval {
+    fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let mut serde_state = serde::Serializer::serialize_struct(
+            serializer,
+            "SqlxPostgresTypesPgInterval",
+            false as usize + 1 + 1 + 1,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "months",
+            &self.0.months,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "days",
+            &self.0.days,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "microseconds",
+            &self.0.microseconds,
+        )?;
+        serde::ser::SerializeStruct::end(serde_state)
+    }
+}
+impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        enum Field { Months, Days, Microseconds }
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct FieldVisitor;
+                impl serde::de::Visitor<'_> for FieldVisitor {
+                    type Value = Field;
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        formatter.write_str("`months` or `days` or `microseconds`")
+                    }
+                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "months" => Ok(Field::Months),
+                            "days" => Ok(Field::Days),
+                            "microseconds" => Ok(Field::Microseconds),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(FieldVisitor)
+            }
+        }
+        struct SqlxPostgresTypesPgIntervalVisitor;
+        impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgIntervalVisitor {
+            type Value = SqlxPostgresTypesPgInterval;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct SqlxPostgresTypesPgInterval")
+            }
+            fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
+            where
+                V: serde::de::SeqAccess<'de>,
+            {
+                let months = seq.next_element()?
+                    .ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                let days = seq.next_element()?
+                    .ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                let microseconds = seq.next_element()?
+                    .ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
+                Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
+                    months,
+                    days,
+                    microseconds,
+                }))
+            }
+            fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut months = None;
+                let mut days = None;
+                let mut microseconds = None;
+                while let Some(key) = map.next_key()? {
+                    match key {
+                        Field::Months => {
+                            if months.is_some() {
+                                return Err(serde::de::Error::duplicate_field("months"));
+                            }
+                            months = Some(map.next_value()?);
+                        }
+                        Field::Days => {
+                            if days.is_some() {
+                                return Err(serde::de::Error::duplicate_field("days"));
+                            }
+                            days = Some(map.next_value()?);
+                        }
+                        Field::Microseconds => {
+                            if microseconds.is_some() {
+                                return Err(serde::de::Error::duplicate_field("microseconds"));
+                            }
+                            microseconds = Some(map.next_value()?);
+                        }
+                    }
+                }
+                let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
+                let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
+                let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
+                Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
+                    months,
+                    days,
+                    microseconds,
+                }))
+            }
+        }
+        const FIELDS: &[&str] = &["months", "days", "microseconds"];
+        deserializer.deserialize_struct("SqlxPostgresTypesPgInterval", FIELDS, SqlxPostgresTypesPgIntervalVisitor)
+    }
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     months: std::primitive::i32,
@@ -6759,134 +6884,4 @@ impl Default for Order {
 pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
-}
-
-/////////////////////////////////////////////
-#[derive(Debug, Clone, PartialEq, Eq)]//, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFromWithEqImpl
-pub struct Meow(pub sqlx::postgres::types::PgInterval);
-impl serde::Serialize for Meow {
-    fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        let mut serde_state = serde::Serializer::serialize_struct(
-            serializer,
-            "Meow",
-            false as usize + 1 + 1 + 1,
-        )?;
-        serde::ser::SerializeStruct::serialize_field(
-            &mut serde_state,
-            "months",
-            &self.0.months,
-        )?;
-        serde::ser::SerializeStruct::serialize_field(
-            &mut serde_state,
-            "days",
-            &self.0.days,
-        )?;
-        serde::ser::SerializeStruct::serialize_field(
-            &mut serde_state,
-            "microseconds",
-            &self.0.microseconds,
-        )?;
-        serde::ser::SerializeStruct::end(serde_state)
-    }
-}
-
-impl<'de> serde::Deserialize<'de> for Meow {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        enum Field { Months, Days, Microseconds }
-        impl<'de> serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
-            where
-                D: serde::Deserializer<'de>,
-            {
-                struct FieldVisitor;
-                impl serde::de::Visitor<'_> for FieldVisitor {
-                    type Value = Field;
-                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        formatter.write_str("`months` or `days` or `microseconds`")
-                    }
-                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                    where
-                        E: serde::de::Error,
-                    {
-                        match value {
-                            "months" => Ok(Field::Months),
-                            "days" => Ok(Field::Days),
-                            "microseconds" => Ok(Field::Microseconds),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                        }
-                    }
-                }
-                deserializer.deserialize_identifier(FieldVisitor)
-            }
-        }
-        struct MeowVisitor;
-        impl<'de> serde::de::Visitor<'de> for MeowVisitor {
-            type Value = Meow;
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct Meow")
-            }
-            fn visit_seq<V>(self, mut seq: V) -> Result<Meow, V::Error>
-            where
-                V: serde::de::SeqAccess<'de>,
-            {
-                let months = seq.next_element()?
-                    .ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                let days = seq.next_element()?
-                    .ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                let microseconds = seq.next_element()?
-                    .ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
-                Ok(Meow(sqlx::postgres::types::PgInterval {
-                    months,
-                    days,
-                    microseconds,
-                }))
-            }
-            fn visit_map<V>(self, mut map: V) -> Result<Meow, V::Error>
-            where
-                V: serde::de::MapAccess<'de>,
-            {
-                let mut months = None;
-                let mut days = None;
-                let mut microseconds = None;
-                while let Some(key) = map.next_key()? {
-                    match key {
-                        Field::Months => {
-                            if months.is_some() {
-                                return Err(serde::de::Error::duplicate_field("months"));
-                            }
-                            months = Some(map.next_value()?);
-                        }
-                        Field::Days => {
-                            if days.is_some() {
-                                return Err(serde::de::Error::duplicate_field("days"));
-                            }
-                            days = Some(map.next_value()?);
-                        }
-                        Field::Microseconds => {
-                            if microseconds.is_some() {
-                                return Err(serde::de::Error::duplicate_field("microseconds"));
-                            }
-                            microseconds = Some(map.next_value()?);
-                        }
-                    }
-                }
-                let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
-                let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
-                let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
-                Ok(Meow(sqlx::postgres::types::PgInterval {
-                    months,
-                    days,
-                    microseconds,
-                }))
-            }
-        }
-        const FIELDS: &[&str] = &["months", "days", "microseconds"];
-        deserializer.deserialize_struct("Meow", FIELDS, MeowVisitor)
-    }
 }
