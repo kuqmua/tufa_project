@@ -4388,6 +4388,31 @@ impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
+////
+impl serde::Serialize for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let mut serde_state = serde::Serializer::serialize_struct(
+            serializer,
+            "SqlxPostgresTypesPgRangeStdPrimitiveI64",
+            false as usize + 1 + 1,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "start",
+            &self.0.start,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut serde_state,
+            "end",
+            &self.0.end,
+        )?;
+        serde::ser::SerializeStruct::end(serde_state)
+    }
+}
+////
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i64>,
