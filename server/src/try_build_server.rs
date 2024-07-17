@@ -18,7 +18,7 @@
             common::common::utoipa::std::time::StdTimeDuration,
             error_occurence_lib::code_occurence::CodeOccurence,
             //
-            postgresql_crud::TimeMonthWithSerializeDeserialize,
+            postgresql_crud::TimeMonth,
             postgresql_crud::SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
             postgresql_crud::NumBigintSignWithSerializeDeserialize,
             postgresql_crud::NumBigintBigIntWithSerializeDeserialize,

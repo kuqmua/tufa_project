@@ -3621,7 +3621,7 @@ pub struct Something {
     something: std::string::String,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, utoipa::ToSchema)]
 pub struct TimeMonth(pub time::Month);
 impl serde::Serialize for TimeMonth {
     fn serialize<__S>(
@@ -3969,57 +3969,6 @@ impl<'de> serde::Deserialize<'de> for TimeMonth {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub enum TimeMonthWithSerializeDeserialize {
-    January,   // = 1,
-    February,  // = 2,
-    March,     // = 3,
-    April,     // = 4,
-    May,       // = 5,
-    June,      // = 6,
-    July,      // = 7,
-    August,    // = 8,
-    September, // = 9,
-    October,   // = 10,
-    November,  // = 11,
-    December,  // = 12,
-}
-impl std::convert::From<TimeMonthWithSerializeDeserialize> for time::Month {
-    fn from(value: TimeMonthWithSerializeDeserialize) -> Self {
-        match value {
-            TimeMonthWithSerializeDeserialize::January => Self::January,
-            TimeMonthWithSerializeDeserialize::February => Self::February,
-            TimeMonthWithSerializeDeserialize::March => Self::March,
-            TimeMonthWithSerializeDeserialize::April => Self::April,
-            TimeMonthWithSerializeDeserialize::May => Self::May,
-            TimeMonthWithSerializeDeserialize::June => Self::June,
-            TimeMonthWithSerializeDeserialize::July => Self::July,
-            TimeMonthWithSerializeDeserialize::August => Self::August,
-            TimeMonthWithSerializeDeserialize::September => Self::September,
-            TimeMonthWithSerializeDeserialize::October => Self::October,
-            TimeMonthWithSerializeDeserialize::November => Self::November,
-            TimeMonthWithSerializeDeserialize::December => Self::December,
-        }
-    }
-}
-impl std::convert::From<time::Month> for TimeMonthWithSerializeDeserialize {
-    fn from(value: time::Month) -> Self {
-        match value {
-            time::Month::January => Self::January,
-            time::Month::February => Self::February,
-            time::Month::March => Self::March,
-            time::Month::April => Self::April,
-            time::Month::May => Self::May,
-            time::Month::June => Self::June,
-            time::Month::July => Self::July,
-            time::Month::August => Self::August,
-            time::Month::September => Self::September,
-            time::Month::October => Self::October,
-            time::Month::November => Self::November,
-            time::Month::December => Self::December,
-        }
-    }
-}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     hours: std::primitive::i8,
@@ -6718,7 +6667,7 @@ pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeDateWithSerializeDeserialize {
     year: std::primitive::i32,
-    month: TimeMonthWithSerializeDeserialize,
+    month: TimeMonth,
     day: std::primitive::u8,
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -6736,7 +6685,7 @@ impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize> for SqlxTy
     ) -> Result<Self, Self::Error> {//todo maybe use better initialize function (not ony for what)
         match sqlx::types::time::Date::from_calendar_date(
             value.year,
-            time::Month::from(value.month),
+            value.month.0,
             value.day,
         ) {
             Ok(value) => Ok(Self(value)),
@@ -6753,7 +6702,7 @@ impl std::convert::From<SqlxTypesTimeDate>
     fn from(value: SqlxTypesTimeDate) -> Self {
         Self {
             year: value.0.year(),
-            month: value.0.month().into(),
+            month: TimeMonth(value.0.month().into()),
             day: value.0.day(),
         }
     }
