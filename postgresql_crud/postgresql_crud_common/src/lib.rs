@@ -3621,6 +3621,354 @@ pub struct Something {
     something: std::string::String,
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct TimeMonth(pub time::Month);
+impl serde::Serialize for TimeMonth {
+    fn serialize<__S>(
+        &self,
+        __serializer: __S,
+    ) -> serde::__private::Result<__S::Ok, __S::Error>
+    where
+        __S: serde::Serializer,
+    {
+        match self.0 {
+            time::Month::January => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    0u32,
+                    "January",
+                )
+            }
+            time::Month::February => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    1u32,
+                    "February",
+                )
+            }
+            time::Month::March => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    2u32,
+                    "March",
+                )
+            }
+            time::Month::April => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    3u32,
+                    "April",
+                )
+            }
+            time::Month::May => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    4u32,
+                    "May",
+                )
+            }
+            time::Month::June => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    5u32,
+                    "June",
+                )
+            }
+            time::Month::July => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    6u32,
+                    "July",
+                )
+            }
+            time::Month::August => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    7u32,
+                    "August",
+                )
+            }
+            time::Month::September => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    8u32,
+                    "September",
+                )
+            }
+            time::Month::October => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    9u32,
+                    "October",
+                )
+            }
+            time::Month::November => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    10u32,
+                    "November",
+                )
+            }
+            time::Month::December => {
+                serde::Serializer::serialize_unit_variant(
+                    __serializer,
+                    "TimeMonth",
+                    11u32,
+                    "December",
+                )
+            }
+        }
+    }
+}
+impl<'de> serde::Deserialize<'de> for TimeMonth {
+    fn deserialize<__D>(
+        __deserializer: __D,
+    ) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[allow(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __field1,
+            __field2,
+            __field3,
+            __field4,
+            __field5,
+            __field6,
+            __field7,
+            __field8,
+            __field9,
+            __field10,
+            __field11,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "variant identifier",
+                )
+            }
+            fn visit_u64<__E>(
+                self,
+                __value: u64,
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    1u64 => serde::__private::Ok(__Field::__field1),
+                    2u64 => serde::__private::Ok(__Field::__field2),
+                    3u64 => serde::__private::Ok(__Field::__field3),
+                    4u64 => serde::__private::Ok(__Field::__field4),
+                    5u64 => serde::__private::Ok(__Field::__field5),
+                    6u64 => serde::__private::Ok(__Field::__field6),
+                    7u64 => serde::__private::Ok(__Field::__field7),
+                    8u64 => serde::__private::Ok(__Field::__field8),
+                    9u64 => serde::__private::Ok(__Field::__field9),
+                    10u64 => serde::__private::Ok(__Field::__field10),
+                    11u64 => serde::__private::Ok(__Field::__field11),
+                    _ => {
+                        serde::__private::Err(
+                            serde::de::Error::invalid_value(
+                                serde::de::Unexpected::Unsigned(__value),
+                                &"variant index 0 <= i < 12",
+                            ),
+                        )
+                    }
+                }
+            }
+            fn visit_str<__E>(
+                self,
+                __value: &str,
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "January" => serde::__private::Ok(__Field::__field0),
+                    "February" => serde::__private::Ok(__Field::__field1),
+                    "March" => serde::__private::Ok(__Field::__field2),
+                    "April" => serde::__private::Ok(__Field::__field3),
+                    "May" => serde::__private::Ok(__Field::__field4),
+                    "June" => serde::__private::Ok(__Field::__field5),
+                    "July" => serde::__private::Ok(__Field::__field6),
+                    "August" => serde::__private::Ok(__Field::__field7),
+                    "September" => serde::__private::Ok(__Field::__field8),
+                    "October" => serde::__private::Ok(__Field::__field9),
+                    "November" => serde::__private::Ok(__Field::__field10),
+                    "December" => serde::__private::Ok(__Field::__field11),
+                    _ => {
+                        serde::__private::Err(
+                            serde::de::Error::unknown_variant(__value, VARIANTS),
+                        )
+                    }
+                }
+            }
+            fn visit_bytes<__E>(
+                self,
+                __value: &[u8],
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"January" => serde::__private::Ok(__Field::__field0),
+                    b"February" => serde::__private::Ok(__Field::__field1),
+                    b"March" => serde::__private::Ok(__Field::__field2),
+                    b"April" => serde::__private::Ok(__Field::__field3),
+                    b"May" => serde::__private::Ok(__Field::__field4),
+                    b"June" => serde::__private::Ok(__Field::__field5),
+                    b"July" => serde::__private::Ok(__Field::__field6),
+                    b"August" => serde::__private::Ok(__Field::__field7),
+                    b"September" => serde::__private::Ok(__Field::__field8),
+                    b"October" => serde::__private::Ok(__Field::__field9),
+                    b"November" => serde::__private::Ok(__Field::__field10),
+                    b"December" => serde::__private::Ok(__Field::__field11),
+                    _ => {
+                        let __value = &serde::__private::from_utf8_lossy(__value);
+                        serde::__private::Err(
+                            serde::de::Error::unknown_variant(__value, VARIANTS),
+                        )
+                    }
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(
+                __deserializer: __D,
+            ) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(
+                    __deserializer,
+                    __FieldVisitor,
+                )
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<TimeMonth>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = TimeMonth;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "enum TimeMonth",
+                )
+            }
+            fn visit_enum<__A>(
+                self,
+                __data: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::EnumAccess<'de>,
+            {
+                match serde::de::EnumAccess::variant(__data)? {
+                    (__Field::__field0, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::January))
+                    }
+                    (__Field::__field1, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::February))
+                    }
+                    (__Field::__field2, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::March))
+                    }
+                    (__Field::__field3, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::April))
+                    }
+                    (__Field::__field4, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::May))
+                    }
+                    (__Field::__field5, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::June))
+                    }
+                    (__Field::__field6, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::July))
+                    }
+                    (__Field::__field7, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::August))
+                    }
+                    (__Field::__field8, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::September))
+                    }
+                    (__Field::__field9, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::October))
+                    }
+                    (__Field::__field10, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::November))
+                    }
+                    (__Field::__field11, __variant) => {
+                        serde::de::VariantAccess::unit_variant(__variant)?;
+                        serde::__private::Ok(TimeMonth(time::Month::December))
+                    }
+                }
+            }
+        }
+        #[doc(hidden)]
+        const VARIANTS: &'static [&'static str] = &[
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        serde::Deserializer::deserialize_enum(
+            __deserializer,
+            "TimeMonth",
+            VARIANTS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<TimeMonth>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum TimeMonthWithSerializeDeserialize {
     January,   // = 1,
