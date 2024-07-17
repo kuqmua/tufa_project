@@ -6509,13 +6509,25 @@ impl error_occurence_lib::ToStdStringString for SqlxTypesUuidUuidWithSerializeDe
         format!("{self}")
     }
 }
-//here25
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, 
+    postgresql_crud_types_macro_logic_reuse::CommonFrom, 
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 impl AsPostgresqlInet for SqlxTypesIpnetworkIpNetwork {}
 impl AsPostgresqlCidr for SqlxTypesIpnetworkIpNetwork {}
-//here26
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, 
+    postgresql_crud_types_macro_logic_reuse::CommonFrom, 
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
