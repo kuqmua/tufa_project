@@ -6537,10 +6537,12 @@ impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 //here20
 #[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFromWithEqImpl)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
+
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    date: SqlxTypesTimeDateWithSerializeDeserialize,
-    time: SqlxTypesTimeTimeWithSerializeDeserialize,
+    date: SqlxTypesTimeDate,
+    time: SqlxTypesTimeTime,
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
@@ -6564,36 +6566,10 @@ pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
 }
 impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for SqlxTypesTimePrimitiveDateTime {
     type Error = SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        let (date, time) = match (
-            SqlxTypesTimeDate::try_from(value.date),
-            SqlxTypesTimeTime::try_from(value.time),
-        ) {
-            (Ok(date), Ok(time)) => (date, time),
-            (Err(error), Ok(_)) => {
-                return Err(Self::Error::Date { 
-                    date: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-            (Ok(_), Err(error)) => {
-                return Err(Self::Error::Time { 
-                    time: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-            (Err(date_error), Err(time_error)) => {
-                return Err(Self::Error::DateTime {
-                    date: date_error,
-                    time: time_error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
+    fn try_from(value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
         Ok(Self(sqlx::types::time::PrimitiveDateTime::new(
-            date.0, time.0,
+            value.date.0,
+            value.time.0
         )))
     }
 }
@@ -6603,12 +6579,8 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
     fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
         Self {
             //todo impl from directly from type?
-            date: SqlxTypesTimeDateWithSerializeDeserialize::from(
-                SqlxTypesTimeDate(value.0.date()),
-            ),
-            time: SqlxTypesTimeTimeWithSerializeDeserialize::from(SqlxTypesTimeTime(
-                value.0.time(),
-            )),
+            date: SqlxTypesTimeDate(value.0.date()),
+            time: SqlxTypesTimeTime(value.0.time()),
         }
     }
 }
