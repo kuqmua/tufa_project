@@ -6680,32 +6680,68 @@ impl std::fmt::Display for SqlxTypesBigDecimalWithSerializeDeserialize {
 }
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
-//here13
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::CommonFrom,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
-//here14
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::CommonFrom,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
-//here15
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::CommonFrom,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
 impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
-//here16
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::CommonFrom,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 impl AsPostgresqlTimestamp for SqlxTypesChronoNaiveDateTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
-//here17
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::CommonFrom,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
-//here18
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, 
+    postgresql_crud_types_macro_logic_reuse::CommonFrom, 
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
