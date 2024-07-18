@@ -19,7 +19,7 @@
             error_occurence_lib::code_occurence::CodeOccurence,
             //
             postgresql_crud::TimeMonth,
-            postgresql_crud::SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesTimeUtcOffset,
             postgresql_crud::NumBigintSignWithSerializeDeserialize,
             postgresql_crud::NumBigintBigIntWithSerializeDeserialize,
             postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize,

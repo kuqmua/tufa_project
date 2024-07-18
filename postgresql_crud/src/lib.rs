@@ -22,7 +22,7 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 pub use postgresql_crud_common::NumBigintBigIntWithSerializeDeserialize;
 pub use postgresql_crud_common::NumBigintSignWithSerializeDeserialize;
-pub use postgresql_crud_common::SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesTimeUtcOffset;
 pub use postgresql_crud_common::TimeMonth;
 ///////////////////////////////////
 pub use postgresql_crud_common::StdPrimitiveBoolAsPostgresqlBool;

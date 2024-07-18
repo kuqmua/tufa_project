@@ -4262,45 +4262,7 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
-    hours: std::primitive::i8,
-    minutes: std::primitive::i8,
-    seconds: std::primitive::i8,
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed {
-    TimeErrorComponentRange {
-        #[eo_to_std_string_string]
-        time_error_component_range: time::error::ComponentRange,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize> for sqlx::types::time::UtcOffset {
-    type Error = SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        match Self::from_hms(value.hours, value.minutes, value.seconds) {
-            Ok(value) => Ok(value),
-            Err(error) => Err(Self::Error::TimeErrorComponentRange {
-                time_error_component_range: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-}
-impl std::convert::From<sqlx::types::time::UtcOffset>
-    for SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
-{
-    fn from(value: sqlx::types::time::UtcOffset) -> Self {
-        Self {
-            hours: value.whole_hours(),
-            minutes: value.minutes_past_hour(),
-            seconds: value.seconds_past_minute(),
-        }
-    }
-}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum NumBigintSignWithSerializeDeserialize {
     Minus,
@@ -6753,25 +6715,14 @@ pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     time: SqlxTypesTimeTime,
-    offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
+    offset: SqlxTypesTimeUtcOffset,
 }
+//todo remove SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
     Time {
         #[eo_error_occurence]
         time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Offset {
-        #[eo_error_occurence]
-        offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    TimeOffset {
-        #[eo_error_occurence]
-        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        #[eo_error_occurence]
-        offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -6780,18 +6731,9 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> fo
     fn try_from(
         value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
-        let offset = match sqlx::types::time::UtcOffset::try_from(value.offset) {
-            Ok(offset) => offset,
-            Err(error) => {
-                return Err(Self::Error::Offset { 
-                    offset: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
         Ok(Self(sqlx::postgres::types::PgTimeTz { 
             time: value.time.0,
-            offset 
+            offset: value.offset.0
         }))
     }
 }
@@ -6802,7 +6744,7 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz>
         Self {
             //todo impl from directly from type?
             time: SqlxTypesTimeTime(value.0.time),
-            offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize::from(value.0.offset),
+            offset: SqlxTypesTimeUtcOffset(value.0.offset),
         }
     }
 }
