@@ -6619,9 +6619,106 @@ impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializ
 }
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
-//here21
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFromWithEqImpl)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
+impl serde::Serialize for SqlxTypesTimeOffsetDateTime {
+    fn serialize<__S>(
+        &self,
+        __serializer: __S,
+    ) -> serde::__private::Result<__S::Ok, __S::Error>
+    where
+        __S: serde::Serializer,
+    {
+        serde::Serializer::serialize_newtype_struct(
+            __serializer,
+            "SqlxTypesTimeOffsetDateTime",
+            &self.0.unix_timestamp(),
+        )
+    }
+}
+impl<'de> serde::Deserialize<'de> for SqlxTypesTimeOffsetDateTime {
+    fn deserialize<__D>(
+        __deserializer: __D,
+    ) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<SqlxTypesTimeOffsetDateTime>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = SqlxTypesTimeOffsetDateTime;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "tuple struct SqlxTypesTimeOffsetDateTime",
+                )
+            }
+            #[inline]
+            fn visit_newtype_struct<__E>(
+                self,
+                __e: __E,
+            ) -> serde::__private::Result<Self::Value, __E::Error>
+            where
+                __E: serde::Deserializer<'de>,
+            {
+                let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(
+                    __e,
+                )?;
+                serde::__private::Ok(SqlxTypesTimeOffsetDateTime(match sqlx::types::time::OffsetDateTime::from_unix_timestamp(__field0) {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(error));
+                    },
+                }))
+            }
+            #[inline]
+            fn visit_seq<__A>(
+                self,
+                mut __seq: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<
+                    std::primitive::i64,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                0usize,
+                                &"tuple struct SqlxTypesTimeOffsetDateTime with 1 element",
+                            ),
+                        );
+                    }
+                };
+                serde::__private::Ok(SqlxTypesTimeOffsetDateTime(match sqlx::types::time::OffsetDateTime::from_unix_timestamp(__field0) {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(error));
+                    },
+                }))
+            }
+        }
+        serde::Deserializer::deserialize_newtype_struct(
+            __deserializer,
+            "SqlxTypesTimeOffsetDateTime",
+            __Visitor {
+                marker: serde::__private::PhantomData::<
+                    SqlxTypesTimeOffsetDateTime,
+                >,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
     std::primitive::i64,
