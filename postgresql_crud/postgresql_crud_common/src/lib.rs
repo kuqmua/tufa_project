@@ -6459,7 +6459,7 @@ impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
-    time: SqlxTypesTimeTimeWithSerializeDeserialize,
+    time: SqlxTypesTimeTime,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -6487,32 +6487,19 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> fo
     fn try_from(
         value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
-        let (time, offset) = match (
-            SqlxTypesTimeTime::try_from(value.time),
-            sqlx::types::time::UtcOffset::try_from(value.offset),
-        ) {
-            (Ok(time), Ok(offset)) => (time.0, offset),
-            (Err(error), Ok(_)) => {
-                return Err(Self::Error::Time { 
-                    time: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-            (Ok(_), Err(error)) => {
+        let offset = match sqlx::types::time::UtcOffset::try_from(value.offset) {
+            Ok(offset) => offset,
+            Err(error) => {
                 return Err(Self::Error::Offset { 
                     offset: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-            (Err(time_error), Err(offset_error)) => {
-                return Err(Self::Error::TimeOffset {
-                    time: time_error,
-                    offset: offset_error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
         };
-        Ok(Self(sqlx::postgres::types::PgTimeTz { time, offset }))
+        Ok(Self(sqlx::postgres::types::PgTimeTz { 
+            time: value.time.0,
+            offset 
+        }))
     }
 }
 impl std::convert::From<SqlxPostgresTypesPgTimeTz>
@@ -6521,9 +6508,7 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz>
     fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
         Self {
             //todo impl from directly from type?
-            time: SqlxTypesTimeTimeWithSerializeDeserialize::from(SqlxTypesTimeTime(
-                value.0.time,
-            )),
+            time: SqlxTypesTimeTime(value.0.time),
             offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize::from(value.0.offset),
         }
     }
