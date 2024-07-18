@@ -6661,9 +6661,303 @@ impl std::fmt::Display for SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
     }
 }
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
-//here22
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFromWithEqImpl)]
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
+impl serde::Serialize for SqlxTypesTimeDate {
+    fn serialize<__S>(
+        &self,
+        __serializer: __S,
+    ) -> serde::__private::Result<__S::Ok, __S::Error>
+    where
+        __S: serde::Serializer,
+    {
+        let mut __serde_state = serde::Serializer::serialize_struct(
+            __serializer,
+            "SqlxTypesTimeDate",
+            false as usize + 1 + 1 + 1,
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut __serde_state,
+            "year",
+            &self.0.year(),
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut __serde_state,
+            "month",
+            &TimeMonth(self.0.month().into()),
+        )?;
+        serde::ser::SerializeStruct::serialize_field(
+            &mut __serde_state,
+            "day",
+            &self.0.day(),
+        )?;
+        serde::ser::SerializeStruct::end(__serde_state)
+    }
+}
+
+impl<'de> serde::Deserialize<'de> for SqlxTypesTimeDate {
+    fn deserialize<__D>(
+        __deserializer: __D,
+    ) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[allow(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __field1,
+            __field2,
+            __ignore,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "field identifier",
+                )
+            }
+            fn visit_u64<__E>(
+                self,
+                __value: u64,
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    1u64 => serde::__private::Ok(__Field::__field1),
+                    2u64 => serde::__private::Ok(__Field::__field2),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_str<__E>(
+                self,
+                __value: &str,
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "year" => serde::__private::Ok(__Field::__field0),
+                    "month" => serde::__private::Ok(__Field::__field1),
+                    "day" => serde::__private::Ok(__Field::__field2),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_bytes<__E>(
+                self,
+                __value: &[u8],
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"year" => serde::__private::Ok(__Field::__field0),
+                    b"month" => serde::__private::Ok(__Field::__field1),
+                    b"day" => serde::__private::Ok(__Field::__field2),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(
+                __deserializer: __D,
+            ) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(
+                    __deserializer,
+                    __FieldVisitor,
+                )
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<SqlxTypesTimeDate>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = SqlxTypesTimeDate;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "struct SqlxTypesTimeDate",
+                )
+            }
+            #[inline]
+            fn visit_seq<__A>(
+                self,
+                mut __seq: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<
+                    std::primitive::i32,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                0usize,
+                                &"struct SqlxTypesTimeDate with 3 elements",
+                            ),
+                        );
+                    }
+                };
+                let __field1 = match serde::de::SeqAccess::next_element::<
+                    TimeMonth,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                1usize,
+                                &"struct SqlxTypesTimeDate with 3 elements",
+                            ),
+                        );
+                    }
+                };
+                let __field2 = match serde::de::SeqAccess::next_element::<
+                    std::primitive::u8,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                2usize,
+                                &"struct SqlxTypesTimeDate with 3 elements",
+                            ),
+                        );
+                    }
+                };
+                serde::__private::Ok(SqlxTypesTimeDate(
+                    match sqlx::types::time::Date::from_calendar_date(
+                        __field0,
+                        __field1.0,
+                        __field2,
+                    ) {
+                        Ok(value) => value,
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(error));
+                        },
+                    }
+                ))
+            }
+            #[inline]
+            fn visit_map<__A>(
+                self,
+                mut __map: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::MapAccess<'de>,
+            {
+                let mut __field0: serde::__private::Option<std::primitive::i32> = serde::__private::None;
+                let mut __field1: serde::__private::Option<TimeMonth> = serde::__private::None;
+                let mut __field2: serde::__private::Option<std::primitive::u8> = serde::__private::None;
+                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
+                    __Field,
+                >(&mut __map)? {
+                    match __key {
+                        __Field::__field0 => {
+                            if serde::__private::Option::is_some(&__field0) {
+                                return serde::__private::Err(
+                                    <__A::Error as serde::de::Error>::duplicate_field("year"),
+                                );
+                            }
+                            __field0 = serde::__private::Some(
+                                serde::de::MapAccess::next_value::<
+                                    std::primitive::i32,
+                                >(&mut __map)?,
+                            );
+                        }
+                        __Field::__field1 => {
+                            if serde::__private::Option::is_some(&__field1) {
+                                return serde::__private::Err(
+                                    <__A::Error as serde::de::Error>::duplicate_field("month"),
+                                );
+                            }
+                            __field1 = serde::__private::Some(
+                                serde::de::MapAccess::next_value::<TimeMonth>(&mut __map)?,
+                            );
+                        }
+                        __Field::__field2 => {
+                            if serde::__private::Option::is_some(&__field2) {
+                                return serde::__private::Err(
+                                    <__A::Error as serde::de::Error>::duplicate_field("day"),
+                                );
+                            }
+                            __field2 = serde::__private::Some(
+                                serde::de::MapAccess::next_value::<
+                                    std::primitive::u8,
+                                >(&mut __map)?,
+                            );
+                        }
+                        _ => {
+                            let _ = serde::de::MapAccess::next_value::<
+                                serde::de::IgnoredAny,
+                            >(&mut __map)?;
+                        }
+                    }
+                }
+                let __field0 = match __field0 {
+                    serde::__private::Some(__field0) => __field0,
+                    serde::__private::None => {
+                        serde::__private::de::missing_field("year")?
+                    }
+                };
+                let __field1 = match __field1 {
+                    serde::__private::Some(__field1) => __field1,
+                    serde::__private::None => {
+                        serde::__private::de::missing_field("month")?
+                    }
+                };
+                let __field2 = match __field2 {
+                    serde::__private::Some(__field2) => __field2,
+                    serde::__private::None => {
+                        serde::__private::de::missing_field("day")?
+                    }
+                };
+                serde::__private::Ok(SqlxTypesTimeDate(
+                    match sqlx::types::time::Date::from_calendar_date(
+                        __field0,
+                        __field1.0,
+                        __field2,
+                    ) {
+                        Ok(value) => value,
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(error));
+                        },
+                    }
+                ))
+            }
+        }
+        #[doc(hidden)]
+        const FIELDS: &'static [&'static str] = &["year", "month", "day"];
+        serde::Deserializer::deserialize_struct(
+            __deserializer,
+            "SqlxTypesTimeDate",
+            FIELDS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<SqlxTypesTimeDate>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeDateWithSerializeDeserialize {
     year: std::primitive::i32,
