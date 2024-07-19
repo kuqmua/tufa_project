@@ -21,7 +21,7 @@
             postgresql_crud::TimeMonth,
             postgresql_crud::SqlxTypesTimeUtcOffset,
             postgresql_crud::NumBigintSignWithSerializeDeserialize,
-            postgresql_crud::NumBigintBigIntWithSerializeDeserialize,
+            postgresql_crud::NumBigintBigInt,
             postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize,
             postgresql_crud::StdPrimitiveI16WithSerializeDeserialize,
             postgresql_crud::StdPrimitiveI32WithSerializeDeserialize,

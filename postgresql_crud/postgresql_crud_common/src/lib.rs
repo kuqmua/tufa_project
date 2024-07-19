@@ -4288,9 +4288,8 @@ impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserial
     }
 }
 //todo pub or not for all - think
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, utoipa::ToSchema)]
 pub struct NumBigintBigInt(pub num_bigint::BigInt);
-
 impl serde::Serialize for NumBigintBigInt {
     fn serialize<__S>(
         &self,
@@ -4527,31 +4526,6 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct NumBigintBigIntWithSerializeDeserialize {
-    sign: NumBigintSignWithSerializeDeserialize,
-    digits: std::vec::Vec<std::primitive::u32>,
-}
-impl std::convert::From<NumBigintBigIntWithSerializeDeserialize> for num_bigint::BigInt {
-    fn from(value: NumBigintBigIntWithSerializeDeserialize) -> Self {
-        let sign = match value.sign {
-            NumBigintSignWithSerializeDeserialize::Minus => num_bigint::Sign::Minus,
-            NumBigintSignWithSerializeDeserialize::NoSign => num_bigint::Sign::NoSign,
-            NumBigintSignWithSerializeDeserialize::Plus => num_bigint::Sign::Plus,
-        };
-        Self::new(sign, value.digits)
-    }
-}
-impl std::convert::From<num_bigint::BigInt> for NumBigintBigIntWithSerializeDeserialize {
-    fn from(value: num_bigint::BigInt) -> Self {
-        let (sign, digits) = value.to_u32_digits();
-        Self {
-            sign: NumBigintSignWithSerializeDeserialize::from(sign),
-            digits,
-        }
     }
 }
 impl Default for TestNewType<Something> {
@@ -6895,13 +6869,13 @@ impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBigDecimalWithSerializeDeserialize {
-    digits: NumBigintBigIntWithSerializeDeserialize,
+    digits: NumBigintBigInt,
     scale: std::primitive::i64,
 }
 impl std::convert::From<SqlxTypesBigDecimalWithSerializeDeserialize> for SqlxTypesBigDecimal {
     fn from(value: SqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
         Self(sqlx::types::BigDecimal::new(
-            num_bigint::BigInt::from(value.digits),
+            value.digits.0,
             value.scale,
         ))
     }
@@ -6910,7 +6884,7 @@ impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalWithSerializ
     fn from(value: SqlxTypesBigDecimal) -> Self {
         let (bigint, exponent) = value.0.into_bigint_and_exponent();
         Self {
-            digits: NumBigintBigIntWithSerializeDeserialize::from(bigint),
+            digits: NumBigintBigInt::from(NumBigintBigInt(bigint)),
             scale: exponent, //todo is exponent equal to scale?
         }
     }
