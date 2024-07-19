@@ -48,7 +48,6 @@ exclude = [
 [workspace.lints.rust]
 unsafe_code = { level = "deny", priority = 0 }
 absolute_paths_not_starting_with_crate = { level = "deny", priority = 0 } #fully qualified paths that start with a module name instead of `crate`, `self`, or an extern crate name
-box_pointers = { level = "allow", priority = 0 } #use of owned (Box type) heap memory
 deprecated_in_future = { level = "deny", priority = 0 } #detects use of items that will be deprecated in a future version
 elided_lifetimes_in_paths = { level = "deny", priority = 0 } #hidden lifetime parameters in types are deprecated
 explicit_outlives_requirements = { level = "deny", priority = 0 } #outlives requirements can be inferred
