@@ -6683,8 +6683,8 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
 );
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
+    start: std::ops::Bound<SqlxTypesBigDecimal>,
+    end: std::ops::Bound<SqlxTypesBigDecimal>,
 }
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize>
     for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
@@ -6718,27 +6718,19 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimalWithSerializeDeserialize::from(
-                    SqlxTypesBigDecimal(value.clone()),
-                ))
+                std::ops::Bound::Included(SqlxTypesBigDecimal(value.clone()))
             }
             std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimalWithSerializeDeserialize::from(
-                    SqlxTypesBigDecimal(value.clone()),
-                ))
+                std::ops::Bound::Excluded(SqlxTypesBigDecimal(value.clone()))
             }
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimalWithSerializeDeserialize::from(
-                    SqlxTypesBigDecimal(value.clone()),
-                ))
+                std::ops::Bound::Included(SqlxTypesBigDecimal(value.clone()))
             }
             std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimalWithSerializeDeserialize::from(
-                    SqlxTypesBigDecimal(value.clone()),
-                ))
+                std::ops::Bound::Excluded(SqlxTypesBigDecimal(value.clone()))
             }
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
