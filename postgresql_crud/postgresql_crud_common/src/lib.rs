@@ -3357,7 +3357,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
     sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTime,
-    sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
+    sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTime,
     sqlx_types_time_date: SqlxTypesTimeDate,
     sqlx_types_time_time: SqlxTypesTimeTime,
     sqlx_types_uuid_uuid: SqlxTypesUuidUuidWithSerializeDeserialize,
@@ -5753,8 +5753,8 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
 );
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
+    start: std::ops::Bound<SqlxTypesTimeOffsetDateTime>,
+    end: std::ops::Bound<SqlxTypesTimeOffsetDateTime>,
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
@@ -5785,172 +5785,18 @@ impl std::convert::TryFrom<
     fn try_from(
         value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
-        let (start, end) = match (value.start, value.end) {
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
-                match (
-                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
-                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Included(start_value.0),
-                        std::ops::Bound::Included(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
+        Ok(Self(sqlx::postgres::types::PgRange { 
+            start: match value.start {
+                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
+            },
+            end: match value.end {
+                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
             }
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
-                match (
-                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
-                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Included(start_value.0),
-                        std::ops::Bound::Excluded(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
-                match SqlxTypesTimeOffsetDateTime::try_from(start_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Included(value.0),
-                        std::ops::Bound::Unbounded,
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
-                match (
-                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
-                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Excluded(start_value.0),
-                        std::ops::Bound::Included(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
-                match (
-                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
-                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Excluded(start_value.0),
-                        std::ops::Bound::Excluded(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
-                match SqlxTypesTimeOffsetDateTime::try_from(start_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Excluded(value.0),
-                        std::ops::Bound::Unbounded,
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
-                match SqlxTypesTimeOffsetDateTime::try_from(end_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Unbounded,
-                        std::ops::Bound::Included(value.0),
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
-                match SqlxTypesTimeOffsetDateTime::try_from(end_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Unbounded,
-                        std::ops::Bound::Excluded(value.0),
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
-                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
-            }
-        };
-        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
+        }))
     }
 }
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
@@ -5959,29 +5805,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesTimeOffsetDateTime(*value),
-                ),
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesTimeOffsetDateTime(*value),
-                ),
-            ),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeOffsetDateTime(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeOffsetDateTime(*value)),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesTimeOffsetDateTime(*value),
-                ),
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesTimeOffsetDateTime(*value),
-                ),
-            ),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeOffsetDateTime(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeOffsetDateTime(*value)),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         Self { start, end }
