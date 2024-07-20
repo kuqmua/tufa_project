@@ -126,9 +126,9 @@ fn field_type_implements_serialize_deserialize_handle(
             }
         }
     };
-    // if ident == "" {
+    // if ident == "StdPrimitiveBool" {
     //     println!("{gen}");
-    //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
+    //     // println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
     // }
     gen.into()
 }
@@ -206,9 +206,9 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         }
     };
-    // if ident == "" {
+    // if ident == "StdPrimitiveBool" {
     //     println!("{gen}");
-    //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
+    //     // println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
     // }
     gen.into()
 }
@@ -838,9 +838,9 @@ fn common_handle(
             }
         }
     };
-    // if ident == "SqlxPostgresTypesPgCiText" {
+    // if ident == "StdPrimitiveBool" {
     //     println!("{gen}");
-    //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
+    //     // println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
     // }
     gen.into()
 }
