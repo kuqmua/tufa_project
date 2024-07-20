@@ -6440,8 +6440,8 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
 );
 #[derive(Debug, Clone, Copy, Eq, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
+    start: std::ops::Bound<SqlxTypesTimeDate>,
+    end: std::ops::Bound<SqlxTypesTimeDate>,
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
@@ -6468,172 +6468,183 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
     fn try_from(
         value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
-        let (start, end) = match (value.start, value.end) {
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
-                match (
-                    SqlxTypesTimeDate::try_from(start_value),
-                    SqlxTypesTimeDate::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Included(start_value.0),
-                        std::ops::Bound::Included(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
+        // let (start, end) = match (value.start, value.end) {
+        //     (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+        //         match (
+        //             SqlxTypesTimeDate::try_from(start_value),
+        //             SqlxTypesTimeDate::try_from(end_value),
+        //         ) {
+        //             (Ok(start_value), Ok(end_value)) => (
+        //                 std::ops::Bound::Included(start_value.0),
+        //                 std::ops::Bound::Included(end_value.0),
+        //             ),
+        //             (Ok(_), Err(error)) => return Err(Self::Error::End { 
+        //                 end: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+        //                 start: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(start_error), Err(end_error)) => {
+        //                 return Err(Self::Error::StartEnd {
+        //                     start: start_error,
+        //                     end: end_error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 });
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+        //         match (
+        //             SqlxTypesTimeDate::try_from(start_value),
+        //             SqlxTypesTimeDate::try_from(end_value),
+        //         ) {
+        //             (Ok(start_value), Ok(end_value)) => (
+        //                 std::ops::Bound::Included(start_value.0),
+        //                 std::ops::Bound::Excluded(end_value.0),
+        //             ),
+        //             (Ok(_), Err(error)) => return Err(Self::Error::End { 
+        //                 end: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+        //                 start: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(start_error), Err(end_error)) => {
+        //                 return Err(Self::Error::StartEnd {
+        //                     start: start_error,
+        //                     end: end_error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 })
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+        //         match SqlxTypesTimeDate::try_from(start_value) {
+        //             Ok(value) => (
+        //                 std::ops::Bound::Included(value.0),
+        //                 std::ops::Bound::Unbounded,
+        //             ),
+        //             Err(error) => {
+        //                 return Err(Self::Error::Start { 
+        //                     start: error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 });
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+        //         match (
+        //             SqlxTypesTimeDate::try_from(start_value),
+        //             SqlxTypesTimeDate::try_from(end_value),
+        //         ) {
+        //             (Ok(start_value), Ok(end_value)) => (
+        //                 std::ops::Bound::Excluded(start_value.0),
+        //                 std::ops::Bound::Included(end_value.0),
+        //             ),
+        //             (Ok(_), Err(error)) => return Err(Self::Error::End { 
+        //                 end: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+        //                 start: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(start_error), Err(end_error)) => {
+        //                 return Err(Self::Error::StartEnd {
+        //                     start: start_error,
+        //                     end: end_error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 })
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+        //         match (
+        //             SqlxTypesTimeDate::try_from(start_value),
+        //             SqlxTypesTimeDate::try_from(end_value),
+        //         ) {
+        //             (Ok(start_value), Ok(end_value)) => (
+        //                 std::ops::Bound::Excluded(start_value.0),
+        //                 std::ops::Bound::Excluded(end_value.0),
+        //             ),
+        //             (Ok(_), Err(error)) => return Err(Self::Error::End { 
+        //                 end: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+        //                 start: error,
+        //                 code_occurence: error_occurence_lib::code_occurence!(),
+        //             }),
+        //             (Err(start_error), Err(end_error)) => {
+        //                 return Err(Self::Error::StartEnd {
+        //                     start: start_error,
+        //                     end: end_error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 })
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+        //         match SqlxTypesTimeDate::try_from(start_value) {
+        //             Ok(value) => (
+        //                 std::ops::Bound::Excluded(value.0),
+        //                 std::ops::Bound::Unbounded,
+        //             ),
+        //             Err(error) => {
+        //                 return Err(Self::Error::Start { 
+        //                     start: error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 });
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+        //         match SqlxTypesTimeDate::try_from(end_value) {
+        //             Ok(value) => (
+        //                 std::ops::Bound::Unbounded,
+        //                 std::ops::Bound::Included(value.0),
+        //             ),
+        //             Err(error) => {
+        //                 return Err(Self::Error::Start { 
+        //                     start: error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 });
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+        //         match SqlxTypesTimeDate::try_from(end_value) {
+        //             Ok(value) => (
+        //                 std::ops::Bound::Unbounded,
+        //                 std::ops::Bound::Excluded(value.0),
+        //             ),
+        //             Err(error) => {
+        //                 return Err(Self::Error::Start { 
+        //                     start: error,
+        //                     code_occurence: error_occurence_lib::code_occurence!(),
+        //                 });
+        //             }
+        //         }
+        //     }
+        //     (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+        //         (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+        //     }
+        // };
+        Ok(Self(sqlx::postgres::types::PgRange { 
+            start: match value.start {
+                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
+            }, 
+            end: match value.end {
+                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
             }
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
-                match (
-                    SqlxTypesTimeDate::try_from(start_value),
-                    SqlxTypesTimeDate::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Included(start_value.0),
-                        std::ops::Bound::Excluded(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
-                match SqlxTypesTimeDate::try_from(start_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Included(value.0),
-                        std::ops::Bound::Unbounded,
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
-                match (
-                    SqlxTypesTimeDate::try_from(start_value),
-                    SqlxTypesTimeDate::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Excluded(start_value.0),
-                        std::ops::Bound::Included(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
-                match (
-                    SqlxTypesTimeDate::try_from(start_value),
-                    SqlxTypesTimeDate::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Excluded(start_value.0),
-                        std::ops::Bound::Excluded(end_value.0),
-                    ),
-                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
-                        end: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
-                        start: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
-                match SqlxTypesTimeDate::try_from(start_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Excluded(value.0),
-                        std::ops::Bound::Unbounded,
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
-                match SqlxTypesTimeDate::try_from(end_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Unbounded,
-                        std::ops::Bound::Included(value.0),
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
-                match SqlxTypesTimeDate::try_from(end_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Unbounded,
-                        std::ops::Bound::Excluded(value.0),
-                    ),
-                    Err(error) => {
-                        return Err(Self::Error::Start { 
-                            start: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
-                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
-            }
-        };
-        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
+        }))
     }
 }
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
@@ -6642,29 +6653,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
-                    *value,
-                )),
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
-                    *value,
-                )),
-            ),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeDate(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeDate(*value)),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
-                    *value,
-                )),
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
-                    *value,
-                )),
-            ),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeDate(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeDate(*value)),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         Self { start, end }
