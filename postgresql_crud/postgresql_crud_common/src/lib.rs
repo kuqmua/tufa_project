@@ -6001,10 +6001,10 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTi
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>,
 );
-#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
+    start: std::ops::Bound<SqlxTypesChronoNaiveDateTime>,
+    end: std::ops::Bound<SqlxTypesChronoNaiveDateTime>,
 }
 impl std::convert::From<
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
@@ -6057,29 +6057,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesChronoNaiveDateTime(*value),
-                ),
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesChronoNaiveDateTime(*value),
-                ),
-            ),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime(*value)),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesChronoNaiveDateTime(*value),
-                ),
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
-                    SqlxTypesChronoNaiveDateTime(*value),
-                ),
-            ),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime(*value)),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         Self { start, end }
