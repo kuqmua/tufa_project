@@ -9403,45 +9403,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
         )
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
-    SqlxTypesUuidError {
-        #[eo_to_std_string_string]
-        sqlx_types_uuid_error: sqlx::types::uuid::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize> for SqlxTypesUuidUuid {
-    type Error = SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxTypesUuidUuidWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        match sqlx::types::uuid::Uuid::try_parse(&value.0) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(Self::Error::SqlxTypesUuidError{
-                sqlx_types_uuid_error: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-}
-impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidWithSerializeDeserialize {
-    fn from(value: SqlxTypesUuidUuid) -> Self {
-        Self(value.0.to_string())
-    }
-}
-impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
-impl error_occurence_lib::ToStdStringString for SqlxTypesUuidUuidWithSerializeDeserialize {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, 
@@ -9551,27 +9512,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesMacAddressMacAddressWithSerializeDeserialize([std::primitive::u8; 6]);
-impl std::convert::From<SqlxTypesMacAddressMacAddressWithSerializeDeserialize>
-    for SqlxTypesMacAddressMacAddress
-{
-    fn from(value: SqlxTypesMacAddressMacAddressWithSerializeDeserialize) -> Self {
-        Self(sqlx::types::mac_address::MacAddress::new(value.0))
-    }
-}
-impl std::convert::From<SqlxTypesMacAddressMacAddress>
-    for SqlxTypesMacAddressMacAddressWithSerializeDeserialize
-{
-    fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
-        Self(value.0.bytes())
-    }
-}
-impl std::fmt::Display for SqlxTypesMacAddressMacAddressWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
 #[derive(Debug, Clone, PartialEq, Eq,
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, 
@@ -9668,21 +9608,11 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesBitVec {
 impl AsPostgresqlBit for SqlxTypesBitVec {}
 impl AsPostgresqlVarBit for SqlxTypesBitVec {}
 impl PostgresqlOrder for SqlxTypesBitVec {}
-//here29
+
 #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesJsonWithSerializeDeserialize<T>(sqlx::types::Json<T>);
-impl<T> std::convert::From<SqlxTypesJsonWithSerializeDeserialize<T>> for SqlxTypesJson<T> {
-    fn from(value: SqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
-        Self(value.0)
-    }
-}
-impl<T> std::convert::From<SqlxTypesJson<T>> for SqlxTypesJsonWithSerializeDeserialize<T> {
-    fn from(value: SqlxTypesJson<T>) -> Self {
-        Self(value.0)
-    }
-}
 impl<T> SqlxTypesJson<T> {
     pub fn into_inner(self) -> sqlx::types::Json<T> {
         self.0
@@ -9830,22 +9760,9 @@ impl<T> SqlxTypesJson<T> {
 //     pub value: SqlxTypesJson,
 //     pub conjuctive_operator: ConjunctiveOperator,
 // }
-// #[derive(Debug, serde::Serialize, serde::Deserialize)]
-// pub struct WhereSqlxTypesJsonWithSerializeDeserialize {
-//     pub value: SqlxTypesJsonWithSerializeDeserialize,
-//     pub conjuctive_operator: ConjunctiveOperator,
-// }
-// impl std::convert::From<WhereSqlxTypesJsonWithSerializeDeserialize> for WhereSqlxTypesJson {
-//     fn from(value: WhereSqlxTypesJsonWithSerializeDeserialize) -> Self {
-//         Self {
-//             value: SqlxTypesJson::from(value.value),
-//             conjuctive_operator: value.conjuctive_operator
-//         }
-//     }
-// }
 
 //heer30
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct StdOptionOptionSqlxTypesJson<T>(pub std::option::Option<sqlx::types::Json<T>>);
 impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJson<T> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9929,8 +9846,8 @@ impl<T> StdOptionOptionSqlxTypesJson<T> {
 //         query
 //     }
 // }
-//here31
-#[derive(Debug, PartialEq, Eq)]
+
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdOptionOptionSqlxTypesJson<T> {
     pub value: StdOptionOptionSqlxTypesJson<T>,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9983,64 +9900,7 @@ impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJson
 //         query
 //     }
 // }
-#[derive(Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-pub struct WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
-    pub value: StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter,
-            "value: {}, conjuctive_operator: {}",
-            self.value, self.conjuctive_operator
-        )
-    }
-}
-impl<T> std::convert::From<WhereStdOptionOptionSqlxTypesJson<T>> for WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
-    fn from(value: WhereStdOptionOptionSqlxTypesJson<T>) -> Self {
-        Self {
-            value: StdOptionOptionSqlxTypesJsonWithSerializeDeserialize::from(value.value),
-            conjuctive_operator: value.conjuctive_operator,
-        }
-    }
-}
-//
-impl<T> std::convert::From<WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>> for WhereStdOptionOptionSqlxTypesJson<T> {
-    fn from(value: WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
-        Self {
-            value: StdOptionOptionSqlxTypesJson::from(value.value),
-            conjuctive_operator: value.conjuctive_operator,
-        }
-    }
-}
-//here32
-#[derive(
-    Debug,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-)]
-pub struct StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>(std::option::Option<SqlxTypesJsonWithSerializeDeserialize<T>>);
-impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
-impl<T> std::convert::From<StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>> for StdOptionOptionSqlxTypesJson<T> {
-    fn from(value: StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
-        value.0.map_or_else(|| Self(None), |value| Self(Some(SqlxTypesJson::from(value).0)))
-    }
-}
-impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
-    fn from(value: StdOptionOptionSqlxTypesJson<T>) -> Self {
-        value.0.map_or_else(|| Self(None), |value| Self(Some(SqlxTypesJsonWithSerializeDeserialize::from(SqlxTypesJson(value)))))
-    }
-}
 
-//here33
 #[derive(Debug, Clone, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
