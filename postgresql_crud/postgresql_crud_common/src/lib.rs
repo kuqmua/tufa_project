@@ -4929,39 +4929,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
         deserializer.deserialize_struct("SqlxPostgresTypesPgInterval", FIELDS, SqlxPostgresTypesPgIntervalVisitor)
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
-    months: std::primitive::i32,
-    days: std::primitive::i32,
-    microseconds: std::primitive::i64,
-}
-impl std::convert::From<SqlxPostgresTypesPgIntervalWithSerializeDeserialize>
-    for SqlxPostgresTypesPgInterval
-{
-    fn from(value: SqlxPostgresTypesPgIntervalWithSerializeDeserialize) -> Self {
-        Self(sqlx::postgres::types::PgInterval {
-            months: value.months,
-            days: value.days,
-            microseconds: value.microseconds,
-        })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgInterval>
-    for SqlxPostgresTypesPgIntervalWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgInterval) -> Self {
-        Self {
-            months: value.0.months,
-            days: value.0.days,
-            microseconds: value.0.microseconds,
-        }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
-    }
-}
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 
