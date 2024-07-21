@@ -351,14 +351,14 @@ pub struct Dog {
 // pub use postgresql_crud::StdOptionOptionStdPrimitiveI16;
 // pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
 // pub use postgresql_crud::StdPrimitiveI64;
-#[derive(Debug)]
-pub struct Field<T> {
-    pub value: T,
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct FieldWithSerializeDeserialize<T> {
-    pub value: T,
-}
+// #[derive(Debug)]
+// pub struct Field<T> {
+//     pub value: T,
+// }
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct FieldWithSerializeDeserialize<T> {
+//     pub value: T,
+// }
 ////
 #[derive(Debug)]
 pub struct CreateManyPayloadElement {
