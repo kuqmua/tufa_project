@@ -232,26 +232,26 @@ pub struct Dog {
 //         >,
 //     >,
 // }
-impl std::convert::From<Dog> for DogOptions {
-    fn from(value: Dog) -> Self {
-        Self {
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
-                postgresql_crud::Value {
-                    value: value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key.0,
-                },
-            ),
-            std_primitive_bool_as_postgresql_bool: Some(postgresql_crud::Value {
-                value: value.std_primitive_bool_as_postgresql_bool.0
-            }),
-            std_primitive_i16_as_postgresql_small_int: Some(postgresql_crud::Value {
-                value: value.std_primitive_i16_as_postgresql_small_int.0,
-            }),
-            std_primitive_i32_as_postgresql_int: Some(postgresql_crud::Value {
-                value: value.std_primitive_i32_as_postgresql_int.0
-            }),
-        }
-    }
-}
+// impl std::convert::From<Dog> for DogOptions {
+//     fn from(value: Dog) -> Self {
+//         Self {
+//             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
+//                 postgresql_crud::Value {
+//                     value: value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key.0,
+//                 },
+//             ),
+//             std_primitive_bool_as_postgresql_bool: Some(postgresql_crud::Value {
+//                 value: value.std_primitive_bool_as_postgresql_bool.0
+//             }),
+//             std_primitive_i16_as_postgresql_small_int: Some(postgresql_crud::Value {
+//                 value: value.std_primitive_i16_as_postgresql_small_int.0,
+//             }),
+//             std_primitive_i32_as_postgresql_int: Some(postgresql_crud::Value {
+//                 value: value.std_primitive_i32_as_postgresql_int.0
+//             }),
+//         }
+//     }
+// }
 #[derive(
     Debug,
     serde :: Serialize,
