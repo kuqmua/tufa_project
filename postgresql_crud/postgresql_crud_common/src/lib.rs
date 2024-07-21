@@ -5157,36 +5157,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
         deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI32", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor)
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
-    start: std::ops::Bound<std::primitive::i32>,
-    end: std::ops::Bound<std::primitive::i32>,
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize>
-    for SqlxPostgresTypesPgRangeStdPrimitiveI32
-{
-    fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize) -> Self {
-        Self(sqlx::postgres::types::PgRange {
-            start: value.start,
-            end: value.end,
-        })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32>
-    for SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
-        Self {
-            start: value.0.start,
-            end: value.0.end,
-        }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
