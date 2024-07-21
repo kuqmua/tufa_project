@@ -5435,134 +5435,6 @@ for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize
-{
-    start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtc>,
-    end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtc>,
-}
-impl std::convert::From<
-    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
-> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize) -> Self {
-        let (start, end) = match (value.start, value.end) {
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
-                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
-            }
-        };
-        Self(sqlx::postgres::types::PgRange { start, end })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
-        let (start, end) = match (value.0.start, value.0.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(start_value)),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(end_value))
-            ),
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(start_value)),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(end_value))
-            ),
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(start_value)), 
-                std::ops::Bound::Unbounded
-            ),
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(start_value)),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(end_value))
-            ),
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(start_value)),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(end_value))
-            ),
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(start_value)), 
-                std::ops::Bound::Unbounded
-            ),
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => (
-                std::ops::Bound::Unbounded, 
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(end_value))
-            ),
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => (
-                std::ops::Bound::Unbounded, 
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtc(end_value))
-            ),
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -5839,135 +5711,6 @@ for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
-{
-    start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocal>,
-    end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocal>,
-}
-impl std::convert::From<
-    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
-> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize) -> Self {
-        let (start, end) = match (value.start, value.end) {
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Unbounded, 
-                std::ops::Bound::Unbounded
-            )
-        };
-        Self(sqlx::postgres::types::PgRange { start, end })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
-        let (start, end) = match (value.0.start, value.0.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-            ),
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-            ),
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)), 
-                std::ops::Bound::Unbounded
-            ),
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-            ),
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-            ),
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)), 
-                std::ops::Bound::Unbounded
-            ),
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => (
-                std::ops::Bound::Unbounded, 
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-            ),
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => (
-                std::ops::Bound::Unbounded, 
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-            ),
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
@@ -6247,77 +5990,6 @@ for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesTimeOffsetDateTime>,
-    end: std::ops::Bound<SqlxTypesTimeOffsetDateTime>,
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
-    Start {
-        #[eo_error_occurence]
-        start: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-    End {
-        #[eo_error_occurence]
-        end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-    StartEnd {
-        #[eo_error_occurence]
-        start: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        #[eo_error_occurence]
-        end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<
-    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
-> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
-{
-    type Error =
-        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        Ok(Self(sqlx::postgres::types::PgRange { 
-            start: match value.start {
-                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
-            },
-            end: match value.end {
-                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
-            }
-        }))
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
-    for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeOffsetDateTime(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeOffsetDateTime(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeOffsetDateTime(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeOffsetDateTime(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -6593,79 +6265,6 @@ for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesChronoNaiveDateTime>,
-    end: std::ops::Bound<SqlxTypesChronoNaiveDateTime>,
-}
-impl std::convert::From<
-    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
-> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize) -> Self {
-        let (start, end) = match (value.start, value.end) {
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Unbounded, 
-                std::ops::Bound::Unbounded
-            )
-        };
-        Self(sqlx::postgres::types::PgRange { start, end })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {}
@@ -6945,77 +6544,6 @@ for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesTimePrimitiveDateTime>,
-    end: std::ops::Bound<SqlxTypesTimePrimitiveDateTime>,
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed
-{
-    Start {
-        #[eo_error_occurence]
-        start: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    End {
-        #[eo_error_occurence]
-        end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StartEnd {
-        #[eo_error_occurence]
-        start: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        #[eo_error_occurence]
-        end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<
-    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
-{
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        Ok(Self(sqlx::postgres::types::PgRange { 
-            start: match value.start {
-                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-            }, 
-            end: match value.end {
-                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-            }
-        }))
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
-    for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimePrimitiveDateTime(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimePrimitiveDateTime(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -7293,79 +6821,6 @@ for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesChronoNaiveDate>,
-    end: std::ops::Bound<SqlxTypesChronoNaiveDate>,
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize) -> Self {
-        let (start, end) = match (value.start, value.end) {
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDate::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDate::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDate::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate::from(end_value).0),
-            ),
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDate::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate::from(start_value).0),
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDate::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate::from(start_value).0),
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate::from(end_value).0),
-            ),
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate::from(start_value).0),
-                std::ops::Bound::Unbounded,
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(SqlxTypesChronoNaiveDate::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate::from(end_value).0),
-            ),
-            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => (
-                std::ops::Bound::Unbounded, 
-                std::ops::Bound::Unbounded
-            )
-        };
-        Self(sqlx::postgres::types::PgRange { start, end })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDate(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDate(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDate(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -7638,73 +7093,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate 
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-#[derive(Debug, Clone, Copy, Eq, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesTimeDate>,
-    end: std::ops::Bound<SqlxTypesTimeDate>,
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
-    Start {
-        #[eo_error_occurence]
-        start: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    End {
-        #[eo_error_occurence]
-        end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StartEnd {
-        #[eo_error_occurence]
-        start: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        #[eo_error_occurence]
-        end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        Ok(Self(sqlx::postgres::types::PgRange { 
-            start: match value.start {
-                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
-            }, 
-            end: match value.end {
-                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
-            }
-        }))
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
-    for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeDate(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeDate(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesTimeDate(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesTimeDate(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
@@ -7983,67 +7371,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesBigDecima
         )
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesBigDecimal>,
-    end: std::ops::Bound<SqlxTypesBigDecimal>,
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize>
-    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
-        let start = match value.start {
-            std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0)
-            }
-            std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0)
-            }
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.end {
-            std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0)
-            }
-            std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0)
-            }
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self(sqlx::postgres::types::PgRange { start, end })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
-    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimal(value.clone()))
-            }
-            std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimal(value.clone()))
-            }
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimal(value.clone()))
-            }
-            std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimal(value.clone()))
-            }
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -8320,51 +7647,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
         )
     }
 }
-#[derive(Debug, PartialEq, Eq, Clone, Copy, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesDecimal>,
-    end: std::ops::Bound<SqlxTypesDecimal>,
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize>
-    for SqlxPostgresTypesPgRangeSqlxTypesDecimal
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Self {
-        let start = match value.start {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.end {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self(sqlx::postgres::types::PgRange { start, end })
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
-    for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimal(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimal(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimal(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimal(*value)),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self { start, end }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -8452,27 +7734,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
-impl std::convert::From<SqlxPostgresTypesPgMoneyWithSerializeDeserialize>
-    for SqlxPostgresTypesPgMoney
-{
-    fn from(value: SqlxPostgresTypesPgMoneyWithSerializeDeserialize) -> Self {
-        Self(sqlx::postgres::types::PgMoney(value.0))
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgMoney>
-    for SqlxPostgresTypesPgMoneyWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgMoney) -> Self {
-        Self(value.0 .0)
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgMoneyWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.0)
     }
 }
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
@@ -8564,27 +7825,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgCiText {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
-impl std::convert::From<SqlxPostgresTypesPgCiTextWithSerializeDeserialize>
-    for SqlxPostgresTypesPgCiText
-{
-    fn from(value: SqlxPostgresTypesPgCiTextWithSerializeDeserialize) -> Self {
-        Self(sqlx::postgres::types::PgCiText(value.0))
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgCiText>
-    for SqlxPostgresTypesPgCiTextWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgCiText) -> Self {
-        Self(value.0.0)
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgCiTextWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.0)
     }
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
@@ -8832,33 +8072,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesBigDecimal {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesBigDecimalWithSerializeDeserialize {
-    digits: NumBigintBigInt,
-    scale: std::primitive::i64,
-}
-impl std::convert::From<SqlxTypesBigDecimalWithSerializeDeserialize> for SqlxTypesBigDecimal {
-    fn from(value: SqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
-        Self(sqlx::types::BigDecimal::new(
-            value.digits.0,
-            value.scale,
-        ))
-    }
-}
-impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalWithSerializeDeserialize {
-    fn from(value: SqlxTypesBigDecimal) -> Self {
-        let (bigint, exponent) = value.0.into_bigint_and_exponent();
-        Self {
-            digits: NumBigintBigInt(bigint),
-            scale: exponent, //todo is exponent equal to scale?
-        }
-    }
-}
-impl std::fmt::Display for SqlxTypesBigDecimalWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "digits: {:?}, scale: {:?}", self.digits, self.scale)
     }
 }
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
@@ -9159,47 +8372,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgTimeTz {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
-    time: SqlxTypesTimeTime,
-    offset: SqlxTypesTimeUtcOffset,
-}
-//todo remove SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
-    Time {
-        #[eo_error_occurence]
-        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for SqlxPostgresTypesPgTimeTz {
-    type Error = SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        Ok(Self(sqlx::postgres::types::PgTimeTz { 
-            time: value.time.0,
-            offset: value.offset.0
-        }))
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgTimeTz>
-    for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize
-{
-    fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
-        Self {
-            //todo impl from directly from type?
-            time: SqlxTypesTimeTime(value.0.time),
-            offset: SqlxTypesTimeUtcOffset(value.0.offset),
-        }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "time: {}, offset: {:?}", self.time, self.offset)
-    }
-}
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -9444,56 +8616,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimePrimitiveDateTime {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    date: SqlxTypesTimeDate,
-    time: SqlxTypesTimeTime,
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
-    Date {
-        #[eo_error_occurence]
-        date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Time {
-        #[eo_error_occurence]
-        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DateTime {
-        #[eo_error_occurence]
-        date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        #[eo_error_occurence]
-        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for SqlxTypesTimePrimitiveDateTime {
-    type Error = SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self(sqlx::types::time::PrimitiveDateTime::new(
-            value.date.0,
-            value.time.0
-        )))
-    }
-}
-impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
-    for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize
-{
-    fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
-        Self {
-            //todo impl from directly from type?
-            date: SqlxTypesTimeDate(value.0.date()),
-            time: SqlxTypesTimeTime(value.0.time()),
-        }
-    }
-}
-impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "date: {}, time: {}", self.date, self.time)
-    }
-}
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
 
@@ -9594,44 +8716,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeOffsetDateTime {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
-    std::primitive::i64,
-);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
-    TimeErrorComponentRange {
-        #[eo_to_std_string_string]
-        time_error_component_range: time::error::ComponentRange,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for SqlxTypesTimeOffsetDateTime {
-    type Error = SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        match sqlx::types::time::OffsetDateTime::from_unix_timestamp(value.0) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(Self::Error::TimeErrorComponentRange {
-                time_error_component_range: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-}
-impl std::convert::From<SqlxTypesTimeOffsetDateTime>
-    for SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize
-{
-    fn from(value: SqlxTypesTimeOffsetDateTime) -> Self {
-        Self(value.0.unix_timestamp())
-    }
-}
-impl std::fmt::Display for SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.0)
     }
 }
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
@@ -9931,54 +9015,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeDate {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimeDateWithSerializeDeserialize {
-    year: std::primitive::i32,
-    month: TimeMonth,
-    day: std::primitive::u8,
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
-    TimeErrorComponentRange {
-        #[eo_to_std_string_string]
-        time_error_component_range: time::error::ComponentRange,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize> for SqlxTypesTimeDate {
-    type Error = SqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxTypesTimeDateWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {//todo maybe use better initialize function (not ony for what)
-        match sqlx::types::time::Date::from_calendar_date(
-            value.year,
-            value.month.0,
-            value.day,
-        ) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(Self::Error::TimeErrorComponentRange {
-                time_error_component_range: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-}
-impl std::convert::From<SqlxTypesTimeDate>
-    for SqlxTypesTimeDateWithSerializeDeserialize
-{
-    fn from(value: SqlxTypesTimeDate) -> Self {
-        Self {
-            year: value.0.year(),
-            month: TimeMonth(value.0.month().into()),
-            day: value.0.day(),
-        }
-    }
-}
-impl std::fmt::Display for SqlxTypesTimeDateWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "year: {}, month: {:?}, day: {}", self.year, self.month, self.day)
-    }
-}
 impl AsPostgresqlDate for SqlxTypesTimeDate {}
 impl PostgresqlOrder for SqlxTypesTimeDate {}
 
@@ -10267,49 +9303,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeTime {
         )
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
-    hour: std::primitive::u8,
-    minute: std::primitive::u8,
-    second: std::primitive::u8,
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
-    TimeErrorComponentRange {
-        #[eo_to_std_string_string]
-        time_error_component_range: time::error::ComponentRange,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-//todo different init methods support
-impl std::convert::TryFrom<SqlxTypesTimeTimeWithSerializeDeserialize> for SqlxTypesTimeTime {
-    type Error = SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(
-        value: SqlxTypesTimeTimeWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        match sqlx::types::time::Time::from_hms(value.hour, value.minute, value.second) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(Self::Error::TimeErrorComponentRange{
-                time_error_component_range: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-}
-impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeWithSerializeDeserialize {
-    fn from(value: SqlxTypesTimeTime) -> Self {
-        Self {
-            hour: value.0.hour(),
-            minute: value.0.minute(),
-            second: value.0.second(),
-        }
-    }
-}
-impl std::fmt::Display for SqlxTypesTimeTimeWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "hour: {}, minute: {}, second: {}", self.hour, self.minute, self.second)
-    }
-}
 impl AsPostgresqlTime for SqlxTypesTimeTime {}
 impl PostgresqlOrder for SqlxTypesTimeTime {}
 //todo maybe its possible to not use Clone (refactor where .clone() used)
@@ -10444,12 +9437,12 @@ impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserialize {
         write!(formatter, "{:?}", self.0)
     }
 }
-impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 impl error_occurence_lib::ToStdStringString for SqlxTypesUuidUuidWithSerializeDeserialize {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self}")
     }
 }
+impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, 
     serde::Serialize,
