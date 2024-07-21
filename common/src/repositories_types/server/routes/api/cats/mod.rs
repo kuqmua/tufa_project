@@ -252,66 +252,66 @@ pub struct Dog {
 //         }
 //     }
 // }
-#[derive(
-    Debug,
-    serde :: Serialize,
-    serde :: Deserialize,
-    enum_extension_lib
-:: EnumExtension,
-    postgresql_crud :: EnumIter,
-    PartialEq,
-    Eq,
-    from_str ::
-FromStr,
-    Clone,
-    Copy,
-)]
-pub enum DogColumn {
-    #[serde(rename(
-        serialize = "std_primitive_bool_as_postgresql_bool",
-        deserialize = "std_primitive_bool_as_postgresql_bool"
-    ))]
-    StdPrimitiveBoolAsPostgresqlBool,
-    #[serde(rename(
-        serialize = "std_primitive_i16_as_postgresql_small_int",
-        deserialize = "std_primitive_i16_as_postgresql_small_int"
-    ))]
-    StdPrimitiveI16AsPostgresqlSmallInt,
-    #[serde(rename(
-        serialize = "std_primitive_i32_as_postgresql_int",
-        deserialize = "std_primitive_i32_as_postgresql_int"
-    ))]
-    StdPrimitiveI32AsPostgresqlInt,
-    #[serde(rename(
-        serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
-        deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-    ))]
-    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
-}
-impl std::fmt::Display for DogColumn {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::StdPrimitiveBoolAsPostgresqlBool => {
-                write!(formatter, "std_primitive_bool_as_postgresql_bool")
-            }
-            Self::StdPrimitiveI16AsPostgresqlSmallInt => {
-                write!(formatter, "std_primitive_i16_as_postgresql_small_int")
-            }
-            Self::StdPrimitiveI32AsPostgresqlInt => {
-                write!(formatter, "std_primitive_i32_as_postgresql_int")
-            }
-            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => write!(
-                formatter,
-                "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-            ),
-        }
-    }
-}
-impl error_occurence_lib::ToStdStringString for DogColumn {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
+// #[derive(
+//     Debug,
+//     serde :: Serialize,
+//     serde :: Deserialize,
+//     enum_extension_lib
+// :: EnumExtension,
+//     postgresql_crud :: EnumIter,
+//     PartialEq,
+//     Eq,
+//     from_str ::
+// FromStr,
+//     Clone,
+//     Copy,
+// )]
+// pub enum DogColumn {
+//     #[serde(rename(
+//         serialize = "std_primitive_bool_as_postgresql_bool",
+//         deserialize = "std_primitive_bool_as_postgresql_bool"
+//     ))]
+//     StdPrimitiveBoolAsPostgresqlBool,
+//     #[serde(rename(
+//         serialize = "std_primitive_i16_as_postgresql_small_int",
+//         deserialize = "std_primitive_i16_as_postgresql_small_int"
+//     ))]
+//     StdPrimitiveI16AsPostgresqlSmallInt,
+//     #[serde(rename(
+//         serialize = "std_primitive_i32_as_postgresql_int",
+//         deserialize = "std_primitive_i32_as_postgresql_int"
+//     ))]
+//     StdPrimitiveI32AsPostgresqlInt,
+//     #[serde(rename(
+//         serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+//         deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+//     ))]
+//     StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+// }
+// impl std::fmt::Display for DogColumn {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         match self {
+//             Self::StdPrimitiveBoolAsPostgresqlBool => {
+//                 write!(formatter, "std_primitive_bool_as_postgresql_bool")
+//             }
+//             Self::StdPrimitiveI16AsPostgresqlSmallInt => {
+//                 write!(formatter, "std_primitive_i16_as_postgresql_small_int")
+//             }
+//             Self::StdPrimitiveI32AsPostgresqlInt => {
+//                 write!(formatter, "std_primitive_i32_as_postgresql_int")
+//             }
+//             Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => write!(
+//                 formatter,
+//                 "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+//             ),
+//         }
+//     }
+// }
+// impl error_occurence_lib::ToStdStringString for DogColumn {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
 fn generate_query_vec_column(value: &[DogColumn]) -> std::string::String {
     let mut value = value
         .iter()
