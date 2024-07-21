@@ -198,7 +198,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, #where_ident_should_implement_eq_token_stream)]
+        #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, #where_ident_should_implement_eq_token_stream)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -332,7 +332,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, #where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
+        #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, #where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
         pub struct #where_std_option_option_ident_upper_camel_case_token_stream {
             pub value: #std_option_option_ident_upper_camel_case_token_stream ,
             pub conjuctive_operator: ConjunctiveOperator,

@@ -741,6 +741,9 @@ impl SqlxPostgresType {
             Self::SerdeJsonValue => std::string::String::from("serde_json::Value"),
         }
     }
+    pub fn get_path_stringified(&self) -> std::string::String {
+        add_path(&self.to_string())
+    }
 }
 
 impl std::convert::TryFrom<&SupportedSqlxPostgresType> for SqlxPostgresType {
@@ -2285,6 +2288,9 @@ impl RustSqlxMapToPostgresTypeVariant {
     }
     pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         SupportedSqlxPostgresType::from(self).inner_type_from_or_try_from_inner_type_with_serialize_deserialize()
+    }
+    pub fn get_supported_sqlx_postgres_type(&self) -> SupportedSqlxPostgresType {
+        SupportedSqlxPostgresType::from(self)
     }
 }
 
