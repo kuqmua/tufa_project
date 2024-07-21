@@ -3584,7 +3584,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let query_bind_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
                         let field_ident =  &element.field_ident;
                         quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(#element_snake_case.#field_ident.0);
+                            #query_snake_case = postgresql_crud::BindQuery::bind_value_to_query(#element_snake_case.#field_ident, #query_snake_case);
                         }
                     });
                     quote::quote! {
@@ -3777,7 +3777,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #parameters_token_stream
                 #try_operation_route_logic_token_stream
-                #try_operation_token_stream
+                // #try_operation_token_stream
             },
             // try_operation_test_token_stream,
             quote::quote! {}
@@ -7264,7 +7264,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream
 
-            // #create_many_token_stream
+            #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
