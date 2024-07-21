@@ -4922,39 +4922,38 @@ pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it priv
 //         Self(value.0)
 //     }
 // }
-#[derive(
-    Debug,
-    PartialEq,
-    Eq,
-    Clone,
-    Copy,//change
-    serde :: Serialize,
-    serde ::
-Deserialize,
-    utoipa :: ToSchema,
-)]
-pub struct StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize(
-    pub std::option::Option<std::primitive::bool>,
-);
-impl std::fmt::Display for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
-impl std::convert::From<StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize>
-    for StdOptionOptionStdPrimitiveBool
-{
-    fn from(value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
-        Self(value.0)
-    }
-}
-impl std::convert::From<StdOptionOptionStdPrimitiveBool>
-    for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
-{
-    fn from(value: StdOptionOptionStdPrimitiveBool) -> Self {
-        Self(value.0)
-    }
-}
+// #[derive(
+//     Debug,
+//     PartialEq,
+//     Eq,
+//     Clone,
+//     Copy,//change
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+// )]
+// pub struct StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize(
+//     pub std::option::Option<std::primitive::bool>,
+// );
+// impl std::fmt::Display for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "{:?}", self.0)
+//     }
+// }
+// impl std::convert::From<StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize>
+//     for StdOptionOptionStdPrimitiveBool
+// {
+//     fn from(value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+//         Self(value.0)
+//     }
+// }
+// impl std::convert::From<StdOptionOptionStdPrimitiveBool>
+//     for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+// {
+//     fn from(value: StdOptionOptionStdPrimitiveBool) -> Self {
+//         Self(value.0)
+//     }
+// }
 //
 impl std::convert::From<WhereStdPrimitiveBoolWithSerializeDeserialize> for WhereStdPrimitiveBool {
     fn from(value: WhereStdPrimitiveBoolWithSerializeDeserialize) -> Self {
@@ -5143,7 +5142,10 @@ impl std::convert::From<WhereStdPrimitiveBool> for WhereStdPrimitiveBoolWithSeri
 }
 #[derive(Debug, 
     Clone, Copy,//change
-    PartialEq, Eq)]
+    PartialEq, Eq,
+    serde::Serialize,
+    serde::Deserialize
+)]
 pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
 impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5286,7 +5288,7 @@ impl BindQuery for WhereStdOptionOptionStdPrimitiveBool {
     Clone, Copy, //change
     PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
 pub struct WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    pub value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub value: StdOptionOptionStdPrimitiveBool,
     pub conjuctive_operator: ConjunctiveOperator,
 }
 impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
@@ -5303,7 +5305,7 @@ impl std::convert::From<WhereStdOptionOptionStdPrimitiveBool>
 {
     fn from(value: WhereStdOptionOptionStdPrimitiveBool) -> Self {
         Self {
-            value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(value.value),
+            value: value.value,
             conjuctive_operator: value.conjuctive_operator,
         }
     }

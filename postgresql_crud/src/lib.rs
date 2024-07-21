@@ -649,7 +649,6 @@ pub use postgresql_crud_common::StdOptionOptionSqlxTypesJson;
 
 pub use postgresql_crud_common::StdOptionOptionSerdeJsonValue;
 ////////////////////////////////////////////////////////////
-pub use postgresql_crud_common::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize;
 
 pub use postgresql_crud_common::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize;
 

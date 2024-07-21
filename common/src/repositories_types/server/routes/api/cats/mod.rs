@@ -218,7 +218,7 @@ pub struct DogOptions {
     >,
     pub std_primitive_bool_as_postgresql_bool: std::option::Option<
         postgresql_crud::Value<
-            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+            postgresql_crud::StdOptionOptionStdPrimitiveBool,
         >,
     >,
     pub std_primitive_i16_as_postgresql_small_int: std::option::Option<
@@ -246,9 +246,10 @@ impl std::convert::From<Dog> for DogOptions {
             ),
             std_primitive_bool_as_postgresql_bool: Some(postgresql_crud::Value {
                 value:
-                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+                    // postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+                        //change
                         value.std_primitive_bool_as_postgresql_bool.0,
-                    ),
+                    // )
             }),
             std_primitive_i16_as_postgresql_small_int: Some(postgresql_crud::Value {
                 value:
@@ -383,8 +384,7 @@ pub struct CreateManyPayloadElement {
 pub struct CreateManyPayload(pub std::vec::Vec<CreateManyPayloadElement>);
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateManyPayloadElementWithSerializeDeserialize {
-    std_primitive_bool_as_postgresql_bool:
-        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    std_primitive_bool_as_postgresql_bool: postgresql_crud::StdOptionOptionStdPrimitiveBool,
     std_primitive_i16_as_postgresql_small_int:
         postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
     std_primitive_i32_as_postgresql_int:
@@ -431,9 +431,10 @@ impl std::convert::From<CreateManyPayloadElement>
 {
     fn from(value: CreateManyPayloadElement) -> Self {
         let std_primitive_bool_as_postgresql_bool =
-            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
-                value.std_primitive_bool_as_postgresql_bool,
-            );
+            // postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+                value.std_primitive_bool_as_postgresql_bool
+            // )
+            ;
         let std_primitive_i16_as_postgresql_small_int =
             postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
                 value.std_primitive_i16_as_postgresql_small_int,
