@@ -211,27 +211,27 @@ pub struct Dog {
 // }
 ///////////////////////
 // pub const TABLE_NAME: &std::primitive::str = "dogs";
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct DogOptions {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>,
-    >,
-    pub std_primitive_bool_as_postgresql_bool: std::option::Option<
-        postgresql_crud::Value<
-            postgresql_crud::StdOptionOptionStdPrimitiveBool,
-        >,
-    >,
-    pub std_primitive_i16_as_postgresql_small_int: std::option::Option<
-        postgresql_crud::Value<
-            postgresql_crud::StdOptionOptionStdPrimitiveI16,
-        >,
-    >,
-    pub std_primitive_i32_as_postgresql_int: std::option::Option<
-        postgresql_crud::Value<
-            postgresql_crud::StdOptionOptionStdPrimitiveI32,
-        >,
-    >,
-}
+// #[derive(Debug, serde::Serialize, serde::Deserialize)]
+// pub struct DogOptions {
+//     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<
+//         postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>,
+//     >,
+//     pub std_primitive_bool_as_postgresql_bool: std::option::Option<
+//         postgresql_crud::Value<
+//             postgresql_crud::StdOptionOptionStdPrimitiveBool,
+//         >,
+//     >,
+//     pub std_primitive_i16_as_postgresql_small_int: std::option::Option<
+//         postgresql_crud::Value<
+//             postgresql_crud::StdOptionOptionStdPrimitiveI16,
+//         >,
+//     >,
+//     pub std_primitive_i32_as_postgresql_int: std::option::Option<
+//         postgresql_crud::Value<
+//             postgresql_crud::StdOptionOptionStdPrimitiveI32,
+//         >,
+//     >,
+// }
 impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
         Self {
