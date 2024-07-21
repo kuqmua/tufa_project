@@ -7238,8 +7238,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #column_token_stream
         // #generate_query_vec_column_token_stream
         #allow_methods_token_stream
-        // #ident_column_read_permission_token_stream
-        // #(#reexport_postgresql_sqlx_column_types_token_stream)*
+        #ident_column_read_permission_token_stream
+        #(#reexport_postgresql_sqlx_column_types_token_stream)*
         // #field_and_field_with_serialize_deserialize_token_stream
 
         // #[cfg(test)]

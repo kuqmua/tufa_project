@@ -340,17 +340,17 @@ pub struct Dog {
 //     http::Method::PATCH,
 //     http::Method::DELETE,
 // ];
-#[derive(Debug, Clone, Copy)]
-pub struct DogColumnReadPermission {
-    std_primitive_bool_as_postgresql_bool: std::primitive::bool,
-    std_primitive_i16_as_postgresql_small_int: std::primitive::bool,
-    std_primitive_i32_as_postgresql_int: std::primitive::bool,
-    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
-}
-pub use postgresql_crud::StdOptionOptionStdPrimitiveBool;
-pub use postgresql_crud::StdOptionOptionStdPrimitiveI16;
-pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
-pub use postgresql_crud::StdPrimitiveI64;
+// #[derive(Debug, Clone, Copy)]
+// pub struct DogColumnReadPermission {
+//     std_primitive_bool_as_postgresql_bool: std::primitive::bool,
+//     std_primitive_i16_as_postgresql_small_int: std::primitive::bool,
+//     std_primitive_i32_as_postgresql_int: std::primitive::bool,
+//     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
+// }
+// pub use postgresql_crud::StdOptionOptionStdPrimitiveBool;
+// pub use postgresql_crud::StdOptionOptionStdPrimitiveI16;
+// pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
+// pub use postgresql_crud::StdPrimitiveI64;
 #[derive(Debug)]
 pub struct Field<T> {
     pub value: T,
