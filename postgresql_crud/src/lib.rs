@@ -445,7 +445,6 @@ pub use postgresql_crud_common::WhereSqlxTypesBitVec;
 
 pub use postgresql_crud_common::WhereSerdeJsonValue;
 ///////////////////
-pub use postgresql_crud_common::WhereStdPrimitiveBoolWithSerializeDeserialize;
 
 pub use postgresql_crud_common::WhereStdPrimitiveI16WithSerializeDeserialize;
 
