@@ -573,29 +573,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let element_snake_case = naming_constants::ElementSnakeCase;
     let acc_snake_case = naming_constants::AccSnakeCase;
     let generate_query_vec_column_snake_case_token_stream = quote::quote!{generate_query_vec_column};
-    let generate_query_vec_column_token_stream = {
-        let variants_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element|{
-            let field_ident_upper_camel_case_token_stream = syn_ident_to_upper_camel_case_token_stream(element.field_ident);
-            let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-                &element.field_ident.to_string(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => #field_ident_string_quotes_token_stream}
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {
-            fn #generate_query_vec_column_snake_case_token_stream(#value_snake_case: &[#ident_column_upper_camel_case_token_stream]) -> #std_string_string {
-                let mut #value_snake_case = #value_snake_case.iter().fold(#std_string_string::#from_snake_case(""), |mut #acc_snake_case, #element_snake_case| {
-                    #acc_snake_case += match #element_snake_case {
-                        #(#variants_token_stream),*
-                    };
-                    #acc_snake_case += ",";
-                    #acc_snake_case
-                });
-                let _ = #value_snake_case.pop();
-                #value_snake_case
-            }
-        }
-    };
+    // let generate_query_vec_column_token_stream = {
+    //     let variants_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element|{
+    //         let field_ident_upper_camel_case_token_stream = syn_ident_to_upper_camel_case_token_stream(element.field_ident);
+    //         let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+    //             &element.field_ident.to_string(),
+    //             &proc_macro_name_upper_camel_case_ident_stringified,
+    //         );
+    //         quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => #field_ident_string_quotes_token_stream}
+    //     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+    //     quote::quote! {
+    //         fn #generate_query_vec_column_snake_case_token_stream(#value_snake_case: &[#ident_column_upper_camel_case_token_stream]) -> #std_string_string {
+    //             let mut #value_snake_case = #value_snake_case.iter().fold(#std_string_string::#from_snake_case(""), |mut #acc_snake_case, #element_snake_case| {
+    //                 #acc_snake_case += match #element_snake_case {
+    //                     #(#variants_token_stream),*
+    //                 };
+    //                 #acc_snake_case += ",";
+    //                 #acc_snake_case
+    //             });
+    //             let _ = #value_snake_case.pop();
+    //             #value_snake_case
+    //         }
+    //     }
+    // };
     // println!("{generate_query_vec_column_token_stream}");
     let primary_key_field_ident_variant_initialization_token_stream = {
         let field_code_occurence_new_46d303bf_4267_4eb4_a98d_22193db9d220_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
@@ -7237,7 +7237,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #from_ident_for_ident_options_token_stream
         #column_token_stream
         // #generate_query_vec_column_token_stream
-        // #allow_methods_token_stream
+        #allow_methods_token_stream
         // #ident_column_read_permission_token_stream
         // #(#reexport_postgresql_sqlx_column_types_token_stream)*
         // #field_and_field_with_serialize_deserialize_token_stream
