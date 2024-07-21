@@ -1,379 +1,9 @@
-#[proc_macro_derive(FieldTypeImplementsSerializeDeserializeWithEqImpl)]
-pub fn field_type_implements_serialize_deserialize_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let proc_macro_name_upper_camel_case = "FieldTypeImplementsSerializeDeserializeWithEqImpl";
-    field_type_implements_serialize_deserialize_handle(
-        input,
-        proc_macro_name_upper_camel_case,
-        true,
-    )
-}
-
-#[proc_macro_derive(FieldTypeImplementsSerializeDeserializeWithoutEqImpl)]
-pub fn field_type_implements_serialize_deserialize_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let proc_macro_name_upper_camel_case = "FieldTypeImplementsSerializeDeserializeWithoutEqImpl";
-    field_type_implements_serialize_deserialize_handle(
-        input,
-        proc_macro_name_upper_camel_case,
-        false,
-    )
-}
-
-
-fn field_type_implements_serialize_deserialize_handle(
-    input: proc_macro::TokenStream,
-    proc_macro_name_upper_camel_case: &str,
-    should_implement_eq: std::primitive::bool,
-) -> proc_macro::TokenStream {
-    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
-    proc_macro_common::panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
-        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
-            match fields_unnamed.unnamed.len() {
-                1 => &fields_unnamed.unnamed[0],
-                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed with one field")
-            }
-        } else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed");
-        }
-    } else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
-    };
-    let field_type = &field.ty;
-    let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{ident}",
-            naming_conventions::StdOptionOptionUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{ident}{}",
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let possible_eq_impl_token_stream = if should_implement_eq {
-        quote::quote!{Eq,}
-    }
-    else {
-        proc_macro2::TokenStream::new()
-    };
-    let gen = quote::quote!{
-        //todo maybe some of them will not be needed in the future
-        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-        pub struct #ident_with_serialize_deserialize_token_stream(pub #field_type);
-        impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "{:?}", self.0)
-            }
-        }
-        impl error_occurence_lib::ToStdStringString for #ident_with_serialize_deserialize_token_stream {
-            fn to_std_string_string(&self) -> std::string::String {
-                format!("{self}")
-            }
-        }
-        impl std::convert::From<#ident_with_serialize_deserialize_token_stream> for #ident {
-            fn from(value: #ident_with_serialize_deserialize_token_stream) -> Self {
-                Self(value.0)
-            }
-        }
-        impl std::convert::From<#ident> for #ident_with_serialize_deserialize_token_stream {
-            fn from(value: #ident) -> Self {
-                Self(value.0)
-            }
-        }
-        ///////////////////////////////////////
-        #[derive(
-            Debug,
-            PartialEq,
-            #possible_eq_impl_token_stream
-            Clone,
-            serde::Serialize,
-            serde::Deserialize,
-            utoipa::ToSchema,
-        )]
-        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(pub std::option::Option<#field_type>);
-        impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "{:?}", self.0)
-            }
-        }
-        impl std::convert::From<#std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #std_option_option_ident_upper_camel_case_token_stream {
-            fn from(value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
-                Self(value.0)
-            }
-        }
-        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
-                Self(value.0)
-            }
-        }
-    };
-    // if ident == "StdPrimitiveBool" {
-    //     println!("{gen}");
-    //     // println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
-    // }
-    gen.into()
-}
-
-
-#[proc_macro_derive(CommonFrom)]
-pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "CommonFrom";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let where_ident_token_stream = {
-        let value = format!("{}{ident}", naming_constants::WhereUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_with_serialize_deserialize_token_stream = {
-        let value = format!(
-            "{}{ident}{}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_token_stream = {
-        let value = format!(
-            "{}{ident}",
-            naming_conventions::StdOptionOptionUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_token_stream = {
-        let value = format!(
-            "{}{}{ident}",
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::StdOptionOptionUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_with_serialize_deserialize_token_stream = {
-        let value = format!(
-            "{}{}{ident}{}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let gen = quote::quote!{
-        impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
-            fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
-                Self {
-                    value: #ident::from(value.value),
-                    conjuctive_operator: value.conjuctive_operator
-                }
-            }
-        }
-        impl std::convert::From<#where_std_option_option_ident_with_serialize_deserialize_token_stream> for #where_std_option_option_ident_token_stream {
-            fn from(value: #where_std_option_option_ident_with_serialize_deserialize_token_stream) -> Self {
-                Self {
-                    value: #std_option_option_ident_token_stream::from(value.value),
-                    conjuctive_operator: value.conjuctive_operator,
-                }
-            }
-        }
-    };
-    // if ident == "StdPrimitiveBool" {
-    //     println!("{gen}");
-    //     // println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
-    // }
-    gen.into()
-}
-
-#[proc_macro_derive(CommonTryFrom)]
-pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "CommonTryFrom";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_snake_case_token_stream = {
-        let value = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let ident_with_serialize_deserialize_error_named_token_stream = {
-        let value = format!(
-            "{ident}{}{}", 
-            naming_conventions::WithSerializeDeserializeUpperCamelCase,
-            naming_conventions::ErrorNamedUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_token_stream = {
-        let value = format!(
-            "{}{ident}",
-            naming_conventions::StdOptionOptionUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_token_stream = {
-        let value = format!("{}{ident}", naming_constants::WhereUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_with_serialize_deserialize_token_stream = {
-        let value = format!(
-            "{}{ident}{}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_with_serialize_deserialize_error_named_token_stream = {
-        let value = format!(
-            "{}{ident}{}{}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase,
-            naming_conventions::ErrorNamedUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_with_serialize_deserialize_error_named_token_stream = {
-        let value = format!(
-            "{}{}{ident}{}{}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase,
-            naming_conventions::ErrorNamedUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_token_stream = {
-        let value = format!(
-            "{}{}{ident}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::StdOptionOptionUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_with_serialize_deserialize_token_stream = {
-        let value = format!(
-            "{}{}{ident}{}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let eo_error_occurence_attribute_token_stream = proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence.to_attribute_view_token_stream();
-    let gen = quote::quote!{
-        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-        pub enum #where_ident_with_serialize_deserialize_error_named_token_stream {
-            #ident {
-                #eo_error_occurence_attribute_token_stream
-                #ident_snake_case_token_stream: #ident_with_serialize_deserialize_error_named_token_stream,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence//todo reuse path to error_occurence_lib
-            },
-        }
-        impl std::convert::TryFrom<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
-            type Error = #where_ident_with_serialize_deserialize_error_named_token_stream;
-            fn try_from(value: #where_ident_with_serialize_deserialize_token_stream) -> Result<Self, Self::Error> {
-                Ok(Self {
-                    value: match #ident::try_from(value.value) {
-                        Ok(value) => value,
-                        Err(error) => {
-                            return Err(Self::Error::#ident {
-                                #ident_snake_case_token_stream: error,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }  
-                    },
-                    conjuctive_operator: value.conjuctive_operator
-                })
-            }
-        }
-        //
-        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-        pub enum #where_std_option_option_ident_with_serialize_deserialize_error_named_token_stream {
-            #ident {
-                #eo_error_occurence_attribute_token_stream
-                #ident_snake_case_token_stream: #ident_with_serialize_deserialize_error_named_token_stream,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence//todo reuse path to error_occurence_lib
-            },
-        }
-        impl std::convert::TryFrom<#where_std_option_option_ident_with_serialize_deserialize_token_stream> for #where_std_option_option_ident_token_stream {
-            type Error = #where_std_option_option_ident_with_serialize_deserialize_error_named_token_stream;
-            fn try_from(value: #where_std_option_option_ident_with_serialize_deserialize_token_stream) -> Result<Self, Self::Error> {
-                match value.value.0 {
-                    Some(value_one) => match #ident::try_from(value_one) {
-                        Ok(value_two) => Ok(Self{
-                            value: #std_option_option_ident_token_stream(Some(value_two.0)),
-                            conjuctive_operator: value.conjuctive_operator,
-                        }),
-                        Err(error) => Err(Self::Error::#ident {
-                            #ident_snake_case_token_stream: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    },
-                    None => Ok(Self {
-                        value: #std_option_option_ident_token_stream(None),
-                        conjuctive_operator: value.conjuctive_operator,
-                    })
-                }
-            }
-        }
-        //
-    };
-    // if ident == "" {
-        // println!("{gen}");
-    // }
-    gen.into()
-}
 
 #[proc_macro_derive(CommonWithEqImpl)] //todo check on postgresql max length value of type
 pub fn common_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     common_handle(
         input,
         "CommonWithEqImpl",
-        true,
-        true,
         true,
         true,
         true,
@@ -388,21 +18,6 @@ pub fn common_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::Tok
         false,
         false,
         false,
-        false,
-        false,
-    )
-}
-
-#[proc_macro_derive(CommonWithSerializeDeserializeEqImpl)] //todo check on postgresql max length value of type
-pub fn common_with_serialize_deserialize_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_handle(
-        input,
-        "CommonWithSerializeDeserializeEqImpl",
-        false,
-        true,
-        false,
-        false,
-        true,
     )
 }
 
@@ -410,10 +25,8 @@ fn common_handle(
     input: proc_macro::TokenStream,
     proc_macro_name_upper_camel_case: &str,
     where_ident_should_implement_eq: std::primitive::bool,
-    where_ident_with_serialize_deserialize_should_implement_eq: std::primitive::bool,
     std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
     where_std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
-    where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq: std::primitive::bool,
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
@@ -439,22 +52,8 @@ fn common_handle(
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
     let field_type = &field.ty;
-    let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let where_ident_token_stream = {
         let value = format!("{}{ident}", naming_constants::WhereUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_with_serialize_deserialize_token_stream = {
-        let value = format!(
-            "{}{ident}{}", 
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -476,32 +75,7 @@ fn common_handle(
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     //
-    let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{ident}{}",
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{}{ident}{}",
-            naming_constants::WhereUpperCamelCase,
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let where_ident_should_implement_eq_token_stream = if where_ident_should_implement_eq {
-        quote::quote!{Eq,}
-    }
-    else {
-        proc_macro2::TokenStream::new()
-    };
-    let where_ident_with_serialize_deserialize_should_implement_eq_token_stream = if where_ident_with_serialize_deserialize_should_implement_eq {
         quote::quote!{Eq,}
     }
     else {
@@ -514,12 +88,6 @@ fn common_handle(
         proc_macro2::TokenStream::new()
     };
     let where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream = if where_std_option_option_ident_upper_camel_case_should_implement_eq {
-        quote::quote!{Eq,}
-    }
-    else {
-        proc_macro2::TokenStream::new()
-    };
-    let where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq_token_stream = if where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq {
         quote::quote!{Eq,}
     }
     else {
@@ -665,41 +233,35 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, #where_ident_with_serialize_deserialize_should_implement_eq_token_stream serde::Serialize, serde::Deserialize)]
-        pub struct #where_ident_with_serialize_deserialize_token_stream {
-            pub value: #ident_with_serialize_deserialize_token_stream,
-            pub conjuctive_operator: ConjunctiveOperator,
-        }
-        impl std::fmt::Display for #where_ident_with_serialize_deserialize_token_stream {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
-            }
-        }
-        impl std::convert::From<#where_ident_token_stream> for #where_ident_with_serialize_deserialize_token_stream {
-            fn from(value: #where_ident_token_stream) -> Self {
-                Self {
-                    value: #ident_with_serialize_deserialize_token_stream::from(value.value),
-                    conjuctive_operator: value.conjuctive_operator,
-                }
-            }
-        }
         ///////////////////////////////////////
-        #[derive(Debug, PartialEq, #std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
-        pub struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#field_type>);
+        #[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, #std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
+        pub struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#ident>);//#field_type
         ////////////////////////////
         impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "{:?}", self.0)
+                write!(
+                    formatter, "{:?}", 
+                    match &self.0 {
+                        Some(value) => Some(&value.0),
+                        None => None
+                    }
+                )
             }
         }
         impl #std_option_option_ident_upper_camel_case_token_stream {
             pub fn into_inner(self) -> std::option::Option<#field_type> {
-                self.0
+                match self.0 {
+                    Some(value) => Some(value.0),
+                    None => None
+                }
             }
         }
         impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for std::option::Option<#field_type> {
             fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
-                value.0
+                match value.0 {
+                    Some(value) => Some(value.0),
+                    None => None
+                }
             }
         }
         impl sqlx::Type<sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
@@ -763,7 +325,10 @@ fn common_handle(
                 self,
                 mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
             ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                query = query.bind(self.0);
+                query = query.bind(match self.0 {
+                    Some(value) => Some(value.0),
+                    None => None
+                });
                 query
             }
         }
@@ -811,30 +376,11 @@ fn common_handle(
                 self,
                 mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
             ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                query = query.bind(self.value.0);
+                query = query.bind(match self.value.0 {
+                    Some(value) => Some(value.0),
+                    None => None
+                });
                 query
-            }
-        }
-        #[derive(Debug, PartialEq, #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq_token_stream serde :: Serialize, serde :: Deserialize)]
-        pub struct #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            pub value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream,
-            pub conjuctive_operator: ConjunctiveOperator,
-        }
-        impl std::fmt::Display for #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(
-                    formatter,
-                    "value: {}, conjuctive_operator: {}",
-                    self.value, self.conjuctive_operator
-                )
-            }
-        }
-        impl std::convert::From<#where_std_option_option_ident_upper_camel_case_token_stream> for #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn from(value: #where_std_option_option_ident_upper_camel_case_token_stream) -> Self {
-                Self {
-                    value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream::from(value.value),
-                    conjuctive_operator: value.conjuctive_operator,
-                }
             }
         }
     };
@@ -845,217 +391,6 @@ fn common_handle(
     gen.into()
 }
 ///////////////
-#[proc_macro_derive(CommonSpecificFromWithEqImpl)]
-pub fn common_specific_from_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_specific_from_handle(
-        input,
-        "CommonSpecificFromWithEqImpl",
-        true,
-    )
-}
-
-#[proc_macro_derive(CommonSpecificFromWithoutEqImpl)]
-pub fn common_specific_from_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_specific_from_handle(
-        input,
-        "CommonSpecificFromWithoutEqImpl",
-        false,
-    )
-}
-
-fn common_specific_from_handle(
-    input: proc_macro::TokenStream,
-    proc_macro_name_upper_camel_case: &str,
-    should_implement_eq: std::primitive::bool,
-) -> proc_macro::TokenStream {
-    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
-    proc_macro_common::panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{ident}",
-            naming_conventions::StdOptionOptionUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{ident}{}",
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let possible_eq_impl_token_stream = if should_implement_eq {
-        quote::quote!{Eq,}
-    }
-    else {
-        proc_macro2::TokenStream::new()
-    };
-    let gen = quote::quote!{
-        #[derive(
-            Debug,
-            PartialEq,
-            #possible_eq_impl_token_stream
-            serde::Serialize,
-            serde::Deserialize,
-            utoipa::ToSchema,
-        )]
-        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(pub std::option::Option<#ident_with_serialize_deserialize_token_stream>);
-        impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "{:?}", self.0)
-            }
-        }
-        impl std::convert::From<#std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #std_option_option_ident_upper_camel_case_token_stream {
-            fn from(value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
-                match value.0 {
-                    Some(value) => Self(Some(#ident::from(value).0)),
-                    None => Self(None)
-                }
-            }
-        }
-        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
-                match value.0 {
-                    Some(value) => Self(Some(#ident_with_serialize_deserialize_token_stream::from(#ident(value)))),
-                    None => Self(None)
-                }
-            }
-        }
-    };
-    // if ident == "" {
-    //     println!("{gen}");
-    //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
-    // }
-    gen.into()
-}
-
-#[proc_macro_derive(CommonSpecificTryFromWithEqImpl)]
-pub fn common_specific_try_from_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_specific_try_from_handle(
-        input,
-        "CommonSpecificTryFromWithEqImpl",
-        true,
-    )
-}
-
-#[proc_macro_derive(CommonSpecificTryFromWithoutEqImpl)]
-pub fn common_specific_try_from_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_specific_try_from_handle(
-        input,
-        "CommonSpecificTryFromWithoutEqImpl",
-        false,
-    )
-}
-
-fn common_specific_try_from_handle(
-    input: proc_macro::TokenStream,
-    proc_macro_name_upper_camel_case: &str,
-    should_implement_eq: std::primitive::bool,
-) -> proc_macro::TokenStream {
-    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
-    proc_macro_common::panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
-        panic!(
-            "{proc_macro_name_upper_camel_case} {}: {error}",
-            proc_macro_common::constants::AST_PARSE_FAILED
-        )
-    });
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_with_serialize_deserialize_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{ident}",
-            naming_conventions::StdOptionOptionUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
-        let value = format!(
-            "{}{ident}{}",
-            naming_conventions::StdOptionOptionUpperCamelCase,
-            naming_conventions::WithSerializeDeserializeUpperCamelCase
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let ident_with_serialize_deserialize_error_named_token_stream = {
-        let value = format!(
-            "{ident}{}{}", 
-            naming_conventions::WithSerializeDeserializeUpperCamelCase,
-            naming_conventions::ErrorNamedUpperCamelCase,
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let possible_eq_impl_token_stream = if should_implement_eq {
-        quote::quote!{Eq,}
-    }
-    else {
-        proc_macro2::TokenStream::new()
-    };
-    let gen = quote::quote!{
-        #[derive(
-            Debug,
-            PartialEq,
-            #possible_eq_impl_token_stream
-            serde::Serialize,
-            serde::Deserialize,
-            utoipa::ToSchema,
-        )]
-        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(pub std::option::Option<#ident_with_serialize_deserialize_token_stream>);
-        impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "{:?}", self.0)
-            }
-        }
-        impl std::convert::TryFrom<#std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #std_option_option_ident_upper_camel_case_token_stream {
-            type Error = #ident_with_serialize_deserialize_error_named_token_stream;
-            fn try_from(value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
-                match value.0 {
-                    Some(value) => match #ident::try_from(value) {
-                        Ok(value) => Ok(Self(Some(value.0))),
-                        Err(error) => Err(error)
-                    },
-                    None => Ok(Self(None))
-                }
-            }
-        }
-        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
-                match value.0 {
-                    Some(value) => Self(Some(#ident_with_serialize_deserialize_token_stream::from(#ident(value)))),
-                    None => Self(None)
-                }
-            }
-        }
-    };
-    // if ident == "" {
-        // println!("{gen}");
-    // }
-    gen.into()
-}
 
 #[proc_macro_derive(AsPostgresqlCommon)] //todo check on postgresql max length value of type
 pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
