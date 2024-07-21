@@ -4963,16 +4963,16 @@ pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it priv
 //         }
 //     }
 // }
-impl std::convert::From<WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize>
-    for WhereStdOptionOptionStdPrimitiveBool
-{
-    fn from(value: WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
-        Self {
-            value: StdOptionOptionStdPrimitiveBool::from(value.value),
-            conjuctive_operator: value.conjuctive_operator,
-        }
-    }
-}
+// impl std::convert::From<WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize>
+//     for WhereStdOptionOptionStdPrimitiveBool
+// {
+//     fn from(value: WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+//         Self {
+//             value: StdOptionOptionStdPrimitiveBool::from(value.value),
+//             conjuctive_operator: value.conjuctive_operator,
+//         }
+//     }
+// }
 //
 impl std::fmt::Display for StdPrimitiveBool {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5284,32 +5284,32 @@ impl BindQuery for WhereStdOptionOptionStdPrimitiveBool {
         query
     }
 }
-#[derive(Debug, 
-    Clone, Copy, //change
-    PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-pub struct WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    pub value: StdOptionOptionStdPrimitiveBool,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter,
-            "value: {}, conjuctive_operator: {}",
-            self.value, self.conjuctive_operator
-        )
-    }
-}
-impl std::convert::From<WhereStdOptionOptionStdPrimitiveBool>
-    for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
-{
-    fn from(value: WhereStdOptionOptionStdPrimitiveBool) -> Self {
-        Self {
-            value: value.value,
-            conjuctive_operator: value.conjuctive_operator,
-        }
-    }
-}
+// #[derive(Debug, 
+//     Clone, Copy, //change
+//     PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+// pub struct WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     pub value: StdOptionOptionStdPrimitiveBool,
+//     pub conjuctive_operator: ConjunctiveOperator,
+// }
+// impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(
+//             formatter,
+//             "value: {}, conjuctive_operator: {}",
+//             self.value, self.conjuctive_operator
+//         )
+//     }
+// }
+// impl std::convert::From<WhereStdOptionOptionStdPrimitiveBool>
+//     for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+// {
+//     fn from(value: WhereStdOptionOptionStdPrimitiveBool) -> Self {
+//         Self {
+//             value: value.value,
+//             conjuctive_operator: value.conjuctive_operator,
+//         }
+//     }
+// }
 //
 impl AsPostgresqlBool for StdPrimitiveBool {}
 impl PostgresqlOrder for StdPrimitiveBool {}

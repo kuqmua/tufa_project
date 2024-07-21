@@ -811,7 +811,6 @@ pub use postgresql_crud_common::WhereStdOptionOptionSqlxTypesBitVec;
 
 pub use postgresql_crud_common::WhereStdOptionOptionSerdeJsonValue;
 //////////////////////////////
-pub use postgresql_crud_common::WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize;
 
 pub use postgresql_crud_common::WhereStdOptionOptionStdPrimitiveI16WithSerializeDeserialize;
 
