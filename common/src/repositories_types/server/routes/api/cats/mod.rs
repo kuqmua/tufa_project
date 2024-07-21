@@ -210,7 +210,7 @@ pub struct Dog {
 //     something: std::string::String,
 // }
 ///////////////////////
-pub const TABLE_NAME: &std::primitive::str = "dogs";
+// pub const TABLE_NAME: &std::primitive::str = "dogs";
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct DogOptions {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<
