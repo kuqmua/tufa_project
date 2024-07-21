@@ -3313,7 +3313,7 @@ struct TestNewType<T> {
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct TestNewTypeWithSerializeDeserialize<T> {
-    std_primitive_bool: StdPrimitiveBoolWithSerializeDeserialize,
+    std_primitive_bool: StdPrimitiveBool,
     std_primitive_i16: StdPrimitiveI16WithSerializeDeserialize,
     std_primitive_i32: StdPrimitiveI32WithSerializeDeserialize,
     std_primitive_i64: StdPrimitiveI64WithSerializeDeserialize,
@@ -4893,34 +4893,35 @@ pub trait CheckSupportedPostgresqlColumnType {
 #[derive(Debug, Clone, Copy, PartialEq, Eq,
     serde::Serialize,
     serde::Deserialize,
+    utoipa::ToSchema,
     // postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, 
     // postgresql_crud_types_macro_logic_reuse::CommonFrom, 
     // postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
 )]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
 //
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]//change
-pub struct StdPrimitiveBoolWithSerializeDeserialize(pub std::primitive::bool);
-impl std::fmt::Display for StdPrimitiveBoolWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
-impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolWithSerializeDeserialize {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
-impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
-    fn from(value: StdPrimitiveBoolWithSerializeDeserialize) -> Self {
-        Self(value.0)
-    }
-}
-impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
-    fn from(value: StdPrimitiveBool) -> Self {
-        Self(value.0)
-    }
-}
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]//change
+// pub struct StdPrimitiveBoolWithSerializeDeserialize(pub std::primitive::bool);
+// impl std::fmt::Display for StdPrimitiveBoolWithSerializeDeserialize {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "{:?}", self.0)
+//     }
+// }
+// impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolWithSerializeDeserialize {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
+//     fn from(value: StdPrimitiveBoolWithSerializeDeserialize) -> Self {
+//         Self(value.0)
+//     }
+// }
+// impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
+//     fn from(value: StdPrimitiveBool) -> Self {
+//         Self(value.0)
+//     }
+// }
 #[derive(
     Debug,
     PartialEq,
@@ -5120,7 +5121,7 @@ impl BindQuery for WhereStdPrimitiveBool {
     PartialEq, Eq, serde :: Serialize, serde :: Deserialize
 )]
 pub struct WhereStdPrimitiveBoolWithSerializeDeserialize {
-    pub value: StdPrimitiveBoolWithSerializeDeserialize,
+    pub value: StdPrimitiveBool,
     pub conjuctive_operator: ConjunctiveOperator,
 }
 impl std::fmt::Display for WhereStdPrimitiveBoolWithSerializeDeserialize {
@@ -5135,7 +5136,7 @@ impl std::fmt::Display for WhereStdPrimitiveBoolWithSerializeDeserialize {
 impl std::convert::From<WhereStdPrimitiveBool> for WhereStdPrimitiveBoolWithSerializeDeserialize {
     fn from(value: WhereStdPrimitiveBool) -> Self {
         Self {
-            value: StdPrimitiveBoolWithSerializeDeserialize::from(value.value),
+            value: value.value,
             conjuctive_operator: value.conjuctive_operator,
         }
     }

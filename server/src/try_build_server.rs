@@ -22,7 +22,7 @@
             postgresql_crud::SqlxTypesTimeUtcOffset,
             postgresql_crud::NumBigintSignWithSerializeDeserialize,
             postgresql_crud::NumBigintBigInt,
-            postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize,
+            postgresql_crud::StdPrimitiveBool,
             postgresql_crud::StdPrimitiveI16WithSerializeDeserialize,
             postgresql_crud::StdPrimitiveI32WithSerializeDeserialize,
             postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
