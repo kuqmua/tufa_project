@@ -4029,28 +4029,109 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub enum NumBigintSignWithSerializeDeserialize {
-    Minus,
-    NoSign,
-    Plus,
-}
-impl std::convert::From<NumBigintSignWithSerializeDeserialize> for num_bigint::Sign {
-    fn from(value: NumBigintSignWithSerializeDeserialize) -> Self {
-        match value {
-            NumBigintSignWithSerializeDeserialize::Minus => Self::Minus,
-            NumBigintSignWithSerializeDeserialize::NoSign => Self::NoSign,
-            NumBigintSignWithSerializeDeserialize::Plus => Self::Plus,
-        }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, utoipa::ToSchema)]
+pub struct NumBigintSign(pub num_bigint::Sign);
+impl serde::Serialize for NumBigintSign {
+    fn serialize<__S>(
+        &self,
+        __serializer: __S,
+    ) -> serde::__private::Result<__S::Ok, __S::Error>
+    where
+        __S: serde::Serializer,
+    {
+        serde::Serializer::serialize_newtype_struct(
+            __serializer,
+            "NumBigintSign",
+            match self.0 {
+                num_bigint::Sign::Minus => "Minus",
+                num_bigint::Sign::NoSign => "NoSign",
+                num_bigint::Sign::Plus => "Plus"
+            },
+        )
     }
 }
-impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserialize {
-    fn from(value: num_bigint::Sign) -> Self {
-        match value {
-            num_bigint::Sign::Minus => Self::Minus,
-            num_bigint::Sign::NoSign => Self::NoSign,
-            num_bigint::Sign::Plus => Self::Plus,
+impl<'de> serde::Deserialize<'de> for NumBigintSign {
+    fn deserialize<__D>(
+        __deserializer: __D,
+    ) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<NumBigintSign>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
         }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = NumBigintSign;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "tuple struct NumBigintSign",
+                )
+            }
+            #[inline]
+            fn visit_newtype_struct<__E>(
+                self,
+                __e: __E,
+            ) -> serde::__private::Result<Self::Value, __E::Error>
+            where
+                __E: serde::Deserializer<'de>,
+            {
+                let __field0: std::string::String = <std::string::String as serde::Deserialize>::deserialize(
+                    __e,
+                )?;
+                serde::__private::Ok(NumBigintSign(match __field0.as_str() {
+                    "Minus" => num_bigint::Sign::Minus,
+                    "NoSign" => num_bigint::Sign::NoSign,
+                    "Plus" => num_bigint::Sign::Plus,
+                    _ => {
+                        return Err(serde::de::Error::custom("unsupported value, supported: Minus, NoSign, Plus"));
+                    }
+                }))
+            }
+            #[inline]
+            fn visit_seq<__A>(
+                self,
+                mut __seq: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<
+                    std::string::String,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                0usize,
+                                &"tuple struct NumBigintSign with 1 element",
+                            ),
+                        );
+                    }
+                };
+                serde::__private::Ok(NumBigintSign(match __field0.as_str() {
+                    "Minus" => num_bigint::Sign::Minus,
+                    "NoSign" => num_bigint::Sign::NoSign,
+                    "Plus" => num_bigint::Sign::Plus,
+                    _ => {
+                        return Err(serde::de::Error::custom("unsupported value, supported: Minus, NoSign, Plus"));
+                    }
+                }))
+            }
+        }
+        serde::Deserializer::deserialize_newtype_struct(
+            __deserializer,
+            "NumBigintSign",
+            __Visitor {
+                marker: serde::__private::PhantomData::<NumBigintSign>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
     }
 }
 //todo pub or not for all - think
@@ -4070,11 +4151,7 @@ impl serde::Serialize for NumBigintBigInt {
             "NumBigintBigInt",
             false as usize + 1 + 1,
         )?;
-        serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "sign", &match sign {
-            num_bigint::Sign::Minus => NumBigintSignWithSerializeDeserialize::Minus,
-            num_bigint::Sign::NoSign => NumBigintSignWithSerializeDeserialize::NoSign,
-            num_bigint::Sign::Plus => NumBigintSignWithSerializeDeserialize::Plus,
-        })?;
+        serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "sign", &NumBigintSign(sign))?;
         serde::ser::SerializeStruct::serialize_field(
             &mut __serde_state,
             "digits",
@@ -4177,10 +4254,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
             where
                 __A: serde::de::SeqAccess<'de>,
             {
-                let __field0 = match serde::de::SeqAccess::next_element::<
-                    NumBigintSignWithSerializeDeserialize,
-                >(&mut __seq)?
-                {
+                let __field0 = match serde::de::SeqAccess::next_element::<NumBigintSign>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
                         return serde::__private::Err(serde::de::Error::invalid_length(
@@ -4202,11 +4276,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
                     }
                 };
                 serde::__private::Ok(NumBigintBigInt(num_bigint::BigInt::new(
-                    match __field0 {
-                        NumBigintSignWithSerializeDeserialize::Minus => num_bigint::Sign::Minus,
-                        NumBigintSignWithSerializeDeserialize::NoSign => num_bigint::Sign::NoSign,
-                        NumBigintSignWithSerializeDeserialize::Plus => num_bigint::Sign::Plus,
-                    },
+                    __field0.0,
                     __field1
                 )))
             }
@@ -4218,9 +4288,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
             where
                 __A: serde::de::MapAccess<'de>,
             {
-                let mut __field0: serde::__private::Option<
-                    NumBigintSignWithSerializeDeserialize,
-                > = serde::__private::None;
+                let mut __field0: serde::__private::Option<NumBigintSign> = serde::__private::None;
                 let mut __field1: serde::__private::Option<
                     std::vec::Vec<std::primitive::u32>,
                 > = serde::__private::None;
@@ -4235,9 +4303,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
                                 );
                             }
                             __field0 =
-                                serde::__private::Some(serde::de::MapAccess::next_value::<
-                                    NumBigintSignWithSerializeDeserialize,
-                                >(
+                                serde::__private::Some(serde::de::MapAccess::next_value::<NumBigintSign>(
                                     &mut __map
                                 )?);
                         }
@@ -4272,11 +4338,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
                     serde::__private::None => serde::__private::de::missing_field("digits")?,
                 };
                 serde::__private::Ok(NumBigintBigInt(num_bigint::BigInt::new(
-                    match __field0 {
-                        NumBigintSignWithSerializeDeserialize::Minus => num_bigint::Sign::Minus,
-                        NumBigintSignWithSerializeDeserialize::NoSign => num_bigint::Sign::NoSign,
-                        NumBigintSignWithSerializeDeserialize::Plus => num_bigint::Sign::Plus,
-                    },
+                    __field0.0,
                     __field1
                 )))
             }

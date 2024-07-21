@@ -21,7 +21,7 @@ pub use generate_postgresql_crud::common_additional_route_logic;
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 pub use postgresql_crud_common::NumBigintBigInt;
-pub use postgresql_crud_common::NumBigintSignWithSerializeDeserialize;
+pub use postgresql_crud_common::NumBigintSign;
 pub use postgresql_crud_common::SqlxTypesTimeUtcOffset;
 pub use postgresql_crud_common::TimeMonth;
 ///////////////////////////////////
