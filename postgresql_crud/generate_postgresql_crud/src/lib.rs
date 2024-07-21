@@ -6578,7 +6578,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                     #acc_snake_case.push(&#value_snake_case);
                                                 }
                                                 else {
-                                                    let #error_0_token_stream = #field_ident_token_stream(#value_snake_case.clone());
+                                                    let #error_0_token_stream = #value_snake_case.clone();
                                                     #not_unique_fields_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                                                 }
                                             }
@@ -7287,7 +7287,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
-            // #delete_many_token_stream
+            #delete_many_token_stream
             // #delete_one_token_stream
         // }
     };
