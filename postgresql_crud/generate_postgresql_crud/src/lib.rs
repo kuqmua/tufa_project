@@ -1664,6 +1664,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         value
     };
+    let common_route_with_row_and_rollback_syn_variants = {
+        let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+        common_route_syn_variants.iter().for_each(|element|{
+            value.push(*element);
+        });
+        value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
+        value
+    };
     let common_additional_route_logic_token_stream = proc_macro_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &syn_derive_input.attrs,
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute(),
@@ -2937,14 +2945,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
-                common_route_syn_variants.iter().for_each(|element|{
-                    value.push(*element);
-                });
-                value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value
-            },
+            &common_route_with_row_and_rollback_syn_variants,
             &operation,
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
@@ -4740,7 +4741,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &{
                     let is_pub = true;
-                    let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream =  generate_primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream(is_pub);
+                    let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = generate_primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream(is_pub);
                     let fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream = generate_fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream(is_pub);
                     quote::quote! {
                         #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
@@ -5190,14 +5191,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let (delete_one_token_stream, delete_one_test_token_stream) = {
         let operation = Operation::DeleteOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-            &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
-                common_route_syn_variants.iter().for_each(|element|{
-                    value.push(*element);
-                });
-                value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value
-            },
+            &common_route_with_row_and_rollback_syn_variants,
             &operation,
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
