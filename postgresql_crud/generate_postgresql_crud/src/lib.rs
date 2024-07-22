@@ -2848,34 +2848,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let generate_parameters_logic_token_stream = |
         operation: &Operation,
-        from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-        // self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &SynVariantWrapper,
         operation_payload_with_serialize_deserialize_check_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
         let body_bytes_snake_case = naming_conventions::BodyBytesSnakeCase;
         let try_or_try_from_operation_payload_upper_camel_case_token_stream = {
             let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
             quote::quote! {#operation_payload_upper_camel_case_token_stream::#from_snake_case(#value_snake_case)}
-            // match from_or_try_from {
-            //     postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#operation_payload_upper_camel_case_token_stream::#from_snake_case(#value_snake_case)},
-            //     postgresql_crud_common::FromOrTryFrom::TryFrom => {
-            //         let self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-            //             &operation,
-            //             &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
-            //             file!(),
-            //             line!(),
-            //             column!(),
-            //         );
-            //         quote::quote! {
-            //             match #operation_payload_upper_camel_case_token_stream::#try_from_snake_case(#value_snake_case) {
-            //                 Ok(#value_snake_case) => #value_snake_case,
-            //                 Err(#error_0_token_stream) => {
-            //                     #self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-            //                 }
-            //             }
-            //         }
-            //     },
-            // }
         };
         let serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
             &operation,
@@ -3365,8 +3343,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
-                    &fields_named_excluding_primary_key_from_or_try_from,
-                    // &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &proc_macro2::TokenStream::new(),
                 );
                 // println!("{parameters_logic_token_stream}");
@@ -3675,8 +3651,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
-                    &fields_named_excluding_primary_key_from_or_try_from,
-                    // &self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper,
                     &proc_macro2::TokenStream::new(),
                 );
                 let query_string_token_stream = {
@@ -3985,7 +3959,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
-                   &fields_named_from_or_try_from,
                    &{
                         let filter_not_unique_fields_token_stream = {
                             let filter_not_unique_primary_key_token_stream = {
@@ -4013,16 +3986,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             let filter_not_unique_fields_named_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
                                 let element_field_ident = &element.field_ident;
-                                let field_ident_token_stream = {
-                                    let value = format!(
-                                        "{postgresql_snake_case_stringified}::{}",
-                                        postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
-                                            &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
-                                        ),
-                                    );
-                                    value.parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                };
                                 //todo remove syn_variant_wrapper creation duplication
                                 let not_unique_fields_syn_variant_wrapper = new_syn_variant_wrapper(
                                     &format!(
@@ -4443,16 +4406,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     column!(),
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                 );
-                                let field_ident_token_stream = {
-                                    let value = format!(
-                                        "{postgresql_snake_case_stringified}::{}",
-                                        postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
-                                            &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
-                                        ),
-                                    );
-                                    value.parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                };
                                 quote::quote! {
                                     #not_unique_field_ident_upper_camel_case_token_stream {
                                         #not_unique_field_ident_snake_case_token_stream: #value_snake_case.clone(),
@@ -4656,7 +4609,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
-                    &primary_key_from_or_try_from,
                     &{
                          let filter_not_unique_column_token_stream = generate_filter_not_unique_column_route_logic_token_stream(&operation);
                          quote::quote!{
@@ -4947,7 +4899,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
-                   &fields_named_from_or_try_from,
                    &{
                         let filter_not_unique_primary_key_token_stream = {
                             let not_unique_primary_key_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
@@ -5451,7 +5402,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
-                   &fields_named_from_or_try_from,
                    &{
                         let filter_no_payload_fields_token_stream = generate_filter_no_payload_fields_token_stream(&operation, &quote::quote! {#value_snake_case});
                         quote::quote!{
@@ -5790,7 +5740,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
-                    &fields_named_from_or_try_from,
                     &{
                         let filter_no_payload_fields_token_stream = {
                             let none_fields_named_token_stream = syn_field_with_additional_info_fields_named.iter().map(|_|{
@@ -5856,16 +5805,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             let filter_not_unique_fields_named_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
                                 let element_field_ident = &element.field_ident;
-                                let field_ident_token_stream = {
-                                    let value = format!(
-                                        "{postgresql_snake_case_stringified}::{}",
-                                        postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(
-                                            &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
-                                        ),
-                                    );
-                                    value.parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                };
                                 //todo remove syn_variant_wrapper creation duplication
                                 let not_unique_fields_syn_variant_wrapper = new_syn_variant_wrapper(
                                     &format!(
@@ -6308,7 +6247,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                    &operation,
-                   &primary_key_from_or_try_from,
                    &proc_macro2::TokenStream::new(),
                 );
                 let query_string_token_stream = {
