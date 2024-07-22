@@ -1705,20 +1705,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         true => &primary_key_inner_type_token_stream,
         false => &primary_key_inner_type_token_stream,
     };
-    let generate_fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream = |is_pub: bool|match is_pub {
-        true => &pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
-        false => &fields_idents_std_option_option_std_vec_vec_where_inner_type_with_serialize_deserialize_token_stream,
+    let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = {
+        let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(true);
+        quote::quote! {pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_handle_token_stream>>}
     };
-    let generate_primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = |is_pub: bool|{
-        let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
-        let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
-        quote::quote! {#pub_handle_token_stream #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_handle_token_stream>>}
+    let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
+        quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>}
     };
-    let generate_pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = |is_pub: bool|{
-        let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
-        quote::quote! {#pub_handle_token_stream #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>}
-    };
-    let generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = |is_pub: bool|{
+    let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = {
+        let is_pub = true;
         let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
         let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
         quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_inner_type_handle_token_stream}
@@ -3154,20 +3149,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &operation,
             generate_operation_payload_token_stream(
                 &operation,
-                &{
-                    let is_pub = true;
-                    let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
-                    let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = generate_primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream(is_pub);
-                    let fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream = generate_fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream(is_pub);
-                    let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = generate_pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream(is_pub);
-                    quote::quote! {
-                        #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
-                        #fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream,
-                        #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
-                        #pub_handle_token_stream #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-                        #pub_handle_token_stream #limit_snake_case: #limit_and_offset_type_token_stream,
-                        #pub_handle_token_stream #offset_snake_case: #limit_and_offset_type_token_stream,
-                    }
+                &quote::quote! {
+                    #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
+                    #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
+                    #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
+                    pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
+                    pub #limit_snake_case: #limit_and_offset_type_token_stream,
+                    pub #offset_snake_case: #limit_and_offset_type_token_stream,
                 }
             ),
         );
@@ -3755,14 +3743,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &operation,
             generate_operation_payload_token_stream(
                 &operation,
-                &{
-                    let is_pub = true;
-                    let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(is_pub);
-                    let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = generate_pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream(is_pub);
-                    quote::quote! {
-                        #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
-                        #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
-                    }
+                &quote::quote! {
+                    #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
+                    #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
                 }
             ),
         );
@@ -4739,14 +4722,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &operation,
             generate_operation_payload_token_stream(
                 &operation,
-                &{
-                    let is_pub = true;
-                    let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = generate_primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream(is_pub);
-                    let fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream = generate_fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream(is_pub);
-                    quote::quote! {
-                        #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
-                        #fields_idents_std_option_option_std_vec_vec_where_inner_type_handle_token_stream
-                    }
+                &quote::quote! {
+                    #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
+                    #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
                 },
             ),
         );
@@ -5198,7 +5176,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &operation,
             generate_operation_payload_token_stream(
                 &operation,
-                &generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(true)
+                &pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream
             ),
         );
         // println!("{parameters_token_stream}");
