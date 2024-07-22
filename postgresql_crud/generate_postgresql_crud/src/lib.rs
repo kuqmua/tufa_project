@@ -2683,8 +2683,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let generate_type_variants_from_request_response_syn_variants = |
         syn_variants: &std::vec::Vec<&syn::Variant>,
-        from_or_try_from: &postgresql_crud_common::FromOrTryFrom,
-        // self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper: &SynVariantWrapper,
         operation: &Operation,
     | -> std::vec::Vec<syn::Variant> {
         let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
@@ -2698,9 +2696,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         for element in operation_additional_error_variants {
             type_variants_from_request_response_syn_variants.push(element.clone());
         }
-        // if *from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-        //     type_variants_from_request_response_syn_variants.push(self_payload_try_from_self_payload_with_serialize_deserialize_syn_variant_wrapper.get_syn_variant().clone());
-        // }
         type_variants_from_request_response_syn_variants
     };
     let generate_try_operation_error_named_token_stream = |
@@ -3261,7 +3256,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&unexpected_rows_length_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value
             },
-            &fields_named_excluding_primary_key_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
@@ -3601,7 +3595,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value
             },
-            &fields_named_excluding_primary_key_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
@@ -3838,7 +3831,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 value
             },
-            &fields_named_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
@@ -4530,7 +4522,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&not_unique_column_syn_variant_wrapper.get_syn_variant());
                 value
             },
-            &primary_key_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
@@ -4828,7 +4819,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
                 value
             },
-            &fields_named_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
@@ -5362,7 +5352,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value
             },
-            &fields_named_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
@@ -5647,7 +5636,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 value
             },
-            &fields_named_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
@@ -6183,7 +6171,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value
             },
-            &primary_key_from_or_try_from,
             &operation,
         );
         let parameters_token_stream = {
