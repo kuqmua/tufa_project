@@ -1715,14 +1715,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
         quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_inner_type_handle_token_stream}
     };
-    let generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream = |
-        operation: &Operation
-    | {
-        let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
-        quote::quote!{
-            #operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)
-        }
-    };
     let generate_filter_not_unique_column_route_logic_token_stream = |operation: &Operation|{
         let not_unique_column_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
             &operation,
@@ -2437,7 +2429,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         type_variants_from_request_response_syn_variants: &[syn::Variant],
         result_ok_type_token_stream: &proc_macro2::TokenStream,
         payload_check_token_stream: &proc_macro2::TokenStream,
-        operation_payload_with_serialize_deserialize_initialization_token_stream: &proc_macro2::TokenStream,
         desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     | -> proc_macro2::TokenStream {
         let try_operation_snake_case_token_stream = naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
@@ -2450,6 +2441,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 line!(),
                 column!(),
             );
+            let operation_payload_with_serialize_deserialize_initialization_token_stream = {
+                let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(operation);
+                quote::quote!{#operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
+            };
             quote::quote! {
                 let #payload_snake_case = {
                     #payload_check_token_stream
@@ -2874,10 +2869,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
-                &{
-                    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
-                    quote::quote!{#operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
-                },
                 &quote::quote!{
                     #value_snake_case
                     .into_iter()
@@ -3080,10 +3071,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
-                &{
-                    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
-                    quote::quote!{#operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
-                },
                 &quote::quote!{#primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case)}
             );
             // let try_operation_test_token_stream = {
@@ -3672,7 +3659,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #filter_not_unique_column_token_stream
                     }
                 },
-                &generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream(&operation),
                 &match fields_named_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
                         #value_snake_case
@@ -3881,7 +3867,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #filter_not_unique_column_token_stream
                     }
                 },
-                &generate_read_operation_payload_with_serialize_deserialize_initialization_token_stream(&operation),
                 &match fields_named_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => quote::quote!{#struct_options_ident_token_stream::#from_snake_case(#value_snake_case)},
                     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{#value_snake_case}
@@ -4410,10 +4395,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #filter_not_unique_primary_key_token_stream
                     }
                 },
-                &{
-                    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
-                    quote::quote!{#operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
-                },
                 &quote::quote!{
                     #value_snake_case
                     .into_iter()
@@ -4686,10 +4667,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
-                &{
-                    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
-                    quote::quote!{#operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
-                },
                 &quote::quote!{#primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case)}
             );
             (
@@ -5134,10 +5111,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
-                &{
-                    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
-                    quote::quote!{#operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
-                },
                 &quote::quote!{
                     #value_snake_case
                     .into_iter()
@@ -5350,10 +5323,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_inner_type_token_stream,
                 &proc_macro2::TokenStream::new(),
-                &{
-                    let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
-                    quote::quote!{#operation_payload_upper_camel_case_token_stream::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
-                },
                 &quote::quote!{#primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case)}
             );
             // let try_operation_test_token_stream = {
