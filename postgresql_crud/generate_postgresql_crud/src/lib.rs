@@ -3331,41 +3331,44 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             line!(),
                             column!(),
                         );
+                        let index_snake_case = naming_constants::IndexSnakeCase;
                         quote::quote!{
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                let prefix = match additional_parameters.is_empty() {
-                                    true => #where_snake_case_qoutes_token_stream,
-                                    false => #prefix_false_handle_token_stream,
-                                };
-                                let bind_increments = {
-                                    let mut bind_increments = #std_string_string::default();
-                                    for (index, #element_snake_case) in #value_snake_case.iter().enumerate() {
-                                        match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                            #element_snake_case,
-                                            &mut #increment_snake_case
-                                        ) {
-                                            Ok(#value_snake_case) => {
-                                                let handle = format!(#handle_token_stream);
-                                                match index == 0 {
-                                                    true => {
-                                                        bind_increments.push_str(&handle);
-                                                    },
-                                                    false => {
-                                                        bind_increments.push_str(&format!("{} {handle}", #element_snake_case.conjuctive_operator));
-                                                    },
-                                                }
-                                            },
-                                            Err(#error_0_token_stream) => {
-                                                #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-                                            },
+                                additional_parameters.push_str(&format!(
+                                    "{} {}",
+                                    match additional_parameters.is_empty() {
+                                        true => #where_snake_case_qoutes_token_stream,
+                                        false => #prefix_false_handle_token_stream,
+                                    },
+                                    {
+                                        let mut #acc_snake_case = #std_string_string::default();
+                                        for (#index_snake_case, #element_snake_case) in #value_snake_case.iter().enumerate() {
+                                            match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
+                                                #element_snake_case,
+                                                &mut #increment_snake_case
+                                            ) {
+                                                Ok(#value_snake_case) => {
+                                                    let handle = format!(#handle_token_stream);
+                                                    match #index_snake_case == 0 {
+                                                        true => {
+                                                            #acc_snake_case.push_str(&handle);
+                                                        },
+                                                        false => {
+                                                            #acc_snake_case.push_str(&format!("{} {handle}", #element_snake_case.conjuctive_operator));
+                                                        },
+                                                    }
+                                                },
+                                                Err(#error_0_token_stream) => {
+                                                    #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                                                },
+                                            }
                                         }
+                                        if let false = #acc_snake_case.is_empty() {
+                                            let _ = #acc_snake_case.pop();
+                                        }
+                                        #acc_snake_case
                                     }
-                                    if let false = bind_increments.is_empty() {
-                                        let _ = bind_increments.pop();
-                                    }
-                                    bind_increments
-                                };
-                                additional_parameters.push_str(&format!("{prefix} {bind_increments}"));
+                                ));
                             }
                         }
                     });
