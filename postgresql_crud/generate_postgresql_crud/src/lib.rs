@@ -2156,8 +2156,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let try_operation_route_logic_error_named_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(generate_error_occurence_variant_token_stream);
+            let derive_debug_this_error_error_occurence = token_patterns::DeriveDebugThisErrorErrorOccurence;
             quote::quote! {
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                #derive_debug_this_error_error_occurence
                 pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
                     #(#variants_token_stream),*
                 }
