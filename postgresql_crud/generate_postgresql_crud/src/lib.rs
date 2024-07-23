@@ -421,22 +421,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let value_upper_camel_case = naming_constants::ValueUpperCamelCase;
     let value_snake_case = naming_constants::ValueSnakeCase;
     let from_snake_case = naming_constants::FromSnakeCase;
+    let generate_postgresql_crud_value_declaration_token_stream = |content_token_stream: &proc_macro2::TokenStream|{
+        quote::quote!{#postgresql_crud_snake_case::#value_upper_camel_case<#content_token_stream>}
+    };
     let generate_postgresql_crud_value_initialization_token_stream = |content_token_stream: &proc_macro2::TokenStream|{
         quote::quote!{#postgresql_crud_snake_case::#value_upper_camel_case{#value_snake_case: #content_token_stream}}
     };
     let struct_options_token_stream = {
         // let serde_skip_serializing_if_value_attribute_token_stream = quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]};//todo maybe its not correct for nullable\option types
-        let field_option_primary_key_token_stream = quote::quote! {
-            // #serde_skip_serializing_if_value_attribute_token_stream
-            pub #primary_key_field_ident: std::option::Option<#postgresql_crud_snake_case::#value_upper_camel_case<#primary_key_inner_type_token_stream>>
+        let field_option_primary_key_token_stream = {
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_inner_type_token_stream);
+            quote::quote! {
+                // #serde_skip_serializing_if_value_attribute_token_stream
+                pub #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
+            }
         };
         let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
             let field_vis = &element.field.vis;
             let field_ident = &element.field_ident;
-            let inner_type_token_stream = &element.inner_type_token_stream;
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream);
             quote::quote!{
                 // #serde_skip_serializing_if_value_attribute_token_stream
-                #field_vis #field_ident: std::option::Option<#postgresql_crud_snake_case::#value_upper_camel_case<#inner_type_token_stream>>
+                #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
             }
         });
         quote::quote! {
@@ -901,14 +907,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         Delete,
     }
     let generate_options_try_from_sqlx_row_token_stream = |operation: &Operation|{
-        let declaration_primary_key_token_stream = quote::quote! {
-            let mut #primary_key_field_ident: std::option::Option<#postgresql_crud_snake_case::#value_upper_camel_case<#primary_key_inner_type_token_stream>> = None;
+        let declaration_primary_key_token_stream = {
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_inner_type_token_stream);
+            quote::quote! {
+                let mut #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
+            }
         };
         let declaration_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element|{
             let field_ident = &element.field_ident;
-            let inner_type_token_stream = &element.inner_type_token_stream;
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream);
             quote::quote! {
-                let mut #field_ident: std::option::Option<#postgresql_crud_snake_case::#value_upper_camel_case<#inner_type_token_stream>> = None;
+                let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
             }
         });
         let assignment_variant_primary_key_token_stream = {
