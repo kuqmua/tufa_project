@@ -4164,62 +4164,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
-                    //todo remove () if in fields named only one element
-                    // let column_vecs_token_stream = fields_named.iter().map(|element|{
-                    //     let field_ident_underscore_vec_stringified = format!("{}_{}", &element.field_ident, naming_constants::VecSnakeCase);
-                    //     field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
-                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    // });
-                    // let column_vecs_with_capacity_token_stream = fields_named.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_snake_case)});
-                    // let columns_acc_push_elements_token_stream = fields_named.iter().enumerate().map(|(index, element)|{
-                    //     let field_ident = &element.field_ident;
-                    //     let index_token_stream = {
-                    //         let index_stringified = format!("{index}");
-                    //         index_stringified.parse::<proc_macro2::TokenStream>()
-                    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    //     };
-                    //     quote::quote!{#acc_snake_case.#index_token_stream.push(#element_snake_case.#field_ident);}
-                    // });
-                    // let column_query_bind_primary_key_vec_token_stream = {
-                    //     let field_ident_underscore_vec_token_stream = {
-                    //         let field_ident_underscore_vec_stringified = format!(
-                    //             "{primary_key_field_ident}_{}", naming_constants::VecSnakeCase
-                    //         );
-                    //         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
-                    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    //     };
-                    //     quote::quote! {
-                    //         #query_snake_case = #query_snake_case.bind(
-                    //             #field_ident_underscore_vec_token_stream
-                    //             .into_iter()
-                    //             .map(|#element_snake_case| #element_snake_case.into_inner())
-                    //             .collect::<std::vec::Vec<#primary_key_original_type_token_stream>>()
-                    //         );
-                    //     }
-                    // };
-                    // let column_query_bind_vecs_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    //     let field_ident_underscore_vec_token_stream = {
-                    //         let field_ident_underscore_vec_stringified = {
-                    //             let field_ident = &element.field_ident;
-                    //             format!("{field_ident}_{}", naming_constants::VecSnakeCase)
-                    //         };
-                    //         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
-                    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    //     };
-                    //     let original_type_token_stream = &element.original_type_token_stream;
-                    //     quote::quote!{
-                    //         //todo this is wrong!!! if OptionField value in None then simpli ignore it, not need to push in vec
-                    //         #query_snake_case = #query_snake_case.bind(
-                    //             #field_ident_underscore_vec_token_stream
-                    //                 .into_iter()
-                    //                 .map(|#element_snake_case| match #element_snake_case.#value_snake_case {
-                    //                     Some(#value_snake_case) => #value_snake_case.into_inner(),
-                    //                     None => None
-                    //                 })
-                    //                 .collect::<std::vec::Vec<#original_type_token_stream>>(),
-                    //         );
-                    //     }
-                    // });
                     let fields_named_excluding_primary_key_update_assignment_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
                         let is_field_ident_update_exists_token_stream = {
@@ -4228,18 +4172,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             value.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        // let else_field_ident_end_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        //     &format!("{else_snake_case} {field_ident} {end_snake_case},"),
-                        //     &proc_macro_name_upper_camel_case_ident_stringified,
-                        // );
-                        // let when_primary_key_field_ident_equals_then_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        //     &format!(
-                        //         "{} {primary_key_field_ident} = {{}} {} {{}} ",
-                        //         naming_constants::WhenSnakeCase,
-                        //         naming_constants::ThenSnakeCase
-                        //     ),
-                        //     &proc_macro_name_upper_camel_case_ident_stringified,
-                        // );
                         quote::quote!{
                             {
                                 let mut #is_field_ident_update_exists_token_stream = false;
@@ -4496,20 +4428,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     );
                     let additional_parameters_modification_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        // let handle_token_stream = {
-                        //     let possible_dot_space = if (
-                        //         index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
-                        //     ) == fields_named_excluding_primary_key_len {
-                        //         ""
-                        //     }
-                        //     else {
-                        //         dot_space
-                        //     };
-                        //     proc_macro_common::generate_quotes::token_stream(
-                        //         &format!("{field_ident} = ${{increment}}{possible_dot_space}"),
-                        //         &proc_macro_name_upper_camel_case_ident_stringified,
-                        //     )
-                        // };
                         let field_ident_equals_dollar_increment_token_stream = proc_macro_common::generate_quotes::token_stream(
                             &format!("{field_ident} = ${{}},"),
                             &proc_macro_name_upper_camel_case_ident_stringified,
