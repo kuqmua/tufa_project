@@ -153,6 +153,7 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "operation",
     "generate",
     "increments",
+    "increment",
     "additional",
     "http",
     "codes",

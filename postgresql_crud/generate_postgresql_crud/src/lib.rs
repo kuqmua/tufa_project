@@ -1388,7 +1388,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::bind_value_to_query};
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
     let postgresql_crud_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_increment};
-    let increment_initialization_token_stream = quote::quote! {let mut increment: u64 = 0;};
+    let increment_snake_case = naming_constants::IncrementSnakeCase;
+    let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
     let dot_space = ", ";
     let where_snake_case_qoutes_token_stream = proc_macro_common::generate_quotes::token_stream(
         &where_snake_case.to_string(),
@@ -2724,10 +2725,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote!{
                             match #postgresql_crud_snake_case::BindQuery::try_increment(
                                 &#element_snake_case.#field_ident,
-                                &mut increment,
+                                &mut #increment_snake_case,
                             ) {
                                 Ok(_) => {
-                                    #value_snake_case.push_str(&format!("${},", increment));
+                                    #value_snake_case.push_str(&format!("${},", #increment_snake_case));
                                 }
                                 Err(_) => {//todo try_increment has own error. is it must be used? or no?
                                     #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3297,9 +3298,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     true => #where_snake_case_qoutes_token_stream,
                                     false => #prefix_false_handle_token_stream,
                                 };
-                                match increment.checked_add(1) {
+                                match #increment_snake_case.checked_add(1) {
                                     Some(#value_snake_case) => {
-                                        increment = #value_snake_case;
+                                        #increment_snake_case = #value_snake_case;
                                     },
                                     None => {
                                         #checked_add_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
@@ -3308,7 +3309,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 additional_parameters.push_str(&format!(
                                     #handle_token_stream,
                                     prefix,
-                                    increment
+                                    #increment_snake_case
                                 ));
                             }
                         }
@@ -3341,7 +3342,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     for (index, #element_snake_case) in #value_snake_case.iter().enumerate() {
                                         match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
                                             #element_snake_case,
-                                            &mut increment
+                                            &mut #increment_snake_case
                                         ) {
                                             Ok(#value_snake_case) => {
                                                 let handle = format!(#handle_token_stream);
@@ -3433,7 +3434,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     };
                                     let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
                                         &#parameters_snake_case.#payload_snake_case.#limit_snake_case,
-                                        &mut increment
+                                        &mut #increment_snake_case
                                     ) {
                                         Ok(#value_snake_case) => #value_snake_case,
                                         Err(#error_0_token_stream) => {
@@ -3453,7 +3454,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     };
                                     let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
                                         &#parameters_snake_case.#payload_snake_case.#offset_snake_case,
-                                        &mut increment
+                                        &mut #increment_snake_case
                                     ) {
                                         Ok(#value_snake_case) => #value_snake_case,
                                         Err(#error_0_token_stream) => {
@@ -4101,13 +4102,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             #acc_snake_case.push_str(&format!(
                                                 #when_primary_key_field_ident_equals_then_token_stream,
-                                                match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut increment) {
+                                                match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_0_token_stream) => {
                                                         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 },
-                                                match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut increment) {
+                                                match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut #increment_snake_case) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_0_token_stream) => {
                                                         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4139,7 +4140,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 {
                                     let mut #acc_snake_case = #std_string_string::default();
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                        match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut increment) {
+                                        match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
                                             Ok(#value_snake_case) => {
                                                 #acc_snake_case.push_str(&format!("{value},"));
                                             },
@@ -4157,7 +4158,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote!{
                         {
                             let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
-                            let mut increment: u64 = 0;
+                            #increment_initialization_token_stream
                             #(#fields_named_excluding_primary_key_update_assignment_token_stream)*
                             let _ = #query_snake_case.pop();
                             #where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream
@@ -4439,10 +4440,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
                                     &#value_snake_case.#value_snake_case,
-                                    &mut increment,
+                                    &mut #increment_snake_case,
                                 ) {
                                     Ok(_) => {
-                                        #query_snake_case.push_str(&format!(#field_ident_equals_dollar_increment_token_stream, increment));
+                                        #query_snake_case.push_str(&format!(#field_ident_equals_dollar_increment_token_stream, #increment_snake_case));
                                     }
                                     Err(#error_0_token_stream) => {
                                         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4457,7 +4458,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         quote::quote! {
-                            match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(&#parameters_snake_case.#payload_snake_case.#primary_key_field_ident, &mut increment) {
+                            match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(&#parameters_snake_case.#payload_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
                                 Ok(_) => {
                                     #query_snake_case.push_str(&format!(#query_part_token_stream));
                                 },
@@ -4817,11 +4818,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             column!(),
                         );
                         quote::quote!{
-                            if let Some(value) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                for element in value {
+                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
+                                for #element_snake_case in #value_snake_case {
                                     match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
-                                        element,
-                                        &mut increment
+                                        #element_snake_case,
+                                        &mut #increment_snake_case
                                     ) {
                                         Ok(_) => {
                                             let handle = format!(#handle_token_stream);
@@ -4873,7 +4874,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         for #element_snake_case in #primary_key_field_ident {
                                             match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
                                                 #element_snake_case,
-                                                &mut increment,
+                                                &mut #increment_snake_case,
                                             ) {
                                                 Ok(_) => {
                                                     additional_parameters.push_str(&format!("${increment},"));
