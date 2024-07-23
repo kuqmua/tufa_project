@@ -441,13 +441,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let value_snake_case = naming_constants::ValueSnakeCase;
     let from_snake_case = naming_constants::FromSnakeCase;
     let from_ident_for_ident_options_token_stream = {
         let ident_option_variant_primary_key_token_stream = quote::quote! {
             #primary_key_field_ident: Some(
                 #postgresql_crud_snake_case::Value {
-                    value: #primary_key_inner_type_token_stream::#from_snake_case(
-                        value.#primary_key_field_ident.0
+                    #value_snake_case: #primary_key_inner_type_token_stream::#from_snake_case(
+                        #value_snake_case.#primary_key_field_ident.0
                     )
                 }
             ),
@@ -458,7 +459,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #field_ident: Some(
                     #postgresql_crud_snake_case::Value {
-                        value: #inner_type_token_stream::#from_snake_case(value.#field_ident.0)
+                        #value_snake_case: #inner_type_token_stream::#from_snake_case(
+                            #value_snake_case.#field_ident.0
+                        )
                     }
                 )
             }
@@ -544,7 +547,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{column_token_stream}");
-    let value_snake_case = naming_constants::ValueSnakeCase;
     let element_snake_case = naming_constants::ElementSnakeCase;
     let acc_snake_case = naming_constants::AccSnakeCase;
     let parameters_snake_case = naming_constants::ParametersSnakeCase;
