@@ -2754,6 +2754,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             column!(),
         )
     );
+    let generate_create_update_delete_one_fetch_token_stream = |operation: &Operation|generate_fetch_one_token_stream(
+        &generate_sqlx_row_try_get_primary_key_token_stream(
+            &quote::quote!{#primary_key_inner_type_token_stream(#value_snake_case)},
+            &generate_match_postgres_transaction_rollback_await_token_stream(
+                &operation,
+                file!(),
+                line!(),
+                column!(),
+                file!(),
+                line!(),
+                column!(),
+            ),
+        ),
+        &generate_match_postgres_transaction_rollback_await_token_stream(
+            &operation,
+            file!(),
+            line!(),
+            column!(),
+            file!(),
+            line!(),
+            column!(),
+        )
+    );
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let expected_length_snake_case = naming_conventions::ExpectedLengthSnakeCase;
@@ -3116,34 +3139,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{binded_query_token_stream}");
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
-                    &{
-                        let fetch_one_token_stream = generate_fetch_one_token_stream(
-                            &generate_sqlx_row_try_get_primary_key_token_stream(
-                                &quote::quote!{#primary_key_inner_type_token_stream(#value_snake_case)},
-                                &generate_match_postgres_transaction_rollback_await_token_stream(
-                                    &operation,
-                                    file!(),
-                                    line!(),
-                                    column!(),
-                                    file!(),
-                                    line!(),
-                                    column!(),
-                                ),
-                            ),
-                            &generate_match_postgres_transaction_rollback_await_token_stream(
-                                &operation,
-                                file!(),
-                                line!(),
-                                column!(),
-                                file!(),
-                                line!(),
-                                column!(),
-                            )
-                        );
-                        quote::quote!{
-                            #fetch_one_token_stream
-                        }
-                    },
+                    &generate_create_update_delete_one_fetch_token_stream(&operation),
                 );
                 // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 // //     &table_name_stringified,
@@ -4498,34 +4494,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
-                    &{
-                        let fetch_one_token_stream = generate_fetch_one_token_stream(
-                            &generate_sqlx_row_try_get_primary_key_token_stream(
-                                &quote::quote!{#primary_key_inner_type_token_stream(#value_snake_case)},
-                                &generate_match_postgres_transaction_rollback_await_token_stream(
-                                    &operation,
-                                    file!(),
-                                    line!(),
-                                    column!(),
-                                    file!(),
-                                    line!(),
-                                    column!(),
-                                )
-                            ),
-                            &generate_match_postgres_transaction_rollback_await_token_stream(
-                               &operation,
-                               file!(),
-                               line!(),
-                               column!(),
-                               file!(),
-                               line!(),
-                               column!(),
-                            )
-                        );
-                        quote::quote!{
-                            #fetch_one_token_stream
-                        }
-                    },
+                    &generate_create_update_delete_one_fetch_token_stream(&operation),
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &table_name_stringified,
@@ -5026,34 +4995,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
-                    &{
-                        let fetch_one_token_stream = generate_fetch_one_token_stream(
-                            &generate_sqlx_row_try_get_primary_key_token_stream(
-                                &quote::quote!{#primary_key_inner_type_token_stream(#value_snake_case)},
-                                &generate_match_postgres_transaction_rollback_await_token_stream(
-                                    &operation,
-                                    file!(),
-                                    line!(),
-                                    column!(),
-                                    file!(),
-                                    line!(),
-                                    column!(),
-                                )
-                            ),
-                            &generate_match_postgres_transaction_rollback_await_token_stream(
-                                &operation,
-                                file!(),
-                                line!(),
-                                column!(),
-                                file!(),
-                                line!(),
-                                column!(),
-                            )
-                        );
-                        quote::quote!{
-                            #fetch_one_token_stream
-                        }
-                    },
+                    &generate_create_update_delete_one_fetch_token_stream(&operation),
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &table_name_stringified,
