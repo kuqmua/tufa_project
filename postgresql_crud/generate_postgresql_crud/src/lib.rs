@@ -4017,10 +4017,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 {
                                     let mut #acc_snake_case = std::vec::Vec::new();
                                     for #element_snake_case in &#value_snake_case.0 {
-                                        let #error_0_token_stream = #element_snake_case.#primary_key_field_ident;
                                         if !#acc_snake_case.contains(&&#element_snake_case.#primary_key_field_ident) {
                                             #acc_snake_case.push(&#element_snake_case.#primary_key_field_ident);
                                         } else {
+                                            let #error_0_token_stream = #element_snake_case.#primary_key_field_ident;
                                             #not_unique_primary_key_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                                         }
                                     }
@@ -4301,10 +4301,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote!{
                             let mut #acc_snake_case = std::vec::Vec::new();
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                let #error_0_token_stream = #element_snake_case.#primary_key_field_ident;
                                 if !#acc_snake_case.contains(&&#element_snake_case.#primary_key_field_ident) {
                                     #acc_snake_case.push(&#element_snake_case.#primary_key_field_ident);
                                 } else {
+                                    let #error_0_token_stream = #element_snake_case.#primary_key_field_ident;
                                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_primary_key_syn_variant_initialization_token_stream);
                                 }
                             }
