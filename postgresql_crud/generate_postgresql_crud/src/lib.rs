@@ -2866,11 +2866,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_names = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let field_ident = &element.field_ident;
                         let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                        if incremented_index == syn_field_with_additional_info_fields_named_excluding_primary_key_len {
-                            acc.push_str(&format!("{field_ident}"));
-                        }
-                        else {
-                            acc.push_str(&format!("{field_ident}{dot_space}"));
+                        acc.push_str(&format!("{field_ident}"));
+                        if incremented_index != syn_field_with_additional_info_fields_named_excluding_primary_key_len {
+                            acc.push_str(&format!(","));
                         }
                         acc
                     });
@@ -3108,14 +3106,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         ), |mut acc, (index, element)| {
                             let field_ident = &element.field_ident;
                             let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                            if incremented_index == syn_field_with_additional_info_fields_named_excluding_primary_key_len {
-                                acc.0.push_str(&format!("{field_ident}"));
-                                acc.1.push_str(&format!("${incremented_index}"));
+                            let postfix = if incremented_index == syn_field_with_additional_info_fields_named_excluding_primary_key_len {
+                                ""
                             }
                             else {
-                                acc.0.push_str(&format!("{field_ident}{dot_space}"));
-                                acc.1.push_str(&format!("${incremented_index}{dot_space}"));
-                            }
+                                ","
+                            };
+                            acc.0.push_str(&format!("{field_ident}"));
+                            acc.0.push_str(postfix);
+                            acc.1.push_str(&format!("${incremented_index}"));
+                            acc.1.push_str(postfix);
                             acc
                         })
                     };
