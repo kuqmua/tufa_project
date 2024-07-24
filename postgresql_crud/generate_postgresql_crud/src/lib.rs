@@ -2777,6 +2777,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             column!(),
         )
     );
+    let space_and_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+        &format!(" {and_snake_case}"),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let expected_length_snake_case = naming_conventions::ExpectedLengthSnakeCase;
@@ -2981,10 +2985,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &{
-                        quote::quote! {
-                            let #error_0_token_stream = #parameters_snake_case.#payload_snake_case.0.len();
-                        }
+                    &quote::quote! {
+                        let #error_0_token_stream = #parameters_snake_case.#payload_snake_case.0.len();
                     },
                     &query_string_token_stream,
                     &binded_query_token_stream,
@@ -3291,10 +3293,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 let query_string_token_stream = {
                     let additional_parameters_primary_key_modification_token_stream = {
-                        let prefix_false_handle_token_stream = proc_macro_common::generate_quotes::token_stream(
-                            &format!(" {and_snake_case}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
                         let handle_token_stream = proc_macro_common::generate_quotes::token_stream(
                             &format!("{{}} {primary_key_field_ident} {in_snake_case} ({select_snake_case} {unnest_snake_case}(${{}}))"),
                             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3310,7 +3308,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             if let Some(_) = &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
                                 let prefix = match additional_parameters.is_empty() {
                                     true => #where_snake_case_qoutes_token_stream,
-                                    false => #prefix_false_handle_token_stream,
+                                    false => #space_and_quotes_token_stream,
                                 };
                                 match #increment_snake_case.checked_add(1) {
                                     Some(#value_snake_case) => {
@@ -3334,10 +3332,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &format!("{field_ident} ~ {{value}} "),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
-                        let prefix_false_handle_token_stream = proc_macro_common::generate_quotes::token_stream(
-                            &format!(" {and_snake_case}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
                         let bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
                             &bind_query_syn_variant_wrapper,
@@ -3352,7 +3346,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     "{} {}",
                                     match additional_parameters.is_empty() {
                                         true => #where_snake_case_qoutes_token_stream,
-                                        false => #prefix_false_handle_token_stream,
+                                        false => #space_and_quotes_token_stream,
                                     },
                                     {
                                         let mut #acc_snake_case = #std_string_string::default();
@@ -4719,10 +4713,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             handle_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        let additional_parameters_and_token_stream = proc_macro_common::generate_quotes::token_stream(
-                            &format!(" {and_snake_case}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
                         let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
                             &bind_query_syn_variant_wrapper,
@@ -4733,7 +4723,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote! {
                             if let Some(#primary_key_field_ident) = &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
                                 if let false = additional_parameters.is_empty() {
-                                    additional_parameters.push_str(#additional_parameters_and_token_stream);
+                                    additional_parameters.push_str(#space_and_quotes_token_stream);
                                 }
                                 additional_parameters.push_str(&format!(
                                     #handle_token_stream,
