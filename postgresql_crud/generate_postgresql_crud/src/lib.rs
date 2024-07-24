@@ -4947,27 +4947,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                    &proc_macro2::TokenStream::new(),
                 );
                 let query_string_token_stream = {
-                    let additional_parameters_primary_key_modification_token_stream = {
-                        let query_part_token_stream = proc_macro_common::generate_quotes::token_stream(
-                            &format!(" {primary_key_field_ident} = $1"),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
-                        quote::quote! {
-                            #query_snake_case.push_str(&format!(#query_part_token_stream));
-                        }
-                    };
-                    let handle_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{delete_snake_case} {from_snake_case} {table_name_stringified} {where_snake_case}"),
+                    let query_token_stream = proc_macro_common::generate_quotes::token_stream(
+                        &format!("{delete_snake_case} {from_snake_case} {table_name_stringified} {where_snake_case} {primary_key_field_ident} = $1{returning_primary_key_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
-                    quote::quote! {
-                        {
-                            let mut #query_snake_case = format!(#handle_token_stream);
-                            #additional_parameters_primary_key_modification_token_stream
-                            #query_snake_case.push_str(&format!(#returning_primary_key_quotes_token_stream));
-                            #query_snake_case
-                        }
-                    }
+                    quote::quote! {format!(#query_token_stream) }
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
