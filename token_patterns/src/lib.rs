@@ -139,6 +139,14 @@ impl quote::ToTokens for DeriveDebugCloneCopy {
     }
 }
 #[derive(Debug, Clone, Copy)]
+pub struct DeriveDebugThisErrorErrorOccurence;
+impl quote::ToTokens for DeriveDebugThisErrorErrorOccurence {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}.to_tokens(tokens)
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveStrSqlxColumnIndex;
 impl quote::ToTokens for StdPrimitiveStrSqlxColumnIndex {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
