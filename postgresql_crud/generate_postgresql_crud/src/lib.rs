@@ -3118,7 +3118,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         quote::quote!{
                             #fetch_one_token_stream
-                            let #value_snake_case = #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case);
                         }
                     },
                 );
@@ -4536,7 +4535,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         quote::quote!{
                             #fetch_one_token_stream
-                            let #value_snake_case = #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case);
                         }
                     },
                 );
@@ -5094,7 +5092,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         quote::quote!{
                             #fetch_one_token_stream
-                            let #value_snake_case = #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case);
                         }
                     },
                 );
