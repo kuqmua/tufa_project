@@ -2880,7 +2880,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             column!(),
                         );
                         quote::quote!{
-                            match #postgresql_crud_snake_case::BindQuery::try_increment(
+                            match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
                                 &#element_snake_case.#field_ident,
                                 &mut #increment_snake_case,
                             ) {
