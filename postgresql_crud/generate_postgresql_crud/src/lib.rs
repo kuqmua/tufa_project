@@ -2008,12 +2008,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 column!(),
             );
             quote::quote! {
-                let mut #executor_snake_case = match {
-                    use #sqlx_acquire;
-                    #executor_snake_case.#begin_snake_case()
-                }
-                .await
-                {
+                let mut #executor_snake_case = match #sqlx_acquire::#begin_snake_case(#executor_snake_case).await {
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_0_token_stream) => {
                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -2827,9 +2822,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 }
                             }
-                            let #value_snake_case = #value_snake_case.into_iter().map(
-                                |#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case)
-                            ).collect();
                         }
                     },
                 );
@@ -4309,9 +4301,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             {
                                 #non_existing_primary_keys_check_token_stream
                             }
-                            let #value_snake_case = #value_snake_case.into_iter().map(
-                                |#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case)
-                            ).collect();
                         }
                     },
                 );
@@ -5049,9 +5038,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #non_existing_primary_keys_check_token_stream
                                 }
                             }
-                            let #value_snake_case = #value_snake_case.into_iter().map(
-                                |#element_snake_case|#primary_key_inner_type_token_stream::#from_snake_case(#element_snake_case)
-                            ).collect();
                         }
                     },
                 );
