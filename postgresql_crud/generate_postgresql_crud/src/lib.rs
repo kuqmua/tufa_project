@@ -2630,9 +2630,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 column!(),
             );
             quote::quote! {
-                if let Some(#primary_key_field_ident) = &#value_snake_case.#primary_key_field_ident {
+                if let Some(#value_snake_case) = &#value_snake_case.#primary_key_field_ident {
                     let mut #acc_snake_case = std::vec::Vec::new();
-                    for #element_snake_case in #primary_key_field_ident {
+                    for #element_snake_case in #value_snake_case {
                         if !#acc_snake_case.contains(&#element_snake_case) {
                             #acc_snake_case.push(&#element_snake_case);
                         }
