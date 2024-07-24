@@ -4025,7 +4025,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         }
                                     }
                                 }
-
                             }
                         };
                         let filter_no_payload_fields_token_stream = {
