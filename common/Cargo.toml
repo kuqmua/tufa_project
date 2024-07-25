@@ -23,7 +23,6 @@ secrecy = {version = "=0.8", features = ["serde"]}
 serde = {version = "=1.0", features = ["derive"]}
 serde_derive = {version = "=1.0"}
 serde_json = {version = "=1.0"}
-strum = {version = "=0.24.1"}
 thiserror = {version = "=1.0.48"}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 # uuid = {version = "=0.8", features = ["v4", "serde"]}
