@@ -11,11 +11,11 @@ pub fn create(
     let mut all_equal: Option<SuportedEnumVariant> = None;
     assert!(!data_enum.variants.is_empty(), "{proc_macro_name_ident_stringified} enum variants are empty");
     let error_message = format!("{proc_macro_name_ident_stringified} {} enums where all variants are {}::{} or all variants are {}::{}",
-        naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-        naming_constants::SYN_FIELDS,
-        naming_constants::SYN_FIELDS,
-        naming_constants::NamedUpperCamelCase,
-        naming_constants::UnnamedUpperCamelCase,
+        naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+        naming_conventions::SYN_FIELDS,
+        naming_conventions::SYN_FIELDS,
+        naming_conventions::NamedUpperCamelCase,
+        naming_conventions::UnnamedUpperCamelCase,
     );
     data_enum
         .variants
@@ -40,6 +40,6 @@ pub fn create(
             syn::Fields::Unit => panic!("{error_message}"),
         });
     all_equal.map_or_else(|| {
-        panic!("{proc_macro_name_ident_stringified} {} with enums where all variants are named or unnamed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+        panic!("{proc_macro_name_ident_stringified} {} with enums where all variants are named or unnamed", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
     }, |supported_enum_variant| supported_enum_variant)
 }

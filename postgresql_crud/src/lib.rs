@@ -531,5 +531,5 @@ pub trait CombinationOfTraitsForPostgresqlCrudLogic:
 {
 }
 
-pub use naming_constants::CommitUpperCamelCase;
-pub use naming_constants::CommitSnakeCase;
+pub use naming_conventions::CommitUpperCamelCase;
+pub use naming_conventions::CommitSnakeCase;

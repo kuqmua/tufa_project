@@ -70,7 +70,7 @@ where
         format!(
             "\"{}{}{} {}{}\"",
             slashes,
-            naming_constants::TrySnakeCase,
+            naming_conventions::TrySnakeCase,
             self.to_snake_case_stringified(),
             proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(test_operation_print_in_info),
             slashes,

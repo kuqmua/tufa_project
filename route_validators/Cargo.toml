@@ -12,7 +12,7 @@ serde = {version = "=1.0", features = ["derive"]}
 http-body = {version = "=1.0.0"}
 bytes = {version = "=1.2.1"}
 git_info = {path = "../git_info"}
-naming_constants = {path = "../naming_constants"}
+naming_conventions = {path = "../naming_conventions"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 http_logic = {path = "../http_logic"}
 

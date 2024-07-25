@@ -11,7 +11,7 @@
 //     );
 //     let configuration_error_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
-//             <naming_constants::Configuration as naming_constants::Naming>::upper_camel_case_stringified();
+//             <naming_conventions::Configuration as naming_conventions::Naming>::upper_camel_case_stringified();
 //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -29,7 +29,7 @@
 //     //todo move it into custom macro attribute
 //     let database_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
-//             <naming_constants::Database as naming_constants::Naming>::upper_camel_case_stringified();
+//             <naming_conventions::Database as naming_conventions::Naming>::upper_camel_case_stringified();
 //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -46,7 +46,7 @@
 //     };
 //     let io_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
-//             <naming_constants::Io as naming_constants::Naming>::upper_camel_case_stringified();
+//             <naming_conventions::Io as naming_conventions::Naming>::upper_camel_case_stringified();
 //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -66,7 +66,7 @@
 //     };
 //     let tls_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
-//             <naming_constants::Tls as naming_constants::Naming>::upper_camel_case_stringified();
+//             <naming_conventions::Tls as naming_conventions::Naming>::upper_camel_case_stringified();
 //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -83,7 +83,7 @@
 //     };
 //     let protocol_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
-//             <naming_constants::Protocol as naming_constants::Naming>::upper_camel_case_stringified();
+//             <naming_conventions::Protocol as naming_conventions::Naming>::upper_camel_case_stringified();
 //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -144,7 +144,7 @@
 //                 ),
 //                 (
 //                     crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-//                     &naming_constants::LenSnakeCase.to_string(),
+//                     &naming_conventions::LenSnakeCase.to_string(),
 //                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
 //                         &["usize"],
 //                         proc_macro_name_upper_camel_case_ident_stringified
@@ -189,7 +189,7 @@
 //     );
 //     let decode_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
-//             <naming_constants::Decode as naming_constants::Naming>::upper_camel_case_stringified();
+//             <naming_conventions::Decode as naming_conventions::Naming>::upper_camel_case_stringified();
 //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -257,7 +257,7 @@
 //     };
 //     let migrate_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
-//             <naming_constants::Migrate as naming_constants::Naming>::upper_camel_case_stringified();
+//             <naming_conventions::Migrate as naming_conventions::Naming>::upper_camel_case_stringified();
 //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,

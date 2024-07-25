@@ -17,7 +17,7 @@ pub fn generate_getter_traits_for_struct_fields(
             let field_ident = field
                 .ident
                 .as_ref()
-                .unwrap_or_else(|| panic!("{ident} {}", naming_constants::FIELD_IDENT_IS_NONE));
+                .unwrap_or_else(|| panic!("{ident} {}", naming_conventions::FIELD_IDENT_IS_NONE));
             (
                 field_ident,
                 syn::Ident::new(
@@ -89,7 +89,7 @@ pub fn generate_getter_trait(
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_upper_camel_case_stringified = format!(
         "{}{ident}",
-        naming_constants::GetUpperCamelCase,
+        naming_conventions::GetUpperCamelCase,
     );
     let get_ident_upper_camel_case_token_stream = {
         get_ident_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()

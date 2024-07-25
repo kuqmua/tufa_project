@@ -53,7 +53,7 @@ fn common_handle(
     };
     let field_type = &field.ty;
     let where_ident_token_stream = {
-        let value = format!("{}{ident}", naming_constants::WhereUpperCamelCase);
+        let value = format!("{}{ident}", naming_conventions::WhereUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -68,7 +68,7 @@ fn common_handle(
     let where_std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!(
             "{}{}{ident}",
-            naming_constants::WhereUpperCamelCase,
+            naming_conventions::WhereUpperCamelCase,
             naming_conventions::StdOptionOptionUpperCamelCase
         );
         value.parse::<proc_macro2::TokenStream>()

@@ -12,7 +12,7 @@ serde = {version = "=1.0", features = ["derive"]}
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
 error_occurence = {path = "./error_occurence"}
-naming_constants = {path = "../naming_constants"}
+naming_conventions = {path = "../naming_conventions"}
 to_std_string_string = {path = "../to_std_string_string"}
 
 [lints]

@@ -18,7 +18,6 @@ postgresql_crud_common = {path = "./../postgresql_crud_common"}
 proc_macro_assistants = {path = "../../proc_macro_assistants"}
 proc_macro_common = {path = "../../proc_macro_common"}
 proc_macro_helpers = {path = "../../proc_macro_helpers"}
-naming_constants = {path = "../../naming_constants"}
 naming_conventions = {path = "../../naming_conventions"}
 token_patterns = {path = "../../token_patterns"}
 

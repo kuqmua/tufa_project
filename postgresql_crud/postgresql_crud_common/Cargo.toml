@@ -20,7 +20,6 @@ error_occurence_lib = {path = "../../error_occurence_lib"}
 enum_extension_lib = {path = "../../enum_extension_lib"}
 proc_macro_common = {path = "../../proc_macro_common"}
 proc_macro_assistants = {path = "../../proc_macro_assistants"}
-naming_constants = {path = "../../naming_constants"}
 naming_conventions = {path = "../../naming_conventions"}
 from_str = {path = "../../from_str"}
 

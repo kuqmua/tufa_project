@@ -42,7 +42,7 @@ pub fn check_commit(
         // app_state.get_enable_api_git_commit_check() 
         enable_api_git_commit_check
     {
-        headers.get(&naming_constants::CommitSnakeCase.to_string()).map_or_else(|| Err(CheckCommitErrorNamed::NoCommitHeader {
+        headers.get(&naming_conventions::CommitSnakeCase.to_string()).map_or_else(|| Err(CheckCommitErrorNamed::NoCommitHeader {
             no_commit_header: std::string::String::from("no_commit_header"),
             code_occurence: error_occurence_lib::code_occurence!(),
         }), |value| match value.to_str() {

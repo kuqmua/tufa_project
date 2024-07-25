@@ -58,17 +58,17 @@ impl std::fmt::Display for CodeOccurence {
                 )),
                 app_state::SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(|| format!(
                     "{}/blob/{}/{}#L{}",
-                    naming_constants::GITHUB_URL,
+                    naming_conventions::GITHUB_URL,
                     self.commit,
                     self.file,
                     self.line
                 ), |value| format!(
                     "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
-                    naming_constants::GITHUB_URL,
+                    naming_conventions::GITHUB_URL,
                     self.commit,
                     self.file,
                     self.line,
-                    naming_constants::GITHUB_URL,
+                    naming_conventions::GITHUB_URL,
                     self.commit,
                     value.file,
                     value.line

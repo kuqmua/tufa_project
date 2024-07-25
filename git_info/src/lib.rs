@@ -24,7 +24,7 @@ where
     fn get_git_commit_link(&self) -> std::string::String {
         format!(
             "{}/tree/{}",
-            naming_constants::GITHUB_URL,
+            naming_conventions::GITHUB_URL,
             self.get_git_commit_id()
         )
     }

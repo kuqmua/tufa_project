@@ -11,46 +11,46 @@
 //     let str_stringified = "str";
 //     let std_string_string_stringified = format!(
 //         "{}::{}::{}",
-//         naming_constants::STD_STRINGIFIED,
-//         <naming_constants::String as naming_constants::Naming>::snake_case_stringified(),
-//         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
+//         naming_conventions::STD_STRINGIFIED,
+//         <naming_conventions::String as naming_conventions::Naming>::snake_case_stringified(),
+//         <naming_conventions::String as naming_conventions::Naming>::upper_camel_case_stringified()
 //     );
 //     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
 //     let as_std_collections_hashmap_key_type_stringified = format!(
 //         "as {}::collections::{} key type",
-//         naming_constants::STD_STRINGIFIED,
-//         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+//         naming_conventions::STD_STRINGIFIED,
+//         <naming_conventions::HashMap as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let type_upper_camel_case = "Type";
 //     let hashmap_value_type_stringified = format!(
 //         "{}{}{type_upper_camel_case}",
-//         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-//         <naming_constants::Value as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::HashMap as naming_conventions::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Value as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let hashmap_value_type_path_stringified = format!(
 //         "{hashmap_value_type_stringified}::{}",
-//         <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let hashmap_value_type_reference_stringified = format!(
 //         "{hashmap_value_type_stringified}::{}",
-//         <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Reference as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let hashmap_key_type_stringified = format!(
 //         "{}{}{type_upper_camel_case}",
-//         <naming_constants::Key as naming_constants::Naming>::upper_camel_case_stringified(),
-//         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Key as naming_conventions::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::HashMap as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let hashmap_key_type_path_stringified = format!(
 //         "{hashmap_key_type_stringified}::{}",
-//         <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let hashmap_key_type_reference_stringified = format!(
 //         "{hashmap_key_type_stringified}::{}",
-//         <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Reference as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let vec_element_type_path_stringified = format!(
 //         "crate::error_occurence::vec_element_type::VecElementType::{}",
-//         <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     match &attribute {
 //         crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
@@ -63,9 +63,9 @@
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {} {}{}", 
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
-//                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
+//                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
+//                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 )
 //             }
 //         },
@@ -84,7 +84,7 @@
 //                         &reference_ident,
 //                         str_stringified,
 //                         proc_macro_name_ident_stringified,
-//                         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
 //                         &attribute
 //                     );
 //                     quote::quote!{#std_string_string_token_stream}
@@ -93,10 +93,10 @@
 //                 crate::error_occurence::supported_container::SupportedContainer::HashMap{ .. } => panic!(
 //                     "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
-//                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
-//                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
-//                     <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
+//                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
+//                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
+//                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
+//                     <naming_conventions::Reference as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 ),
 //             }
 //         },
@@ -113,7 +113,7 @@
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
+//                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }
 //         },
@@ -132,7 +132,7 @@
 //                     panic!(
 //                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
 //                         proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
 //                 }
 //             }
@@ -140,7 +140,7 @@
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
+//                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }
 //         },
@@ -161,7 +161,7 @@
 //                             &reference_ident,
 //                             str_stringified,
 //                             proc_macro_name_ident_stringified,
-//                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+//                             naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
 //                             &attribute
 //                         );
 //                         {
@@ -177,7 +177,7 @@
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
+//                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }
 //         },
@@ -198,7 +198,7 @@
 //                     panic!(
 //                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
 //                         proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
 //                 }
 //             }
@@ -206,7 +206,7 @@
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-//                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
+//                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }
 //         },
@@ -222,12 +222,12 @@
 // ) -> crate::error_occurence::supported_container::SupportedContainer {
 //     let syn_type_reference = format!(
 //         "syn::Type::{}",
-//         <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
+//         <naming_conventions::Reference as naming_conventions::Naming>::upper_camel_case_stringified(),
 //     );
 //     let error_message = format!(
 //         "{} {} and {syn_type_reference}",
-//         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//         naming_constants::SYN_TYPE_PATH
+//         naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//         naming_conventions::SYN_TYPE_PATH
 //     );
 //     match &field.ty {
 //         syn::Type::Path(type_path) => {
@@ -239,9 +239,9 @@
 //             let path_segment = type_path.path.segments.iter().last()
 //             .unwrap_or_else(|| panic!(
 //                 "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().last() {}",
-//                 naming_constants::IS_NONE_STRINGIFIED
+//                 naming_conventions::IS_NONE_STRINGIFIED
 //             ));
-//             if path_segment.ident == <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
+//             if path_segment.ident == <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified()
 //             {
 //                 let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = &path_segment.arguments {
 //                     if angle_brackets_generic_arguments.args.len() == 1 {
@@ -250,7 +250,7 @@
 //                             .iter().next()
 //                             .unwrap_or_else(|| panic!(
 //                                 "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.into_iter().nth(0) {}",
-//                                 naming_constants::IS_NONE_STRINGIFIED
+//                                 naming_conventions::IS_NONE_STRINGIFIED
 //                             ))
 //                         {
 //                             match type_handle {
@@ -268,7 +268,7 @@
 //                                             .into_iter().next()
 //                                             .unwrap_or_else(|| panic!(
 //                                                 "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-//                                                 naming_constants::IS_NONE_STRINGIFIED
+//                                                 naming_conventions::IS_NONE_STRINGIFIED
 //                                             ))
 //                                             .ident
 //                                         }
@@ -279,15 +279,15 @@
 //                                     else {
 //                                         panic!(
 //                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
-//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                             naming_constants::SYN_TYPE_PATH
+//                                             naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                             naming_conventions::SYN_TYPE_PATH
 //                                         );
 //                                     };
 //                                     crate::error_occurence::vec_element_type::VecElementType::Reference {
 //                                         reference_ident,
 //                                         lifetime_ident: type_reference.lifetime.clone().unwrap_or_else(|| panic!(
 //                                             "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-//                                             naming_constants::IS_NONE_STRINGIFIED
+//                                             naming_conventions::IS_NONE_STRINGIFIED
 //                                         )).ident
 //                                     }
 //                                 },
@@ -305,21 +305,21 @@
 //                                 syn::Type::Tuple(_) | 
 //                                 syn::Type::Verbatim(_) => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference}",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                     naming_constants::SYN_TYPE_PATH
+//                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_conventions::SYN_TYPE_PATH
 //                                 ),
 //                                 _ => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference} (exhaustive)",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                     naming_constants::SYN_TYPE_PATH
+//                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_conventions::SYN_TYPE_PATH
 //                                 ),
 //                             }
 //                         }
 //                         else {
 //                             panic!(
 //                                 "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}",
-//                                 naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                 naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+//                                 naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                 naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
 //                             );
 //                         }
 //                     }
@@ -330,7 +330,7 @@
 //                 else {
 //                     panic!(
 //                         "{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed",
-//                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
 //                 };
 //                 crate::error_occurence::supported_container::SupportedContainer::Vec{
@@ -338,7 +338,7 @@
 //                     vec_element_type
 //                 }
 //             }
-//             else if path_segment.ident == <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified() {
+//             else if path_segment.ident == <naming_conventions::HashMap as naming_conventions::Naming>::upper_camel_case_stringified() {
 //                 let (
 //                     hashmap_key_type,
 //                     hashmap_value_type
@@ -367,11 +367,11 @@
 //                             (
 //                                 key_generic_argument_option.unwrap_or_else(|| panic!(
 //                                     "{proc_macro_name_ident_stringified} key_generic_argument_option {}",
-//                                     naming_constants::IS_NONE_STRINGIFIED
+//                                     naming_conventions::IS_NONE_STRINGIFIED
 //                                 )),
 //                                 value_generic_argument_option.unwrap_or_else(|| panic!(
 //                                     "{proc_macro_name_ident_stringified} value_generic_argument_option {}",
-//                                     naming_constants::IS_NONE_STRINGIFIED
+//                                     naming_conventions::IS_NONE_STRINGIFIED
 //                                 ))
 //                             )
 //                         };
@@ -396,7 +396,7 @@
 //                                             .into_iter().next()
 //                                             .unwrap_or_else(|| panic!(
 //                                                 "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-//                                                 naming_constants::IS_NONE_STRINGIFIED
+//                                                 naming_conventions::IS_NONE_STRINGIFIED
 //                                             ))
 //                                             .ident
 //                                         }
@@ -407,15 +407,15 @@
 //                                     else {
 //                                         panic!(
 //                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
-//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                             naming_constants::SYN_TYPE_PATH
+//                                             naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                             naming_conventions::SYN_TYPE_PATH
 //                                         );
 //                                     };
 //                                     crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
 //                                         key_reference_ident,
 //                                         key_lifetime_ident: type_reference.lifetime.clone().unwrap_or_else(|| panic!(
 //                                             "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-//                                             naming_constants::IS_NONE_STRINGIFIED
+//                                             naming_conventions::IS_NONE_STRINGIFIED
 //                                         )).ident
 //                                     }
 //                                 },
@@ -433,21 +433,21 @@
 //                                 syn::Type::Tuple(_) | 
 //                                 syn::Type::Verbatim(_) => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference}",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                     naming_constants::SYN_TYPE_PATH
+//                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_conventions::SYN_TYPE_PATH
 //                                 ),
 //                                 _ => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference} (exhaustive)",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                     naming_constants::SYN_TYPE_PATH
+//                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_conventions::SYN_TYPE_PATH
 //                                 ),
 //                             }
 //                         }
 //                         else {
 //                             panic!(
 //                                 "{proc_macro_name_ident_stringified} key_generic_argument {} {}",
-//                                 naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                 naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+//                                 naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                 naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
 //                             );
 //                         };
 //                         let hashmap_value_type = if let syn::GenericArgument::Type(type_handle) = value_generic_argument {
@@ -468,7 +468,7 @@
 //                                             .into_iter().next()
 //                                             .unwrap_or_else(|| panic!(
 //                                                 "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-//                                                 naming_constants::IS_NONE_STRINGIFIED
+//                                                 naming_conventions::IS_NONE_STRINGIFIED
 //                                             ))
 //                                             .ident
 //                                         }
@@ -479,15 +479,15 @@
 //                                     else {
 //                                         panic!(
 //                                             "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
-//                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                             naming_constants::SYN_TYPE_PATH
+//                                             naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                             naming_conventions::SYN_TYPE_PATH
 //                                         );
 //                                     };
 //                                    crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
 //                                         value_reference_ident,
 //                                         value_lifetime_ident: type_reference.lifetime.clone().unwrap_or_else(|| panic!(
 //                                             "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-//                                             naming_constants::IS_NONE_STRINGIFIED
+//                                             naming_conventions::IS_NONE_STRINGIFIED
 //                                         )).ident
 //                                     }
 //                                 },
@@ -505,21 +505,21 @@
 //                                 syn::Type::Tuple(_) | 
 //                                 syn::Type::Verbatim(_) => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and syn::Type::Reference",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                     naming_constants::SYN_TYPE_PATH
+//                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_conventions::SYN_TYPE_PATH
 //                                 ),
 //                                 _ => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and syn::Type::Reference (exhaustive)",
-//                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                     naming_constants::SYN_TYPE_PATH
+//                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                     naming_conventions::SYN_TYPE_PATH
 //                                 ),
 //                             }
 //                         }
 //                         else {
 //                             panic!(
 //                                 "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}",
-//                                 naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                                 naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+//                                 naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                                 naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
 //                             );
 //                         };
 //                         (
@@ -534,7 +534,7 @@
 //                 else {
 //                     panic!(
 //                         "{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed",
-//                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
+//                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
 //                 };
 //                 crate::error_occurence::supported_container::SupportedContainer::HashMap{
@@ -557,7 +557,7 @@
 //                     .into_iter().next()
 //                     .unwrap_or_else(|| panic!(
 //                         "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-//                         naming_constants::IS_NONE_STRINGIFIED
+//                         naming_conventions::IS_NONE_STRINGIFIED
 //                     ))
 //                     .ident
 //                 }
@@ -568,15 +568,15 @@
 //             else {
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {}",
-//                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-//                     naming_constants::SYN_TYPE_PATH
+//                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+//                     naming_conventions::SYN_TYPE_PATH
 //                 );
 //             };
 //             crate::error_occurence::supported_container::SupportedContainer::Reference{
 //                 reference_ident,
 //                 lifetime_ident: type_reference.lifetime.clone().unwrap_or_else(|| panic!(
 //                     "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-//                     naming_constants::IS_NONE_STRINGIFIED
+//                     naming_conventions::IS_NONE_STRINGIFIED
 //                 )).ident,
 //             }
 //         },

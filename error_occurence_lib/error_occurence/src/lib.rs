@@ -37,7 +37,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     } else {
         panic!(
             "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
-            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+            naming_conventions::SUPPORTS_ONLY_STRINGIFIED
         );
     };
     let supported_enum_variant = proc_macro_helpers::error_occurence::supported_enum_variant::create(
@@ -92,7 +92,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             else {
                                 panic!(
                                     "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
-                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                    naming_conventions::SUPPORTS_ONLY_STRINGIFIED
                                 );
                             };
                             let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element|
@@ -271,7 +271,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     else {
                         panic!(
                             "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                            naming_conventions::SUPPORTS_ONLY_STRINGIFIED
                         );
                     };
                     let fields_idents_token_stream = fields.iter().map(|element|&element.ident);
@@ -425,7 +425,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     else {
                         panic!(
                             "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                            naming_conventions::SUPPORTS_ONLY_STRINGIFIED
                         );
                     };
                     let inner_type_with_serialize_deserialize_token_stream = {

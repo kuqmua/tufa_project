@@ -11,11 +11,11 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named = syn::Ident::new(&format!(
         "{ident}{}{}{}{}{}",
-        naming_constants::TryUpperCamelCase,
-        naming_constants::FromUpperCamelCase,
-        naming_constants::EnvUpperCamelCase,
-        naming_constants::ErrorUpperCamelCase,
-        naming_constants::NamedUpperCamelCase,
+        naming_conventions::TryUpperCamelCase,
+        naming_conventions::FromUpperCamelCase,
+        naming_conventions::EnvUpperCamelCase,
+        naming_conventions::ErrorUpperCamelCase,
+        naming_conventions::NamedUpperCamelCase,
     ), ident.span());
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
@@ -51,8 +51,8 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let error_upper_camel_case_token_stream = {
                 let value = format!(
                     "{try_from_std_env_var_ok_upper_camel_case_stringified}{element_ident_upper_camel_case_token_stream}{}{}",
-                    naming_constants::ErrorUpperCamelCase,
-                    naming_constants::NamedUpperCamelCase,
+                    naming_conventions::ErrorUpperCamelCase,
+                    naming_conventions::NamedUpperCamelCase,
                 );
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))

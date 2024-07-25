@@ -11,7 +11,7 @@ generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 postgresql_crud_common = {path = "./postgresql_crud_common"}
 app_state = {path = "../app_state"}
 http_logic = {path = "../http_logic"}
-naming_constants = {path = "../naming_constants"}
+naming_conventions = {path = "../naming_conventions"}
 
 [lints]
 workspace = true

@@ -1236,7 +1236,7 @@ impl SupportedSqlxPostgresType {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
                 "{}{}{}{}",
-                naming_constants::WhereUpperCamelCase,
+                naming_conventions::WhereUpperCamelCase,
                 self.get_inner_type_handle_stringified(generic_type_str),
                 naming_conventions::WithSerializeDeserializeUpperCamelCase,
                 naming_conventions::ErrorNamedUpperCamelCase
@@ -2279,7 +2279,7 @@ impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         add_path(&format!(
             "{}{}", 
-            naming_constants::WhereUpperCamelCase, 
+            naming_conventions::WhereUpperCamelCase, 
             self.get_inner_type_handle_stringified(generic_type_str)
         ))
     }
@@ -9987,9 +9987,9 @@ pub enum ConjunctiveOperator {
 impl std::fmt::Display for ConjunctiveOperator {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Or => write!(formatter, "{}", naming_constants::OrUpperCamelCase),
+            Self::Or => write!(formatter, "{}", naming_conventions::OrUpperCamelCase),
             Self::And => {
-                write!(formatter, "{}", naming_constants::AndUpperCamelCase)
+                write!(formatter, "{}", naming_conventions::AndUpperCamelCase)
             }
         }
     }
@@ -10012,8 +10012,8 @@ pub enum Order {
 impl std::fmt::Display for Order {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Asc => write!(formatter, "{}", naming_constants::AscUpperCamelCase),
-            Self::Desc => write!(formatter, "{}", naming_constants::DescUpperCamelCase),
+            Self::Asc => write!(formatter, "{}", naming_conventions::AscUpperCamelCase),
+            Self::Desc => write!(formatter, "{}", naming_conventions::DescUpperCamelCase),
         }
     }
 }

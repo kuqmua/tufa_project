@@ -5,7 +5,7 @@ pub fn form_last_arg_lifetime_vec(
     segments.last().map_or_else(||{
         panic!(
             "{proc_macro_name_ident_stringified} type_path.path.segments.last() {}",
-            naming_constants::IS_NONE_STRINGIFIED
+            naming_conventions::IS_NONE_STRINGIFIED
         )},
         |path_segment| match &path_segment.arguments {
             syn::PathArguments::None => Vec::new(),
@@ -19,13 +19,13 @@ pub fn form_last_arg_lifetime_vec(
                         syn::GenericArgument::AssocConst(_) | 
                         syn::GenericArgument::Constraint(_) => panic!(
                             "{proc_macro_name_ident_stringified} type_path.path.segments.last() angle_bracketed_generic_argument.args[0] {} syn::GenericArgument::Lifetime and {}",
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                            naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                            naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
                         ),
                         _ => panic!(
                             "{proc_macro_name_ident_stringified} type_path.path.segments.last() angle_bracketed_generic_argument.args[0] {} syn::GenericArgument::Lifetime and {} (exhaustive)",
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                            naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                            naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
                         )
                     }
                 })
