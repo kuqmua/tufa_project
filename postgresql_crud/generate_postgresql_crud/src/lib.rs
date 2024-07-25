@@ -2864,9 +2864,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
                     let column_names = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                        let field_ident = &element.field_ident;
                         let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                        acc.push_str(&format!("{field_ident}"));
+                        acc.push_str(&format!("{}", &element.field_ident));
                         if incremented_index != syn_field_with_additional_info_fields_named_excluding_primary_key_len {
                             acc.push_str(&format!(","));
                         }
@@ -2895,13 +2894,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                     });
-                    let query_token_stream = {
-                        let value = format!(
-                            "\"{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case} {{values}} {returning_primary_key_stringified}\""
-                        );
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let query_token_stream = proc_macro_common::generate_quotes::token_stream(
+                        &format!("{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case} {{values}} {returning_primary_key_stringified}"),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
                     quote::quote!{
                         {
                             #increment_initialization_token_stream
@@ -3103,7 +3099,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             std::string::String::default(),
                             std::string::String::default()
                         ), |mut acc, (index, element)| {
-                            let field_ident = &element.field_ident;
                             let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                             let postfix = if incremented_index == syn_field_with_additional_info_fields_named_excluding_primary_key_len {
                                 ""
@@ -3111,7 +3106,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             else {
                                 ","
                             };
-                            acc.0.push_str(&format!("{field_ident}"));
+                            acc.0.push_str(&format!("{}", &element.field_ident));
                             acc.0.push_str(postfix);
                             acc.1.push_str(&format!("${incremented_index}"));
                             acc.1.push_str(postfix);
@@ -3119,7 +3114,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         })
                     };
                     proc_macro_common::generate_quotes::token_stream(
-                        &format!("{insert_snake_case} {into_snake_case} {table_name_stringified}({column_names}) {values_snake_case} ({column_increments}){returning_primary_key_stringified}"),
+                        &format!("{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case} ({column_increments}){returning_primary_key_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     )
                 };
@@ -3411,75 +3406,75 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         line!(),
                         column!(),
                     );
+                    let prefix_to_additional_parameters_token_stream = quote::quote! {
+                        let prefix = match additional_parameters.is_empty() {
+                            true => "",
+                            false => " ",
+                        };
+                    };
+                    let column_snake_case = naming_constants::ColumnSnakeCase;
                     quote::quote! {
-                        format!(
-                            #handle_token_stream,
-                            #query_vec_column_token_stream,
-                            {
-                                #increment_initialization_token_stream
-                                let mut additional_parameters = #std_string_string::default();
-                                #additional_parameters_primary_key_modification_token_stream
-                                #(#additional_parameters_modification_token_stream)*
+                        {
+                            format!(
+                                #handle_token_stream,
+                                #query_vec_column_token_stream,
                                 {
-                                    let prefix = match additional_parameters.is_empty() {
-                                        true => "",
-                                        false => " ",
-                                    };
-                                    let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
-                                    let order_stringified = match &#value_snake_case.order {
-                                        Some(order) => order.to_string(),
-                                        None => #postgresql_crud_order_token_stream::default().to_string(),
-                                    };
-                                    additional_parameters.push_str(&format!(
-                                        #additional_parameters_order_by_handle_token_stream,
-                                        prefix,
-                                        #value_snake_case.column,
-                                        order_stringified
-                                    ));
+                                    #increment_initialization_token_stream
+                                    let mut additional_parameters = #std_string_string::default();
+                                    #additional_parameters_primary_key_modification_token_stream
+                                    #(#additional_parameters_modification_token_stream)*
+                                    {
+                                        #prefix_to_additional_parameters_token_stream
+                                        let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
+                                        let #order_snake_case = match &#value_snake_case.#order_snake_case {
+                                            Some(#value_snake_case) => #value_snake_case.to_string(),
+                                            None => #postgresql_crud_order_token_stream::default().to_string(),
+                                        };
+                                        additional_parameters.push_str(&format!(
+                                            #additional_parameters_order_by_handle_token_stream,
+                                            prefix,
+                                            #value_snake_case.#column_snake_case,
+                                            #order_snake_case
+                                        ));
+                                    }
+                                    {
+                                        #prefix_to_additional_parameters_token_stream
+                                        let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
+                                            &#parameters_snake_case.#payload_snake_case.#limit_snake_case,
+                                            &mut #increment_snake_case
+                                        ) {
+                                            Ok(#value_snake_case) => #value_snake_case,
+                                            Err(#error_0_token_stream) => {
+                                                #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream_e6e820dd_ec74_4bc5_b482_2aa9cd6b3793
+                                            },
+                                        };
+                                        additional_parameters.push_str(&format!(
+                                            #additional_parameters_limit_handle_token_stream,
+                                            prefix,
+                                            #value_snake_case
+                                        ));
+                                    }
+                                    {
+                                        #prefix_to_additional_parameters_token_stream
+                                        let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
+                                            &#parameters_snake_case.#payload_snake_case.#offset_snake_case,
+                                            &mut #increment_snake_case
+                                        ) {
+                                            Ok(#value_snake_case) => #value_snake_case,
+                                            Err(#error_0_token_stream) => {
+                                                #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream_6d384a1b_d37a_4fd3_9ed3_c160afbb74fc
+                                            },
+                                        };
+                                        additional_parameters.push_str(&format!(
+                                            #additional_parameters_offset_handle_token_stream,
+                                            prefix,
+                                            #value_snake_case
+                                        ));
+                                    }
+                                    additional_parameters
                                 }
-                                {
-                                    let prefix = match additional_parameters.is_empty() {
-                                        true => "",
-                                        false => " ",
-                                    };
-                                    let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                        &#parameters_snake_case.#payload_snake_case.#limit_snake_case,
-                                        &mut #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => #value_snake_case,
-                                        Err(#error_0_token_stream) => {
-                                            #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream_e6e820dd_ec74_4bc5_b482_2aa9cd6b3793
-                                        },
-                                    };
-                                    additional_parameters.push_str(&format!(
-                                        #additional_parameters_limit_handle_token_stream,
-                                        prefix,
-                                        #value_snake_case
-                                    ));
-                                }
-                                {
-                                    let prefix = match additional_parameters.is_empty() {
-                                        true => "",
-                                        false => " ",
-                                    };
-                                    let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                        &#parameters_snake_case.#payload_snake_case.#offset_snake_case,
-                                        &mut #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => #value_snake_case,
-                                        Err(#error_0_token_stream) => {
-                                            #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream_6d384a1b_d37a_4fd3_9ed3_c160afbb74fc
-                                        },
-                                    };
-                                    additional_parameters.push_str(&format!(
-                                        #additional_parameters_offset_handle_token_stream,
-                                        prefix,
-                                        #value_snake_case
-                                    ));
-                                }
-                                additional_parameters
-                            }
-                        )
+                            )
+                        }
                     }
                 };
                 // println!("{query_string_token_stream}");
