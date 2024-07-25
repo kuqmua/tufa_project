@@ -1087,7 +1087,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let values_snake_case = naming_conventions::ValuesSnakeCase;
     let delete_snake_case = naming_conventions::DeleteSnakeCase;
     let where_snake_case = naming_conventions::WhereSnakeCase;
-    let use_futures_try_stream_ext_token_stream = quote::quote! {use futures::TryStreamExt};
+    let use_postgresql_crud_try_stream_ext_token_stream = quote::quote! {use #postgresql_crud_snake_case::TryStreamExt};
     let returning_snake_case = naming_conventions::ReturningSnakeCase;
     let returning_primary_key_stringified = format!(" {returning_snake_case} {primary_key_field_ident}");
     let returning_primary_key_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
@@ -1778,7 +1778,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
             let mut #acc_snake_case = std::vec::Vec::new();
             while let Some(#value_snake_case) = match { 
-                #use_futures_try_stream_ext_token_stream; 
+                #use_postgresql_crud_try_stream_ext_token_stream; 
                 #rows_snake_case.try_next() 
             }.await
             {
