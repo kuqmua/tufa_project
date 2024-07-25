@@ -2246,10 +2246,18 @@ pub enum FromOrTryFrom {
     TryFrom,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, strum_macros::Display)]
 pub enum RustSqlxMapToPostgresPrimiryKeyTypeVariant {
     StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
     SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,
+}
+impl RustSqlxMapToPostgresPrimiryKeyTypeVariant {
+    pub fn to_sqlx_postgres_type(&self) -> SqlxPostgresType {
+        match self {
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => SqlxPostgresType::StdPrimitiveI64,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => SqlxPostgresType::SqlxTypesUuidUuid,
+        }
+    }
 }
 
 impl RustSqlxMapToPostgresTypeVariant {
@@ -2298,7 +2306,7 @@ impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_supported_sqlx_postgres_type(&self) -> SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::from(self)
     }
-    pub fn try_convert_into(&self) -> Result<RustSqlxMapToPostgresPrimiryKeyTypeVariant, ()> {
+    pub fn try_convert_into_rust_sqlx_map_to_postgres_primiry_key_type_variant(&self) -> Result<RustSqlxMapToPostgresPrimiryKeyTypeVariant, ()> {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool |
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull |
