@@ -3406,8 +3406,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         line!(),
                         column!(),
                     );
+                    let prefix_snake_case = naming_constants::PrefixSnakeCase;
                     let prefix_to_additional_parameters_token_stream = quote::quote! {
-                        let prefix = match additional_parameters.is_empty() {
+                        let #prefix_snake_case = match additional_parameters.is_empty() {
                             true => "",
                             false => " ",
                         };
@@ -3432,7 +3433,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         };
                                         additional_parameters.push_str(&format!(
                                             #additional_parameters_order_by_handle_token_stream,
-                                            prefix,
+                                            #prefix_snake_case,
                                             #value_snake_case.#column_snake_case,
                                             #order_snake_case
                                         ));
@@ -3450,7 +3451,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         };
                                         additional_parameters.push_str(&format!(
                                             #additional_parameters_limit_handle_token_stream,
-                                            prefix,
+                                            #prefix_snake_case,
                                             #value_snake_case
                                         ));
                                     }
@@ -3467,7 +3468,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         };
                                         additional_parameters.push_str(&format!(
                                             #additional_parameters_offset_handle_token_stream,
-                                            prefix,
+                                            #prefix_snake_case,
                                             #value_snake_case
                                         ));
                                     }
@@ -3487,8 +3488,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let binded_query_modifications_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element|{
                         let field_ident = &element.field_ident;
                         quote::quote!{
-                            if let Some(values) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                for #value_snake_case in values {
+                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
+                                for #value_snake_case in #value_snake_case {
                                     #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
                                         #value_snake_case, #query_snake_case,
                                     );

@@ -175,7 +175,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "then",
     "rows",
     "results",
-    "executor"
+    "executor",
+    "prefix"
 );
 
 #[derive(Debug, Clone, Copy)]
