@@ -524,7 +524,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #debug_upper_camel_case,
                 #serde_serialize,
                 #serde_deserialize,
-                enum_extension_lib::EnumExtension,
                 #postgresql_crud_snake_case::EnumIter,
                 PartialEq,
                 Eq,
