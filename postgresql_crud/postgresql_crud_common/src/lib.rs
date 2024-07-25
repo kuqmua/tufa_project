@@ -2246,6 +2246,12 @@ pub enum FromOrTryFrom {
     TryFrom,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum RustSqlxMapToPostgresPrimiryKeyTypeVariant {
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,
+}
+
 impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_path_stringified(&self) -> std::string::String {
         add_path(&self.to_string())
@@ -2291,6 +2297,168 @@ impl RustSqlxMapToPostgresTypeVariant {
     }
     pub fn get_supported_sqlx_postgres_type(&self) -> SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::from(self)
+    }
+    pub fn try_convert_into(&self) -> Result<RustSqlxMapToPostgresPrimiryKeyTypeVariant, ()> {
+        match self {
+            Self::StdPrimitiveBoolAsPostgresqlBool |
+            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull |
+
+            Self::StdPrimitiveI16AsPostgresqlSmallInt |
+            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull |
+            Self::StdPrimitiveI16AsPostgresqlSmallSerial |
+            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull |
+            Self::StdPrimitiveI16AsPostgresqlInt2 |
+            Self::StdPrimitiveI16AsPostgresqlInt2NotNull |
+
+            Self::StdPrimitiveI32AsPostgresqlInt |
+            Self::StdPrimitiveI32AsPostgresqlIntNotNull |
+            Self::StdPrimitiveI32AsPostgresqlSerial |
+            Self::StdPrimitiveI32AsPostgresqlSerialNotNull |
+            Self::StdPrimitiveI32AsPostgresqlInt4 |
+            Self::StdPrimitiveI32AsPostgresqlInt4NotNull |
+
+            Self::StdPrimitiveI64AsPostgresqlBigInt |
+            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull |
+            Self::StdPrimitiveI64AsPostgresqlBigSerial |
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull |
+
+            Self::StdPrimitiveI64AsPostgresqlInt8 |
+            Self::StdPrimitiveI64AsPostgresqlInt8NotNull |
+
+            Self::StdPrimitiveF32AsPostgresqlReal |
+            Self::StdPrimitiveF32AsPostgresqlRealNotNull |
+            Self::StdPrimitiveF32AsPostgresqlFloat4 |
+            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull |
+
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecision |
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull |
+            Self::StdPrimitiveF64AsPostgresqlFloat8 |
+            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull |
+
+            Self::StdStringStringAsPostgresqlVarchar |
+            Self::StdStringStringAsPostgresqlVarcharNotNull |
+            Self::StdStringStringAsPostgresqlCharN |
+            Self::StdStringStringAsPostgresqlCharNNotNull |
+            Self::StdStringStringAsPostgresqlText |
+            Self::StdStringStringAsPostgresqlTextNotNull |
+            Self::StdStringStringAsPostgresqlCiText |
+            Self::StdStringStringAsPostgresqlCiTextNotNull |
+
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea |
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull |
+
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval |
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull |
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull |
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull |
+
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney |
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull |
+
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText |
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull |
+
+            Self::SqlxTypesBigDecimalAsPostgresqlNumeric |
+            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull |
+
+            Self::SqlxTypesDecimalAsPostgresqlNumeric |
+            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull |
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull |
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull |
+
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp |
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull |
+
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate |
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull |
+
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime |
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull |
+
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz |
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull |
+
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp |
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull |
+
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz |
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull |
+
+            Self::SqlxTypesTimeDateAsPostgresqlDate |
+            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull |
+
+            Self::SqlxTypesTimeTimeAsPostgresqlTime |
+            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull |
+
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid |
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull |
+
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull |
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr |
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull |
+
+            Self::StdNetIpAddrAsPostgresqlInet |
+            Self::StdNetIpAddrAsPostgresqlInetNotNull |
+            Self::StdNetIpAddrAsPostgresqlCidr |
+            Self::StdNetIpAddrAsPostgresqlCidrNotNull |
+
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr |
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull |
+
+            Self::SqlxTypesBitVecAsPostgresqlBit |
+            Self::SqlxTypesBitVecAsPostgresqlBitNotNull |
+            Self::SqlxTypesBitVecAsPostgresqlVarBit |
+            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull |
+
+            Self::SqlxTypesJsonTAsPostgresqlJson |
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull |
+            Self::SqlxTypesJsonTAsPostgresqlJsonB |
+            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull |
+
+            Self::SerdeJsonValueAsPostgresqlJson |
+            Self::SerdeJsonValueAsPostgresqlJsonNotNull |
+            Self::SerdeJsonValueAsPostgresqlJsonB |
+            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => Err(()),
+
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => Ok(RustSqlxMapToPostgresPrimiryKeyTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => Ok(RustSqlxMapToPostgresPrimiryKeyTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey),
+        }
     }
 }
 
