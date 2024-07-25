@@ -8,7 +8,6 @@ pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 
-//todo make it reuse naming_constants
 naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants!(
     [
         ["primary", "key"],
