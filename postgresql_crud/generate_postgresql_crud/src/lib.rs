@@ -1392,7 +1392,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgresql_crud_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_increment};
     let increment_snake_case = naming_conventions::IncrementSnakeCase;
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
-    let dot_space = ", ";
     let where_snake_case_qoutes_token_stream = proc_macro_common::generate_quotes::token_stream(
         &where_snake_case.to_string(),
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -1693,15 +1692,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>
         }
     });
-    let fields_idents_std_option_option_std_vec_vec_where_inner_type_with_serialize_deserialize_token_stream = {
-        generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
-            let field_ident = &element.field_ident;
-            let where_inner_type_token_stream = &element.where_inner_type_token_stream;
-            quote::quote! {
-                #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>
-            }
-        })
-    };
     let generate_pub_handle_token_stream = |is_pub: bool|match is_pub {
         true => quote::quote! {pub},
         false => proc_macro2::TokenStream::new()
