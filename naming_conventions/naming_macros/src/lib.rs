@@ -1,9 +1,9 @@
 const REGEX_VALUE: &str = r"^[a-zA-Z]+$";
 
 #[proc_macro]
-pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_snake_case_stringified = "generate_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants";
+    let proc_macro_name_snake_case_stringified = "generate_upper_camel_and_snake_case_stringified_and_token_stream";
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input.to_string())
     .expect("failed to convert tokens input into valid json string[][] pattern")
     .into_iter()
@@ -111,9 +111,9 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream_from_nam
 }
 
 #[proc_macro]
-pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_snake_case_stringified = "generate_self_upper_camel_and_snake_case_stringified_and_token_stream_from_naming_constants";
+    let proc_macro_name_snake_case_stringified = "generate_self_upper_camel_and_snake_case_stringified_and_token_stream";
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input.to_string())
     .expect("failed to convert tokens input into valid json string[][] pattern")
     .into_iter()
