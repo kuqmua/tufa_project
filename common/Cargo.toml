@@ -44,8 +44,6 @@ postgresql_crud = {path = "../postgresql_crud"}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
 constants = {path = "../constants"}
-http_logic = {path = "../http_logic"}
-route_validators = {path = "../route_validators"}
 
 [lints]
 workspace = true

@@ -1371,7 +1371,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
                 &naming_conventions::CheckBodySizeSnakeCase,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &["route_validators", "check_body_size", &naming_conventions::CheckBodySizeErrorNamedUpperCamelCase.to_string()],
+                    &[&postgresql_crud_snake_case.to_string(), "check_body_size", &naming_conventions::CheckBodySizeErrorNamedUpperCamelCase.to_string()],
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ),
             )
@@ -2133,10 +2133,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 let (parts, #body_snake_case) = #request_snake_case.into_parts();
                 let headers = parts.headers;
-                let body_bytes = match route_validators::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
+                let body_bytes = match #postgresql_crud_snake_case::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_0_token_stream) => {
-                        let #status_code_snake_case = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_0_token_stream);
+                        let #status_code_snake_case = #postgresql_crud_snake_case::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_0_token_stream);
                         #check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                     }
                 };
