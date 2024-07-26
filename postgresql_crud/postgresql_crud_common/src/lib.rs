@@ -9910,6 +9910,11 @@ impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for std::option::Opt
         value.0
     }
 }
+impl<T> std::convert::From<SqlxTypesJson<T>> for StdOptionOptionSqlxTypesJson<T> {
+    fn from(value: SqlxTypesJson<T>) -> Self {
+        Self(Some(value.0))
+    }
+}
 impl<T> sqlx::Type<sqlx::Postgres> for StdOptionOptionSqlxTypesJson<T> {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::option::Option<sqlx::types::Json<T>> as sqlx::Type<sqlx::Postgres>>::type_info()
