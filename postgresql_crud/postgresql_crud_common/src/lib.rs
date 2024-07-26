@@ -3526,11 +3526,6 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-pub struct Something {
-    something: std::string::String,
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, utoipa::ToSchema)]
 pub struct TimeMonth(pub time::Month);
 impl serde::Serialize for TimeMonth {
@@ -10205,3 +10200,11 @@ pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
+
+/////////////////////
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct Something {
+    something: std::string::String,
+}
+// let schema = schema_for!(Something);
+// println!("{}", serde_json::to_string_pretty(&schema).unwrap());
