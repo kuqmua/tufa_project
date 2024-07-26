@@ -32,6 +32,7 @@
 //todo check on postgresql max length value of type
 //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
 //todo update one and delete one must be a transaction
+//todo postgresql json schema validation https://youtu.be/F6X60ln2VNc
 
 #[proc_macro_attribute]
 pub fn create_many_additional_error_variants(
