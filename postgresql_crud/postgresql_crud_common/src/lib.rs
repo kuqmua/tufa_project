@@ -9831,9 +9831,9 @@ where
 impl<T> CheckSupportedPostgresqlColumnType for SqlxTypesJson<T> {
     fn check_supported_postgresql_column_type() {}
 }
-// impl std::fmt::Display for  SqlxTypesJson<T> {
+// impl<T> std::fmt::Display for SqlxTypesJson<T> {
 //     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "{:?}", self.0)
+//         write!(f, "{}", self.0)
 //     }
 // }
 impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
@@ -9851,48 +9851,40 @@ impl<T> SqlxTypesJson<T> {
             .collect()
     }
 }
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-//todo impl for bind query
-// impl<T: serde::Serialize + std::marker::Send> BindQuery for SqlxTypesJson<T> {
-//     fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(incr) => {
-//                 *increment = incr;
-//                 Ok(())
-//             }
-//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-//                 checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-//                 code_occurence: error_occurence_lib::code_occurence!(),
-//             })
-//         }
-//     }
-//     fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-//         let mut increments = std::string::String::default();
-//         match increment.checked_add(1) {
-//             Some(incr) => {
-//                 *increment = incr;
-//                 increments.push_str(&format!("${increment}"));
-//             }
-//             None => {
-//                 return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-//                     checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-//                     code_occurence: error_occurence_lib::code_occurence!(),
-//                 });
-//             }
-//         }
-//         Ok(increments)
-//     }
-//     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
-//     where T: 'a 
-//     {
-//         query = query.bind(self.0);
-//         query
-//     }
-// }
+impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for SqlxTypesJson<T> {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                Ok(())
+            }
+            None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+        let mut increments = std::string::String::default();
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("${increment}"));
+            }
+            None => {
+                return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        Ok(increments)
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
+    {
+        query = query.bind(self.0);
+        query
+    }
+}
+
 //todo 
 // #[derive(Debug)]
 // pub struct WhereSqlxTypesJson {
@@ -10143,10 +10135,10 @@ pub enum TryGenerateBindIncrementsErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-pub trait BindQuery {
+pub trait BindQuery<'a> {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed>;
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
-    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq)]

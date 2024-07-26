@@ -169,7 +169,7 @@ fn common_handle(
                     .collect()
             }
         }
-        impl BindQuery for #ident {
+        impl BindQuery<'_> for #ident {
             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), #try_generate_bind_increments_error_named_upper_camel_case> {
                 increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -208,7 +208,7 @@ fn common_handle(
                 write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
             }
         }
-        impl BindQuery for #where_ident_token_stream {
+        impl BindQuery<'_> for #where_ident_token_stream {
             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), #try_generate_bind_increments_error_named_upper_camel_case> {
                 increment.checked_add(1).map_or_else(|| Err(#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -288,7 +288,7 @@ fn common_handle(
                     .collect()
             }
         }
-        impl BindQuery for #std_option_option_ident_upper_camel_case_token_stream {
+        impl BindQuery<'_> for #std_option_option_ident_upper_camel_case_token_stream {
             fn try_increment(
                 &self,
                 increment: &mut std::primitive::u64,
@@ -321,10 +321,7 @@ fn common_handle(
                 }
                 Ok(increments)
             }
-            fn bind_value_to_query(
-                self,
-                mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 query = query.bind(match self.0 {
                     Some(value) => Some(value.0),
                     None => None
@@ -346,7 +343,7 @@ fn common_handle(
                 )
             }
         }
-        impl BindQuery for #where_std_option_option_ident_upper_camel_case_token_stream {
+        impl BindQuery<'_> for #where_std_option_option_ident_upper_camel_case_token_stream {
             fn try_increment(
                 &self,
                 increment: &mut std::primitive::u64,
@@ -372,10 +369,7 @@ fn common_handle(
                     }),
                 }
             }
-            fn bind_value_to_query(
-                self,
-                mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 query = query.bind(match self.value.0 {
                     Some(value) => Some(value.0),
                     None => None

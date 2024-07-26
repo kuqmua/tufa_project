@@ -1,50 +1,53 @@
-#[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
-#[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
-#[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
-#[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
-#[postgresql_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
-#[postgresql_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
-#[postgresql_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
-#[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
-#[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
-#[postgresql_crud::common_additional_error_variants{
-    enum CommonAdditionalErrorVariants {
-        CheckCommit {
-            #[eo_error_occurence]
-            check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        },
-    }
-}]
-#[postgresql_crud::create_many_additional_route_logic{
-    println!("kekw");
-}]
-#[postgresql_crud::create_one_additional_route_logic{}]
-#[postgresql_crud::read_many_additional_route_logic{}]
-#[postgresql_crud::read_one_additional_route_logic{}]
-#[postgresql_crud::update_many_additional_route_logic{}]
-#[postgresql_crud::update_one_additional_route_logic{}]
-#[postgresql_crud::delete_many_additional_route_logic{}]
-#[postgresql_crud::delete_one_additional_route_logic{}]
-#[postgresql_crud::common_additional_route_logic{
-    // if let Err(error) = postgresql_crud::check_commit::check_commit(
-    //     *app_state.get_enable_api_git_commit_check(),
-    //     &headers,
-    // ) {
-    //     let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-    //     //todo use reserved work instead of TryCreateManyRouteLogicErrorNamed
-    //     let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
-    //         check_commit: error,
-    //         code_occurence: error_occurence_lib::code_occurence!(),
-    //     };
-    //     eprintln!("{error}");
-    //     let mut response = axum::response::IntoResponse::into_response(axum::Json(
-    //         TryCreateManyRouteLogicResponseVariants::from(error),
-    //     ));
-    //     *response.status_mut() = status_code;
-    //     return response;
-    // }
-}]
+#[derive(
+    Debug, 
+    // postgresql_crud::GeneratePostgresqlCrud
+)]
+// #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::common_additional_error_variants{
+//     enum CommonAdditionalErrorVariants {
+//         CheckCommit {
+//             #[eo_error_occurence]
+//             check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+//             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//         },
+//     }
+// }]
+// #[postgresql_crud::create_many_additional_route_logic{
+//     println!("kekw");
+// }]
+// #[postgresql_crud::create_one_additional_route_logic{}]
+// #[postgresql_crud::read_many_additional_route_logic{}]
+// #[postgresql_crud::read_one_additional_route_logic{}]
+// #[postgresql_crud::update_many_additional_route_logic{}]
+// #[postgresql_crud::update_one_additional_route_logic{}]
+// #[postgresql_crud::delete_many_additional_route_logic{}]
+// #[postgresql_crud::delete_one_additional_route_logic{}]
+// #[postgresql_crud::common_additional_route_logic{
+//     // if let Err(error) = postgresql_crud::check_commit::check_commit(
+//     //     *app_state.get_enable_api_git_commit_check(),
+//     //     &headers,
+//     // ) {
+//     //     let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+//     //     //todo use reserved work instead of TryCreateManyRouteLogicErrorNamed
+//     //     let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+//     //         check_commit: error,
+//     //         code_occurence: error_occurence_lib::code_occurence!(),
+//     //     };
+//     //     eprintln!("{error}");
+//     //     let mut response = axum::response::IntoResponse::into_response(axum::Json(
+//     //         TryCreateManyRouteLogicResponseVariants::from(error),
+//     //     ));
+//     //     *response.status_mut() = status_code;
+//     //     return response;
+//     // }
+// }]
 pub struct Jsongeneric {
     // pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
     // pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull,
@@ -195,7 +198,8 @@ pub struct Jsongeneric {
 
     //todo what to do with generic?
     // pub sqlx_types_json_t_as_postgresql_json: postgresql_crud::SqlxTypesJsonTAsPostgresqlJson::<postgresql_crud::Something>,//todo
-    pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,//todo postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonNotNull::<postgresql_crud::Something>
+    // postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,//
+    pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonNotNull::<postgresql_crud::Something>
     // pub sqlx_types_json_t_as_postgresql_json_b: postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonB::<<postgresql_crud::Something>,//todo
     // pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonBNotNull::<<postgresql_crud::Something>,//todo
 
@@ -214,7 +218,7 @@ pub struct JsongenericOptions {
         postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
     >,
     pub sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveBool>,
+        postgresql_crud::Value<postgresql_crud::StdOptionOptionSqlxTypesJson<postgresql_crud::Something>>,
     >,
 }
 impl std::convert::From<Jsongeneric> for JsongenericOptions {
@@ -235,7 +239,7 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
                 ),
             }),
             sqlx_types_json_t_as_postgresql_json_not_null: Some(postgresql_crud::Value {
-                value: postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
+                value: postgresql_crud::StdOptionOptionSqlxTypesJson::from(
                     value.sqlx_types_json_t_as_postgresql_json_not_null.0,
                 ),
             }),
@@ -295,7 +299,7 @@ pub struct JsongenericColumnReadPermission {
     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
     sqlx_types_json_t_as_postgresql_json_not_null: std::primitive::bool,
 }
-pub use postgresql_crud::StdOptionOptionStdPrimitiveBool;
+pub use postgresql_crud::SqlxTypesJson;
 pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
 pub use postgresql_crud::StdPrimitiveI64;
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
@@ -305,8 +309,7 @@ pub struct Field<T> {
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateOnePayload {
     pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdOptionOptionStdPrimitiveI32,
-    pub sqlx_types_json_t_as_postgresql_json_not_null:
-        postgresql_crud::StdOptionOptionStdPrimitiveBool,
+    pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJson<postgresql_crud::Something>,
 }
 #[derive(Debug)]
 pub struct CreateOneParameters {
