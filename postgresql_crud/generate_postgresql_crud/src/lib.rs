@@ -34,6 +34,20 @@
 //todo update one and delete one must be a transaction
 //todo postgresql json schema validation https://youtu.be/F6X60ln2VNc
 
+//todo postgresql json:
+//* define rust type 
+//* make sure it can be serialized and deserialized
+//* define postgresql json type
+//* write checker what ensures what postgresql type equals to 
+//* write json schema in postgresql
+//* validate insert json field with json schema
+//* syncronize serde json type deserialize validation with postgresql insert validation 
+//* validate read json field - all recursive json tree variants to read
+//* generate all recursive tree variants to read in serde read variants type
+//* generate all recursive tree variants to read in postgresql query
+//* validate update json field with json schema - all recursive tree variants to update
+//* delete not need?
+
 #[proc_macro_attribute]
 pub fn create_many_additional_error_variants(
     _attr: proc_macro::TokenStream,
