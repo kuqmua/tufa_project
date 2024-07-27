@@ -209,17 +209,17 @@ pub struct Jsongeneric {
     // pub serde_json_value_as_postgresql_json_b_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 //todo remove s postfix from name
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub struct JsongenericOptions {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>>,
-    pub std_primitive_i32_as_postgresql_int: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
-    >,
-    pub sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::StdOptionOptionSqlxTypesJson<postgresql_crud::Something>>,
-    >,
-}
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+// pub struct JsongenericOptions {
+//     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+//         std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>>,
+//     pub std_primitive_i32_as_postgresql_int: std::option::Option<
+//         postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
+//     >,
+//     pub sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<
+//         postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::Something>>,
+//     >,
+// }
 impl std::convert::From<Jsongeneric> for JsongenericOptions {
     fn from(value: Jsongeneric) -> Self {
         Self {
@@ -238,7 +238,7 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
                 ),
             }),
             sqlx_types_json_t_as_postgresql_json_not_null: Some(postgresql_crud::Value {
-                value: postgresql_crud::StdOptionOptionSqlxTypesJson::from(
+                value: postgresql_crud::SqlxTypesJson::from(
                     value.sqlx_types_json_t_as_postgresql_json_not_null.0,
                 ),
             }),

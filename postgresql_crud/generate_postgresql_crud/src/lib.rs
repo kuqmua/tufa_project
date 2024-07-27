@@ -284,7 +284,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             println!("original_type_token_stream {original_type_token_stream}");
             let inner_type_token_stream = {
-                let value = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""); //todo generic for json
+                let value = format!(
+                    "{}{}",
+                    &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
+                    match &maybe_generic_token_stream {
+                        Some(value) => value.to_string(),
+                        None => std::string::String::default()
+                    }
+                ); //todo generic for json
                 println!("@@@{value}");
                 match value.parse::<proc_macro2::TokenStream>() {
                     Ok(value) => value,
@@ -444,10 +451,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
             let field_vis = &element.field.vis;
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = {
-                // let f =  match &element.rust
-                generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream)
-            };
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream);
             quote::quote!{
                 // #serde_skip_serializing_if_value_attribute_token_stream
                 #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
@@ -1090,13 +1094,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let create_table_if_not_exists_function_token_stream = {
         let pool_snake_case = naming_conventions::PoolSnakeCase;
         let create_table_if_not_exists_quotes_token_stream = {
-            let acc = syn_field_with_additional_info_fields_named.iter().map(|element|format!(
-                "{} {}",
-                &element.field_ident,
-                postgresql_crud_common::PostgresqlTypeWithMetadata::from(&element.rust_sqlx_map_to_postgres_type_variant).postgresql_naming()
-            ));
+            let acc = {
+                let mut acc = syn_field_with_additional_info_fields_named.iter().fold(
+                    std::string::String::default(),
+                    |mut acc, element| {
+                        acc.push_str(&format!(
+                            "{} {},",
+                            &element.field_ident,
+                            postgresql_crud_common::PostgresqlTypeWithMetadata::from(&element.rust_sqlx_map_to_postgres_type_variant).postgresql_naming()
+                        ));
+                        acc
+                    }
+                );
+                let _ = acc.pop();
+                acc
+            };
+            let value = format!("CREATE TABLE IF NOT EXISTS {ident_snake_case_stringified} ({acc})");
+            println!("{value}");
             proc_macro_common::generate_quotes::token_stream(
-                &format!("CREATE TABLE IF NOT EXISTS {ident_snake_case_stringified} ({})", ""),
+                &value,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             )
         };
@@ -4955,7 +4971,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{emulate_crud_api_usage_test_token_stream}");
     let common_token_stream = quote::quote! {
         pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;
-        // #struct_options_token_stream
+        #struct_options_token_stream
         // #from_ident_for_ident_options_token_stream
         // #column_token_stream
         // #allow_methods_token_stream

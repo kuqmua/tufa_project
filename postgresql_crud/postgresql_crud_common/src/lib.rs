@@ -736,7 +736,7 @@ impl SqlxPostgresType {
             Self::StdNetIpAddr => std::string::String::from("std::net::IpAddr"),
             Self::SqlxTypesMacAddressMacAddress => std::string::String::from("sqlx::types::mac_address::MacAddress"),
             Self::SqlxTypesBitVec => std::string::String::from("sqlx::types::BitVec"),
-            Self::SqlxTypesJson => format!("sqlx::types::Json<{generic_type_str}>"),
+            Self::SqlxTypesJson => format!("sqlx::types::Json{generic_type_str}"),
             Self::SerdeJsonValue => std::string::String::from("serde_json::Value"),
         }
     }
