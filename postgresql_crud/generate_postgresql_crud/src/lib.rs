@@ -33,6 +33,9 @@
 //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
 //todo update one and delete one must be a transaction
 //todo postgresql json schema validation https://youtu.be/F6X60ln2VNc
+// SET search_path TO public;
+// DROP EXTENSION IF EXISTS "pg_jsonschema";
+// CREATE EXTENSION "pg_jsonschema";
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
 
 //todo postgresql json:
