@@ -208,8 +208,8 @@ pub struct Jsongeneric {
     // pub serde_json_value_as_postgresql_json_b: postgresql_crud::SerdeJsonValueAsPostgresqlJsonB,
     // pub serde_json_value_as_postgresql_json_b_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
-
-pub const TABLE_NAME: &std::primitive::str = "jsongenerics";
+//todo remove s postfix from name
+pub const TABLE_NAME: &std::primitive::str = "jsongeneric";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct JsongenericOptions {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
@@ -490,7 +490,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
     };
     println!("{:#?}", parameters);
     let query_string =
-    "insert into jsongenerics (std_primitive_i32_as_postgresql_int,sqlx_types_json_t_as_postgresql_json_not_null) values ($1,$2) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key";
+    "insert into jsongeneric (std_primitive_i32_as_postgresql_int,sqlx_types_json_t_as_postgresql_json_not_null) values ($1,$2) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key";
     println!("{}", query_string);
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
@@ -784,7 +784,7 @@ pub async fn try_create_one(
             }
         }
     };
-    let url = format!("{}/jsongenerics/create_one", server_location,);
+    let url = format!("{}/jsongeneric/create_one", server_location,);
     let future = reqwest::Client::new()
         .post(&url)
         .header(
