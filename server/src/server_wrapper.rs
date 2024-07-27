@@ -2,7 +2,7 @@ pub(crate) async fn server_wrapper(
     config: &'static common::repositories_types::server::config::Config,
 ) -> Result<(), Box<common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed>> {
     let postgres_pool = match common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
-        Ok(postgres_pool) => postgres_pool,
+        Ok(value) => value,
         Err(error) => {
             return Err(Box::new(
                 common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::TryGetPostgresPool {
@@ -12,7 +12,8 @@ pub(crate) async fn server_wrapper(
             ))
         },
     };
-    
+    println!("prepare_and_check_postgres...");
+    crate::prepare_and_check_postgres::prepare_and_check_postgres(&postgres_pool).await;
     // println!("trying to create redis session storage...");
     // let redis_session_storage = match {
     //     use common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
