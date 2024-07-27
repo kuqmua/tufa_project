@@ -235,95 +235,94 @@ impl std::convert::From<&PostgresqlTypeWithMetadata> for PostgresqlType {
 }
 
 impl PostgresqlTypeWithMetadata {
-    //todo add NOT NULL or not? or add different method and Primary Key
     pub const fn postgresql_naming(&self) -> &str {
         match self {
-            Self::Bool |
-            Self::BoolNotNull => "BOOL",
-            Self::Char |
-            Self::CharNotNull => "CHAR",
-            Self::SmallInt |
-            Self::SmallIntNotNull => "SMALLINT",
-            Self::SmallSerial |
-            Self::SmallSerialNotNull => "SMALLSERIAL",
-            Self::Int2 |
-            Self::Int2NotNull => "INT2",
-            Self::Int |
-            Self::IntNotNull => "INT",
-            Self::Serial |
-            Self::SerialNotNull => "SERIAL",
-            Self::Int4 |
-            Self::Int4NotNull => "INT4",
-            Self::BigInt |
-            Self::BigIntNotNull => "BIGINT",
-            Self::BigSerial |
-            Self::BigSerialNotNull |
-            Self::BigSerialNotNullPrimaryKey => "BIGSERIAL",
-            Self::Int8 |
-            Self::Int8NotNull => "INT8",
-            Self::Real |
-            Self::RealNotNull => "REAL",
-            Self::Float4 |
-            Self::Float4NotNull => "FLOAT4",
-            Self::DoublePrecision |
-            Self::DoublePrecisionNotNull => "DOUBLE PRECISION",
-            Self::Float8 |
-            Self::Float8NotNull => "FLOAT8",
-            Self::Varchar |
-            Self::VarcharNotNull => "VARCHAR",
-            Self::CharN |
-            Self::CharNNotNull => "CHAR(N)",
-            Self::Text |
-            Self::TextNotNull => "TEXT",
-            Self::CiText |
-            Self::CiTextNotNull => "CITEXT",
-            Self::Bytea |
-            Self::ByteaNotNull => "BYTEA",
-            Self::Interval |
-            Self::IntervalNotNull => "INTERVAL",
-            Self::Int8Range |
-            Self::Int8RangeNotNull => "INT8RANGE",
-            Self::Int4Range |
-            Self::Int4RangeNotNull => "INT4RANGE",
-            Self::TsRange |
-            Self::TsRangeNotNull => "TSRANGE",
-            Self::TsTzRange |
-            Self::TsTzRangeNotNull => "TSTZRANGE",
-            Self::DateRange |
-            Self::DateRangeNotNull => "DATERANGE",
-            Self::NumRange |
-            Self::NumRangeNotNull => "NUMRANGE",
-            Self::Money |
-            Self::MoneyNotNull => "MONEY",
-            Self::Numeric |
-            Self::NumericNotNull => "NUMERIC",
-            Self::TimestampTz |
-            Self::TimestampTzNotNull => "TIMESTAMPTZ",
-            Self::Date |
-            Self::DateNotNull => "DATE",
-            Self::Time |
-            Self::TimeNotNull => "TIME",
-            Self::TimeTz |
-            Self::TimeTzNotNull => "TIMETZ",
-            Self::Timestamp |
-            Self::TimestampNotNull => "TIMESTAMP",
-            Self::Uuid |
-            Self::UuidNotNull |
-            Self::UuidNotNullPrimaryKey => "UUID",
-            Self::Inet |
-            Self::InetNotNull => "INET",
-            Self::Cidr |
-            Self::CidrNotNull => "CIDR",
-            Self::MacAddr |
-            Self::MacAddrNotNull => "MACADDR",
-            Self::Bit |
-            Self::BitNotNull => "BIT",
-            Self::VarBit |
-            Self::VarBitNotNull => "VARBIT",
-            Self::Json |
-            Self::JsonNotNull => "JSON",
-            Self::JsonB |
-            Self::JsonBNotNull => "JSONB",
+            Self::Bool => "BOOL",
+            Self::BoolNotNull => "BOOL NOT NULL",
+            Self::Char => "CHAR",
+            Self::CharNotNull => "CHAR NOT NULL",
+            Self::SmallInt => "SMALLINT",
+            Self::SmallIntNotNull => "SMALLINT NOT NULL",
+            Self::SmallSerial => "SMALLSERIAL",
+            Self::SmallSerialNotNull => "SMALLSERIAL NOT NULL",
+            Self::Int2 => "INT2",
+            Self::Int2NotNull => "INT2 NOT NULL",
+            Self::Int => "INT",
+            Self::IntNotNull => "INT NOT NULL",
+            Self::Serial => "SERIAL",
+            Self::SerialNotNull => "SERIAL NOT NULL",
+            Self::Int4 => "INT4",
+            Self::Int4NotNull => "INT4 NOT NULL",
+            Self::BigInt => "BIGINT",
+            Self::BigIntNotNull => "BIGINT NOT NULL",
+            Self::BigSerial => "BIGSERIAL",
+            Self::BigSerialNotNull => "BIGSERIAL NOT NULL",
+            Self::BigSerialNotNullPrimaryKey => "BIGSERIAL PRIMARY KEY",//not null to add NOT NULL coz its primary key
+            Self::Int8 => "INT8",
+            Self::Int8NotNull => "INT8 NOT NULL",
+            Self::Real => "REAL",
+            Self::RealNotNull => "REAL NOT NULL",
+            Self::Float4 => "FLOAT4",
+            Self::Float4NotNull => "FLOAT4 NOT NULL",
+            Self::DoublePrecision => "DOUBLE PRECISION",
+            Self::DoublePrecisionNotNull => "DOUBLE PRECISION NOT NULL",
+            Self::Float8 => "FLOAT8",
+            Self::Float8NotNull => "FLOAT8 NOT NULL",
+            Self::Varchar => "VARCHAR",
+            Self::VarcharNotNull => "VARCHAR NOT NULL",
+            Self::CharN => "CHAR(N)",
+            Self::CharNNotNull => "CHAR(N) NOT NULL",
+            Self::Text => "TEXT",
+            Self::TextNotNull => "TEXT NOT NULL",
+            Self::CiText => "CITEXT",
+            Self::CiTextNotNull => "CITEXT NOT NULL",
+            Self::Bytea => "BYTEA",
+            Self::ByteaNotNull => "BYTEA NOT NULL",
+            Self::Interval => "INTERVAL",
+            Self::IntervalNotNull => "INTERVAL NOT NULL",
+            Self::Int8Range => "INT8RANGE",
+            Self::Int8RangeNotNull => "INT8RANGE NOT NULL",
+            Self::Int4Range => "INT4RANGE",
+            Self::Int4RangeNotNull => "INT4RANGE NOT NULL",
+            Self::TsRange => "TSRANGE",
+            Self::TsRangeNotNull => "TSRANGE NOT NULL",
+            Self::TsTzRange => "TSTZRANGE",
+            Self::TsTzRangeNotNull => "TSTZRANGE NOT NULL",
+            Self::DateRange => "DATERANGE",
+            Self::DateRangeNotNull => "DATERANGE NOT NULL",
+            Self::NumRange => "NUMRANGE",
+            Self::NumRangeNotNull => "NUMRANGE NOT NULL",
+            Self::Money => "MONEY",
+            Self::MoneyNotNull => "MONEY NOT NULL",
+            Self::Numeric => "NUMERIC",
+            Self::NumericNotNull => "NUMERIC NOT NULL",
+            Self::TimestampTz => "TIMESTAMPTZ",
+            Self::TimestampTzNotNull => "TIMESTAMPTZ NOT NULL",
+            Self::Date => "DATE",
+            Self::DateNotNull => "DATE NOT NULL",
+            Self::Time => "TIME",
+            Self::TimeNotNull => "TIME NOT NULL",
+            Self::TimeTz => "TIMETZ",
+            Self::TimeTzNotNull => "TIMETZ NOT NULL",
+            Self::Timestamp => "TIMESTAMP",
+            Self::TimestampNotNull => "TIMESTAMP NOT NULL",
+            Self::Uuid => "UUID",
+            Self::UuidNotNull => "UUID NOT NULL",
+            Self::UuidNotNullPrimaryKey => "UUID PRIMARY KEY",//not null to add NOT NULL coz its primary key
+            Self::Inet => "INET",
+            Self::InetNotNull => "INET NOT NULL",
+            Self::Cidr => "CIDR",
+            Self::CidrNotNull => "CIDR NOT NULL",
+            Self::MacAddr => "MACADDR",
+            Self::MacAddrNotNull => "MACADDR NOT NULL",
+            Self::Bit => "BIT",
+            Self::BitNotNull => "BIT NOT NULL",
+            Self::VarBit => "VARBIT",
+            Self::VarBitNotNull => "VARBIT NOT NULL",
+            Self::Json => "JSON",
+            Self::JsonNotNull => "JSON NOT NULL",
+            Self::JsonB => "JSONB",
+            Self::JsonBNotNull => "JSONB NOT NULL",
         }
     }
 }
