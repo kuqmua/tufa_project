@@ -9831,11 +9831,13 @@ where
 impl<T> CheckSupportedPostgresqlColumnType for SqlxTypesJson<T> {
     fn check_supported_postgresql_column_type() {}
 }
-// impl<T> std::fmt::Display for SqlxTypesJson<T> {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "{}", self.0)
-//     }
-// }
+impl<T> std::fmt::Display for SqlxTypesJson<T> 
+where T: std::fmt::Debug
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
 impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
 impl<T> AsPostgresqlJsonB for SqlxTypesJson<T> {}
 impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
@@ -9884,15 +9886,43 @@ impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for SqlxTyp
         query
     }
 }
-
-//todo 
-// #[derive(Debug)]
-// pub struct WhereSqlxTypesJson {
-//     pub value: SqlxTypesJson,
-//     pub conjuctive_operator: ConjunctiveOperator,
-// }
-
-//heer30
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct WhereSqlxTypesJson<T> {
+    pub value: SqlxTypesJson<T>,
+    pub conjuctive_operator: ConjunctiveOperator,
+}
+impl<T> std::fmt::Display for WhereSqlxTypesJson<T> 
+where T: std::fmt::Debug
+{
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "value: {:?}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+    }
+}
+impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for WhereSqlxTypesJson<T> {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+        increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+            code_occurence: error_occurence_lib::code_occurence!(),
+        }), |incr| {
+            *increment = incr;
+            Ok(())
+        })
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<
+        std::string::String,
+        TryGenerateBindIncrementsErrorNamed,
+    > {
+        increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+            code_occurence: error_occurence_lib::code_occurence!(),
+        }), |incr| {
+            *increment = incr;
+            Ok(format!("${increment}"))
+        })
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.value.0);
+        query
+    }
+}
 #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct StdOptionOptionSqlxTypesJson<T>(pub std::option::Option<sqlx::types::Json<T>>);
 impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJson<T> {
@@ -9939,49 +9969,35 @@ impl<T> StdOptionOptionSqlxTypesJson<T> {
             .collect()
     }
 }
-// impl<T: std::marker::Send + serde::Serialize> BindQuery for StdOptionOptionSqlxTypesJson<T> {
-//     fn try_increment(
-//         &self,
-//         increment: &mut std::primitive::u64,
-//     ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(incr) => {
-//                 *increment = incr;
-//                 Ok(())
-//             }
-//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-//                 checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-//                 code_occurence: error_occurence_lib::code_occurence!(),
-//             }),
-//         }
-//     }
-//     fn try_generate_bind_increments(
-//         &self,
-//         increment: &mut std::primitive::u64,
-//     ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-//         let mut increments = std::string::String::default();
-//         match increment.checked_add(1) {
-//             Some(incr) => {
-//                 *increment = incr;
-//                 increments.push_str(&format!("${increment}"));
-//             }
-//             None => {
-//                 return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-//                     checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-//                     code_occurence: error_occurence_lib::code_occurence!(),
-//                 });
-//             }
-//         }
-//         Ok(increments)
-//     }
-//     fn bind_value_to_query(
-//         self,
-//         mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
-//     ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(self.0);
-//         query
-//     }
-// }
+impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + sqlx::Encode<'a, sqlx::Postgres> + 'a> BindQuery<'a> for StdOptionOptionSqlxTypesJson<T> {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+        increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+            code_occurence: error_occurence_lib::code_occurence!(),
+        }), |incr| {
+            *increment = incr;
+            Ok(())
+        })
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<
+        std::string::String,
+        TryGenerateBindIncrementsErrorNamed,
+    > {
+        increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+            code_occurence: error_occurence_lib::code_occurence!(),
+        }), |incr| {
+            *increment = incr;
+            Ok(format!("${increment}"))
+        })
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        let f = match self.0 {
+            Some(value) => Some(value.0),
+            None => None
+        };
+        query = query.bind(f);
+        query
+    }
+}
 
 #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdOptionOptionSqlxTypesJson<T> {
