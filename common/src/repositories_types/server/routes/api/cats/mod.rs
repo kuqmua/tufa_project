@@ -220,91 +220,91 @@ pub struct Jsongeneric {
 //         postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::Something>>,
 //     >,
 // }
-impl std::convert::From<Jsongeneric> for JsongenericOptions {
-    fn from(value: Jsongeneric) -> Self {
-        Self {
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
-                postgresql_crud::Value {
-                    value: postgresql_crud::StdPrimitiveI64::from(
-                        value
-                            .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
-                            .0,
-                    ),
-                },
-            ),
-            std_primitive_i32_as_postgresql_int: Some(postgresql_crud::Value {
-                value: postgresql_crud::StdOptionOptionStdPrimitiveI32::from(
-                    value.std_primitive_i32_as_postgresql_int.0,
-                ),
-            }),
-            sqlx_types_json_t_as_postgresql_json_not_null: Some(postgresql_crud::Value {
-                value: postgresql_crud::SqlxTypesJson::from(
-                    value.sqlx_types_json_t_as_postgresql_json_not_null.0,
-                ),
-            }),
-        }
-    }
-}
-#[derive(
-    Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Eq, from_str :: FromStr, Clone, Copy,
-)]
-pub enum JsongenericColumn {
-    #[serde(rename(
-        serialize = "std_primitive_i32_as_postgresql_int",
-        deserialize = "std_primitive_i32_as_postgresql_int"
-    ))]
-    StdPrimitiveI32AsPostgresqlInt,
-    #[serde(rename(
-        serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
-        deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-    ))]
-    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
-    #[serde(rename(
-        serialize = "sqlx_types_json_t_as_postgresql_json_not_null",
-        deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
-    ))]
-    SqlxTypesJsonAsPostgresqlJsonNotNull,
-}
-impl std::fmt::Display for JsongenericColumn {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::StdPrimitiveI32AsPostgresqlInt => {
-                write!(formatter, "std_primitive_i32_as_postgresql_int")
-            }
-            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => write!(
-                formatter,
-                "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-            ),
-            Self::SqlxTypesJsonAsPostgresqlJsonNotNull => {
-                write!(formatter, "sqlx_types_json_t_as_postgresql_json_not_null")
-            }
-        }
-    }
-}
-impl error_occurence_lib::ToStdStringString for JsongenericColumn {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
-pub const ALLOW_METHODS: [http::Method; 4] = [
-    http::Method::GET,
-    http::Method::POST,
-    http::Method::PATCH,
-    http::Method::DELETE,
-];
-#[derive(Debug, Clone, Copy)]
-pub struct JsongenericColumnReadPermission {
-    std_primitive_i32_as_postgresql_int: std::primitive::bool,
-    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
-    sqlx_types_json_t_as_postgresql_json_not_null: std::primitive::bool,
-}
+// impl std::convert::From<Jsongeneric> for JsongenericOptions {
+//     fn from(value: Jsongeneric) -> Self {
+//         Self {
+//             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
+//                 postgresql_crud::Value {
+//                     value: postgresql_crud::StdPrimitiveI64::from(
+//                         value
+//                             .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+//                             .0,
+//                     ),
+//                 },
+//             ),
+//             std_primitive_i32_as_postgresql_int: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::StdOptionOptionStdPrimitiveI32::from(
+//                     value.std_primitive_i32_as_postgresql_int.0,
+//                 ),
+//             }),
+//             sqlx_types_json_t_as_postgresql_json_not_null: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::SqlxTypesJson::from(
+//                     value.sqlx_types_json_t_as_postgresql_json_not_null.0,
+//                 ),
+//             }),
+//         }
+//     }
+// }
+// #[derive(
+//     Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Eq, from_str :: FromStr, Clone, Copy,
+// )]
+// pub enum JsongenericColumn {
+//     #[serde(rename(
+//         serialize = "std_primitive_i32_as_postgresql_int",
+//         deserialize = "std_primitive_i32_as_postgresql_int"
+//     ))]
+//     StdPrimitiveI32AsPostgresqlInt,
+//     #[serde(rename(
+//         serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+//         deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+//     ))]
+//     StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+//     #[serde(rename(
+//         serialize = "sqlx_types_json_t_as_postgresql_json_not_null",
+//         deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
+//     ))]
+//     SqlxTypesJsonAsPostgresqlJsonNotNull,
+// }
+// impl std::fmt::Display for JsongenericColumn {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         match self {
+//             Self::StdPrimitiveI32AsPostgresqlInt => {
+//                 write!(formatter, "std_primitive_i32_as_postgresql_int")
+//             }
+//             Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => write!(
+//                 formatter,
+//                 "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+//             ),
+//             Self::SqlxTypesJsonAsPostgresqlJsonNotNull => {
+//                 write!(formatter, "sqlx_types_json_t_as_postgresql_json_not_null")
+//             }
+//         }
+//     }
+// }
+// impl error_occurence_lib::ToStdStringString for JsongenericColumn {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// pub const ALLOW_METHODS: [http::Method; 4] = [
+//     http::Method::GET,
+//     http::Method::POST,
+//     http::Method::PATCH,
+//     http::Method::DELETE,
+// ];
+// #[derive(Debug, Clone, Copy)]
+// pub struct JsongenericColumnReadPermission {
+//     std_primitive_i32_as_postgresql_int: std::primitive::bool,
+//     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
+//     sqlx_types_json_t_as_postgresql_json_not_null: std::primitive::bool,
+// }
 pub use postgresql_crud::SqlxTypesJson;
 pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
 pub use postgresql_crud::StdPrimitiveI64;
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct Field<T> {
-    pub value: T,
-}
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct Field<T> {
+//     pub value: T,
+// }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateOnePayload {
     pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdOptionOptionStdPrimitiveI32,

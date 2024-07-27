@@ -4972,12 +4972,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_token_stream = quote::quote! {
         pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;
         #struct_options_token_stream
-        // #from_ident_for_ident_options_token_stream
-        // #column_token_stream
-        // #allow_methods_token_stream
-        // #ident_column_read_permission_token_stream
+        #from_ident_for_ident_options_token_stream
+        #column_token_stream
+        #allow_methods_token_stream
+        #ident_column_read_permission_token_stream
         // #(#reexport_postgresql_sqlx_column_types_token_stream)*
-        // #field_token_stream
+        #field_token_stream
         #create_table_if_not_exists_function_token_stream
 
         // #[cfg(test)]
