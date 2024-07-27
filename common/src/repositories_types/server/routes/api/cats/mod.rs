@@ -209,7 +209,6 @@ pub struct Jsongeneric {
     // pub serde_json_value_as_postgresql_json_b_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 //todo remove s postfix from name
-pub const TABLE_NAME: &std::primitive::str = "jsongeneric";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct JsongenericOptions {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
