@@ -9990,11 +9990,10 @@ impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + 
         })
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        let f = match self.0 {
+        query = query.bind(match self.0 {
             Some(value) => Some(value.0),
             None => None
-        };
-        query = query.bind(f);
+        });
         query
     }
 }
