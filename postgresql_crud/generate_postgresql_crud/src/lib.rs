@@ -194,9 +194,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let table_name_stringified = pluralizer::pluralize(&ident_snake_case_stringified, 2, false);
     let table_name_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
-        &table_name_stringified,
+        &ident_snake_case_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     #[derive(Debug, Clone)]
@@ -1102,7 +1101,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 postgresql_crud_common::PostgresqlTypeWithMetadata::from(&element.rust_sqlx_map_to_postgres_type_variant).postgresql_naming()
             ));
             proc_macro_common::generate_quotes::token_stream(
-                &format!("CREATE TABLE IF NOT EXISTS {table_name_stringified} ({})", ""),
+                &format!("CREATE TABLE IF NOT EXISTS {ident_snake_case_stringified} ({})", ""),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             )
         };
@@ -2335,7 +2334,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let url_snake_case = naming_conventions::UrlSnakeCase;
         let server_location_snake_case = naming_conventions::ServerLocationSnakeCase;
         let url_token_stream = {
-            let url_handle_token_stream = naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, &table_name_stringified);
+            let url_handle_token_stream = naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, &ident_snake_case_stringified);
             quote::quote! {
                 let #url_snake_case = format!(
                     #url_handle_token_stream,
@@ -2765,7 +2764,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     });
                     let query_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case} {{values}} {returning_primary_key_stringified}"),
+                        &format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} {{values}} {returning_primary_key_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote!{
@@ -2838,7 +2837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     },
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //     &table_name_stringified,
+                //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
                 //     &application_json_quotes_token_stream,
                 //     &table_name_quotes_token_stream,
@@ -2984,7 +2983,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         })
                     };
                     proc_macro_common::generate_quotes::token_stream(
-                        &format!("{insert_snake_case} {into_snake_case} {table_name_stringified} ({column_names}) {values_snake_case} ({column_increments}){returning_primary_key_stringified}"),
+                        &format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} ({column_increments}){returning_primary_key_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     )
                 };
@@ -3008,7 +3007,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &generate_create_update_delete_one_fetch_token_stream(&operation),
                 );
                 // // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                // //     &table_name_stringified,
+                // //     &ident_snake_case_stringified,
                 // //     &unique_status_codes,
                 // //     &application_json_quotes_token_stream,
                 // //     &table_name_quotes_token_stream,
@@ -3245,7 +3244,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     });
                     let handle_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{select_snake_case} {{}} {from_snake_case} {table_name_stringified} {{}}"),
+                        &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {{}}"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let order_snake_case = naming_conventions::OrderSnakeCase;
@@ -3402,7 +3401,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //     &table_name_stringified,
+                //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
                 //     &application_json_quotes_token_stream,
                 //     &table_name_quotes_token_stream,
@@ -3651,7 +3650,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 let query_string_token_stream = {
                     let query_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{select_snake_case} {{}} {from_snake_case} {table_name_stringified} {where_snake_case} {primary_key_field_ident} = $1"),
+                        &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
@@ -3690,7 +3689,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //     &table_name_stringified,
+                //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
                 //     &application_json_quotes_token_stream,
                 //     &table_name_quotes_token_stream,
@@ -3921,7 +3920,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let query_string_token_stream = {
                     let query_start_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{update_snake_case} {table_name_stringified} {set_snake_case} "),
+                        &format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let query_snake_case = naming_conventions::QuerySnakeCase;
@@ -4099,7 +4098,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     },
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //     &table_name_stringified,
+                //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
                 //     &application_json_quotes_token_stream,
                 //     &table_name_quotes_token_stream,
@@ -4265,7 +4264,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 let query_string_token_stream = {
                     let query_start_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{update_snake_case} {table_name_stringified} {set_snake_case} "),
+                        &format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
@@ -4356,7 +4355,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &generate_create_update_delete_one_fetch_token_stream(&operation),
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //     &table_name_stringified,
+                //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
                 //     &application_json_quotes_token_stream,
                 //     &table_name_quotes_token_stream,
@@ -4615,7 +4614,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     };
                     let handle_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{delete_snake_case} {from_snake_case} {table_name_stringified} {where_snake_case} {{}}{returning_primary_key_stringified}"),
+                        &format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {{}}{returning_primary_key_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
@@ -4676,7 +4675,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     },
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //     &table_name_stringified,
+                //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
                 //     &application_json_quotes_token_stream,
                 //     &table_name_quotes_token_stream,
@@ -4813,7 +4812,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 let query_string_token_stream = {
                     let query_token_stream = proc_macro_common::generate_quotes::token_stream(
-                        &format!("{delete_snake_case} {from_snake_case} {table_name_stringified} {where_snake_case} {primary_key_field_ident} = $1{returning_primary_key_stringified}"),
+                        &format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1{returning_primary_key_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {format!(#query_token_stream) }
@@ -4837,7 +4836,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &generate_create_update_delete_one_fetch_token_stream(&operation),
                 );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //     &table_name_stringified,
+                //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
                 //     &application_json_quotes_token_stream,
                 //     &table_name_quotes_token_stream,
@@ -4982,7 +4981,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     //comment out coz its impossible to correctly generate tokens for debug purposes
     // let _mod_name_snake_case_token_stream = {
-    //     let value = format!("{proc_macro_name_snake_case}_{table_name_stringified}");
+    //     let value = format!("{proc_macro_name_snake_case}_{ident_snake_case_stringified}");
     //     value.parse::<proc_macro2::TokenStream>()
     //     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     // };
@@ -5013,14 +5012,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 }
 
 // fn generate_swagger_open_api_token_stream(
-//     table_name_stringified: &str,
+//     ident_snake_case_stringified: &str,
 //     unique_status_codes: &[proc_macro_helpers::status_code::StatusCode],
 //     application_json_quotes_token_stream: &proc_macro2::TokenStream,
 //     table_name_quotes_token_stream: &proc_macro2::TokenStream,
 //     content_type_token_stream: &proc_macro2::TokenStream,
 //     operation: &Operation,
 // ) -> proc_macro2::TokenStream {
-//     let swagger_url_path_quotes_token_stream = naming_conventions::SwaggerUrlPathSelfQuotesTokenStream::swagger_url_path_self_quotes_token_stream(operation, table_name_stringified);
+//     let swagger_url_path_quotes_token_stream = naming_conventions::SwaggerUrlPathSelfQuotesTokenStream::swagger_url_path_self_quotes_token_stream(operation, ident_snake_case_stringified);
 //     let content_type_snake_case_token_stream = quote::quote! {content_type};
 //     let description_snake_case_token_stream = quote::quote! {description};
 //     let responses_token_stream = unique_status_codes.iter().map(|element|{
@@ -5043,7 +5042,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 //     let request_body_token_stream = {
 //         let request_body_description_token_stream = {
 //             let value = proc_macro_common::generate_quotes::stringified(&format!(
-//                 "{table_name_stringified} {} {}",
+//                 "{ident_snake_case_stringified} {} {}",
 //                 proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation),
 //                 naming_conventions::PayloadSnakeCase
 //             ));

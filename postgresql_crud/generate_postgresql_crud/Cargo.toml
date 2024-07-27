@@ -12,7 +12,6 @@ proc-macro2 = {version = "=1.0.81"}
 quote = {version = "=1.0.36"}
 syn = {version = "=2.0.60"}
 convert_case = {version = "=0.6.0"}
-pluralizer = {version = "=0.4.0"}
 strum_macros = {version = "=0.24.3"}
 postgresql_crud_common = {path = "./../postgresql_crud_common"}
 proc_macro_assistants = {path = "../../proc_macro_assistants"}
