@@ -11,8 +11,6 @@ mod server_wrapper;
 pub mod routes;
 pub mod try_build_server;
 
-pub mod dev;
-
 fn main() {
     println!("commit {}", git_info::PROJECT_GIT_INFO.commit);
     crate::entry::entry(
