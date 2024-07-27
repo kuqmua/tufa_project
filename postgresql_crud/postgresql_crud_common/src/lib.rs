@@ -414,8 +414,8 @@ pub enum SupportedSqlxPostgresType {
     StdOptionOptionSqlxTypesMacAddressMacAddress,
     SqlxTypesBitVec,
     StdOptionOptionSqlxTypesBitVec,
-    SqlxTypesJsonT,
-    StdOptionOptionSqlxTypesJsonT,
+    SqlxTypesJson,
+    StdOptionOptionSqlxTypesJson,
     SerdeJsonValue,
     StdOptionOptionSerdeJsonValue,
 }
@@ -462,7 +462,7 @@ impl std::convert::From<&SqlxPostgresType> for SupportedSqlxPostgresType {
             SqlxPostgresType::StdNetIpAddr => Self::StdNetIpAddr,
             SqlxPostgresType::SqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
             SqlxPostgresType::SqlxTypesBitVec => Self::SqlxTypesBitVec,
-            SqlxPostgresType::SqlxTypesJsonT => Self::SqlxTypesJsonT,
+            SqlxPostgresType::SqlxTypesJson => Self::SqlxTypesJson,
             SqlxPostgresType::SerdeJsonValue => Self::SerdeJsonValue,
         }
     }
@@ -555,8 +555,8 @@ impl std::convert::From<&SupportedSqlxPostgresType> for SqlxPostgresTypeOrOption
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesMacAddressMacAddress => Self::OptionSupportedSqlxPostgresType(OptionSupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress),
             SupportedSqlxPostgresType::SqlxTypesBitVec => Self::SqlxPostgresType(SqlxPostgresType::SqlxTypesBitVec),
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesBitVec => Self::OptionSupportedSqlxPostgresType(OptionSupportedSqlxPostgresType::SqlxTypesBitVec),
-            SupportedSqlxPostgresType::SqlxTypesJsonT => Self::SqlxPostgresType(SqlxPostgresType::SqlxTypesJsonT),
-            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJsonT => Self::OptionSupportedSqlxPostgresType(OptionSupportedSqlxPostgresType::SqlxTypesJsonT),
+            SupportedSqlxPostgresType::SqlxTypesJson => Self::SqlxPostgresType(SqlxPostgresType::SqlxTypesJson),
+            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJson => Self::OptionSupportedSqlxPostgresType(OptionSupportedSqlxPostgresType::SqlxTypesJson),
             SupportedSqlxPostgresType::SerdeJsonValue => Self::SqlxPostgresType(SqlxPostgresType::SerdeJsonValue),
             SupportedSqlxPostgresType::StdOptionOptionSerdeJsonValue => Self::OptionSupportedSqlxPostgresType(OptionSupportedSqlxPostgresType::SerdeJsonValue),
         }
@@ -604,7 +604,7 @@ pub enum SqlxPostgresType {
     StdNetIpAddr,
     SqlxTypesMacAddressMacAddress,
     SqlxTypesBitVec,
-    SqlxTypesJsonT,
+    SqlxTypesJson,
     SerdeJsonValue,
 }
 
@@ -689,8 +689,8 @@ impl SqlxPostgresType {
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
             SupportedSqlxPostgresType::SqlxTypesBitVec |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesBitVec => Self::SqlxTypesBitVec,
-            SupportedSqlxPostgresType::SqlxTypesJsonT |
-            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJsonT => Self::SqlxTypesJsonT,
+            SupportedSqlxPostgresType::SqlxTypesJson |
+            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJson => Self::SqlxTypesJson,
             SupportedSqlxPostgresType::SerdeJsonValue |
             SupportedSqlxPostgresType::StdOptionOptionSerdeJsonValue => Self::SerdeJsonValue,
         }
@@ -736,7 +736,7 @@ impl SqlxPostgresType {
             Self::StdNetIpAddr => std::string::String::from("std::net::IpAddr"),
             Self::SqlxTypesMacAddressMacAddress => std::string::String::from("sqlx::types::mac_address::MacAddress"),
             Self::SqlxTypesBitVec => std::string::String::from("sqlx::types::BitVec"),
-            Self::SqlxTypesJsonT => format!("sqlx::types::Json<{generic_type_str}>"),
+            Self::SqlxTypesJson => format!("sqlx::types::Json<{generic_type_str}>"),
             Self::SerdeJsonValue => std::string::String::from("serde_json::Value"),
         }
     }
@@ -788,7 +788,7 @@ impl std::convert::TryFrom<&SupportedSqlxPostgresType> for SqlxPostgresType {
             SupportedSqlxPostgresType::StdOptionOptionStdNetIpAddr |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesMacAddressMacAddress |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesBitVec |
-            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJsonT |
+            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJson |
             SupportedSqlxPostgresType::StdOptionOptionSerdeJsonValue => Err(()),
 
             SupportedSqlxPostgresType::StdPrimitiveBool => Ok(Self::StdPrimitiveBool),
@@ -830,7 +830,7 @@ impl std::convert::TryFrom<&SupportedSqlxPostgresType> for SqlxPostgresType {
             SupportedSqlxPostgresType::StdNetIpAddr => Ok(Self::StdNetIpAddr),
             SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress => Ok(Self::SqlxTypesMacAddressMacAddress),
             SupportedSqlxPostgresType::SqlxTypesBitVec => Ok(Self::SqlxTypesBitVec),
-            SupportedSqlxPostgresType::SqlxTypesJsonT => Ok(Self::SqlxTypesJsonT),
+            SupportedSqlxPostgresType::SqlxTypesJson => Ok(Self::SqlxTypesJson),
             SupportedSqlxPostgresType::SerdeJsonValue => Ok(Self::SerdeJsonValue),
             
         }
@@ -879,7 +879,7 @@ impl std::convert::From<&OptionSupportedSqlxPostgresType> for SqlxPostgresType {
             OptionSupportedSqlxPostgresType::StdNetIpAddr => Self::StdNetIpAddr,
             OptionSupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
             OptionSupportedSqlxPostgresType::SqlxTypesBitVec => Self::SqlxTypesBitVec,
-            OptionSupportedSqlxPostgresType::SqlxTypesJsonT => Self::SqlxTypesJsonT,
+            OptionSupportedSqlxPostgresType::SqlxTypesJson => Self::SqlxTypesJson,
             OptionSupportedSqlxPostgresType::SerdeJsonValue => Self::SerdeJsonValue,
         }
     }
@@ -926,7 +926,7 @@ pub enum OptionSupportedSqlxPostgresType {
     StdNetIpAddr,
     SqlxTypesMacAddressMacAddress,
     SqlxTypesBitVec,
-    SqlxTypesJsonT,
+    SqlxTypesJson,
     SerdeJsonValue,
 }
 
@@ -978,7 +978,7 @@ impl std::convert::From<&OptionSupportedSqlxPostgresType> for SupportedSqlxPostg
             OptionSupportedSqlxPostgresType::StdNetIpAddr => Self::StdOptionOptionStdNetIpAddr,
             OptionSupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress => Self::StdOptionOptionSqlxTypesMacAddressMacAddress,
             OptionSupportedSqlxPostgresType::SqlxTypesBitVec => Self::StdOptionOptionSqlxTypesBitVec,
-            OptionSupportedSqlxPostgresType::SqlxTypesJsonT => Self::StdOptionOptionSqlxTypesJsonT,
+            OptionSupportedSqlxPostgresType::SqlxTypesJson => Self::StdOptionOptionSqlxTypesJson,
             OptionSupportedSqlxPostgresType::SerdeJsonValue => Self::StdOptionOptionSerdeJsonValue,
         }
     }
@@ -1027,7 +1027,7 @@ impl std::convert::TryFrom<&SupportedSqlxPostgresType> for OptionSupportedSqlxPo
             SupportedSqlxPostgresType::StdNetIpAddr |
             SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress |
             SupportedSqlxPostgresType::SqlxTypesBitVec |
-            SupportedSqlxPostgresType::SqlxTypesJsonT |
+            SupportedSqlxPostgresType::SqlxTypesJson |
             SupportedSqlxPostgresType::SerdeJsonValue => Err(()),
 
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveBool => Ok(Self::StdPrimitiveBool),
@@ -1069,7 +1069,7 @@ impl std::convert::TryFrom<&SupportedSqlxPostgresType> for OptionSupportedSqlxPo
             SupportedSqlxPostgresType::StdOptionOptionStdNetIpAddr => Ok(Self::StdNetIpAddr),
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesMacAddressMacAddress => Ok(Self::SqlxTypesMacAddressMacAddress),
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesBitVec => Ok(Self::SqlxTypesBitVec),
-            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJsonT => Ok(Self::SqlxTypesJsonT),
+            SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJson => Ok(Self::SqlxTypesJson),
             SupportedSqlxPostgresType::StdOptionOptionSerdeJsonValue => Ok(Self::SerdeJsonValue),
         }
     }
@@ -1117,7 +1117,7 @@ impl std::convert::From<&SqlxPostgresType> for OptionSupportedSqlxPostgresType {
             SqlxPostgresType::StdNetIpAddr => Self::StdNetIpAddr,
             SqlxPostgresType::SqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
             SqlxPostgresType::SqlxTypesBitVec => Self::SqlxTypesBitVec,
-            SqlxPostgresType::SqlxTypesJsonT => Self::SqlxTypesJsonT,
+            SqlxPostgresType::SqlxTypesJson => Self::SqlxTypesJson,
             SqlxPostgresType::SerdeJsonValue => Self::SerdeJsonValue,
         }
     }
@@ -1132,7 +1132,10 @@ impl SupportedSqlxPostgresType {
     }
     fn get_inner_type_handle_stringified(self, generic_type_str: &str) -> std::string::String {
         match self {
-            Self::SqlxTypesJsonT => format!("{self}<{generic_type_str}>"),
+            Self::SqlxTypesJson |
+            Self::StdOptionOptionSqlxTypesJson |
+            Self::SerdeJsonValue |
+            Self::StdOptionOptionSerdeJsonValue => format!("{self}{generic_type_str}"),
             Self::StdPrimitiveBool | 
             Self::StdOptionOptionStdPrimitiveBool | 
             Self::StdPrimitiveI16 |
@@ -1210,10 +1213,7 @@ impl SupportedSqlxPostgresType {
             Self::SqlxTypesMacAddressMacAddress |
             Self::StdOptionOptionSqlxTypesMacAddressMacAddress |
             Self::SqlxTypesBitVec |
-            Self::StdOptionOptionSqlxTypesBitVec |
-            Self::StdOptionOptionSqlxTypesJsonT |
-            Self::SerdeJsonValue |
-            Self::StdOptionOptionSerdeJsonValue => self.to_string()
+            Self::StdOptionOptionSqlxTypesBitVec => self.to_string()
         }
     }
     pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
@@ -1304,8 +1304,8 @@ impl SupportedSqlxPostgresType {
             Self::StdOptionOptionSqlxTypesMacAddressMacAddress |
             Self::SqlxTypesBitVec |
             Self::StdOptionOptionSqlxTypesBitVec |
-            Self::SqlxTypesJsonT |
-            Self::StdOptionOptionSqlxTypesJsonT |
+            Self::SqlxTypesJson |
+            Self::StdOptionOptionSqlxTypesJson |
             Self::SerdeJsonValue |
             Self::StdOptionOptionSerdeJsonValue => FromOrTryFrom::From,
 
@@ -1491,11 +1491,11 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPost
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBitNotNull |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull => Self::SqlxTypesBitVec,
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson |
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB => Self::StdOptionOptionSqlxTypesJsonT,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJson |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonB => Self::StdOptionOptionSqlxTypesJson,
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull |
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull => Self::SqlxTypesJsonT,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonBNotNull => Self::SqlxTypesJson,
 
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson |
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonB => Self::StdOptionOptionSerdeJsonValue,
@@ -1666,10 +1666,10 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SqlxTypesBitVecAsPostgresqlVarBitNotNull,
 
     //todo what to do with generic?
-    SqlxTypesJsonTAsPostgresqlJson,
-    SqlxTypesJsonTAsPostgresqlJsonNotNull,
-    SqlxTypesJsonTAsPostgresqlJsonB,
-    SqlxTypesJsonTAsPostgresqlJsonBNotNull,
+    SqlxTypesJsonAsPostgresqlJson,
+    SqlxTypesJsonAsPostgresqlJsonNotNull,
+    SqlxTypesJsonAsPostgresqlJsonB,
+    SqlxTypesJsonAsPostgresqlJsonBNotNull,
 
     SerdeJsonValueAsPostgresqlJson,
     SerdeJsonValueAsPostgresqlJsonNotNull,
@@ -1772,8 +1772,8 @@ pub enum RustSqlxMapToPostgresTypeVariantNullable {
     SqlxTypesBitVecAsPostgresqlVarBit,
 
     //todo what to do with generic?
-    SqlxTypesJsonTAsPostgresqlJson,
-    SqlxTypesJsonTAsPostgresqlJsonB,
+    SqlxTypesJsonAsPostgresqlJson,
+    SqlxTypesJsonAsPostgresqlJsonB,
 
     SerdeJsonValueAsPostgresqlJson,
     SerdeJsonValueAsPostgresqlJsonB,
@@ -1874,8 +1874,8 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariantNullable> for RustSqlxM
             RustSqlxMapToPostgresTypeVariantNullable::SqlxTypesBitVecAsPostgresqlBit => Self::SqlxTypesBitVecAsPostgresqlBit,
             RustSqlxMapToPostgresTypeVariantNullable::SqlxTypesBitVecAsPostgresqlVarBit => Self::SqlxTypesBitVecAsPostgresqlVarBit,
 
-            RustSqlxMapToPostgresTypeVariantNullable::SqlxTypesJsonTAsPostgresqlJson => Self::SqlxTypesJsonTAsPostgresqlJson,
-            RustSqlxMapToPostgresTypeVariantNullable::SqlxTypesJsonTAsPostgresqlJsonB => Self::SqlxTypesJsonTAsPostgresqlJsonB,
+            RustSqlxMapToPostgresTypeVariantNullable::SqlxTypesJsonAsPostgresqlJson => Self::SqlxTypesJsonAsPostgresqlJson,
+            RustSqlxMapToPostgresTypeVariantNullable::SqlxTypesJsonAsPostgresqlJsonB => Self::SqlxTypesJsonAsPostgresqlJsonB,
 
             RustSqlxMapToPostgresTypeVariantNullable::SerdeJsonValueAsPostgresqlJson => Self::SerdeJsonValueAsPostgresqlJson,
             RustSqlxMapToPostgresTypeVariantNullable::SerdeJsonValueAsPostgresqlJsonB => Self::SerdeJsonValueAsPostgresqlJsonB,
@@ -1942,8 +1942,8 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
             RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBitNotNull |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull |
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull |
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonBNotNull |
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull |
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonBNotNull => Err(()),
             //
@@ -2054,9 +2054,9 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
             
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBit => Ok(Self::SqlxTypesBitVecAsPostgresqlVarBit),
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson => Ok(Self::SqlxTypesJsonTAsPostgresqlJson),
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJson => Ok(Self::SqlxTypesJsonAsPostgresqlJson),
             
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonB),
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonB => Ok(Self::SqlxTypesJsonAsPostgresqlJsonB),
 
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson => Ok(Self::SerdeJsonValueAsPostgresqlJson),
             
@@ -2066,7 +2066,6 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
     }
 }
 
-//
 impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for PostgresqlTypeWithMetadata {
     fn from(value: &RustSqlxMapToPostgresTypeVariant) -> Self {
         match value {
@@ -2218,10 +2217,10 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for PostgresqlTypeWit
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull => Self::VarBitNotNull,
 
             // RustSqlxMapToPostgresTypeVariant:://todo what to do with generic?
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson => Self::Json,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull => Self::JsonNotNull,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB => Self::JsonB,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull => Self::JsonBNotNull,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJson => Self::Json,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonNotNull => Self::JsonNotNull,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonB => Self::JsonB,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonBNotNull => Self::JsonBNotNull,
 
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson => Self::Json,
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull => Self::JsonNotNull,
@@ -2230,7 +2229,6 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for PostgresqlTypeWit
         }
     }
 }
-//
 
 #[derive(Debug, Clone, Copy)]
 pub enum RustSqlxMapToPostgresTypeVariantPrimaryKey {
@@ -2387,10 +2385,10 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBit |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull |
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson |
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull |
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB |
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJson |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonB |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonAsPostgresqlJsonBNotNull |
 
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson |
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull |
@@ -2619,10 +2617,10 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesBitVecAsPostgresqlVarBit |
             Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull |
 
-            Self::SqlxTypesJsonTAsPostgresqlJson |
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull |
-            Self::SqlxTypesJsonTAsPostgresqlJsonB |
-            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull |
+            Self::SqlxTypesJsonAsPostgresqlJson |
+            Self::SqlxTypesJsonAsPostgresqlJsonNotNull |
+            Self::SqlxTypesJsonAsPostgresqlJsonB |
+            Self::SqlxTypesJsonAsPostgresqlJsonBNotNull |
 
             Self::SerdeJsonValueAsPostgresqlJson |
             Self::SerdeJsonValueAsPostgresqlJsonNotNull |
@@ -2787,10 +2785,10 @@ impl std::str::FromStr for RustSqlxMapToPostgresTypeVariant {
             "SqlxTypesBitVecAsPostgresqlVarBitNotNull" => Ok(Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull),
 
             //todo what to do with generic?
-            "SqlxTypesJsonTAsPostgresqlJson" => Ok(Self::SqlxTypesJsonTAsPostgresqlJson),
-            "SqlxTypesJsonTAsPostgresqlJsonNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonNotNull),
-            "SqlxTypesJsonTAsPostgresqlJsonB" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonB),
-            "SqlxTypesJsonTAsPostgresqlJsonBNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull),
+            "SqlxTypesJsonAsPostgresqlJson" => Ok(Self::SqlxTypesJsonAsPostgresqlJson),
+            "SqlxTypesJsonAsPostgresqlJsonNotNull" => Ok(Self::SqlxTypesJsonAsPostgresqlJsonNotNull),
+            "SqlxTypesJsonAsPostgresqlJsonB" => Ok(Self::SqlxTypesJsonAsPostgresqlJsonB),
+            "SqlxTypesJsonAsPostgresqlJsonBNotNull" => Ok(Self::SqlxTypesJsonAsPostgresqlJsonBNotNull),
 
             "SerdeJsonValueAsPostgresqlJson" => Ok(Self::SerdeJsonValueAsPostgresqlJson),
             "SerdeJsonValueAsPostgresqlJsonNotNull" => Ok(Self::SerdeJsonValueAsPostgresqlJsonNotNull),
@@ -2956,10 +2954,10 @@ impl std::str::FromStr for RustSqlxMapToPostgresTypeVariant {
 //             "SqlxTypesBitVecAsPostgresqlVarBitNotNull" => Ok(Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull),
 
 //             //todo what to do with generic?
-//             "SqlxTypesJsonTAsPostgresqlJson" => Ok(Self::SqlxTypesJsonTAsPostgresqlJson),
-//             "SqlxTypesJsonTAsPostgresqlJsonNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonNotNull),
-//             "SqlxTypesJsonTAsPostgresqlJsonB" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonB),
-//             "SqlxTypesJsonTAsPostgresqlJsonBNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull),
+//             "SqlxTypesJsonAsPostgresqlJson" => Ok(Self::SqlxTypesJsonAsPostgresqlJson),
+//             "SqlxTypesJsonAsPostgresqlJsonNotNull" => Ok(Self::SqlxTypesJsonAsPostgresqlJsonNotNull),
+//             "SqlxTypesJsonAsPostgresqlJsonB" => Ok(Self::SqlxTypesJsonAsPostgresqlJsonB),
+//             "SqlxTypesJsonAsPostgresqlJsonBNotNull" => Ok(Self::SqlxTypesJsonAsPostgresqlJsonBNotNull),
 
 //             "SerdeJsonValueAsPostgresqlJson" => Ok(Self::SerdeJsonValueAsPostgresqlJson),
 //             "SerdeJsonValueAsPostgresqlJsonNotNull" => Ok(Self::SerdeJsonValueAsPostgresqlJsonNotNull),
@@ -3256,23 +3254,23 @@ pub struct SqlxTypesBitVecAsPostgresqlVarBit(pub StdOptionOptionSqlxTypesBitVec)
 pub struct SqlxTypesBitVecAsPostgresqlVarBitNotNull(pub SqlxTypesBitVec);
 //todo what to do with generic?
 #[derive(Debug)]
-pub struct SqlxTypesJsonTAsPostgresqlJson<T>(pub StdOptionOptionSqlxTypesJson<T>);
-impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJson<T> {
+pub struct SqlxTypesJsonAsPostgresqlJson<T>(pub StdOptionOptionSqlxTypesJson<T>);
+impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonAsPostgresqlJson<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesJsonTAsPostgresqlJsonNotNull<T>(pub SqlxTypesJson<T>);
-impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonNotNull<T> {
+pub struct SqlxTypesJsonAsPostgresqlJsonNotNull<T>(pub SqlxTypesJson<T>);
+impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonAsPostgresqlJsonNotNull<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesJsonTAsPostgresqlJsonB<T>(pub StdOptionOptionSqlxTypesJson<T>);
-impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonB<T> {
+pub struct SqlxTypesJsonAsPostgresqlJsonB<T>(pub StdOptionOptionSqlxTypesJson<T>);
+impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonAsPostgresqlJsonB<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesJsonTAsPostgresqlJsonBNotNull<T>(pub SqlxTypesJson<T>);
-impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
+pub struct SqlxTypesJsonAsPostgresqlJsonBNotNull<T>(pub SqlxTypesJson<T>);
+impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonAsPostgresqlJsonBNotNull<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
@@ -3557,10 +3555,10 @@ pub struct TestOption<T> {
 //     _sqlx_types_bit_vec_as_postgresql_var_bit_not_null: SqlxTypesBitVecAsPostgresqlVarBitNotNull,
 
 //     //todo what to do with generic?
-//     _sqlx_types_json_t_as_postgresql_json: SqlxTypesJsonTAsPostgresqlJson<T>,
-//     _sqlx_types_json_t_as_postgresql_json_not_null: SqlxTypesJsonTAsPostgresqlJsonNotNull<T>,
-//     _sqlx_types_json_t_as_postgresql_json_b: SqlxTypesJsonTAsPostgresqlJsonB<T>,
-//     _sqlx_types_json_t_as_postgresql_json_b_not_null: SqlxTypesJsonTAsPostgresqlJsonBNotNull<T>,
+//     _sqlx_types_json_t_as_postgresql_json: SqlxTypesJsonAsPostgresqlJson<T>,
+//     _sqlx_types_json_t_as_postgresql_json_not_null: SqlxTypesJsonAsPostgresqlJsonNotNull<T>,
+//     _sqlx_types_json_t_as_postgresql_json_b: SqlxTypesJsonAsPostgresqlJsonB<T>,
+//     _sqlx_types_json_t_as_postgresql_json_b_not_null: SqlxTypesJsonAsPostgresqlJsonBNotNull<T>,
 
 //     _serde_json_value_as_postgresql_json: SerdeJsonValueAsPostgresqlJson,
 //     _serde_json_value_as_postgresql_json_not_null: SerdeJsonValueAsPostgresqlJsonNotNull,
@@ -10007,7 +10005,7 @@ impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
 impl<T> AsPostgresqlJsonB for SqlxTypesJson<T> {}
 impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesJson<T>) -> Self {
-        Self::SqlxTypesJsonT
+        Self::SqlxTypesJson
     }
 }
 impl<T> SqlxTypesJson<T> {
@@ -10123,7 +10121,7 @@ impl<T> CheckSupportedPostgresqlColumnType for StdOptionOptionSqlxTypesJson<T> {
 }
 impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for SupportedSqlxPostgresType {
     fn from(_value: StdOptionOptionSqlxTypesJson<T>) -> Self {
-        Self::SqlxTypesJsonT
+        Self::SqlxTypesJson
     }
 }
 impl<T> StdOptionOptionSqlxTypesJson<T> {

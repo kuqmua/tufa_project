@@ -197,11 +197,11 @@ pub struct Jsongeneric {
     // pub sqlx_types_bit_vec_as_postgresql_var_bit_not_null: postgresql_crud::SqlxTypesBitVecAsPostgresqlVarBitNotNull,
 
     //todo what to do with generic?
-    // pub sqlx_types_json_t_as_postgresql_json: postgresql_crud::SqlxTypesJsonTAsPostgresqlJson::<postgresql_crud::Something>,//todo
+    // pub sqlx_types_json_t_as_postgresql_json: postgresql_crud::SqlxTypesJsonAsPostgresqlJson::<postgresql_crud::Something>,//todo
     // postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,//
-    pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonNotNull::<postgresql_crud::Something>
-    // pub sqlx_types_json_t_as_postgresql_json_b: postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonB::<<postgresql_crud::Something>,//todo
-    // pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonBNotNull::<<postgresql_crud::Something>,//todo
+    pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonNotNull::<postgresql_crud::Something>
+    // pub sqlx_types_json_t_as_postgresql_json_b: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonB::<<postgresql_crud::Something>,//todo
+    // pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonBNotNull::<<postgresql_crud::Something>,//todo
 
     // pub serde_json_value_as_postgresql_json: postgresql_crud::SerdeJsonValueAsPostgresqlJson,
     // pub serde_json_value_as_postgresql_json_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonNotNull,
@@ -263,7 +263,7 @@ pub enum JsongenericColumn {
         serialize = "sqlx_types_json_t_as_postgresql_json_not_null",
         deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
     ))]
-    SqlxTypesJsonTAsPostgresqlJsonNotNull,
+    SqlxTypesJsonAsPostgresqlJsonNotNull,
 }
 impl std::fmt::Display for JsongenericColumn {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -275,7 +275,7 @@ impl std::fmt::Display for JsongenericColumn {
                 formatter,
                 "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
             ),
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => {
+            Self::SqlxTypesJsonAsPostgresqlJsonNotNull => {
                 write!(formatter, "sqlx_types_json_t_as_postgresql_json_not_null")
             }
         }

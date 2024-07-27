@@ -177,10 +177,10 @@ pub use postgresql_crud_common::SqlxTypesBitVecAsPostgresqlBitNotNull;
 pub use postgresql_crud_common::SqlxTypesBitVecAsPostgresqlVarBit;
 pub use postgresql_crud_common::SqlxTypesBitVecAsPostgresqlVarBitNotNull;
 
-pub use postgresql_crud_common::SqlxTypesJsonTAsPostgresqlJson;
-pub use postgresql_crud_common::SqlxTypesJsonTAsPostgresqlJsonB;
-pub use postgresql_crud_common::SqlxTypesJsonTAsPostgresqlJsonBNotNull;
-pub use postgresql_crud_common::SqlxTypesJsonTAsPostgresqlJsonNotNull;
+pub use postgresql_crud_common::SqlxTypesJsonAsPostgresqlJson;
+pub use postgresql_crud_common::SqlxTypesJsonAsPostgresqlJsonB;
+pub use postgresql_crud_common::SqlxTypesJsonAsPostgresqlJsonBNotNull;
+pub use postgresql_crud_common::SqlxTypesJsonAsPostgresqlJsonNotNull;
 
 pub use postgresql_crud_common::SerdeJsonValueAsPostgresqlJson;
 pub use postgresql_crud_common::SerdeJsonValueAsPostgresqlJsonB;

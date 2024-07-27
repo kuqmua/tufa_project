@@ -202,9 +202,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     struct SynFieldWithAdditionalInfo<'a> {
         field: &'a syn::Field,
         field_ident: &'a syn::Ident,
-        rust_sqlx_map_to_postgres_type_variant:
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
-        _maybe_generic_token_stream: proc_macro2::TokenStream, //todo maybe not need to add here
+        rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
+        maybe_generic_token_stream: std::option::Option<proc_macro2::TokenStream>, //todo maybe not need to add here
         original_type_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_token_stream: proc_macro2::TokenStream,
@@ -222,76 +221,58 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let (rust_sqlx_map_to_postgres_type_variant, maybe_generic_token_stream) = match &value.ty {
                 syn::Type::Path(value) => {
-                    if value.path.segments.len() == 2 {
-                        let first = match value.path.segments.first() {
-                            Some(value) => value,
-                            None => {
-                                return Err(std::string::String::from("no first value in punctuated"));
-                            }
-                        };
-                        if first.ident != &naming_conventions::PostgresqlCrudSnakeCase.to_string() {
-                            return Err(format!("{name} field_type is not syn::Type::Path"));
-                        }
-                        match first.arguments {
-                            syn::PathArguments::None => (),
-                            syn::PathArguments::AngleBracketed(_) | 
-                            syn::PathArguments::Parenthesized(_) => {
-                                return Err(format!("{name} value.path().segments[0].arguments != syn::PathArguments::None"));
-                            }
-                        }
-                        let second_element = match value.path.segments.iter().nth(1) {
-                            Some(value) => value,
-                            None => {
-                                return Err(std::string::String::from("no second element"));
-                            }
-                        };
-                        let rust_sqlx_map_to_postgres_type_variant =
-                            match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(
-                                &second_element.ident.to_string(),
-                            ) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {error}"));
-                                },
-                            };
-                        let maybe_generic_token_stream = match &second_element.arguments {
-                            syn::PathArguments::None => quote::quote! {},
-                            syn::PathArguments::AngleBracketed(value) => {
-                                quote::quote! {#value} //< test_mod :: Something >
-                            }
-                            syn::PathArguments::Parenthesized(_) => {
-                                return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
-                            }
-                        };
-                        (
-                            rust_sqlx_map_to_postgres_type_variant,
-                            maybe_generic_token_stream,
-                        )
-                    }
-                    else {
+                    if value.path.segments.len() != 2 {
                         return Err(std::string::String::from("value.path.segments.len() != 2"));
                     }
-                }
-                syn::Type::Array(_) | 
-                syn::Type::BareFn(_) | 
-                syn::Type::Group(_) | 
-                syn::Type::ImplTrait(_) | 
-                syn::Type::Infer(_) | 
-                syn::Type::Macro(_) | 
-                syn::Type::Never(_) | 
-                syn::Type::Paren(_) | 
-                syn::Type::Ptr(_) | 
-                syn::Type::Reference(_) | 
-                syn::Type::Slice(_) | 
-                syn::Type::TraitObject(_) | 
-                syn::Type::Tuple(_) | 
-                syn::Type::Verbatim(_) => {
-                    return Err(format!("{name} field_type is not syn::Type::Path"));
+                    let first = match value.path.segments.first() {
+                        Some(value) => value,
+                        None => {
+                            return Err(std::string::String::from("no first value in punctuated"));
+                        }
+                    };
+                    if first.ident != &naming_conventions::PostgresqlCrudSnakeCase.to_string() {
+                        return Err(format!("{name} field_type is not syn::Type::Path"));
+                    }
+                    match first.arguments {
+                        syn::PathArguments::None => (),
+                        syn::PathArguments::AngleBracketed(_) | 
+                        syn::PathArguments::Parenthesized(_) => {
+                            return Err(format!("{name} value.path().segments[0].arguments != syn::PathArguments::None"));
+                        }
+                    }
+                    let second_element = match value.path.segments.iter().nth(1) {
+                        Some(value) => value,
+                        None => {
+                            return Err(std::string::String::from("no second element"));
+                        }
+                    };
+                    let rust_sqlx_map_to_postgres_type_variant =
+                        match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(
+                            &second_element.ident.to_string(),
+                        ) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {error}"));
+                            },
+                        };
+                    let maybe_generic_token_stream = match &second_element.arguments {
+                        syn::PathArguments::None => None,
+                        syn::PathArguments::AngleBracketed(value) => Some(quote::quote!{#value}),
+                        syn::PathArguments::Parenthesized(_) => {
+                            return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
+                        }
+                    };
+                    (
+                        rust_sqlx_map_to_postgres_type_variant,
+                        maybe_generic_token_stream,
+                    )
                 }
                 _ => {
-                    return Err(format!("{name} field_type is not syn::Type::Path (exhaustive)"));
+                    return Err(format!("{name} field_type is not syn::Type::Path"));
                 },
             };
+            println!("rust_sqlx_map_to_postgres_type_variant {rust_sqlx_map_to_postgres_type_variant:#?}");
+            println!("maybe_generic_token_stream {maybe_generic_token_stream:#?}");
             let original_type_token_stream = {
                 let value = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -301,8 +282,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            println!("original_type_token_stream {original_type_token_stream}");
             let inner_type_token_stream = {
                 let value = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""); //todo generic for json
+                println!("@@@{value}");
                 match value.parse::<proc_macro2::TokenStream>() {
                     Ok(value) => value,
                     Err(error) => {
@@ -310,6 +293,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            println!("inner_type_token_stream {inner_type_token_stream}");
             let where_inner_type_token_stream = {
                 let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -319,6 +303,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            println!("where_inner_type_token_stream {where_inner_type_token_stream}");
             let original_wrapper_type_token_stream = {
                 let value = postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&rust_sqlx_map_to_postgres_type_variant.get_supported_sqlx_postgres_type()).get_path_stringified();
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -328,11 +313,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            println!("original_wrapper_type_token_stream {original_wrapper_type_token_stream}");
+            println!("------------");
             Ok(Self {
                 field: value,
                 field_ident,
                 rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
-                _maybe_generic_token_stream: maybe_generic_token_stream, //todo maybe not need to add here
+                maybe_generic_token_stream, //todo maybe not need to add here
                 // path_token_stream,
                 original_type_token_stream,
                 inner_type_token_stream,
@@ -457,10 +444,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
             let field_vis = &element.field.vis;
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream);
+            let postgresql_crud_value_declaration_token_stream = {
+                // let f =  match &element.rust
+                generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream)
+            };
             quote::quote!{
                 // #serde_skip_serializing_if_value_attribute_token_stream
                 #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
+
+
+                //
+                // pub std_primitive_i32_as_postgresql_int: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>>,
+                // pub sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionSqlxTypesJson<postgresql_crud::Something>>,
             }
         });
         quote::quote! {
