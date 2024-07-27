@@ -1,17 +1,11 @@
 pub(crate) async fn server_wrapper(
     config: &'static common::repositories_types::server::config::Config,
 ) -> Result<(), Box<common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed>> {
-    let postgres_pool = match common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
-        Ok(value) => value,
-        Err(error) => {
-            return Err(Box::new(
-                common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::TryGetPostgresPool {
-                    try_get_postgres_pool: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                }
-            ))
-        },
-    };
+    println!("trying to create postgres pool...");
+    let postgres_pool = sqlx::postgres::PgPoolOptions::new()
+        .connect(secrecy::ExposeSecret::expose_secret(
+            app_state::GetDatabaseUrl::get_database_url(&config)
+        )).await.unwrap();
     println!("create_table_if_not_exists...");
     common::repositories_types::server::routes::api::cats::create_table_if_not_exists(&postgres_pool).await;
     // println!("trying to create redis session storage...");
