@@ -10,7 +10,6 @@ mod server_wrapper;
 // pub mod issue_delivery_worker;
 pub mod routes;
 pub mod try_build_server;
-mod prepare_and_check_postgres;
 
 fn main() {
     println!("commit {}", git_info::PROJECT_GIT_INFO.commit);

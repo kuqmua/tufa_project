@@ -12,8 +12,8 @@ pub(crate) async fn server_wrapper(
             ))
         },
     };
-    println!("prepare_and_check_postgres...");
-    crate::prepare_and_check_postgres::prepare_and_check_postgres(&postgres_pool).await;
+    println!("create_table_if_not_exists...");
+    common::repositories_types::server::routes::api::cats::create_table_if_not_exists(&postgres_pool).await;
     // println!("trying to create redis session storage...");
     // let redis_session_storage = match {
     //     use common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;

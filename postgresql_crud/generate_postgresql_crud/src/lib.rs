@@ -1093,35 +1093,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             pub #value_snake_case: T
         }       
     };
-    // let create_table_if_not_exists_function_token_stream = {
-    //     let pool_snake_case = naming_conventions::PoolSnakeCase;
-    //     let create_table_if_not_exists_quotes_token_stream = {
-    //         let acc = fields_named.iter().map(|element|{
-    //             let element_ident = &element.field_ident;
-    //             //here
-    //             //  PostgresqlTypeWithMetadata postgresql_naming
-    //             // format!("{element_ident} ")
-    //         });
-    //         proc_macro_common::generate_quotes::token_stream(
-    //             &format!("CREATE TABLE IF NOT EXISTS {table_name_stringified} ({})", ""),
-    //             &proc_macro_name_upper_camel_case_ident_stringified,
-    //         )
-    //     };
-    //     quote::quote!{
-    //         pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
-    //             //todo how to check if table schema to potentially create equals to actual postgresql table schema if it exists?
-    //         	let _ = sqlx::query(r#"
-    //                 CREATE TABLE IF NOT EXISTS jsongeneric (
-    //                   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key BIGSERIAL PRIMARY KEY,
-    //                   std_primitive_i32_as_postgresql_int INT,
-    //                   sqlx_types_json_t_as_postgresql_json_not_null JSON
-    //                 )
-    //             "#)
-    //         	.execute(#pool_snake_case)
-    //         	.await.unwrap();//assuming it will be called on service start
-    //         }
-    //     }
-    // };
+    let create_table_if_not_exists_function_token_stream = {
+        let pool_snake_case = naming_conventions::PoolSnakeCase;
+        let create_table_if_not_exists_quotes_token_stream = {
+            let acc = syn_field_with_additional_info_fields_named.iter().map(|element|format!(
+                "{} {}",
+                &element.field_ident,
+                postgresql_crud_common::PostgresqlTypeWithMetadata::from(&element.rust_sqlx_map_to_postgres_type_variant).postgresql_naming()
+            ));
+            proc_macro_common::generate_quotes::token_stream(
+                &format!("CREATE TABLE IF NOT EXISTS {table_name_stringified} ({})", ""),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            )
+        };
+        quote::quote!{
+            pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
+                //todo how to check if table schema to potentially create equals to actual postgresql table schema if it exists?
+                let _ = sqlx::query(#create_table_if_not_exists_quotes_token_stream)
+            	.execute(#pool_snake_case)
+            	.await.unwrap();//assuming it will be called on service start
+            }
+        }
+    };
     let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
     let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
     let rollback_snake_case = naming_conventions::RollbackSnakeCase;
@@ -4967,14 +4960,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // };
     // println!("{emulate_crud_api_usage_test_token_stream}");
     let common_token_stream = quote::quote! {
-        pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;
-        #struct_options_token_stream
-        #from_ident_for_ident_options_token_stream
-        #column_token_stream
-        #allow_methods_token_stream
-        #ident_column_read_permission_token_stream
-        #(#reexport_postgresql_sqlx_column_types_token_stream)*
-        #field_token_stream
+        // pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;
+        // #struct_options_token_stream
+        // #from_ident_for_ident_options_token_stream
+        // #column_token_stream
+        // #allow_methods_token_stream
+        // #ident_column_read_permission_token_stream
+        // #(#reexport_postgresql_sqlx_column_types_token_stream)*
+        // #field_token_stream
+        #create_table_if_not_exists_function_token_stream
 
         // #[cfg(test)]
         // mod test_try_create_many {
@@ -4996,7 +4990,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generated = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            // #common_token_stream
+            #common_token_stream
 
             // #create_many_token_stream
             // #create_one_token_stream
