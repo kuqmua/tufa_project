@@ -206,6 +206,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         maybe_generic_token_stream: std::option::Option<proc_macro2::TokenStream>, //todo maybe not need to add here
         original_type_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
+        inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         where_inner_type_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
     }   
@@ -284,15 +285,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             println!("original_type_token_stream {original_type_token_stream}");
             let inner_type_token_stream = {
-                let value = format!(
-                    "{}{}",
-                    &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-                    match &maybe_generic_token_stream {
-                        Some(value) => value.to_string(),
-                        None => std::string::String::default()
-                    }
-                ); //todo generic for json
-                println!("@@@{value}");
+                let value = rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
                 match value.parse::<proc_macro2::TokenStream>() {
                     Ok(value) => value,
                     Err(error) => {
@@ -301,6 +294,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             println!("inner_type_token_stream {inner_type_token_stream}");
+            let inner_type_with_generic_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
+                    match &maybe_generic_token_stream {
+                        Some(value) => value.to_string(),
+                        None => std::string::String::default()
+                    }
+                ); //todo generic for json
+                match value.parse::<proc_macro2::TokenStream>() {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
+                }
+            };
+            println!("inner_type_with_generic_token_stream {inner_type_with_generic_token_stream}");
             let where_inner_type_token_stream = {
                 let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -330,6 +340,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // path_token_stream,
                 original_type_token_stream,
                 inner_type_token_stream,
+                inner_type_with_generic_token_stream,
                 // where_inner_type_with_serialize_deserialize_handle_stringified,
                 where_inner_type_token_stream,
                 original_wrapper_type_token_stream,
@@ -451,7 +462,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
             let field_vis = &element.field.vis;
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_token_stream);
             quote::quote!{
                 // #serde_skip_serializing_if_value_attribute_token_stream
                 #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
@@ -4976,7 +4987,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #column_token_stream
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream
-        // #(#reexport_postgresql_sqlx_column_types_token_stream)*
+        #(#reexport_postgresql_sqlx_column_types_token_stream)*
         #field_token_stream
         #create_table_if_not_exists_function_token_stream
 

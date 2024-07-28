@@ -298,9 +298,9 @@ pub struct Jsongeneric {
 //     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
 //     sqlx_types_json_t_as_postgresql_json_not_null: std::primitive::bool,
 // }
-pub use postgresql_crud::SqlxTypesJson;
-pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
-pub use postgresql_crud::StdPrimitiveI64;
+// pub use postgresql_crud::SqlxTypesJson;
+// pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
+// pub use postgresql_crud::StdPrimitiveI64;
 // #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 // pub struct Field<T> {
 //     pub value: T,
