@@ -208,3 +208,324 @@ pub struct Jsongeneric {
     // pub serde_json_value_as_postgresql_json_b: postgresql_crud::SerdeJsonValueAsPostgresqlJsonB,
     // pub serde_json_value_as_postgresql_json_b_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
+
+
+pub async fn try_read_one_route_logic(
+    app_state : axum :: extract :: State < crate ::
+repositories_types :: server :: routes :: app_state ::
+DynArcCombinationOfAppStateLogicTraits, >,
+    request: axum::extract::Request,
+) -> axum::response::Response {
+    let (parts, body) = request.into_parts();
+    let headers = parts.headers;
+    let body_bytes = match postgresql_crud::check_body_size::check_body_size(
+        body,
+        *app_state.get_maximum_size_of_http_body_in_bytes(),
+    )
+    .await
+    {
+        Ok(value) => value,
+        Err(error_0) => {
+            let status_code =
+                postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error_0);
+            let error = TryReadOneRouteLogicErrorNamed::CheckBodySize {
+                check_body_size: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2232,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                TryReadOneRouteLogicResponseVariants::from(error),
+            ));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+    };
+    let parameters =
+        ReadOneParameters {
+            payload: match serde_json::from_slice::<ReadOnePayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ReadOnePayload::from(value);
+                    let mut acc = std::vec::Vec::new();
+                    for element in &value.select {
+                        if acc.contains(&element) {
+                            let error_0 = *element;
+                            let error =
+                        TryReadOneRouteLogicErrorNamed :: NotUniqueColumn
+                        {
+                            not_unique_column : error_0, code_occurence :
+                            error_occurence_lib :: code_occurence :: CodeOccurence ::
+                            new(file! ().to_owned(), line! (), column! (),
+                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                            {
+                                file : std :: string :: String ::
+                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line : 1660, column : 13,
+                            }))
+                        };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(
+                                axum::Json(TryReadOneRouteLogicResponseVariants::from(error)),
+                            );
+                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                            return response;
+                        } else {
+                            acc.push(element);
+                        }
+                    }
+                    value
+                }
+                Err(error_0) => {
+                    let error = TryReadOneRouteLogicErrorNamed::SerdeJson {
+                        serde_json: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 2334,
+                                column: 13,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                        TryReadOneRouteLogicResponseVariants::from(error),
+                    ));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+    println!("{:#?}", parameters);
+    let query_string = format!
+    ("select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
+    {
+        let mut value =
+        parameters.payload.select.iter().fold(std :: string :: String ::
+        from(""), | mut acc, element |
+        {
+            acc += match element
+            {
+                JsongenericColumn :: StdPrimitiveI32AsPostgresqlInt =>
+                "std_primitive_i32_as_postgresql_int", JsongenericColumn ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey =>
+                "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull =>
+                "sqlx_types_json_t_as_postgresql_json_not_null"
+            }; acc += ","; acc
+        }); let _ = value.pop(); value
+    },);
+    println!("{}", query_string);
+    let binded_query = {
+        let query = sqlx::query::<sqlx::Postgres>(&query_string);
+        let query = postgresql_crud::BindQuery::bind_value_to_query(
+            parameters
+                .payload
+                .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            query,
+        );
+        query
+    };
+    let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+        Ok(value) => value,
+        Err(error_0) => {
+            let error = TryReadOneRouteLogicErrorNamed::Postgresql {
+                postgresql: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2265,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                TryReadOneRouteLogicResponseVariants::from(error),
+            ));
+            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+            return response;
+        }
+    };
+    let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+        Ok(value) => value,
+        Err(error_0) => {
+            let error = TryReadOneRouteLogicErrorNamed::Postgresql {
+                postgresql: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2265,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                TryReadOneRouteLogicResponseVariants::from(error),
+            ));
+            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+            return response;
+        }
+    };
+    let value = {
+        let value = {
+            match binded_query.fetch_one(executor.as_mut()).await {
+                Ok(value) => {
+                    let mut std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>> = None;
+                    let mut std_primitive_i32_as_postgresql_int: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>> = None;
+                    let mut sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::Something>>> = None;
+                    for element in &parameters.payload.select {
+                        match element {
+                            JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey =>
+                            match sqlx::Row::try_get::<std::primitive::i64, &std::primitive::str>(&value,"std_primitive_i64_as_postgresql_big_serial_not_null_primary_key") {
+                                Ok(value) => {
+                                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = Some(postgresql_crud :: Value {
+                                        value : postgresql_crud::StdPrimitiveI64(value)
+                                    });
+                                }, Err(error_0) =>
+                                {
+                                    let error = TryReadOneRouteLogicErrorNamed :: Postgresql
+                                    {
+                                        postgresql : error_0, code_occurence : error_occurence_lib
+                                        :: code_occurence :: CodeOccurence ::
+                                        new(file! ().to_owned(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 1003, column : 17,
+                                        }))
+                                    }; eprintln! ("{error}"); let mut response = axum ::
+                                    response :: IntoResponse ::
+                                    into_response(axum ::
+                                    Json(TryReadOneRouteLogicResponseVariants :: from(error)));
+                                    * response.status_mut() = axum :: http :: StatusCode ::
+                                    INTERNAL_SERVER_ERROR; return response;
+                                }
+                            }, 
+                            
+                            JsongenericColumn :: StdPrimitiveI32AsPostgresqlInt =>
+                            match sqlx::Row::try_get::<std::option::Option<std::primitive::i32>, &std::primitive::str>(&value, "std_primitive_i32_as_postgresql_int") {
+                                Ok(value) => {
+                                    std_primitive_i32_as_postgresql_int = Some(postgresql_crud::Value {
+                                        value: postgresql_crud::StdOptionOptionStdPrimitiveI32(match value {
+                                            Some(value) => Some(postgresql_crud::StdPrimitiveI32(value)),
+                                            None => None
+                                        })
+                                    });
+                                }, 
+                                Err(error_0) =>
+                                {
+                                    let error = TryReadOneRouteLogicErrorNamed :: Postgresql
+                                    {
+                                        postgresql : error_0, code_occurence : error_occurence_lib
+                                        :: code_occurence :: CodeOccurence ::
+                                        new(file! ().to_owned(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 1043, column : 17,
+                                        }))
+                                    }; eprintln! ("{error}"); let mut response = axum ::
+                                    response :: IntoResponse ::
+                                    into_response(axum ::
+                                    Json(TryReadOneRouteLogicResponseVariants :: from(error)));
+                                    * response.status_mut() = axum :: http :: StatusCode ::
+                                    INTERNAL_SERVER_ERROR; return response;
+                                }
+                            }, 
+                            JsongenericColumn ::
+                            SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::Something>, &std::primitive::str>(& value, "sqlx_types_json_t_as_postgresql_json_not_null")
+                            {
+                                Ok(value) => {
+                                    sqlx_types_json_t_as_postgresql_json_not_null = Some(postgresql_crud::Value {
+                                        value: postgresql_crud::SqlxTypesJson(value)
+                                    });
+                                }, Err(error_0) =>
+                                {
+                                    let error = TryReadOneRouteLogicErrorNamed :: Postgresql
+                                    {
+                                        postgresql : error_0, code_occurence : error_occurence_lib
+                                        :: code_occurence :: CodeOccurence ::
+                                        new(file! ().to_owned(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 1043, column : 17,
+                                        }))
+                                    }; eprintln! ("{error}"); let mut response = axum ::
+                                    response :: IntoResponse ::
+                                    into_response(axum ::
+                                    Json(TryReadOneRouteLogicResponseVariants :: from(error)));
+                                    * response.status_mut() = axum :: http :: StatusCode ::
+                                    INTERNAL_SERVER_ERROR; return response;
+                                }
+                            }
+                        }
+                    }
+                    JsongenericOptions {
+                        std_primitive_i32_as_postgresql_int,
+                        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+                        sqlx_types_json_t_as_postgresql_json_not_null,
+                    }
+                }
+                Err(error_0) => {
+                    let error = TryReadOneRouteLogicErrorNamed::Postgresql {
+                        postgresql: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 3773,
+                                column: 29,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                        TryReadOneRouteLogicResponseVariants::from(error),
+                    ));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+        };
+        value
+    };
+    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+        TryReadOneRouteLogicResponseVariants::Desirable(value),
+    ));
+    *response.status_mut() = axum::http::StatusCode::OK;
+    return response;
+}

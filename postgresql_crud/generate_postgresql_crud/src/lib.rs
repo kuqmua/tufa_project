@@ -204,6 +204,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
         maybe_generic_token_stream: std::option::Option<&'a syn::AngleBracketedGenericArguments>,
         original_type_token_stream: proc_macro2::TokenStream,
+        original_type_with_generic_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         where_inner_type_token_stream: proc_macro2::TokenStream,
@@ -284,6 +285,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             println!("original_type_token_stream {original_type_token_stream}");
+            let original_type_with_generic_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""),
+                    match &maybe_generic_token_stream {
+                        Some(value) => quote::quote!{#value}.to_string(),
+                        None => std::string::String::default()
+                    }
+                ); //todo generic for json
+                match value.parse::<proc_macro2::TokenStream>() {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
+                }
+            };
+            println!("original_type_with_generic_token_stream {original_type_with_generic_token_stream}");
             let inner_type_token_stream = {
                 let value = rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -357,6 +375,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 maybe_generic_token_stream, //todo maybe not need to add here
                 // path_token_stream,
                 original_type_token_stream,
+                original_type_with_generic_token_stream,
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
                 // where_inner_type_with_serialize_deserialize_handle_stringified,
@@ -962,7 +981,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let declaration_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element|{
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_token_stream);
             quote::quote! {
                 let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
             }
@@ -1011,7 +1030,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let original_type_token_stream = &element.original_type_token_stream;
+            let original_type_with_generic_token_stream = &element.original_type_with_generic_token_stream;
             let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                 &element.field_ident.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -1037,7 +1056,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             quote::quote! {
                 #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => match sqlx::Row::try_get::<
-                    std::option::Option<#original_type_token_stream>, 
+                    std::option::Option<#original_type_with_generic_token_stream>, 
                     #ref_std_primitive_str
                 >(
                     &#value_snake_case, 
@@ -3781,7 +3800,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
-                #try_operation_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
             }
         };
         // println!("{try_operation_route_logic_token_stream}");
@@ -3902,7 +3921,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #parameters_token_stream
                 #try_operation_route_logic_token_stream
-                #try_operation_token_stream
+                // #try_operation_token_stream
             },
             quote::quote! {},
             // http_request_test_expect_success_token_stream,
@@ -5069,7 +5088,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_many_token_stream
             #create_one_token_stream
             // #read_many_token_stream
-            // #read_one_token_stream
+            #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream
