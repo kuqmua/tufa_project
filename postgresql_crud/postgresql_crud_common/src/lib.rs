@@ -9912,7 +9912,7 @@ impl AsPostgresqlVarBit for SqlxTypesBitVec {}
 impl PostgresqlOrder for SqlxTypesBitVec {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
-pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
+pub struct SqlxTypesJson<T>(pub sqlx::types::Json<T>);
 impl<T> SqlxTypesJson<T> {
     pub fn into_inner(self) -> sqlx::types::Json<T> {
         self.0
@@ -9997,6 +9997,13 @@ where T: std::fmt::Debug
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}", self.0)
+    }
+}
+impl<T> error_occurence_lib::ToStdStringString for SqlxTypesJson<T> 
+where T: std::fmt::Display + std::fmt::Debug
+{
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
     }
 }
 impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
@@ -10367,6 +10374,11 @@ pub struct OrderBy<ColumnGeneric> {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
+}
+impl std::fmt::Display for Something {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", &self.something)
+    }
 }
 // let schema = schema_for!(Something);
 // println!("{}", serde_json::to_string_pretty(&schema).unwrap());

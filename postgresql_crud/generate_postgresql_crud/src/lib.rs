@@ -190,7 +190,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
-    // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -203,7 +202,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         field: &'a syn::Field,
         field_ident: &'a syn::Ident,
         rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
-        maybe_generic_token_stream: std::option::Option<proc_macro2::TokenStream>, //todo maybe not need to add here
+        maybe_generic_token_stream: std::option::Option<&'a syn::AngleBracketedGenericArguments>,
         original_type_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
@@ -259,7 +258,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                     let maybe_generic_token_stream = match &second_element.arguments {
                         syn::PathArguments::None => None,
-                        syn::PathArguments::AngleBracketed(value) => Some(quote::quote!{#value}),
+                        syn::PathArguments::AngleBracketed(value) => Some(value),
                         syn::PathArguments::Parenthesized(_) => {
                             return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
                         }
@@ -300,7 +299,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
                     match &maybe_generic_token_stream {
-                        Some(value) => value.to_string(),
+                        Some(value) => quote::quote!{#value}.to_string(),
                         None => std::string::String::default()
                     }
                 ); //todo generic for json
@@ -328,7 +327,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified(""),
                     match &maybe_generic_token_stream {
-                        Some(value) => value.to_string(),
+                        Some(value) => quote::quote!{#value}.to_string(),
                         None => std::string::String::default()
                     }
                 );
@@ -1837,7 +1836,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 ).to_string(),
                                 proc_macro2::Span::call_site()
                             ),
-                            arguments: syn::PathArguments::None,
+                            arguments: match &element.maybe_generic_token_stream {
+                                Some(value) => syn::PathArguments::AngleBracketed((*value).clone()),
+                                None => syn::PathArguments::None
+                            },
                         });
                         value
                     }
@@ -4515,6 +4517,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &type_variants_from_request_response_syn_variants,
             );
+            // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
@@ -4737,9 +4740,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
-                #try_operation_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
             }
         };
+        // println!("{try_operation_route_logic_token_stream}");
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(
                 &operation,
@@ -4815,7 +4819,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
             quote::quote! {}
