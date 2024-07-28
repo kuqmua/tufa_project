@@ -2571,6 +2571,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let generate_contains_check_token_stream = |
+        contains_token_stream: &dyn quote::ToTokens,
+        push_token_stream: &dyn quote::ToTokens,
+        error_token_stream: &dyn quote::ToTokens,
+        error_initialization_token_stream: &dyn quote::ToTokens,
+    |{
+        quote::quote!{
+            if !#acc_snake_case.contains(#contains_token_stream) {
+                #acc_snake_case.push(#push_token_stream);
+            }
+            else {
+                let #error_0_token_stream = #error_token_stream;
+                #error_initialization_token_stream
+            }
+        }
+    };
     let generate_filter_not_unique_fields_token_stream = |
         operation: &Operation,
         syn_field_with_additional_info_fields_named_excluding_primary_key: &std::vec::Vec<SynFieldWithAdditionalInfo<'_>>
@@ -2643,41 +2659,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 line!(),
                 column!(),
             );
-            let content_token_stream = {
-                let generate_contains_check_token_stream = |
-                    contains_token_stream: &proc_macro2::TokenStream,
-                    push_token_stream: &proc_macro2::TokenStream,
-                    error_token_stream: &proc_macro2::TokenStream
-                |{
+            let content_token_stream = match postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::from(&postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)) {
+                postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::SqlxPostgresType(_) => generate_contains_check_token_stream(
+                    &quote::quote!{&&#element_snake_case.#value_snake_case.0},
+                    &quote::quote!{&#element_snake_case.#value_snake_case.0},
+                    &quote::quote!{#element_snake_case.#value_snake_case.clone()},
+                    &not_unique_fields_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                ),
+                postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::OptionSupportedSqlxPostgresType(_) => {
+                    let content_token_stream = generate_contains_check_token_stream(
+                        &quote::quote!{&#value_snake_case},
+                        &quote::quote!{&#value_snake_case},
+                        &quote::quote!{#value_snake_case.clone()},
+                        &not_unique_fields_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                    );
                     quote::quote!{
-                        if !#acc_snake_case.contains(#contains_token_stream) {
-                            #acc_snake_case.push(#push_token_stream);
-                        }
-                        else {
-                            let #error_0_token_stream = #error_token_stream;
-                            #not_unique_fields_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                        if let Some(#value_snake_case) = &#element_snake_case.#value_snake_case.0 {
+                            #content_token_stream
                         }
                     }
-                };
-                match postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::from(&postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)) {
-                    postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::SqlxPostgresType(_) => generate_contains_check_token_stream(
-                        &quote::quote!{&&#element_snake_case.#value_snake_case.0},
-                        &quote::quote!{&#element_snake_case.#value_snake_case.0},
-                        &quote::quote!{#element_snake_case.#value_snake_case.clone()},
-                    ),
-                    postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::OptionSupportedSqlxPostgresType(_) => {
-                        let content_token_stream = generate_contains_check_token_stream(
-                            &quote::quote!{&#value_snake_case},
-                            &quote::quote!{&#value_snake_case},
-                            &quote::quote!{#value_snake_case.clone()},
-                        );
-                        quote::quote!{
-                            if let Some(#value_snake_case) = &#element_snake_case.#value_snake_case.0 {
-                                #content_token_stream
-                            }
-                        }
-                    },
-                }
+                },
             };
             quote::quote! {
                 if let Some(#value_snake_case) = &#value_snake_case.#element_field_ident {
@@ -3591,23 +3592,41 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 );
                                 quote::quote! {
                                     #not_unique_field_ident_upper_camel_case_token_stream {
-                                        #not_unique_field_ident_snake_case_token_stream: #value_snake_case.clone(),
+                                        #not_unique_field_ident_snake_case_token_stream: #error_0_token_stream,
                                         #field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream,
                                     }
                                 }
                             };
-                            quote::quote!{
+                            //todo maybe reuse
+                            let content_token_stream = {
+                                let error_initialization_token_stream = quote::quote!{return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_fields_syn_variant_initialization_token_stream);};
+                                match postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::from(&postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)) {
+                                    postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::SqlxPostgresType(_) => generate_contains_check_token_stream(
+                                        &quote::quote!{&&#element_snake_case.#value_snake_case.0},
+                                        &quote::quote!{&#element_snake_case.#value_snake_case.0},
+                                        &quote::quote!{#element_snake_case.#value_snake_case.clone()},
+                                        &error_initialization_token_stream
+                                    ),
+                                    postgresql_crud_common::SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::OptionSupportedSqlxPostgresType(_) => {
+                                        let content_token_stream = generate_contains_check_token_stream(
+                                            &quote::quote!{&#value_snake_case},
+                                            &quote::quote!{&#value_snake_case},
+                                            &quote::quote!{#value_snake_case.clone()},
+                                            &error_initialization_token_stream
+                                        );
+                                        quote::quote!{
+                                            if let Some(#value_snake_case) = &#element_snake_case.#value_snake_case.0 {
+                                                #content_token_stream
+                                            }
+                                        }
+                                    },
+                                }
+                            };
+                            quote::quote! {
                                 if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#element_field_ident {
                                     let mut #acc_snake_case = std::vec::Vec::new();
                                     for #element_snake_case in #value_snake_case {
-                                        if let Some(#value_snake_case) = &#element_snake_case.#value_snake_case.0 {
-                                            if !#acc_snake_case.contains(&#value_snake_case) {
-                                                #acc_snake_case.push(&#value_snake_case);
-                                            }
-                                            else {
-                                                return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_fields_syn_variant_initialization_token_stream);
-                                            }
-                                        }
+                                        #content_token_stream
                                     }
                                 }
                             }
@@ -3675,7 +3694,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 quote::quote! {
                     #try_operation_error_named_token_stream
-                    // #try_operation_token_stream
+                    #try_operation_token_stream
                 },
                 quote::quote! {}
                 // try_operation_test_token_stream,
@@ -4804,7 +4823,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_inner_type_token_stream,
-                &proc_macro2::TokenStream::new(),
+                &proc_macro2::TokenStream::new(),//todo maybe add filter on not unique primary key like in read_many ?
                 &quote::quote!{
                     #value_snake_case
                     .into_iter()
