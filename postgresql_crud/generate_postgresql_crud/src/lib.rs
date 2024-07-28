@@ -273,8 +273,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(format!("{name} field_type is not syn::Type::Path"));
                 },
             };
-            println!("rust_sqlx_map_to_postgres_type_variant {rust_sqlx_map_to_postgres_type_variant:#?}");
-            println!("maybe_generic_token_stream {maybe_generic_token_stream:#?}");
             let original_type_token_stream = {
                 let value = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -284,7 +282,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            println!("original_type_token_stream {original_type_token_stream}");
             let original_type_with_generic_token_stream = {
                 let value = format!(
                     "{}{}",
@@ -301,7 +298,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            println!("original_type_with_generic_token_stream {original_type_with_generic_token_stream}");
             let inner_type_token_stream = {
                 let value = rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -311,7 +307,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            println!("inner_type_token_stream {inner_type_token_stream}");
             let inner_type_with_generic_token_stream = {
                 let value = format!(
                     "{}{}",
@@ -328,7 +323,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            println!("inner_type_with_generic_token_stream {inner_type_with_generic_token_stream}");
             let where_inner_type_token_stream = {
                 let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -338,8 +332,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            println!("where_inner_type_token_stream {where_inner_type_token_stream}");
-            // where_inner_type_with_generic_token_stream
             let where_inner_type_with_generic_token_stream = {
                 let value = format!(
                     "{}{}",
@@ -356,7 +348,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            println!("where_inner_type_with_generic_token_stream {where_inner_type_with_generic_token_stream}");
             let original_wrapper_type_token_stream = {
                 let value = postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&rust_sqlx_map_to_postgres_type_variant.get_supported_sqlx_postgres_type()).get_path_stringified();
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -366,19 +357,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            println!("original_wrapper_type_token_stream {original_wrapper_type_token_stream}");
-            println!("------------");
             Ok(Self {
                 field: value,
                 field_ident,
                 rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
-                maybe_generic_token_stream, //todo maybe not need to add here
-                // path_token_stream,
+                maybe_generic_token_stream, //todo rename
                 original_type_token_stream,
                 original_type_with_generic_token_stream,
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
-                // where_inner_type_with_serialize_deserialize_handle_stringified,
                 where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
