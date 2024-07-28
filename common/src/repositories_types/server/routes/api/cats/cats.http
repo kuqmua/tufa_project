@@ -1,19 +1,21 @@
 #need to enable vscode rest client  extension https://marketplace.visualstudio.com/items?itemName=humao.rest-client to send requests
 
-POST http://127.0.0.1:8080/dogs/create_many HTTP/1.1
+POST http://127.0.0.1:8080/jsongeneric/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
     {
-        "std_primitive_bool_as_postgresql_bool": true,
-        "std_primitive_i16_as_postgresql_small_int": 45,
-        "std_primitive_i32_as_postgresql_int": null
+        "std_primitive_i32_as_postgresql_int": 83,
+        "sqlx_types_json_t_as_postgresql_json_not_null": {
+            "something": "sss"
+        }
     },
     {
-        "std_primitive_bool_as_postgresql_bool": false,
-        "std_primitive_i16_as_postgresql_small_int": null,
-        "std_primitive_i32_as_postgresql_int": 83
+        "std_primitive_i32_as_postgresql_int": 83,
+        "sqlx_types_json_t_as_postgresql_json_not_null": {
+            "something": "sss"
+        }
     }
 ]
 
@@ -41,12 +43,12 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 ###
 
-POST http://127.0.0.1:8080/dogs/read_many HTTP/1.1
+POST http://127.0.0.1:8080/jsongeneric/read_many HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-    "select": ["std_primitive_i16_as_postgresql_small_int"],
+    "select": ["sqlx_types_json_t_as_postgresql_json_not_null"],
     # "id": [
     #     "7b51bb9c-124e-44ba-9941-7f32a2c18c78",
     #     "5829d06c-4141-4734-8266-b3d1e618c4de",
@@ -68,16 +70,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 ### todo name and color must be  arrays              
 
-POST http://127.0.0.1:8080/dogs/read_one HTTP/1.1
+POST http://127.0.0.1:8080/jsongeneric/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 234,
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 2,
     "select": [
-        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-        ,
-        "std_primitive_bool_as_postgresql_bool"
+        "std_primitive_i32_as_postgresql_int"
         # ,
         # "std_primitive_i16_as_postgresql_small_int"
         # ,
@@ -87,66 +87,49 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### fix this  
  
-PATCH http://127.0.0.1:8080/dogs/update_many HTTP/1.1 
+PATCH http://127.0.0.1:8080/jsongeneric/update_many HTTP/1.1 
 content-type: application/json
 commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
     {
         "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
-        "std_primitive_bool_as_postgresql_bool": {
-            "value": true
-        },
-        "std_primitive_i16_as_postgresql_small_int": {
-            "value": null
-        },
         "std_primitive_i32_as_postgresql_int": {
             "value": 84
         }
     },
     {
         "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 2,
-        "std_primitive_bool_as_postgresql_bool": {
-            "value": true
-        },
-        "std_primitive_i16_as_postgresql_small_int": {
-            "value": null
-        },
-        "std_primitive_i32_as_postgresql_int": {
-            "value": 80
+        "sqlx_types_json_t_as_postgresql_json_not_null": {
+            "value": {
+                "something": "kekew"
+            }
         }
     }
 ]
 
 ### 
 
-PATCH http://127.0.0.1:8080/dogs/update_one HTTP/1.1
+PATCH http://127.0.0.1:8080/jsongeneric/update_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 9,
-    "std_primitive_bool_as_postgresql_bool": {
-        "value": true
-    },
-    "std_primitive_i16_as_postgresql_small_int": {
-        "value": null
-    },
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 4,
     "std_primitive_i32_as_postgresql_int": {
-        "value": 90
+        "value": 44
     }
 }
 
 ####"^first_test_name_create$"  
 
-DELETE http://127.0.0.1:8080/dogs/delete_many HTTP/1.1
+DELETE http://127.0.0.1:8080/jsongeneric/delete_many HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": [
-      11,
-      12
+      3
     ]
     # ,
     # "name":[
@@ -165,12 +148,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-DELETE http://127.0.0.1:8080/dogs/delete_one HTTP/1.1
+DELETE http://127.0.0.1:8080/jsongeneric/delete_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 13
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1
 }
 
 ###

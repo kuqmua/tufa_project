@@ -37,6 +37,9 @@
 // DROP EXTENSION IF EXISTS "pg_jsonschema";
 // CREATE EXTENSION "pg_jsonschema";
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
+//todo find out why postgresql primary key rebuild 12345 even if u delete three - must be 1245 but got 1234
+//todo fix "postgresql": "error returned from database: CASE/WHEN could not convert type jsonb to json",
+//todo fix "postgresql": "no rows returned by a query that expected to return at least one row", in delete one
 
 //todo postgresql json:
 //* define rust type in postgresql types crate
