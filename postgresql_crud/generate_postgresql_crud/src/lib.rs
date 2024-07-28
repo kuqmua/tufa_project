@@ -5013,7 +5013,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream
 
-            // #create_many_token_stream
+            #create_many_token_stream
             #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
