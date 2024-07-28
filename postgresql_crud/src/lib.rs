@@ -347,7 +347,7 @@ pub use postgresql_crud_common::WhereSqlxTypesMacAddressMacAddress;
 
 pub use postgresql_crud_common::WhereSqlxTypesBitVec;
 
-// pub use postgresql_crud_common::WhereSqlxTypesJson;
+pub use postgresql_crud_common::WhereSqlxTypesJson;
 
 pub use postgresql_crud_common::WhereSerdeJsonValue;
 ////////////////////////////////////////////////////////////

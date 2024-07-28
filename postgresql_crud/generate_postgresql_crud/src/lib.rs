@@ -208,6 +208,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         where_inner_type_token_stream: proc_macro2::TokenStream,
+        where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
     }   
     impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
@@ -321,6 +322,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             println!("where_inner_type_token_stream {where_inner_type_token_stream}");
+            // where_inner_type_with_generic_token_stream
+            let where_inner_type_with_generic_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified(""),
+                    match &maybe_generic_token_stream {
+                        Some(value) => value.to_string(),
+                        None => std::string::String::default()
+                    }
+                );
+                match value.parse::<proc_macro2::TokenStream>() {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
+                }
+            };
+            println!("where_inner_type_with_generic_token_stream {where_inner_type_with_generic_token_stream}");
             let original_wrapper_type_token_stream = {
                 let value = postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&rust_sqlx_map_to_postgres_type_variant.get_supported_sqlx_postgres_type()).get_path_stringified();
                 match value.parse::<proc_macro2::TokenStream>() {
@@ -343,6 +362,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 inner_type_with_generic_token_stream,
                 // where_inner_type_with_serialize_deserialize_handle_stringified,
                 where_inner_type_token_stream,
+                where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
             })
         }
@@ -1588,9 +1608,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWithAdditionalInfo<'_>| -> proc_macro2::TokenStream {
         let field_ident = &element.field_ident;
-        let where_inner_type_token_stream = &element.where_inner_type_token_stream;
+        let where_inner_type_with_generic_token_stream = &element.where_inner_type_with_generic_token_stream;
         quote::quote! {
-            pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>
+            pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_generic_token_stream>>
         }
     });
     let generate_pub_handle_token_stream = |is_pub: bool|match is_pub {
@@ -4795,8 +4815,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                #try_operation_route_logic_token_stream
-                #try_operation_token_stream
+                // #try_operation_route_logic_token_stream
+                // #try_operation_token_stream
             },
             quote::quote! {}
             // try_operation_test_token_stream,
@@ -5019,7 +5039,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
-            // #delete_many_token_stream
+            #delete_many_token_stream
             // #delete_one_token_stream
         // }
     };
