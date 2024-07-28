@@ -305,15 +305,15 @@ pub struct Jsongeneric {
 // pub struct Field<T> {
 //     pub value: T,
 // }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct CreateOnePayload {
-    pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdOptionOptionStdPrimitiveI32,
-    pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJson<postgresql_crud::Something>,
-}
-#[derive(Debug)]
-pub struct CreateOneParameters {
-    pub payload: CreateOnePayload,
-}
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct CreateOnePayload {
+//     pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdOptionOptionStdPrimitiveI32,
+//     pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJson<postgresql_crud::Something>,
+// }
+// #[derive(Debug)]
+// pub struct CreateOneParameters {
+//     pub payload: CreateOnePayload,
+// }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryCreateOneRouteLogicResponseVariants {
     Desirable(postgresql_crud::StdPrimitiveI64),

@@ -2314,7 +2314,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWithAdditionalInfo<'_>| {
         let field_ident = &element.field_ident;
-        let inner_type_token_stream = &element.inner_type_token_stream;
+        let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
         quote::quote! {
             pub #field_ident: #inner_type_token_stream
         }
@@ -3108,8 +3108,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                #try_operation_route_logic_token_stream
-                #try_operation_token_stream
+                // #try_operation_route_logic_token_stream
+                // #try_operation_token_stream
             },
             // try_operation_test_token_stream,
             quote::quote! {}
@@ -5014,7 +5014,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             // #create_many_token_stream
-            // #create_one_token_stream
+            #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
             // #update_many_token_stream
