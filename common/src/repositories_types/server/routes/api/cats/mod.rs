@@ -314,107 +314,107 @@ pub struct Jsongeneric {
 // pub struct CreateOneParameters {
 //     pub payload: CreateOnePayload,
 // }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub enum TryCreateOneRouteLogicResponseVariants {
-    Desirable(postgresql_crud::StdPrimitiveI64),
-    CheckBodySize {
-        check_body_size:
-            postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Postgresql {
-        postgresql: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    SerdeJson {
-        serde_json: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckCommit {
-        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    RowAndRollback {
-        row: std::string::String,
-        rollback: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateOneRouteLogicErrorNamed>
-    for TryCreateOneRouteLogicResponseVariants
-{
-    fn from(value: TryCreateOneRouteLogicErrorNamed) -> Self {
-        match value.into_serialize_deserialize_version() {
-            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize {
-                check_body_size,
-                code_occurence,
-            } => Self::CheckBodySize {
-                check_body_size,
-                code_occurence,
-            },
-            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
-                postgresql,
-                code_occurence,
-            } => Self::Postgresql {
-                postgresql,
-                code_occurence,
-            },
-            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::SerdeJson {
-                serde_json,
-                code_occurence,
-            } => Self::SerdeJson {
-                serde_json,
-                code_occurence,
-            },
-            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit {
-                check_commit,
-                code_occurence,
-            } => Self::CheckCommit {
-                check_commit,
-                code_occurence,
-            },
-            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollback {
-                row,
-                rollback,
-                code_occurence,
-            } => Self::RowAndRollback {
-                row,
-                rollback,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryCreateOneRouteLogicErrorNamed {
-    CheckBodySize {
-        #[eo_error_occurence]
-        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Postgresql {
-        #[eo_to_std_string_string]
-        postgresql: sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    SerdeJson {
-        #[eo_to_std_string_string]
-        serde_json: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckCommit {
-        #[eo_error_occurence]
-        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    RowAndRollback {
-        #[eo_to_std_string_string]
-        row: sqlx::Error,
-        #[eo_to_std_string_string]
-        rollback: sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+// pub enum TryCreateOneRouteLogicResponseVariants {
+//     Desirable(postgresql_crud::StdPrimitiveI64),
+//     CheckBodySize {
+//         check_body_size:
+//             postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Postgresql {
+//         postgresql: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     SerdeJson {
+//         serde_json: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     CheckCommit {
+//         check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     RowAndRollback {
+//         row: std::string::String,
+//         rollback: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl std::convert::From<TryCreateOneRouteLogicErrorNamed>
+//     for TryCreateOneRouteLogicResponseVariants
+// {
+//     fn from(value: TryCreateOneRouteLogicErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize {
+//                 check_body_size,
+//                 code_occurence,
+//             } => Self::CheckBodySize {
+//                 check_body_size,
+//                 code_occurence,
+//             },
+//             TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
+//                 postgresql,
+//                 code_occurence,
+//             } => Self::Postgresql {
+//                 postgresql,
+//                 code_occurence,
+//             },
+//             TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::SerdeJson {
+//                 serde_json,
+//                 code_occurence,
+//             } => Self::SerdeJson {
+//                 serde_json,
+//                 code_occurence,
+//             },
+//             TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit {
+//                 check_commit,
+//                 code_occurence,
+//             } => Self::CheckCommit {
+//                 check_commit,
+//                 code_occurence,
+//             },
+//             TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollback {
+//                 row,
+//                 rollback,
+//                 code_occurence,
+//             } => Self::RowAndRollback {
+//                 row,
+//                 rollback,
+//                 code_occurence,
+//             },
+//         }
+//     }
+// }
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum TryCreateOneRouteLogicErrorNamed {
+//     CheckBodySize {
+//         #[eo_error_occurence]
+//         check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Postgresql {
+//         #[eo_to_std_string_string]
+//         postgresql: sqlx::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     SerdeJson {
+//         #[eo_to_std_string_string]
+//         serde_json: serde_json::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     CheckCommit {
+//         #[eo_error_occurence]
+//         check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     RowAndRollback {
+//         #[eo_to_std_string_string]
+//         row: sqlx::Error,
+//         #[eo_to_std_string_string]
+//         rollback: sqlx::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
 pub async fn try_create_one_route_logic(
     app_state : axum :: extract :: State < crate ::
 repositories_types :: server :: routes :: app_state ::
