@@ -10375,10 +10375,14 @@ pub struct OrderBy<ColumnGeneric> {
 }
 
 /////////////////////
+pub trait JsonFieldNameStringified {
+    fn json_field_name_stringified(&self) -> &std::primitive::str;
+}
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
     omega: std::vec::Vec<bool>,
+    // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: Doggie
 
 }
@@ -10398,9 +10402,25 @@ pub enum SomethingReader {
     Omega(std::vec::Vec<bool>),
     Doggie(DoggieReader)
 }
+impl JsonFieldNameStringified for SomethingReader {
+    fn json_field_name_stringified(&self) -> &std::primitive::str {
+        match self {
+            Self::Something(_) => "something",
+            Self::Omega(_) => "omega",
+            Self::Doggie(value) => JsonFieldNameStringified::json_field_name_stringified(value)
+        }
+    }
+}
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum DoggieReader {
     Says(std::string::String)
+}
+impl JsonFieldNameStringified for DoggieReader {
+    fn json_field_name_stringified(&self) -> &std::primitive::str {
+        match self {
+            Self::Says(_) => "says"
+        }
+    }
 }
 
 // let schema = schema_for!(Something);

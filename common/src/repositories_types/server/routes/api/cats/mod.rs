@@ -417,17 +417,20 @@ DynArcCombinationOfAppStateLogicTraits, >,
     ("select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
     {
         let mut value =
-        parameters.payload.select.iter().fold(std :: string :: String ::
-        from(""), | mut acc, element |
+        parameters.payload.select.iter().fold(std::string::String::from(""), | mut acc, element |
         {
-            acc += match element {
+            acc.push_str(match element {
                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int", 
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
-                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => "sqlx_types_json_t_as_postgresql_json_not_null"
-            }; 
-            acc += ","; 
+                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => {
+                    "sqlx_types_json_t_as_postgresql_json_not_null"
+                }
+            }); 
+            acc.push_str(","); 
             acc
-        }); let _ = value.pop(); value
+        }); 
+        let _ = value.pop();
+        value
     },);
     println!("{}", query_string);
     let binded_query = {
