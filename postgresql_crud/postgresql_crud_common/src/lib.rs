@@ -10377,6 +10377,8 @@ pub struct OrderBy<ColumnGeneric> {
 /////////////////////
 pub trait JsonFieldNameStringified {
     fn json_field_name_stringified(&self) -> &std::primitive::str;
+    fn fields_len(&self) -> std::primitive::usize;
+    fn try_create_filter<'a>(value: &'a std::vec::Vec<Self>) -> Result<std::vec::Vec<&'a Self>, &'a Self> where Self: Sized;
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
@@ -10410,6 +10412,23 @@ impl JsonFieldNameStringified for SomethingReader {
             Self::Doggie(value) => JsonFieldNameStringified::json_field_name_stringified(value)
         }
     }
+    fn fields_len(&self) -> std::primitive::usize {
+        3
+    }
+    fn try_create_filter<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<std::vec::Vec<&'a SomethingReader>, &'a SomethingReader> {
+        let mut acc = vec![];
+        for element in value {
+            match acc.contains(&element) {
+                true => {
+                    return Err(element);
+                },
+                false => {
+                    acc.push(element);
+                }
+            }
+        }
+        Ok(acc)
+    }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum DoggieReader {
@@ -10420,6 +10439,23 @@ impl JsonFieldNameStringified for DoggieReader {
         match self {
             Self::Says(_) => "says"
         }
+    }
+    fn fields_len(&self) -> std::primitive::usize {
+        1
+    }
+    fn try_create_filter<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<std::vec::Vec<&'a DoggieReader>, &'a DoggieReader> {
+        let mut acc = vec![];
+        for element in value {
+            match acc.contains(&element) {
+                true => {
+                    return Err(element);
+                },
+                false => {
+                    acc.push(element);
+                }
+            }
+        }
+        Ok(acc)
     }
 }
 
