@@ -39,7 +39,7 @@
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
 //todo find out why postgresql primary key rebuild 12345 even if u delete three - must be 1245 but got 1234
 //todo fix "postgresql": "error returned from database: CASE/WHEN could not convert type jsonb to json",
-//todo fix "postgresql": "no rows returned by a query that expected to return at least one row", in delete one
+//todo fix "postgresql": "no rows returned by a query that expected to return at least one row", in delete one - looks like some postgresql config instance local issue
 
 //todo postgresql json:
 //* define rust type in postgresql types crate
@@ -5103,7 +5103,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream
-            #delete_one_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
