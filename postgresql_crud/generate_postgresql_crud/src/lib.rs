@@ -39,8 +39,6 @@
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
 
 //todo postgresql json:
-//* define rust type in postgresql types crate
-//* make sure it can be serialized and deserialized
 //* define postgresql json type
 //* write checker what ensures what postgresql type equals to 
 //* write json schema in postgresql
