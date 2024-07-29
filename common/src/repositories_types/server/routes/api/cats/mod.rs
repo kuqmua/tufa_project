@@ -211,8 +211,7 @@ pub struct Jsongeneric {
 
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ReadOnePayload {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        postgresql_crud::StdPrimitiveI64,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdPrimitiveI64,
     pub select: std::vec::Vec<JsongenericColumn>,
 }
 #[derive(Debug)]
@@ -499,18 +498,9 @@ DynArcCombinationOfAppStateLogicTraits, >,
         let value = {
             match binded_query.fetch_one(executor.as_mut()).await {
                 Ok(value) => {
-                    let mut
-                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
-                    : std :: option :: Option < postgresql_crud :: Value <
-                    postgresql_crud::StdPrimitiveI64 > > = None;
-                    let mut std_primitive_i32_as_postgresql_int: std::option::Option<
-                        postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
-                    > = None;
-                    let mut sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<
-                        postgresql_crud::Value<
-                            postgresql_crud::SqlxTypesJson<postgresql_crud::Something>,
-                        >,
-                    > = None;
+                    let mut std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>> = None;
+                    let mut std_primitive_i32_as_postgresql_int: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>> = None;
+                    let mut sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::Something>>> = None;
                     for element in &parameters.payload.select {
                         match element
                         {
@@ -586,13 +576,12 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             }, 
                             
                             
-                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx :: Row :: try_get :: < sqlx::types::Json:: < postgresql_crud ::Something > , & std :: primitive :: str >(
+                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::Something>, &std::primitive::str>(
                                 &value,
                                 "sqlx_types_json_t_as_postgresql_json_not_null"
                             ) {
                                 Ok(value) => {
-                                    sqlx_types_json_t_as_postgresql_json_not_null =
-                                    Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
+                                    sqlx_types_json_t_as_postgresql_json_not_null = Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
                                 },
                                 Err(error_0) => {
                                     let error = TryReadOneRouteLogicErrorNamed::Postgresql {
