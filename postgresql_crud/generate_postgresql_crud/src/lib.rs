@@ -1123,6 +1123,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let derive_debug = token_patterns::DeriveDebug;
     let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
+    //todo replace it with postgresql_crud::Value
     let field_token_stream = quote::quote!{
         #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
         pub struct #field_upper_camel_case<T> {

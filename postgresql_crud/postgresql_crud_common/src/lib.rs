@@ -10340,7 +10340,7 @@ impl std::fmt::Display for ConjunctiveOperator {
 }
 
 //this needed coz serde std::option::Option<std::option::Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct Value<T> {
     pub value: T
 }
@@ -10393,11 +10393,6 @@ impl std::fmt::Display for Something {
         write!(formatter, "{:?}", &self)
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-pub struct Doggie {
-    says: std::string::String,
-    
-}
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum SomethingReader {
     Something(std::string::String),
@@ -10430,6 +10425,18 @@ impl JsonFieldNameStringified for SomethingReader {
         Ok(acc)
     }
 }
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct SomethingOptions {
+    something: std::option::Option<Value<std::string::String>>,
+    omega: std::option::Option<Value<std::vec::Vec<bool>>>,
+    // #[json_field_name_stringified_reader] //todo for the future proc macro
+    doggie: std::option::Option<Value<DoggieOptions>>
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct Doggie {
+    says: std::string::String,
+}
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum DoggieReader {
     Says(std::string::String)
@@ -10457,6 +10464,10 @@ impl JsonFieldNameStringified for DoggieReader {
         }
         Ok(acc)
     }
+}
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct DoggieOptions {
+    says: std::option::Option<Value<std::string::String>>,
 }
 
 // let schema = schema_for!(Something);

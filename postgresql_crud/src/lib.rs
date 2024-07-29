@@ -539,4 +539,6 @@ pub trait CombinationOfTraitsForPostgresqlCrudLogic:
 pub use naming_conventions::CommitUpperCamelCase;
 pub use naming_conventions::CommitSnakeCase;
 
+pub use postgresql_crud_common::JsonFieldNameStringified;
+
 pub use postgresql_crud_common::Something;
