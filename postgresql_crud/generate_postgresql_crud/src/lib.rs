@@ -37,9 +37,6 @@
 // DROP EXTENSION IF EXISTS "pg_jsonschema";
 // CREATE EXTENSION "pg_jsonschema";
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
-//todo find out why postgresql primary key rebuild 12345 even if u delete three - must be 1245 but got 1234
-//todo fix "postgresql": "error returned from database: CASE/WHEN could not convert type jsonb to json",
-//todo fix "postgresql": "no rows returned by a query that expected to return at least one row", in read one
 
 //todo postgresql json:
 //* define rust type in postgresql types crate
@@ -210,7 +207,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         original_type_with_generic_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
-        where_inner_type_token_stream: proc_macro2::TokenStream,
+        // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
     }   
@@ -326,15 +323,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let where_inner_type_token_stream = {
-                let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
-                match value.parse::<proc_macro2::TokenStream>() {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                    }
-                }
-            };
+            // let where_inner_type_token_stream = {
+            //     let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
+            //     match value.parse::<proc_macro2::TokenStream>() {
+            //         Ok(value) => value,
+            //         Err(error) => {
+            //             return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            //         }
+            //     }
+            // };
             let where_inner_type_with_generic_token_stream = {
                 let value = format!(
                     "{}{}",
@@ -369,7 +366,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 original_type_with_generic_token_stream,
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
-                where_inner_type_token_stream,
+                // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
             })
@@ -1025,7 +1022,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &element.field_ident.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let inner_type_token_stream = &element.inner_type_token_stream;
+            // let inner_type_token_stream = &element.inner_type_token_stream;
             let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                 &operation,
                 &postgresql_syn_variant_wrapper,
@@ -5103,7 +5100,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream
-            // #delete_one_token_stream
+            #delete_one_token_stream
         // }
     };
     // if ident == "" {
