@@ -39,7 +39,10 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
     "std_primitive_i32_as_postgresql_int": 83,
     "sqlx_types_json_t_as_postgresql_json_not_null": {
         "something": "sss",
-        "omega": [true, false,false]
+        "omega": [true, false,false],
+        "doggie": {
+            "says": "gav"
+        }
     }
 }
 

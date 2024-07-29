@@ -4931,7 +4931,10 @@ impl Default for TestNewType<Something> {
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(Something {
             something: std_string_string_handle,
-            omega: vec![true, false]
+            omega: vec![true, false],
+            doggie: Doggie {
+                says: std::string::String::from("gav")
+            }
         }));
         let serde_json_value =
             SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
@@ -10375,12 +10378,30 @@ pub struct OrderBy<ColumnGeneric> {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
-    omega: std::vec::Vec<bool>
+    omega: std::vec::Vec<bool>,
+    doggie: Doggie
+
 }
 impl std::fmt::Display for Something {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", &self)
     }
 }
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct Doggie {
+    says: std::string::String,
+    
+}
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub enum SomethingReader {
+    Something(std::string::String),
+    Omega(std::vec::Vec<bool>),
+    Doggie(DoggieReader)
+}
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub enum DoggieReader {
+    Says(std::string::String)
+}
+
 // let schema = schema_for!(Something);
 // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
