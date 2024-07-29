@@ -514,11 +514,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     for element in &parameters.payload.select {
                         match element
                         {
-                            JsongenericColumn ::
-                            StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey =>
-                            match sqlx :: Row :: try_get :: < std::primitive::i64, & std
-                            :: primitive :: str >
-                            (& value,
+                            JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => match sqlx::Row::try_get::<std::primitive::i64, &std::primitive::str> (& value,
                             "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")
                             {
                                 Ok(value) =>
@@ -547,7 +543,9 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                     * response.status_mut() = axum :: http :: StatusCode ::
                                     INTERNAL_SERVER_ERROR; return response;
                                 }
-                            }, JsongenericColumn :: StdPrimitiveI32AsPostgresqlInt =>
+                            }, 
+                            
+                            JsongenericColumn :: StdPrimitiveI32AsPostgresqlInt =>
                             match sqlx :: Row :: try_get :: <
                             std::option::Option<std::primitive::i32> , & std ::
                             primitive :: str >
@@ -585,36 +583,35 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                     * response.status_mut() = axum :: http :: StatusCode ::
                                     INTERNAL_SERVER_ERROR; return response;
                                 }
-                            }, JsongenericColumn ::
-                            SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx :: Row
-                            :: try_get :: < sqlx::types::Json:: < postgresql_crud ::
-                            Something > , & std :: primitive :: str >
-                            (& value, "sqlx_types_json_t_as_postgresql_json_not_null")
-                            {
-                                Ok(value) =>
-                                {
+                            }, 
+                            
+                            
+                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx :: Row :: try_get :: < sqlx::types::Json:: < postgresql_crud ::Something > , & std :: primitive :: str >(
+                                &value,
+                                "sqlx_types_json_t_as_postgresql_json_not_null"
+                            ) {
+                                Ok(value) => {
                                     sqlx_types_json_t_as_postgresql_json_not_null =
-                                    Some(postgresql_crud :: Value
-                                    { value : postgresql_crud::SqlxTypesJson(value) });
-                                }, Err(error_0) =>
-                                {
-                                    let error = TryReadOneRouteLogicErrorNamed :: Postgresql
-                                    {
-                                        postgresql : error_0, code_occurence : error_occurence_lib
-                                        :: code_occurence :: CodeOccurence ::
-                                        new(file! ().to_owned(), line! (), column! (),
-                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                                        {
-                                            file : std :: string :: String ::
-                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line : 1028, column : 17,
-                                        }))
-                                    }; eprintln! ("{error}"); let mut response = axum ::
-                                    response :: IntoResponse ::
-                                    into_response(axum ::
-                                    Json(TryReadOneRouteLogicResponseVariants :: from(error)));
-                                    * response.status_mut() = axum :: http :: StatusCode ::
-                                    INTERNAL_SERVER_ERROR; return response;
+                                    Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
+                                },
+                                Err(error_0) => {
+                                    let error = TryReadOneRouteLogicErrorNamed::Postgresql {
+                                        postgresql: error_0,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            file!().to_owned(),
+                                            line!(),
+                                            column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                line: 1028,
+                                                column: 17,
+                                            })
+                                        )
+                                    };
+                                    eprintln!("{error}");
+                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadOneRouteLogicResponseVariants::from(error)));
+                                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                    return response;
                                 }
                             }
                         }
