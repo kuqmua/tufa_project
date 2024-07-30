@@ -10402,6 +10402,15 @@ impl std::fmt::Display for Something {
         write!(formatter, "{:?}", &self)
     }
 }
+impl std::convert::From<Something> for SomethingOptions {
+    fn from(value: Something) -> Self {
+        Self {
+            something: Some(Value { value: value.something}),
+            omega: Some(Value { value: value.omega }),
+            doggie: Some(Value { value: DoggieOptions::from(value.doggie)}),
+        }
+    }
+}
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum SomethingReader {
     Something(std::string::String),
@@ -10456,6 +10465,13 @@ pub struct SomethingOptions {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
     says: std::string::String,
+}
+impl std::convert::From<Doggie> for DoggieOptions {
+    fn from(value: Doggie) -> Self {
+        Self {
+            says: Some(Value { value: value.says })
+        }
+    }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum DoggieReader {

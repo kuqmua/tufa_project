@@ -209,6 +209,43 @@ pub struct Jsongeneric {
     // pub serde_json_value_as_postgresql_json_b_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub struct JsongenericOptions {
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>>,
+    pub std_primitive_i32_as_postgresql_int: std::option::Option<
+        postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
+    >,
+    pub sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<
+        postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingOptions>>,//here change
+    >,
+}
+impl std::convert::From<Jsongeneric> for JsongenericOptions {
+    fn from(value: Jsongeneric) -> Self {
+        Self {
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
+                postgresql_crud::Value {
+                    value: postgresql_crud::StdPrimitiveI64::from(
+                        value
+                            .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                            .0,
+                    ),
+                },
+            ),
+            std_primitive_i32_as_postgresql_int: Some(postgresql_crud::Value {
+                value: postgresql_crud::StdOptionOptionStdPrimitiveI32::from(
+                    value.std_primitive_i32_as_postgresql_int.0,
+                ),
+            }),
+            //todo difference
+            sqlx_types_json_t_as_postgresql_json_not_null: Some(postgresql_crud::Value {
+                value: postgresql_crud::SqlxTypesJson(sqlx::types::Json(postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_not_null.0.0.0))),
+            }),
+        }
+    }
+}
+
+/////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ReadOnePayload {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdPrimitiveI64,
@@ -508,7 +545,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     //todo change type
                     let 
                     // mut 
-                    sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::Something>>> = None;
+                    sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingOptions>>> = None;
                     //
                     for element in &parameters.payload.select {
                         match element

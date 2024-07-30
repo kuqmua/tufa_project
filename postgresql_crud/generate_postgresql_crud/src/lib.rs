@@ -5061,8 +5061,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{emulate_crud_api_usage_test_token_stream}");
     let common_token_stream = quote::quote! {
         pub const TABLE_NAME: #ref_std_primitive_str = #table_name_quotes_token_stream;
-        #struct_options_token_stream
-        #from_ident_for_ident_options_token_stream
+        // #struct_options_token_stream
+        // #from_ident_for_ident_options_token_stream
         #column_token_stream
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream
@@ -5094,7 +5094,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            #read_many_token_stream
+            // #read_many_token_stream
             // #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
