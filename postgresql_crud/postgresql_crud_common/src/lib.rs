@@ -10375,10 +10375,19 @@ pub struct OrderBy<ColumnGeneric> {
 }
 
 /////////////////////
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct JsonFieldsLengthError {
+    got_length: std::primitive::usize,
+    max_length: std::primitive::usize,
+    //todo maybe add code occurence?
+}
+
+
 pub trait JsonFieldNameStringified {
     fn json_field_name_stringified(&self) -> &std::primitive::str;
-    fn fields_len(&self) -> std::primitive::usize;
+    fn max_length() -> std::primitive::usize;
     fn try_create_filter<'a>(value: &'a std::vec::Vec<Self>) -> Result<std::vec::Vec<&'a Self>, &'a Self> where Self: Sized;
+    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
@@ -10407,9 +10416,7 @@ impl JsonFieldNameStringified for SomethingReader {
             Self::Doggie(value) => JsonFieldNameStringified::json_field_name_stringified(value)
         }
     }
-    fn fields_len(&self) -> std::primitive::usize {
-        3
-    }
+    fn max_length() -> std::primitive::usize { 3 }
     fn try_create_filter<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<std::vec::Vec<&'a SomethingReader>, &'a SomethingReader> {
         let mut acc = vec![];
         for element in value {
@@ -10423,6 +10430,19 @@ impl JsonFieldNameStringified for SomethingReader {
             }
         }
         Ok(acc)
+    }
+    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
+        let got_length = value.len();
+        let max_length = SomethingReader::max_length();
+        if got_length <= max_length {
+            Ok(value)
+        }
+        else {
+            Err(JsonFieldsLengthError{
+                got_length,
+                max_length,
+            })
+        }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -10447,9 +10467,7 @@ impl JsonFieldNameStringified for DoggieReader {
             Self::Says(_) => "says"
         }
     }
-    fn fields_len(&self) -> std::primitive::usize {
-        1
-    }
+    fn max_length() -> std::primitive::usize { 1 }
     fn try_create_filter<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<std::vec::Vec<&'a DoggieReader>, &'a DoggieReader> {
         let mut acc = vec![];
         for element in value {
@@ -10463,6 +10481,19 @@ impl JsonFieldNameStringified for DoggieReader {
             }
         }
         Ok(acc)
+    }
+    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
+        let got_length = value.len();
+        let max_length = DoggieReader::max_length();
+        if got_length <= max_length {
+            Ok(value)
+        }
+        else {
+            Err(JsonFieldsLengthError{
+                got_length,
+                max_length,
+            })
+        }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
