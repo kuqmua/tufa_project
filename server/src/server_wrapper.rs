@@ -25,7 +25,7 @@ pub(crate) async fn server_wrapper(
     // };
     println!("trying to build server...");
     if let Err(error) = crate::try_build_server::try_build_server(
-        postgres_pool,
+        pg_pool,
         // redis_session_storage,
         config,
     )
