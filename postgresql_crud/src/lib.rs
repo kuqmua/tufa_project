@@ -542,3 +542,4 @@ pub use naming_conventions::CommitSnakeCase;
 pub use postgresql_crud_common::JsonFieldNameStringified;
 
 pub use postgresql_crud_common::Something;
+pub use postgresql_crud_common::SomethingOptions;

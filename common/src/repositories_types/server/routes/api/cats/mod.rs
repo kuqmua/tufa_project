@@ -419,12 +419,16 @@ DynArcCombinationOfAppStateLogicTraits, >,
         let mut value =
         parameters.payload.select.iter().fold(std::string::String::from(""), | mut acc, element |
         {
-            acc.push_str(match element {
-                JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int", 
-                JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
-                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => {
-                    "sqlx_types_json_t_as_postgresql_json_not_null"
-                }
+            acc.push_str(&match element {
+                JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
+                JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
+                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => format!(
+                    "sqlx_types_json_t_as_postgresql_json_not_null{}",
+                    {
+                        //todo postgres query language
+                        "-> \'something\'"
+                    }
+                )
             }); 
             acc.push_str(","); 
             acc
@@ -501,7 +505,11 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 Ok(value) => {
                     let mut std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>> = None;
                     let mut std_primitive_i32_as_postgresql_int: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>> = None;
-                    let mut sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::Something>>> = None;
+                    //todo change type
+                    let 
+                    // mut 
+                    sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::Something>>> = None;
+                    //
                     for element in &parameters.payload.select {
                         match element
                         {
@@ -576,13 +584,15 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 }
                             }, 
                             
-                            
-                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::Something>, &std::primitive::str>(
+                            //todo
+                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx::Row::try_get::<sqlx::types::JsonValue, &std::primitive::str>(//sqlx::types::Json::<postgresql_crud::Something>
                                 &value,
-                                "sqlx_types_json_t_as_postgresql_json_not_null"
+                                "?column?"
                             ) {
                                 Ok(value) => {
-                                    sqlx_types_json_t_as_postgresql_json_not_null = Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
+                                    println!("{value:#?}");
+                                    todo!();
+                                    // sqlx_types_json_t_as_postgresql_json_not_null = Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
                                 },
                                 Err(error_0) => {
                                     let error = TryReadOneRouteLogicErrorNamed::Postgresql {
