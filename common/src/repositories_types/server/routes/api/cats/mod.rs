@@ -244,8 +244,10 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
         }
     }
 }
+//from_str :: FromStr,
 #[derive(
-    Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Eq, from_str :: FromStr, Clone, Copy,
+    Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Eq, Clone, 
+    // Copy,
 )]
 pub enum JsongenericColumn {
     #[serde(rename(
@@ -262,7 +264,9 @@ pub enum JsongenericColumn {
         serialize = "sqlx_types_json_t_as_postgresql_json_not_null",
         deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
     ))]
-    SqlxTypesJsonTAsPostgresqlJsonNotNull,
+    SqlxTypesJsonTAsPostgresqlJsonNotNull {
+        filter: std::vec::Vec<postgresql_crud::SomethingReader>
+    },
 }
 impl std::fmt::Display for JsongenericColumn {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -274,7 +278,7 @@ impl std::fmt::Display for JsongenericColumn {
                 formatter,
                 "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
             ),
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => {
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull { filter } => {//todo should add reader to write! ?
                 write!(formatter, "sqlx_types_json_t_as_postgresql_json_not_null")
             }
         }
@@ -438,7 +442,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     let mut acc = std::vec::Vec::new();
                     for element in &value.select {
                         if acc.contains(&element) {
-                            let error_0 = *element;
+                            let error_0 = element.clone();//here
                             let error =
                         TryReadOneRouteLogicErrorNamed :: NotUniqueColumn
                         {
@@ -459,6 +463,8 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                             return response;
                         } else {
+                            //todo check on unique json reader
+                            //todo on non empry json reader vec
                             acc.push(element);
                         }
                     }
@@ -499,19 +505,17 @@ DynArcCombinationOfAppStateLogicTraits, >,
             acc.push_str(&match element {
                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
-                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => format!(
+                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull{ filter } => format!(
                     "jsonb_build_object({}) as sqlx_types_json_t_as_postgresql_json_not_null",//todo should support arrays or "key: array" is enough? 
-                    postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(&postgresql_crud::SomethingReader::Something, "sqlx_types_json_t_as_postgresql_json_not_null")
+                    {
+                        let mut acc = filter.iter().fold(std::string::String::default(), |mut acc, element| {
+                            acc.push_str(&format!("{},", postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(*&element, "sqlx_types_json_t_as_postgresql_json_not_null")));
+                            acc
+                        });
+                        let _ = acc.pop();
+                        acc
+                    }
                 )
-                
-                
-                // format!(
-                    // "jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object{}",
-                    // "jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object{}",
-
-                    //sqlx_types_json_t_as_postgresql_json_not_null
-                    // {
-
 // select 
 // std_primitive_i32_as_postgresql_int, 
 // jsonb_build_object(
@@ -523,9 +527,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
 // ) as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object 
 // from jsongeneric 
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
-                        
-                    // }
-                // )
             }); 
             acc.push_str(","); 
             acc
@@ -683,13 +684,30 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             }, 
                             
                             //todo
-                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx::Row::try_get::<sqlx::types::JsonValue, &std::primitive::str>(//sqlx::types::Json::<postgresql_crud::Something>
+                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull{ filter } => match sqlx::Row::try_get::<sqlx::types::JsonValue, &std::primitive::str>(//sqlx::types::Json::<postgresql_crud::Something>
                                 &value,
                                 "sqlx_types_json_t_as_postgresql_json_not_null"
                             ) {
                                 Ok(value) => {
                                     println!("{value:#?}");
                                     todo!();
+
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+// pub enum SomethingReader {
+//     Something,
+//     Omega,
+//     Doggie(DoggieReader)
+// }
+// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+// pub struct SomethingOptions {
+//     something: std::option::Option<Value<std::string::String>>,
+//     omega: std::option::Option<Value<std::vec::Vec<bool>>>,
+//     // #[json_field_name_stringified_reader] //todo for the future proc macro
+//     doggie: std::option::Option<Value<DoggieOptions>>
+// }
+
+
+                                    // postgresql_crud::SomethingReader
                                     // sqlx_types_json_t_as_postgresql_json_not_null = Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
                                 },
                                 Err(error_0) => {
@@ -805,7 +823,7 @@ pub async fn try_read_one(
         let mut acc = std::vec::Vec::new();
         for element in &parameters.payload.select {
             if acc.contains(&element) {
-                let error_0 = *element;
+                let error_0 = element.clone();//here
                 return Err(TryReadOneErrorNamed::NotUniqueColumn {
                     not_unique_column: error_0,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
