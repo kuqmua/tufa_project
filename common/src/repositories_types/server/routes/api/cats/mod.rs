@@ -500,10 +500,15 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
                 JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => format!(
-                    "sqlx_types_json_t_as_postgresql_json_not_null{}",
+                    "jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object{}",
+                    // "jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object{}",
+
+                    //sqlx_types_json_t_as_postgresql_json_not_null
                     {
                         //todo select jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
-                        postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(&postgresql_crud::SomethingReader::Something)
+
+                        //select std_primitive_i32_as_postgresql_int, jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
+                        postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(&postgresql_crud::SomethingReader::Something, "sqlx_types_json_t_as_postgresql_json_not_null")
                     }
                 )
             }); 
