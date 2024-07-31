@@ -502,7 +502,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => format!(
                     "sqlx_types_json_t_as_postgresql_json_not_null{}",
                     {
-                        //todo
+                        //todo select jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
                         postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(&postgresql_crud::SomethingReader::Something)
                     }
                 )
