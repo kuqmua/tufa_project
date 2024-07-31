@@ -244,7 +244,47 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
         }
     }
 }
-
+#[derive(
+    Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Eq, from_str :: FromStr, Clone, Copy,
+)]
+pub enum JsongenericColumn {
+    #[serde(rename(
+        serialize = "std_primitive_i32_as_postgresql_int",
+        deserialize = "std_primitive_i32_as_postgresql_int"
+    ))]
+    StdPrimitiveI32AsPostgresqlInt,
+    #[serde(rename(
+        serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+        deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+    ))]
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    #[serde(rename(
+        serialize = "sqlx_types_json_t_as_postgresql_json_not_null",
+        deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
+    ))]
+    SqlxTypesJsonTAsPostgresqlJsonNotNull,
+}
+impl std::fmt::Display for JsongenericColumn {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::StdPrimitiveI32AsPostgresqlInt => {
+                write!(formatter, "std_primitive_i32_as_postgresql_int")
+            }
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => write!(
+                formatter,
+                "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+            ),
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => {
+                write!(formatter, "sqlx_types_json_t_as_postgresql_json_not_null")
+            }
+        }
+    }
+}
+impl error_occurence_lib::ToStdStringString for JsongenericColumn {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
 /////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ReadOnePayload {
@@ -463,7 +503,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     "sqlx_types_json_t_as_postgresql_json_not_null{}",
                     {
                         //todo postgres query language
-                        "-> \'something\'"
+                        " -> \'something\'"
                     }
                 )
             }); 
