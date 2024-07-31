@@ -10457,8 +10457,8 @@ impl JsonFieldNameStringified for SomethingReader {
     fn generate_postgresql_query_part(&self, column_name: &std::primitive::str) -> std::string::String {
         // "'omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie')",
         match self {
-            Self::Something => std::string::String::from(" -> \'something\'"),
-            Self::Omega => std::string::String::from(" -> \'omega\'"),
+            Self::Something => format!("'something', {column_name} ->>'something'"),
+            Self::Omega => format!("'something', {column_name} ->>'something'"),
             Self::Doggie(value) => format!(" -> doggie{}", value.generate_postgresql_query_part(&column_name))
         }
     }
