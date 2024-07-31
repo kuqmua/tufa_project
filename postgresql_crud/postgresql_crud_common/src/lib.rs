@@ -10388,7 +10388,7 @@ pub trait JsonFieldNameStringified {
     fn max_length() -> std::primitive::usize;
     fn try_create_filter<'a>(value: &'a std::vec::Vec<Self>) -> Result<std::vec::Vec<&'a Self>, &'a Self> where Self: Sized;
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
-    fn generate_postgresql_query_part(&self) -> &std::primitive::str;
+    fn generate_postgresql_query_part(&self) -> std::string::String;
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
@@ -10454,11 +10454,11 @@ impl JsonFieldNameStringified for SomethingReader {
             })
         }
     }
-    fn generate_postgresql_query_part(&self) -> &std::primitive::str {
+    fn generate_postgresql_query_part(&self) -> std::string::String {
         match self  {
-            Self::Something(_) => " -> \'something\'",
-            Self::Omega(_) => " -> \'omega\'",
-            Self::Doggie(_value) => todo!()
+            Self::Something(_) => std::string::String::from(" -> \'something\'"),
+            Self::Omega(_) => std::string::String::from(" -> \'omega\'"),
+            Self::Doggie(value) => format!(" -> doggie{}", value.generate_postgresql_query_part())
         }
     }
 }
@@ -10519,9 +10519,9 @@ impl JsonFieldNameStringified for DoggieReader {
             })
         }
     }
-    fn generate_postgresql_query_part(&self) -> &std::primitive::str {
+    fn generate_postgresql_query_part(&self) -> std::string::String {
         match self  {
-            Self::Says(_) => " -> \'says\'",
+            Self::Says(_) => std::string::String::from(" -> \'says\'"),
         }
     }
 }

@@ -502,8 +502,8 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => format!(
                     "sqlx_types_json_t_as_postgresql_json_not_null{}",
                     {
-                        //todo postgres query language
-                        " -> \'something\'"
+                        //todo
+                        postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(&postgresql_crud::SomethingReader::Something(std::string::String::from("")))
                     }
                 )
             }); 

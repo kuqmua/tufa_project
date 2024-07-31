@@ -73,8 +73,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "offset": 0
 }
 
-### todo name and color must be  arrays              
-
+### todo name and color must be  arrays           
+ 
 POST http://127.0.0.1:8080/jsongeneric/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c

@@ -543,3 +543,4 @@ pub use postgresql_crud_common::JsonFieldNameStringified;
 
 pub use postgresql_crud_common::Something;
 pub use postgresql_crud_common::SomethingOptions;
+pub use postgresql_crud_common::SomethingReader;
