@@ -10412,17 +10412,17 @@ impl std::convert::From<Something> for SomethingOptions {
         }
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum SomethingReader {
-    Something(std::string::String),
-    Omega(std::vec::Vec<bool>),
+    Something,
+    Omega,
     Doggie(DoggieReader)
 }
 impl JsonFieldNameStringified for SomethingReader {
     fn json_field_name_stringified(&self) -> &std::primitive::str {
         match self {
-            Self::Something(_) => "something",
-            Self::Omega(_) => "omega",
+            Self::Something => "something",
+            Self::Omega => "omega",
             Self::Doggie(value) => JsonFieldNameStringified::json_field_name_stringified(value)
         }
     }
@@ -10456,8 +10456,8 @@ impl JsonFieldNameStringified for SomethingReader {
     }
     fn generate_postgresql_query_part(&self) -> std::string::String {
         match self  {
-            Self::Something(_) => std::string::String::from(" -> \'something\'"),
-            Self::Omega(_) => std::string::String::from(" -> \'omega\'"),
+            Self::Something => std::string::String::from(" -> \'something\'"),
+            Self::Omega => std::string::String::from(" -> \'omega\'"),
             Self::Doggie(value) => format!(" -> doggie{}", value.generate_postgresql_query_part())
         }
     }
@@ -10481,14 +10481,14 @@ impl std::convert::From<Doggie> for DoggieOptions {
         }
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum DoggieReader {
-    Says(std::string::String)
+    Says
 }
 impl JsonFieldNameStringified for DoggieReader {
     fn json_field_name_stringified(&self) -> &std::primitive::str {
         match self {
-            Self::Says(_) => "says"
+            Self::Says => "says"
         }
     }
     fn max_length() -> std::primitive::usize { 1 }
@@ -10521,7 +10521,7 @@ impl JsonFieldNameStringified for DoggieReader {
     }
     fn generate_postgresql_query_part(&self) -> std::string::String {
         match self  {
-            Self::Says(_) => std::string::String::from(" -> \'says\'"),
+            Self::Says => std::string::String::from(" -> \'says\'"),
         }
     }
 }
