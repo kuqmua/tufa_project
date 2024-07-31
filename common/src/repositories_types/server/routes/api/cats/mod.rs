@@ -499,7 +499,12 @@ DynArcCombinationOfAppStateLogicTraits, >,
             acc.push_str(&match element {
                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
-                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(&postgresql_crud::SomethingReader::Something, "sqlx_types_json_t_as_postgresql_json_not_null")
+                JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonNotNull => format!(
+                    "jsonb_build_object({}) as sqlx_types_json_t_as_postgresql_json_not_null",//todo should support arrays or "key: array" is enough? 
+                    postgresql_crud::JsonFieldNameStringified::generate_postgresql_query_part(&postgresql_crud::SomethingReader::Something, "sqlx_types_json_t_as_postgresql_json_not_null")
+                )
+                
+                
                 // format!(
                     // "jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object{}",
                     // "jsonb_build_object('omega', sqlx_types_json_t_as_postgresql_json_not_null->>'omega', 'doggie', sqlx_types_json_t_as_postgresql_json_not_null->>'doggie') as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object{}",
@@ -614,7 +619,8 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                     =
                                     Some(postgresql_crud :: Value
                                     { value : postgresql_crud::StdPrimitiveI64(value) });
-                                }, Err(error_0) =>
+                                }, 
+                                Err(error_0) =>
                                 {
                                     let error = TryReadOneRouteLogicErrorNamed :: Postgresql
                                     {
@@ -679,7 +685,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             //todo
                             JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull => match sqlx::Row::try_get::<sqlx::types::JsonValue, &std::primitive::str>(//sqlx::types::Json::<postgresql_crud::Something>
                                 &value,
-                                "?column?"
+                                "sqlx_types_json_t_as_postgresql_json_not_null"
                             ) {
                                 Ok(value) => {
                                     println!("{value:#?}");
