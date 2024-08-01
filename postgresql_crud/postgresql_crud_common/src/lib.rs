@@ -10466,20 +10466,6 @@ impl JsonFieldNameStringified for SomethingReader {
         }
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
-// select 
-// std_primitive_i32_as_postgresql_int, 
-// jsonb_build_object(
-// 	'omega', sqlx_types_json_t_as_postgresql_json_not_null ->>'omega',
-// 	'doggie', jsonb_build_object(
-// 		'says', sqlx_types_json_t_as_postgresql_json_not_null ->'doggie'->>'says',
-// 		'kekw', jsonb_build_object('meow', sqlx_types_json_t_as_postgresql_json_not_null ->'doggie'->'kekw'->>'meow')
-// 	)
-// ) as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
-
-
-// SELECT json_build_object('omega', json_agg(sqlx_types_json_t_as_postgresql_json_not_null->'omega')) AS result FROM jsongeneric;
         match self {
             Self::Something => format!("'something',{column_name_and_maybe_field_getter}->'something'"),
             Self::Omega => format!("'omega',{column_name_and_maybe_field_getter}->'omega'"),
@@ -10498,15 +10484,6 @@ pub struct SomethingOptions {
     omega: std::option::Option<std::vec::Vec<bool>>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: std::option::Option<DoggieOptions>
-}
-impl std::default::Default for SomethingOptions {
-    fn default() -> Self {
-        Self {
-            something: None,
-            omega: None,
-            doggie: None
-        }
-    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -10571,13 +10548,6 @@ impl JsonFieldNameStringified for DoggieReader {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
     says: std::option::Option<std::string::String>,
-}
-impl std::default::Default for DoggieOptions {
-    fn default() -> Self {
-        Self {
-            says: None,
-        }
-    }
 }
 
 
