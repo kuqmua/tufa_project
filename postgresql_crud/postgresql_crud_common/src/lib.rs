@@ -10405,9 +10405,9 @@ impl std::fmt::Display for Something {
 impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
-            something: Some(value.something),
-            omega: Some(value.omega),
-            doggie: Some(DoggieOptions::from(value.doggie)),
+            something: Some(Value{value: value.something}),
+            omega: Some(Value{value:value.omega}),
+            doggie: Some(Value{value:DoggieOptions::from(value.doggie)}),
         }
     }
 }
@@ -10480,10 +10480,10 @@ impl JsonFieldNameStringified for SomethingReader {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
-    something: std::option::Option<std::string::String>,
-    omega: std::option::Option<std::vec::Vec<bool>>,
+    something: std::option::Option<Value<std::string::String>>,
+    omega: std::option::Option<Value<std::vec::Vec<bool>>>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    doggie: std::option::Option<DoggieOptions>
+    doggie: std::option::Option<Value<DoggieOptions>>
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -10493,7 +10493,7 @@ pub struct Doggie {
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
         Self {
-            says: Some(value.says)
+            says: Some(Value{value:value.says})
         }
     }
 }
@@ -10547,7 +10547,7 @@ impl JsonFieldNameStringified for DoggieReader {
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    says: std::option::Option<std::string::String>,
+    says: std::option::Option<Value<std::string::String>>,
 }
 
 
