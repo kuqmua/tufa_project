@@ -10481,8 +10481,8 @@ impl JsonFieldNameStringified for SomethingReader {
 
 // SELECT json_build_object('omega', json_agg(sqlx_types_json_t_as_postgresql_json_not_null->'omega')) AS result FROM jsongeneric;
         match self {
-            Self::Something => format!("'something',{column_name_and_maybe_field_getter}->>'something'"),
-            Self::Omega => format!("'omega',{column_name_and_maybe_field_getter}->>'omega'"),
+            Self::Something => format!("'something',{column_name_and_maybe_field_getter}->'something'"),
+            Self::Omega => format!("'omega',{column_name_and_maybe_field_getter}->'omega'"),
             Self::Doggie(value) => format!(
                 "'doggie',jsonb_build_object({})",
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
@@ -10564,7 +10564,7 @@ impl JsonFieldNameStringified for DoggieReader {
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
-            Self::Says => format!("'says',{column_name_and_maybe_field_getter}->>'says'"),
+            Self::Says => format!("'says',{column_name_and_maybe_field_getter}->'says'"),
         }
     }
 }

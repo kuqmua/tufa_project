@@ -84,7 +84,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "select": [
         {
             "sqlx_types_json_t_as_postgresql_json_not_null":{
-                "filter":["something"]
+                "filter":["something", "omega", {"doggie": "says"}]
             }
         }
         # ,
