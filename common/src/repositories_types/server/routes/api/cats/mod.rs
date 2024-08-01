@@ -678,9 +678,11 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             ) {
                                 Ok(value) => {
                                     // let mut options = postgresql_crud::SomethingOptions::default();
+                                    println!("1{value:#?}");
+                                    let value = serde_json::from_value::<postgresql_crud::SomethingOptions>(value).unwrap();//todo remove unwrap
 
                                     // postgresql_crud::SqlxTypesJson(sqlx::types::Json(::from(value.sqlx_types_json_t_as_postgresql_json_not_null.0.0.0))),
-                                    println!("{value:#?}");
+                                    println!("2{value:#?}");
                                     todo!();
 
 // #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
