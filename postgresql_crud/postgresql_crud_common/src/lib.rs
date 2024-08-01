@@ -10467,10 +10467,10 @@ impl JsonFieldNameStringified for SomethingReader {
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
-            Self::Something => format!("'something',{column_name_and_maybe_field_getter}->'something'"),
-            Self::Omega => format!("'omega',{column_name_and_maybe_field_getter}->'omega'"),
+            Self::Something => format!("'something',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'something')"),
+            Self::Omega => format!("'omega',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'omega')"),
             Self::Doggie(value) => format!(
-                "'doggie',jsonb_build_object({})",
+                "'doggie',jsonb_build_object('value',jsonb_build_object({}))",
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
             )
         }
@@ -10541,7 +10541,7 @@ impl JsonFieldNameStringified for DoggieReader {
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
-            Self::Says => format!("'says',{column_name_and_maybe_field_getter}->'says'"),
+            Self::Says => format!("'says',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'says')"),
         }
     }
 }
