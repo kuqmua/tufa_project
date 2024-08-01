@@ -399,8 +399,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
     {
         Ok(value) => value,
         Err(error_0) => {
-            let status_code =
-                postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error_0);
             let error = TryReadOneRouteLogicErrorNamed::CheckBodySize {
                 check_body_size: error_0,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(

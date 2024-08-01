@@ -2226,7 +2226,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let body_bytes = match #postgresql_crud_snake_case::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_0_token_stream) => {
-                        let #status_code_snake_case = #postgresql_crud_snake_case::GetAxumHttpStatusCode::get_axum_http_status_code(&#error_0_token_stream);
                         #check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                     }
                 };
