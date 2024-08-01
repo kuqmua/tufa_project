@@ -10477,6 +10477,9 @@ impl JsonFieldNameStringified for SomethingReader {
 // ) as sqlx_types_json_t_as_postgresql_json_not_null_jsonb_build_object 
 // from jsongeneric 
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
+
+
+// SELECT json_build_object('omega', json_agg(sqlx_types_json_t_as_postgresql_json_not_null->'omega')) AS result FROM jsongeneric;
         match self {
             Self::Something => format!("'something',{column_name_and_maybe_field_getter}->>'something'"),
             Self::Omega => format!("'omega',{column_name_and_maybe_field_getter}->>'omega'"),
