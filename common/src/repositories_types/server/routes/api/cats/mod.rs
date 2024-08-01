@@ -270,18 +270,8 @@ pub enum JsongenericColumn {
 }
 impl std::fmt::Display for JsongenericColumn {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::StdPrimitiveI32AsPostgresqlInt => {
-                write!(formatter, "std_primitive_i32_as_postgresql_int")
-            }
-            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => write!(
-                formatter,
-                "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-            ),
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull { filter } => {//todo should add reader to write! ?
-                write!(formatter, "sqlx_types_json_t_as_postgresql_json_not_null")
-            }
-        }
+        //here change
+        write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))
     }
 }
 impl error_occurence_lib::ToStdStringString for JsongenericColumn {
