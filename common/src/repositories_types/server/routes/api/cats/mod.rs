@@ -677,6 +677,9 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 "sqlx_types_json_t_as_postgresql_json_not_null"
                             ) {
                                 Ok(value) => {
+                                    // let mut options = postgresql_crud::SomethingOptions::default();
+
+                                    // postgresql_crud::SqlxTypesJson(sqlx::types::Json(::from(value.sqlx_types_json_t_as_postgresql_json_not_null.0.0.0))),
                                     println!("{value:#?}");
                                     todo!();
 

@@ -10494,6 +10494,15 @@ pub struct SomethingOptions {
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: std::option::Option<Value<DoggieOptions>>
 }
+impl std::default::Default for SomethingOptions {
+    fn default() -> Self {
+        Self {
+            something: None,
+            omega: None,
+            doggie: None
+        }
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
@@ -10558,6 +10567,12 @@ impl JsonFieldNameStringified for DoggieReader {
 pub struct DoggieOptions {
     says: std::option::Option<Value<std::string::String>>,
 }
-
+impl std::default::Default for DoggieOptions {
+    fn default() -> Self {
+        Self {
+            says: None,
+        }
+    }
+}
 // let schema = schema_for!(Something);
 // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
