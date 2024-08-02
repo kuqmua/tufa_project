@@ -315,6 +315,14 @@ pub enum TryReadOneRouteLogicResponseVariants {
         not_unique_column: JsongenericColumn,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    EmptyColumnJsonReader {
+        empty_column_json_reader: JsongenericColumn,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueColumnJsonReader {
+        not_unique_column_json_reader: JsongenericColumn,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
 }
 impl std::convert::From<TryReadOneRouteLogicErrorNamed> for TryReadOneRouteLogicResponseVariants {
     fn from(value: TryReadOneRouteLogicErrorNamed) -> Self {
@@ -354,6 +362,20 @@ impl std::convert::From<TryReadOneRouteLogicErrorNamed> for TryReadOneRouteLogic
                 not_unique_column,
                 code_occurence,
             },
+            TryReadOneRouteLogicErrorNamedWithSerializeDeserialize::EmptyColumnJsonReader {
+                empty_column_json_reader,
+                code_occurence,
+            } => Self::EmptyColumnJsonReader {
+                empty_column_json_reader,
+                code_occurence,
+            },
+            TryReadOneRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueColumnJsonReader {
+                not_unique_column_json_reader,
+                code_occurence,
+            } => Self::NotUniqueColumnJsonReader {
+                not_unique_column_json_reader,
+                code_occurence,
+            },
         }
     }
 }
@@ -382,6 +404,16 @@ pub enum TryReadOneRouteLogicErrorNamed {
     NotUniqueColumn {
         #[eo_to_std_string_string_serialize_deserialize]
         not_unique_column: JsongenericColumn,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    EmptyColumnJsonReader {
+        #[eo_to_std_string_string_serialize_deserialize]
+        empty_column_json_reader: JsongenericColumn,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueColumnJsonReader {
+        #[eo_to_std_string_string_serialize_deserialize]
+        not_unique_column_json_reader: JsongenericColumn,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -459,8 +491,8 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull { filter } => {
                                     if filter.is_empty() {
                                         let error_0 = element.clone();//here
-                                        let error = TryReadOneRouteLogicErrorNamed::NotUniqueColumn { 
-                                            not_unique_column: error_0, 
+                                        let error = TryReadOneRouteLogicErrorNamed::EmptyColumnJsonReader { 
+                                            empty_column_json_reader: error_0, 
                                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                                 file!().to_owned(),
                                                 line!(),
@@ -483,8 +515,8 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                         Ok(_) => (),
                                         Err(error) => {
                                             let error_0 = element.clone();//here
-                                            let error = TryReadOneRouteLogicErrorNamed :: NotUniqueColumn { 
-                                                not_unique_column: error_0, 
+                                            let error = TryReadOneRouteLogicErrorNamed :: NotUniqueColumnJsonReader { 
+                                                not_unique_column_json_reader: error_0, 
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                                     file!().to_owned(),
                                                     line!(),
@@ -506,7 +538,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                     }
                                 },
                             }
-                            //todo on non empry json reader vec
                             acc.push(element);
                         }
                     }
@@ -994,6 +1025,20 @@ pub async fn try_read_one(
             code_occurence,
         } => TryReadOneRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueColumn {
             not_unique_column,
+            code_occurence,
+        },
+        TryReadOneRouteLogicResponseVariants::EmptyColumnJsonReader {
+            empty_column_json_reader,
+            code_occurence,
+        } => TryReadOneRouteLogicErrorNamedWithSerializeDeserialize::EmptyColumnJsonReader {
+            empty_column_json_reader,
+            code_occurence,
+        },
+        TryReadOneRouteLogicResponseVariants::NotUniqueColumnJsonReader {
+            not_unique_column_json_reader,
+            code_occurence,
+        } => TryReadOneRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueColumnJsonReader {
+            not_unique_column_json_reader,
             code_occurence,
         },
     };
