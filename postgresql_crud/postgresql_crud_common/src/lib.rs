@@ -10395,8 +10395,10 @@ pub struct Something {
     omega: std::vec::Vec<bool>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: Doggie
-
 }
+
+                    // pub #limit_snake_case: #limit_and_offset_type_token_stream,
+                    // pub #offset_snake_case: #limit_and_offset_type_token_stream,
 impl std::fmt::Display for Something {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", &self)
