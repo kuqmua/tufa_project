@@ -10452,6 +10452,42 @@ impl JsonFieldNameStringified for SomethingReader {
         }
         Ok(())
     }
+    // fn check_unique<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<(), &'a SomethingReader> {
+    //     let mut acc = vec![];
+    //     for element in value {
+    //         match element {
+    //             Self::Something => match acc.contains(&element) {
+    //                 true => {
+    //                     return Err(element);
+    //                 },
+    //                 false => {
+    //                     acc.push(element);
+    //                 }
+    //             },
+    //             Self::Omega => match acc.contains(&element) {
+    //                 true => {
+    //                     return Err(element);
+    //                 },
+    //                 false => {
+    //                     acc.push(element);
+    //                 }
+    //             },
+    //             Self::Doggie(value) => {
+    //                 // match vlaue
+    //                 // todo find ?
+    //                 match acc.contains(&element) {
+    //                     true => {
+    //                         return Err(element);
+    //                     },
+    //                     false => {
+    //                         acc.push(element);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     Ok(())
+    // }
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
         let got_length = value.len();
         let max_length = SomethingReader::max_length();
@@ -10515,12 +10551,14 @@ impl JsonFieldNameStringified for DoggieReader {
     fn check_unique<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<(), &'a DoggieReader> {
         let mut acc = vec![];
         for element in value {
-            match acc.contains(&element) {
-                true => {
-                    return Err(element);
-                },
-                false => {
-                    acc.push(element);
+            match element {
+                Self::Says => match acc.contains(&element) {
+                    true => {
+                        return Err(element);
+                    },
+                    false => {
+                        acc.push(element);
+                    }
                 }
             }
         }
