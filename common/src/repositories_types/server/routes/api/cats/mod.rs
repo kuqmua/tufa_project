@@ -456,18 +456,16 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             match &element {
                                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => (),
                                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => (),
-                                JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull { filter } => match postgresql_crud::JsonFieldNameStringified::check_unique(filter) {
-                                    Ok(_) => (),
-                                    Err(error) => {
-                                        //todo different error enum types
+                                JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull { filter } => {
+                                    if filter.is_empty() {
                                         let error_0 = element.clone();//here
-                                        let error = TryReadOneRouteLogicErrorNamed :: NotUniqueColumn { 
+                                        let error = TryReadOneRouteLogicErrorNamed::NotUniqueColumn { 
                                             not_unique_column: error_0, 
                                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                                 file!().to_owned(),
                                                 line!(),
                                                 column!(),
-                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
                                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
                                                     line: 1647, 
                                                     column: 13,
@@ -480,6 +478,31 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                         );
                                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                         return response;
+                                    }
+                                    match postgresql_crud::JsonFieldNameStringified::check_unique(filter) {
+                                        Ok(_) => (),
+                                        Err(error) => {
+                                            let error_0 = element.clone();//here
+                                            let error = TryReadOneRouteLogicErrorNamed :: NotUniqueColumn { 
+                                                not_unique_column: error_0, 
+                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                    file!().to_owned(),
+                                                    line!(),
+                                                    column!(),
+                                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                        line: 1647, 
+                                                        column: 13,
+                                                    })
+                                                )
+                                            };
+                                            eprintln!("{error}");
+                                            let mut response = axum::response::IntoResponse::into_response(
+                                                axum::Json(TryReadOneRouteLogicResponseVariants::from(error)),
+                                            );
+                                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                            return response;
+                                        }
                                     }
                                 },
                             }

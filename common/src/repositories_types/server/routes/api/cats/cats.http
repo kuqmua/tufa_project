@@ -84,9 +84,10 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "select": [
         {
             "sqlx_types_json_t_as_postgresql_json_not_null":{
-                "filter":["something", "something", "omega", {"doggie": "says"}]
+                "filter": []
             }
         }
+        # "something", "something", "omega", {"doggie": "says"}
         # ,
         # "std_primitive_i32_as_postgresql_int"
         # "std_primitive_i16_as_postgresql_small_int"
