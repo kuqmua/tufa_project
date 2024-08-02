@@ -10490,7 +10490,18 @@ impl JsonFieldNameStringified for SomethingReader {
     //     Ok(())
     // }
     fn is_equal<'a>(&'a self, value: &'a Self) -> Result<(), &'a Self> where Self: Sized {
-        todo!()
+        match (self, value) {
+            (SomethingReader::Something, SomethingReader::Something) => todo!(),
+            (SomethingReader::Something, SomethingReader::Omega) => todo!(),
+            (SomethingReader::Something, SomethingReader::Doggie(_)) => todo!(),
+            (SomethingReader::Omega, SomethingReader::Something) => todo!(),
+            (SomethingReader::Omega, SomethingReader::Omega) => todo!(),
+            (SomethingReader::Omega, SomethingReader::Doggie(_)) => todo!(),
+            (SomethingReader::Doggie(_), SomethingReader::Something) => todo!(),
+            (SomethingReader::Doggie(_), SomethingReader::Omega) => todo!(),
+            (SomethingReader::Doggie(_), SomethingReader::Doggie(_)) => todo!(),
+        }
+        // todo!()
     }
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
         let got_length = value.len();
