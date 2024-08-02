@@ -10396,6 +10396,34 @@ pub struct Something {
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: Doggie
 }
+//todo support pagination with limit and offset
+//todo support vec of structs or enums
+// fn g(value: &Something) -> serde_json::Value {
+//     let something = &value.something;
+//     let omega = &value.something;
+//     let doggie = &value.doggie;
+
+//     // let f = serde_json::to_value(value).unwrap();//todo
+//     let something_json_value = match f {
+//         serde::Json::Value::Null => ,
+//         serde::Json::Value::Bool(bool) => ,
+//         serde::Json::Value::Number(Number) => ,
+//         serde::Json::Value::String(String) => ,
+//         serde::Json::Value::Array(Vec<Value>) => ,
+//         serde::Json::Value::Object(Map<String, Value>) => ,
+//     };
+//     todo!()
+// }
+
+// pub enum Value {
+//     Null,
+//     Bool(bool),
+//     Number(Number),
+//     String(String),
+//     Array(Vec<Value>),
+//     Object(Map<String, Value>),
+// }
+
 
                     // pub #limit_snake_case: #limit_and_offset_type_token_stream,
                     // pub #offset_snake_case: #limit_and_offset_type_token_stream,
