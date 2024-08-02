@@ -10385,7 +10385,7 @@ pub struct JsonFieldsLengthError {
 pub trait JsonFieldNameStringified {
     fn json_field_name_stringified(&self) -> &std::primitive::str;
     fn max_length() -> std::primitive::usize;
-    fn try_create_filter<'a>(value: &'a std::vec::Vec<Self>) -> Result<std::vec::Vec<&'a Self>, &'a Self> where Self: Sized;
+    fn check_unique<'a>(value: &'a std::vec::Vec<Self>) -> Result<(), &'a Self> where Self: Sized;
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
 }
@@ -10438,7 +10438,7 @@ impl JsonFieldNameStringified for SomethingReader {
         }
     }
     fn max_length() -> std::primitive::usize { 3 }
-    fn try_create_filter<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<std::vec::Vec<&'a SomethingReader>, &'a SomethingReader> {
+    fn check_unique<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<(), &'a SomethingReader> {
         let mut acc = vec![];
         for element in value {
             match acc.contains(&element) {
@@ -10450,7 +10450,7 @@ impl JsonFieldNameStringified for SomethingReader {
                 }
             }
         }
-        Ok(acc)
+        Ok(())
     }
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
         let got_length = value.len();
@@ -10512,7 +10512,7 @@ impl JsonFieldNameStringified for DoggieReader {
         }
     }
     fn max_length() -> std::primitive::usize { 1 }
-    fn try_create_filter<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<std::vec::Vec<&'a DoggieReader>, &'a DoggieReader> {
+    fn check_unique<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<(), &'a DoggieReader> {
         let mut acc = vec![];
         for element in value {
             match acc.contains(&element) {
@@ -10524,7 +10524,7 @@ impl JsonFieldNameStringified for DoggieReader {
                 }
             }
         }
-        Ok(acc)
+        Ok(())
     }
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
         let got_length = value.len();
