@@ -4934,7 +4934,8 @@ impl Default for TestNewType<Something> {
             omega: vec![true, false],
             doggie: Doggie {
                 says: std::string::String::from("gav")
-            }
+            },
+            cats: vec![Cat { meow: std::string::String::from("") }]
         }));
         let serde_json_value =
             SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
@@ -10383,7 +10384,7 @@ pub struct JsonFieldsLengthError {
 }
 
 pub trait JsonFieldNameStringified {
-    fn json_field_name_stringified(&self) -> &std::primitive::str;
+    // fn json_field_name_stringified(&self) -> &std::primitive::str;
     fn max_length() -> std::primitive::usize;
     fn check_unique<'a>(value: &'a std::vec::Vec<Self>) -> Result<(), &'a Self> where Self: Sized;
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
@@ -10394,7 +10395,8 @@ pub struct Something {
     something: std::string::String,
     omega: std::vec::Vec<bool>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    doggie: Doggie
+    doggie: Doggie,
+    cats: std::vec::Vec<Cat>,
 }
 //todo support pagination with limit and offset
 //todo support vec of structs or enums
@@ -10438,10 +10440,11 @@ impl std::convert::From<Something> for SomethingOptions {
             something: Some(Value{value: value.something}),
             omega: Some(Value{value:value.omega}),
             doggie: Some(Value{value:DoggieOptions::from(value.doggie)}),
+            cats: Some(Value{value: value.cats.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>()}),
         }
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum SomethingReader {
     #[serde(rename(
         serialize = "something",
@@ -10457,16 +10460,22 @@ pub enum SomethingReader {
         serialize = "doggie",
         deserialize = "doggie"
     ))]
-    Doggie(DoggieReader)
+    Doggie(DoggieReader),
+    #[serde(rename(
+        serialize = "cats",
+        deserialize = "cats"
+    ))]
+    Cats(std::vec::Vec<CatReader>)
 }
 impl JsonFieldNameStringified for SomethingReader {
-    fn json_field_name_stringified(&self) -> &std::primitive::str {
-        match self {
-            Self::Something => "something",
-            Self::Omega => "omega",
-            Self::Doggie(value) => JsonFieldNameStringified::json_field_name_stringified(value)
-        }
-    }
+    // fn json_field_name_stringified(&self) -> &std::primitive::str {
+    //     match self {
+    //         Self::Something => "something",
+    //         Self::Omega => "omega",
+    //         Self::Doggie(value) => JsonFieldNameStringified::json_field_name_stringified(value),
+    //         Self::Cats(value) => "cats",
+    //     }
+    // }
     fn max_length() -> std::primitive::usize { 3 }
     fn check_unique<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<(), &'a SomethingReader> {
         let mut acc = vec![];
@@ -10502,7 +10511,11 @@ impl JsonFieldNameStringified for SomethingReader {
             Self::Doggie(value) => format!(
                 "'doggie',jsonb_build_object('value',jsonb_build_object({}))",
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
-            )
+            ),
+            Self::Cats(value) => format!(
+                "'cats',jsonb_build_object('value',jsonb_build_object({}))",
+                value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'cats'"))
+            ),
         }
     }
 }
@@ -10513,7 +10526,8 @@ pub struct SomethingOptions {
     something: std::option::Option<Value<std::string::String>>,
     omega: std::option::Option<Value<std::vec::Vec<bool>>>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    doggie: std::option::Option<Value<DoggieOptions>>
+    doggie: std::option::Option<Value<DoggieOptions>>,
+    cats: std::option::Option<Value<std::vec::Vec<CatOptions>>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -10536,11 +10550,11 @@ pub enum DoggieReader {
     Says
 }
 impl JsonFieldNameStringified for DoggieReader {
-    fn json_field_name_stringified(&self) -> &std::primitive::str {
-        match self {
-            Self::Says => "says"
-        }
-    }
+    // fn json_field_name_stringified(&self) -> &std::primitive::str {
+    //     match self {
+    //         Self::Says => "says"
+    //     }
+    // }
     fn max_length() -> std::primitive::usize { 1 }
     fn check_unique<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<(), &'a DoggieReader> {
         let mut acc = vec![];
@@ -10592,3 +10606,70 @@ pub struct DoggieOptions {
 // }
 // let schema = schema_for!(Something);
 // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
+
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct Cat {
+    meow: std::string::String,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub enum CatReader {
+    #[serde(rename(
+        serialize = "meow",
+        deserialize = "meow"
+    ))]
+    Meow
+}
+impl JsonFieldNameStringified for CatReader {
+    // fn json_field_name_stringified(&self) -> &std::primitive::str {
+    //     match self {
+    //         Self::Meow => "meow"
+    //     }
+    // }
+    fn max_length() -> std::primitive::usize { 1 }
+    fn check_unique<'a>(value: &'a std::vec::Vec<CatReader>) -> Result<(), &'a CatReader> {
+        let mut acc = vec![];
+        for element in value {
+            match element {
+                Self::Meow => match acc.contains(&element) {
+                    true => {
+                        return Err(element);
+                    },
+                    false => {
+                        acc.push(element);
+                    }
+                }
+            }
+        }
+        Ok(())
+    }
+    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
+        let got_length = value.len();
+        let max_length = CatReader::max_length();
+        if got_length <= max_length {
+            Ok(value)
+        }
+        else {
+            Err(JsonFieldsLengthError{
+                got_length,
+                max_length,
+            })
+        }
+    }
+    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
+        match self {
+            Self::Meow => format!("'meow',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'meow')"),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
+pub struct CatOptions {
+    meow: std::option::Option<Value<std::string::String>>,
+}
+impl std::convert::From<Cat> for CatOptions {
+    fn from(value: Cat) -> Self {
+        Self {
+            meow: Some(Value{value:value.meow}),
+        }
+    }
+}
