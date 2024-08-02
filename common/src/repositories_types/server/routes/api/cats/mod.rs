@@ -511,29 +511,36 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                         return response;
                                     }
-                                    match postgresql_crud::JsonFieldNameStringified::check_unique(filter) {
-                                        Ok(_) => (),
-                                        Err(error) => {
-                                            let error_0 = element.clone();//here
-                                            let error = TryReadOneRouteLogicErrorNamed :: NotUniqueColumnJsonReader { 
-                                                not_unique_column_json_reader: error_0, 
-                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                    file!().to_owned(),
-                                                    line!(),
-                                                    column!(),
-                                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                        line: 1647, 
-                                                        column: 13,
-                                                    })
-                                                )
-                                            };
-                                            eprintln!("{error}");
-                                            let mut response = axum::response::IntoResponse::into_response(
-                                                axum::Json(TryReadOneRouteLogicResponseVariants::from(error)),
-                                            );
-                                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                                            return response;
+                                    {
+                                        let mut acc = vec![];
+                                        for element_handle in filter {
+                                            match acc.contains(&element_handle) {
+                                                true => {
+                                                    let error_0 = element.clone();//here
+                                                    let error = TryReadOneRouteLogicErrorNamed :: NotUniqueColumnJsonReader { 
+                                                        not_unique_column_json_reader: error_0, 
+                                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                            file!().to_owned(),
+                                                            line!(),
+                                                            column!(),
+                                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                                line: 1647, 
+                                                                column: 13,
+                                                            })
+                                                        )
+                                                    };
+                                                    eprintln!("{error}");
+                                                    let mut response = axum::response::IntoResponse::into_response(
+                                                        axum::Json(TryReadOneRouteLogicResponseVariants::from(error)),
+                                                    );
+                                                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                                    return response;
+                                                },
+                                                false => {
+                                                    acc.push(element_handle);
+                                                }
+                                            }
                                         }
                                     }
                                 },

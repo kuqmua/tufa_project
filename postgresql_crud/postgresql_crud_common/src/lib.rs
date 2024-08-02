@@ -10385,9 +10385,8 @@ pub struct JsonFieldsLengthError {
 
 pub trait JsonFieldNameStringified {
     // fn json_field_name_stringified(&self) -> &std::primitive::str;
-    fn max_length() -> std::primitive::usize;
-    fn check_unique<'a>(value: &'a std::vec::Vec<Self>) -> Result<(), &'a Self> where Self: Sized;
-    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
+    // fn check_unique<'a>(value: &'a std::vec::Vec<Self>) -> Result<(), &'a Self> where Self: Sized;
+    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -10476,34 +10475,33 @@ impl JsonFieldNameStringified for SomethingReader {
     //         Self::Cats(value) => "cats",
     //     }
     // }
-    fn max_length() -> std::primitive::usize { 3 }
-    fn check_unique<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<(), &'a SomethingReader> {
-        let mut acc = vec![];
-        for element in value {
-            match acc.contains(&element) {
-                true => {
-                    return Err(element);
-                },
-                false => {
-                    acc.push(element);
-                }
-            }
-        }
-        Ok(())
-    }
-    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
-        let got_length = value.len();
-        let max_length = SomethingReader::max_length();
-        if got_length <= max_length {
-            Ok(value)
-        }
-        else {
-            Err(JsonFieldsLengthError{
-                got_length,
-                max_length,
-            })
-        }
-    }
+    // fn check_unique<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<(), &'a SomethingReader> {
+    //     let mut acc = vec![];
+    //     for element in value {
+    //         match acc.contains(&element) {
+    //             true => {
+    //                 return Err(element);
+    //             },
+    //             false => {
+    //                 acc.push(element);
+    //             }
+    //         }
+    //     }
+    //     Ok(())
+    // }
+    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
+    //     let got_length = value.len();
+    //     let max_length = 4;
+    //     if got_length <= max_length {
+    //         Ok(value)
+    //     }
+    //     else {
+    //         Err(JsonFieldsLengthError{
+    //             got_length,
+    //             max_length,
+    //         })
+    //     }
+    // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
             Self::Something => format!("'something',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'something')"),
@@ -10512,10 +10510,12 @@ impl JsonFieldNameStringified for SomethingReader {
                 "'doggie',jsonb_build_object('value',jsonb_build_object({}))",
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
             ),
-            Self::Cats(value) => format!(
-                "'cats',jsonb_build_object('value',jsonb_build_object({}))",
-                value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'cats'"))
-            ),
+            Self::Cats(value) => 
+            todo!()
+            // format!(
+            //     "'cats',jsonb_build_object('value',jsonb_build_object({}))",
+            //     value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'cats'"))
+            // ),
         }
     }
 }
@@ -10555,36 +10555,35 @@ impl JsonFieldNameStringified for DoggieReader {
     //         Self::Says => "says"
     //     }
     // }
-    fn max_length() -> std::primitive::usize { 1 }
-    fn check_unique<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<(), &'a DoggieReader> {
-        let mut acc = vec![];
-        for element in value {
-            match element {
-                Self::Says => match acc.contains(&element) {
-                    true => {
-                        return Err(element);
-                    },
-                    false => {
-                        acc.push(element);
-                    }
-                }
-            }
-        }
-        Ok(())
-    }
-    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
-        let got_length = value.len();
-        let max_length = DoggieReader::max_length();
-        if got_length <= max_length {
-            Ok(value)
-        }
-        else {
-            Err(JsonFieldsLengthError{
-                got_length,
-                max_length,
-            })
-        }
-    }
+    // fn check_unique<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<(), &'a DoggieReader> {
+    //     let mut acc = vec![];
+    //     for element in value {
+    //         match element {
+    //             Self::Says => match acc.contains(&element) {
+    //                 true => {
+    //                     return Err(element);
+    //                 },
+    //                 false => {
+    //                     acc.push(element);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     Ok(())
+    // }
+    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
+    //     let got_length = value.len();
+    //     let max_length = 1;
+    //     if got_length <= max_length {
+    //         Ok(value)
+    //     }
+    //     else {
+    //         Err(JsonFieldsLengthError{
+    //             got_length,
+    //             max_length,
+    //         })
+    //     }
+    // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
             Self::Says => format!("'says',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'says')"),
@@ -10626,36 +10625,35 @@ impl JsonFieldNameStringified for CatReader {
     //         Self::Meow => "meow"
     //     }
     // }
-    fn max_length() -> std::primitive::usize { 1 }
-    fn check_unique<'a>(value: &'a std::vec::Vec<CatReader>) -> Result<(), &'a CatReader> {
-        let mut acc = vec![];
-        for element in value {
-            match element {
-                Self::Meow => match acc.contains(&element) {
-                    true => {
-                        return Err(element);
-                    },
-                    false => {
-                        acc.push(element);
-                    }
-                }
-            }
-        }
-        Ok(())
-    }
-    fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
-        let got_length = value.len();
-        let max_length = CatReader::max_length();
-        if got_length <= max_length {
-            Ok(value)
-        }
-        else {
-            Err(JsonFieldsLengthError{
-                got_length,
-                max_length,
-            })
-        }
-    }
+    // fn check_unique<'a>(value: &'a std::vec::Vec<CatReader>) -> Result<(), &'a CatReader> {
+    //     let mut acc = vec![];
+    //     for element in value {
+    //         match element {
+    //             Self::Meow => match acc.contains(&element) {
+    //                 true => {
+    //                     return Err(element);
+    //                 },
+    //                 false => {
+    //                     acc.push(element);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     Ok(())
+    // }
+    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
+    //     let got_length = value.len();
+    //     let max_length = 1;
+    //     if got_length <= max_length {
+    //         Ok(value)
+    //     }
+    //     else {
+    //         Err(JsonFieldsLengthError{
+    //             got_length,
+    //             max_length,
+    //         })
+    //     }
+    // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
             Self::Meow => format!("'meow',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'meow')"),
