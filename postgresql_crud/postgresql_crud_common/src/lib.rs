@@ -10386,7 +10386,6 @@ pub trait JsonFieldNameStringified {
     fn json_field_name_stringified(&self) -> &std::primitive::str;
     fn max_length() -> std::primitive::usize;
     fn check_unique<'a>(value: &'a std::vec::Vec<Self>) -> Result<(), &'a Self> where Self: Sized;
-    fn is_equal<'a>(&'a self, value: &'a Self) -> Result<(), &'a Self> where Self: Sized;
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
 }
@@ -10452,56 +10451,6 @@ impl JsonFieldNameStringified for SomethingReader {
             }
         }
         Ok(())
-    }
-    // fn check_unique<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<(), &'a SomethingReader> {
-    //     let mut acc = vec![];
-    //     for element in value {
-    //         match element {
-    //             Self::Something => match acc.contains(&element) {
-    //                 true => {
-    //                     return Err(element);
-    //                 },
-    //                 false => {
-    //                     acc.push(element);
-    //                 }
-    //             },
-    //             Self::Omega => match acc.contains(&element) {
-    //                 true => {
-    //                     return Err(element);
-    //                 },
-    //                 false => {
-    //                     acc.push(element);
-    //                 }
-    //             },
-    //             Self::Doggie(value) => {
-    //                 // match vlaue
-    //                 // todo find ?
-    //                 match acc.contains(&element) {
-    //                     true => {
-    //                         return Err(element);
-    //                     },
-    //                     false => {
-    //                         acc.push(element);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     Ok(())
-    // }
-    fn is_equal<'a>(&'a self, value: &'a Self) -> Result<(), &'a Self> where Self: Sized {
-        match (self, value) {
-            (SomethingReader::Something, SomethingReader::Something) => todo!(),
-            (SomethingReader::Something, SomethingReader::Omega) => todo!(),
-            (SomethingReader::Something, SomethingReader::Doggie(_)) => todo!(),
-            (SomethingReader::Omega, SomethingReader::Something) => todo!(),
-            (SomethingReader::Omega, SomethingReader::Omega) => todo!(),
-            (SomethingReader::Omega, SomethingReader::Doggie(_)) => todo!(),
-            (SomethingReader::Doggie(_), SomethingReader::Something) => todo!(),
-            (SomethingReader::Doggie(_), SomethingReader::Omega) => todo!(),
-            (SomethingReader::Doggie(_), SomethingReader::Doggie(_)) => todo!(),
-        }
-        // todo!()
     }
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
         let got_length = value.len();
@@ -10578,9 +10527,6 @@ impl JsonFieldNameStringified for DoggieReader {
             }
         }
         Ok(())
-    }
-    fn is_equal<'a>(&'a self, value: &'a Self) -> Result<(), &'a Self> where Self: Sized {
-        todo!()
     }
     fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
         let got_length = value.len();

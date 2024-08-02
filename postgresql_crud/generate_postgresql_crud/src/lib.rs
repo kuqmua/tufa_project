@@ -1342,6 +1342,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream = quote::quote!{std::vec::Vec::<#primary_key_inner_type_token_stream>};
     let std_vec_vec_struct_options_ident_token_stream = quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>};
+    //todo rename not_unique_column to something what mean json tree getter too
     let not_unique_column_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming_conventions::NotUniqueColumnUpperCamelCase,
         Some(proc_macro_helpers::status_code::StatusCode::BadRequest400),
