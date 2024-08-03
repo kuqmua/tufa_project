@@ -10383,6 +10383,7 @@ pub trait GeneratePostgresqlQueryPart {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
 }
 
+//todo generate wrapper type for all possible json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
@@ -10416,7 +10417,7 @@ impl std::convert::From<Something> for SomethingOptions {
         }
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum SomethingReader {
     #[serde(rename(
         serialize = "something",
@@ -10435,7 +10436,7 @@ pub enum SomethingReader {
         serialize = "doggie",
         deserialize = "doggie"
     ))]
-    Doggie(DoggieReader),
+    Doggie(std::vec::Vec<DoggieReader>),
     #[serde(rename(
         serialize = "cats",
         deserialize = "cats"
@@ -10447,6 +10448,7 @@ pub enum SomethingReader {
     }
 }
 impl GeneratePostgresqlQueryPart for SomethingReader {
+    //todo return result instead of std::string::String
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
             Self::Something => format!("'something',{column_name_and_maybe_field_getter}->'something'"),
@@ -10455,15 +10457,39 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                 offset
             } => {
                 let start = offset;
+                //todo generate error instead of 
                 let end = match offset.checked_add(*limit) {
                     Some(value) => value,
                     None => 0
                 };
                 format!("'omega',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end})")
             },
-            Self::Doggie(reader) => format!(
+            Self::Doggie(reader_vec) => format!(
                 "'doggie',jsonb_build_object({})",
-                reader.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
+                {
+                    if reader_vec.is_empty() {
+                        todo!()//return error
+                    }
+                    let mut unique_reader_vec = vec![];
+                    for element in reader_vec {
+                        if unique_reader_vec.contains(&element) {
+                            todo!()//return error
+                        }
+                        else {
+                            unique_reader_vec.push(&element);
+                        }
+                    }
+                    let mut acc = reader_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                        acc.push_str(&format!(
+                            "{},",
+                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
+                        ));
+                        acc
+                    });
+                    let _ = acc.pop();
+                    acc
+                }
+                
             ),
             Self::Cats {
                 reader,

@@ -93,8 +93,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                         }
                     }, 
                     {
-                        "doggie": "says"
-                    },
+                        "doggie": ["says"]
+                    }
+                    ,
                     {
                         "cats": {
                             "reader": "one",
