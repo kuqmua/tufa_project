@@ -10379,8 +10379,8 @@ pub struct OrderBy<ColumnGeneric> {
 }
 
 /////////////////////
-pub trait GeneratePostgresqlQueryPart {
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
+pub trait GeneratePostgresqlQueryPart<T> {
+    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
 }
 
 //todo generate wrapper type for all possible json type
@@ -10447,11 +10447,23 @@ pub enum SomethingReader {
         offset: std::primitive::u64,
     }
 }
-impl GeneratePostgresqlQueryPart for SomethingReader {
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
+    OffsetPlusLimitIsIntOverflow {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FieldsFilterIsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueFieldFilter {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingReader {
     //todo return result instead of std::string::String
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
+    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::Something => format!("'something',{column_name_and_maybe_field_getter}->'something'"),
+            Self::Something => Ok(format!("'something',{column_name_and_maybe_field_getter}->'something'")),
             Self::Omega {
                 limit,
                 offset
@@ -10462,9 +10474,9 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                     Some(value) => value,
                     None => 0
                 };
-                format!("'omega',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end})")
+                Ok(format!("'omega',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end})"))
             },
-            Self::Doggie(reader_vec) => format!(
+            Self::Doggie(reader_vec) => Ok(format!(
                 "'doggie',jsonb_build_object({})",
                 {
                     if reader_vec.is_empty() {
@@ -10482,15 +10494,14 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                     let mut acc = reader_vec.iter().fold(std::string::String::default(), |mut acc, element| {
                         acc.push_str(&format!(
                             "{},",
-                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
+                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'")).unwrap()//todo return error
                         ));
                         acc
                     });
                     let _ = acc.pop();
                     acc
                 }
-                
-            ),
+            )),
             Self::Cats {
                 reader_vec,
                 limit,
@@ -10511,7 +10522,7 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                 let mut acc = reader_vec.iter().fold(std::string::String::default(), |mut acc, element| {
                     acc.push_str(&format!(
                         "{},",
-                        element.generate_postgresql_query_part("value")//todo if it two inner[][] - is it correct to use value still?
+                        element.generate_postgresql_query_part("value").unwrap()//todo return error//todo if it two inner[][] - is it correct to use value still?
                     ));
                     acc
                 });
@@ -10522,7 +10533,7 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                     Some(value) => value,
                     None => 0
                 };
-                format!("'cats',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between 0 AND 4)")
+                Ok(format!("'cats',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between {start} AND {end})"))
             }
         }
     }
@@ -10570,10 +10581,22 @@ pub enum DoggieReader {
     ))]
     Says
 }
-impl GeneratePostgresqlQueryPart for DoggieReader {
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum DoggieGeneratePostgresqlQueryPartErrorNamed {
+    OffsetPlusLimitIsIntOverflow {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FieldsFilterIsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueFieldFilter {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> for DoggieReader {
+    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::Says => format!("'says',{column_name_and_maybe_field_getter}->'says'"),
+            Self::Says => Ok(format!("'says',{column_name_and_maybe_field_getter}->'says'")),
         }
     }
 }
@@ -10611,11 +10634,23 @@ pub enum CatReader {
     ))]
     One
 }
-impl GeneratePostgresqlQueryPart for CatReader {
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum CatGeneratePostgresqlQueryPartErrorNamed {
+    OffsetPlusLimitIsIntOverflow {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FieldsFilterIsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueFieldFilter {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for CatReader {
+    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, CatGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::Meow => format!("'meow',{column_name_and_maybe_field_getter}->'meow'"),
-            Self::One => format!("'one',{column_name_and_maybe_field_getter}->'one'"),
+            Self::Meow => Ok(format!("'meow',{column_name_and_maybe_field_getter}->'meow'")),
+            Self::One => Ok(format!("'one',{column_name_and_maybe_field_getter}->'one'")),
         }
     }
 }

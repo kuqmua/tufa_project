@@ -594,7 +594,9 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     "jsonb_build_object({}) as sqlx_types_json_t_as_postgresql_json_not_null",//todo should support arrays or "key: array" is enough? 
                     {
                         let mut acc = filter.iter().fold(std::string::String::default(), |mut acc, element| {
-                            acc.push_str(&format!("{},", postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part(*&element, "sqlx_types_json_t_as_postgresql_json_not_null")));
+                            acc.push_str(
+                                &format!("{},", postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part(*&element, "sqlx_types_json_t_as_postgresql_json_not_null").unwrap())//todo return error
+                            );
                             acc
                         });
                         let _ = acc.pop();
