@@ -10442,7 +10442,7 @@ pub enum SomethingReader {
         deserialize = "cats"
     ))]
     Cats {
-        reader: CatReader,
+        reader_vec: std::vec::Vec<CatReader>,
         limit: std::primitive::u64,
         offset: std::primitive::u64,
     }
@@ -10492,19 +10492,37 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                 
             ),
             Self::Cats {
-                reader,
+                reader_vec,
                 limit,
                 offset
             } => {
+                if reader_vec.is_empty() {
+                    todo!()//return error
+                }
+                let mut unique_reader_vec = vec![];
+                for element in reader_vec {
+                    if unique_reader_vec.contains(&element) {
+                        todo!()//return error
+                    }
+                    else {
+                        unique_reader_vec.push(&element);
+                    }
+                }
+                let mut acc = reader_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                    acc.push_str(&format!(
+                        "{},",
+                        element.generate_postgresql_query_part("value")//todo if it two inner[][] - is it correct to use value still?
+                    ));
+                    acc
+                });
+                let _ = acc.pop();
                 let start = offset;
+                //todo generate error instead
                 let end = match offset.checked_add(*limit) {
                     Some(value) => value,
                     None => 0
                 };
-                format!(
-                    "'cats',(select json_agg(jsonb_build_object({})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between 0 AND 4)",
-                    reader.generate_postgresql_query_part("value")//todo if it two inner[][] - is it correct to use value still?
-                )
+                format!("'cats',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between 0 AND 4)")
             }
         }
     }

@@ -94,11 +94,10 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     }, 
                     {
                         "doggie": ["says"]
-                    }
-                    ,
+                    },
                     {
                         "cats": {
-                            "reader": "one",
+                            "reader_vec": ["one"],
                             "offset": 0,
                             "limit": 3
                         }
