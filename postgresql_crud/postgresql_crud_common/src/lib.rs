@@ -10454,7 +10454,7 @@ pub trait JsonFieldNameStringified {
 // select 
 // jsonb_build_object(
 // 	'omega',
-// 	json_build_array(
+// 	jsonb_build_array(
 // 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'->0,
 // 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1,
 // 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'->2
@@ -10464,12 +10464,11 @@ pub trait JsonFieldNameStringified {
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
 
 
-// select 
-// jsonb_build_object(
+// select jsonb_build_object(
 // 	'omega',
 // 	jsonb_build_object(
 // 		'value',
-// 		json_build_array(
+// 		jsonb_build_array(
 // 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->0,
 // 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1,
 // 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->2
@@ -10479,6 +10478,18 @@ pub trait JsonFieldNameStringified {
 // from jsongeneric 
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
 
+
+
+// select 
+// value
+// from json_array_elements(
+// 	(select sqlx_types_json_t_as_postgresql_json_not_null->'omega' as sqlx_types_json_t_as_postgresql_json_not_null 
+// 	from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1)
+// )
+// with ordinality
+// where ordinality between 0 and 2;
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
@@ -10487,8 +10498,14 @@ pub struct Something {
     doggie: Doggie,
     cats: std::vec::Vec<Cat>,
 }
+//todo support extract elements of array
 //todo support pagination with limit and offset
 //todo support vec of structs or enums
+//todo support getting length
+
+
+
+
 // fn g(value: &Something) -> serde_json::Value {
 //     let something = &value.something;
 //     let omega = &value.something;
@@ -10544,7 +10561,10 @@ pub enum SomethingReader {
         serialize = "omega",
         deserialize = "omega"
     ))]
-    Omega,
+    Omega {
+        limit: std::primitive::u64,
+        offset: std::primitive::u64,
+    },
     #[serde(rename(
         serialize = "doggie",
         deserialize = "doggie"
