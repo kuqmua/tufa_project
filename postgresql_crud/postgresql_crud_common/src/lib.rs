@@ -10376,12 +10376,12 @@ pub struct OrderBy<ColumnGeneric> {
 }
 
 /////////////////////
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-pub struct JsonFieldsLengthError {
-    got_length: std::primitive::usize,
-    max_length: std::primitive::usize,
-    //todo maybe add code occurence?
-}
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+// pub struct JsonFieldsLengthError {
+//     got_length: std::primitive::usize,
+//     max_length: std::primitive::usize,
+//     //todo maybe add code occurence?
+// }
 
 pub trait JsonFieldNameStringified {
     // fn json_field_name_stringified(&self) -> &std::primitive::str;
@@ -10393,7 +10393,7 @@ pub trait JsonFieldNameStringified {
 // where T: JsonFieldNameStringified
 // {
 //     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
-//         format!("'something',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'something')")
+//         
 //     }
 // }
 
@@ -10484,11 +10484,7 @@ pub struct Something {
     cats: std::vec::Vec<Cat>,
 }
 //todo support extract elements of array
-//todo support vec of structs or enums
 //todo support getting length
-
-
-
 
 // fn g(value: &Something) -> serde_json::Value {
 //     let something = &value.something;
@@ -10516,9 +10512,6 @@ pub struct Something {
 //     Object(Map<String, Value>),
 // }
 
-
-                    // pub #limit_snake_case: #limit_and_offset_type_token_stream,
-                    // pub #offset_snake_case: #limit_and_offset_type_token_stream,
 impl std::fmt::Display for Something {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", &self)
@@ -10527,15 +10520,10 @@ impl std::fmt::Display for Something {
 impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
-            something: Some(
-                // Value{value: 
-                    value.something
-                // }
-                )
-                ,
-            omega: Some(Value{value:value.omega}),
-            doggie: Some(Value{value:DoggieOptions::from(value.doggie)}),
-            cats: Some(Value{value: value.cats.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>()}),
+            something: Some(value.something),
+            omega: Some(value.omega),
+            doggie: Some(DoggieOptions::from(value.doggie)),
+            cats: Some(value.cats.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>()),
         }
     }
 }
@@ -10616,10 +10604,10 @@ impl JsonFieldNameStringified for SomethingReader {
                     Some(value) => value,
                     None => 0
                 };
-                format!("'omega',jsonb_build_object('value', (select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end}))")
+                format!("'omega',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end})")
             },
             Self::Doggie(value) => format!(
-                "'doggie',jsonb_build_object('value',jsonb_build_object({}))",
+                "'doggie',jsonb_build_object({})",
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
             ),
             Self::Cats {
@@ -10631,13 +10619,8 @@ impl JsonFieldNameStringified for SomethingReader {
                     Some(value) => value,
                     None => 0
                 };
-                format!("'cats',jsonb_build_object('value', (select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'cats')) with ordinality where ordinality between {start} and {end}))")
+                format!("'cats',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'cats')) with ordinality where ordinality between {start} and {end})")
             }
-            // todo!()
-            // format!(
-            //     "'cats',jsonb_build_object('value',jsonb_build_object({}))",
-            //     value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'cats'"))
-            // ),
         }
     }
 }
@@ -10645,15 +10628,11 @@ impl JsonFieldNameStringified for SomethingReader {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
-    something: std::option::Option<
-    // Value<
-    std::string::String
-    // >
-    >,
-    omega: std::option::Option<Value<std::vec::Vec<bool>>>,
+    something: std::option::Option<std::string::String>,
+    omega: std::option::Option<std::vec::Vec<bool>>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    doggie: std::option::Option<Value<DoggieOptions>>,
-    cats: std::option::Option<Value<std::vec::Vec<CatOptions>>>,
+    doggie: std::option::Option<DoggieOptions>,
+    cats: std::option::Option<std::vec::Vec<CatOptions>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -10663,7 +10642,7 @@ pub struct Doggie {
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
         Self {
-            says: Some(Value{value:value.says})
+            says: Some(value.says)
         }
     }
 }
@@ -10712,13 +10691,13 @@ impl JsonFieldNameStringified for DoggieReader {
     // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
-            Self::Says => format!("'says',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'says')"),
+            Self::Says => format!("'says',{column_name_and_maybe_field_getter}->'says'"),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    says: std::option::Option<Value<std::string::String>>,
+    says: std::option::Option<std::string::String>,
 }
 
 
@@ -10782,50 +10761,18 @@ impl JsonFieldNameStringified for CatReader {
     // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
-            Self::Meow => format!("'meow',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'meow')"),
+            Self::Meow => format!("'meow',{column_name_and_maybe_field_getter}->'meow'"),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct CatOptions {
-    meow: std::option::Option<
-    // Value<
-    std::string::String
-    // >
-    >,
+    meow: std::option::Option<std::string::String>,
 }
 impl std::convert::From<Cat> for CatOptions {
     fn from(value: Cat) -> Self {
         Self {
-            meow: Some(
-                // Value{value:
-                    value.meow
-                // }
-            ),
+            meow: Some(value.meow),
         }
     }
 }
-
-// {
-//   "Desirable": {
-//     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
-//     "std_primitive_i32_as_postgresql_int": null,
-//     "sqlx_types_json_t_as_postgresql_json_not_null": {
-//       "value": {
-//         "something": null,
-//         "omega": null,
-//         "doggie": null,
-//         "cats": {
-//           "value": [
-//             {
-//               "meow": "meow0"
-//             },
-//             {
-//               "meow": "meow1"
-//             }
-//           ]
-//         }
-//       }
-//     }
-//   }
-// }
