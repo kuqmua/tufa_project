@@ -10464,6 +10464,21 @@ pub trait JsonFieldNameStringified {
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
 
 
+// select 
+// jsonb_build_object(
+// 	'omega',
+// 	jsonb_build_object(
+// 		'value',
+// 		json_build_array(
+// 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->0,
+// 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1,
+// 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->2
+// 		)
+// 	)
+// ) as sqlx_types_json_t_as_postgresql_json_not_null 
+// from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
