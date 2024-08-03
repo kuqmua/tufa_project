@@ -10421,29 +10421,6 @@ pub trait JsonFieldNameStringified {
 
 
 
-// {
-//   "cats": {
-//     "value": [
-//       {
-//         "meow": "ssssd"
-//       }
-//     ]
-//   },
-//   "omega": {
-//     "value": [
-//       true,
-//       false,
-//       false
-//     ]
-//   },
-//   "something": {
-//     "value": "somethingvalue"
-//   }
-// }
-//
-
-
-
 // select 
 // sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1
 // as sqlx_types_json_t_as_postgresql_json_not_null 
@@ -10507,7 +10484,6 @@ pub struct Something {
     cats: std::vec::Vec<Cat>,
 }
 //todo support extract elements of array
-//todo support pagination with limit and offset
 //todo support vec of structs or enums
 //todo support getting length
 
@@ -10626,11 +10602,14 @@ impl JsonFieldNameStringified for SomethingReader {
             Self::Omega {
                 limit,
                 offset
-            } => format!("'omega',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'omega')"),
-
-            //
-			// (select json_agg(value) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'omega')) with ordinality where ordinality between 0 and 4)
-            //
+            } => {
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => 0
+                };
+                format!("'omega',jsonb_build_object('value', (select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end}))")
+            },
             Self::Doggie(value) => format!(
                 "'doggie',jsonb_build_object('value',jsonb_build_object({}))",
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
