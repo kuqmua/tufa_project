@@ -10513,6 +10513,30 @@ pub trait JsonFieldNameStringified {
 // WHERE ordinality BETWEEN 0 AND 4;
 
 
+	// select 
+	// jsonb_build_object(
+	// 	'omega',
+	// 	json_build_object(
+	// 		'value',
+	// 		(
+	// 		SELECT json_agg(value)
+	// FROM json_array_elements(
+	// 	(
+	// 		SELECT sqlx_types_json_t_as_postgresql_json_not_null->'omega'
+	// 		FROM jsongeneric 
+	// 		WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
+	// 	)
+	// ) WITH ORDINALITY
+	// WHERE ordinality BETWEEN 0 AND 2
+	// 		)
+	// 	)
+	// ) as sqlx_types_json_t_as_postgresql_json_not_null 
+	// from jsongeneric 
+	// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
+
+
+
+
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
