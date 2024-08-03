@@ -10376,104 +10376,9 @@ pub struct OrderBy<ColumnGeneric> {
 }
 
 /////////////////////
-// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-// pub struct JsonFieldsLengthError {
-//     got_length: std::primitive::usize,
-//     max_length: std::primitive::usize,
-//     //todo maybe add code occurence?
-// }
-
-pub trait JsonFieldNameStringified {
-    // fn json_field_name_stringified(&self) -> &std::primitive::str;
-    // fn check_unique<'a>(value: &'a std::vec::Vec<Self>) -> Result<(), &'a Self> where Self: Sized;
-    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
+pub trait GeneratePostgresqlQueryPart {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
 }
-// impl<T> JsonFieldNameStringified for std::vec::Vec<T> 
-// where T: JsonFieldNameStringified
-// {
-//     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
-//         
-//     }
-// }
-
-//
-// select 
-// jsonb_build_object(
-// 	'something',
-// 	jsonb_build_object(
-// 		'value',
-// 		sqlx_types_json_t_as_postgresql_json_not_null->'something'
-// 	),
-// 	'omega',
-// 	jsonb_build_object(
-// 		'value',
-// 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'
-// 	),
-// 	'cats',
-// 	jsonb_build_object(
-// 		'value',
-// 		sqlx_types_json_t_as_postgresql_json_not_null->'cats'
-// 	)
-// ) as sqlx_types_json_t_as_postgresql_json_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
-
-
-
-// select 
-// sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1
-// as sqlx_types_json_t_as_postgresql_json_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
-
-
-// select 
-// jsonb_build_object(
-// 	'omega',
-// 	jsonb_build_array(
-// 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'->0,
-// 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1,
-// 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'->2
-// 	)
-// ) as sqlx_types_json_t_as_postgresql_json_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
-
-
-// select jsonb_build_object(
-// 	'omega',
-// 	jsonb_build_object(
-// 		'value',
-// 		jsonb_build_array(
-// 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->0,
-// 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1,
-// 			sqlx_types_json_t_as_postgresql_json_not_null->'omega'->2
-// 		)
-// 	)
-// ) as sqlx_types_json_t_as_postgresql_json_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
-
-// select 
-// jsonb_build_object(
-// 	'omega',
-// 	json_build_object(
-// 		'value',
-// 		(
-// 			select json_agg(value)
-// 			from json_array_elements(
-// 				(
-// 					select sqlx_types_json_t_as_postgresql_json_not_null->'omega'
-// 				)
-// 			) with ordinality
-// 			where ordinality between 0 and 4
-// 		)
-// 	)
-// ) as sqlx_types_json_t_as_postgresql_json_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
-
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
@@ -10483,25 +10388,6 @@ pub struct Something {
     doggie: Doggie,
     cats: std::vec::Vec<Cat>,
 }
-//todo support extract elements of array
-//todo support getting length
-
-// fn g(value: &Something) -> serde_json::Value {
-//     let something = &value.something;
-//     let omega = &value.something;
-//     let doggie = &value.doggie;
-
-//     // let f = serde_json::to_value(value).unwrap();//todo
-//     let something_json_value = match f {
-//         serde::Json::Value::Null => ,
-//         serde::Json::Value::Bool(bool) => ,
-//         serde::Json::Value::Number(Number) => ,
-//         serde::Json::Value::String(String) => ,
-//         serde::Json::Value::Array(Vec<Value>) => ,
-//         serde::Json::Value::Object(Map<String, Value>) => ,
-//     };
-//     todo!()
-// }
 
 // pub enum Value {
 //     Null,
@@ -10556,42 +10442,7 @@ pub enum SomethingReader {
         offset: std::primitive::u64,
     }
 }
-impl JsonFieldNameStringified for SomethingReader {
-    // fn json_field_name_stringified(&self) -> &std::primitive::str {
-    //     match self {
-    //         Self::Something => "something",
-    //         Self::Omega => "omega",
-    //         Self::Doggie(value) => JsonFieldNameStringified::json_field_name_stringified(value),
-    //         Self::Cats(value) => "cats",
-    //     }
-    // }
-    // fn check_unique<'a>(value: &'a std::vec::Vec<SomethingReader>) -> Result<(), &'a SomethingReader> {
-    //     let mut acc = vec![];
-    //     for element in value {
-    //         match acc.contains(&element) {
-    //             true => {
-    //                 return Err(element);
-    //             },
-    //             false => {
-    //                 acc.push(element);
-    //             }
-    //         }
-    //     }
-    //     Ok(())
-    // }
-    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
-    //     let got_length = value.len();
-    //     let max_length = 4;
-    //     if got_length <= max_length {
-    //         Ok(value)
-    //     }
-    //     else {
-    //         Err(JsonFieldsLengthError{
-    //             got_length,
-    //             max_length,
-    //         })
-    //     }
-    // }
+impl GeneratePostgresqlQueryPart for SomethingReader {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
             Self::Something => format!("'something',{column_name_and_maybe_field_getter}->'something'"),
@@ -10619,11 +10470,24 @@ impl JsonFieldNameStringified for SomethingReader {
                     Some(value) => value,
                     None => 0
                 };
+                //todo value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->''"))
                 format!("'cats',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'cats')) with ordinality where ordinality between {start} and {end})")
             }
         }
     }
 }
+// SELECT 
+//     jsonb_build_object(
+//         'cats',
+//         (SELECT json_agg(jsonb_build_object('meow', value->>'meow')) 
+//          FROM json_array_elements(
+//                  (SELECT sqlx_types_json_t_as_postgresql_json_not_null->'cats')
+//              ) WITH ORDINALITY 
+//              WHERE ordinality BETWEEN 0 AND 4)
+//     ) AS sqlx_types_json_t_as_postgresql_json_not_null 
+// FROM jsongeneric 
+// WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1;
+
 
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
@@ -10654,7 +10518,7 @@ pub enum DoggieReader {
     ))]
     Says
 }
-impl JsonFieldNameStringified for DoggieReader {
+impl GeneratePostgresqlQueryPart for DoggieReader {
     // fn json_field_name_stringified(&self) -> &std::primitive::str {
     //     match self {
     //         Self::Says => "says"
@@ -10724,7 +10588,7 @@ pub enum CatReader {
     ))]
     Meow
 }
-impl JsonFieldNameStringified for CatReader {
+impl GeneratePostgresqlQueryPart for CatReader {
     // fn json_field_name_stringified(&self) -> &std::primitive::str {
     //     match self {
     //         Self::Meow => "meow"

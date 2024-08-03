@@ -85,23 +85,22 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         {
             "sqlx_types_json_t_as_postgresql_json_not_null":{
                 "filter": [
-                    "something"
-                    # ,
-                    # {
-                    #     "omega": {
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }, 
-                    # {
-                    #     "doggie": "says"
-                    # }
-                    # {
-                    #     "cats": {
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
+                    "something",
+                    {
+                        "omega": {
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }, 
+                    {
+                        "doggie": "says"
+                    },
+                    {
+                        "cats": {
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }
                 ]
             }
         }

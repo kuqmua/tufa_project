@@ -419,3 +419,23 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
     };
     gen.into()
 }
+
+///////////////
+// #[proc_macro_derive(GeneratePostgresqlQueryPart)] //todo check on postgresql max length value of type
+// pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
+//     proc_macro_common::panic_location::panic_location();
+//     let proc_macro_name_upper_camel_case = "GeneratePostgresqlQueryPart";
+//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+//         panic!(
+//             "{proc_macro_name_upper_camel_case} {}: {error}",
+//             proc_macro_common::constants::AST_PARSE_FAILED
+//         )
+//     });
+//     // println!("{:#?}", syn_derive_input.data);
+//     let ident = &syn_derive_input.ident;
+//     let gen = quote::quote!{
+        
+//     };
+//     gen.into()
+// }

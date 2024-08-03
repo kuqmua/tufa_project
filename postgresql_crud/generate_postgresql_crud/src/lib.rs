@@ -37,6 +37,7 @@
 // DROP EXTENSION IF EXISTS "pg_jsonschema";
 // CREATE EXTENSION "pg_jsonschema";
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
+//todo support read table length
 
 //todo postgresql json:
 //* define postgresql json type
