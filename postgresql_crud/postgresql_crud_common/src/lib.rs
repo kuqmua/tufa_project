@@ -10527,14 +10527,19 @@ impl std::fmt::Display for Something {
 impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
-            something: Some(Value{value: value.something}),
+            something: Some(
+                // Value{value: 
+                    value.something
+                // }
+                )
+                ,
             omega: Some(Value{value:value.omega}),
             doggie: Some(Value{value:DoggieOptions::from(value.doggie)}),
             cats: Some(Value{value: value.cats.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>()}),
         }
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum SomethingReader {
     #[serde(rename(
         serialize = "something",
@@ -10558,7 +10563,10 @@ pub enum SomethingReader {
         serialize = "cats",
         deserialize = "cats"
     ))]
-    Cats(std::vec::Vec<CatReader>)
+    Cats {
+        limit: std::primitive::u64,
+        offset: std::primitive::u64,
+    }
 }
 impl JsonFieldNameStringified for SomethingReader {
     // fn json_field_name_stringified(&self) -> &std::primitive::str {
@@ -10598,7 +10606,7 @@ impl JsonFieldNameStringified for SomethingReader {
     // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
-            Self::Something => format!("'something',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'something')"),
+            Self::Something => format!("'something',{column_name_and_maybe_field_getter}->'something'"),
             Self::Omega {
                 limit,
                 offset
@@ -10614,8 +10622,18 @@ impl JsonFieldNameStringified for SomethingReader {
                 "'doggie',jsonb_build_object('value',jsonb_build_object({}))",
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
             ),
-            Self::Cats(value) => 
-            todo!()
+            Self::Cats {
+                limit,
+                offset
+            } => {
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => 0
+                };
+                format!("'cats',jsonb_build_object('value', (select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'cats')) with ordinality where ordinality between {start} and {end}))")
+            }
+            // todo!()
             // format!(
             //     "'cats',jsonb_build_object('value',jsonb_build_object({}))",
             //     value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'cats'"))
@@ -10627,7 +10645,11 @@ impl JsonFieldNameStringified for SomethingReader {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
-    something: std::option::Option<Value<std::string::String>>,
+    something: std::option::Option<
+    // Value<
+    std::string::String
+    // >
+    >,
     omega: std::option::Option<Value<std::vec::Vec<bool>>>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: std::option::Option<Value<DoggieOptions>>,
@@ -10766,12 +10788,44 @@ impl JsonFieldNameStringified for CatReader {
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct CatOptions {
-    meow: std::option::Option<Value<std::string::String>>,
+    meow: std::option::Option<
+    // Value<
+    std::string::String
+    // >
+    >,
 }
 impl std::convert::From<Cat> for CatOptions {
     fn from(value: Cat) -> Self {
         Self {
-            meow: Some(Value{value:value.meow}),
+            meow: Some(
+                // Value{value:
+                    value.meow
+                // }
+            ),
         }
     }
 }
+
+// {
+//   "Desirable": {
+//     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
+//     "std_primitive_i32_as_postgresql_int": null,
+//     "sqlx_types_json_t_as_postgresql_json_not_null": {
+//       "value": {
+//         "something": null,
+//         "omega": null,
+//         "doggie": null,
+//         "cats": {
+//           "value": [
+//             {
+//               "meow": "meow0"
+//             },
+//             {
+//               "meow": "meow1"
+//             }
+//           ]
+//         }
+//       }
+//     }
+//   }
+// }
