@@ -10389,6 +10389,68 @@ pub trait JsonFieldNameStringified {
     // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized;
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
 }
+// impl<T> JsonFieldNameStringified for std::vec::Vec<T> 
+// where T: JsonFieldNameStringified
+// {
+//     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
+//         format!("'something',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'something')")
+//     }
+// }
+
+//
+// select 
+// jsonb_build_object(
+// 	'something',
+// 	jsonb_build_object(
+// 		'value',
+// 		sqlx_types_json_t_as_postgresql_json_not_null->'something'
+// 	),
+// 	'omega',
+// 	jsonb_build_object(
+// 		'value',
+// 		sqlx_types_json_t_as_postgresql_json_not_null->'omega'
+// 	),
+// 	'cats',
+// 	jsonb_build_object(
+// 		'value',
+// 		sqlx_types_json_t_as_postgresql_json_not_null->'cats'
+// 	)
+// ) as sqlx_types_json_t_as_postgresql_json_not_null 
+// from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
+
+
+
+// {
+//   "cats": {
+//     "value": [
+//       {
+//         "meow": "ssssd"
+//       }
+//     ]
+//   },
+//   "omega": {
+//     "value": [
+//       true,
+//       false,
+//       false
+//     ]
+//   },
+//   "something": {
+//     "value": "somethingvalue"
+//   }
+// }
+//
+
+
+
+// select 
+// sqlx_types_json_t_as_postgresql_json_not_null->'omega'->1
+// as sqlx_types_json_t_as_postgresql_json_not_null 
+// from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
+
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
