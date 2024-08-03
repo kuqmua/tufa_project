@@ -10462,6 +10462,7 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                 value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
             ),
             Self::Cats {
+                // value,
                 limit,
                 offset
             } => {
@@ -10471,11 +10472,22 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                     None => 0
                 };
                 //todo value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->''"))
-                format!("'cats',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'cats')) with ordinality where ordinality between {start} and {end})")
+                // format!("'cats',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'cats')) with ordinality where ordinality between {start} and {end})")
+                format!(
+                    "'cats',(select json_agg(jsonb_build_object({})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between 0 AND 4)",
+                    // value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
+                    format!("'meow',value->'meow'")
+                )
+
+                // Self::Meow => format!("'meow',{column_name_and_maybe_field_getter}->'meow'"),
             }
         }
     }
 }
+
+
+
+
 // SELECT 
 //     jsonb_build_object(
 //         'cats',
