@@ -4935,7 +4935,10 @@ impl Default for TestNewType<Something> {
             doggie: Doggie {
                 says: std::string::String::from("gav")
             },
-            cats: vec![Cat { meow: std::string::String::from("") }]
+            cats: vec![Cat { 
+                meow: std::string::String::from(""),
+                one: std::string::String::from(""), 
+            }]
         }));
         let serde_json_value =
             SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
@@ -10438,6 +10441,7 @@ pub enum SomethingReader {
         deserialize = "cats"
     ))]
     Cats {
+        reader: CatReader,
         limit: std::primitive::u64,
         offset: std::primitive::u64,
     }
@@ -10457,12 +10461,12 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                 };
                 format!("'omega',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end})")
             },
-            Self::Doggie(value) => format!(
+            Self::Doggie(reader) => format!(
                 "'doggie',jsonb_build_object({})",
-                value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
+                reader.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
             ),
             Self::Cats {
-                // value,
+                reader,
                 limit,
                 offset
             } => {
@@ -10471,22 +10475,14 @@ impl GeneratePostgresqlQueryPart for SomethingReader {
                     Some(value) => value,
                     None => 0
                 };
-                //todo value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->''"))
-                // format!("'cats',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'cats')) with ordinality where ordinality between {start} and {end})")
                 format!(
                     "'cats',(select json_agg(jsonb_build_object({})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between 0 AND 4)",
-                    // value.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'"))
-                    format!("'meow',value->'meow'")
+                    reader.generate_postgresql_query_part("value")//todo if it two inner[][] - is it correct to use value still?
                 )
-
-                // Self::Meow => format!("'meow',{column_name_and_maybe_field_getter}->'meow'"),
             }
         }
     }
 }
-
-
-
 
 // SELECT 
 //     jsonb_build_object(
@@ -10531,40 +10527,6 @@ pub enum DoggieReader {
     Says
 }
 impl GeneratePostgresqlQueryPart for DoggieReader {
-    // fn json_field_name_stringified(&self) -> &std::primitive::str {
-    //     match self {
-    //         Self::Says => "says"
-    //     }
-    // }
-    // fn check_unique<'a>(value: &'a std::vec::Vec<DoggieReader>) -> Result<(), &'a DoggieReader> {
-    //     let mut acc = vec![];
-    //     for element in value {
-    //         match element {
-    //             Self::Says => match acc.contains(&element) {
-    //                 true => {
-    //                     return Err(element);
-    //                 },
-    //                 false => {
-    //                     acc.push(element);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     Ok(())
-    // }
-    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
-    //     let got_length = value.len();
-    //     let max_length = 1;
-    //     if got_length <= max_length {
-    //         Ok(value)
-    //     }
-    //     else {
-    //         Err(JsonFieldsLengthError{
-    //             got_length,
-    //             max_length,
-    //         })
-    //     }
-    // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
             Self::Says => format!("'says',{column_name_and_maybe_field_getter}->'says'"),
@@ -10575,7 +10537,6 @@ impl GeneratePostgresqlQueryPart for DoggieReader {
 pub struct DoggieOptions {
     says: std::option::Option<std::string::String>,
 }
-
 
 // impl DoggieOptions {
 //     fn s(value: sqlx::types::JsonValue) -> Self {
@@ -10591,6 +10552,7 @@ pub struct DoggieOptions {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
     meow: std::string::String,
+    one: std::string::String,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum CatReader {
@@ -10598,57 +10560,31 @@ pub enum CatReader {
         serialize = "meow",
         deserialize = "meow"
     ))]
-    Meow
+    Meow,
+    #[serde(rename(
+        serialize = "one",
+        deserialize = "one"
+    ))]
+    One
 }
 impl GeneratePostgresqlQueryPart for CatReader {
-    // fn json_field_name_stringified(&self) -> &std::primitive::str {
-    //     match self {
-    //         Self::Meow => "meow"
-    //     }
-    // }
-    // fn check_unique<'a>(value: &'a std::vec::Vec<CatReader>) -> Result<(), &'a CatReader> {
-    //     let mut acc = vec![];
-    //     for element in value {
-    //         match element {
-    //             Self::Meow => match acc.contains(&element) {
-    //                 true => {
-    //                     return Err(element);
-    //                 },
-    //                 false => {
-    //                     acc.push(element);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     Ok(())
-    // }
-    // fn check_if_length_valid<'a>(value: &'a std::vec::Vec<Self>) -> Result<&'a std::vec::Vec<Self>, JsonFieldsLengthError> where Self: Sized {
-    //     let got_length = value.len();
-    //     let max_length = 1;
-    //     if got_length <= max_length {
-    //         Ok(value)
-    //     }
-    //     else {
-    //         Err(JsonFieldsLengthError{
-    //             got_length,
-    //             max_length,
-    //         })
-    //     }
-    // }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String {
         match self {
             Self::Meow => format!("'meow',{column_name_and_maybe_field_getter}->'meow'"),
+            Self::One => format!("'one',{column_name_and_maybe_field_getter}->'one'"),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct CatOptions {
     meow: std::option::Option<std::string::String>,
+    one: std::option::Option<std::string::String>,
 }
 impl std::convert::From<Cat> for CatOptions {
     fn from(value: Cat) -> Self {
         Self {
             meow: Some(value.meow),
+            one: Some(value.one),
         }
     }
 }

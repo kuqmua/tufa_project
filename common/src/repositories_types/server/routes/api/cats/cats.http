@@ -97,6 +97,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     },
                     {
                         "cats": {
+                            "reader": "one",
                             "offset": 0,
                             "limit": 3
                         }
