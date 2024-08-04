@@ -10450,6 +10450,10 @@ pub enum SomethingReader {
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     OffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::u64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::u64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     FieldsFilterIsEmpty {
@@ -10469,10 +10473,15 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 offset
             } => {
                 let start = offset;
-                //todo generate error instead of 
                 let end = match offset.checked_add(*limit) {
                     Some(value) => value,
-                    None => 0
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+                            limit: *limit,
+                            offset: *offset,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
                 };
                 Ok(format!("'omega',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end})"))
             },
@@ -10528,10 +10537,15 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 });
                 let _ = acc.pop();
                 let start = offset;
-                //todo generate error instead
                 let end = match offset.checked_add(*limit) {
                     Some(value) => value,
-                    None => 0
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+                            limit: *limit,
+                            offset: *offset,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
                 };
                 Ok(format!("'cats',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between {start} AND {end})"))
             }

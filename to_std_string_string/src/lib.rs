@@ -6,6 +6,11 @@ impl ToStdStringString for std::string::String {
         self.clone()
     }
 }
+impl ToStdStringString for std::primitive::u64 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
 impl ToStdStringString for tracing::dispatcher::SetGlobalDefaultError {
     fn to_std_string_string(&self) -> std::string::String {
         std::string::String::from("tracing::dispatcher::SetGlobalDefaultError")
