@@ -194,7 +194,7 @@ pub struct Something {
     pub something: StdStringStringJson,
     pub omega: StdVecVecStdPrimitiveBoolJson,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    pub doggie: Doggie,
+    pub doggie: GenericJson<Doggie>,
     pub cats: std::vec::Vec<Cat>,
 }
 
@@ -219,7 +219,7 @@ impl std::convert::From<Something> for SomethingOptions {
         Self {
             something: Some(value.something),
             omega: Some(value.omega),
-            doggie: Some(DoggieOptions::from(value.doggie)),
+            doggie: Some(GenericJson(DoggieOptions::from(value.doggie.0))),
             cats: Some(value.cats.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>()),
         }
     }
@@ -401,7 +401,7 @@ pub struct SomethingOptions {
     something: std::option::Option<StdStringStringJson>,
     omega: std::option::Option<StdVecVecStdPrimitiveBoolJson>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    doggie: std::option::Option<DoggieOptions>,
+    doggie: std::option::Option<GenericJson<DoggieOptions>>,
     cats: std::option::Option<std::vec::Vec<CatOptions>>,
 }
 

@@ -4934,9 +4934,9 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(crate::generate_postgresql_query_part::Something {
             something: generate_postgresql_query_part::StdStringStringJson(std_string_string_handle),
             omega: generate_postgresql_query_part::StdVecVecStdPrimitiveBoolJson(vec![true, false]),
-            doggie: crate::generate_postgresql_query_part::Doggie {
+            doggie: generate_postgresql_query_part::GenericJson(crate::generate_postgresql_query_part::Doggie {
                 says: std::string::String::from("gav")
-            },
+            }),
             cats: vec![crate::generate_postgresql_query_part::Cat { 
                 meow: std::string::String::from(""),
                 one: std::string::String::from(""), 
