@@ -189,7 +189,9 @@ pub trait GeneratePostgresqlQueryPart<T> {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
 }
 //todo generate wrapper type for all possible json type
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     pub something: StdStringStringJson,
     pub omega: StdVecVecStdPrimitiveBoolJson,
@@ -464,7 +466,7 @@ pub struct DoggieOptions {
 
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, 
-postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
+
 )] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
     pub meow: StdStringStringJson,

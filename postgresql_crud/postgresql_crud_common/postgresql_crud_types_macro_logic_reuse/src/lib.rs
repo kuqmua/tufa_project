@@ -421,6 +421,105 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
 }
 
 ///////////////
+#[derive(Debug)]
+enum SupportedPredefinedType<'a> {
+    StdPrimitiveI8Json(&'a syn::PathArguments), 
+    StdPrimitiveI16Json(&'a syn::PathArguments), 
+    StdPrimitiveI32Json(&'a syn::PathArguments), 
+    StdPrimitiveI64Json(&'a syn::PathArguments), 
+    StdPrimitiveI128Json(&'a syn::PathArguments),
+    StdPrimitiveU8Json(&'a syn::PathArguments), 
+    StdPrimitiveU16Json(&'a syn::PathArguments), 
+    StdPrimitiveU32Json(&'a syn::PathArguments), 
+    StdPrimitiveU64Json(&'a syn::PathArguments), 
+    StdPrimitiveU128Json(&'a syn::PathArguments), 
+    StdPrimitiveF32Json(&'a syn::PathArguments), 
+    StdPrimitiveF64Json(&'a syn::PathArguments), 
+    StdPrimitiveBoolJson(&'a syn::PathArguments), 
+    StdStringStringJson(&'a syn::PathArguments), 
+
+    StdOptionOptionStdPrimitiveI8Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveI16Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveI32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveI64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveI128Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveU8Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveU16Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveU32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveU64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveU128Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveF32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveF64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdPrimitiveBoolJson(&'a syn::PathArguments), 
+    StdOptionOptionStdStringStringJson(&'a syn::PathArguments), 
+
+    StdVecVecStdPrimitiveI8Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveI16Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveI32Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveI64Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveI128Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveU8Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveU16Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveU32Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveU64Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveU128Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveF32Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveF64Json(&'a syn::PathArguments), 
+    StdVecVecStdPrimitiveBoolJson(&'a syn::PathArguments), 
+    StdVecVecStdStringStringJson(&'a syn::PathArguments), 
+
+    StdOptionOptionStdVecVecStdPrimitiveI8Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveI16Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveI32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveI64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveI128Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveU8Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveU16Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveU32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveU64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveU128Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveF32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveF64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdPrimitiveBoolJson(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdStringStringJson(&'a syn::PathArguments), 
+
+    StdVecVecStdOptionOptionStdPrimitiveI8Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveI16Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveI32Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveI64Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveI128Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveU8Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveU16Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveU32Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveU64Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveU128Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveF32Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveF64Json(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdPrimitiveBoolJson(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdStringStringJson(&'a syn::PathArguments), 
+
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64Json(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolJson(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdStringStringJson(&'a syn::PathArguments), 
+
+    GenericJson(&'a syn::PathArguments), 
+    StdOptionOptionGenericJson(&'a syn::PathArguments), 
+    StdVecVecGenericJson(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecGenericJson(&'a syn::PathArguments), 
+    StdVecVecStdOptionOptionStdGenericJson(&'a syn::PathArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdGenericJson(&'a syn::PathArguments), 
+}
 #[proc_macro_derive(GeneratePostgresqlQueryPart)]
 pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -444,7 +543,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    println!("{vec_syn_field:#?}");
+    // println!("{vec_syn_field:#?}");
 //
     let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
     let ident_field_upper_camel_case = {
@@ -465,14 +564,131 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+            let maybe_additional_token_stream = {
+                let element_ty = &element.ty;
+                match &element.ty {
+                    syn::Type::Path(type_path) => match type_path.path.segments.last() {
+                        Some(path_segment) => {
+                            let segment_ident_stringified = path_segment.ident.to_string();
+                            let supported_predefined_type = match segment_ident_stringified.as_str() {
+                                "StdPrimitiveI8Json" => SupportedPredefinedType::StdPrimitiveI8Json(&path_segment.arguments),
+                                // "StdPrimitiveI16Json(pub std::primitive::i16);
+                                // "StdPrimitiveI32Json(pub std::primitive::i32);
+                                // "StdPrimitiveI64Json(pub std::primitive::i64);
+                                // "StdPrimitiveI128Json(pub std::primitive::i128);
+                                // "StdPrimitiveU8Json(pub std::primitive::u8);
+                                // "StdPrimitiveU16Json(pub std::primitive::u16);
+                                // "StdPrimitiveU32Json(pub std::primitive::u32);
+                                // "StdPrimitiveU64Json(pub std::primitive::u64);
+                                // "StdPrimitiveU128Json(pub std::primitive::u128);
+                                // "StdPrimitiveF32Json(pub std::primitive::f32);
+                                // "StdPrimitiveF64Json(pub std::primitive::f64);
+                                // "StdPrimitiveBoolJson(pub std::primitive::bool);
+                                // "StdStringStringJson(pub std::string::String);
+
+                                // "StdOptionOptionStdPrimitiveI8Json(pub std::option::Option<std::primitive::i8>);
+                                // "StdOptionOptionStdPrimitiveI16Json(pub std::option::Option<std::primitive::i16>);
+                                // "StdOptionOptionStdPrimitiveI32Json(pub std::option::Option<std::primitive::i32>);
+                                // "StdOptionOptionStdPrimitiveI64Json(pub std::option::Option<std::primitive::i64>);
+                                // "StdOptionOptionStdPrimitiveI128Json(pub std::option::Option<std::primitive::i128>);
+                                // "StdOptionOptionStdPrimitiveU8Json(pub std::option::Option<std::primitive::u8>);
+                                // "StdOptionOptionStdPrimitiveU16Json(pub std::option::Option<std::primitive::u16>);
+                                // "StdOptionOptionStdPrimitiveU32Json(pub std::option::Option<std::primitive::u32>);
+                                // "StdOptionOptionStdPrimitiveU64Json(pub std::option::Option<std::primitive::u64>);
+                                // "StdOptionOptionStdPrimitiveU128Json(pub std::option::Option<std::primitive::u128>);
+                                // "StdOptionOptionStdPrimitiveF32Json(pub std::option::Option<std::primitive::f32>);
+                                // "StdOptionOptionStdPrimitiveF64Json(pub std::option::Option<std::primitive::f64>);
+                                // "StdOptionOptionStdPrimitiveBoolJson(pub std::option::Option<std::primitive::bool>);
+                                // "StdOptionOptionStdStringStringJson(pub std::option::Option<std::string::String>);
+
+                                // "StdVecVecStdPrimitiveI8Json(pub std::vec::Vec<std::primitive::i8>);
+                                // "StdVecVecStdPrimitiveI16Json(pub std::vec::Vec<std::primitive::i16>);
+                                // "StdVecVecStdPrimitiveI32Json(pub std::vec::Vec<std::primitive::i32>);
+                                // "StdVecVecStdPrimitiveI64Json(pub std::vec::Vec<std::primitive::i64>);
+                                // "StdVecVecStdPrimitiveI128Json(pub std::vec::Vec<std::primitive::i128>);
+                                // "StdVecVecStdPrimitiveU8Json(pub std::vec::Vec<std::primitive::u8>);
+                                // "StdVecVecStdPrimitiveU16Json(pub std::vec::Vec<std::primitive::u16>);
+                                // "StdVecVecStdPrimitiveU32Json(pub std::vec::Vec<std::primitive::u32>);
+                                // "StdVecVecStdPrimitiveU64Json(pub std::vec::Vec<std::primitive::u64>);
+                                // "StdVecVecStdPrimitiveU128Json(pub std::vec::Vec<std::primitive::u128>);
+                                // "StdVecVecStdPrimitiveF32Json(pub std::vec::Vec<std::primitive::f32>);
+                                // "StdVecVecStdPrimitiveF64Json(pub std::vec::Vec<std::primitive::f64>);
+                                // "StdVecVecStdPrimitiveBoolJson(pub std::vec::Vec<std::primitive::bool>);
+                                // "StdVecVecStdStringStringJson(pub std::vec::Vec<std::string::String>);
+
+                                // "StdOptionOptionStdVecVecStdPrimitiveI8Json(pub std::option::Option<std::vec::Vec<std::primitive::i8>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveI16Json(pub std::option::Option<std::vec::Vec<std::primitive::i16>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveI32Json(pub std::option::Option<std::vec::Vec<std::primitive::i32>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveI64Json(pub std::option::Option<std::vec::Vec<std::primitive::i64>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveI128Json(pub std::option::Option<std::vec::Vec<std::primitive::i128>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveU8Json(pub std::option::Option<std::vec::Vec<std::primitive::u8>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveU16Json(pub std::option::Option<std::vec::Vec<std::primitive::u16>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveU32Json(pub std::option::Option<std::vec::Vec<std::primitive::u32>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveU64Json(pub std::option::Option<std::vec::Vec<std::primitive::u64>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveU128Json(pub std::option::Option<std::vec::Vec<std::primitive::u128>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveF32Json(pub std::option::Option<std::vec::Vec<std::primitive::f32>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveF64Json(pub std::option::Option<std::vec::Vec<std::primitive::f64>>);
+                                // "StdOptionOptionStdVecVecStdPrimitiveBoolJson(pub std::option::Option<std::vec::Vec<std::primitive::bool>>);
+                                // "StdOptionOptionStdVecVecStdStringStringJson(pub std::option::Option<std::vec::Vec<std::string::String>>);
+
+                                // "StdVecVecStdOptionOptionStdPrimitiveI8Json(pub std::vec::Vec<std::option::Option<std::primitive::i8>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveI16Json(pub std::vec::Vec<std::option::Option<std::primitive::i16>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveI32Json(pub std::vec::Vec<std::option::Option<std::primitive::i32>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveI64Json(pub std::vec::Vec<std::option::Option<std::primitive::i64>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveI128Json(pub std::vec::Vec<std::option::Option<std::primitive::i128>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveU8Json(pub std::vec::Vec<std::option::Option<std::primitive::u8>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveU16Json(pub std::vec::Vec<std::option::Option<std::primitive::u16>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveU32Json(pub std::vec::Vec<std::option::Option<std::primitive::u32>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveU64Json(pub std::vec::Vec<std::option::Option<std::primitive::u64>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveU128Json(pub std::vec::Vec<std::option::Option<std::primitive::u128>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveF32Json(pub std::vec::Vec<std::option::Option<std::primitive::f32>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveF64Json(pub std::vec::Vec<std::option::Option<std::primitive::f64>>);
+                                // "StdVecVecStdOptionOptionStdPrimitiveBoolJson(pub std::vec::Vec<std::option::Option<std::primitive::bool>>);
+                                // "StdVecVecStdOptionOptionStdStringStringJson(pub std::vec::Vec<std::option::Option<std::string::String>>);
+
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i128>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u128>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolJson(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdStringStringJson(pub std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
+
+                                // "GenericJson<T>(pub T);
+                                // "StdOptionOptionGenericJson<T>(pub std::option::Option<T>);
+                                // "StdVecVecGenericJson<T>(pub std::vec::Vec<T>);
+                                // "StdOptionOptionStdVecVecGenericJson<T>(pub std::option::Option<std::vec::Vec<T>>);
+                                // "StdVecVecStdOptionOptionStdGenericJson<T>(pub std::vec::Vec<std::option::Option<T>>);
+                                // "StdOptionOptionStdVecVecStdOptionOptionStdGenericJson<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
+                                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} unsupported predefined type wrapper: {segment_ident_stringified}")
+                                //
+                            };
+                        }
+                        None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type syn::Type::Path last path segment is None")
+                    }
+                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
+                }
+                // proc_macro2::TokenStream::new()
+                quote::quote!{
+
+                }
+            };
             quote::quote!{
                 #[serde(rename(
                    serialize = #serialize_deserialize_field_ident_quotes_token_stream,
                    deserialize = #serialize_deserialize_field_ident_quotes_token_stream
                 ))]
-                #variant_ident_upper_camel_case_token_stream,
+                #variant_ident_upper_camel_case_token_stream #maybe_additional_token_stream,
             }
         });
+        let f = quote::quote!{#(#variants_token_stream),*};
         quote::quote!{
             // #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
             // pub enum #ident_field_upper_camel_case {
