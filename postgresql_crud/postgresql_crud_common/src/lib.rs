@@ -10447,6 +10447,11 @@ pub enum SomethingReader {
         offset: std::primitive::u64,
     }
 }
+impl error_occurence_lib::ToStdStringString for SomethingReader {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     OffsetPlusLimitIsIntOverflow {
@@ -10460,6 +10465,8 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotUniqueFieldFilter {
+        #[eo_to_std_string_string_serialize_deserialize]
+        field: DoggieReader,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -10489,12 +10496,23 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 "'doggie',jsonb_build_object({})",
                 {
                     if reader_vec.is_empty() {
-                        todo!()//return error
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                     let mut unique_reader_vec = vec![];
                     for element in reader_vec {
                         if unique_reader_vec.contains(&element) {
-                            todo!()//return error
+                            // todo!()//return error
+                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueFieldFilter {
+                                field: *element,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+
+    //                         NotUniqueFieldFilter {
+    //     field: DoggieReader,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // }
                         }
                         else {
                             unique_reader_vec.push(&element);
@@ -10517,7 +10535,9 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 offset
             } => {
                 if reader_vec.is_empty() {
-                    todo!()//return error
+                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
                 }
                 let mut unique_reader_vec = vec![];
                 for element in reader_vec {
@@ -10595,6 +10615,11 @@ pub enum DoggieReader {
     ))]
     Says
 }
+impl error_occurence_lib::ToStdStringString for DoggieReader {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum DoggieGeneratePostgresqlQueryPartErrorNamed {
     OffsetPlusLimitIsIntOverflow {
@@ -10647,6 +10672,11 @@ pub enum CatReader {
         deserialize = "one"
     ))]
     One
+}
+impl error_occurence_lib::ToStdStringString for CatReader {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CatGeneratePostgresqlQueryPartErrorNamed {
