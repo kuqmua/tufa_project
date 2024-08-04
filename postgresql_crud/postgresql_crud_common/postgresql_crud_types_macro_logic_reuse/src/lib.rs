@@ -433,8 +433,105 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     });
     // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
+    let ident_field_upper_camel_case = {
+        let value =  format!("{ident}{field_upper_camel_case}");
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let pub_enum_ident_field_token_stream = {
+        quote::quote!{
+            
+        }
+    };
+    let _token_stream = {
+        quote::quote!{
+            
+        }
+    };
+    let _token_stream = {
+        quote::quote!{
+            
+        }
+    };
+    let _token_stream = {
+        quote::quote!{
+            
+        }
+    };
+    let _token_stream = {
+        quote::quote!{
+            
+        }
+    };
+    let _token_stream = {
+        quote::quote!{
+            
+        }
+    };
+    let _token_stream = {
+        quote::quote!{
+            
+        }
+    };
     let gen = quote::quote!{
-
+        // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+        // pub struct Cat {
+        //     pub meow: StdStringStringJson,
+        //     pub one: StdStringStringJson,
+        // }
+        // #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+        // pub enum #ident_field_upper_camel_case {
+        //     #[serde(rename(
+        //         serialize = "meow",
+        //         deserialize = "meow"
+        //     ))]
+        //     Meow,
+        //     #[serde(rename(
+        //         serialize = "one",
+        //         deserialize = "one"
+        //     ))]
+        //     One
+        // }
+        // impl error_occurence_lib::ToStdStringString for CatField {
+        //     fn to_std_string_string(&self) -> std::string::String {
+        //         format!("{self:?}")
+        //     }
+        // }
+        // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+        // pub enum CatGeneratePostgresqlQueryPartErrorNamed {
+        //     OffsetPlusLimitIsIntOverflow {
+        //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //     },
+        //     FieldsFilterIsEmpty {
+        //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //     },
+        //     NotUniqueFieldFilter {
+        //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //     }
+        // }
+        // impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for CatField {
+        //     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, CatGeneratePostgresqlQueryPartErrorNamed> {
+        //         match self {
+        //             Self::Meow => Ok(format!("'meow',{column_name_and_maybe_field_getter}->'meow'")),
+        //             Self::One => Ok(format!("'one',{column_name_and_maybe_field_getter}->'one'")),
+        //         }
+        //     }
+        // }
+        // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
+        // pub struct CatOptions {
+        //     meow: std::option::Option<StdStringStringJson>,
+        //     one: std::option::Option<StdStringStringJson>,
+        // }
+        // impl std::convert::From<Cat> for CatOptions {
+        //     fn from(value: Cat) -> Self {
+        //         Self {
+        //             meow: Some(value.meow),
+        //             one: Some(value.one),
+        //         }
+        //     }
+        // }
     };
     gen.into()
 }
