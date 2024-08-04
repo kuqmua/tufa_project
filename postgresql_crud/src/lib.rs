@@ -539,11 +539,11 @@ pub trait CombinationOfTraitsForPostgresqlCrudLogic:
 pub use naming_conventions::CommitUpperCamelCase;
 pub use naming_conventions::CommitSnakeCase;
 
-pub use postgresql_crud_common::GeneratePostgresqlQueryPart;
+pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPart;
 
-pub use postgresql_crud_common::Something;
-pub use postgresql_crud_common::SomethingOptions;
-pub use postgresql_crud_common::SomethingReader;
-pub use postgresql_crud_common::Doggie;
-pub use postgresql_crud_common::DoggieOptions;
-pub use postgresql_crud_common::DoggieReader;
+pub use postgresql_crud_common::generate_postgresql_query_part::Something;
+pub use postgresql_crud_common::generate_postgresql_query_part::SomethingOptions;
+pub use postgresql_crud_common::generate_postgresql_query_part::SomethingReader;
+pub use postgresql_crud_common::generate_postgresql_query_part::Doggie;
+pub use postgresql_crud_common::generate_postgresql_query_part::DoggieOptions;
+pub use postgresql_crud_common::generate_postgresql_query_part::DoggieReader;
