@@ -26,7 +26,7 @@ pub struct StdPrimitiveF64Json(std::primitive::f64);
 pub struct StdPrimitiveBoolJson(std::primitive::bool);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdStringStringJson(std::string::String);
-//
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdPrimitiveI8Json(std::option::Option<std::primitive::i8>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -55,7 +55,7 @@ pub struct StdOptionOptionStdPrimitiveF64Json(std::option::Option<std::primitive
 pub struct StdOptionOptionStdPrimitiveBoolJson(std::option::Option<std::primitive::bool>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdStringStringJson(std::option::Option<std::string::String>);
-//
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdPrimitiveI8Json(std::vec::Vec<std::primitive::i8>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -84,7 +84,7 @@ pub struct StdVecVecStdPrimitiveF64Json(std::vec::Vec<std::primitive::f64>);
 pub struct StdVecVecStdPrimitiveBoolJson(std::vec::Vec<std::primitive::bool>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdStringStringJson(std::vec::Vec<std::string::String>);
-//
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdVecVecStdPrimitiveI8Json(std::option::Option<std::vec::Vec<std::primitive::i8>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -113,7 +113,7 @@ pub struct StdOptionOptionStdVecVecStdPrimitiveF64Json(std::option::Option<std::
 pub struct StdOptionOptionStdVecVecStdPrimitiveBoolJson(std::option::Option<std::vec::Vec<std::primitive::bool>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdVecVecStdStringStringJson(std::option::Option<std::vec::Vec<std::string::String>>);
-//
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdOptionOptionStdPrimitiveI8Json(std::vec::Vec<std::option::Option<std::primitive::i8>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -142,7 +142,7 @@ pub struct StdVecVecStdOptionOptionStdPrimitiveF64Json(std::vec::Vec<std::option
 pub struct StdVecVecStdOptionOptionStdPrimitiveBoolJson(std::vec::Vec<std::option::Option<std::primitive::bool>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdOptionOptionStdStringStringJson(std::vec::Vec<std::option::Option<std::string::String>>);
-//
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8Json(std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -171,15 +171,19 @@ pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64Json(std::optio
 pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolJson(std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdVecVecStdOptionOptionStdStringStringJson(std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
-//
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-// pub struct GenericJson<T>(T);
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-// pub struct StdOptionOptionGenericJson<T>(std::option::Option<T>);
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-// pub struct StdVecVecGenericJson<T>(std::vec::Vec<T>);
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-// pub struct StdVecVecStdGenericJson<T>(std::vec::Vec<T>);
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct GenericJson<T>(T);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct StdOptionOptionGenericJson<T>(std::option::Option<T>);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct StdVecVecGenericJson<T>(std::vec::Vec<T>);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct StdOptionOptionStdVecVecGenericJson<T>(std::option::Option<std::vec::Vec<T>>);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct StdVecVecStdOptionOptionStdGenericJson<T>(std::vec::Vec<std::option::Option<T>>);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdGenericJson<T>(std::option::Option<std::vec::Vec<std::option::Option<T>>>);
 /////////////////////
 pub trait GeneratePostgresqlQueryPart<T> {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
