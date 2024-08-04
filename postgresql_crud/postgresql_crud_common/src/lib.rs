@@ -10464,9 +10464,14 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     FieldsFilterIsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUniqueFieldFilter {
+    NotUniqueDoggieFieldFilter {
         #[eo_to_std_string_string_serialize_deserialize]
         field: DoggieReader,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueCatsFieldFilter {
+        #[eo_to_std_string_string_serialize_deserialize]
+        field: CatReader,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -10503,16 +10508,10 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     let mut unique_reader_vec = vec![];
                     for element in reader_vec {
                         if unique_reader_vec.contains(&element) {
-                            // todo!()//return error
-                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueFieldFilter {
+                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
                                 field: *element,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
-
-    //                         NotUniqueFieldFilter {
-    //     field: DoggieReader,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // }
                         }
                         else {
                             unique_reader_vec.push(&element);
@@ -10542,7 +10541,10 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 let mut unique_reader_vec = vec![];
                 for element in reader_vec {
                     if unique_reader_vec.contains(&element) {
-                        todo!()//return error
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
+                            field: *element,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                     else {
                         unique_reader_vec.push(&element);
