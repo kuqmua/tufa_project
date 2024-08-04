@@ -463,7 +463,9 @@ pub struct DoggieOptions {
 // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
 
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, 
+postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
     pub meow: StdStringStringJson,
     pub one: StdStringStringJson,

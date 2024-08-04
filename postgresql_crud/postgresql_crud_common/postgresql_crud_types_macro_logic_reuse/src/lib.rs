@@ -434,6 +434,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+//
+    let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
+        if let syn::Fields::Named(fields_named) = &data_struct.fields {
+            fields_named.named.iter().map(|element|element).collect::<std::vec::Vec<&syn::Field>>()
+        } else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Named");
+        }
+    } else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+    };
+    println!("{vec_syn_field:#?}");
+//
     let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
     let ident_field_upper_camel_case = {
         let value =  format!("{ident}{field_upper_camel_case}");
@@ -441,6 +453,26 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let pub_enum_ident_field_token_stream = {
+        let variants_token_stream = vec_syn_field.iter().map(|element|{
+            let field_ident_stringified = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                )
+            }).to_string();
+            let serialize_deserialize_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+                &field_ident_stringified,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+            quote::quote!{
+                #[serde(rename(
+                   serialize = #serialize_deserialize_field_ident_quotes_token_stream,
+                   deserialize = #serialize_deserialize_field_ident_quotes_token_stream
+                ))]
+                #variant_ident_upper_camel_case_token_stream,
+            }
+        });
         quote::quote!{
             // #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
             // pub enum #ident_field_upper_camel_case {
@@ -455,6 +487,34 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //     ))]
             //     One
             // }
+
+    // #[serde(rename(
+    //     serialize = "something",
+    //     deserialize = "something"
+    // ))]
+    // Something,
+    // #[serde(rename(
+    //     serialize = "omega",
+    //     deserialize = "omega"
+    // ))]
+    // Omega {
+    //     limit: std::primitive::u64,
+    //     offset: std::primitive::u64,
+    // },
+    // #[serde(rename(
+    //     serialize = "doggie",
+    //     deserialize = "doggie"
+    // ))]
+    // Doggie(std::vec::Vec<DoggieField>),
+    // #[serde(rename(
+    //     serialize = "cats",
+    //     deserialize = "cats"
+    // ))]
+    // Cats {
+    //     reader_vec: std::vec::Vec<CatField>,
+    //     limit: std::primitive::u64,
+    //     offset: std::primitive::u64,
+    // }
         }
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream = {
