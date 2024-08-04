@@ -58,6 +58,13 @@ pub struct StdOptionOptionStdStringStringJson(pub std::option::Option<std::strin
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdPrimitiveI8Json(pub std::vec::Vec<std::primitive::i8>);
+//
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct StdVecVecStdPrimitiveI8JsonFilter {
+    limit: std::primitive::u64,
+    offset: std::primitive::u64,
+}
+//
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdPrimitiveI16Json(pub std::vec::Vec<std::primitive::i16>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -184,6 +191,19 @@ pub struct StdOptionOptionStdVecVecGenericJson<T>(pub std::option::Option<std::v
 pub struct StdVecVecStdOptionOptionStdGenericJson<T>(pub std::vec::Vec<std::option::Option<T>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdVecVecStdOptionOptionStdGenericJson<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
+
+
+    // Something,
+    // Omega {
+    //     limit: std::primitive::u64,
+    //     offset: std::primitive::u64,
+    // },
+    // Doggie(std::vec::Vec<DoggieField>),
+    // Cats {
+    //     reader_vec: std::vec::Vec<CatField>,
+    //     limit: std::primitive::u64,
+    //     offset: std::primitive::u64,
+    // }
 /////////////////////
 pub trait GeneratePostgresqlQueryPart<T> {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
