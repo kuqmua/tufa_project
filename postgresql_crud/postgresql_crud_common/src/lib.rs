@@ -4933,7 +4933,7 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(crate::generate_postgresql_query_part::Something {
             something: generate_postgresql_query_part::StdStringStringJson(std_string_string_handle),
-            omega: vec![true, false],
+            omega: generate_postgresql_query_part::StdVecVecStdPrimitiveBoolJson(vec![true, false]),
             doggie: crate::generate_postgresql_query_part::Doggie {
                 says: std::string::String::from("gav")
             },

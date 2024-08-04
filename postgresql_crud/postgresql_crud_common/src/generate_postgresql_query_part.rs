@@ -192,7 +192,7 @@ pub trait GeneratePostgresqlQueryPart<T> {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     pub something: StdStringStringJson,
-    pub omega: std::vec::Vec<std::primitive::bool>,
+    pub omega: StdVecVecStdPrimitiveBoolJson,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     pub doggie: Doggie,
     pub cats: std::vec::Vec<Cat>,
@@ -399,7 +399,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
     something: std::option::Option<StdStringStringJson>,
-    omega: std::option::Option<std::vec::Vec<bool>>,
+    omega: std::option::Option<StdVecVecStdPrimitiveBoolJson>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: std::option::Option<DoggieOptions>,
     cats: std::option::Option<std::vec::Vec<CatOptions>>,
