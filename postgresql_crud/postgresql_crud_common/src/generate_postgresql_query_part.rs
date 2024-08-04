@@ -193,7 +193,6 @@ pub trait GeneratePostgresqlQueryPart<T> {
 pub struct Something {
     pub something: StdStringStringJson,
     pub omega: StdVecVecStdPrimitiveBoolJson,
-    // #[json_field_name_stringified_reader] //todo for the future proc macro
     pub doggie: GenericJson<Doggie>,
     pub cats: StdVecVecGenericJson<Cat>,
 }
@@ -225,7 +224,7 @@ impl std::convert::From<Something> for SomethingOptions {
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub enum SomethingReader {
+pub enum SomethingField {
     #[serde(rename(
         serialize = "something",
         deserialize = "something"
@@ -243,18 +242,18 @@ pub enum SomethingReader {
         serialize = "doggie",
         deserialize = "doggie"
     ))]
-    Doggie(std::vec::Vec<DoggieReader>),
+    Doggie(std::vec::Vec<DoggieField>),
     #[serde(rename(
         serialize = "cats",
         deserialize = "cats"
     ))]
     Cats {
-        reader_vec: std::vec::Vec<CatReader>,
+        reader_vec: std::vec::Vec<CatField>,
         limit: std::primitive::u64,
         offset: std::primitive::u64,
     }
 }
-impl error_occurence_lib::ToStdStringString for SomethingReader {
+impl error_occurence_lib::ToStdStringString for SomethingField {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
@@ -273,16 +272,16 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     },
     NotUniqueDoggieFieldFilter {
         #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieReader,
+        field: DoggieField,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotUniqueCatsFieldFilter {
         #[eo_to_std_string_string_serialize_deserialize]
-        field: CatReader,
+        field: CatField,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
-impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingReader {
+impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
     //todo return result instead of std::string::String
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
@@ -417,14 +416,14 @@ impl std::convert::From<Doggie> for DoggieOptions {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub enum DoggieReader {
+pub enum DoggieField {
     #[serde(rename(
         serialize = "says",
         deserialize = "says"
     ))]
     Says
 }
-impl error_occurence_lib::ToStdStringString for DoggieReader {
+impl error_occurence_lib::ToStdStringString for DoggieField {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
@@ -441,7 +440,7 @@ pub enum DoggieGeneratePostgresqlQueryPartErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
-impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> for DoggieReader {
+impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> for DoggieField {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
         match self {
             Self::Says => Ok(format!("'says',{column_name_and_maybe_field_getter}->'says'")),
@@ -470,7 +469,7 @@ pub struct Cat {
     pub one: StdStringStringJson,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub enum CatReader {
+pub enum CatField {
     #[serde(rename(
         serialize = "meow",
         deserialize = "meow"
@@ -482,7 +481,7 @@ pub enum CatReader {
     ))]
     One
 }
-impl error_occurence_lib::ToStdStringString for CatReader {
+impl error_occurence_lib::ToStdStringString for CatField {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
@@ -499,7 +498,7 @@ pub enum CatGeneratePostgresqlQueryPartErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
-impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for CatReader {
+impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for CatField {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, CatGeneratePostgresqlQueryPartErrorNamed> {
         match self {
             Self::Meow => Ok(format!("'meow',{column_name_and_maybe_field_getter}->'meow'")),

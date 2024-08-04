@@ -267,7 +267,7 @@ pub enum JsongenericColumn {
         deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
     ))]
     SqlxTypesJsonTAsPostgresqlJsonNotNull {
-        filter: std::vec::Vec<postgresql_crud::SomethingReader>
+        filter: std::vec::Vec<postgresql_crud::SomethingField>
     },
 }
 impl std::fmt::Display for JsongenericColumn {
