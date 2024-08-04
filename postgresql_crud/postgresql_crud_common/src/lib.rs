@@ -4935,11 +4935,11 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
             something: generate_postgresql_query_part::StdStringStringJson(std_string_string_handle),
             omega: generate_postgresql_query_part::StdVecVecStdPrimitiveBoolJson(vec![true, false]),
             doggie: generate_postgresql_query_part::GenericJson(crate::generate_postgresql_query_part::Doggie {
-                says: std::string::String::from("gav")
+                says: generate_postgresql_query_part::StdStringStringJson(std::string::String::from("gav"))
             }),
             cats: generate_postgresql_query_part::StdVecVecGenericJson(vec![crate::generate_postgresql_query_part::Cat { 
-                meow: std::string::String::from(""),
-                one: std::string::String::from(""), 
+                meow: generate_postgresql_query_part::StdStringStringJson(std::string::String::from("")),
+                one: generate_postgresql_query_part::StdStringStringJson(std::string::String::from("")), 
             }])
         }));
         let serde_json_value =

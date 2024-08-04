@@ -407,7 +407,7 @@ pub struct SomethingOptions {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    pub says: std::string::String,
+    pub says: StdStringStringJson,
 }
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
@@ -450,7 +450,7 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> fo
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    says: std::option::Option<std::string::String>,
+    says: std::option::Option<StdStringStringJson>,
 }
 
 // impl DoggieOptions {
@@ -466,8 +466,8 @@ pub struct DoggieOptions {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
-    pub meow: std::string::String,
-    pub one: std::string::String,
+    pub meow: StdStringStringJson,
+    pub one: StdStringStringJson,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum CatReader {
@@ -509,8 +509,8 @@ impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for C
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct CatOptions {
-    meow: std::option::Option<std::string::String>,
-    one: std::option::Option<std::string::String>,
+    meow: std::option::Option<StdStringStringJson>,
+    one: std::option::Option<StdStringStringJson>,
 }
 impl std::convert::From<Cat> for CatOptions {
     fn from(value: Cat) -> Self {
