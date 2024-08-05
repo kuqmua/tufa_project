@@ -58,13 +58,6 @@ pub struct StdOptionOptionStdStringString(pub std::option::Option<std::string::S
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdPrimitiveI8(pub std::vec::Vec<std::primitive::i8>);
-//
-// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-// pub struct StdVecVecStdPrimitiveI8JsonFilter {
-//     limit: std::primitive::u64,
-//     offset: std::primitive::u64,
-// }
-//
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdPrimitiveI16(pub std::vec::Vec<std::primitive::i16>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -214,7 +207,7 @@ postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     pub std_string_string: StdStringString,
-    pub omega: StdVecVecStdPrimitiveBool,
+    pub std_vec_vec_std_primitive_bool: StdVecVecStdPrimitiveBool,
     pub doggie: Generic<Doggie>,
     // pub doggie_maybe_null: StdOptionOptionGenericJson<Doggie>,
     pub cats: StdVecVecGeneric<Cat>,
@@ -245,7 +238,7 @@ impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
             std_string_string: Some(value.std_string_string),
-            omega: Some(value.omega),
+            std_vec_vec_std_primitive_bool: Some(value.std_vec_vec_std_primitive_bool),
             doggie: Some(Generic(DoggieOptions::from(value.doggie.0))),
             cats: Some(StdVecVecGeneric(value.cats.0.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>())),
         }
@@ -259,10 +252,10 @@ pub enum SomethingField {
     ))]
     StdStringString,
     #[serde(rename(
-        serialize = "omega",
-        deserialize = "omega"
+        serialize = "std_vec_vec_std_primitive_bool",
+        deserialize = "std_vec_vec_std_primitive_bool"
     ))]
-    Omega {
+    StdVecVecStdPrimitiveBool {
         limit: std::primitive::u64,
         offset: std::primitive::u64,
     },
@@ -314,7 +307,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
             Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
-            Self::Omega {
+            Self::StdVecVecStdPrimitiveBool {
                 limit,
                 offset
             } => {
@@ -426,7 +419,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
     std_string_string: std::option::Option<StdStringString>,
-    omega: std::option::Option<StdVecVecStdPrimitiveBool>,
+    std_vec_vec_std_primitive_bool: std::option::Option<StdVecVecStdPrimitiveBool>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: std::option::Option<Generic<DoggieOptions>>,
     cats: std::option::Option<StdVecVecGeneric<CatOptions>>,
