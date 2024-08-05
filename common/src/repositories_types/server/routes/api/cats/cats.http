@@ -98,8 +98,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     {
                         "std_vec_vec_generic_cat": {
                             "reader_vec": [
-                                "std_string_string",
-                                "one"
+                                "std_string_string"
                             ],
                             "offset": 0,
                             "limit": 3

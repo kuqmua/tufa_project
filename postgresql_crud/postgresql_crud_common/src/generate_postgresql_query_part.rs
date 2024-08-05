@@ -498,11 +498,6 @@ pub enum CatField {
         deserialize = "std_string_string"
     ))]
     StdStringString,
-    #[serde(rename(
-        serialize = "one",
-        deserialize = "one"
-    ))]
-    One
 }
 impl error_occurence_lib::ToStdStringString for CatField {
     fn to_std_string_string(&self) -> std::string::String {
@@ -525,20 +520,17 @@ impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for C
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, CatGeneratePostgresqlQueryPartErrorNamed> {
         match self {
             Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
-            Self::One => Ok(format!("'one',{column_name_and_maybe_field_getter}->'one'")),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct CatOptions {
     std_string_string: std::option::Option<StdStringString>,
-    one: std::option::Option<StdStringString>,
 }
 impl std::convert::From<Cat> for CatOptions {
     fn from(value: Cat) -> Self {
         Self {
             std_string_string: Some(value.std_string_string),
-            one: Some(value.one),
         }
     }
 }
