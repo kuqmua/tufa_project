@@ -4934,12 +4934,14 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(crate::generate_postgresql_query_part::Something {
             std_string_string: generate_postgresql_query_part::StdStringString(std_string_string_handle),
             std_vec_vec_std_primitive_bool: generate_postgresql_query_part::StdVecVecStdPrimitiveBool(vec![true, false]),
-            generic_doggie: generate_postgresql_query_part::Generic(crate::generate_postgresql_query_part::Doggie {
+            generic: generate_postgresql_query_part::Generic(crate::generate_postgresql_query_part::Doggie {
                 std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
             }),
-            std_vec_vec_generic_cat: generate_postgresql_query_part::StdVecVecGeneric(vec![crate::generate_postgresql_query_part::Cat { 
-                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("")),
-                one: generate_postgresql_query_part::StdStringString(std::string::String::from("")), 
+            std_option_option_generic: generate_postgresql_query_part::StdOptionOptionGeneric(Some(crate::generate_postgresql_query_part::Doggie {
+                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+            })),
+            std_vec_vec_generic: generate_postgresql_query_part::StdVecVecGeneric(vec![crate::generate_postgresql_query_part::Doggie {
+                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
             }])
         }));
         let serde_json_value =

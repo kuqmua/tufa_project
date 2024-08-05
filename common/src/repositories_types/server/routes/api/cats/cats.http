@@ -93,11 +93,14 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                         }
                     }, 
                     {
-                        "generic_doggie": ["std_string_string"]
+                        "generic": ["std_string_string"]
                     },
                     {
-                        "std_vec_vec_generic_cat": {
-                            "reader_vec": [
+                        "std_option_option_generic": ["std_string_string"]
+                    },
+                    {
+                        "std_vec_vec_generic": {
+                            "field_vec": [
                                 "std_string_string"
                             ],
                             "offset": 0,

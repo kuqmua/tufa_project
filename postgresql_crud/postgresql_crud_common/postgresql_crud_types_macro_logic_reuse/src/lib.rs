@@ -1138,7 +1138,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 match supported_predefined_type {
                     SupportedPredefinedType::Generic(value) => {
                         quote::quote!{
-
+                            // (std::vec::Vec<DoggieField>)
                         }
                     }, 
                     SupportedPredefinedType::StdOptionOptionGeneric(value) => {

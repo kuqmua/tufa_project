@@ -208,27 +208,29 @@ postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
 pub struct Something {
     pub std_string_string: StdStringString,
     pub std_vec_vec_std_primitive_bool: StdVecVecStdPrimitiveBool,
-    pub generic_doggie: Generic<Doggie>,
-    // pub doggie_maybe_null: StdOptionOptionGenericJson<Doggie>,
-    pub std_vec_vec_generic_cat: StdVecVecGeneric<Cat>,
-    // pub cats_maybe_null: StdOptionOptionStdVecVecGenericJson<Cat>,
-
-// StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
-// StdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
-// StdOptionOptionStdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
+    pub generic: Generic<Doggie>,
+    pub std_option_option_generic: StdOptionOptionGeneric<Doggie>,
+    pub std_vec_vec_generic: StdVecVecGeneric<Doggie>,
+    // pub std_option_option_std_vec_vec_generic: StdOptionOptionStdVecVecGeneric<Doggie>,
+    // pub std_vec_vec_std_option_option_std_generic: StdVecVecStdOptionOptionStdGeneric<Doggie>,
+    // pub std_option_option_std_vec_vec_std_option_option_std_generic: StdOptionOptionStdVecVecStdOptionOptionStdGeneric<Doggie>,
 }
 
-
-
-// pub enum Value {
-//     Null,
-//     Bool(bool),
-//     Number(Number),
-//     String(String),
-//     Array(Vec<Value>),
-//     Object(Map<String, Value>),
+// {
+//     "std_string_string": "sss",
+//     "std_vec_vec_std_primitive_bool": [
+//       true,
+//       false,
+//       false
+//     ],
+//     "generic": {
+//       "std_string_string": "gav"
+//     },
+//     "std_vec_vec_generic": [
+//       {
+//         "std_string_string": "sdss"
+//       }]
 // }
-
 impl std::fmt::Display for Something {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", &self)
@@ -239,8 +241,17 @@ impl std::convert::From<Something> for SomethingOptions {
         Self {
             std_string_string: Some(value.std_string_string),
             std_vec_vec_std_primitive_bool: Some(value.std_vec_vec_std_primitive_bool),
-            generic_doggie: Some(Generic(DoggieOptions::from(value.generic_doggie.0))),
-            std_vec_vec_generic_cat: Some(StdVecVecGeneric(value.std_vec_vec_generic_cat.0.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>())),
+            generic: Some(Generic(DoggieOptions::from(value.generic.0))),
+            //todo rewrite to from or try from impl
+            std_option_option_generic: Some(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
+                Some(value) => DoggieOptions {
+                    std_string_string: Some(value.std_string_string),
+                },
+                None => DoggieOptions {
+                    std_string_string: None,
+                },
+            }))),
+            std_vec_vec_generic: Some(StdVecVecGeneric(value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>())),
         }
     }
 }
@@ -260,16 +271,21 @@ pub enum SomethingField {
         offset: std::primitive::u64,
     },
     #[serde(rename(
-        serialize = "generic_doggie",
-        deserialize = "generic_doggie"
+        serialize = "generic",
+        deserialize = "generic"
     ))]
-    GenericDoggie(std::vec::Vec<DoggieField>),
+    Generic(std::vec::Vec<DoggieField>),
     #[serde(rename(
-        serialize = "std_vec_vec_generic_cat",
-        deserialize = "std_vec_vec_generic_cat"
+        serialize = "std_option_option_generic",
+        deserialize = "std_option_option_generic"
     ))]
-    StdVecVecGenericCat {
-        reader_vec: std::vec::Vec<CatField>,
+    StdOptionOptionGeneric(std::vec::Vec<DoggieField>),
+    #[serde(rename(
+        serialize = "std_vec_vec_generic",
+        deserialize = "std_vec_vec_generic"
+    ))]
+    StdVecVecGeneric {
+        field_vec: std::vec::Vec<DoggieField>,
         limit: std::primitive::u64,
         offset: std::primitive::u64,
     }
@@ -298,7 +314,7 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     },
     NotUniqueCatsFieldFilter {
         #[eo_to_std_string_string_serialize_deserialize]
-        field: CatField,
+        field: DoggieField,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -324,30 +340,30 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 };
                 Ok(format!("'std_vec_vec_std_primitive_bool',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')) with ordinality where ordinality between {start} and {end})"))
             },
-            Self::GenericDoggie(reader_vec) => Ok(format!(
-                "'generic_doggie',jsonb_build_object({})",
+            Self::Generic(field_vec) => Ok(format!(
+                "'generic',jsonb_build_object({})",
                 {
-                    if reader_vec.is_empty() {
+                    if field_vec.is_empty() {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
-                    let mut unique_reader_vec = vec![];
-                    for element in reader_vec {
-                        if unique_reader_vec.contains(&element) {
+                    let mut unique_field_vec = vec![];
+                    for element in field_vec {
+                        if unique_field_vec.contains(&element) {
                             return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
                                 field: *element,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
                         }
                         else {
-                            unique_reader_vec.push(&element);
+                            unique_field_vec.push(&element);
                         }
                     }
-                    let mut acc = reader_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                    let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
                         acc.push_str(&format!(
                             "{},",
-                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'generic_doggie'")).unwrap()//todo return error
+                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'generic'")).unwrap()//todo return error
                         ));
                         acc
                     });
@@ -355,29 +371,62 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     acc
                 }
             )),
-            Self::StdVecVecGenericCat {
-                reader_vec,
+            //
+            Self::StdOptionOptionGeneric(field_vec) => Ok(format!(
+                "'std_option_option_generic',jsonb_build_object({})",
+                {
+                    if field_vec.is_empty() {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                    let mut unique_field_vec = vec![];
+                    for element in field_vec {
+                        if unique_field_vec.contains(&element) {
+                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
+                                field: *element,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                        else {
+                            unique_field_vec.push(&element);
+                        }
+                    }
+                    let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                        acc.push_str(&format!(
+                            "{},",
+                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'")).unwrap()//todo return error
+                        ));
+                        acc
+                    });
+                    let _ = acc.pop();
+                    acc
+                }
+            )),
+            //
+            Self::StdVecVecGeneric {
+                field_vec,
                 limit,
                 offset
             } => {
-                if reader_vec.is_empty() {
+                if field_vec.is_empty() {
                     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
-                let mut unique_reader_vec = vec![];
-                for element in reader_vec {
-                    if unique_reader_vec.contains(&element) {
+                let mut unique_field_vec = vec![];
+                for element in field_vec {
+                    if unique_field_vec.contains(&element) {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
                             field: *element,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
                     else {
-                        unique_reader_vec.push(&element);
+                        unique_field_vec.push(&element);
                     }
                 }
-                let mut acc = reader_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
                     acc.push_str(&format!(
                         "{},",
                         element.generate_postgresql_query_part("value").unwrap()//todo return error//todo if it two inner[][] - is it correct to use value still?
@@ -396,7 +445,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                         });
                     }
                 };
-                Ok(format!("'std_vec_vec_generic_cat',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'std_vec_vec_generic_cat')) with ordinality where ordinality between {start} AND {end})"))
+                Ok(format!("'std_vec_vec_generic',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'std_vec_vec_generic')) with ordinality where ordinality between {start} AND {end})"))
             }
         }
     }
@@ -420,9 +469,9 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 pub struct SomethingOptions {
     std_string_string: std::option::Option<StdStringString>,
     std_vec_vec_std_primitive_bool: std::option::Option<StdVecVecStdPrimitiveBool>,
-    // #[json_field_name_stringified_reader] //todo for the future proc macro
-    generic_doggie: std::option::Option<Generic<DoggieOptions>>,
-    std_vec_vec_generic_cat: std::option::Option<StdVecVecGeneric<CatOptions>>,
+    generic: std::option::Option<Generic<DoggieOptions>>,
+    std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
+    std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -473,69 +522,6 @@ pub struct DoggieOptions {
     std_string_string: std::option::Option<StdStringString>,
 }
 
-// impl DoggieOptions {
-//     fn s(value: sqlx::types::JsonValue) -> Self {
-//         let f: Self = serde_json::from_value(value).unwrap();
-
-//         f
-//     }
-// }
-// let schema = schema_for!(Something);
-// println!("{}", serde_json::to_string_pretty(&schema).unwrap());
-
-
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, 
-
-)] //user type must implement utoipa::ToSchema trait
-pub struct Cat {
-    pub std_string_string: StdStringString,
-    pub one: StdStringString,
-}
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub enum CatField {
-    #[serde(rename(
-        serialize = "std_string_string",
-        deserialize = "std_string_string"
-    ))]
-    StdStringString,
-}
-impl error_occurence_lib::ToStdStringString for CatField {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum CatGeneratePostgresqlQueryPartErrorNamed {
-    OffsetPlusLimitIsIntOverflow {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for CatField {
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, CatGeneratePostgresqlQueryPartErrorNamed> {
-        match self {
-            Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
-        }
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-pub struct CatOptions {
-    std_string_string: std::option::Option<StdStringString>,
-}
-impl std::convert::From<Cat> for CatOptions {
-    fn from(value: Cat) -> Self {
-        Self {
-            std_string_string: Some(value.std_string_string),
-        }
-    }
-}
-
-
 // [
 //     Field {
 //         attrs: [],
@@ -559,7 +545,7 @@ impl std::convert::From<Cat> for CatOptions {
 //                 segments: [
 //                     PathSegment {
 //                         ident: Ident {
-//                             ident: "StdStringStringJson",
+//                             ident: "StdStringString",
 //                             span: #0 bytes(566271..566290),
 //                         },
 //                         arguments: PathArguments::None,
@@ -590,7 +576,7 @@ impl std::convert::From<Cat> for CatOptions {
 //                 segments: [
 //                     PathSegment {
 //                         ident: Ident {
-//                             ident: "StdVecVecStdPrimitiveBoolJson",
+//                             ident: "StdVecVecStdPrimitiveBool",
 //                             span: #0 bytes(566307..566336),
 //                         },
 //                         arguments: PathArguments::None,
@@ -621,7 +607,7 @@ impl std::convert::From<Cat> for CatOptions {
 //                 segments: [
 //                     PathSegment {
 //                         ident: Ident {
-//                             ident: "GenericJson",
+//                             ident: "Generic",
 //                             span: #0 bytes(566354..566365),
 //                         },
 //                         arguments: PathArguments::AngleBracketed {
@@ -675,7 +661,7 @@ impl std::convert::From<Cat> for CatOptions {
 //                 segments: [
 //                     PathSegment {
 //                         ident: Ident {
-//                             ident: "StdVecVecGenericJson",
+//                             ident: "StdVecVecGeneric",
 //                             span: #0 bytes(566389..566409),
 //                         },
 //                         arguments: PathArguments::AngleBracketed {
