@@ -1,63 +1,63 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveI8Json(pub std::primitive::i8);
+pub struct StdPrimitiveI8(pub std::primitive::i8);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveI16Json(pub std::primitive::i16);
+pub struct StdPrimitiveI16(pub std::primitive::i16);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveI32Json(pub std::primitive::i32);
+pub struct StdPrimitiveI32(pub std::primitive::i32);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveI64Json(pub std::primitive::i64);
+pub struct StdPrimitiveI64(pub std::primitive::i64);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveI128Json(pub std::primitive::i128);
+pub struct StdPrimitiveI128(pub std::primitive::i128);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveU8Json(pub std::primitive::u8);
+pub struct StdPrimitiveU8(pub std::primitive::u8);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveU16Json(pub std::primitive::u16);
+pub struct StdPrimitiveU16(pub std::primitive::u16);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveU32Json(pub std::primitive::u32);
+pub struct StdPrimitiveU32(pub std::primitive::u32);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveU64Json(pub std::primitive::u64);
+pub struct StdPrimitiveU64(pub std::primitive::u64);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveU128Json(pub std::primitive::u128);
+pub struct StdPrimitiveU128(pub std::primitive::u128);
 #[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveF32Json(pub std::primitive::f32);
+pub struct StdPrimitiveF32(pub std::primitive::f32);
 #[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveF64Json(pub std::primitive::f64);
+pub struct StdPrimitiveF64(pub std::primitive::f64);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdPrimitiveBoolJson(pub std::primitive::bool);
+pub struct StdPrimitiveBool(pub std::primitive::bool);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdStringStringJson(pub std::string::String);
+pub struct StdStringString(pub std::string::String);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveI8Json(pub std::option::Option<std::primitive::i8>);
+pub struct StdOptionOptionStdPrimitiveI8(pub std::option::Option<std::primitive::i8>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveI16Json(pub std::option::Option<std::primitive::i16>);
+pub struct StdOptionOptionStdPrimitiveI16(pub std::option::Option<std::primitive::i16>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveI32Json(pub std::option::Option<std::primitive::i32>);
+pub struct StdOptionOptionStdPrimitiveI32(pub std::option::Option<std::primitive::i32>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveI64Json(pub std::option::Option<std::primitive::i64>);
+pub struct StdOptionOptionStdPrimitiveI64(pub std::option::Option<std::primitive::i64>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveI128Json(pub std::option::Option<std::primitive::i128>);
+pub struct StdOptionOptionStdPrimitiveI128(pub std::option::Option<std::primitive::i128>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveU8Json(pub std::option::Option<std::primitive::u8>);
+pub struct StdOptionOptionStdPrimitiveU8(pub std::option::Option<std::primitive::u8>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveU16Json(pub std::option::Option<std::primitive::u16>);
+pub struct StdOptionOptionStdPrimitiveU16(pub std::option::Option<std::primitive::u16>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveU32Json(pub std::option::Option<std::primitive::u32>);
+pub struct StdOptionOptionStdPrimitiveU32(pub std::option::Option<std::primitive::u32>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveU64Json(pub std::option::Option<std::primitive::u64>);
+pub struct StdOptionOptionStdPrimitiveU64(pub std::option::Option<std::primitive::u64>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveU128Json(pub std::option::Option<std::primitive::u128>);
+pub struct StdOptionOptionStdPrimitiveU128(pub std::option::Option<std::primitive::u128>);
 #[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveF32Json(pub std::option::Option<std::primitive::f32>);
+pub struct StdOptionOptionStdPrimitiveF32(pub std::option::Option<std::primitive::f32>);
 #[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveF64Json(pub std::option::Option<std::primitive::f64>);
+pub struct StdOptionOptionStdPrimitiveF64(pub std::option::Option<std::primitive::f64>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdPrimitiveBoolJson(pub std::option::Option<std::primitive::bool>);
+pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdStringStringJson(pub std::option::Option<std::string::String>);
+pub struct StdOptionOptionStdStringString(pub std::option::Option<std::string::String>);
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveI8Json(pub std::vec::Vec<std::primitive::i8>);
+pub struct StdVecVecStdPrimitiveI8(pub std::vec::Vec<std::primitive::i8>);
 //
 // #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 // pub struct StdVecVecStdPrimitiveI8JsonFilter {
@@ -66,131 +66,131 @@ pub struct StdVecVecStdPrimitiveI8Json(pub std::vec::Vec<std::primitive::i8>);
 // }
 //
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveI16Json(pub std::vec::Vec<std::primitive::i16>);
+pub struct StdVecVecStdPrimitiveI16(pub std::vec::Vec<std::primitive::i16>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveI32Json(pub std::vec::Vec<std::primitive::i32>);
+pub struct StdVecVecStdPrimitiveI32(pub std::vec::Vec<std::primitive::i32>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveI64Json(pub std::vec::Vec<std::primitive::i64>);
+pub struct StdVecVecStdPrimitiveI64(pub std::vec::Vec<std::primitive::i64>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveI128Json(pub std::vec::Vec<std::primitive::i128>);
+pub struct StdVecVecStdPrimitiveI128(pub std::vec::Vec<std::primitive::i128>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveU8Json(pub std::vec::Vec<std::primitive::u8>);
+pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveU16Json(pub std::vec::Vec<std::primitive::u16>);
+pub struct StdVecVecStdPrimitiveU16(pub std::vec::Vec<std::primitive::u16>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveU32Json(pub std::vec::Vec<std::primitive::u32>);
+pub struct StdVecVecStdPrimitiveU32(pub std::vec::Vec<std::primitive::u32>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveU64Json(pub std::vec::Vec<std::primitive::u64>);
+pub struct StdVecVecStdPrimitiveU64(pub std::vec::Vec<std::primitive::u64>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveU128Json(pub std::vec::Vec<std::primitive::u128>);
+pub struct StdVecVecStdPrimitiveU128(pub std::vec::Vec<std::primitive::u128>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveF32Json(pub std::vec::Vec<std::primitive::f32>);
+pub struct StdVecVecStdPrimitiveF32(pub std::vec::Vec<std::primitive::f32>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveF64Json(pub std::vec::Vec<std::primitive::f64>);
+pub struct StdVecVecStdPrimitiveF64(pub std::vec::Vec<std::primitive::f64>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveBoolJson(pub std::vec::Vec<std::primitive::bool>);
+pub struct StdVecVecStdPrimitiveBool(pub std::vec::Vec<std::primitive::bool>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdStringStringJson(pub std::vec::Vec<std::string::String>);
+pub struct StdVecVecStdStringString(pub std::vec::Vec<std::string::String>);
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveI8Json(pub std::option::Option<std::vec::Vec<std::primitive::i8>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveI8(pub std::option::Option<std::vec::Vec<std::primitive::i8>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveI16Json(pub std::option::Option<std::vec::Vec<std::primitive::i16>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveI16(pub std::option::Option<std::vec::Vec<std::primitive::i16>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveI32Json(pub std::option::Option<std::vec::Vec<std::primitive::i32>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveI32(pub std::option::Option<std::vec::Vec<std::primitive::i32>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveI64Json(pub std::option::Option<std::vec::Vec<std::primitive::i64>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveI64(pub std::option::Option<std::vec::Vec<std::primitive::i64>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveI128Json(pub std::option::Option<std::vec::Vec<std::primitive::i128>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveI128(pub std::option::Option<std::vec::Vec<std::primitive::i128>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveU8Json(pub std::option::Option<std::vec::Vec<std::primitive::u8>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveU8(pub std::option::Option<std::vec::Vec<std::primitive::u8>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveU16Json(pub std::option::Option<std::vec::Vec<std::primitive::u16>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveU16(pub std::option::Option<std::vec::Vec<std::primitive::u16>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveU32Json(pub std::option::Option<std::vec::Vec<std::primitive::u32>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveU32(pub std::option::Option<std::vec::Vec<std::primitive::u32>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveU64Json(pub std::option::Option<std::vec::Vec<std::primitive::u64>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveU64(pub std::option::Option<std::vec::Vec<std::primitive::u64>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveU128Json(pub std::option::Option<std::vec::Vec<std::primitive::u128>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveU128(pub std::option::Option<std::vec::Vec<std::primitive::u128>>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveF32Json(pub std::option::Option<std::vec::Vec<std::primitive::f32>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveF32(pub std::option::Option<std::vec::Vec<std::primitive::f32>>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveF64Json(pub std::option::Option<std::vec::Vec<std::primitive::f64>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveF64(pub std::option::Option<std::vec::Vec<std::primitive::f64>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdPrimitiveBoolJson(pub std::option::Option<std::vec::Vec<std::primitive::bool>>);
+pub struct StdOptionOptionStdVecVecStdPrimitiveBool(pub std::option::Option<std::vec::Vec<std::primitive::bool>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdStringStringJson(pub std::option::Option<std::vec::Vec<std::string::String>>);
+pub struct StdOptionOptionStdVecVecStdStringString(pub std::option::Option<std::vec::Vec<std::string::String>>);
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveI8Json(pub std::vec::Vec<std::option::Option<std::primitive::i8>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveI8(pub std::vec::Vec<std::option::Option<std::primitive::i8>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveI16Json(pub std::vec::Vec<std::option::Option<std::primitive::i16>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveI16(pub std::vec::Vec<std::option::Option<std::primitive::i16>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveI32Json(pub std::vec::Vec<std::option::Option<std::primitive::i32>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveI32(pub std::vec::Vec<std::option::Option<std::primitive::i32>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveI64Json(pub std::vec::Vec<std::option::Option<std::primitive::i64>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveI64(pub std::vec::Vec<std::option::Option<std::primitive::i64>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveI128Json(pub std::vec::Vec<std::option::Option<std::primitive::i128>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveI128(pub std::vec::Vec<std::option::Option<std::primitive::i128>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveU8Json(pub std::vec::Vec<std::option::Option<std::primitive::u8>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveU8(pub std::vec::Vec<std::option::Option<std::primitive::u8>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveU16Json(pub std::vec::Vec<std::option::Option<std::primitive::u16>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveU16(pub std::vec::Vec<std::option::Option<std::primitive::u16>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveU32Json(pub std::vec::Vec<std::option::Option<std::primitive::u32>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveU32(pub std::vec::Vec<std::option::Option<std::primitive::u32>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveU64Json(pub std::vec::Vec<std::option::Option<std::primitive::u64>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveU64(pub std::vec::Vec<std::option::Option<std::primitive::u64>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveU128Json(pub std::vec::Vec<std::option::Option<std::primitive::u128>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveU128(pub std::vec::Vec<std::option::Option<std::primitive::u128>>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveF32Json(pub std::vec::Vec<std::option::Option<std::primitive::f32>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveF32(pub std::vec::Vec<std::option::Option<std::primitive::f32>>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveF64Json(pub std::vec::Vec<std::option::Option<std::primitive::f64>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveF64(pub std::vec::Vec<std::option::Option<std::primitive::f64>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdPrimitiveBoolJson(pub std::vec::Vec<std::option::Option<std::primitive::bool>>);
+pub struct StdVecVecStdOptionOptionStdPrimitiveBool(pub std::vec::Vec<std::option::Option<std::primitive::bool>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdStringStringJson(pub std::vec::Vec<std::option::Option<std::string::String>>);
+pub struct StdVecVecStdOptionOptionStdStringString(pub std::vec::Vec<std::option::Option<std::string::String>>);
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i128>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i128>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u128>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u128>>>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64Json(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolJson(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdStringStringJson(pub std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct GenericJson<T>(pub T);
+pub struct Generic<T>(pub T);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionGenericJson<T>(pub std::option::Option<T>);
+pub struct StdOptionOptionGeneric<T>(pub std::option::Option<T>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecGenericJson<T>(pub std::vec::Vec<T>);
+pub struct StdVecVecGeneric<T>(pub std::vec::Vec<T>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecGenericJson<T>(pub std::option::Option<std::vec::Vec<T>>);
+pub struct StdOptionOptionStdVecVecGeneric<T>(pub std::option::Option<std::vec::Vec<T>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdGenericJson<T>(pub std::vec::Vec<std::option::Option<T>>);
+pub struct StdVecVecStdOptionOptionStdGeneric<T>(pub std::vec::Vec<std::option::Option<T>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdGenericJson<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionStdGeneric<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
 
 
     // Something,
@@ -213,10 +213,16 @@ pub trait GeneratePostgresqlQueryPart<T> {
 postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
-    pub something: StdStringStringJson,
-    pub omega: StdVecVecStdPrimitiveBoolJson,
-    pub doggie: GenericJson<Doggie>,
-    pub cats: StdVecVecGenericJson<Cat>,
+    pub something: StdStringString,
+    pub omega: StdVecVecStdPrimitiveBool,
+    pub doggie: Generic<Doggie>,
+    // pub doggie_maybe_null: StdOptionOptionGenericJson<Doggie>,
+    pub cats: StdVecVecGeneric<Cat>,
+    // pub cats_maybe_null: StdOptionOptionStdVecVecGenericJson<Cat>,
+
+// StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
+// StdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
+// StdOptionOptionStdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
 }
 
 
@@ -240,8 +246,8 @@ impl std::convert::From<Something> for SomethingOptions {
         Self {
             something: Some(value.something),
             omega: Some(value.omega),
-            doggie: Some(GenericJson(DoggieOptions::from(value.doggie.0))),
-            cats: Some(StdVecVecGenericJson(value.cats.0.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>())),
+            doggie: Some(Generic(DoggieOptions::from(value.doggie.0))),
+            cats: Some(StdVecVecGeneric(value.cats.0.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>())),
         }
     }
 }
@@ -419,16 +425,16 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
-    something: std::option::Option<StdStringStringJson>,
-    omega: std::option::Option<StdVecVecStdPrimitiveBoolJson>,
+    something: std::option::Option<StdStringString>,
+    omega: std::option::Option<StdVecVecStdPrimitiveBool>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    doggie: std::option::Option<GenericJson<DoggieOptions>>,
-    cats: std::option::Option<StdVecVecGenericJson<CatOptions>>,
+    doggie: std::option::Option<Generic<DoggieOptions>>,
+    cats: std::option::Option<StdVecVecGeneric<CatOptions>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    pub says: StdStringStringJson,
+    pub says: StdStringString,
 }
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
@@ -471,7 +477,7 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> fo
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    says: std::option::Option<StdStringStringJson>,
+    says: std::option::Option<StdStringString>,
 }
 
 // impl DoggieOptions {
@@ -489,8 +495,8 @@ pub struct DoggieOptions {
 
 )] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
-    pub meow: StdStringStringJson,
-    pub one: StdStringStringJson,
+    pub meow: StdStringString,
+    pub one: StdStringString,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum CatField {
@@ -532,8 +538,8 @@ impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for C
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct CatOptions {
-    meow: std::option::Option<StdStringStringJson>,
-    one: std::option::Option<StdStringStringJson>,
+    meow: std::option::Option<StdStringString>,
+    one: std::option::Option<StdStringString>,
 }
 impl std::convert::From<Cat> for CatOptions {
     fn from(value: Cat) -> Self {
@@ -717,3 +723,5 @@ impl std::convert::From<Cat> for CatOptions {
 //         },
 //     },
 // ]
+
+

@@ -423,102 +423,102 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
 ///////////////
 #[derive(Debug)]
 enum SupportedPredefinedType<'a> {
-    StdPrimitiveI8Json, 
-    StdPrimitiveI16Json, 
-    StdPrimitiveI32Json, 
-    StdPrimitiveI64Json, 
-    StdPrimitiveI128Json,
-    StdPrimitiveU8Json, 
-    StdPrimitiveU16Json, 
-    StdPrimitiveU32Json, 
-    StdPrimitiveU64Json, 
-    StdPrimitiveU128Json, 
-    StdPrimitiveF32Json, 
-    StdPrimitiveF64Json, 
-    StdPrimitiveBoolJson, 
-    StdStringStringJson, 
+    StdPrimitiveI8, 
+    StdPrimitiveI16, 
+    StdPrimitiveI32, 
+    StdPrimitiveI64, 
+    StdPrimitiveI128,
+    StdPrimitiveU8, 
+    StdPrimitiveU16, 
+    StdPrimitiveU32, 
+    StdPrimitiveU64, 
+    StdPrimitiveU128, 
+    StdPrimitiveF32, 
+    StdPrimitiveF64, 
+    StdPrimitiveBool, 
+    StdStringString, 
 
-    StdOptionOptionStdPrimitiveI8Json, 
-    StdOptionOptionStdPrimitiveI16Json, 
-    StdOptionOptionStdPrimitiveI32Json, 
-    StdOptionOptionStdPrimitiveI64Json, 
-    StdOptionOptionStdPrimitiveI128Json, 
-    StdOptionOptionStdPrimitiveU8Json, 
-    StdOptionOptionStdPrimitiveU16Json, 
-    StdOptionOptionStdPrimitiveU32Json, 
-    StdOptionOptionStdPrimitiveU64Json, 
-    StdOptionOptionStdPrimitiveU128Json, 
-    StdOptionOptionStdPrimitiveF32Json, 
-    StdOptionOptionStdPrimitiveF64Json, 
-    StdOptionOptionStdPrimitiveBoolJson, 
-    StdOptionOptionStdStringStringJson, 
+    StdOptionOptionStdPrimitiveI8, 
+    StdOptionOptionStdPrimitiveI16, 
+    StdOptionOptionStdPrimitiveI32, 
+    StdOptionOptionStdPrimitiveI64, 
+    StdOptionOptionStdPrimitiveI128, 
+    StdOptionOptionStdPrimitiveU8, 
+    StdOptionOptionStdPrimitiveU16, 
+    StdOptionOptionStdPrimitiveU32, 
+    StdOptionOptionStdPrimitiveU64, 
+    StdOptionOptionStdPrimitiveU128, 
+    StdOptionOptionStdPrimitiveF32, 
+    StdOptionOptionStdPrimitiveF64, 
+    StdOptionOptionStdPrimitiveBool, 
+    StdOptionOptionStdStringString, 
 
-    StdVecVecStdPrimitiveI8Json, 
-    StdVecVecStdPrimitiveI16Json, 
-    StdVecVecStdPrimitiveI32Json, 
-    StdVecVecStdPrimitiveI64Json, 
-    StdVecVecStdPrimitiveI128Json, 
-    StdVecVecStdPrimitiveU8Json, 
-    StdVecVecStdPrimitiveU16Json, 
-    StdVecVecStdPrimitiveU32Json, 
-    StdVecVecStdPrimitiveU64Json, 
-    StdVecVecStdPrimitiveU128Json, 
-    StdVecVecStdPrimitiveF32Json, 
-    StdVecVecStdPrimitiveF64Json, 
-    StdVecVecStdPrimitiveBoolJson, 
-    StdVecVecStdStringStringJson, 
+    StdVecVecStdPrimitiveI8, 
+    StdVecVecStdPrimitiveI16, 
+    StdVecVecStdPrimitiveI32, 
+    StdVecVecStdPrimitiveI64, 
+    StdVecVecStdPrimitiveI128, 
+    StdVecVecStdPrimitiveU8, 
+    StdVecVecStdPrimitiveU16, 
+    StdVecVecStdPrimitiveU32, 
+    StdVecVecStdPrimitiveU64, 
+    StdVecVecStdPrimitiveU128, 
+    StdVecVecStdPrimitiveF32, 
+    StdVecVecStdPrimitiveF64, 
+    StdVecVecStdPrimitiveBool, 
+    StdVecVecStdStringString, 
 
-    StdOptionOptionStdVecVecStdPrimitiveI8Json, 
-    StdOptionOptionStdVecVecStdPrimitiveI16Json, 
-    StdOptionOptionStdVecVecStdPrimitiveI32Json, 
-    StdOptionOptionStdVecVecStdPrimitiveI64Json, 
-    StdOptionOptionStdVecVecStdPrimitiveI128Json, 
-    StdOptionOptionStdVecVecStdPrimitiveU8Json, 
-    StdOptionOptionStdVecVecStdPrimitiveU16Json, 
-    StdOptionOptionStdVecVecStdPrimitiveU32Json, 
-    StdOptionOptionStdVecVecStdPrimitiveU64Json, 
-    StdOptionOptionStdVecVecStdPrimitiveU128Json, 
-    StdOptionOptionStdVecVecStdPrimitiveF32Json, 
-    StdOptionOptionStdVecVecStdPrimitiveF64Json, 
-    StdOptionOptionStdVecVecStdPrimitiveBoolJson, 
-    StdOptionOptionStdVecVecStdStringStringJson, 
+    StdOptionOptionStdVecVecStdPrimitiveI8, 
+    StdOptionOptionStdVecVecStdPrimitiveI16, 
+    StdOptionOptionStdVecVecStdPrimitiveI32, 
+    StdOptionOptionStdVecVecStdPrimitiveI64, 
+    StdOptionOptionStdVecVecStdPrimitiveI128, 
+    StdOptionOptionStdVecVecStdPrimitiveU8, 
+    StdOptionOptionStdVecVecStdPrimitiveU16, 
+    StdOptionOptionStdVecVecStdPrimitiveU32, 
+    StdOptionOptionStdVecVecStdPrimitiveU64, 
+    StdOptionOptionStdVecVecStdPrimitiveU128, 
+    StdOptionOptionStdVecVecStdPrimitiveF32, 
+    StdOptionOptionStdVecVecStdPrimitiveF64, 
+    StdOptionOptionStdVecVecStdPrimitiveBool, 
+    StdOptionOptionStdVecVecStdStringString, 
 
-    StdVecVecStdOptionOptionStdPrimitiveI8Json, 
-    StdVecVecStdOptionOptionStdPrimitiveI16Json, 
-    StdVecVecStdOptionOptionStdPrimitiveI32Json, 
-    StdVecVecStdOptionOptionStdPrimitiveI64Json, 
-    StdVecVecStdOptionOptionStdPrimitiveI128Json, 
-    StdVecVecStdOptionOptionStdPrimitiveU8Json, 
-    StdVecVecStdOptionOptionStdPrimitiveU16Json, 
-    StdVecVecStdOptionOptionStdPrimitiveU32Json, 
-    StdVecVecStdOptionOptionStdPrimitiveU64Json, 
-    StdVecVecStdOptionOptionStdPrimitiveU128Json, 
-    StdVecVecStdOptionOptionStdPrimitiveF32Json, 
-    StdVecVecStdOptionOptionStdPrimitiveF64Json, 
-    StdVecVecStdOptionOptionStdPrimitiveBoolJson, 
-    StdVecVecStdOptionOptionStdStringStringJson, 
+    StdVecVecStdOptionOptionStdPrimitiveI8, 
+    StdVecVecStdOptionOptionStdPrimitiveI16, 
+    StdVecVecStdOptionOptionStdPrimitiveI32, 
+    StdVecVecStdOptionOptionStdPrimitiveI64, 
+    StdVecVecStdOptionOptionStdPrimitiveI128, 
+    StdVecVecStdOptionOptionStdPrimitiveU8, 
+    StdVecVecStdOptionOptionStdPrimitiveU16, 
+    StdVecVecStdOptionOptionStdPrimitiveU32, 
+    StdVecVecStdOptionOptionStdPrimitiveU64, 
+    StdVecVecStdOptionOptionStdPrimitiveU128, 
+    StdVecVecStdOptionOptionStdPrimitiveF32, 
+    StdVecVecStdOptionOptionStdPrimitiveF64, 
+    StdVecVecStdOptionOptionStdPrimitiveBool, 
+    StdVecVecStdOptionOptionStdStringString, 
 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64Json, 
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolJson, 
-    StdOptionOptionStdVecVecStdOptionOptionStdStringStringJson, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64, 
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool, 
+    StdOptionOptionStdVecVecStdOptionOptionStdStringString, 
 
-    GenericJson(&'a syn::AngleBracketedGenericArguments), 
-    StdOptionOptionGenericJson(&'a syn::AngleBracketedGenericArguments), 
-    StdVecVecGenericJson(&'a syn::AngleBracketedGenericArguments), 
-    StdOptionOptionStdVecVecGenericJson(&'a syn::AngleBracketedGenericArguments), 
-    StdVecVecStdOptionOptionStdGenericJson(&'a syn::AngleBracketedGenericArguments), 
-    StdOptionOptionStdVecVecStdOptionOptionStdGenericJson(&'a syn::AngleBracketedGenericArguments), 
+    Generic(&'a syn::AngleBracketedGenericArguments), 
+    StdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
+    StdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
+    StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
+    StdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
 }
 #[derive(Debug)]
 enum SupportedPredefinedTypeTryFromSynField {
@@ -535,541 +535,541 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SupportedPredefinedType<'a> {
             syn::Type::Path(type_path) => match type_path.path.segments.last() {
                 Some(path_segment) => {
                     let supported_predefined_type = match path_segment.ident.to_string().as_str() {
-                        "StdPrimitiveI8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI16Json,
+                        "StdPrimitiveI8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveI16,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveI32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI32Json,
+                        "StdPrimitiveI32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveI32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveI64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI64Json,
+                        "StdPrimitiveI64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveI64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveI128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI128Json,
+                        "StdPrimitiveI128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveI128,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveU8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU8Json,
+                        "StdPrimitiveU8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveU8,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveU16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU16Json,
+                        "StdPrimitiveU16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveU16,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveU32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU32Json,
+                        "StdPrimitiveU32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveU32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveU64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU64Json,
+                        "StdPrimitiveU64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveU64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveU128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU128Json,
+                        "StdPrimitiveU128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveU128,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveF32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveF32Json,
+                        "StdPrimitiveF32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveF32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveF64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveF64Json,
+                        "StdPrimitiveF64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveF64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdPrimitiveBoolJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveBoolJson,
+                        "StdPrimitiveBool" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdPrimitiveBool,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdStringStringJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdStringStringJson,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-
-                        "StdOptionOptionStdPrimitiveI8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI8Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI16Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI128Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU8Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU16Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU128Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveF32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveF32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveF64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveF64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveBoolJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveBoolJson,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdStringStringJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdStringStringJson,
+                        "StdStringString" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdStringString,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
 
-                        "StdVecVecStdPrimitiveI8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI8Json,
+                        "StdOptionOptionStdPrimitiveI8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI8,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveI16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI16Json,
+                        "StdOptionOptionStdPrimitiveI16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI16,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveI32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI32Json,
+                        "StdOptionOptionStdPrimitiveI32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveI64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI64Json,
+                        "StdOptionOptionStdPrimitiveI64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveI128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI128Json,
+                        "StdOptionOptionStdPrimitiveI128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI128,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveU8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU8Json,
+                        "StdOptionOptionStdPrimitiveU8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU8,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveU16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU16Json,
+                        "StdOptionOptionStdPrimitiveU16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU16,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveU32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU32Json,
+                        "StdOptionOptionStdPrimitiveU32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveU64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU64Json,
+                        "StdOptionOptionStdPrimitiveU64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveU128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU128Json,
+                        "StdOptionOptionStdPrimitiveU128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU128,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveF32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveF32Json,
+                        "StdOptionOptionStdPrimitiveF32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveF32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveF64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveF64Json,
+                        "StdOptionOptionStdPrimitiveF64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveF64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdPrimitiveBoolJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveBoolJson,
+                        "StdOptionOptionStdPrimitiveBool" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveBool,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdStringStringJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdStringStringJson,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-
-                        "StdOptionOptionStdVecVecStdPrimitiveI8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI8Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI16Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI128Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU8Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU16Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU128Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveF32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveF32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveF64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveF64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveBoolJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveBoolJson,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdStringStringJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdStringStringJson,
+                        "StdOptionOptionStdStringString" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdStringString,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
 
-                        "StdVecVecStdOptionOptionStdPrimitiveI8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI8Json,
+                        "StdVecVecStdPrimitiveI8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI8,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveI16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI16Json,
+                        "StdVecVecStdPrimitiveI16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI16,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveI32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI32Json,
+                        "StdVecVecStdPrimitiveI32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveI64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI64Json,
+                        "StdVecVecStdPrimitiveI64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveI128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI128Json,
+                        "StdVecVecStdPrimitiveI128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI128,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveU8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU8Json,
+                        "StdVecVecStdPrimitiveU8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU8,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveU16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU16Json,
+                        "StdVecVecStdPrimitiveU16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU16,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveU32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU32Json,
+                        "StdVecVecStdPrimitiveU32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveU64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU64Json,
+                        "StdVecVecStdPrimitiveU64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveU128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU128Json,
+                        "StdVecVecStdPrimitiveU128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU128,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveF32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveF32Json,
+                        "StdVecVecStdPrimitiveF32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveF32,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveF64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveF64Json,
+                        "StdVecVecStdPrimitiveF64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveF64,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdPrimitiveBoolJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveBoolJson,
+                        "StdVecVecStdPrimitiveBool" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveBool,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
-                        "StdVecVecStdOptionOptionStdStringStringJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdStringStringJson,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64Json" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64Json,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolJson,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdStringStringJson" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdStringStringJson,
+                        "StdVecVecStdStringString" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdStringString,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
                             },
                         },
 
-                        "GenericJson" => Self::GenericJson(match &path_segment.arguments {
+                        "StdOptionOptionStdVecVecStdPrimitiveI8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI8,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveI16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI16,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveI32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveI64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveI128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI128,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveU8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU8,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveU16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU16,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveU32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveU64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveU128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU128,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveF32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveF32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveF64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveF64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveBool" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveBool,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdStringString" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdStringString,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+
+                        "StdVecVecStdOptionOptionStdPrimitiveI8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI8,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveI16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI16,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveI32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveI64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveI128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI128,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveU8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU8,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveU16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU16,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveU32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveU64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveU128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU128,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveF32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveF32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveF64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveF64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveBool" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveBool,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdVecVecStdOptionOptionStdStringString" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdStringString,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdStringString" => match path_segment.arguments{
+                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
+                            _ => {
+                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                            },
+                        },
+
+                        "Generic" => Self::Generic(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
                             },
                         }),
-                        "StdOptionOptionGenericJson" => Self::StdOptionOptionGenericJson(match &path_segment.arguments {
+                        "StdOptionOptionGeneric" => Self::StdOptionOptionGeneric(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
                             },
                         }),
-                        "StdVecVecGenericJson" => Self::StdVecVecGenericJson(match &path_segment.arguments {
+                        "StdVecVecGeneric" => Self::StdVecVecGeneric(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
                             },
                         }),
-                        "StdOptionOptionStdVecVecGenericJson" => Self::StdOptionOptionStdVecVecGenericJson(match &path_segment.arguments {
+                        "StdOptionOptionStdVecVecGeneric" => Self::StdOptionOptionStdVecVecGeneric(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
                             },
                         }),
-                        "StdVecVecStdOptionOptionStdGenericJson" => Self::StdVecVecStdOptionOptionStdGenericJson(match &path_segment.arguments {
+                        "StdVecVecStdOptionOptionStdGeneric" => Self::StdVecVecStdOptionOptionStdGeneric(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
                             },
                         }),
-                        "StdOptionOptionStdVecVecStdOptionOptionStdGenericJson" => Self::StdOptionOptionStdVecVecStdOptionOptionStdGenericJson(match &path_segment.arguments {
+                        "StdOptionOptionStdVecVecStdOptionOptionStdGeneric" => Self::StdOptionOptionStdVecVecStdOptionOptionStdGeneric(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
@@ -1136,32 +1136,32 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
                 println!("{supported_predefined_type:#?}");
                 match supported_predefined_type {
-                    SupportedPredefinedType::GenericJson(value) => {
+                    SupportedPredefinedType::Generic(value) => {
                         quote::quote!{
 
                         }
                     }, 
-                    SupportedPredefinedType::StdOptionOptionGenericJson(value) => {
+                    SupportedPredefinedType::StdOptionOptionGeneric(value) => {
                         quote::quote!{
 
                         }
                     }, 
-                    SupportedPredefinedType::StdVecVecGenericJson(value) => {
+                    SupportedPredefinedType::StdVecVecGeneric(value) => {
                         quote::quote!{
 
                         }
                     }, 
-                    SupportedPredefinedType::StdOptionOptionStdVecVecGenericJson(value) => {
+                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(value) => {
                         quote::quote!{
 
                         }
                     }, 
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdGenericJson(value) => {
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdGeneric(value) => {
                         quote::quote!{
 
                         }
                     }, 
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdGenericJson(value) => {
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdGeneric(value) => {
                         quote::quote!{
 
                         }
@@ -1266,8 +1266,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         quote::quote!{
             // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
             // pub struct CatOptions {
-            //     meow: std::option::Option<StdStringStringJson>,
-            //     one: std::option::Option<StdStringStringJson>,
+            //     meow: std::option::Option<StdStringString>,
+            //     one: std::option::Option<StdStringString>,
             // }
         }
     };
@@ -1286,8 +1286,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let gen = quote::quote!{
         // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
         // pub struct Cat {
-        //     pub meow: StdStringStringJson,
-        //     pub one: StdStringStringJson,
+        //     pub meow: StdStringString,
+        //     pub one: StdStringString,
         // }
         #pub_enum_ident_field_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
@@ -1301,9 +1301,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
 
 
-// StdStringStringJson
-// StdVecVecStdPrimitiveBoolJson
-// GenericJson(
+// StdStringString
+// StdVecVecStdPrimitiveBool
+// Generic(
 //     AngleBracketedGenericArguments {
 //         colon2_token: None,
 //         lt_token: Lt,
@@ -1329,7 +1329,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 //         gt_token: Gt,
 //     },
 // )
-// StdVecVecGenericJson(
+// StdVecVecGeneric(
 //     AngleBracketedGenericArguments {
 //         colon2_token: None,
 //         lt_token: Lt,
@@ -1355,9 +1355,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 //         gt_token: Gt,
 //     },
 // )
-// StdStringStringJson
-// StdVecVecStdPrimitiveBoolJson
-// GenericJson(
+// StdStringString
+// StdVecVecStdPrimitiveBool
+// Generic(
 //     AngleBracketedGenericArguments {
 //         colon2_token: None,
 //         lt_token: Lt,
@@ -1383,7 +1383,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 //         gt_token: Gt,
 //     },
 // )
-// StdVecVecGenericJson(
+// StdVecVecGeneric(
 //     AngleBracketedGenericArguments {
 //         colon2_token: None,
 //         lt_token: Lt,
