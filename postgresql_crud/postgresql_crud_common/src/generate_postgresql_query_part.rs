@@ -181,9 +181,9 @@ pub struct StdVecVecGeneric<T>(pub std::vec::Vec<T>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdOptionOptionStdVecVecGeneric<T>(pub std::option::Option<std::vec::Vec<T>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdOptionOptionStdGeneric<T>(pub std::vec::Vec<std::option::Option<T>>);
+pub struct StdVecVecStdOptionOptionGeneric<T>(pub std::vec::Vec<std::option::Option<T>>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdOptionOptionStdVecVecStdOptionOptionStdGeneric<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
+pub struct StdOptionOptionStdVecVecStdOptionOptionGeneric<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
 
 
     // Something,
@@ -198,24 +198,6 @@ pub struct StdOptionOptionStdVecVecStdOptionOptionStdGeneric<T>(pub std::option:
     //     offset: std::primitive::u64,
     // }
 /////////////////////
-// {
-//     "std_string_string": "sss",
-//     "std_vec_vec_std_primitive_bool": [
-//       true,
-//       false,
-//       false
-//     ],
-//     "generic": {
-//       "std_string_string": "gav"
-//     },
-//     "std_option_option_generic": {
-//       "std_string_string": "gav"
-//     },
-//     "std_vec_vec_generic": [
-//       {
-//         "std_string_string": "sdss"
-//       }]
-//   }
 pub trait GeneratePostgresqlQueryPart<T> {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
 }
@@ -229,26 +211,18 @@ pub struct Something {
     pub generic: Generic<Doggie>,
     pub std_option_option_generic: StdOptionOptionGeneric<Doggie>,
     pub std_vec_vec_generic: StdVecVecGeneric<Doggie>,
-    // pub std_option_option_std_vec_vec_generic: StdOptionOptionStdVecVecGeneric<Doggie>,
-    // pub std_vec_vec_std_option_option_std_generic: StdVecVecStdOptionOptionStdGeneric<Doggie>,
-    // pub std_option_option_std_vec_vec_std_option_option_std_generic: StdOptionOptionStdVecVecStdOptionOptionStdGeneric<Doggie>,
+    pub std_option_option_std_vec_vec_generic: StdOptionOptionStdVecVecGeneric<Doggie>,
+    // pub std_vec_vec_std_option_option_generic: StdVecVecStdOptionOptionGeneric<Doggie>,
+    // pub std_option_option_std_vec_vec_std_option_option_generic: StdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
+    //
+    // Generic(&'a syn::AngleBracketedGenericArguments), 
+    // StdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
+    // StdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
+    // StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
+    // StdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
+    // StdOptionOptionStdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
+    //
 }
-
-// {
-//     "std_string_string": "sss",
-//     "std_vec_vec_std_primitive_bool": [
-//       true,
-//       false,
-//       false
-//     ],
-//     "generic": {
-//       "std_string_string": "gav"
-//     },
-//     "std_vec_vec_generic": [
-//       {
-//         "std_string_string": "sdss"
-//       }]
-// }
 impl std::fmt::Display for Something {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", &self)
@@ -270,6 +244,10 @@ impl std::convert::From<Something> for SomethingOptions {
                 },
             }))),
             std_vec_vec_generic: Some(StdVecVecGeneric(value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>())),
+            std_option_option_std_vec_vec_generic: Some(StdOptionOptionStdVecVecGeneric(match value.std_option_option_std_vec_vec_generic.0 {
+                Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
+                None => None
+            })),
         }
     }
 }
@@ -306,7 +284,16 @@ pub enum SomethingField {
         field_vec: std::vec::Vec<DoggieField>,
         limit: std::primitive::u64,
         offset: std::primitive::u64,
-    }
+    },
+    #[serde(rename(
+        serialize = "std_option_option_std_vec_vec_generic",
+        deserialize = "std_option_option_std_vec_vec_generic"
+    ))]
+    StdOptionOptionStdVecVecGeneric {
+        field_vec: std::vec::Vec<DoggieField>,
+        limit: std::primitive::u64,
+        offset: std::primitive::u64,
+    },
 }
 impl error_occurence_lib::ToStdStringString for SomethingField {
     fn to_std_string_string(&self) -> std::string::String {
@@ -389,7 +376,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     acc
                 }
             )),
-            //
             Self::StdOptionOptionGeneric(field_vec) => Ok(format!(
                 "'std_option_option_generic',jsonb_build_object({})",
                 {
@@ -421,7 +407,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     acc
                 }
             )),
-            //
             Self::StdVecVecGeneric {
                 field_vec,
                 limit,
@@ -465,6 +450,50 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 };
                 Ok(format!("'std_vec_vec_generic',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'std_vec_vec_generic')) with ordinality where ordinality between {start} AND {end})"))
             }
+            //
+            Self::StdOptionOptionStdVecVecGeneric {
+                field_vec,
+                limit,
+                offset
+            } => {
+                if field_vec.is_empty() {
+                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                let mut unique_field_vec = vec![];
+                for element in field_vec {
+                    if unique_field_vec.contains(&element) {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
+                            field: *element,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                    else {
+                        unique_field_vec.push(&element);
+                    }
+                }
+                let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                    acc.push_str(&format!(
+                        "{},",
+                        element.generate_postgresql_query_part("value").unwrap()//todo return error//todo if it two inner[][] - is it correct to use value still?
+                    ));
+                    acc
+                });
+                let _ = acc.pop();
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+                            limit: *limit,
+                            offset: *offset,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                };
+                Ok(format!("'std_option_option_std_vec_vec_generic',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'std_option_option_std_vec_vec_generic')) with ordinality where ordinality between {start} and {end})"))
+            }
         }
     }
 }
@@ -490,6 +519,7 @@ pub struct SomethingOptions {
     generic: std::option::Option<Generic<DoggieOptions>>,
     std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
+    std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait

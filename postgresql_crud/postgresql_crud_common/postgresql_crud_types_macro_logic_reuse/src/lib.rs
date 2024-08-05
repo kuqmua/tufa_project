@@ -517,8 +517,8 @@ enum SupportedPredefinedType<'a> {
     StdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
     StdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
     StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
-    StdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
-    StdOptionOptionStdVecVecStdOptionOptionStdGeneric(&'a syn::AngleBracketedGenericArguments), 
+    StdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
+    StdOptionOptionStdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
 }
 #[derive(Debug)]
 enum SupportedPredefinedTypeTryFromSynField {
@@ -1063,13 +1063,13 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SupportedPredefinedType<'a> {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
                             },
                         }),
-                        "StdVecVecStdOptionOptionStdGeneric" => Self::StdVecVecStdOptionOptionStdGeneric(match &path_segment.arguments {
+                        "StdVecVecStdOptionOptionGeneric" => Self::StdVecVecStdOptionOptionGeneric(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
                             },
                         }),
-                        "StdOptionOptionStdVecVecStdOptionOptionStdGeneric" => Self::StdOptionOptionStdVecVecStdOptionOptionStdGeneric(match &path_segment.arguments {
+                        "StdOptionOptionStdVecVecStdOptionOptionGeneric" => Self::StdOptionOptionStdVecVecStdOptionOptionGeneric(match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => value,
                             _ => {
                                 return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
@@ -1156,12 +1156,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                         }
                     }, 
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdGeneric(value) => {
+                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(value) => {
                         quote::quote!{
 
                         }
                     }, 
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdGeneric(value) => {
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(value) => {
                         quote::quote!{
 
                         }

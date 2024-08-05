@@ -4942,7 +4942,10 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
             })),
             std_vec_vec_generic: generate_postgresql_query_part::StdVecVecGeneric(vec![crate::generate_postgresql_query_part::Doggie {
                 std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
-            }])
+            }]),
+            std_option_option_std_vec_vec_generic: generate_postgresql_query_part::StdOptionOptionStdVecVecGeneric(Some(vec![crate::generate_postgresql_query_part::Doggie {
+                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+            }])),
         }));
         let serde_json_value =
             SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
