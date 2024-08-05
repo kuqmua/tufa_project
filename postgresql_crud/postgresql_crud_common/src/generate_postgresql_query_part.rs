@@ -488,16 +488,16 @@ pub struct DoggieOptions {
 
 )] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
-    pub meow: StdStringString,
+    pub std_string_string: StdStringString,
     pub one: StdStringString,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum CatField {
     #[serde(rename(
-        serialize = "meow",
-        deserialize = "meow"
+        serialize = "std_string_string",
+        deserialize = "std_string_string"
     ))]
-    Meow,
+    StdStringString,
     #[serde(rename(
         serialize = "one",
         deserialize = "one"
@@ -524,20 +524,20 @@ pub enum CatGeneratePostgresqlQueryPartErrorNamed {
 impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for CatField {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, CatGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::Meow => Ok(format!("'meow',{column_name_and_maybe_field_getter}->'meow'")),
+            Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
             Self::One => Ok(format!("'one',{column_name_and_maybe_field_getter}->'one'")),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct CatOptions {
-    meow: std::option::Option<StdStringString>,
+    std_string_string: std::option::Option<StdStringString>,
     one: std::option::Option<StdStringString>,
 }
 impl std::convert::From<Cat> for CatOptions {
     fn from(value: Cat) -> Self {
         Self {
-            meow: Some(value.meow),
+            std_string_string: Some(value.std_string_string),
             one: Some(value.one),
         }
     }
