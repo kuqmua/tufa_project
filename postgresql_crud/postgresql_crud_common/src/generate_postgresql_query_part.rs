@@ -213,7 +213,7 @@ pub trait GeneratePostgresqlQueryPart<T> {
 postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
-    pub something: StdStringString,
+    pub std_string_string: StdStringString,
     pub omega: StdVecVecStdPrimitiveBool,
     pub doggie: Generic<Doggie>,
     // pub doggie_maybe_null: StdOptionOptionGenericJson<Doggie>,
@@ -244,7 +244,7 @@ impl std::fmt::Display for Something {
 impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
-            something: Some(value.something),
+            std_string_string: Some(value.std_string_string),
             omega: Some(value.omega),
             doggie: Some(Generic(DoggieOptions::from(value.doggie.0))),
             cats: Some(StdVecVecGeneric(value.cats.0.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>())),
@@ -254,10 +254,10 @@ impl std::convert::From<Something> for SomethingOptions {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum SomethingField {
     #[serde(rename(
-        serialize = "something",
-        deserialize = "something"
+        serialize = "std_string_string",
+        deserialize = "std_string_string"
     ))]
-    Something,
+    StdStringString,
     #[serde(rename(
         serialize = "omega",
         deserialize = "omega"
@@ -313,7 +313,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
     //todo return result instead of std::string::String
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::Something => Ok(format!("'something',{column_name_and_maybe_field_getter}->'something'")),
+            Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
             Self::Omega {
                 limit,
                 offset
@@ -425,7 +425,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
-    something: std::option::Option<StdStringString>,
+    std_string_string: std::option::Option<StdStringString>,
     omega: std::option::Option<StdVecVecStdPrimitiveBool>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
     doggie: std::option::Option<Generic<DoggieOptions>>,
