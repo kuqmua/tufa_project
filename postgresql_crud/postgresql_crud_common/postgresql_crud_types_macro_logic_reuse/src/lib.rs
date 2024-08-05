@@ -1135,6 +1135,39 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let supported_predefined_type = SupportedPredefinedType::try_from(*element)
                     .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
                 println!("{supported_predefined_type:#?}");
+                match supported_predefined_type {
+                    SupportedPredefinedType::GenericJson(value) => {
+                        quote::quote!{
+
+                        }
+                    }, 
+                    SupportedPredefinedType::StdOptionOptionGenericJson(value) => {
+                        quote::quote!{
+
+                        }
+                    }, 
+                    SupportedPredefinedType::StdVecVecGenericJson(value) => {
+                        quote::quote!{
+
+                        }
+                    }, 
+                    SupportedPredefinedType::StdOptionOptionStdVecVecGenericJson(value) => {
+                        quote::quote!{
+
+                        }
+                    }, 
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdGenericJson(value) => {
+                        quote::quote!{
+
+                        }
+                    }, 
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdGenericJson(value) => {
+                        quote::quote!{
+
+                        }
+                    },
+                    _ => proc_macro2::TokenStream::new()
+                };
                 quote::quote!{
 
                 }
