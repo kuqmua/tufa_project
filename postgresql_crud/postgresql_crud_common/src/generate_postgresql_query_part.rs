@@ -427,22 +427,22 @@ pub struct SomethingOptions {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    pub says: StdStringString,
+    pub std_string_string: StdStringString,
 }
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
         Self {
-            says: Some(value.says)
+            std_string_string: Some(value.std_string_string)
         }
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum DoggieField {
     #[serde(rename(
-        serialize = "says",
-        deserialize = "says"
+        serialize = "std_string_string",
+        deserialize = "std_string_string"
     ))]
-    Says
+    StdStringString
 }
 impl error_occurence_lib::ToStdStringString for DoggieField {
     fn to_std_string_string(&self) -> std::string::String {
@@ -464,13 +464,13 @@ pub enum DoggieGeneratePostgresqlQueryPartErrorNamed {
 impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> for DoggieField {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::Says => Ok(format!("'says',{column_name_and_maybe_field_getter}->'says'")),
+            Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    says: std::option::Option<StdStringString>,
+    std_string_string: std::option::Option<StdStringString>,
 }
 
 // impl DoggieOptions {

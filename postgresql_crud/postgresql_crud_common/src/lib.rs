@@ -4935,7 +4935,7 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
             std_string_string: generate_postgresql_query_part::StdStringString(std_string_string_handle),
             std_vec_vec_std_primitive_bool: generate_postgresql_query_part::StdVecVecStdPrimitiveBool(vec![true, false]),
             generic_doggie: generate_postgresql_query_part::Generic(crate::generate_postgresql_query_part::Doggie {
-                says: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
             }),
             std_vec_vec_generic_cat: generate_postgresql_query_part::StdVecVecGeneric(vec![crate::generate_postgresql_query_part::Cat { 
                 meow: generate_postgresql_query_part::StdStringString(std::string::String::from("")),

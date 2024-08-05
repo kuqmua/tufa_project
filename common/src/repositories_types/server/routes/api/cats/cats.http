@@ -93,7 +93,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                         }
                     }, 
                     {
-                        "generic_doggie": ["says"]
+                        "generic_doggie": ["std_string_string"]
                     },
                     {
                         "std_vec_vec_generic_cat": {
