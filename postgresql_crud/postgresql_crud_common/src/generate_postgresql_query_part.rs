@@ -198,6 +198,24 @@ pub struct StdOptionOptionStdVecVecStdOptionOptionStdGeneric<T>(pub std::option:
     //     offset: std::primitive::u64,
     // }
 /////////////////////
+// {
+//     "std_string_string": "sss",
+//     "std_vec_vec_std_primitive_bool": [
+//       true,
+//       false,
+//       false
+//     ],
+//     "generic": {
+//       "std_string_string": "gav"
+//     },
+//     "std_option_option_generic": {
+//       "std_string_string": "gav"
+//     },
+//     "std_vec_vec_generic": [
+//       {
+//         "std_string_string": "sdss"
+//       }]
+//   }
 pub trait GeneratePostgresqlQueryPart<T> {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
 }
