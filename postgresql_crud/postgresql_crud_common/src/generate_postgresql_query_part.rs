@@ -208,9 +208,9 @@ postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
 pub struct Something {
     pub std_string_string: StdStringString,
     pub std_vec_vec_std_primitive_bool: StdVecVecStdPrimitiveBool,
-    pub doggie: Generic<Doggie>,
+    pub generic_doggie: Generic<Doggie>,
     // pub doggie_maybe_null: StdOptionOptionGenericJson<Doggie>,
-    pub cats: StdVecVecGeneric<Cat>,
+    pub std_vec_vec_generic_cat: StdVecVecGeneric<Cat>,
     // pub cats_maybe_null: StdOptionOptionStdVecVecGenericJson<Cat>,
 
 // StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
@@ -239,8 +239,8 @@ impl std::convert::From<Something> for SomethingOptions {
         Self {
             std_string_string: Some(value.std_string_string),
             std_vec_vec_std_primitive_bool: Some(value.std_vec_vec_std_primitive_bool),
-            doggie: Some(Generic(DoggieOptions::from(value.doggie.0))),
-            cats: Some(StdVecVecGeneric(value.cats.0.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>())),
+            generic_doggie: Some(Generic(DoggieOptions::from(value.generic_doggie.0))),
+            std_vec_vec_generic_cat: Some(StdVecVecGeneric(value.std_vec_vec_generic_cat.0.into_iter().map(|element|CatOptions::from(element)).collect::<std::vec::Vec<CatOptions>>())),
         }
     }
 }
@@ -260,10 +260,10 @@ pub enum SomethingField {
         offset: std::primitive::u64,
     },
     #[serde(rename(
-        serialize = "doggie",
-        deserialize = "doggie"
+        serialize = "generic_doggie",
+        deserialize = "generic_doggie"
     ))]
-    Doggie(std::vec::Vec<DoggieField>),
+    GenericDoggie(std::vec::Vec<DoggieField>),
     #[serde(rename(
         serialize = "cats",
         deserialize = "cats"
@@ -322,10 +322,10 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                         });
                     }
                 };
-                Ok(format!("'omega',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'omega')) with ordinality where ordinality between {start} and {end})"))
+                Ok(format!("'std_vec_vec_std_primitive_bool',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')) with ordinality where ordinality between {start} and {end})"))
             },
-            Self::Doggie(reader_vec) => Ok(format!(
-                "'doggie',jsonb_build_object({})",
+            Self::GenericDoggie(reader_vec) => Ok(format!(
+                "'generic_doggie',jsonb_build_object({})",
                 {
                     if reader_vec.is_empty() {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
@@ -347,7 +347,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     let mut acc = reader_vec.iter().fold(std::string::String::default(), |mut acc, element| {
                         acc.push_str(&format!(
                             "{},",
-                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'doggie'")).unwrap()//todo return error
+                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'generic_doggie'")).unwrap()//todo return error
                         ));
                         acc
                     });
@@ -421,8 +421,8 @@ pub struct SomethingOptions {
     std_string_string: std::option::Option<StdStringString>,
     std_vec_vec_std_primitive_bool: std::option::Option<StdVecVecStdPrimitiveBool>,
     // #[json_field_name_stringified_reader] //todo for the future proc macro
-    doggie: std::option::Option<Generic<DoggieOptions>>,
-    cats: std::option::Option<StdVecVecGeneric<CatOptions>>,
+    generic_doggie: std::option::Option<Generic<DoggieOptions>>,
+    std_vec_vec_generic_cat: std::option::Option<StdVecVecGeneric<CatOptions>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
