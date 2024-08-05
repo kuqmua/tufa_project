@@ -265,10 +265,10 @@ pub enum SomethingField {
     ))]
     GenericDoggie(std::vec::Vec<DoggieField>),
     #[serde(rename(
-        serialize = "cats",
-        deserialize = "cats"
+        serialize = "std_vec_vec_generic_cat",
+        deserialize = "std_vec_vec_generic_cat"
     ))]
-    Cats {
+    StdVecVecGenericCat {
         reader_vec: std::vec::Vec<CatField>,
         limit: std::primitive::u64,
         offset: std::primitive::u64,
@@ -355,7 +355,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     acc
                 }
             )),
-            Self::Cats {
+            Self::StdVecVecGenericCat {
                 reader_vec,
                 limit,
                 offset
@@ -396,7 +396,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                         });
                     }
                 };
-                Ok(format!("'cats',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'cats')) with ordinality where ordinality between {start} AND {end})"))
+                Ok(format!("'std_vec_vec_generic_cat',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'std_vec_vec_generic_cat')) with ordinality where ordinality between {start} AND {end})"))
             }
         }
     }
