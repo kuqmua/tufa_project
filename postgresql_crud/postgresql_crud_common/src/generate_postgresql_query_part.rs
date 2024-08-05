@@ -59,11 +59,11 @@ pub struct StdOptionOptionStdStringStringJson(pub std::option::Option<std::strin
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdPrimitiveI8Json(pub std::vec::Vec<std::primitive::i8>);
 //
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct StdVecVecStdPrimitiveI8JsonFilter {
-    limit: std::primitive::u64,
-    offset: std::primitive::u64,
-}
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+// pub struct StdVecVecStdPrimitiveI8JsonFilter {
+//     limit: std::primitive::u64,
+//     offset: std::primitive::u64,
+// }
 //
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct StdVecVecStdPrimitiveI16Json(pub std::vec::Vec<std::primitive::i16>);
@@ -543,3 +543,177 @@ impl std::convert::From<Cat> for CatOptions {
         }
     }
 }
+
+
+// [
+//     Field {
+//         attrs: [],
+//         vis: Visibility::Public(
+//             Pub,
+//         ),
+//         mutability: FieldMutability::None,
+//         ident: Some(
+//             Ident {
+//                 ident: "something",
+//                 span: #0 bytes(566260..566269),
+//             },
+//         ),
+//         colon_token: Some(
+//             Colon,
+//         ),
+//         ty: Type::Path {
+//             qself: None,
+//             path: Path {
+//                 leading_colon: None,
+//                 segments: [
+//                     PathSegment {
+//                         ident: Ident {
+//                             ident: "StdStringStringJson",
+//                             span: #0 bytes(566271..566290),
+//                         },
+//                         arguments: PathArguments::None,
+//                     },
+//                 ],
+//             },
+//         },
+//     },
+//     Field {
+//         attrs: [],
+//         vis: Visibility::Public(
+//             Pub,
+//         ),
+//         mutability: FieldMutability::None,
+//         ident: Some(
+//             Ident {
+//                 ident: "omega",
+//                 span: #0 bytes(566300..566305),
+//             },
+//         ),
+//         colon_token: Some(
+//             Colon,
+//         ),
+//         ty: Type::Path {
+//             qself: None,
+//             path: Path {
+//                 leading_colon: None,
+//                 segments: [
+//                     PathSegment {
+//                         ident: Ident {
+//                             ident: "StdVecVecStdPrimitiveBoolJson",
+//                             span: #0 bytes(566307..566336),
+//                         },
+//                         arguments: PathArguments::None,
+//                     },
+//                 ],
+//             },
+//         },
+//     },
+//     Field {
+//         attrs: [],
+//         vis: Visibility::Public(
+//             Pub,
+//         ),
+//         mutability: FieldMutability::None,
+//         ident: Some(
+//             Ident {
+//                 ident: "doggie",
+//                 span: #0 bytes(566346..566352),
+//             },
+//         ),
+//         colon_token: Some(
+//             Colon,
+//         ),
+//         ty: Type::Path {
+//             qself: None,
+//             path: Path {
+//                 leading_colon: None,
+//                 segments: [
+//                     PathSegment {
+//                         ident: Ident {
+//                             ident: "GenericJson",
+//                             span: #0 bytes(566354..566365),
+//                         },
+//                         arguments: PathArguments::AngleBracketed {
+//                             colon2_token: None,
+//                             lt_token: Lt,
+//                             args: [
+//                                 GenericArgument::Type(
+//                                     Type::Path {
+//                                         qself: None,
+//                                         path: Path {
+//                                             leading_colon: None,
+//                                             segments: [
+//                                                 PathSegment {
+//                                                     ident: Ident {
+//                                                         ident: "Doggie",
+//                                                         span: #0 bytes(566366..566372),
+//                                                     },
+//                                                     arguments: PathArguments::None,
+//                                                 },
+//                                             ],
+//                                         },
+//                                     },
+//                                 ),
+//                             ],
+//                             gt_token: Gt,
+//                         },
+//                     },
+//                 ],
+//             },
+//         },
+//     },
+//     Field {
+//         attrs: [],
+//         vis: Visibility::Public(
+//             Pub,
+//         ),
+//         mutability: FieldMutability::None,
+//         ident: Some(
+//             Ident {
+//                 ident: "cats",
+//                 span: #0 bytes(566383..566387),
+//             },
+//         ),
+//         colon_token: Some(
+//             Colon,
+//         ),
+//         ty: Type::Path {
+//             qself: None,
+//             path: Path {
+//                 leading_colon: None,
+//                 segments: [
+//                     PathSegment {
+//                         ident: Ident {
+//                             ident: "StdVecVecGenericJson",
+//                             span: #0 bytes(566389..566409),
+//                         },
+//                         arguments: PathArguments::AngleBracketed {
+//                             colon2_token: None,
+//                             lt_token: Lt,
+//                             args: [
+//                                 GenericArgument::Type(
+//                                     Type::Path {
+//                                         qself: None,
+//                                         path: Path {
+//                                             leading_colon: None,
+//                                             segments: [
+//                                                 PathSegment {
+//                                                     ident: Ident {
+//                                                         ident: "Cat",
+//                                                         span: #0 bytes(566410..566413),
+//                                                     },
+//                                                     arguments: PathArguments::None,
+//                                                 },
+//                                             ],
+//                                         },
+//                                     },
+//                                 ),
+//                             ],
+//                             gt_token: Gt,
+//                         },
+//                     },
+//                 ],
+//             },
+//         },
+//     },
+// ]
