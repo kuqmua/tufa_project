@@ -968,3 +968,35 @@ pub struct DoggieOptions {
 // 		)
 // 	)
 // );
+
+////////////
+// SELECT
+// CASE 
+//            WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null) = 'object'
+// 		   		THEN 
+// 	            jsonb_build_object(
+//                     'std_option_option_generic', 
+//                     CASE 
+//                         WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' IS NULL THEN 
+//                             NULL
+//                         WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic') = 'object' THEN 
+//                             jsonb_build_object(
+// 								'std_string_string',
+// 								CASE 
+// 									WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string'  IS NULL THEN
+// 										NULL
+// 									WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string') = 'string' THEN 
+// 										sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string'
+// 									ELSE 
+// 										NULL
+									
+// 								END
+// 							) 
+//                         ELSE 
+//                             NULL
+//                     END
+//                 )
+//            ELSE NULL
+//        END as sqlx_types_json_t_as_postgresql_json_not_null
+// FROM jsongeneric
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
