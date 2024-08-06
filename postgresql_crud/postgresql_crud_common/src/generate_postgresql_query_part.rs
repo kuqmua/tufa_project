@@ -1000,3 +1000,59 @@ pub struct DoggieOptions {
 //        END as sqlx_types_json_t_as_postgresql_json_not_null
 // FROM jsongeneric
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
+
+
+
+// SELECT
+// CASE 
+//            WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null) = 'object'
+// 		   		THEN 
+// 	            jsonb_build_object(
+//                     'std_vec_vec_generic', 
+//                     CASE 
+//                         WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' IS NULL THEN 
+//                             NULL
+//                         WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic') = 'object' THEN 
+//                             jsonb_build_object(
+// 								'std_string_string',
+// 								CASE 
+// 									WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' -> 'std_string_string'  IS NULL THEN
+// 										NULL
+// 									WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' -> 'std_string_string') = 'string' THEN 
+// 										sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' -> 'std_string_string'
+// 									ELSE 
+// 										NULL
+									
+// 								END
+// 							) 
+//                         ELSE 
+//                             NULL
+//                     END
+//                 )
+//            ELSE NULL
+//        END as sqlx_types_json_t_as_postgresql_json_not_null
+// FROM jsongeneric
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
+
+
+// SELECT 
+//        jsonb_build_object(
+//            'a', 
+//            (SELECT jsonb_agg(jsonb_build_object('b', elem -> 'b'))
+//             FROM jsonb_array_elements(data -> 'a') AS elem
+//             WHERE jsonb_typeof(elem) = 'object' 
+//               AND jsonb_typeof(elem -> 'b') = 'number')
+//        ) AS transformed_data
+// FROM my_table
+// WHERE 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
+// AND jsonb_typeof(data) = 'object'
+//   AND data IS NOT NULL
+//   AND jsonb_typeof(data -> 'a') = 'array'
+//   AND (
+//         SELECT bool_and(
+//                  jsonb_typeof(elem) = 'object'
+//                  AND jsonb_typeof(elem -> 'b') = 'number'
+//                )
+//         FROM jsonb_array_elements(data -> 'a') AS elem
+//      );
