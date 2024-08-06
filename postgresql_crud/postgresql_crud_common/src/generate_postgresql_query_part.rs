@@ -617,10 +617,10 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 //         'cats',
 //         (SELECT json_agg(jsonb_build_object('meow', value->>'meow')) 
 //          FROM json_array_elements(
-//                  (SELECT sqlx_types_json_t_as_postgresql_json_not_null->'cats')
+//                  (SELECT sqlx_types_json_t_as_postgresql_json_b_not_null->'cats')
 //              ) WITH ORDINALITY 
 //              WHERE ordinality BETWEEN 0 AND 4)
-//     ) AS sqlx_types_json_t_as_postgresql_json_not_null 
+//     ) AS sqlx_types_json_t_as_postgresql_json_b_not_null 
 // FROM jsongeneric 
 // WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1;
 
@@ -935,7 +935,7 @@ pub struct DoggieOptions {
 
 
 // select 
-// sqlx_types_json_t_as_postgresql_json_not_null
+// sqlx_types_json_t_as_postgresql_json_b_not_null
 // -- jsonb_build_object(
 // -- 	'std_option_option_generic',
 	
@@ -945,26 +945,26 @@ pub struct DoggieOptions {
 // -- 	-- 		'std_string_string',
 // -- 	-- 		jsonb_build_object(
 // -- 	-- 			'value',
-// -- 	-- 			sqlx_types_json_t_as_postgresql_json_not_null->'std_option_option_generic'->'std_string_string'
+// -- 	-- 			sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'std_string_string'
 // -- 	-- 		)
 // -- 	-- 	)
 // -- 	-- )
 // -- ) 
-// -- as sqlx_types_json_t_as_postgresql_json_not_null 
+// -- as sqlx_types_json_t_as_postgresql_json_b_not_null 
 // from jsongeneric 
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
-// AND json_typeof(sqlx_types_json_t_as_postgresql_json_not_null) = 'object'
+// AND json_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object'
 // AND
 // (
-// 	(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' IS NULL)
+// 	(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' IS NULL)
 // 	OR
 // 	(
-// 		json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic') = 'object'
+// 		json_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
 // 		AND 
 // 		(
-// 			json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string') = 'string'
+// 			json_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string') = 'string'
 // 			OR
-// 			sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string' IS NULL
+// 			sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string' IS NULL
 // 		)
 // 	)
 // );
@@ -972,21 +972,21 @@ pub struct DoggieOptions {
 ////////////
 // SELECT
 // CASE 
-//            WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null) = 'object'
+//            WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object'
 // 		   		THEN 
 // 	            jsonb_build_object(
 //                     'std_option_option_generic', 
 //                     CASE 
-//                         WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' IS NULL THEN 
+//                         WHEN sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' IS NULL THEN 
 //                             NULL
-//                         WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic') = 'object' THEN 
+//                         WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object' THEN 
 //                             jsonb_build_object(
 // 								'std_string_string',
 // 								CASE 
-// 									WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string'  IS NULL THEN
+// 									WHEN sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string'  IS NULL THEN
 // 										NULL
-// 									WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string') = 'string' THEN 
-// 										sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string'
+// 									WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string') = 'string' THEN 
+// 										sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string'
 // 									ELSE 
 // 										NULL
 									
@@ -997,7 +997,7 @@ pub struct DoggieOptions {
 //                     END
 //                 )
 //            ELSE NULL
-//        END as sqlx_types_json_t_as_postgresql_json_not_null
+//        END as sqlx_types_json_t_as_postgresql_json_b_not_null
 // FROM jsongeneric
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
 
@@ -1005,32 +1005,32 @@ pub struct DoggieOptions {
 
 // SELECT
 // CASE 
-//            WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null) = 'object'
-// 		   		THEN 
-// 	            jsonb_build_object(
-//                     'std_vec_vec_generic', 
-//                     CASE 
-//                         WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' IS NULL THEN 
-//                             NULL
-//                         WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic') = 'object' THEN 
-//                             jsonb_build_object(
-// 								'std_string_string',
-// 								CASE 
-// 									WHEN sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' -> 'std_string_string'  IS NULL THEN
-// 										NULL
-// 									WHEN json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' -> 'std_string_string') = 'string' THEN 
-// 										sqlx_types_json_t_as_postgresql_json_not_null -> 'std_vec_vec_generic' -> 'std_string_string'
-// 									ELSE 
-// 										NULL
-									
-// 								END
-// 							) 
-//                         ELSE 
-//                             NULL
-//                     END
-//                 )
-//            ELSE NULL
-//        END as sqlx_types_json_t_as_postgresql_json_not_null
+// WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object'
+//    	THEN 
+//         jsonb_build_object(
+//             'std_option_option_generic', 
+//             CASE 
+//                 WHEN sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' IS NULL THEN 
+//                     NULL
+//                 WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object' THEN 
+//                     jsonb_build_object(
+// 						'std_string_string',
+// 						CASE 
+// 							WHEN sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string'  IS NULL THEN
+// 								NULL
+// 							WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string') = 'string' THEN 
+// 								sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic' -> 'std_string_string'
+// 							ELSE 
+// 								NULL
+							
+// 						END
+// 					) 
+//                 ELSE 
+//                     NULL
+//             END
+//         )
+//     ELSE NULL
+// END as sqlx_types_json_t_as_postgresql_json_b_not_null
 // FROM jsongeneric
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
 
