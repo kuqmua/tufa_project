@@ -201,7 +201,7 @@ pub struct Jsongeneric {
     // postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,//
     // pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonNotNull::<postgresql_crud::Something>
     // pub sqlx_types_json_t_as_postgresql_json_b: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonB::<<postgresql_crud::Something>,//todo
-    pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonBNotNull::<<postgresql_crud::Something>,//todo
+    pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonBNotNull::<postgresql_crud::Something>,//todo
 
     // pub serde_json_value_as_postgresql_json: postgresql_crud::SerdeJsonValueAsPostgresqlJson,
     // pub serde_json_value_as_postgresql_json_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonNotNull,
@@ -218,7 +218,7 @@ pub struct JsongenericOptions {
     pub std_primitive_i32_as_postgresql_int: std::option::Option<
         postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
     >,
-    pub sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<
+    pub sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<
         postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingOptions>>,//here change
     >,
 }
@@ -240,8 +240,8 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
                 ),
             }),
             //todo difference
-            sqlx_types_json_t_as_postgresql_json_not_null: Some(postgresql_crud::Value {
-                value: postgresql_crud::SqlxTypesJson(sqlx::types::Json(postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_not_null.0.0.0))),
+            sqlx_types_json_t_as_postgresql_json_b_not_null: Some(postgresql_crud::Value {
+                value: postgresql_crud::SqlxTypesJson(sqlx::types::Json(postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_b_not_null.0.0.0))),
             }),
         }
     }
@@ -266,7 +266,7 @@ pub enum JsongenericColumn {
         serialize = "sqlx_types_json_t_as_postgresql_json_not_null",
         deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
     ))]
-    SqlxTypesJsonTAsPostgresqlJsonNotNull {
+    SqlxTypesJsonTAsPostgresqlJsonBNotNull {
         filter: std::vec::Vec<postgresql_crud::SomethingField>
     },
 }
@@ -488,7 +488,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                             match &element {
                                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => (),
                                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => (),
-                                JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull { filter } => {
+                                JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull { filter } => {
                                     if filter.is_empty() {
                                         let error_0 = element.clone();//here
                                         let error = TryReadOneRouteLogicErrorNamed::EmptyColumnJsonReader { 
@@ -576,11 +576,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
             },
         };
     println!("{:#?}", parameters);
-
-// select jsonb_build_object('something', jsonb_build_object('value', sqlx_types_json_t_as_postgresql_json_not_null->'something')) 
-// as sqlx_types_json_t_as_postgresql_json_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1
     let query_string = format!
     ("select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
     {
@@ -590,12 +585,12 @@ DynArcCombinationOfAppStateLogicTraits, >,
             acc.push_str(&match element {
                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
-                JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull{ filter } => format!(
-                    "jsonb_build_object({}) as sqlx_types_json_t_as_postgresql_json_not_null",//todo should support arrays or "key: array" is enough? 
+                JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => format!(
+                    "jsonb_build_object({}) as sqlx_types_json_t_as_postgresql_json_b_not_null",//todo should support arrays or "key: array" is enough? 
                     {
                         let mut acc = filter.iter().fold(std::string::String::default(), |mut acc, element| {
                             acc.push_str(
-                                &format!("{},", postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part(*&element, "sqlx_types_json_t_as_postgresql_json_not_null").unwrap())//todo return error
+                                &format!("{},", postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part(*&element, "sqlx_types_json_t_as_postgresql_json_b_not_null").unwrap())//todo return error
                             );
                             acc
                         });
@@ -680,7 +675,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     let mut std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>> = None;
                     let mut std_primitive_i32_as_postgresql_int: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>> = None;
                     //todo change type
-                    let mut sqlx_types_json_t_as_postgresql_json_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingOptions>>> = None;
+                    let mut sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingOptions>>> = None;
                     for element in &parameters.payload.select {
                         match element
                         {
@@ -756,12 +751,12 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 }
                             }, 
                             
-                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonNotNull{ filter } => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::SomethingOptions>, &std::primitive::str>(
+                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::SomethingOptions>, &std::primitive::str>(
                                 &value,
-                                "sqlx_types_json_t_as_postgresql_json_not_null"
+                                "sqlx_types_json_t_as_postgresql_json_b_not_null"
                             ) {
                                 Ok(value) => {
-                                    sqlx_types_json_t_as_postgresql_json_not_null = Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
+                                    sqlx_types_json_t_as_postgresql_json_b_not_null = Some(postgresql_crud::Value { value: postgresql_crud::SqlxTypesJson(value) });
                                 },
                                 Err(error_0) => {
                                     let error = TryReadOneRouteLogicErrorNamed::Postgresql {
@@ -788,7 +783,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     JsongenericOptions {
                         std_primitive_i32_as_postgresql_int,
                         std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-                        sqlx_types_json_t_as_postgresql_json_not_null,
+                        sqlx_types_json_t_as_postgresql_json_b_not_null,
                     }
                 }
                 Err(error_0) => {
