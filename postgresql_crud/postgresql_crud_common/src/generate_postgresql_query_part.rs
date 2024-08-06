@@ -213,7 +213,7 @@ pub struct Something {
     pub std_vec_vec_generic: StdVecVecGeneric<Doggie>,
     pub std_option_option_std_vec_vec_generic: StdOptionOptionStdVecVecGeneric<Doggie>,
     pub std_vec_vec_std_option_option_generic: StdVecVecStdOptionOptionGeneric<Doggie>,
-    // pub std_option_option_std_vec_vec_std_option_option_generic: StdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
+    pub std_option_option_std_vec_vec_std_option_option_generic: StdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
     //
     // Generic(&'a syn::AngleBracketedGenericArguments), 
     // StdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
@@ -252,6 +252,13 @@ impl std::convert::From<Something> for SomethingOptions {
                 Some(value) => Some(DoggieOptions::from(value)),
                 None => None
             }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>())),
+            std_option_option_std_vec_vec_std_option_option_generic: Some(StdOptionOptionStdVecVecStdOptionOptionGeneric(match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
+                Some(value) => Some(value.into_iter().map(|element|match element {
+                    Some(value) => Some(DoggieOptions::from(value)),
+                    None => None
+                }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>()),
+                None => None
+            })),
         }
     }
 }
@@ -303,6 +310,15 @@ pub enum SomethingField {
         deserialize = "std_vec_vec_std_option_option_generic"
     ))]
     StdVecVecStdOptionOptionGeneric {
+        field_vec: std::vec::Vec<DoggieField>,
+        limit: std::primitive::u64,
+        offset: std::primitive::u64,
+    },
+    #[serde(rename(
+        serialize = "std_option_option_std_vec_vec_std_option_option_generic",
+        deserialize = "std_option_option_std_vec_vec_std_option_option_generic"
+    ))]
+    StdOptionOptionStdVecVecStdOptionOptionGeneric {
         field_vec: std::vec::Vec<DoggieField>,
         limit: std::primitive::u64,
         offset: std::primitive::u64,
@@ -549,6 +565,49 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 };
                 Ok(format!("'std_vec_vec_std_option_option_generic',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'std_vec_vec_std_option_option_generic')) with ordinality where ordinality between {start} and {end})"))
             },
+            Self::StdOptionOptionStdVecVecStdOptionOptionGeneric {
+                field_vec,
+                limit,
+                offset
+            } => {
+                if field_vec.is_empty() {
+                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                let mut unique_field_vec = vec![];
+                for element in field_vec {
+                    if unique_field_vec.contains(&element) {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
+                            field: *element,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                    else {
+                        unique_field_vec.push(&element);
+                    }
+                }
+                let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                    acc.push_str(&format!(
+                        "{},",
+                        element.generate_postgresql_query_part("value").unwrap()//todo return error//todo if it two inner[][] - is it correct to use value still?
+                    ));
+                    acc
+                });
+                let _ = acc.pop();
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+                            limit: *limit,
+                            offset: *offset,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                };
+                Ok(format!("'std_option_option_std_vec_vec_std_option_option_generic',(select json_agg(jsonb_build_object({acc})) from json_array_elements((select sqlx_types_json_t_as_postgresql_json_not_null->'std_option_option_std_vec_vec_std_option_option_generic')) with ordinality where ordinality between {start} and {end})"))
+            },
         }
     }
 }
@@ -576,6 +635,7 @@ pub struct SomethingOptions {
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
+    std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
