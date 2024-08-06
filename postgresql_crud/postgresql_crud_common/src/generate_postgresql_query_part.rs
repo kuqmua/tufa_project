@@ -232,7 +232,7 @@ impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
             std_string_string: Some(crate::Value{ value: value.std_string_string }),
-            std_vec_vec_std_primitive_bool: Some(value.std_vec_vec_std_primitive_bool),
+            std_vec_vec_std_primitive_bool: Some(crate::Value{ value: value.std_vec_vec_std_primitive_bool}),
             generic: Some(Generic(DoggieOptions::from(value.generic.0))),
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
@@ -372,7 +372,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                         });
                     }
                 };
-                Ok(format!("'std_vec_vec_std_primitive_bool',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')) with ordinality where ordinality between {start} and {end})"))
+                Ok(format!("'std_vec_vec_std_primitive_bool',jsonb_build_object('value',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')) with ordinality where ordinality between {start} and {end}))"))
             },
             Self::Generic(field_vec) => Ok(format!(
                 "'generic',jsonb_build_object({})",
@@ -629,7 +629,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
     std_string_string: std::option::Option<crate::Value<StdStringString>>,
-    std_vec_vec_std_primitive_bool: std::option::Option<StdVecVecStdPrimitiveBool>,
+    std_vec_vec_std_primitive_bool: std::option::Option<crate::Value<StdVecVecStdPrimitiveBool>>,
     generic: std::option::Option<Generic<DoggieOptions>>,
     std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
