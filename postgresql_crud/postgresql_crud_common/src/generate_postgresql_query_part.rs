@@ -233,11 +233,11 @@ impl std::convert::From<Something> for SomethingOptions {
         Self {
             std_string_string: Some(crate::Value{ value: value.std_string_string }),
             std_vec_vec_std_primitive_bool: Some(crate::Value{ value: value.std_vec_vec_std_primitive_bool}),
-            generic: Some(Generic(DoggieOptions::from(value.generic.0))),
+            generic: Some(crate::Value{ value: Generic(DoggieOptions::from(value.generic.0))}),
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
                 Some(value) => DoggieOptions {
-                    std_string_string: Some(value.std_string_string),
+                    std_string_string: Some(crate::Value{ value: value.std_string_string }),
                 },
                 None => DoggieOptions {
                     std_string_string: None,
@@ -375,7 +375,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 Ok(format!("'std_vec_vec_std_primitive_bool',jsonb_build_object('value',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')) with ordinality where ordinality between {start} and {end}))"))
             },
             Self::Generic(field_vec) => Ok(format!(
-                "'generic',jsonb_build_object({})",
+                "'generic',jsonb_build_object('value', jsonb_build_object({}))",
                 {
                     if field_vec.is_empty() {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
@@ -630,7 +630,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 pub struct SomethingOptions {
     std_string_string: std::option::Option<crate::Value<StdStringString>>,
     std_vec_vec_std_primitive_bool: std::option::Option<crate::Value<StdVecVecStdPrimitiveBool>>,
-    generic: std::option::Option<Generic<DoggieOptions>>,
+    generic: std::option::Option<crate::Value<Generic<DoggieOptions>>>,
     std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
@@ -645,7 +645,7 @@ pub struct Doggie {
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
         Self {
-            std_string_string: Some(value.std_string_string)
+            std_string_string: Some(crate::Value{ value: value.std_string_string })
         }
     }
 }
@@ -677,13 +677,13 @@ pub enum DoggieGeneratePostgresqlQueryPartErrorNamed {
 impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> for DoggieField {
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
+            Self::StdStringString => Ok(format!("'std_string_string',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'std_string_string')")),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    std_string_string: std::option::Option<StdStringString>,
+    std_string_string: std::option::Option<crate::Value<StdStringString>>,
 }
 
 // [
