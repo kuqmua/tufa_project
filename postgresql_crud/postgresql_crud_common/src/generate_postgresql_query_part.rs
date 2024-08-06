@@ -235,14 +235,14 @@ impl std::convert::From<Something> for SomethingOptions {
             std_vec_vec_std_primitive_bool: Some(crate::Value{ value: value.std_vec_vec_std_primitive_bool}),
             generic: Some(crate::Value{ value: Generic(DoggieOptions::from(value.generic.0))}),
             //todo rewrite to from or try from impl
-            std_option_option_generic: Some(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
+            std_option_option_generic: Some(crate::Value{ value: StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
                 Some(value) => DoggieOptions {
                     std_string_string: Some(crate::Value{ value: value.std_string_string }),
                 },
                 None => DoggieOptions {
                     std_string_string: None,
                 },
-            }))),
+            }))}),
             std_vec_vec_generic: Some(StdVecVecGeneric(value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>())),
             std_option_option_std_vec_vec_generic: Some(StdOptionOptionStdVecVecGeneric(match value.std_option_option_std_vec_vec_generic.0 {
                 Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
@@ -375,7 +375,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 Ok(format!("'std_vec_vec_std_primitive_bool',jsonb_build_object('value',(select json_agg(value) from json_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')) with ordinality where ordinality between {start} and {end}))"))
             },
             Self::Generic(field_vec) => Ok(format!(
-                "'generic',jsonb_build_object('value', jsonb_build_object({}))",
+                "'generic',jsonb_build_object('value',jsonb_build_object({}))",
                 {
                     if field_vec.is_empty() {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
@@ -406,7 +406,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 }
             )),
             Self::StdOptionOptionGeneric(field_vec) => Ok(format!(
-                "'std_option_option_generic',jsonb_build_object({})",
+                "'std_option_option_generic',jsonb_build_object('value',jsonb_build_object({}))",
                 {
                     if field_vec.is_empty() {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
@@ -631,11 +631,85 @@ pub struct SomethingOptions {
     std_string_string: std::option::Option<crate::Value<StdStringString>>,
     std_vec_vec_std_primitive_bool: std::option::Option<crate::Value<StdVecVecStdPrimitiveBool>>,
     generic: std::option::Option<crate::Value<Generic<DoggieOptions>>>,
-    std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
+    std_option_option_generic: std::option::Option<crate::Value<StdOptionOptionGeneric<DoggieOptions>>>,//todo value between two options
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
+}
+#[test]
+fn test() {
+    // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] 
+    // struct VValue<T> {
+    //     value: T,
+    // }
+    #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+    struct DOptions {
+        std_string_string: std::option::Option<crate::Value<StdStringString>>,
+    }
+    // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+    // struct SStdOptionOptionGeneric<T>(std::option::Option<T>);
+    #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
+    struct SOptions {
+        std_option_option_generic: std::option::Option<crate::Value<std::option::Option<DOptions>>>,//todo value between two options
+    }
+
+    // let h = SOptions {
+    //     std_option_option_generic: Some(crate::Value {
+    //         value: Some(DOptions {
+    //             std_string_string: Some(crate::Value {
+    //                 value: StdStringString(std::string::String::from(""))
+    //             }),
+    //         }),
+    //     }),//todo value between two options
+    // };
+    // println!("*****{h:#?}");
+    // let u = serde_json::to_string(&h).unwrap();
+    // println!("$$$${u:#?}");
+    // {
+    //     "std_option_option_generic": {
+    //         "value": {
+    //             "std_string_string": {
+    //                 "value": ""
+    //             }
+    //         }
+    //     }
+    // }
+    let h = SOptions {
+        std_option_option_generic: Some(crate::Value {
+            value: Some(DOptions {
+                std_string_string: Some(crate::Value {
+                    value: StdStringString(std::string::String::from(""))
+                }),
+            }),
+        }),//todo value between two options
+    };
+    println!("*****{h:#?}");
+    let u = serde_json::to_string(&h).unwrap();
+    println!("$$$${u:#?}");
+    let f = r#"
+        {
+            "std_option_option_generic": {
+                "value": {
+                    "std_string_string": {
+                        "value": null
+                    }
+                }
+            }
+        }
+    "#;
+    let g: SomethingOptions = serde_json::from_str(f).unwrap();
+    println!("{g:#?}");
+    // let mut s = SomethingOptions {
+    //     std_string_string: None,
+    //     std_vec_vec_std_primitive_bool: None,
+    //     generic: None,
+    //     std_option_option_generic: None,//todo value between two options
+    //     std_vec_vec_generic: None,
+    //     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
+    //     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
+    //     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
+    // };
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
@@ -860,3 +934,37 @@ pub struct DoggieOptions {
 // ]
 
 
+// select 
+// sqlx_types_json_t_as_postgresql_json_not_null
+// -- jsonb_build_object(
+// -- 	'std_option_option_generic',
+	
+// -- 	-- jsonb_build_object(
+// -- 	-- 	'value',
+// -- 	-- 	jsonb_build_object(
+// -- 	-- 		'std_string_string',
+// -- 	-- 		jsonb_build_object(
+// -- 	-- 			'value',
+// -- 	-- 			sqlx_types_json_t_as_postgresql_json_not_null->'std_option_option_generic'->'std_string_string'
+// -- 	-- 		)
+// -- 	-- 	)
+// -- 	-- )
+// -- ) 
+// -- as sqlx_types_json_t_as_postgresql_json_not_null 
+// from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
+// AND json_typeof(sqlx_types_json_t_as_postgresql_json_not_null) = 'object'
+// AND
+// (
+// 	(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' IS NULL)
+// 	OR
+// 	(
+// 		json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic') = 'object'
+// 		AND 
+// 		(
+// 			json_typeof(sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string') = 'string'
+// 			OR
+// 			sqlx_types_json_t_as_postgresql_json_not_null -> 'std_option_option_generic' -> 'std_string_string' IS NULL
+// 		)
+// 	)
+// );
