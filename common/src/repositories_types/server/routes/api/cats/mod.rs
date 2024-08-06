@@ -263,8 +263,8 @@ pub enum JsongenericColumn {
     ))]
     StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
     #[serde(rename(
-        serialize = "sqlx_types_json_t_as_postgresql_json_not_null",
-        deserialize = "sqlx_types_json_t_as_postgresql_json_not_null"
+        serialize = "sqlx_types_json_t_as_postgresql_json_b_not_null",
+        deserialize = "sqlx_types_json_t_as_postgresql_json_b_not_null"
     ))]
     SqlxTypesJsonTAsPostgresqlJsonBNotNull {
         filter: std::vec::Vec<postgresql_crud::SomethingField>
