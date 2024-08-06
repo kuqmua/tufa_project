@@ -231,7 +231,7 @@ impl std::fmt::Display for Something {
 impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
-            std_string_string: Some(value.std_string_string),
+            std_string_string: Some(crate::Value{ value: value.std_string_string }),
             std_vec_vec_std_primitive_bool: Some(value.std_vec_vec_std_primitive_bool),
             generic: Some(Generic(DoggieOptions::from(value.generic.0))),
             //todo rewrite to from or try from impl
@@ -356,7 +356,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
     //todo return result instead of std::string::String
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
+            Self::StdStringString => Ok(format!("'std_string_string',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'std_string_string')")),
             Self::StdVecVecStdPrimitiveBool {
                 limit,
                 offset
@@ -628,7 +628,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
-    std_string_string: std::option::Option<StdStringString>,
+    std_string_string: std::option::Option<crate::Value<StdStringString>>,
     std_vec_vec_std_primitive_bool: std::option::Option<StdVecVecStdPrimitiveBool>,
     generic: std::option::Option<Generic<DoggieOptions>>,
     std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options

@@ -1100,7 +1100,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-//
     let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             fields_named.named.iter().map(|element|element).collect::<std::vec::Vec<&syn::Field>>()
@@ -1111,7 +1110,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
     // println!("{vec_syn_field:#?}");
-//
     let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
     let ident_field_upper_camel_case = {
         let value =  format!("{ident}{field_upper_camel_case}");
@@ -1134,7 +1132,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let maybe_additional_token_stream = {
                 let supported_predefined_type = SupportedPredefinedType::try_from(*element)
                     .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
-                println!("{supported_predefined_type:#?}");
+                // println!("{supported_predefined_type:#?}");
                 match supported_predefined_type {
                     SupportedPredefinedType::Generic(value) => {
                         quote::quote!{
