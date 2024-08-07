@@ -586,17 +586,8 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
                 JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => format!(
-                    "jsonb_build_object({}) as sqlx_types_json_t_as_postgresql_json_b_not_null",//todo should support arrays or "key: array" is enough? 
-                    {
-                        let mut acc = filter.iter().fold(std::string::String::default(), |mut acc, element| {
-                            acc.push_str(
-                                &format!("{},", postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part(*&element, "sqlx_types_json_t_as_postgresql_json_b_not_null").unwrap())//todo return error
-                            );
-                            acc
-                        });
-                        let _ = acc.pop();
-                        acc
-                    }
+                    "{} as sqlx_types_json_t_as_postgresql_json_b_not_null",//todo should support arrays or "key: array" is enough? 
+                    postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(filter, "sqlx_types_json_t_as_postgresql_json_b_not_null").unwrap()//todo return error
                 )
             }); 
             acc.push_str(","); 

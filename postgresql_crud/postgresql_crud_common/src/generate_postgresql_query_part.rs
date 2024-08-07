@@ -202,6 +202,7 @@ pub trait GeneratePostgresqlQueryPart<T> {
     fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T> where Self: Sized;
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
 }
+//todo enum tree support
 //todo generate wrapper type for all possible json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
 postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
@@ -359,7 +360,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
             }
         }
         let _ = acc.pop();
-        Ok(acc)
+        Ok(format!("jsonb_build_object({acc})"))
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
