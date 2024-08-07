@@ -199,6 +199,7 @@ pub struct StdOptionOptionStdVecVecStdOptionOptionGeneric<T>(pub std::option::Op
     // }
 /////////////////////
 pub trait GeneratePostgresqlQueryPart<T> {
+    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T> where Self: Sized;
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
 }
 //todo generate wrapper type for all possible json type
@@ -214,14 +215,6 @@ pub struct Something {
     pub std_option_option_std_vec_vec_generic: StdOptionOptionStdVecVecGeneric<Doggie>,
     pub std_vec_vec_std_option_option_generic: StdVecVecStdOptionOptionGeneric<Doggie>,
     pub std_option_option_std_vec_vec_std_option_option_generic: StdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
-    //
-    // Generic(&'a syn::AngleBracketedGenericArguments), 
-    // StdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
-    // StdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
-    // StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
-    // StdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
-    // StdOptionOptionStdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
-    //
 }
 impl std::fmt::Display for Something {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -353,9 +346,48 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     }
 }
 impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
-    //todo return result instead of std::string::String
+    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        for element in value {
+            match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value},"));
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(acc)
+    }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
+            //
+            // SELECT
+            // CASE 
+            // WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object'
+            //        THEN
+            //         CASE 
+            //             WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_string_string') = 'string' THEN
+            //                 jsonb_build_object(
+            //                     'std_string_string',
+            //                     jsonb_build_object(
+            //                         'value',
+            //                         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_string_string'
+            //                     )
+            //                 )
+            //             ELSE 
+            //                 jsonb_build_object(
+            //                     'std_string_string', 
+            //                     NULL
+            //                 )
+            //         END
+            //     ELSE NULL
+            // END as sqlx_types_json_t_as_postgresql_json_b_not_null
+            // FROM jsongeneric
+            // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
+            //
             Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
             Self::StdVecVecStdPrimitiveBool {
                 limit,
@@ -749,6 +781,21 @@ pub enum DoggieGeneratePostgresqlQueryPartErrorNamed {
     }
 }
 impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> for DoggieField {
+    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        for element in value {
+            match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value},"));
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(acc)
+    }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
         match self {
             Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
