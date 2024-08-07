@@ -219,7 +219,7 @@ pub struct JsongenericOptions {
         postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
     >,
     pub sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingOptions>>,//here change
+        postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingWrapper>>,//here change
     >,
 }
 impl std::convert::From<Jsongeneric> for JsongenericOptions {
@@ -241,7 +241,13 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
             }),
             //todo difference
             sqlx_types_json_t_as_postgresql_json_b_not_null: Some(postgresql_crud::Value {
-                value: postgresql_crud::SqlxTypesJson(sqlx::types::Json(postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_b_not_null.0.0.0))),
+                value: postgresql_crud::SqlxTypesJson(
+                    sqlx::types::Json(
+                        postgresql_crud::SomethingWrapper(
+                            std::result::Result::Ok(postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_b_not_null.0.0.0))
+                        )
+                    )
+                ),
             }),
         }
     }
@@ -666,7 +672,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     let mut std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>> = None;
                     let mut std_primitive_i32_as_postgresql_int: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>> = None;
                     //todo change type
-                    let mut sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingOptions>>> = None;
+                    let mut sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingWrapper>>> = None;
                     for element in &parameters.payload.select {
                         match element
                         {
@@ -742,7 +748,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 }
                             }, 
                             
-                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::SomethingOptions>, &std::primitive::str>(
+                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::SomethingWrapper>, &std::primitive::str>(
                                 &value,
                                 "sqlx_types_json_t_as_postgresql_json_b_not_null"
                             ) {

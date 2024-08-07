@@ -360,7 +360,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
             }
         }
         let _ = acc.pop();
-        Ok(format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object({acc}) else null end "))
+        Ok(format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',jsonb_build_object({acc})) else jsonb_build_object('Err','todo error message') end "))
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
@@ -779,6 +779,10 @@ pub struct SomethingOptions {
     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
 }
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
+pub struct SomethingWrapper(pub Result<SomethingOptions,std::string::String>);
+
 // #[test]
 // fn test() {
 //     // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] 
