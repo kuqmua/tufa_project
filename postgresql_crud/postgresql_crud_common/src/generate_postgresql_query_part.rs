@@ -226,7 +226,7 @@ impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
             std_string_string: Some(std::result::Result::Ok(value.std_string_string)),
-            std_vec_vec_std_primitive_bool: Some(value.std_vec_vec_std_primitive_bool),
+            std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(value.std_vec_vec_std_primitive_bool)),
             generic: Some(Generic(DoggieOptions::from(value.generic.0))),
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
@@ -455,7 +455,55 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                         });
                     }
                 };
-                Ok(format!("'std_vec_vec_std_primitive_bool',(select jsonb_agg(value) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')) with ordinality where ordinality between {start} and {end})"))
+                //todo maybe check all types are boolean
+                Ok(format!(r#"
+                    'std_vec_vec_std_primitive_bool',
+                    case 
+                        when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool') = 'array' then 
+                            jsonb_build_object(
+                                'Ok',
+                                (
+                                    select jsonb_agg(value) 
+                                    from jsonb_array_elements(
+                                        (select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')
+                                    )
+                                    with ordinality 
+                                    where ordinality between 0 and 5
+                                )
+                            )
+                        else 
+                            jsonb_build_object(
+                                'Err', 
+                                'todo this must be error message'
+                            ) 
+                    end
+                "#))
+// select 
+// jsonb_build_object(
+// 	'std_vec_vec_std_primitive_bool',
+// 	case 
+// 		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_std_primitive_bool') = 'array' then
+// 			jsonb_build_object(
+// 				'Ok',
+// 				(
+// 					select jsonb_agg(value) 
+// 					from jsonb_array_elements(
+// 						(select sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_std_primitive_bool')
+// 					) 
+// 					with ordinality where ordinality between 0 and 5
+// 				)
+// 			)
+// 		else 
+// 			jsonb_build_object(
+// 				'Err',
+// 				'todo this must be error message'
+// 			)
+		
+// 	end
+// )
+// as sqlx_types_json_t_as_postgresql_json_b_not_null 
+// from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             },
             Self::Generic(field_vec) => Ok(format!(
                 "'generic',jsonb_build_object({})",
@@ -712,7 +760,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
     std_string_string: std::option::Option<std::result::Result<StdStringString, std::string::String>>,
-    std_vec_vec_std_primitive_bool: std::option::Option<StdVecVecStdPrimitiveBool>,
+    std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<StdVecVecStdPrimitiveBool, std::string::String>>,
     generic: std::option::Option<Generic<DoggieOptions>>,
     std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
