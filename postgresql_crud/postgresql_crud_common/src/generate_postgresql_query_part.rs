@@ -418,7 +418,18 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
         // FROM jsongeneric
         // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
             //
-            Self::StdStringString => Ok(format!("'std_string_string',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_string_string') else jsonb_build_object('Err','this message is an error todo write') end ")),
+            Self::StdStringString => Ok(format!(r#"
+                'std_string_string',
+                case 
+                    when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then
+                        jsonb_build_object(
+                            'Ok',
+                            {column_name_and_maybe_field_getter}->'std_string_string'
+                        )
+                    else 
+                        jsonb_build_object('Err','this message is an error todo write')
+                end 
+            "#)),
         //     select 
         //     jsonb_build_object(
         //             'std_string_string',
