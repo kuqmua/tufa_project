@@ -467,6 +467,36 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     }
                 };
                 //todo maybe check all types are boolean
+
+// WITH elements AS (
+//     SELECT 
+//         id,
+//         jsonb_array_elements(my_jsonb_col) AS element
+//     FROM my_table
+// ),
+// types AS (
+//     SELECT
+//         id,
+//         jsonb_typeof(element) AS type
+//     FROM elements
+// ),
+// checks AS (
+//     SELECT
+//         id,
+//         bool_and(type = 'boolean') AS all_are_boolean
+//     FROM types
+//     GROUP BY id
+// )
+// SELECT jsonb_agg(
+//     CASE
+//         WHEN all_are_boolean THEN
+//             jsonb_build_object('Ok', TRUE)
+//         ELSE
+//             jsonb_build_object('Error', 'Array contains non-boolean elements')
+//     END
+// ) AS result
+// FROM checks;
+
                 Ok(format!(r#"
                     'std_vec_vec_std_primitive_bool',
                     case 
