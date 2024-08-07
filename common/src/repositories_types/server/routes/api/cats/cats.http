@@ -37,12 +37,41 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 {
     "std_primitive_i32_as_postgresql_int": 83,
-    "sqlx_types_json_t_as_postgresql_json_not_null": {
-        "something": "sss",
-        "omega": [true, false,false],
-        "doggie": {
-            "says": "gav"
-        }
+    "sqlx_types_json_t_as_postgresql_json_b_not_null": {
+        "std_string_string": "sddsd",
+        "std_vec_vec_std_primitive_bool": [
+            true,
+            false,
+            false
+        ],
+        "generic": {
+            "std_string_string": "sdsd"
+        },
+        "std_option_option_generic": {
+            "std_string_string": "dsfsdfs"
+        },
+        "std_vec_vec_generic": [
+            {
+                "std_string_string": "sdss"
+            }
+        ],
+        "std_option_option_std_vec_vec_generic": [
+            {
+                "std_string_string": "sdss"
+            }
+        ],
+        "std_vec_vec_std_option_option_generic": [
+            {
+              "std_string_string": "sdss"
+            },
+            null
+        ],
+        "std_option_option_std_vec_vec_std_option_option_generic": [
+            {
+                "std_string_string": "sdss"
+            },
+            null
+        ]
     }
 }
 
