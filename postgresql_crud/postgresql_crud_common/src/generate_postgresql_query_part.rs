@@ -225,7 +225,7 @@ impl std::fmt::Display for Something {
 impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
-            std_string_string: Some(crate::Value{ value: value.std_string_string }),
+            std_string_string: Some(std::result::Result::Ok(value.std_string_string)),
             std_vec_vec_std_primitive_bool: Some(value.std_vec_vec_std_primitive_bool),
             generic: Some(Generic(DoggieOptions::from(value.generic.0))),
             //todo rewrite to from or try from impl
@@ -418,9 +418,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
         // FROM jsongeneric
         // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
             //
-            Self::StdStringString => Ok(format!("'std_string_string',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then jsonb_build_object('value',{column_name_and_maybe_field_getter}->'std_string_string') else null end ")),
-            // case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then jsonb_build_object('std_string_string',jsonb_build_object('value', {column_name_and_maybe_field_getter}->'std_string_string')) else jsonb_build_object('std_string_string',    
-            
+            Self::StdStringString => Ok(format!("'std_string_string',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_string_string') else jsonb_build_object('Err','this message is an error todo write') end ")),
         //     select 
         //     jsonb_build_object(
         //             'std_string_string',
@@ -713,7 +711,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
-    std_string_string: std::option::Option<crate::Value<StdStringString>>,
+    std_string_string: std::option::Option<std::result::Result<StdStringString, std::string::String>>,
     std_vec_vec_std_primitive_bool: std::option::Option<StdVecVecStdPrimitiveBool>,
     generic: std::option::Option<Generic<DoggieOptions>>,
     std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
