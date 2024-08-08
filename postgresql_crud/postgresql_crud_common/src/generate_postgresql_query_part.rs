@@ -348,37 +348,24 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
 }
 impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
     fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
+        if value.is_empty() {
+            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
         //todo check unique
-        //todo check length
-
-                    // if field_vec.is_empty() {
-                    //     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
-                    //         code_occurence: error_occurence_lib::code_occurence!(),
-                    //     });
-                    // }
-                    // let mut unique_field_vec = vec![];
-                    // for element in field_vec {
-                    //     if unique_field_vec.contains(&element) {
-                    //         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
-                    //             field: *element,
-                    //             code_occurence: error_occurence_lib::code_occurence!(),
-                    //         });
-                    //     }
-                    //     else {
-                    //         unique_field_vec.push(&element);
-                    //     }
-                    // }
-                    // let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
-                    //     acc.push_str(&format!(
-                    //         "{},",
-                    //         element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'generic'")).unwrap()//todo return error
-                    //     ));
-                    //     acc
-                    // });
-                    // let _ = acc.pop();
-                    // acc
-
-                    
+        // let mut unique = vec![];
+        // for element in value {
+        //     if unique.contains(&element) {
+        //         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
+        //             field: *element,
+        //             code_occurence: error_occurence_lib::code_occurence!(),
+        //         });
+        //     }
+        //     else {
+        //         unique.push(&element);
+        //     }
+        // }
         let mut acc = std::string::String::default();
         for element in value {
             match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
