@@ -218,14 +218,14 @@ impl std::convert::From<Something> for SomethingOptions {
             std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(value.std_vec_vec_std_primitive_bool)),
             generic: Some(Generic(std::result::Result::Ok(DoggieOptions::from(value.generic.0)))),
             //todo rewrite to from or try from impl
-            std_option_option_generic: Some(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
+            std_option_option_generic: Some(std::result::Result::Ok(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
                 Some(value) => DoggieOptions {
                     std_string_string: Some(std::result::Result::Ok(value.std_string_string)),
                 },
                 None => DoggieOptions {
                     std_string_string: None,
                 },
-            }))),
+            })))),
             std_vec_vec_generic: Some(StdVecVecGeneric(value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>())),
             std_option_option_std_vec_vec_generic: Some(StdOptionOptionStdVecVecGeneric(match value.std_option_option_std_vec_vec_generic.0 {
                 Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
@@ -622,7 +622,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
         // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
 
             Self::StdOptionOptionGeneric(field_vec) => Ok(format!(
-                "'std_option_option_generic',jsonb_build_object({})",
+                "'std_option_option_generic',{}",
                 {
                     if field_vec.is_empty() {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
@@ -649,9 +649,71 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                         acc
                     });
                     let _ = acc.pop();
-                    acc
+                    format!(r#"
+                        case 
+                            when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_generic') = 'object' then
+                                jsonb_build_object(
+                                    'Ok',
+                                    jsonb_build_object({acc})
+                                )
+                            when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' then
+                            	jsonb_build_object(
+                            		'Ok',
+                            		null
+                            	)
+                            else 
+                                jsonb_build_object(
+                                    'Err',
+                                    'todo error message'
+                                ) 
+                        end 
+                    "#)
                 }
             )),
+
+// select 
+// 	case 
+// 		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
+// 			jsonb_build_object(
+// 				'Ok',
+// 				jsonb_build_object(
+// 					'std_option_option_generic',
+// 					case
+// 						when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'object' then
+// 							case
+// 								when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'std_string_string') = 'string' then
+// 									jsonb_build_object(
+// 										'Ok',
+// 										sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'std_string_string'
+// 									)
+// 								else 
+// 									jsonb_build_object(
+// 										'Err',
+// 										'todo error message'
+// 									)				
+// 							end
+// 						when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' then
+// 							jsonb_build_object(
+// 								'Ok',
+// 								null
+// 							)
+// 						else 
+// 							jsonb_build_object(
+// 								'Err',
+// 								'todo error message'
+// 							)
+// 					end
+// 				)
+// 			) 
+// 		else 
+// 			jsonb_build_object(
+// 				'Err',
+// 				'todo error message'
+// 			) 
+// 	end  
+// as sqlx_types_json_t_as_postgresql_json_b_not_null 
+// from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             Self::StdVecVecGeneric {
                 field_vec,
                 limit,
@@ -847,7 +909,7 @@ pub struct SomethingOptions {
     std_string_string: std::option::Option<std::result::Result<StdStringString, std::string::String>>,
     std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<StdVecVecStdPrimitiveBool, std::string::String>>,
     generic: std::option::Option<Generic<std::result::Result<DoggieOptions,std::string::String>>>,
-    std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
+    std_option_option_generic: std::option::Option<std::result::Result<StdOptionOptionGeneric<DoggieOptions>,std::string::String>>,
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
