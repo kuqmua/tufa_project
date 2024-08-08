@@ -577,6 +577,52 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     acc
                 }
             )),
+
+        // select 
+        //     case 
+        //     when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
+        //         jsonb_build_object(
+        //             'Ok',
+        //             jsonb_build_object(
+        //                 'generic',
+        //                 case
+        //                      when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'generic') = 'object' then 
+        //                         jsonb_build_object(
+        //                             'Ok',
+        //                             jsonb_build_object(
+        //                                 'std_string_string',
+        //                                 case 
+        //                                     when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'generic'->'std_string_string') = 'string' then 
+        //                                         jsonb_build_object(
+        //                                             'Ok',
+        //                                             sqlx_types_json_t_as_postgresql_json_b_not_null->'generic'->'std_string_string'
+        //                                         )
+        //                                     else 
+        //                                         jsonb_build_object(
+        //                                             'Err',
+        //                                             'todo error message'
+        //                                         )
+        //                                 end
+        //                             )
+        //                         )
+        //                     else 
+        //                         jsonb_build_object(
+        //                             'Err',
+        //                             'todo error message'
+        //                         )
+        //                 end
+        //             )
+        //         ) 
+        //     else 
+        //         jsonb_build_object(
+        //             'Err',
+        //             'todo error message'
+        //         ) 
+        // end  
+        // as sqlx_types_json_t_as_postgresql_json_b_not_null 
+        // from jsongeneric 
+        // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
+
             Self::StdOptionOptionGeneric(field_vec) => Ok(format!(
                 "'std_option_option_generic',jsonb_build_object({})",
                 {
