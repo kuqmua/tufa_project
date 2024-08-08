@@ -186,21 +186,10 @@ pub struct StdVecVecStdOptionOptionGeneric<T>(pub std::vec::Vec<std::option::Opt
 pub struct StdOptionOptionStdVecVecStdOptionOptionGeneric<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
 
 
-    // Something,
-    // Omega {
-    //     limit: std::primitive::u64,
-    //     offset: std::primitive::u64,
-    // },
-    // Doggie(std::vec::Vec<DoggieField>),
-    // Cats {
-    //     reader_vec: std::vec::Vec<CatField>,
-    //     limit: std::primitive::u64,
-    //     offset: std::primitive::u64,
-    // }
 /////////////////////
-pub trait GeneratePostgresqlQueryPart<T> {
-    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T> where Self: Sized;
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T>;
+pub trait GeneratePostgresqlQueryPart<T1, T2> {
+    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T1> where Self: Sized;
+    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, T2>;
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type
@@ -324,6 +313,22 @@ impl error_occurence_lib::ToStdStringString for SomethingField {
     }
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
+    FieldsFilterIsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueFieldFilter {
+        #[eo_to_std_string_string_serialize_deserialize]
+        field: SomethingField,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    GeneratePostgresqlQueryPart {
+        #[eo_error_occurence]
+        error: SomethingGeneratePostgresqlQueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
@@ -335,37 +340,31 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
     FieldsFilterIsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUniqueDoggieFieldFilter {
+    NotUniqueStdOptionOptionGenericFieldFilter {
         #[eo_to_std_string_string_serialize_deserialize]
         field: DoggieField,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUniqueCatsFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieField,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
 }
-impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
-    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
+impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed, SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
+    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed> {
         if value.is_empty() {
-            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+            return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::FieldsFilterIsEmpty {
                 code_occurence: error_occurence_lib::code_occurence!(),
             });
         }
-        //todo check unique
-        // let mut unique = vec![];
-        // for element in value {
-        //     if unique.contains(&element) {
-        //         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
-        //             field: *element,
-        //             code_occurence: error_occurence_lib::code_occurence!(),
-        //         });
-        //     }
-        //     else {
-        //         unique.push(&element);
-        //     }
-        // }
+        let mut unique = vec![];
+        for element in value {
+            if unique.contains(&element) {
+                return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::NotUniqueFieldFilter {
+                    field: element.clone(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+            else {
+                unique.push(&element);
+            }
+        }
         let mut acc = std::string::String::default();
         for element in value {
             match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
@@ -373,7 +372,10 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     acc.push_str(&format!("{value},"));
                 }
                 Err(error) => {
-                    return Err(error);
+                    return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::GeneratePostgresqlQueryPart {
+                        error,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
                 }
             }
         }
@@ -630,7 +632,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                     let mut unique_field_vec = vec![];
                     for element in field_vec {
                         if unique_field_vec.contains(&element) {
-                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
+                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueStdOptionOptionGenericFieldFilter {
                                 field: *element,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
@@ -663,7 +665,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 let mut unique_field_vec = vec![];
                 for element in field_vec {
                     if unique_field_vec.contains(&element) {
-                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueStdOptionOptionGenericFieldFilter {
                             field: *element,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -706,7 +708,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 let mut unique_field_vec = vec![];
                 for element in field_vec {
                     if unique_field_vec.contains(&element) {
-                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueStdOptionOptionGenericFieldFilter {
                             field: *element,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -749,7 +751,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 let mut unique_field_vec = vec![];
                 for element in field_vec {
                     if unique_field_vec.contains(&element) {
-                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueStdOptionOptionGenericFieldFilter {
                             field: *element,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -792,7 +794,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                 let mut unique_field_vec = vec![];
                 for element in field_vec {
                     if unique_field_vec.contains(&element) {
-                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueCatsFieldFilter {
+                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueStdOptionOptionGenericFieldFilter {
                             field: *element,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -954,20 +956,39 @@ impl error_occurence_lib::ToStdStringString for DoggieField {
         format!("{self:?}")
     }
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum DoggieGeneratePostgresqlQueryPartErrorNamed {
-    OffsetPlusLimitIsIntOverflow {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+#[derive(Debug, Clone, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
     FieldsFilterIsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotUniqueFieldFilter {
+        #[eo_to_std_string_string_serialize_deserialize]
+        field: DoggieField,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
+    },
+    GeneratePostgresqlQueryPart {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
-impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> for DoggieField {
-    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
+impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed, ()> for DoggieField {
+    fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed> {
+        if value.is_empty() {
+            return Err(DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed::FieldsFilterIsEmpty {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        let mut unique = vec![];
+        for element in value {
+            if unique.contains(&element) {
+                return Err(DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed::NotUniqueFieldFilter {
+                    field: element.clone(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+            else {
+                unique.push(&element);
+            }
+        }
         let mut acc = std::string::String::default();
         for element in value {
             match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
@@ -975,14 +996,16 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> fo
                     acc.push_str(&format!("{value},"));
                 }
                 Err(error) => {
-                    return Err(error);
+                    return Err(DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed::GeneratePostgresqlQueryPart {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
                 }
             }
         }
         let _ = acc.pop();
         Ok(format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',jsonb_build_object({acc})) else jsonb_build_object('Err','todo error message') end "))
     }
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
+    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, ()> {
         match self {
             Self::StdStringString => Ok(format!(
                 "'std_string_string',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_string_string') else jsonb_build_object('Err','todo error message') end"
