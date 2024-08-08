@@ -227,11 +227,11 @@ impl std::convert::From<Something> for SomethingOptions {
         Self {
             std_string_string: Some(std::result::Result::Ok(value.std_string_string)),
             std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(value.std_vec_vec_std_primitive_bool)),
-            generic: Some(Generic(DoggieOptions::from(value.generic.0))),
+            generic: Some(Generic(std::result::Result::Ok(DoggieOptions::from(value.generic.0)))),
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(StdOptionOptionGeneric(Some(match value.std_option_option_generic.0 {
                 Some(value) => DoggieOptions {
-                    std_string_string: Some(value.std_string_string),
+                    std_string_string: Some(std::result::Result::Ok(value.std_string_string)),
                 },
                 None => DoggieOptions {
                     std_string_string: None,
@@ -348,6 +348,37 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
 }
 impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
     fn generate_postgresql_query_part_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
+        //todo check unique
+        //todo check length
+
+                    // if field_vec.is_empty() {
+                    //     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
+                    //         code_occurence: error_occurence_lib::code_occurence!(),
+                    //     });
+                    // }
+                    // let mut unique_field_vec = vec![];
+                    // for element in field_vec {
+                    //     if unique_field_vec.contains(&element) {
+                    //         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
+                    //             field: *element,
+                    //             code_occurence: error_occurence_lib::code_occurence!(),
+                    //         });
+                    //     }
+                    //     else {
+                    //         unique_field_vec.push(&element);
+                    //     }
+                    // }
+                    // let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                    //     acc.push_str(&format!(
+                    //         "{},",
+                    //         element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'generic'")).unwrap()//todo return error
+                    //     ));
+                    //     acc
+                    // });
+                    // let _ = acc.pop();
+                    // acc
+
+                    
         let mut acc = std::string::String::default();
         for element in value {
             match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
@@ -509,7 +540,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
                                         (select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')
                                     )
                                     with ordinality 
-                                    where ordinality between 0 and 5
+                                    where ordinality between {start} and {end}
                                 )
                             )
                         else 
@@ -546,35 +577,13 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 // from jsongeneric 
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             },
-            Self::Generic(field_vec) => Ok(format!(
-                "'generic',jsonb_build_object({})",
+            Self::Generic(filter) => Ok(format!(
+                "'generic',{}",
                 {
-                    if field_vec.is_empty() {
-                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    let mut unique_field_vec = vec![];
-                    for element in field_vec {
-                        if unique_field_vec.contains(&element) {
-                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueDoggieFieldFilter {
-                                field: *element,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                        else {
-                            unique_field_vec.push(&element);
-                        }
-                    }
-                    let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
-                        acc.push_str(&format!(
-                            "{},",
-                            element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'generic'")).unwrap()//todo return error
-                        ));
-                        acc
-                    });
-                    let _ = acc.pop();
-                    acc
+                    GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                        filter,
+                        column_name_and_maybe_field_getter
+                    ).unwrap()//todo
                 }
             )),
 
@@ -848,7 +857,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartErrorNamed>
 pub struct SomethingOptions {
     std_string_string: std::option::Option<std::result::Result<StdStringString, std::string::String>>,
     std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<StdVecVecStdPrimitiveBool, std::string::String>>,
-    generic: std::option::Option<Generic<DoggieOptions>>,
+    generic: std::option::Option<Generic<std::result::Result<DoggieOptions,std::string::String>>>,
     std_option_option_generic: std::option::Option<StdOptionOptionGeneric<DoggieOptions>>,//todo value between two options
     std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
@@ -941,7 +950,7 @@ pub struct Doggie {
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
         Self {
-            std_string_string: Some(value.std_string_string)
+            std_string_string: Some(std::result::Result::Ok(value.std_string_string))
         }
     }
 }
@@ -984,17 +993,19 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartErrorNamed> fo
             }
         }
         let _ = acc.pop();
-        Ok(acc)
+        Ok(format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',jsonb_build_object({acc})) else jsonb_build_object('Err','todo error message') end "))
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            Self::StdStringString => Ok(format!("'std_string_string',{column_name_and_maybe_field_getter}->'std_string_string'")),
+            Self::StdStringString => Ok(format!(
+                "'std_string_string',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_string_string') else jsonb_build_object('Err','todo error message') end"
+            )),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    std_string_string: std::option::Option<StdStringString>,
+    std_string_string: std::option::Option<std::result::Result<StdStringString, std::string::String>>,
 }
 
 // [
