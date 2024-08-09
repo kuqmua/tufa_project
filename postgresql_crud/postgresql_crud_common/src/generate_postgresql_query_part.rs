@@ -349,6 +349,11 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
         field: DoggieField,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    DoggieGeneratePostgresqlQueryPartFromSelfVec {
+        #[eo_error_occurence]
+        field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed, SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
     fn generate_postgresql_query_part_from_self_vec(
@@ -479,7 +484,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                             {column_name_and_maybe_field_getter}->'std_string_string'
                         )
                     else 
-                        jsonb_build_object('Err','this message is an error todo write')
+                        jsonb_build_object('Err','todo this must be error message')
                 end 
             "#)),
         //     select 
@@ -598,16 +603,19 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
 // from jsongeneric 
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             },
-            Self::Generic(filter) => Ok(format!(
-                "'generic',{}",
-                {
-                    GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                        filter,
-                        &format!("{column_name_and_maybe_field_getter}->'generic'"),
-                        false
-                    ).unwrap()//todo
+            Self::Generic(filter) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                filter,
+                &format!("{column_name_and_maybe_field_getter}->'generic'"),
+                false
+            ) {
+                Ok(value) => Ok(format!("'generic',{value}")),
+                Err(error) => {
+                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+                        field: error,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
                 }
-            )),
+            },
 
         // select 
         //     case 
@@ -654,17 +662,19 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
         // from jsongeneric 
         // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
 
-            Self::StdOptionOptionGeneric(filter) => Ok(format!(
-                "'std_option_option_generic',{}",
-                {
-                    let acc = GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                        filter,
-                        &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"),
-                        true
-                    ).unwrap();//todo
-                    acc
+            Self::StdOptionOptionGeneric(filter) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                filter,
+                &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"),
+                true
+            ) {
+                Ok(value) => Ok(format!("'std_option_option_generic',{value}")),
+                Err(error) => {
+                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+                        field: error,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
                 }
-            )),
+            },
 
 // select 
 // 	case 
