@@ -571,7 +571,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                 {
                     GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                         filter,
-                        column_name_and_maybe_field_getter
+                        &format!("{column_name_and_maybe_field_getter}->'generic'")
                     ).unwrap()//todo
                 }
             )),
@@ -621,27 +621,27 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
         // from jsongeneric 
         // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
 
-            Self::StdOptionOptionGeneric(field_vec) => Ok(format!(
+            Self::StdOptionOptionGeneric(filter) => Ok(format!(
                 "'std_option_option_generic',{}",
                 {
-                    if field_vec.is_empty() {
+                    if filter.is_empty() {
                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::FieldsFilterIsEmpty {
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
-                    let mut unique_field_vec = vec![];
-                    for element in field_vec {
-                        if unique_field_vec.contains(&element) {
+                    let mut unique_filter = vec![];
+                    for element in filter {
+                        if unique_filter.contains(&element) {
                             return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::NotUniqueStdOptionOptionGenericFieldFilter {
                                 field: *element,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
                         }
                         else {
-                            unique_field_vec.push(&element);
+                            unique_filter.push(&element);
                         }
                     }
-                    let mut acc = field_vec.iter().fold(std::string::String::default(), |mut acc, element| {
+                    let mut acc = filter.iter().fold(std::string::String::default(), |mut acc, element| {
                         acc.push_str(&format!(
                             "{},",
                             element.generate_postgresql_query_part(&format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'")).unwrap()//todo return error
@@ -649,6 +649,52 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                         acc
                     });
                     let _ = acc.pop();
+
+                    //'std_string_string',
+                    //    case 
+                    //        when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'std_string_string') = 'string' then 
+                    //            jsonb_build_object(
+                    //                'Ok',
+                    //                sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'std_string_string'
+                    //            ) 
+                    //        else 
+                    //            jsonb_build_object(
+                    //                'Err',
+                    //                'todo error message'
+                    //            ) 
+                    //    end
+
+                    // let acch = GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                    //     filter,
+                    //     column_name_and_maybe_field_getter
+                    // ).unwrap();//todo
+
+                    // case 
+                    // when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
+                    //     jsonb_build_object(
+                    //         'Ok',
+                    //         jsonb_build_object(
+                    //             'std_string_string',
+                    //             case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_string_string') = 'string' then 
+                    //                 jsonb_build_object(
+                    //                     'Ok',
+                    //                     sqlx_types_json_t_as_postgresql_json_b_not_null->'std_string_string'
+                    //                 ) 
+                    //             else 
+                    //                 jsonb_build_object(
+                    //                     'Err',
+                    //                     'todo error message'
+                    //                 ) 
+                    //             end
+                    //         )
+                    //     ) 
+                    // else 
+                    //     jsonb_build_object(
+                    //         'Err',
+                    //         'todo error message'
+                    //     ) 
+                    // end 
+
                     format!(r#"
                         case 
                             when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_generic') = 'object' then
@@ -1057,7 +1103,7 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartFromSelfVecErr
                 Ok(value) => {
                     acc.push_str(&format!("{value},"));
                 }
-                Err(error) => {
+                Err(_) => {
                     return Err(DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed::GeneratePostgresqlQueryPart {
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
