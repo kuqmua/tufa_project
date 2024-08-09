@@ -230,7 +230,7 @@ impl std::convert::From<Something> for SomethingOptions {
                     std_string_string: None,
                 },
             })))),
-            std_vec_vec_generic: Some(StdVecVecGeneric(value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>())),
+            std_vec_vec_generic: Some(std::result::Result::Ok(StdVecVecGeneric(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>()))),
             std_option_option_std_vec_vec_generic: Some(StdOptionOptionStdVecVecGeneric(match value.std_option_option_std_vec_vec_generic.0 {
                 Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
                 None => None
@@ -760,9 +760,45 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                         });
                     }
                 };
-                Ok(format!("'std_vec_vec_generic',(select jsonb_agg(jsonb_build_object({acc})) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_generic')) with ordinality where ordinality between {start} AND {end})"))
+                Ok(format!(r#"
+                    'std_vec_vec_generic',
+                    case 
+                        when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_generic') = 'array' then
+                            jsonb_build_object(
+                                'Ok',
+                                (
+                                    select jsonb_agg(
+ 									   case
+ 									   		when jsonb_typeof(value) = 'object' then 
+                                             	jsonb_build_object(
+                                                 	'Ok',
+                                        				jsonb_build_object(
+                                                            {acc}
+                                        				)
+                                                  )
+ 									   		else
+                                             	jsonb_build_object(
+                                                 	'Err',
+                                                     'todo error message'
+                                                 )
+ 									   end
+                                    ) 
+                                    from jsonb_array_elements(
+                                        (select {column_name_and_maybe_field_getter}->'std_vec_vec_generic')
+                                    ) 
+                                    with ordinality 
+                                    where ordinality between {start} and {end}
+                                )
+                            )
+                        else 
+                            jsonb_build_object(
+                                'Err',
+                                'todo error message'
+                            )
+                    end
+                "#))
 
-//select 
+// select 
 //    case 
 //        when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
 //            jsonb_build_object(
@@ -775,21 +811,32 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
 //                                'Ok',
 //                                (
 //                                    select jsonb_agg(
-//                                        jsonb_build_object(
-//                                            'std_string_string',
-//                                            case 
-//                                                when jsonb_typeof(value->'std_string_string') = 'string' then 
-//                                                    jsonb_build_object(
-//                                                        'Ok',
-//                                                        value->'std_string_string'
-//                                                    ) 
-//                                                else 
-//                                                    jsonb_build_object(
-//                                                        'Err',
-//                                                        'todo error message'
-//                                                    )
-//                                            end
-//                                        )
+// 									   case
+// 									   		when jsonb_typeof(value) = 'object' then 
+//                                             	jsonb_build_object(
+//                                                 	'Ok',
+//                                        				jsonb_build_object(
+//                                            				'std_string_string',
+//                                            				case 
+//                                                				when jsonb_typeof(value->'std_string_string') = 'string' then 
+//                                                    				jsonb_build_object(
+//                                                        				'Ok',
+//                                                        				value->'std_string_string'
+//                                                    				) 
+//                                                				else 
+//                                                    				jsonb_build_object(
+//                                                        				'Err',
+//                                                        				'todo error message'
+//                                                    				)
+//                                            				end
+//                                        				)
+//                                                  )
+// 									   		else
+//                                             	jsonb_build_object(
+//                                                 	'Err',
+//                                                     'todo error message'
+//                                                 )
+// 									   end
 //                                    ) 
 //                                    from jsonb_array_elements(
 //                                        (select sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic')
@@ -812,9 +859,9 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
 //                'todo error message'
 //            ) 
 //    end
-//as sqlx_types_json_t_as_postgresql_json_b_not_null 
-//from jsongeneric 
-//where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
+// as sqlx_types_json_t_as_postgresql_json_b_not_null 
+// from jsongeneric 
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
 
             },
             Self::StdOptionOptionStdVecVecGeneric {
@@ -970,7 +1017,7 @@ pub struct SomethingOptions {
     std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<StdVecVecStdPrimitiveBool, std::string::String>>,
     generic: std::option::Option<Generic<std::result::Result<DoggieOptions,std::string::String>>>,
     std_option_option_generic: std::option::Option<std::result::Result<StdOptionOptionGeneric<DoggieOptions>,std::string::String>>,
-    std_vec_vec_generic: std::option::Option<StdVecVecGeneric<DoggieOptions>>,
+    std_vec_vec_generic: std::option::Option<std::result::Result<StdVecVecGeneric<std::result::Result<DoggieOptions,std::string::String>>,std::string::String>>,
     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
