@@ -114,30 +114,30 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         {
             "sqlx_types_json_t_as_postgresql_json_b_not_null":{
                 "filter": [
-                    "std_string_string",
-                    {
-                        "std_vec_vec_std_primitive_bool": {
-                            "offset": 0,
-                            "limit": 3
-                        }
-                    }, 
-                    {
-                        "generic": ["std_string_string"]
-                    }
-                    ,
-                    {
-                        "std_option_option_generic": ["std_string_string"]
-                    }
-                    # ,
+                    # "std_string_string",
                     # {
-                    #     "std_vec_vec_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
+                    #     "std_vec_vec_std_primitive_bool": {
                     #         "offset": 0,
                     #         "limit": 3
                     #     }
+                    # }, 
+                    # {
+                    #     "generic": ["std_string_string"]
                     # }
+                    # ,
+                    # {
+                    #     "std_option_option_generic": ["std_string_string"]
+                    # }
+                    # ,
+                    {
+                        "std_vec_vec_generic": {
+                            "field_vec": [
+                                "std_string_string"
+                            ],
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }
                     # ,
                     # {
                     #     "std_option_option_std_vec_vec_generic": {

@@ -761,6 +761,61 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                     }
                 };
                 Ok(format!("'std_vec_vec_generic',(select jsonb_agg(jsonb_build_object({acc})) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_generic')) with ordinality where ordinality between {start} AND {end})"))
+
+//select 
+//    case 
+//        when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
+//            jsonb_build_object(
+//                'Ok',
+//                jsonb_build_object(
+//                    'std_vec_vec_generic',
+//                    case 
+//                        when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic') = 'array' then
+//                            jsonb_build_object(
+//                                'Ok',
+//                                (
+//                                    select jsonb_agg(
+//                                        jsonb_build_object(
+//                                            'std_string_string',
+//                                            case 
+//                                                when jsonb_typeof(value->'std_string_string') = 'string' then 
+//                                                    jsonb_build_object(
+//                                                        'Ok',
+//                                                        value->'std_string_string'
+//                                                    ) 
+//                                                else 
+//                                                    jsonb_build_object(
+//                                                        'Err',
+//                                                        'todo error message'
+//                                                    )
+//                                            end
+//                                        )
+//                                    ) 
+//                                    from jsonb_array_elements(
+//                                        (select sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic')
+//                                    ) 
+//                                    with ordinality 
+//                                    where ordinality between 0 AND 3
+//                                )
+//                            )
+//                        else 
+//                            jsonb_build_object(
+//                                'Err',
+//                                'todo error message'
+//                            )
+//                    end
+//                )
+//            )
+//        else 
+//            jsonb_build_object(
+//                'Err',
+//                'todo error message'
+//            ) 
+//    end
+//as sqlx_types_json_t_as_postgresql_json_b_not_null 
+//from jsongeneric 
+//where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
+
             },
             Self::StdOptionOptionStdVecVecGeneric {
                 field_vec,
