@@ -603,8 +603,8 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
 // from jsongeneric 
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             },
-            Self::Generic(filter) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                filter,
+            Self::Generic(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                fields_vec,
                 &format!("{column_name_and_maybe_field_getter}->'generic'"),
                 false
             ) {
@@ -662,8 +662,8 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
         // from jsongeneric 
         // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
 
-            Self::StdOptionOptionGeneric(filter) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                filter,
+            Self::StdOptionOptionGeneric(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                fields_vec,
                 &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"),
                 true
             ) {
