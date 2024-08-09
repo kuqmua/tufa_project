@@ -593,7 +593,11 @@ DynArcCombinationOfAppStateLogicTraits, >,
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
                 JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => format!(
                     "{} as sqlx_types_json_t_as_postgresql_json_b_not_null",//todo should support arrays or "key: array" is enough? 
-                    postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(filter, "sqlx_types_json_t_as_postgresql_json_b_not_null").unwrap()//todo return error
+                    postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                        filter, 
+                        "sqlx_types_json_t_as_postgresql_json_b_not_null",
+                        false
+                    ).unwrap()//todo return error
                 )
             }); 
             acc.push_str(","); 
