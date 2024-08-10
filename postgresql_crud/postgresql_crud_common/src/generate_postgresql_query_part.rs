@@ -224,7 +224,7 @@ impl std::convert::From<Something> for SomethingOptions {
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
                 Some(value) => DoggieOptions {
-                    std_string_string: Some(value.std_string_string.0),
+                    std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
                 },
                 None => DoggieOptions {
                     std_string_string: None,
@@ -1266,7 +1266,7 @@ pub struct Doggie {
 impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
         Self {
-            std_string_string: Some(value.std_string_string.0)
+            std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 })
         }
     }
 }
@@ -1372,7 +1372,7 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartFromSelfVecErr
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct DoggieOptions {
-    std_string_string: std::option::Option<std::string::String>,
+    std_string_string: std::option::Option<crate::value::Value<std::string::String>>,
     // std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
 }
 
@@ -1495,7 +1495,7 @@ impl<'de> serde::Deserialize<'de> for DoggieOptions {
                 serde::__private::Ok(DoggieOptions {
                     std_string_string: match __field0 {
                         Some(value) => match value {
-                            Ok(value) => Some(value),
+                            Ok(value) => Some(crate::value::Value { value }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
                             }
@@ -1556,7 +1556,7 @@ impl<'de> serde::Deserialize<'de> for DoggieOptions {
                 serde::__private::Ok(DoggieOptions {
                     std_string_string: match __field0 {
                         Some(value) => match value {
-                            Ok(value) => Some(value),
+                            Ok(value) => Some(crate::value::Value { value }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
                             }
@@ -1579,11 +1579,6 @@ impl<'de> serde::Deserialize<'de> for DoggieOptions {
         )
     }
 }
-
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-// pub struct DoggieOptions {
-//     std_string_string: std::option::Option<std::string::String>,
-// }
 
 
 
