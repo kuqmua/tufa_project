@@ -283,11 +283,6 @@ impl std::convert::From<Something> for SomethingOptions {
         }
     }
 }
-impl error_occurence_lib::ToStdStringString for SomethingField {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
     FieldsFilterIsEmpty {

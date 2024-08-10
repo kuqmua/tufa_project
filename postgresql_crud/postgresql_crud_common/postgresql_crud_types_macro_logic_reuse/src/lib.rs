@@ -1009,11 +1009,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream = {
         quote::quote!{
-            // impl error_occurence_lib::ToStdStringString for #ident_field_upper_camel_case {
-            //     fn to_std_string_string(&self) -> std::string::String {
-            //         format!("{self:?}")
-            //     }
-            // }
+            impl error_occurence_lib::ToStdStringString for #ident_field_upper_camel_case {
+                fn to_std_string_string(&self) -> std::string::String {
+                    format!("{self:?}")
+                }
+            }
         }
     };
     let pub_enum_field_generate_postgresql_query_part_error_named_token_stream = {
