@@ -1018,18 +1018,63 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let pub_enum_field_generate_postgresql_query_part_error_named_token_stream = {
         quote::quote!{
-            // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-            // pub enum CatGeneratePostgresqlQueryPartErrorNamed {
-            //     OffsetPlusLimitIsIntOverflow {
-            //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-            //     },
-            //     FieldsFilterIsEmpty {
-            //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-            //     },
-            //     NotUniqueFieldFilter {
-            //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-            //     }
-            // }
+            //
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
+//     FieldsFilterIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueFieldFilter {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: SomethingField,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     GeneratePostgresqlQueryPart {
+//         #[eo_error_occurence]
+//         error: SomethingGeneratePostgresqlQueryPartErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
+//     OffsetPlusLimitIsIntOverflow {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         limit: std::primitive::u64,
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         offset: std::primitive::u64,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     FieldsFilterIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueStdOptionOptionGenericFieldFilter {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: DoggieField,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     DoggieGeneratePostgresqlQueryPartFromSelfVec {
+//         #[eo_error_occurence]
+//         field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+
+// #[derive(Debug, Clone, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// pub enum DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
+//     FieldsFilterIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueFieldFilter {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: DoggieField,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     GeneratePostgresqlQueryPart {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+            //
         }
     };
     let impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream = {

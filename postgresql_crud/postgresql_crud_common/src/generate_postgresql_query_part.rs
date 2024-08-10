@@ -242,8 +242,6 @@ impl std::convert::From<Something> for SomethingOptions {
                     None => None
                 }
             }),
-
-
             // std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
             // std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(
             //     value.std_vec_vec_std_primitive_bool.0.into_iter().map(|element|
@@ -388,60 +386,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
     }
     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
         match self {
-            //
-            // select jsonb_build_object('std_string_string',sqlx_types_json_t_as_postgresql_json_b_not_null->'std_string_string') as sqlx_types_json_t_as_postgresql_json_b_not_null from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1
-
-            // SELECT
-            // CASE 
-            // WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object'
-            //        THEN
-            //         CASE 
-            //             WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_string_string') = 'string' THEN
-            //                 jsonb_build_object(
-            //                     'std_string_string',
-            //                     jsonb_build_object(
-            //                         'value',
-            //                         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_string_string'
-            //                     )
-            //                 )
-            //             ELSE 
-            //                 jsonb_build_object(
-            //                     'std_string_string', 
-            //                     NULL
-            //                 )
-            //         END
-            //     ELSE 
-            //         NULL
-            // END
-            
-            //  as sqlx_types_json_t_as_postgresql_json_b_not_null
-            // FROM jsongeneric
-            // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
-
-
-
-        // SELECT
-        //     CASE 
-        //         WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' THEN
-        //             jsonb_build_object(
-        //                 'std_string_string',
-        //                 CASE 
-        //                     WHEN jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_string_string') = 'string' THEN
-        //                          jsonb_build_object(
-        //                                 'value',
-        //                             sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_string_string'
-        //                          )
-        //                     ELSE 
-        //                            NULL
-        //                     END
-        //                 )
-        //         ELSE 
-        //             NULL
-        //     END
-        // as sqlx_types_json_t_as_postgresql_json_b_not_null
-        // FROM jsongeneric
-        // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14;
-            //
             Self::StdStringString => Ok(format!(r#"
                 'std_string_string',
                 case 
@@ -454,27 +398,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                         jsonb_build_object('Err','todo this must be error message')
                 end 
             "#)),
-        //     select 
-        //     jsonb_build_object(
-        //             'std_string_string',
-        //             case 
-        //                 when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_string_string') = 'string' then 
-        //                     jsonb_build_object(
-        //                         'value',
-        //                         sqlx_types_json_t_as_postgresql_json_b_not_null->'std_string_string'
-        //                     ) 
-        //                 else 
-        //                     jsonb_build_object(
-        //                         'error',
-        //                         'sdfsdfsdfsdfsdfsdfs'
-        //                     ) 
-        //             end
-        //         ) 
-        // as sqlx_types_json_t_as_postgresql_json_b_not_null 
-        // from jsongeneric 
-        // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
-
-
             Self::StdVecVecStdPrimitiveBool {
                 limit,
                 offset
@@ -490,37 +413,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                         });
                     }
                 };
-                //todo maybe check all types are boolean
-
-// WITH elements AS (
-//     SELECT 
-//         id,
-//         jsonb_array_elements(my_jsonb_col) AS element
-//     FROM my_table
-// ),
-// types AS (
-//     SELECT
-//         id,
-//         jsonb_typeof(element) AS type
-//     FROM elements
-// ),
-// checks AS (
-//     SELECT
-//         id,
-//         bool_and(type = 'boolean') AS all_are_boolean
-//     FROM types
-//     GROUP BY id
-// )
-// SELECT jsonb_agg(
-//     CASE
-//         WHEN all_are_boolean THEN
-//             jsonb_build_object('Ok', TRUE)
-//         ELSE
-//             jsonb_build_object('Error', 'Array contains non-boolean elements')
-//     END
-// ) AS result
-// FROM checks;
-
                 Ok(format!(r#"
                     'std_vec_vec_std_primitive_bool',
                     case 
@@ -556,32 +448,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                             ) 
                     end
                 "#))
-// select 
-// jsonb_build_object(
-// 	'std_vec_vec_std_primitive_bool',
-// 	case 
-// 		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_std_primitive_bool') = 'array' then
-// 			jsonb_build_object(
-// 				'Ok',
-// 				(
-// 					select jsonb_agg(value) 
-// 					from jsonb_array_elements(
-// 						(select sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_std_primitive_bool')
-// 					) 
-// 					with ordinality where ordinality between 0 and 5
-// 				)
-// 			)
-// 		else 
-// 			jsonb_build_object(
-// 				'Err',
-// 				'todo this must be error message'
-// 			)
-		
-// 	end
-// )
-// as sqlx_types_json_t_as_postgresql_json_b_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             },
             Self::Generic(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                 fields_vec,
@@ -596,52 +462,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                     });
                 }
             },
-
-        // select 
-        //     case 
-        //     when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
-        //         jsonb_build_object(
-        //             'Ok',
-        //             jsonb_build_object(
-        //                 'generic',
-        //                 case
-        //                      when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'generic') = 'object' then 
-        //                         jsonb_build_object(
-        //                             'Ok',
-        //                             jsonb_build_object(
-        //                                 'std_string_string',
-        //                                 case 
-        //                                     when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'generic'->'std_string_string') = 'string' then 
-        //                                         jsonb_build_object(
-        //                                             'Ok',
-        //                                             sqlx_types_json_t_as_postgresql_json_b_not_null->'generic'->'std_string_string'
-        //                                         )
-        //                                     else 
-        //                                         jsonb_build_object(
-        //                                             'Err',
-        //                                             'todo error message'
-        //                                         )
-        //                                 end
-        //                             )
-        //                         )
-        //                     else 
-        //                         jsonb_build_object(
-        //                             'Err',
-        //                             'todo error message'
-        //                         )
-        //                 end
-        //             )
-        //         ) 
-        //     else 
-        //         jsonb_build_object(
-        //             'Err',
-        //             'todo error message'
-        //         ) 
-        // end  
-        // as sqlx_types_json_t_as_postgresql_json_b_not_null 
-        // from jsongeneric 
-        // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
-
             Self::StdOptionOptionGeneric(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                 fields_vec,
                 &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"),
@@ -655,50 +475,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                     });
                 }
             },
-
-// select 
-// 	case 
-// 		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
-// 			jsonb_build_object(
-// 				'Ok',
-// 				jsonb_build_object(
-// 					'std_option_option_generic',
-// 					case
-// 						when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'object' then
-// 							case
-// 								when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'std_string_string') = 'string' then
-// 									jsonb_build_object(
-// 										'Ok',
-// 										sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'std_string_string'
-// 									)
-// 								else 
-// 									jsonb_build_object(
-// 										'Err',
-// 										'todo error message'
-// 									)				
-// 							end
-// 						when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' then
-// 							jsonb_build_object(
-// 								'Ok',
-// 								null
-// 							)
-// 						else 
-// 							jsonb_build_object(
-// 								'Err',
-// 								'todo error message'
-// 							)
-// 					end
-// 				)
-// 			) 
-// 		else 
-// 			jsonb_build_object(
-// 				'Err',
-// 				'todo error message'
-// 			) 
-// 	end  
-// as sqlx_types_json_t_as_postgresql_json_b_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             Self::StdVecVecGeneric {
                 field_vec,
                 limit,
@@ -750,70 +526,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                     });
                 }
             },
-// select 
-//    case 
-//        when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
-//            jsonb_build_object(
-//                'Ok',
-//                jsonb_build_object(
-//                    'std_vec_vec_generic',
-//                    case 
-//                        when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic') = 'array' then
-//                            jsonb_build_object(
-//                                'Ok',
-//                                (
-//                                    select jsonb_agg(
-// 									   case
-// 									   		when jsonb_typeof(value) = 'object' then 
-//                                             	jsonb_build_object(
-//                                                 	'Ok',
-//                                        				jsonb_build_object(
-//                                            				'std_string_string',
-//                                            				case 
-//                                                				when jsonb_typeof(value->'std_string_string') = 'string' then 
-//                                                    				jsonb_build_object(
-//                                                        				'Ok',
-//                                                        				value->'std_string_string'
-//                                                    				) 
-//                                                				else 
-//                                                    				jsonb_build_object(
-//                                                        				'Err',
-//                                                        				'todo error message'
-//                                                    				)
-//                                            				end
-//                                        				)
-//                                                  )
-// 									   		else
-//                                             	jsonb_build_object(
-//                                                 	'Err',
-//                                                     'todo error message'
-//                                                 )
-// 									   end
-//                                    ) 
-//                                    from jsonb_array_elements(
-//                                        (select sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic')
-//                                    ) 
-//                                    with ordinality 
-//                                    where ordinality between 0 AND 3
-//                                )
-//                            )
-//                        else 
-//                            jsonb_build_object(
-//                                'Err',
-//                                'todo error message'
-//                            )
-//                    end
-//                )
-//            )
-//        else 
-//            jsonb_build_object(
-//                'Err',
-//                'todo error message'
-//            ) 
-//    end
-// as sqlx_types_json_t_as_postgresql_json_b_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
             Self::StdOptionOptionStdVecVecGeneric {
                 field_vec,
                 limit,
@@ -919,75 +631,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                     });
                 }
             },
-
-// select 
-// 	case 
-// 		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
-//              jsonb_build_object(
-//              	'Ok',
-//                 jsonb_build_object(
-// 					'std_vec_vec_std_option_option_generic',
-// 					case 
-// 						when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_std_option_option_generic') = 'array' then 
-// 							jsonb_build_object(
-// 								'Ok',
-// 								(
-// 									select jsonb_agg(
-// 										case 
-// 											when jsonb_typeof(value) = 'object' then
-// 												jsonb_build_object(
-// 													'Ok',
-// 													jsonb_build_object(
-// 														'std_string_string',
-// 														case 
-// 															when jsonb_typeof(value->'std_string_string') = 'string' then 
-// 																jsonb_build_object(
-// 																	'Ok',
-// 																	value->'std_string_string'
-// 																) 
-// 															else 
-// 																jsonb_build_object(
-// 																	'Err',
-// 																	'todo error message'
-// 																) 
-// 														end
-// 													)	
-// 												)
-// 											when jsonb_typeof(value) = 'null' then
-// 												jsonb_build_object(
-// 													'Ok',
-// 													null
-// 												) 
-// 											else 
-// 												jsonb_build_object(
-// 													'Err',
-// 													'todo error message'
-// 												)
-// 										end
-// 									) 
-// 									from jsonb_array_elements((select sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_std_option_option_generic')) 
-// 									with ordinality 
-// 									where ordinality between 0 and 3
-// 								)
-// 							)
-// 						else 
-// 							jsonb_build_object(
-// 								'Err',
-// 								'todo error message'
-// 							) 
-// 					end
-// 				)
-//             )
-//         else 
-//         	jsonb_build_object(
-//             	'Err',
-//                 'todo error message'
-//             ) 
-// end
-// as sqlx_types_json_t_as_postgresql_json_b_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
-
             Self::StdOptionOptionStdVecVecStdOptionOptionGeneric {
                 field_vec,
                 limit,
@@ -1042,78 +685,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                     });
                 }
             },
-// select 
-// 	case 
-// 		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null) = 'object' then 
-//              jsonb_build_object(
-//              	'Ok',
-//                 jsonb_build_object(
-// 					'std_option_option_std_vec_vec_std_option_option_generic',
-// 					case 
-// 						when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_std_vec_vec_std_option_option_generic') = 'array' then 
-// 							jsonb_build_object(
-// 								'Ok',
-// 								(
-// 									select jsonb_agg(
-// 										case 
-// 											when jsonb_typeof(value) = 'object' then
-// 												jsonb_build_object(
-// 													'Ok',
-// 													jsonb_build_object(
-// 														'std_string_string',
-// 														case 
-// 															when jsonb_typeof(value->'std_string_string') = 'string' then 
-// 																jsonb_build_object(
-// 																	'Ok',
-// 																	value->'std_string_string'
-// 																) 
-// 															else 
-// 																jsonb_build_object(
-// 																	'Err',
-// 																	'todo error message'
-// 																) 
-// 														end
-// 													)	
-// 												)
-// 											when jsonb_typeof(value) = 'null' then
-// 												jsonb_build_object(
-// 													'Ok',
-// 													null
-// 												) 
-// 											else 
-// 												jsonb_build_object(
-// 													'Err',
-// 													'todo error message'
-// 												)
-// 										end
-// 									) 
-// 									from jsonb_array_elements((select sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_std_vec_vec_std_option_option_generic')) 
-// 									with ordinality 
-// 									where ordinality between 0 and 3
-// 								)
-// 							)
-// 						when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_std_vec_vec_std_option_option_generic') = 'null' then
-// 							jsonb_build_object(
-// 								'Ok',
-// 								null
-// 							)
-// 						else 
-// 							jsonb_build_object(
-// 								'Err',
-// 								'todo error message'
-// 							) 
-// 					end
-// 				)
-//             )
-//         else 
-//         	jsonb_build_object(
-//             	'Err',
-//                 'todo error message'
-//             ) 
-// end
-// as sqlx_types_json_t_as_postgresql_json_b_not_null 
-// from jsongeneric 
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
         }
     }
 }
@@ -2216,81 +1787,6 @@ impl<'de> serde::Deserialize<'de> for SomethingWrapper {
         )
     }
 }
-
-// #[test]
-// fn test() {
-//     // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] 
-//     // struct VValue<T> {
-//     //     value: T,
-//     // }
-//     #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-//     struct DOptions {
-//         std_string_string: std::option::Option<crate::Value<StdStringString>>,
-//     }
-//     // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-//     // struct SStdOptionOptionGeneric<T>(std::option::Option<T>);
-//     #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-//     struct SOptions {
-//         std_option_option_generic: std::option::Option<crate::Value<std::option::Option<DOptions>>>,//todo value between two options
-//     }
-
-//     // let h = SOptions {
-//     //     std_option_option_generic: Some(crate::Value {
-//     //         value: Some(DOptions {
-//     //             std_string_string: Some(crate::Value {
-//     //                 value: StdStringString(std::string::String::from(""))
-//     //             }),
-//     //         }),
-//     //     }),//todo value between two options
-//     // };
-//     // println!("*****{h:#?}");
-//     // let u = serde_json::to_string(&h).unwrap();
-//     // println!("$$$${u:#?}");
-//     // {
-//     //     "std_option_option_generic": {
-//     //         "value": {
-//     //             "std_string_string": {
-//     //                 "value": ""
-//     //             }
-//     //         }
-//     //     }
-//     // }
-//     let h = SOptions {
-//         std_option_option_generic: Some(crate::Value {
-//             value: Some(DOptions {
-//                 std_string_string: Some(crate::Value {
-//                     value: StdStringString(std::string::String::from(""))
-//                 }),
-//             }),
-//         }),//todo value between two options
-//     };
-//     println!("*****{h:#?}");
-//     let u = serde_json::to_string(&h).unwrap();
-//     println!("$$$${u:#?}");
-//     let f = r#"
-//         {
-//             "std_option_option_generic": {
-//                 "value": {
-//                     "std_string_string": {
-//                         "value": null
-//                     }
-//                 }
-//             }
-//         }
-//     "#;
-//     let g: SomethingOptions = serde_json::from_str(f).unwrap();
-//     println!("{g:#?}");
-//     // let mut s = SomethingOptions {
-//     //     std_string_string: None,
-//     //     std_vec_vec_std_primitive_bool: None,
-//     //     generic: None,
-//     //     std_option_option_generic: None,//todo value between two options
-//     //     std_vec_vec_generic: None,
-//     //     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
-//     //     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
-//     //     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
-//     // };
-// }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
