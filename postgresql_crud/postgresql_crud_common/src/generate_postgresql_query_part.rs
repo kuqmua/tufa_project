@@ -219,7 +219,11 @@ impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
             std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
-            std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(value.std_vec_vec_std_primitive_bool.0)),
+            std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(
+                value.std_vec_vec_std_primitive_bool.0.into_iter().map(|element|
+                    std::result::Result::Ok(element)
+                ).collect::<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>>()
+            )),
             generic: Some(std::result::Result::Ok(DoggieOptions::from(value.generic.0))),
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
@@ -565,7 +569,20 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
                             jsonb_build_object(
                                 'Ok',
                                 (
-                                    select jsonb_agg(value) 
+                                    select jsonb_agg(
+                                        case 
+                                            when jsonb_typeof(value) = 'boolean' then 
+                                                jsonb_build_object(
+                                                  'Ok', 
+                                                  value
+                                                ) 
+                                          else 
+                                            jsonb_build_object(
+                                                'Err', 
+                                                'todo error message'
+                                            ) 
+                                        end
+                                    ) 
                                     from jsonb_array_elements(
                                         (select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')
                                     )
@@ -1157,7 +1174,7 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct SomethingOptions {
     std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
-    std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<std::vec::Vec<std::primitive::bool>, std::string::String>>,
+    std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>, std::string::String>>,
     generic: std::option::Option<std::result::Result<DoggieOptions,std::string::String>>,
     std_option_option_generic: std::option::Option<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,
     std_vec_vec_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>,std::string::String>>,
