@@ -1116,6 +1116,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let impl_std_fmt_display_for_ident_token_stream = {
+        quote::quote!{
+            impl std::fmt::Display for #ident {
+                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    write!(formatter, "{:?}", &self)
+                }
+            }
+        }
+    };
     let pub_enum_ident_field_token_stream = {
         let variants_token_stream = vec_syn_field.iter().map(|element|{
             let field_ident_stringified = element.ident.as_ref().unwrap_or_else(|| {
@@ -1282,11 +1291,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let gen = quote::quote!{
-        // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-        // pub struct Cat {
-        //     pub meow: StdStringString,
-        //     pub one: StdStringString,
-        // }
+        #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
         #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
