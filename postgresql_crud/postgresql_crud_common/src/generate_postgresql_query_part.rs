@@ -283,68 +283,6 @@ impl std::convert::From<Something> for SomethingOptions {
         }
     }
 }
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-// pub enum SomethingField {
-//     #[serde(rename(
-//         serialize = "std_string_string",
-//         deserialize = "std_string_string"
-//     ))]
-//     StdStringString,
-//     #[serde(rename(
-//         serialize = "std_vec_vec_std_primitive_bool",
-//         deserialize = "std_vec_vec_std_primitive_bool"
-//     ))]
-//     StdVecVecStdPrimitiveBool {
-//         limit: std::primitive::u64,
-//         offset: std::primitive::u64,
-//     },
-//     #[serde(rename(
-//         serialize = "generic",
-//         deserialize = "generic"
-//     ))]
-//     Generic(std::vec::Vec<DoggieField>),
-//     #[serde(rename(
-//         serialize = "std_option_option_generic",
-//         deserialize = "std_option_option_generic"
-//     ))]
-//     StdOptionOptionGeneric(std::vec::Vec<DoggieField>),
-//     #[serde(rename(
-//         serialize = "std_vec_vec_generic",
-//         deserialize = "std_vec_vec_generic"
-//     ))]
-//     StdVecVecGeneric {
-//         field_vec: std::vec::Vec<DoggieField>,
-//         limit: std::primitive::u64,
-//         offset: std::primitive::u64,
-//     },
-//     #[serde(rename(
-//         serialize = "std_option_option_std_vec_vec_generic",
-//         deserialize = "std_option_option_std_vec_vec_generic"
-//     ))]
-//     StdOptionOptionStdVecVecGeneric {
-//         field_vec: std::vec::Vec<DoggieField>,
-//         limit: std::primitive::u64,
-//         offset: std::primitive::u64,
-//     },
-//     #[serde(rename(
-//         serialize = "std_vec_vec_std_option_option_generic",
-//         deserialize = "std_vec_vec_std_option_option_generic"
-//     ))]
-//     StdVecVecStdOptionOptionGeneric {
-//         field_vec: std::vec::Vec<DoggieField>,
-//         limit: std::primitive::u64,
-//         offset: std::primitive::u64,
-//     },
-//     #[serde(rename(
-//         serialize = "std_option_option_std_vec_vec_std_option_option_generic",
-//         deserialize = "std_option_option_std_vec_vec_std_option_option_generic"
-//     ))]
-//     StdOptionOptionStdVecVecStdOptionOptionGeneric {
-//         field_vec: std::vec::Vec<DoggieField>,
-//         limit: std::primitive::u64,
-//         offset: std::primitive::u64,
-//     },
-// }
 impl error_occurence_lib::ToStdStringString for SomethingField {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
