@@ -1198,6 +1198,128 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_struct_ident_options_token_stream = {
+        let fields_token_stream = vec_syn_field.iter().map(|element|{
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
+            {
+                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
+                SupportedPredefinedType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
+                SupportedPredefinedType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
+                SupportedPredefinedType::StdPrimitiveI128 => quote::quote!{std::primitive::i128},
+                SupportedPredefinedType::StdPrimitiveU8 => quote::quote!{std::primitive::u8},
+                SupportedPredefinedType::StdPrimitiveU16 => quote::quote!{std::primitive::u16},
+                SupportedPredefinedType::StdPrimitiveU32 => quote::quote!{std::primitive::u32},
+                SupportedPredefinedType::StdPrimitiveU64 => quote::quote!{std::primitive::u64},
+                SupportedPredefinedType::StdPrimitiveU128 => quote::quote!{std::primitive::u128},
+                SupportedPredefinedType::StdPrimitiveF32 => quote::quote!{std::primitive::f32},
+                SupportedPredefinedType::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
+                SupportedPredefinedType::StdPrimitiveBool => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdStringString => quote::quote!{std::string::String},
+
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::primitive::i8>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::primitive::i16>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::primitive::i32>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::primitive::i64>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::primitive::i128>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::primitive::u8>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::primitive::u16>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::primitive::u32>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::primitive::u64>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::primitive::u128>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::primitive::f32>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::primitive::f64>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::primitive::bool>},
+                SupportedPredefinedType::StdOptionOptionStdStringString => quote::quote!{std::option::Option<std::string::String>},
+
+                SupportedPredefinedType::StdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::primitive::i8>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::primitive::i16>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::primitive::i32>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::primitive::i64>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI128 => quote::quote!{std::vec::Vec<std::primitive::i128>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::primitive::u8>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::primitive::u16>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::primitive::u32>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::primitive::u64>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU128 => quote::quote!{std::vec::Vec<std::primitive::u128>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::primitive::f32>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::primitive::f64>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveBool => quote::quote!{std::vec::Vec<std::primitive::bool>},
+                SupportedPredefinedType::StdVecVecStdStringString => quote::quote!{std::vec::Vec<std::string::String>},
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i8>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i16>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i32>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i64>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i128>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u8>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u16>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u32>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u64>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u128>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f32>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f64>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::bool>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::string::String>>},
+
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i8>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i16>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i32>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i64>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i128>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u8>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u16>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u32>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u64>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u128>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f32>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f64>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::bool>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString => quote::quote!{std::vec::Vec<std::option::Option<std::string::String>>},
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i128>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u128>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>},
+
+                SupportedPredefinedType::Generic(generic_ident_field_upper_camel_case_token_stream) => {
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdOptionOptionGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdVecVecGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                    quote::quote!{}
+                }
+            };
+            quote::quote!{
+                #element_ident: std::option::Option<crate::value::Value<#type_token_stream>>
+            }
+        });
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait//serde::Deserialize,
             pub struct #ident_options_upper_camel_case_token_stream {
