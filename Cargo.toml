@@ -88,7 +88,6 @@ async_fn_in_trait = { level = "deny", priority = 0 } #use of `async fn` in defin
 bad_asm_style = { level = "deny", priority = 0 } #incorrect use of inline assembly
 bare_trait_objects = { level = "deny", priority = 0 } #suggest using `dyn Trait` for trait objects
 break_with_label_and_loop = { level = "deny", priority = 0 } #`break` expression with label and unlabeled loop as value expression
-byte_slice_in_packed_struct_with_derive = { level = "deny", priority = 0 } #`[u8]` or `str` used in a packed struct with `derive`
 clashing_extern_declarations = { level = "deny", priority = 0 } #detects when an extern fn has been declared with the same name but different types
 coherence_leak_check = { level = "deny", priority = 0 } #distinct impls distinguished only by the leak_check code
 confusable_idents = { level = "deny", priority = 0 } #detects visually confusable pairs between identifiers

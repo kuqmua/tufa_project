@@ -816,8 +816,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // println!("{vec_syn_field:#?}");
     let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
     //todo reuse Field concat
-    let ident_field_upper_camel_case = {
+    let ident_field_upper_camel_case_token_stream = {
         let value = format!("{ident}{field_upper_camel_case}");
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let options_upper_camel_case = naming_conventions::OptionsUpperCamelCase;
+    let ident_options_upper_camel_case_token_stream = {
+        let value = format!("{ident}{options_upper_camel_case}");
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -1002,14 +1008,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         });
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-            pub enum #ident_field_upper_camel_case {
+            pub enum #ident_field_upper_camel_case_token_stream {
                 #(#variants_token_stream),*
             }
         }
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream = {
         quote::quote!{
-            impl error_occurence_lib::ToStdStringString for #ident_field_upper_camel_case {
+            impl error_occurence_lib::ToStdStringString for #ident_field_upper_camel_case_token_stream {
                 fn to_std_string_string(&self) -> std::string::String {
                     format!("{self:?}")
                 }
@@ -1036,7 +1042,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     NotUniqueFieldFilter {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        field: #ident_field_upper_camel_case,
+                        field: #ident_field_upper_camel_case_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     GeneratePostgresqlQueryPart {
@@ -1048,6 +1054,106 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let ident_generate_postgresql_query_part_error_named_token_stream = {
+            //
+            // let f = match element {
+            //     StdPrimitiveI8, 
+            //     StdPrimitiveI16, 
+            //     StdPrimitiveI32, 
+            //     StdPrimitiveI64, 
+            //     StdPrimitiveI128,
+            //     StdPrimitiveU8, 
+            //     StdPrimitiveU16, 
+            //     StdPrimitiveU32, 
+            //     StdPrimitiveU64, 
+            //     StdPrimitiveU128, 
+            //     StdPrimitiveF32, 
+            //     StdPrimitiveF64, 
+            //     StdPrimitiveBool, 
+            //     StdStringString,            
+
+            //     StdOptionOptionStdPrimitiveI8, 
+            //     StdOptionOptionStdPrimitiveI16, 
+            //     StdOptionOptionStdPrimitiveI32, 
+            //     StdOptionOptionStdPrimitiveI64, 
+            //     StdOptionOptionStdPrimitiveI128, 
+            //     StdOptionOptionStdPrimitiveU8, 
+            //     StdOptionOptionStdPrimitiveU16, 
+            //     StdOptionOptionStdPrimitiveU32, 
+            //     StdOptionOptionStdPrimitiveU64, 
+            //     StdOptionOptionStdPrimitiveU128, 
+            //     StdOptionOptionStdPrimitiveF32, 
+            //     StdOptionOptionStdPrimitiveF64, 
+            //     StdOptionOptionStdPrimitiveBool, 
+            //     StdOptionOptionStdStringString,             
+
+            //     StdVecVecStdPrimitiveI8, 
+            //     StdVecVecStdPrimitiveI16, 
+            //     StdVecVecStdPrimitiveI32, 
+            //     StdVecVecStdPrimitiveI64, 
+            //     StdVecVecStdPrimitiveI128, 
+            //     StdVecVecStdPrimitiveU8, 
+            //     StdVecVecStdPrimitiveU16, 
+            //     StdVecVecStdPrimitiveU32, 
+            //     StdVecVecStdPrimitiveU64, 
+            //     StdVecVecStdPrimitiveU128, 
+            //     StdVecVecStdPrimitiveF32, 
+            //     StdVecVecStdPrimitiveF64, 
+            //     StdVecVecStdPrimitiveBool, 
+            //     StdVecVecStdStringString,           
+
+            //     StdOptionOptionStdVecVecStdPrimitiveI8, 
+            //     StdOptionOptionStdVecVecStdPrimitiveI16, 
+            //     StdOptionOptionStdVecVecStdPrimitiveI32, 
+            //     StdOptionOptionStdVecVecStdPrimitiveI64, 
+            //     StdOptionOptionStdVecVecStdPrimitiveI128, 
+            //     StdOptionOptionStdVecVecStdPrimitiveU8, 
+            //     StdOptionOptionStdVecVecStdPrimitiveU16, 
+            //     StdOptionOptionStdVecVecStdPrimitiveU32, 
+            //     StdOptionOptionStdVecVecStdPrimitiveU64, 
+            //     StdOptionOptionStdVecVecStdPrimitiveU128, 
+            //     StdOptionOptionStdVecVecStdPrimitiveF32, 
+            //     StdOptionOptionStdVecVecStdPrimitiveF64, 
+            //     StdOptionOptionStdVecVecStdPrimitiveBool, 
+            //     StdOptionOptionStdVecVecStdStringString,            
+
+            //     StdVecVecStdOptionOptionStdPrimitiveI8, 
+            //     StdVecVecStdOptionOptionStdPrimitiveI16, 
+            //     StdVecVecStdOptionOptionStdPrimitiveI32, 
+            //     StdVecVecStdOptionOptionStdPrimitiveI64, 
+            //     StdVecVecStdOptionOptionStdPrimitiveI128, 
+            //     StdVecVecStdOptionOptionStdPrimitiveU8, 
+            //     StdVecVecStdOptionOptionStdPrimitiveU16, 
+            //     StdVecVecStdOptionOptionStdPrimitiveU32, 
+            //     StdVecVecStdOptionOptionStdPrimitiveU64, 
+            //     StdVecVecStdOptionOptionStdPrimitiveU128, 
+            //     StdVecVecStdOptionOptionStdPrimitiveF32, 
+            //     StdVecVecStdOptionOptionStdPrimitiveF64, 
+            //     StdVecVecStdOptionOptionStdPrimitiveBool, 
+            //     StdVecVecStdOptionOptionStdStringString,            
+
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool, 
+            //     StdOptionOptionStdVecVecStdOptionOptionStdStringString,             
+
+            //     Generic(proc_macro2::TokenStream), 
+            //     StdOptionOptionGeneric(proc_macro2::TokenStream), 
+            //     StdVecVecGeneric(proc_macro2::TokenStream), 
+            //     StdOptionOptionStdVecVecGeneric(proc_macro2::TokenStream), 
+            //     StdVecVecStdOptionOptionGeneric(proc_macro2::TokenStream), 
+            //     StdOptionOptionStdVecVecStdOptionOptionGeneric(proc_macro2::TokenStream), 
+            // };
+            //
             quote::quote!{
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
@@ -1063,7 +1169,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     NotUniqueStdOptionOptionGenericFieldFilter {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        field: #ident_field_upper_camel_case,
+                        field: #ident_field_upper_camel_case_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     DoggieGeneratePostgresqlQueryPartFromSelfVec {
@@ -1093,11 +1199,41 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let pub_struct_ident_options_token_stream = {
         quote::quote!{
-            // #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-            // pub struct CatOptions {
-            //     meow: std::option::Option<StdStringString>,
-            //     one: std::option::Option<StdStringString>,
-            // }
+            #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait//serde::Deserialize,
+            pub struct #ident_options_upper_camel_case_token_stream {
+                std_string_string: std::option::Option<crate::value::Value<std::string::String>>,
+                std_vec_vec_std_primitive_bool: std::option::Option<crate::value::Value<std::vec::Vec<std::primitive::bool>>>,
+                generic: std::option::Option<crate::value::Value<DoggieOptions>>,
+                std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<DoggieOptions>>>,
+                std_vec_vec_generic: std::option::Option<crate::value::Value<std::vec::Vec<DoggieOptions>>>,
+                std_option_option_std_vec_vec_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<DoggieOptions>>>>,
+                std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::vec::Vec<std::option::Option<DoggieOptions>>>>,
+                std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<std::option::Option<DoggieOptions>>>>>,          
+
+                // std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
+                // std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>, std::string::String>>,
+                // generic: std::option::Option<std::result::Result<DoggieOptions,std::string::String>>,
+                // std_option_option_generic: std::option::Option<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,
+                // std_vec_vec_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>,std::string::String>>,
+                // std_option_option_std_vec_vec_generic: std::option::Option<std::result::Result<
+                //     std::option::Option<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>,
+                //     std::string::String
+                // >>,
+                // std_vec_vec_std_option_option_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,std::string::String>>,
+                // std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<
+                //     std::result::Result<
+                //         std::option::Option<
+                //             std::vec::Vec<
+                //                 std::result::Result<
+                //                     std::option::Option<DoggieOptions>,
+                //                     std::string::String
+                //                 >
+                //             >
+                //         >,
+                //         std::string::String
+                //     >
+                // >,
+            }
         }
     };
     let impl_std_convert_from_ident_for_ident_options_token_stream = {
@@ -1118,7 +1254,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
         // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
         #impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream
-        #pub_struct_ident_options_token_stream
+        // #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
     };
     generated.into()
