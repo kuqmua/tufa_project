@@ -542,6 +542,6 @@ pub use naming_conventions::CommitSnakeCase;
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPart;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::Something;
-pub use postgresql_crud_common::generate_postgresql_query_part::SomethingPostgresResultOptions;
+pub use postgresql_crud_common::generate_postgresql_query_part::SomethingOptions;
 pub use postgresql_crud_common::generate_postgresql_query_part::SomethingField;
-pub use postgresql_crud_common::generate_postgresql_query_part::SomethingPostgresResultOptionsWrapper;
+pub use postgresql_crud_common::generate_postgresql_query_part::SomethingWrapper;

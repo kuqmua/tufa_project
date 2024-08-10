@@ -215,37 +215,37 @@ impl std::fmt::Display for Something {
         write!(formatter, "{:?}", &self)
     }
 }
-impl std::convert::From<Something> for SomethingPostgresResultOptions {
+impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
             std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
             std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(value.std_vec_vec_std_primitive_bool.0)),
-            generic: Some(std::result::Result::Ok(DoggiePostgresResultOptions::from(value.generic.0))),
+            generic: Some(std::result::Result::Ok(DoggieOptions::from(value.generic.0))),
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
-                Some(value) => DoggiePostgresResultOptions {
-                    std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
+                Some(value) => DoggieOptions {
+                    std_string_string: Some(value.std_string_string.0),
                 },
-                None => DoggiePostgresResultOptions {
+                None => DoggieOptions {
                     std_string_string: None,
                 },
             }))),
-            std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(DoggiePostgresResultOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>>())),
+            std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>())),
             std_option_option_std_vec_vec_generic: Some(std::result::Result::Ok(match value.std_option_option_std_vec_vec_generic.0 {
-                    Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(DoggiePostgresResultOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>>()),
+                    Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>()),
                     None => None
             })),
             std_vec_vec_std_option_option_generic: Some(std::result::Result::Ok(value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|std::result::Result::Ok(match element {
-                Some(value) => Some(DoggiePostgresResultOptions::from(value)),
+                Some(value) => Some(DoggieOptions::from(value)),
                 None => None
-            })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>>())),
+            })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>())),
             std_option_option_std_vec_vec_std_option_option_generic: Some(
                 std::result::Result::Ok(
                     match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
                         Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(match element {
-                            Some(value) => Some(DoggiePostgresResultOptions::from(value)),
+                            Some(value) => Some(DoggieOptions::from(value)),
                             None => None
-                        })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>>()),
+                        })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>()),
                         None => None
                     }
                 )
@@ -1155,23 +1155,23 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
 // WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1;
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-pub struct SomethingPostgresResultOptions {
+pub struct SomethingOptions {
     std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
     std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<std::vec::Vec<std::primitive::bool>, std::string::String>>,
-    generic: std::option::Option<std::result::Result<DoggiePostgresResultOptions,std::string::String>>,
-    std_option_option_generic: std::option::Option<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>,
-    std_vec_vec_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>,std::string::String>>,
+    generic: std::option::Option<std::result::Result<DoggieOptions,std::string::String>>,
+    std_option_option_generic: std::option::Option<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,
+    std_vec_vec_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>,std::string::String>>,
     std_option_option_std_vec_vec_generic: std::option::Option<std::result::Result<
-        std::option::Option<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>>,
+        std::option::Option<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>,
         std::string::String
     >>,
-    std_vec_vec_std_option_option_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>,std::string::String>>,
+    std_vec_vec_std_option_option_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,std::string::String>>,
     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<
         std::result::Result<
             std::option::Option<
                 std::vec::Vec<
                     std::result::Result<
-                        std::option::Option<DoggiePostgresResultOptions>,
+                        std::option::Option<DoggieOptions>,
                         std::string::String
                     >
                 >
@@ -1182,7 +1182,7 @@ pub struct SomethingPostgresResultOptions {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-pub struct SomethingPostgresResultOptionsWrapper(pub Result<SomethingPostgresResultOptions,std::string::String>);
+pub struct SomethingWrapper(pub Result<SomethingOptions,std::string::String>);
 
 // #[test]
 // fn test() {
@@ -1253,9 +1253,9 @@ pub struct SomethingPostgresResultOptionsWrapper(pub Result<SomethingPostgresRes
 //     //     generic: None,
 //     //     std_option_option_generic: None,//todo value between two options
 //     //     std_vec_vec_generic: None,
-//     //     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggiePostgresResultOptions>>,
-//     //     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggiePostgresResultOptions>>,
-//     //     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggiePostgresResultOptions>>,
+//     //     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
+//     //     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
+//     //     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
 //     // };
 // }
 
@@ -1263,10 +1263,10 @@ pub struct SomethingPostgresResultOptionsWrapper(pub Result<SomethingPostgresRes
 pub struct Doggie {
     pub std_string_string: StdStringString,
 }
-impl std::convert::From<Doggie> for DoggiePostgresResultOptions {
+impl std::convert::From<Doggie> for DoggieOptions {
     fn from(value: Doggie) -> Self {
         Self {
-            std_string_string: Some(std::result::Result::Ok(value.std_string_string.0))
+            std_string_string: Some(value.std_string_string.0)
         }
     }
 }
@@ -1370,10 +1370,224 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartFromSelfVecErr
         }
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-pub struct DoggiePostgresResultOptions {
-    std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+pub struct DoggieOptions {
+    std_string_string: std::option::Option<std::string::String>,
+    // std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
 }
+
+impl<'de> serde::Deserialize<'de> for DoggieOptions {
+    fn deserialize<__D>(
+        __deserializer: __D,
+    ) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[allow(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __ignore,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "field identifier",
+                )
+            }
+            fn visit_u64<__E>(
+                self,
+                __value: u64,
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_str<__E>(
+                self,
+                __value: &str,
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "std_string_string" => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_bytes<__E>(
+                self,
+                __value: &[u8],
+            ) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"std_string_string" => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(
+                __deserializer: __D,
+            ) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(
+                    __deserializer,
+                    __FieldVisitor,
+                )
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<DoggieOptions>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = DoggieOptions;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "struct DoggieOptions",
+                )
+            }
+            #[inline]
+            fn visit_seq<__A>(
+                self,
+                mut __seq: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<
+                    std::option::Option<
+                        std::result::Result<std::string::String, std::string::String>,
+                    >,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                0usize,
+                                &"struct DoggieOptions with 1 element",
+                            ),
+                        );
+                    }
+                };
+                serde::__private::Ok(DoggieOptions {
+                    std_string_string: match __field0 {
+                        Some(value) => match value {
+                            Ok(value) => Some(value),
+                            Err(error) => {
+                                return Err(serde::de::Error::custom(error));
+                            }
+                        }
+                        None => None
+                    },
+                })
+            }
+            #[inline]
+            fn visit_map<__A>(
+                self,
+                mut __map: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::MapAccess<'de>,
+            {
+                let mut __field0: serde::__private::Option<
+                    std::option::Option<
+                        std::result::Result<std::string::String, std::string::String>,
+                    >,
+                > = serde::__private::None;
+                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
+                    __Field,
+                >(&mut __map)? {
+                    match __key {
+                        __Field::__field0 => {
+                            if serde::__private::Option::is_some(&__field0) {
+                                return serde::__private::Err(
+                                    <__A::Error as serde::de::Error>::duplicate_field(
+                                        "std_string_string",
+                                    ),
+                                );
+                            }
+                            __field0 = serde::__private::Some(
+                                serde::de::MapAccess::next_value::<
+                                    std::option::Option<
+                                        std::result::Result<
+                                            std::string::String,
+                                            std::string::String,
+                                        >,
+                                    >,
+                                >(&mut __map)?,
+                            );
+                        }
+                        _ => {
+                            let _ = serde::de::MapAccess::next_value::<
+                                serde::de::IgnoredAny,
+                            >(&mut __map)?;
+                        }
+                    }
+                }
+                let __field0 = match __field0 {
+                    serde::__private::Some(__field0) => __field0,
+                    serde::__private::None => {
+                        serde::__private::de::missing_field("std_string_string")?
+                    }
+                };
+                serde::__private::Ok(DoggieOptions {
+                    std_string_string: match __field0 {
+                        Some(value) => match value {
+                            Ok(value) => Some(value),
+                            Err(error) => {
+                                return Err(serde::de::Error::custom(error));
+                            }
+                        }
+                        None => None
+                    },
+                })
+            }
+        }
+        #[doc(hidden)]
+        const FIELDS: &'static [&'static str] = &["std_string_string"];
+        serde::Deserializer::deserialize_struct(
+            __deserializer,
+            "DoggieOptions",
+            FIELDS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<DoggieOptions>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
+
+// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+// pub struct DoggieOptions {
+//     std_string_string: std::option::Option<std::string::String>,
+// }
+
+
+
+
 
 // [
 //     Field {
