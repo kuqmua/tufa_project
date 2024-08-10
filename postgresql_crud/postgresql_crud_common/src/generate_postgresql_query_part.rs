@@ -215,37 +215,37 @@ impl std::fmt::Display for Something {
         write!(formatter, "{:?}", &self)
     }
 }
-impl std::convert::From<Something> for SomethingOptions {
+impl std::convert::From<Something> for SomethingPostgresResultOptions {
     fn from(value: Something) -> Self {
         Self {
             std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
             std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(value.std_vec_vec_std_primitive_bool.0)),
-            generic: Some(std::result::Result::Ok(DoggieOptions::from(value.generic.0))),
+            generic: Some(std::result::Result::Ok(DoggiePostgresResultOptions::from(value.generic.0))),
             //todo rewrite to from or try from impl
             std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
-                Some(value) => DoggieOptions {
+                Some(value) => DoggiePostgresResultOptions {
                     std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
                 },
-                None => DoggieOptions {
+                None => DoggiePostgresResultOptions {
                     std_string_string: None,
                 },
             }))),
-            std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>())),
+            std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(DoggiePostgresResultOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>>())),
             std_option_option_std_vec_vec_generic: Some(std::result::Result::Ok(match value.std_option_option_std_vec_vec_generic.0 {
-                    Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>()),
+                    Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(DoggiePostgresResultOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>>()),
                     None => None
             })),
             std_vec_vec_std_option_option_generic: Some(std::result::Result::Ok(value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|std::result::Result::Ok(match element {
-                Some(value) => Some(DoggieOptions::from(value)),
+                Some(value) => Some(DoggiePostgresResultOptions::from(value)),
                 None => None
-            })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>())),
+            })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>>())),
             std_option_option_std_vec_vec_std_option_option_generic: Some(
                 std::result::Result::Ok(
                     match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
                         Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(match element {
-                            Some(value) => Some(DoggieOptions::from(value)),
+                            Some(value) => Some(DoggiePostgresResultOptions::from(value)),
                             None => None
-                        })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>()),
+                        })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>>()),
                         None => None
                     }
                 )
@@ -1155,23 +1155,23 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
 // WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1;
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-pub struct SomethingOptions {
+pub struct SomethingPostgresResultOptions {
     std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
     std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<std::vec::Vec<std::primitive::bool>, std::string::String>>,
-    generic: std::option::Option<std::result::Result<DoggieOptions,std::string::String>>,
-    std_option_option_generic: std::option::Option<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,
-    std_vec_vec_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>,std::string::String>>,
+    generic: std::option::Option<std::result::Result<DoggiePostgresResultOptions,std::string::String>>,
+    std_option_option_generic: std::option::Option<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>,
+    std_vec_vec_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>,std::string::String>>,
     std_option_option_std_vec_vec_generic: std::option::Option<std::result::Result<
-        std::option::Option<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>,
+        std::option::Option<std::vec::Vec<std::result::Result<DoggiePostgresResultOptions,std::string::String>>>,
         std::string::String
     >>,
-    std_vec_vec_std_option_option_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,std::string::String>>,
+    std_vec_vec_std_option_option_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<DoggiePostgresResultOptions>,std::string::String>>,std::string::String>>,
     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<
         std::result::Result<
             std::option::Option<
                 std::vec::Vec<
                     std::result::Result<
-                        std::option::Option<DoggieOptions>,
+                        std::option::Option<DoggiePostgresResultOptions>,
                         std::string::String
                     >
                 >
@@ -1182,7 +1182,7 @@ pub struct SomethingOptions {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-pub struct SomethingWrapper(pub Result<SomethingOptions,std::string::String>);
+pub struct SomethingPostgresResultOptionsWrapper(pub Result<SomethingPostgresResultOptions,std::string::String>);
 
 // #[test]
 // fn test() {
@@ -1253,9 +1253,9 @@ pub struct SomethingWrapper(pub Result<SomethingOptions,std::string::String>);
 //     //     generic: None,
 //     //     std_option_option_generic: None,//todo value between two options
 //     //     std_vec_vec_generic: None,
-//     //     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggieOptions>>,
-//     //     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggieOptions>>,
-//     //     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggieOptions>>,
+//     //     std_option_option_std_vec_vec_generic: std::option::Option<StdOptionOptionStdVecVecGeneric<DoggiePostgresResultOptions>>,
+//     //     std_vec_vec_std_option_option_generic: std::option::Option<StdVecVecStdOptionOptionGeneric<DoggiePostgresResultOptions>>,
+//     //     std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<StdOptionOptionStdVecVecStdOptionOptionGeneric<DoggiePostgresResultOptions>>,
 //     // };
 // }
 
@@ -1263,7 +1263,7 @@ pub struct SomethingWrapper(pub Result<SomethingOptions,std::string::String>);
 pub struct Doggie {
     pub std_string_string: StdStringString,
 }
-impl std::convert::From<Doggie> for DoggieOptions {
+impl std::convert::From<Doggie> for DoggiePostgresResultOptions {
     fn from(value: Doggie) -> Self {
         Self {
             std_string_string: Some(std::result::Result::Ok(value.std_string_string.0))
@@ -1371,7 +1371,7 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartFromSelfVecErr
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-pub struct DoggieOptions {
+pub struct DoggiePostgresResultOptions {
     std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
 }
 
