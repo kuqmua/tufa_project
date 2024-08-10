@@ -422,7 +422,7 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
 
 ///////////////
 #[derive(Debug)]
-enum SupportedPredefinedType<'a> {
+enum SupportedPredefinedType {
     StdPrimitiveI8, 
     StdPrimitiveI16, 
     StdPrimitiveI32, 
@@ -513,12 +513,12 @@ enum SupportedPredefinedType<'a> {
     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool, 
     StdOptionOptionStdVecVecStdOptionOptionStdStringString, 
 
-    Generic(&'a syn::AngleBracketedGenericArguments), 
-    StdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
-    StdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
-    StdOptionOptionStdVecVecGeneric(&'a syn::AngleBracketedGenericArguments), 
-    StdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
-    StdOptionOptionStdVecVecStdOptionOptionGeneric(&'a syn::AngleBracketedGenericArguments), 
+    Generic(proc_macro2::TokenStream), 
+    StdOptionOptionGeneric(proc_macro2::TokenStream), 
+    StdVecVecGeneric(proc_macro2::TokenStream), 
+    StdOptionOptionStdVecVecGeneric(proc_macro2::TokenStream), 
+    StdVecVecStdOptionOptionGeneric(proc_macro2::TokenStream), 
+    StdOptionOptionStdVecVecStdOptionOptionGeneric(proc_macro2::TokenStream), 
 }
 #[derive(Debug)]
 enum SupportedPredefinedTypeTryFromSynField {
@@ -528,12 +528,61 @@ enum SupportedPredefinedTypeTryFromSynField {
     PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed,
     UnsupportedPredefinedTypeWrapper,
 }
-impl<'a> std::convert::TryFrom<&'a syn::Field> for SupportedPredefinedType<'a> {
+impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
     type Error = SupportedPredefinedTypeTryFromSynField;
-    fn try_from(value: &'a syn::Field) -> Result<Self, Self::Error> {
+    fn try_from(value: &syn::Field) -> Result<Self, Self::Error> {
         match &value.ty {
             syn::Type::Path(type_path) => match type_path.path.segments.last() {
                 Some(path_segment) => {
+                    let try_generate_generic_ident_upper_camel_case_token_stream = |path_segment: &syn::PathSegment|{
+                        let proc_macro_name_upper_camel_case_ident_stringified = "123";//todo
+                        match &path_segment.arguments {
+                            syn::PathArguments::AngleBracketed(value) => {
+                                if value.args.len() != 1 {
+                                    panic!(
+                                        "{proc_macro_name_upper_camel_case_ident_stringified} AngleBracketedGenericArguments args len != 1",
+                                    );
+                                }
+                                match value.args.first() {
+                                    Some(value) => if let syn::GenericArgument::Type(value) = value {
+                                        match &value {
+                                            syn::Type::Path(type_path) => match type_path.path.segments.last() {
+                                                Some(path_segment) => {
+                                                        //todo reuse
+                                                        let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
+                                                        let value = format!(
+                                                            "{}{field_upper_camel_case}",
+                                                            &path_segment.ident
+                                                        );
+                                                        value.parse::<proc_macro2::TokenStream>()
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                }
+                                                None => panic!(
+                                                    "{proc_macro_name_upper_camel_case_ident_stringified} GenericArgument::Type syn::Type::Path last is None",
+                                                ),
+                                            }
+                                            _ => panic!(
+                                                "{proc_macro_name_upper_camel_case_ident_stringified} GenericArgument::Type value is not syn::Type::Path",
+                                            )
+                                        }
+                                    }
+                                    else {
+                                        panic!(
+                                            "{proc_macro_name_upper_camel_case_ident_stringified} GenericArgument is not GenericArgument::Type",
+                                        );
+                                    },
+                                    None => panic!(
+                                        "{proc_macro_name_upper_camel_case_ident_stringified} AngleBracketedGenericArguments args first is None",
+                                    )
+                                }
+                            },
+                            _ => {
+                                panic!(
+                                    "{proc_macro_name_upper_camel_case_ident_stringified} syn::PathArguments is not AngleBracketed",
+                                )
+                            }
+                        }
+                    };
                     let supported_predefined_type = match path_segment.ident.to_string().as_str() {
                         "StdPrimitiveI8" => match path_segment.arguments{
                             syn::PathArguments::None => Self::StdPrimitiveI16,
@@ -1039,42 +1088,12 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SupportedPredefinedType<'a> {
                             },
                         },
 
-                        "Generic" => Self::Generic(match &path_segment.arguments {
-                            syn::PathArguments::AngleBracketed(value) => value,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
-                            },
-                        }),
-                        "StdOptionOptionGeneric" => Self::StdOptionOptionGeneric(match &path_segment.arguments {
-                            syn::PathArguments::AngleBracketed(value) => value,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
-                            },
-                        }),
-                        "StdVecVecGeneric" => Self::StdVecVecGeneric(match &path_segment.arguments {
-                            syn::PathArguments::AngleBracketed(value) => value,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
-                            },
-                        }),
-                        "StdOptionOptionStdVecVecGeneric" => Self::StdOptionOptionStdVecVecGeneric(match &path_segment.arguments {
-                            syn::PathArguments::AngleBracketed(value) => value,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
-                            },
-                        }),
-                        "StdVecVecStdOptionOptionGeneric" => Self::StdVecVecStdOptionOptionGeneric(match &path_segment.arguments {
-                            syn::PathArguments::AngleBracketed(value) => value,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
-                            },
-                        }),
-                        "StdOptionOptionStdVecVecStdOptionOptionGeneric" => Self::StdOptionOptionStdVecVecStdOptionOptionGeneric(match &path_segment.arguments {
-                            syn::PathArguments::AngleBracketed(value) => value,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed);
-                            },
-                        }),
+                        "Generic" => Self::Generic(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
+                        "StdOptionOptionGeneric" => Self::StdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
+                        "StdVecVecGeneric" => Self::StdVecVecGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
+                        "StdOptionOptionStdVecVecGeneric" => Self::StdOptionOptionStdVecVecGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
+                        "StdVecVecStdOptionOptionGeneric" => Self::StdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
+                        "StdOptionOptionStdVecVecStdOptionOptionGeneric" => Self::StdOptionOptionStdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
                         _ => {
                             return Err(Self::Error::UnsupportedPredefinedTypeWrapper);
                         }
@@ -1111,8 +1130,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     // println!("{vec_syn_field:#?}");
     let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
+    //todo reuse Field concat
     let ident_field_upper_camel_case = {
-        let value =  format!("{ident}{field_upper_camel_case}");
+        let value = format!("{ident}{field_upper_camel_case}");
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -1131,7 +1151,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
                     naming_conventions::FIELD_IDENT_IS_NONE
-                )
+                );
             }).to_string();
             let serialize_deserialize_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                 &field_ident_stringified,
@@ -1141,42 +1161,150 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let maybe_additional_token_stream = {
                 let supported_predefined_type = SupportedPredefinedType::try_from(*element)
                     .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
-                // println!("{supported_predefined_type:#?}");
                 match supported_predefined_type {
-                    SupportedPredefinedType::Generic(value) => {
-                        quote::quote!{
-                            // (std::vec::Vec<DoggieField>)
-                        }
-                    }, 
-                    SupportedPredefinedType::StdOptionOptionGeneric(value) => {
-                        quote::quote!{
+                    SupportedPredefinedType::StdPrimitiveI8 |
+                    SupportedPredefinedType::StdPrimitiveI16 |
+                    SupportedPredefinedType::StdPrimitiveI32 |
+                    SupportedPredefinedType::StdPrimitiveI64 |
+                    SupportedPredefinedType::StdPrimitiveI128 |
+                    SupportedPredefinedType::StdPrimitiveU8 |
+                    SupportedPredefinedType::StdPrimitiveU16 |
+                    SupportedPredefinedType::StdPrimitiveU32 |
+                    SupportedPredefinedType::StdPrimitiveU64 |
+                    SupportedPredefinedType::StdPrimitiveU128 |
+                    SupportedPredefinedType::StdPrimitiveF32 |
+                    SupportedPredefinedType::StdPrimitiveF64 |
+                    SupportedPredefinedType::StdPrimitiveBool |
+                    SupportedPredefinedType::StdStringString |
 
-                        }
-                    }, 
-                    SupportedPredefinedType::StdVecVecGeneric(value) => {
-                        quote::quote!{
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
+                    SupportedPredefinedType::StdOptionOptionStdStringString
+                    => proc_macro2::TokenStream::new(),
 
-                        }
-                    }, 
-                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(value) => {
-                        quote::quote!{
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveBool |
+                    SupportedPredefinedType::StdVecVecStdStringString |
 
-                        }
-                    }, 
-                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(value) => {
-                        quote::quote!{
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
 
-                        }
-                    }, 
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(value) => {
-                        quote::quote!{
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
 
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
+                    => quote::quote!{
+                        {
+                            limit: std::primitive::u64,
+                            offset: std::primitive::u64,
                         }
                     },
-                    _ => proc_macro2::TokenStream::new()
-                };
-                quote::quote!{
 
+                    SupportedPredefinedType::Generic(generic_ident_field_upper_camel_case_token_stream) => {
+                        quote::quote!{
+                            (std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>)
+                        }
+                    }
+                    SupportedPredefinedType::StdOptionOptionGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                        quote::quote!{
+                            (std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>)
+                        }
+                    }
+                    SupportedPredefinedType::StdVecVecGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                        quote::quote!{
+                            {
+                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
+                                limit: std::primitive::u64,
+                                offset: std::primitive::u64,
+                            }
+                        }
+                    }
+                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                        quote::quote!{
+                            {
+                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
+                                limit: std::primitive::u64,
+                                offset: std::primitive::u64,
+                            }
+                        }
+                    }
+                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                        quote::quote!{
+                            {
+                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
+                                limit: std::primitive::u64,
+                                offset: std::primitive::u64,
+                            }
+                        }
+                    }
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(generic_ident_field_upper_camel_case_token_stream) => {
+                        quote::quote!{
+                            {
+                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
+                                limit: std::primitive::u64,
+                                offset: std::primitive::u64,
+                            }
+                        }
+                    }
                 }
             };
             quote::quote!{
@@ -1184,52 +1312,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                    serialize = #serialize_deserialize_field_ident_quotes_token_stream,
                    deserialize = #serialize_deserialize_field_ident_quotes_token_stream
                 ))]
-                #variant_ident_upper_camel_case_token_stream #maybe_additional_token_stream,
+                #variant_ident_upper_camel_case_token_stream #maybe_additional_token_stream
             }
         });
-        let f = quote::quote!{#(#variants_token_stream),*};
         quote::quote!{
-            // #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-            // pub enum #ident_field_upper_camel_case {
-            //     #[serde(rename(
-            //         serialize = "meow",
-            //         deserialize = "meow"
-            //     ))]
-            //     Meow,
-            //     #[serde(rename(
-            //         serialize = "one",
-            //         deserialize = "one"
-            //     ))]
-            //     One
-            // }
-
-    // #[serde(rename(
-    //     serialize = "something",
-    //     deserialize = "something"
-    // ))]
-    // Something,
-    // #[serde(rename(
-    //     serialize = "omega",
-    //     deserialize = "omega"
-    // ))]
-    // Omega {
-    //     limit: std::primitive::u64,
-    //     offset: std::primitive::u64,
-    // },
-    // #[serde(rename(
-    //     serialize = "doggie",
-    //     deserialize = "doggie"
-    // ))]
-    // Doggie(std::vec::Vec<DoggieField>),
-    // #[serde(rename(
-    //     serialize = "cats",
-    //     deserialize = "cats"
-    // ))]
-    // Cats {
-    //     reader_vec: std::vec::Vec<CatField>,
-    //     limit: std::primitive::u64,
-    //     offset: std::primitive::u64,
-    // }
+            #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+            pub enum #ident_field_upper_camel_case {
+                #(#variants_token_stream),*
+            }
         }
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream = {
@@ -1301,114 +1391,3 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     gen.into()
 }
-
-
-
-// StdStringString
-// StdVecVecStdPrimitiveBool
-// Generic(
-//     AngleBracketedGenericArguments {
-//         colon2_token: None,
-//         lt_token: Lt,
-//         args: [
-//             GenericArgument::Type(
-//                 Type::Path {
-//                     qself: None,
-//                     path: Path {
-//                         leading_colon: None,
-//                         segments: [
-//                             PathSegment {
-//                                 ident: Ident {
-//                                     ident: "Doggie",
-//                                     span: #0 bytes(566941..566947),
-//                                 },
-//                                 arguments: PathArguments::None,
-//                             },
-//                         ],
-//                     },
-//                 },
-//             ),
-//         ],
-//         gt_token: Gt,
-//     },
-// )
-// StdVecVecGeneric(
-//     AngleBracketedGenericArguments {
-//         colon2_token: None,
-//         lt_token: Lt,
-//         args: [
-//             GenericArgument::Type(
-//                 Type::Path {
-//                     qself: None,
-//                     path: Path {
-//                         leading_colon: None,
-//                         segments: [
-//                             PathSegment {
-//                                 ident: Ident {
-//                                     ident: "Cat",
-//                                     span: #0 bytes(566985..566988),
-//                                 },
-//                                 arguments: PathArguments::None,
-//                             },
-//                         ],
-//                     },
-//                 },
-//             ),
-//         ],
-//         gt_token: Gt,
-//     },
-// )
-// StdStringString
-// StdVecVecStdPrimitiveBool
-// Generic(
-//     AngleBracketedGenericArguments {
-//         colon2_token: None,
-//         lt_token: Lt,
-//         args: [
-//             GenericArgument::Type(
-//                 Type::Path {
-//                     qself: None,
-//                     path: Path {
-//                         leading_colon: None,
-//                         segments: [
-//                             PathSegment {
-//                                 ident: Ident {
-//                                     ident: "Doggie",
-//                                     span: #0 bytes(566941..566947),
-//                                 },
-//                                 arguments: PathArguments::None,
-//                             },
-//                         ],
-//                     },
-//                 },
-//             ),
-//         ],
-//         gt_token: Gt,
-//     },
-// )
-// StdVecVecGeneric(
-//     AngleBracketedGenericArguments {
-//         colon2_token: None,
-//         lt_token: Lt,
-//         args: [
-//             GenericArgument::Type(
-//                 Type::Path {
-//                     qself: None,
-//                     path: Path {
-//                         leading_colon: None,
-//                         segments: [
-//                             PathSegment {
-//                                 ident: Ident {
-//                                     ident: "Cat",
-//                                     span: #0 bytes(566985..566988),
-//                                 },
-//                                 arguments: PathArguments::None,
-//                             },
-//                         ],
-//                     },
-//                 },
-//             ),
-//         ],
-//         gt_token: Gt,
-//     },
-// )
