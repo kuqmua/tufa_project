@@ -1788,7 +1788,9 @@ impl<'de> serde::Deserialize<'de> for SomethingWrapper {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
     pub std_string_string: StdStringString,
 }
@@ -1797,19 +1799,6 @@ impl std::convert::From<Doggie> for DoggieOptions {
         Self {
             std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 })
         }
-    }
-}
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub enum DoggieField {
-    #[serde(rename(
-        serialize = "std_string_string",
-        deserialize = "std_string_string"
-    ))]
-    StdStringString
-}
-impl error_occurence_lib::ToStdStringString for DoggieField {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
     }
 }
 #[derive(Debug, Clone, thiserror::Error, error_occurence_lib::ErrorOccurence)]
