@@ -45,7 +45,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
         }),
         _ => panic!("SvgComponent works only on enums"),
     };
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         impl SvgComponent for #ident {
             fn get_html(&self) -> Html {
                 match self {
@@ -59,5 +59,5 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
             }
         }
     };
-    gen.into()
+    generated.into()
 }

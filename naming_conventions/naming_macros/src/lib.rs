@@ -105,9 +105,9 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
             #snake_to_tokens_implementation_token_stream
         }
     });
-    let gen = quote::quote!{#(#implementations_token_stream)*};
-    // println!("{gen}");
-    gen.into()
+    let generated = quote::quote!{#(#implementations_token_stream)*};
+    // println!("{generated}");
+    generated.into()
 }
 
 #[proc_macro]
@@ -457,7 +457,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
             #snake_case_token_stream_impl_trait_upper_camel_case_token_stream
         }
     });
-    let gen = quote::quote!{#(#implementations_token_stream)*};
-    // println!("{gen}");
-    gen.into()
+    let generated = quote::quote!{#(#implementations_token_stream)*};
+    // println!("{generated}");
+    generated.into()
 }

@@ -95,7 +95,7 @@ fn common_handle(
     };
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
-    let gen = quote::quote!{
+    let generated = quote::quote!{
         impl std::fmt::Display for #ident {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "{:?}", self.0)
@@ -382,7 +382,7 @@ fn common_handle(
     //     println!("{gen}");
     //     // println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
     // }
-    gen.into()
+    generated.into()
 }
 ///////////////
 
@@ -412,12 +412,12 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let gen = quote::quote!{
+    let generated = quote::quote!{
         impl CheckSupportedRustAndPostgresqlColumnType for #ident {
             fn check_supported_rust_and_postgresql_column_type() {}
         }
     };
-    gen.into()
+    generated.into()
 }
 
 ///////////////
@@ -1017,64 +1017,66 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_enum_field_generate_postgresql_query_part_error_named_token_stream = {
+        let ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = {
+            let value = format!("{ident}SomethingGeneratePostgresqlQueryPartErrorNamed");
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream = {
+            let ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case = {
+                let value = format!("{ident}GeneratePostgresqlQueryPartFromSelfVecErrorNamed");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                pub enum #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case {
+                    FieldsFilterIsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    NotUniqueFieldFilter {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        field: #ident_field_upper_camel_case,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    GeneratePostgresqlQueryPart {
+                        #[eo_error_occurence]
+                        error: #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                }
+            }
+        };
+        let ident_generate_postgresql_query_part_error_named_token_stream = {
+            quote::quote!{
+                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
+                    OffsetPlusLimitIsIntOverflow {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        limit: std::primitive::u64,
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        offset: std::primitive::u64,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    FieldsFilterIsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    NotUniqueStdOptionOptionGenericFieldFilter {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        field: #ident_field_upper_camel_case,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    DoggieGeneratePostgresqlQueryPartFromSelfVec {
+                        #[eo_error_occurence]
+                        field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                }
+            }
+        };
         quote::quote!{
-            //
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
-//     FieldsFilterIsEmpty {
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NotUniqueFieldFilter {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         field: SomethingField,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     GeneratePostgresqlQueryPart {
-//         #[eo_error_occurence]
-//         error: SomethingGeneratePostgresqlQueryPartErrorNamed,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
-
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
-//     OffsetPlusLimitIsIntOverflow {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         limit: std::primitive::u64,
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         offset: std::primitive::u64,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     FieldsFilterIsEmpty {
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NotUniqueStdOptionOptionGenericFieldFilter {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         field: DoggieField,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     DoggieGeneratePostgresqlQueryPartFromSelfVec {
-//         #[eo_error_occurence]
-//         field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
-
-// #[derive(Debug, Clone, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
-//     FieldsFilterIsEmpty {
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NotUniqueFieldFilter {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         field: DoggieField,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     GeneratePostgresqlQueryPart {
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
-            //
+            #ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
+            #ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
     let impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream = {
@@ -1110,14 +1112,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             // }
         }
     };
-    let gen = quote::quote!{
+    let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
-        #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
+        // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
         #impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream
         #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
     };
-    gen.into()
+    generated.into()
 }

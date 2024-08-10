@@ -25,9 +25,9 @@ pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| {
             panic!("failed to parse valid u16 user port to proc_macro2::TokenStream")
         });
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         ServerPort::try_from(#valid_port_token_stream).unwrap()
     };
-    // println!("{gen}");
-    gen.into()
+    // println!("{generated}");
+    generated.into()
 }

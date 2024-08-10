@@ -115,7 +115,7 @@
 //         column!(),
 //         &proc_macro_name_upper_camel_case_ident_stringified,
 //     );
-//     let gen = quote::quote! {
+//     let generated = quote::quote! {
 //         impl From<sqlx::Error> for #ident {
 //             fn from(val: sqlx::Error) -> Self {
 //                 match val {

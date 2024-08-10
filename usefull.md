@@ -196,12 +196,12 @@ tokens there is still import from serde (like "serde::"). Thats why in all crate
 ```
 #[proc_macro_derive(ProcMacroDeriveExample)]
 pub fn proc_macro_derive_example(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let gen = quote::quote! {
+    let generated = quote::quote! {
         #[derive(Debug, serde::Serialize)]
         pub struct Something {
             pub something: std::string::String,
         }
     };
-    gen.into()
+    generated.into()
 }
 ```

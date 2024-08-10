@@ -13,7 +13,7 @@ fn main() {
         .expect("cannot convert parent_dir_pathbuf to string");
     let canonicalize_pathbuf = match std::fs::canonicalize(&parent_dir_pathbuf) {
         Ok(pathbuf) => pathbuf,
-        Err(error) => panic!("error: {e}, path: {parent_dir_pathbuf_as_string}"),
+        Err(error) => panic!("error: {error}, path: {parent_dir_pathbuf_as_string}"),
     };
     let canonicalize_pathbuf_as_string = canonicalize_pathbuf
         .into_os_string()
@@ -130,7 +130,7 @@ fn commands(
     {
         return Err(CommandError::CheckoutDot {
             path,
-            error: format!("{e}"),
+            error: format!("{error}"),
         });
     }
     println!("git checkout . {}", path);
@@ -141,7 +141,7 @@ fn commands(
     {
         return Err(CommandError::SubmoduleUpdate {
             path,
-            error: format!("{e}"),
+            error: format!("{error}"),
         });
     }
     println!("git submodule update --init --recursive {}", path);
@@ -152,7 +152,7 @@ fn commands(
     {
         return Err(CommandError::Pull {
             path,
-            error: format!("{e}"),
+            error: format!("{error}"),
         });
     }
     println!("git pull {}", path);
@@ -163,7 +163,7 @@ fn commands(
     {
         return Err(CommandError::CheckoutMain {
             path,
-            error: format!("{e}"),
+            error: format!("{error}"),
         });
     }
     println!("git checkout main {}", path);
@@ -174,7 +174,7 @@ fn commands(
     {
         return Err(CommandError::CargoBuild {
             path,
-            error: format!("{e}"),
+            error: format!("{error}"),
         });
     }
     println!("cargo build {}", path);
