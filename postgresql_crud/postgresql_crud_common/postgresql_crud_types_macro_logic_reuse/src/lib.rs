@@ -584,509 +584,94 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         }
                     };
                     let supported_predefined_type = match path_segment.ident.to_string().as_str() {
-                        "StdPrimitiveI8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveI32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveI64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveI128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveI128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveU8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveU16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveU32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveU64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveU128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveU128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveF32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveF32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveF64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveF64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdPrimitiveBool" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdPrimitiveBool,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdStringString" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdStringString,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
+                        "StdPrimitiveI8" => Self::StdPrimitiveI16,
+                        "StdPrimitiveI32" => Self::StdPrimitiveI32,
+                        "StdPrimitiveI64" => Self::StdPrimitiveI64,
+                        "StdPrimitiveI128" => Self::StdPrimitiveI128,
+                        "StdPrimitiveU8" => Self::StdPrimitiveU8,
+                        "StdPrimitiveU16" => Self::StdPrimitiveU16,
+                        "StdPrimitiveU32" => Self::StdPrimitiveU32,
+                        "StdPrimitiveU64" => Self::StdPrimitiveU64,
+                        "StdPrimitiveU128" => Self::StdPrimitiveU128,
+                        "StdPrimitiveF32" => Self::StdPrimitiveF32,
+                        "StdPrimitiveF64" => Self::StdPrimitiveF64,
+                        "StdPrimitiveBool" => Self::StdPrimitiveBool,
+                        "StdStringString" => Self::StdStringString,
 
-                        "StdOptionOptionStdPrimitiveI8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveI128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveI128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveU128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveU128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveF32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveF32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveF64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveF64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdPrimitiveBool" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdPrimitiveBool,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdStringString" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdStringString,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
+                        "StdOptionOptionStdPrimitiveI8" => Self::StdOptionOptionStdPrimitiveI8,
+                        "StdOptionOptionStdPrimitiveI16" => Self::StdOptionOptionStdPrimitiveI16,
+                        "StdOptionOptionStdPrimitiveI32" => Self::StdOptionOptionStdPrimitiveI32,
+                        "StdOptionOptionStdPrimitiveI64" => Self::StdOptionOptionStdPrimitiveI64,
+                        "StdOptionOptionStdPrimitiveI128" => Self::StdOptionOptionStdPrimitiveI128,
+                        "StdOptionOptionStdPrimitiveU8" => Self::StdOptionOptionStdPrimitiveU8,
+                        "StdOptionOptionStdPrimitiveU16" => Self::StdOptionOptionStdPrimitiveU16,
+                        "StdOptionOptionStdPrimitiveU32" => Self::StdOptionOptionStdPrimitiveU32,
+                        "StdOptionOptionStdPrimitiveU64" => Self::StdOptionOptionStdPrimitiveU64,
+                        "StdOptionOptionStdPrimitiveU128" => Self::StdOptionOptionStdPrimitiveU128,
+                        "StdOptionOptionStdPrimitiveF32" => Self::StdOptionOptionStdPrimitiveF32,
+                        "StdOptionOptionStdPrimitiveF64" => Self::StdOptionOptionStdPrimitiveF64,
+                        "StdOptionOptionStdPrimitiveBool" => Self::StdOptionOptionStdPrimitiveBool,
+                        "StdOptionOptionStdStringString" => Self::StdOptionOptionStdStringString,
 
-                        "StdVecVecStdPrimitiveI8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveI16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveI32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveI64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveI128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveI128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveU8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveU16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveU32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveU64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveU128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveU128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveF32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveF32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveF64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveF64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdPrimitiveBool" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdPrimitiveBool,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdStringString" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdStringString,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
+                        "StdVecVecStdPrimitiveI8" => Self::StdVecVecStdPrimitiveI8,
+                        "StdVecVecStdPrimitiveI16" => Self::StdVecVecStdPrimitiveI16,
+                        "StdVecVecStdPrimitiveI32" => Self::StdVecVecStdPrimitiveI32,
+                        "StdVecVecStdPrimitiveI64" => Self::StdVecVecStdPrimitiveI64,
+                        "StdVecVecStdPrimitiveI128" => Self::StdVecVecStdPrimitiveI128,
+                        "StdVecVecStdPrimitiveU8" => Self::StdVecVecStdPrimitiveU8,
+                        "StdVecVecStdPrimitiveU16" => Self::StdVecVecStdPrimitiveU16,
+                        "StdVecVecStdPrimitiveU32" => Self::StdVecVecStdPrimitiveU32,
+                        "StdVecVecStdPrimitiveU64" => Self::StdVecVecStdPrimitiveU64,
+                        "StdVecVecStdPrimitiveU128" => Self::StdVecVecStdPrimitiveU128,
+                        "StdVecVecStdPrimitiveF32" => Self::StdVecVecStdPrimitiveF32,
+                        "StdVecVecStdPrimitiveF64" => Self::StdVecVecStdPrimitiveF64,
+                        "StdVecVecStdPrimitiveBool" => Self::StdVecVecStdPrimitiveBool,
+                        "StdVecVecStdStringString" => Self::StdVecVecStdStringString,
 
-                        "StdOptionOptionStdVecVecStdPrimitiveI8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveI128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveI128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveU128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveU128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveF32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveF32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveF64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveF64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdPrimitiveBool" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdPrimitiveBool,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdStringString" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdStringString,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
+                        "StdOptionOptionStdVecVecStdPrimitiveI8" => Self::StdOptionOptionStdVecVecStdPrimitiveI8,
+                        "StdOptionOptionStdVecVecStdPrimitiveI16" => Self::StdOptionOptionStdVecVecStdPrimitiveI16,
+                        "StdOptionOptionStdVecVecStdPrimitiveI32" => Self::StdOptionOptionStdVecVecStdPrimitiveI32,
+                        "StdOptionOptionStdVecVecStdPrimitiveI64" => Self::StdOptionOptionStdVecVecStdPrimitiveI64,
+                        "StdOptionOptionStdVecVecStdPrimitiveI128" => Self::StdOptionOptionStdVecVecStdPrimitiveI128,
+                        "StdOptionOptionStdVecVecStdPrimitiveU8" => Self::StdOptionOptionStdVecVecStdPrimitiveU8,
+                        "StdOptionOptionStdVecVecStdPrimitiveU16" => Self::StdOptionOptionStdVecVecStdPrimitiveU16,
+                        "StdOptionOptionStdVecVecStdPrimitiveU32" => Self::StdOptionOptionStdVecVecStdPrimitiveU32,
+                        "StdOptionOptionStdVecVecStdPrimitiveU64" => Self::StdOptionOptionStdVecVecStdPrimitiveU64,
+                        "StdOptionOptionStdVecVecStdPrimitiveU128" => Self::StdOptionOptionStdVecVecStdPrimitiveU128,
+                        "StdOptionOptionStdVecVecStdPrimitiveF32" => Self::StdOptionOptionStdVecVecStdPrimitiveF32,
+                        "StdOptionOptionStdVecVecStdPrimitiveF64" => Self::StdOptionOptionStdVecVecStdPrimitiveF64,
+                        "StdOptionOptionStdVecVecStdPrimitiveBool" => Self::StdOptionOptionStdVecVecStdPrimitiveBool,
+                        "StdOptionOptionStdVecVecStdStringString" => Self::StdOptionOptionStdVecVecStdStringString,
 
-                        "StdVecVecStdOptionOptionStdPrimitiveI8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveI16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveI32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveI64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveI128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveI128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveU8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveU16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveU32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveU64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveU128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveU128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveF32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveF32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveF64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveF64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdPrimitiveBool" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdPrimitiveBool,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdVecVecStdOptionOptionStdStringString" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdVecVecStdOptionOptionStdStringString,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
+                        "StdVecVecStdOptionOptionStdPrimitiveI8" => Self::StdVecVecStdOptionOptionStdPrimitiveI8,
+                        "StdVecVecStdOptionOptionStdPrimitiveI16" => Self::StdVecVecStdOptionOptionStdPrimitiveI16,
+                        "StdVecVecStdOptionOptionStdPrimitiveI32" => Self::StdVecVecStdOptionOptionStdPrimitiveI32,
+                        "StdVecVecStdOptionOptionStdPrimitiveI64" => Self::StdVecVecStdOptionOptionStdPrimitiveI64,
+                        "StdVecVecStdOptionOptionStdPrimitiveI128" => Self::StdVecVecStdOptionOptionStdPrimitiveI128,
+                        "StdVecVecStdOptionOptionStdPrimitiveU8" => Self::StdVecVecStdOptionOptionStdPrimitiveU8,
+                        "StdVecVecStdOptionOptionStdPrimitiveU16" => Self::StdVecVecStdOptionOptionStdPrimitiveU16,
+                        "StdVecVecStdOptionOptionStdPrimitiveU32" => Self::StdVecVecStdOptionOptionStdPrimitiveU32,
+                        "StdVecVecStdOptionOptionStdPrimitiveU64" => Self::StdVecVecStdOptionOptionStdPrimitiveU64,
+                        "StdVecVecStdOptionOptionStdPrimitiveU128" => Self::StdVecVecStdOptionOptionStdPrimitiveU128,
+                        "StdVecVecStdOptionOptionStdPrimitiveF32" => Self::StdVecVecStdOptionOptionStdPrimitiveF32,
+                        "StdVecVecStdOptionOptionStdPrimitiveF64" => Self::StdVecVecStdOptionOptionStdPrimitiveF64,
+                        "StdVecVecStdOptionOptionStdPrimitiveBool" => Self::StdVecVecStdOptionOptionStdPrimitiveBool,
+                        "StdVecVecStdOptionOptionStdStringString" => Self::StdVecVecStdOptionOptionStdStringString,
 
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
-                        "StdOptionOptionStdVecVecStdOptionOptionStdStringString" => match path_segment.arguments{
-                            syn::PathArguments::None => Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
-                            _ => {
-                                return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
-                            },
-                        },
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
+                        "StdOptionOptionStdVecVecStdOptionOptionStdStringString" => Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
                         "Generic" => Self::Generic(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
                         "StdOptionOptionGeneric" => Self::StdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
@@ -1098,6 +683,106 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                             return Err(Self::Error::UnsupportedPredefinedTypeWrapper);
                         }
                     };
+                    match &supported_predefined_type {
+                        SupportedPredefinedType::StdPrimitiveI8 |
+                        SupportedPredefinedType::StdPrimitiveI16 |
+                        SupportedPredefinedType::StdPrimitiveI32 |
+                        SupportedPredefinedType::StdPrimitiveI64 |
+                        SupportedPredefinedType::StdPrimitiveI128 |
+                        SupportedPredefinedType::StdPrimitiveU8 |
+                        SupportedPredefinedType::StdPrimitiveU16 |
+                        SupportedPredefinedType::StdPrimitiveU32 |
+                        SupportedPredefinedType::StdPrimitiveU64 |
+                        SupportedPredefinedType::StdPrimitiveU128 |
+                        SupportedPredefinedType::StdPrimitiveF32 |
+                        SupportedPredefinedType::StdPrimitiveF64 |
+                        SupportedPredefinedType::StdPrimitiveBool |
+                        SupportedPredefinedType::StdStringString |
+
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
+                        SupportedPredefinedType::StdOptionOptionStdStringString |
+
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveBool |
+                        SupportedPredefinedType::StdVecVecStdStringString |
+
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
+
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
+
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
+                        => {
+                            match path_segment.arguments{
+                                syn::PathArguments::None => (),
+                                _ => {
+                                    return Err(Self::Error::PathSegmentArgumentsIsNotSynPathArgumentsNone);
+                                },
+                            }
+                        }
+                        _ => (),
+                    }
                     Ok(supported_predefined_type)
                 }
                 None => Err(Self::Error::TypePathPathSegmentsLastIsNone),
