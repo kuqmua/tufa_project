@@ -244,7 +244,7 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
                 value: postgresql_crud::SqlxTypesJson(
                     sqlx::types::Json(
                         postgresql_crud::SomethingWrapper(
-                            std::result::Result::Ok(postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_b_not_null.0.0.0))
+                            postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_b_not_null.0.0.0)
                         )
                     )
                 ),

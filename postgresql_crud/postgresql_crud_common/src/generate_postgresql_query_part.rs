@@ -2204,8 +2204,90 @@ impl<'de> serde::Deserialize<'de> for SomethingOptions {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
-pub struct SomethingWrapper(pub Result<SomethingOptions,std::string::String>);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize
+pub struct SomethingWrapper(pub SomethingOptions);//pub Result<SomethingOptions,std::string::String>
+
+impl<'de> serde::Deserialize<'de> for SomethingWrapper {
+    fn deserialize<__D>(
+        __deserializer: __D,
+    ) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<SomethingWrapper>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = SomethingWrapper;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "tuple struct SomethingWrapper",
+                )
+            }
+            #[inline]
+            fn visit_newtype_struct<__E>(
+                self,
+                __e: __E,
+            ) -> serde::__private::Result<Self::Value, __E::Error>
+            where
+                __E: serde::Deserializer<'de>,
+            {
+                let __field0: Result<SomethingOptions, std::string::String> = <Result<
+                    SomethingOptions,
+                    std::string::String,
+                > as serde::Deserialize>::deserialize(__e)?;
+                serde::__private::Ok(SomethingWrapper(match __field0 {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(error));
+                    }
+                }))
+            }
+            #[inline]
+            fn visit_seq<__A>(
+                self,
+                mut __seq: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<
+                    Result<SomethingOptions, std::string::String>,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                0usize,
+                                &"tuple struct SomethingWrapper with 1 element",
+                            ),
+                        );
+                    }
+                };
+                serde::__private::Ok(SomethingWrapper(match __field0 {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(error));
+                    }
+                }))
+            }
+        }
+        serde::Deserializer::deserialize_newtype_struct(
+            __deserializer,
+            "SomethingWrapper",
+            __Visitor {
+                marker: serde::__private::PhantomData::<SomethingWrapper>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
 
 // #[test]
 // fn test() {
