@@ -1634,6 +1634,47 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
             }
         });
+        let visit_str_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+            let field_name_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+                &{
+                     element.ident.as_ref().unwrap_or_else(|| {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                            naming_conventions::FIELD_IDENT_IS_NONE
+                        );
+                    }).to_string()
+                },
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            let field_index_token_stream = {
+                let value = format!("__field{index}");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #field_name_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+            }
+        });
+        let visit_bytes_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+            let b_field_name_quotes_token_stream = {
+                let element_ident_quotes_stringified = proc_macro_common::generate_quotes::stringified(
+                    &element.ident.as_ref().unwrap_or_else(|| {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    }).to_string()
+                );
+                let value = format!("b{element_ident_quotes_stringified}");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let field_index_token_stream = {
+                let value = format!("__field{index}");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #b_field_name_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+            }
+        });
         quote::quote!{
             impl<'de> serde::Deserialize<'de> for #ident_options_upper_camel_case_token_stream {
                 fn deserialize<__D>(
@@ -1681,24 +1722,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             __E: serde::de::Error,
                         {
                             match __value {
-                                "std_string_string" => serde::__private::Ok(__Field::__field0),
-                                "std_vec_vec_std_primitive_bool" => {
-                                    serde::__private::Ok(__Field::__field1)
-                                }
-                                "generic" => serde::__private::Ok(__Field::__field2),
-                                "std_option_option_generic" => {
-                                    serde::__private::Ok(__Field::__field3)
-                                }
-                                "std_vec_vec_generic" => serde::__private::Ok(__Field::__field4),
-                                "std_option_option_std_vec_vec_generic" => {
-                                    serde::__private::Ok(__Field::__field5)
-                                }
-                                "std_vec_vec_std_option_option_generic" => {
-                                    serde::__private::Ok(__Field::__field6)
-                                }
-                                "std_option_option_std_vec_vec_std_option_option_generic" => {
-                                    serde::__private::Ok(__Field::__field7)
-                                }
+                                #(#visit_str_value_enum_variants_token_stream),*,
                                 _ => serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -1710,26 +1734,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             __E: serde::de::Error,
                         {
                             match __value {
-                                b"std_string_string" => serde::__private::Ok(__Field::__field0),
-                                b"std_vec_vec_std_primitive_bool" => {
-                                    serde::__private::Ok(__Field::__field1)
-                                }
-                                b"generic" => serde::__private::Ok(__Field::__field2),
-                                b"std_option_option_generic" => {
-                                    serde::__private::Ok(__Field::__field3)
-                                }
-                                b"std_vec_vec_generic" => {
-                                    serde::__private::Ok(__Field::__field4)
-                                }
-                                b"std_option_option_std_vec_vec_generic" => {
-                                    serde::__private::Ok(__Field::__field5)
-                                }
-                                b"std_vec_vec_std_option_option_generic" => {
-                                    serde::__private::Ok(__Field::__field6)
-                                }
-                                b"std_option_option_std_vec_vec_std_option_option_generic" => {
-                                    serde::__private::Ok(__Field::__field7)
-                                }
+                                #(#visit_bytes_value_enum_variants_token_stream),*,
                                 _ => serde::__private::Ok(__Field::__ignore),
                             }
                         }
