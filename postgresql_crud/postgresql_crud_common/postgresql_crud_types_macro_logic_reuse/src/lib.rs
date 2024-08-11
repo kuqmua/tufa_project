@@ -1611,8 +1611,31 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_serde_deserialize_for_ident_options_token_stream = {
+        let field_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, _)|{
+            let value = format!(
+                "__{}{index}",
+                naming_conventions::FieldSnakeCase,
+            );
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        });
+        let visit_u64_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, _)|{
+            let index_u64_token_stream = {
+                let value = format!("{index}u64");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let field_index_token_stream = {
+                let value = format!("__field{index}");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+            }
+        });
         quote::quote!{
-            impl<'de> serde::Deserialize<'de> for SomethingOptions {
+            impl<'de> serde::Deserialize<'de> for #ident_options_upper_camel_case_token_stream {
                 fn deserialize<__D>(
                     __deserializer: __D,
                 ) -> serde::__private::Result<Self, __D::Error>
@@ -1622,14 +1645,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #[allow(non_camel_case_types)]
                     #[doc(hidden)]
                     enum __Field {
-                        __field0,
-                        __field1,
-                        __field2,
-                        __field3,
-                        __field4,
-                        __field5,
-                        __field6,
-                        __field7,
+                        #(#field_enum_variants_token_stream),*,
                         __ignore,
                     }
                     #[doc(hidden)]
@@ -1653,14 +1669,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             __E: serde::de::Error,
                         {
                             match __value {
-                                0u64 => serde::__private::Ok(__Field::__field0),
-                                1u64 => serde::__private::Ok(__Field::__field1),
-                                2u64 => serde::__private::Ok(__Field::__field2),
-                                3u64 => serde::__private::Ok(__Field::__field3),
-                                4u64 => serde::__private::Ok(__Field::__field4),
-                                5u64 => serde::__private::Ok(__Field::__field5),
-                                6u64 => serde::__private::Ok(__Field::__field6),
-                                7u64 => serde::__private::Ok(__Field::__field7),
+                                #(#visit_u64_value_enum_variants_token_stream),*,
                                 _ => serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -1741,18 +1750,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     #[doc(hidden)]
                     struct __Visitor<'de> {
-                        marker: serde::__private::PhantomData<SomethingOptions>,
+                        marker: serde::__private::PhantomData<#ident_options_upper_camel_case_token_stream>,
                         lifetime: serde::__private::PhantomData<&'de ()>,
                     }
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = SomethingOptions;
+                        type Value = #ident_options_upper_camel_case_token_stream;
                         fn expecting(
                             &self,
                             __formatter: &mut serde::__private::Formatter<'_>,
                         ) -> serde::__private::fmt::Result {
                             serde::__private::Formatter::write_str(
                                 __formatter,
-                                "struct SomethingOptions",
+                                "struct #ident_options_upper_camel_case_token_stream",
                             )
                         }
                         #[inline]
@@ -1773,7 +1782,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             0usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
@@ -1796,7 +1805,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             1usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
@@ -1811,7 +1820,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             2usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
@@ -1829,7 +1838,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             3usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
@@ -1849,7 +1858,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             4usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
@@ -1871,7 +1880,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             5usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
@@ -1894,7 +1903,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             6usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
@@ -1919,12 +1928,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             7usize,
-                                            &"struct SomethingOptions with 8 elements",
+                                            &"struct #ident_options_upper_camel_case_token_stream with 8 elements",
                                         ),
                                     );
                                 }
                             };
-                            serde::__private::Ok(SomethingOptions {
+                            serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
                                 std_string_string: match __field0 {
                                     Some(value) => 
                                     match value {
@@ -2404,7 +2413,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     )?
                                 }
                             };
-                            serde::__private::Ok(SomethingOptions {
+                            serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
                                 std_string_string: match __field0 {
                                     Some(value) => 
                                     match value {
@@ -2568,16 +2577,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ];
                     serde::Deserializer::deserialize_struct(
                         __deserializer,
-                        "SomethingOptions",
+                        "#ident_options_upper_camel_case_token_stream",
                         FIELDS,
                         __Visitor {
-                            marker: serde::__private::PhantomData::<SomethingOptions>,
+                            marker: serde::__private::PhantomData::<#ident_options_upper_camel_case_token_stream>,
                             lifetime: serde::__private::PhantomData,
                         },
                     )
                 }
             }
         }
+    };
+    let impl_serde_deserialize_for_ident_options_token_stream = if ident.to_string() == "Something" {
+        impl_serde_deserialize_for_ident_options_token_stream   
+    }
+    else {
+        proc_macro2::TokenStream::new()
     };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
@@ -2587,7 +2602,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream
         #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
-        // #impl_serde_deserialize_for_ident_options_token_stream
+        #impl_serde_deserialize_for_ident_options_token_stream
     };
     generated.into()
 }
