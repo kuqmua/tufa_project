@@ -1417,7 +1417,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::StdOptionOptionStdStringString
-                => quote::quote!{},
+                => quote::quote!{
+                    match value.#element_ident.0 {
+                        Some(value) => Some(value),
+                        None => None,
+                    }
+                },
 
                 SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
                 SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
@@ -1449,7 +1454,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString
-                => quote::quote!{},
+                => quote::quote!{
+                    match value.#element_ident.0 {
+                        Some(value) => Some(value),
+                        None => None
+                    }
+                },
 
                 SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
                 SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
@@ -1465,7 +1475,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString
-                => quote::quote!{},
+                => quote::quote!{
+                    value.#element_ident.0.into_iter().map(|element|match element {
+                        Some(value) => Some(value),
+                        None => None
+                    }).collect()
+                },
 
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
@@ -1481,36 +1496,66 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
-                => quote::quote!{},
+                => quote::quote!{
+                    match value.#element_ident.0 {
+                        Some(value) => Some(value.into_iter().map(|element|match element {
+                            Some(value) => Some(value),
+                            None => None
+                        }).collect()),
+                        None => None
+                    }
+                },
 
                 SupportedPredefinedType::Generic(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{#generic_ident_options_upper_camel_case_token_stream::from(value.#element_ident.0)}
+                    quote::quote!{
+                        #generic_ident_options_upper_camel_case_token_stream::from(value.#element_ident.0)
+                    }
                 }
                 SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         match value.#element_ident.0 {
-                            Some(value) => Some(DoggieOptions::from(value)),
+                            Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
                             None => None,
                         }
                     }
                 }
                 SupportedPredefinedType::StdVecVecGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{}
+                    quote::quote!{
+                        value.#element_ident.0.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()
+                    }
                 }
                 SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{}
+                    quote::quote!{
+                        match value.#element_ident.0 {
+                            Some(value) => Some(value.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()),
+                            None => None
+                        }
+                    }
                 }
                 SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{}
+                    quote::quote!{
+                        value.#element_ident.0.into_iter().map(|element|match element {
+                            Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
+                            None => None
+                        }).collect::<std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>>()
+                    }
                 }
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{}
+                    quote::quote!{
+                        match value.#element_ident.0 {
+                            Some(value) => Some(value.into_iter().map(|element|match element {
+                                Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
+                                None => None
+                            }).collect::<std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>>()),
+                            None => None
+                        }
+                    }
                 }
             };
             quote::quote!{
@@ -1522,37 +1567,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 fn from(value: #ident) -> Self {
                     Self {
                         #(#fields_token_stream),*
-                        // std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
-                        // std_vec_vec_std_primitive_bool: Some(crate::value::Value{ value: value.std_vec_vec_std_primitive_bool.0 }),
-                        // generic: Some(crate::value::Value{ value: DoggieOptions::from(value.generic.0) }),
-                        // //todo rewrite to from or try from impl
-                        // std_option_option_generic: Some(crate::value::Value{ value: Some(match value.std_option_option_generic.0 {
-                        //     Some(value) => DoggieOptions {
-                        //         std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
-                        //     },
-                        //     None => DoggieOptions {
-                        //         std_string_string: None,
-                        //     },
-                        // })}),
-                        // std_vec_vec_generic: Some(crate::value::Value{ value: value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()}),
-                        // std_option_option_std_vec_vec_generic: Some(crate::value::Value{ value: match value.std_option_option_std_vec_vec_generic.0 {
-                        //         Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
-                        //         None => None
-                        // }}),
-                        // std_vec_vec_std_option_option_generic: Some(crate::value::Value{ value: value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|match element {
-                        //     Some(value) => Some(DoggieOptions::from(value)),
-                        //     None => None
-                        // }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>()}),
-                        // std_option_option_std_vec_vec_std_option_option_generic: Some(crate::value::Value{ value: match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
-                        //         Some(value) => Some(value.into_iter().map(|element|match element {
-                        //             Some(value) => Some(DoggieOptions::from(value)),
-                        //             None => None
-                        //         }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>()),
-                        //         None => None
-                        //     }
-                        // }),
 
-
+                        //just for case if must return result impl
                         // // std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
                         // // std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(
                         // //     value.std_vec_vec_std_primitive_bool.0.into_iter().map(|element|
@@ -1601,7 +1617,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
         #impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream
         #pub_struct_ident_options_token_stream
-        // #impl_std_convert_from_ident_for_ident_options_token_stream
+        #impl_std_convert_from_ident_for_ident_options_token_stream
     };
     generated.into()
 }

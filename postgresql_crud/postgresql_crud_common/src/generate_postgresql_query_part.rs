@@ -210,76 +210,6 @@ pub struct Something {
     pub std_vec_vec_std_option_option_generic: StdVecVecStdOptionOptionGeneric<Doggie>,
     pub std_option_option_std_vec_vec_std_option_option_generic: StdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
-impl std::convert::From<Something> for SomethingOptions {
-    fn from(value: Something) -> Self {
-        Self {
-            //todo maybe not correct
-            std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
-            std_vec_vec_std_primitive_bool: Some(crate::value::Value{ value: value.std_vec_vec_std_primitive_bool.0 }),
-            generic: Some(crate::value::Value{ value: DoggieOptions::from(value.generic.0) }),
-            //todo rewrite to from or try from impl
-            std_option_option_generic: Some(crate::value::Value{ 
-                value: match value.std_option_option_generic.0 {
-                    Some(value) => Some(DoggieOptions::from(value)),
-                    None => None,
-                }
-            }),
-            std_vec_vec_generic: Some(crate::value::Value{ value: value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()}),
-            std_option_option_std_vec_vec_generic: Some(crate::value::Value{ value: match value.std_option_option_std_vec_vec_generic.0 {
-                    Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
-                    None => None
-            }}),
-            std_vec_vec_std_option_option_generic: Some(crate::value::Value{ value: value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|match element {
-                Some(value) => Some(DoggieOptions::from(value)),
-                None => None
-            }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>()}),
-            std_option_option_std_vec_vec_std_option_option_generic: Some(crate::value::Value{ value: match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
-                    Some(value) => Some(value.into_iter().map(|element|match element {
-                        Some(value) => Some(DoggieOptions::from(value)),
-                        None => None
-                    }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>()),
-                    None => None
-                }
-            }),
-            // std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
-            // std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(
-            //     value.std_vec_vec_std_primitive_bool.0.into_iter().map(|element|
-            //         std::result::Result::Ok(element)
-            //     ).collect::<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>>()
-            // )),
-            // generic: Some(std::result::Result::Ok(DoggieOptions::from(value.generic.0))),
-            // //todo rewrite to from or try from impl
-            // std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
-            //     Some(value) => DoggieOptions {
-            //         std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
-            //     },
-            //     None => DoggieOptions {
-            //         std_string_string: None,
-            //     },
-            // }))),
-            // std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>())),
-            // std_option_option_std_vec_vec_generic: Some(std::result::Result::Ok(match value.std_option_option_std_vec_vec_generic.0 {
-            //         Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>()),
-            //         None => None
-            // })),
-            // std_vec_vec_std_option_option_generic: Some(std::result::Result::Ok(value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|std::result::Result::Ok(match element {
-            //     Some(value) => Some(DoggieOptions::from(value)),
-            //     None => None
-            // })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>())),
-            // std_option_option_std_vec_vec_std_option_option_generic: Some(
-            //     std::result::Result::Ok(
-            //         match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
-            //             Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(match element {
-            //                 Some(value) => Some(DoggieOptions::from(value)),
-            //                 None => None
-            //             })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>()),
-            //             None => None
-            //         }
-            //     )
-            // ),
-        }
-    }
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
     FieldsFilterIsEmpty {
@@ -1744,13 +1674,6 @@ impl<'de> serde::Deserialize<'de> for SomethingWrapper {
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
     pub std_string_string: StdStringString,
-}
-impl std::convert::From<Doggie> for DoggieOptions {
-    fn from(value: Doggie) -> Self {
-        Self {
-            std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 })
-        }
-    }
 }
 #[derive(Debug, Clone, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
