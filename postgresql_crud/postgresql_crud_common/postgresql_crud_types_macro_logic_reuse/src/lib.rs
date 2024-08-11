@@ -1700,7 +1700,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            //
             let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
                 SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::bool},
@@ -1800,22 +1799,21 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
                 SupportedPredefinedType::StdVecVecGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>}
+                    quote::quote!{std::vec::Vec<std::result::Result<#generic_ident_options_upper_camel_case_token_stream,std::string::String>>}
                 }
                 SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::option::Option<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>}
+                    quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<#generic_ident_options_upper_camel_case_token_stream,std::string::String>>>}
                 }
                 SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>}
+                    quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>,std::string::String>>}
                 }
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>>}
+                    quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>,std::string::String>>>}
                 }
             };
-            //
             quote::quote!{
                 let #field_index_token_stream = match serde::de::SeqAccess::next_element::<std::option::Option<std::result::Result<#type_token_stream, std::string::String>>>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
@@ -1828,153 +1826,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                     }
                 };
-
-                            // let __field1 = match serde::de::SeqAccess::next_element::<
-                            //     std::option::Option<
-                            //         std::result::Result<
-                            //             std::vec::Vec<
-                            //                 std::result::Result<
-                            //                     std::primitive::bool,
-                            //                     std::string::String,
-                            //                 >,
-                            //             >,
-                            //             std::string::String,
-                            //         >,
-                            //     >,
-                            // >(&mut __seq)? {
-                            //     serde::__private::Some(__value) => __value,
-                            //     serde::__private::None => {
-                            //         return serde::__private::Err(
-                            //             serde::de::Error::invalid_length(
-                            //                 1usize,
-                            //                 &#struct_ident_options_with_quotes_token_stream,
-                            //             ),
-                            //         );
-                            //     }
-                            // };
-                            // let __field2 = match serde::de::SeqAccess::next_element::<
-                            //     std::option::Option<
-                            //         std::result::Result<DoggieOptions, std::string::String>,
-                            //     >,
-                            // >(&mut __seq)? {
-                            //     serde::__private::Some(__value) => __value,
-                            //     serde::__private::None => {
-                            //         return serde::__private::Err(
-                            //             serde::de::Error::invalid_length(
-                            //                 2usize,
-                            //                 &#struct_ident_options_with_quotes_token_stream,
-                            //             ),
-                            //         );
-                            //     }
-                            // };
-                            // let __field3 = match serde::de::SeqAccess::next_element::<
-                            //     std::option::Option<
-                            //         std::result::Result<
-                            //             std::option::Option<DoggieOptions>,
-                            //             std::string::String,
-                            //         >,
-                            //     >,
-                            // >(&mut __seq)? {
-                            //     serde::__private::Some(__value) => __value,
-                            //     serde::__private::None => {
-                            //         return serde::__private::Err(
-                            //             serde::de::Error::invalid_length(
-                            //                 3usize,
-                            //                 &#struct_ident_options_with_quotes_token_stream,
-                            //             ),
-                            //         );
-                            //     }
-                            // };
-                            // let __field4 = match serde::de::SeqAccess::next_element::<
-                            //     std::option::Option<
-                            //         std::result::Result<
-                            //             std::vec::Vec<
-                            //                 std::result::Result<DoggieOptions, std::string::String>,
-                            //             >,
-                            //             std::string::String,
-                            //         >,
-                            //     >,
-                            // >(&mut __seq)? {
-                            //     serde::__private::Some(__value) => __value,
-                            //     serde::__private::None => {
-                            //         return serde::__private::Err(
-                            //             serde::de::Error::invalid_length(
-                            //                 4usize,
-                            //                 &#struct_ident_options_with_quotes_token_stream,
-                            //             ),
-                            //         );
-                            //     }
-                            // };
-                            // let __field5 = match serde::de::SeqAccess::next_element::<
-                            //     std::option::Option<
-                            //         std::result::Result<
-                            //             std::option::Option<
-                            //                 std::vec::Vec<
-                            //                     std::result::Result<DoggieOptions, std::string::String>,
-                            //                 >,
-                            //             >,
-                            //             std::string::String,
-                            //         >,
-                            //     >,
-                            // >(&mut __seq)? {
-                            //     serde::__private::Some(__value) => __value,
-                            //     serde::__private::None => {
-                            //         return serde::__private::Err(
-                            //             serde::de::Error::invalid_length(
-                            //                 5usize,
-                            //                 &#struct_ident_options_with_quotes_token_stream,
-                            //             ),
-                            //         );
-                            //     }
-                            // };
-                            // let __field6 = match serde::de::SeqAccess::next_element::<
-                            //     std::option::Option<
-                            //         std::result::Result<
-                            //             std::vec::Vec<
-                            //                 std::result::Result<
-                            //                     std::option::Option<DoggieOptions>,
-                            //                     std::string::String,
-                            //                 >,
-                            //             >,
-                            //             std::string::String,
-                            //         >,
-                            //     >,
-                            // >(&mut __seq)? {
-                            //     serde::__private::Some(__value) => __value,
-                            //     serde::__private::None => {
-                            //         return serde::__private::Err(
-                            //             serde::de::Error::invalid_length(
-                            //                 6usize,
-                            //                 &#struct_ident_options_with_quotes_token_stream,
-                            //             ),
-                            //         );
-                            //     }
-                            // };
-                            // let __field7 = match serde::de::SeqAccess::next_element::<
-                            //     std::option::Option<
-                            //         std::result::Result<
-                            //             std::option::Option<
-                            //                 std::vec::Vec<
-                            //                     std::result::Result<
-                            //                         std::option::Option<DoggieOptions>,
-                            //                         std::string::String,
-                            //                     >,
-                            //                 >,
-                            //             >,
-                            //             std::string::String,
-                            //         >,
-                            //     >,
-                            // >(&mut __seq)? {
-                            //     serde::__private::Some(__value) => __value,
-                            //     serde::__private::None => {
-                            //         return serde::__private::Err(
-                            //             serde::de::Error::invalid_length(
-                            //                 7usize,
-                            //                 &#struct_ident_options_with_quotes_token_stream,
-                            //             ),
-                            //         );
-                            //     }
-                            // };
             }
         });
         quote::quote!{
@@ -2079,167 +1930,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         where
                             __A: serde::de::SeqAccess<'de>,
                         {
-                            let __field0 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<std::string::String, std::string::String>,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            0usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field1 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<
-                                        std::vec::Vec<
-                                            std::result::Result<
-                                                std::primitive::bool,
-                                                std::string::String,
-                                            >,
-                                        >,
-                                        std::string::String,
-                                    >,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            1usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field2 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<DoggieOptions, std::string::String>,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            2usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field3 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<
-                                        std::option::Option<DoggieOptions>,
-                                        std::string::String,
-                                    >,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            3usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field4 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<
-                                        std::vec::Vec<
-                                            std::result::Result<DoggieOptions, std::string::String>,
-                                        >,
-                                        std::string::String,
-                                    >,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            4usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field5 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<
-                                        std::option::Option<
-                                            std::vec::Vec<
-                                                std::result::Result<DoggieOptions, std::string::String>,
-                                            >,
-                                        >,
-                                        std::string::String,
-                                    >,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            5usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field6 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<
-                                        std::vec::Vec<
-                                            std::result::Result<
-                                                std::option::Option<DoggieOptions>,
-                                                std::string::String,
-                                            >,
-                                        >,
-                                        std::string::String,
-                                    >,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            6usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field7 = match serde::de::SeqAccess::next_element::<
-                                std::option::Option<
-                                    std::result::Result<
-                                        std::option::Option<
-                                            std::vec::Vec<
-                                                std::result::Result<
-                                                    std::option::Option<DoggieOptions>,
-                                                    std::string::String,
-                                                >,
-                                            >,
-                                        >,
-                                        std::string::String,
-                                    >,
-                                >,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            7usize,
-                                            &#struct_ident_options_with_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
+                            #(#visit_seq_fields_initialization_token_stream)*
                             serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
                                 std_string_string: match __field0 {
                                     Some(value) => 
