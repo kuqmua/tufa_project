@@ -1689,6 +1689,294 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             ),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
+        let visit_seq_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+            let field_index_token_stream = {
+                let value = format!("__field{index}");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let index_usize_token_stream = {
+                let value = format!("{index}usize");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            //
+            let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
+            {
+                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
+                SupportedPredefinedType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
+                SupportedPredefinedType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
+                SupportedPredefinedType::StdPrimitiveI128 => quote::quote!{std::primitive::i128},
+                SupportedPredefinedType::StdPrimitiveU8 => quote::quote!{std::primitive::u8},
+                SupportedPredefinedType::StdPrimitiveU16 => quote::quote!{std::primitive::u16},
+                SupportedPredefinedType::StdPrimitiveU32 => quote::quote!{std::primitive::u32},
+                SupportedPredefinedType::StdPrimitiveU64 => quote::quote!{std::primitive::u64},
+                SupportedPredefinedType::StdPrimitiveU128 => quote::quote!{std::primitive::u128},
+                SupportedPredefinedType::StdPrimitiveF32 => quote::quote!{std::primitive::f32},
+                SupportedPredefinedType::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
+                SupportedPredefinedType::StdPrimitiveBool => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdStringString => quote::quote!{std::string::String},
+
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::primitive::i8>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::primitive::i16>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::primitive::i32>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::primitive::i64>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::primitive::i128>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::primitive::u8>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::primitive::u16>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::primitive::u32>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::primitive::u64>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::primitive::u128>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::primitive::f32>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::primitive::f64>},
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::primitive::bool>},
+                SupportedPredefinedType::StdOptionOptionStdStringString => quote::quote!{std::option::Option<std::string::String>},
+
+                SupportedPredefinedType::StdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i8,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i16,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i32,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i64,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveI128 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i128,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u8,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u16,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u32,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u64,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveU128 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u128,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::f32,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::f64,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdPrimitiveBool => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdStringString => quote::quote!{std::vec::Vec<std::result::Result<std::string::String,std::string::String>>},
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i8,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i16,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i32,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i64,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i128,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::u8,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::u16,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::u32,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::u64,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::u128,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::f32,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::f64,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::string::String,std::string::String>>>},
+
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i16>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i32>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i64>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i128>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u8>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u16>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u32>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u64>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u128>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::f32>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::f64>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::primitive::bool>,std::string::String>>},
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString => quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<std::string::String>,std::string::String>>},
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i16>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i32>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i64>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i128>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u8>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u16>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u32>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u64>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::u128>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::f32>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::f64>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::bool>,std::string::String>>},
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::string::String>,std::string::String>>},
+
+                SupportedPredefinedType::Generic(type_path) => generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string()),
+                SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{std::option::Option<#generic_ident_options_upper_camel_case_token_stream>}
+                }
+                SupportedPredefinedType::StdVecVecGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>}
+                }
+                SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{std::option::Option<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>}
+                }
+                SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>}
+                }
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>>}
+                }
+            };
+            //
+            quote::quote!{
+                let #field_index_token_stream = match serde::de::SeqAccess::next_element::<std::option::Option<std::result::Result<#type_token_stream, std::string::String>>>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                #index_usize_token_stream,
+                                &#struct_ident_options_with_quotes_token_stream,
+                            ),
+                        );
+                    }
+                };
+
+                            // let __field1 = match serde::de::SeqAccess::next_element::<
+                            //     std::option::Option<
+                            //         std::result::Result<
+                            //             std::vec::Vec<
+                            //                 std::result::Result<
+                            //                     std::primitive::bool,
+                            //                     std::string::String,
+                            //                 >,
+                            //             >,
+                            //             std::string::String,
+                            //         >,
+                            //     >,
+                            // >(&mut __seq)? {
+                            //     serde::__private::Some(__value) => __value,
+                            //     serde::__private::None => {
+                            //         return serde::__private::Err(
+                            //             serde::de::Error::invalid_length(
+                            //                 1usize,
+                            //                 &#struct_ident_options_with_quotes_token_stream,
+                            //             ),
+                            //         );
+                            //     }
+                            // };
+                            // let __field2 = match serde::de::SeqAccess::next_element::<
+                            //     std::option::Option<
+                            //         std::result::Result<DoggieOptions, std::string::String>,
+                            //     >,
+                            // >(&mut __seq)? {
+                            //     serde::__private::Some(__value) => __value,
+                            //     serde::__private::None => {
+                            //         return serde::__private::Err(
+                            //             serde::de::Error::invalid_length(
+                            //                 2usize,
+                            //                 &#struct_ident_options_with_quotes_token_stream,
+                            //             ),
+                            //         );
+                            //     }
+                            // };
+                            // let __field3 = match serde::de::SeqAccess::next_element::<
+                            //     std::option::Option<
+                            //         std::result::Result<
+                            //             std::option::Option<DoggieOptions>,
+                            //             std::string::String,
+                            //         >,
+                            //     >,
+                            // >(&mut __seq)? {
+                            //     serde::__private::Some(__value) => __value,
+                            //     serde::__private::None => {
+                            //         return serde::__private::Err(
+                            //             serde::de::Error::invalid_length(
+                            //                 3usize,
+                            //                 &#struct_ident_options_with_quotes_token_stream,
+                            //             ),
+                            //         );
+                            //     }
+                            // };
+                            // let __field4 = match serde::de::SeqAccess::next_element::<
+                            //     std::option::Option<
+                            //         std::result::Result<
+                            //             std::vec::Vec<
+                            //                 std::result::Result<DoggieOptions, std::string::String>,
+                            //             >,
+                            //             std::string::String,
+                            //         >,
+                            //     >,
+                            // >(&mut __seq)? {
+                            //     serde::__private::Some(__value) => __value,
+                            //     serde::__private::None => {
+                            //         return serde::__private::Err(
+                            //             serde::de::Error::invalid_length(
+                            //                 4usize,
+                            //                 &#struct_ident_options_with_quotes_token_stream,
+                            //             ),
+                            //         );
+                            //     }
+                            // };
+                            // let __field5 = match serde::de::SeqAccess::next_element::<
+                            //     std::option::Option<
+                            //         std::result::Result<
+                            //             std::option::Option<
+                            //                 std::vec::Vec<
+                            //                     std::result::Result<DoggieOptions, std::string::String>,
+                            //                 >,
+                            //             >,
+                            //             std::string::String,
+                            //         >,
+                            //     >,
+                            // >(&mut __seq)? {
+                            //     serde::__private::Some(__value) => __value,
+                            //     serde::__private::None => {
+                            //         return serde::__private::Err(
+                            //             serde::de::Error::invalid_length(
+                            //                 5usize,
+                            //                 &#struct_ident_options_with_quotes_token_stream,
+                            //             ),
+                            //         );
+                            //     }
+                            // };
+                            // let __field6 = match serde::de::SeqAccess::next_element::<
+                            //     std::option::Option<
+                            //         std::result::Result<
+                            //             std::vec::Vec<
+                            //                 std::result::Result<
+                            //                     std::option::Option<DoggieOptions>,
+                            //                     std::string::String,
+                            //                 >,
+                            //             >,
+                            //             std::string::String,
+                            //         >,
+                            //     >,
+                            // >(&mut __seq)? {
+                            //     serde::__private::Some(__value) => __value,
+                            //     serde::__private::None => {
+                            //         return serde::__private::Err(
+                            //             serde::de::Error::invalid_length(
+                            //                 6usize,
+                            //                 &#struct_ident_options_with_quotes_token_stream,
+                            //             ),
+                            //         );
+                            //     }
+                            // };
+                            // let __field7 = match serde::de::SeqAccess::next_element::<
+                            //     std::option::Option<
+                            //         std::result::Result<
+                            //             std::option::Option<
+                            //                 std::vec::Vec<
+                            //                     std::result::Result<
+                            //                         std::option::Option<DoggieOptions>,
+                            //                         std::string::String,
+                            //                     >,
+                            //                 >,
+                            //             >,
+                            //             std::string::String,
+                            //         >,
+                            //     >,
+                            // >(&mut __seq)? {
+                            //     serde::__private::Some(__value) => __value,
+                            //     serde::__private::None => {
+                            //         return serde::__private::Err(
+                            //             serde::de::Error::invalid_length(
+                            //                 7usize,
+                            //                 &#struct_ident_options_with_quotes_token_stream,
+                            //             ),
+                            //         );
+                            //     }
+                            // };
+            }
+        });
         quote::quote!{
             impl<'de> serde::Deserialize<'de> for #ident_options_upper_camel_case_token_stream {
                 fn deserialize<__D>(
