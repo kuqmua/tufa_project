@@ -1433,7 +1433,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
                 SupportedPredefinedType::StdVecVecStdPrimitiveBool |
                 SupportedPredefinedType::StdVecVecStdStringString
-                => quote::quote!{},
+                => quote::quote!{value.#element_ident.0},
 
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
                 SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
@@ -1485,11 +1485,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 SupportedPredefinedType::Generic(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{}
+                    quote::quote!{#generic_ident_options_upper_camel_case_token_stream::from(value.#element_ident.0)}
                 }
                 SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{}
+                    quote::quote!{
+                        match value.#element_ident.0 {
+                            Some(value) => Some(DoggieOptions::from(value)),
+                            None => None,
+                        }
+                    }
                 }
                 SupportedPredefinedType::StdVecVecGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());

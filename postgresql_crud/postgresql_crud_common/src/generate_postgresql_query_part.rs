@@ -213,18 +213,17 @@ pub struct Something {
 impl std::convert::From<Something> for SomethingOptions {
     fn from(value: Something) -> Self {
         Self {
+            //todo maybe not correct
             std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
             std_vec_vec_std_primitive_bool: Some(crate::value::Value{ value: value.std_vec_vec_std_primitive_bool.0 }),
             generic: Some(crate::value::Value{ value: DoggieOptions::from(value.generic.0) }),
             //todo rewrite to from or try from impl
-            std_option_option_generic: Some(crate::value::Value{ value: Some(match value.std_option_option_generic.0 {
-                Some(value) => DoggieOptions {
-                    std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
-                },
-                None => DoggieOptions {
-                    std_string_string: None,
-                },
-            })}),
+            std_option_option_generic: Some(crate::value::Value{ 
+                value: match value.std_option_option_generic.0 {
+                    Some(value) => Some(DoggieOptions::from(value)),
+                    None => None,
+                }
+            }),
             std_vec_vec_generic: Some(crate::value::Value{ value: value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()}),
             std_option_option_std_vec_vec_generic: Some(crate::value::Value{ value: match value.std_option_option_std_vec_vec_generic.0 {
                     Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
