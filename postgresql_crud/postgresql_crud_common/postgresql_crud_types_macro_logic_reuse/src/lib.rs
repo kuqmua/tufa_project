@@ -1379,15 +1379,214 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_std_convert_from_ident_for_ident_options_token_stream = {
+        let fields_token_stream = vec_syn_field.iter().map(|element|{
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            let conversion_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
+                SupportedPredefinedType::StdPrimitiveI8 |
+                SupportedPredefinedType::StdPrimitiveI16 |
+                SupportedPredefinedType::StdPrimitiveI32 |
+                SupportedPredefinedType::StdPrimitiveI64 |
+                SupportedPredefinedType::StdPrimitiveI128 |
+                SupportedPredefinedType::StdPrimitiveU8 |
+                SupportedPredefinedType::StdPrimitiveU16 |
+                SupportedPredefinedType::StdPrimitiveU32 |
+                SupportedPredefinedType::StdPrimitiveU64 |
+                SupportedPredefinedType::StdPrimitiveU128 |
+                SupportedPredefinedType::StdPrimitiveF32 |
+                SupportedPredefinedType::StdPrimitiveF64 |
+                SupportedPredefinedType::StdPrimitiveBool |
+                SupportedPredefinedType::StdStringString
+                => quote::quote!{value.#element_ident.0},
+
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdStringString
+                => quote::quote!{},
+
+                SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::StdVecVecStdStringString
+                => quote::quote!{},
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString
+                => quote::quote!{},
+
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString
+                => quote::quote!{},
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
+                => quote::quote!{},
+
+                SupportedPredefinedType::Generic(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdVecVecGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{}
+                }
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{}
+                }
+            };
+            quote::quote!{
+                #element_ident: Some(crate::value::Value{ value: #conversion_token_stream })
+            }
+        });
         quote::quote!{
-            // impl std::convert::From<Cat> for CatOptions {
-            //     fn from(value: Cat) -> Self {
-            //         Self {
-            //             meow: Some(value.meow),
-            //             one: Some(value.one),
-            //         }
-            //     }
-            // }
+            impl std::convert::From<#ident> for #ident_options_upper_camel_case_token_stream {
+                fn from(value: #ident) -> Self {
+                    Self {
+                        #(#fields_token_stream),*
+                        // std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
+                        // std_vec_vec_std_primitive_bool: Some(crate::value::Value{ value: value.std_vec_vec_std_primitive_bool.0 }),
+                        // generic: Some(crate::value::Value{ value: DoggieOptions::from(value.generic.0) }),
+                        // //todo rewrite to from or try from impl
+                        // std_option_option_generic: Some(crate::value::Value{ value: Some(match value.std_option_option_generic.0 {
+                        //     Some(value) => DoggieOptions {
+                        //         std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
+                        //     },
+                        //     None => DoggieOptions {
+                        //         std_string_string: None,
+                        //     },
+                        // })}),
+                        // std_vec_vec_generic: Some(crate::value::Value{ value: value.std_vec_vec_generic.0.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()}),
+                        // std_option_option_std_vec_vec_generic: Some(crate::value::Value{ value: match value.std_option_option_std_vec_vec_generic.0 {
+                        //         Some(value) => Some(value.into_iter().map(|element|DoggieOptions::from(element)).collect::<std::vec::Vec<DoggieOptions>>()),
+                        //         None => None
+                        // }}),
+                        // std_vec_vec_std_option_option_generic: Some(crate::value::Value{ value: value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|match element {
+                        //     Some(value) => Some(DoggieOptions::from(value)),
+                        //     None => None
+                        // }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>()}),
+                        // std_option_option_std_vec_vec_std_option_option_generic: Some(crate::value::Value{ value: match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
+                        //         Some(value) => Some(value.into_iter().map(|element|match element {
+                        //             Some(value) => Some(DoggieOptions::from(value)),
+                        //             None => None
+                        //         }).collect::<std::vec::Vec<std::option::Option<DoggieOptions>>>()),
+                        //         None => None
+                        //     }
+                        // }),
+
+
+                        // // std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
+                        // // std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(
+                        // //     value.std_vec_vec_std_primitive_bool.0.into_iter().map(|element|
+                        // //         std::result::Result::Ok(element)
+                        // //     ).collect::<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>>()
+                        // // )),
+                        // // generic: Some(std::result::Result::Ok(DoggieOptions::from(value.generic.0))),
+                        // // //todo rewrite to from or try from impl
+                        // // std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
+                        // //     Some(value) => DoggieOptions {
+                        // //         std_string_string: Some(crate::value::Value{ value: value.std_string_string.0 }),
+                        // //     },
+                        // //     None => DoggieOptions {
+                        // //         std_string_string: None,
+                        // //     },
+                        // // }))),
+                        // // std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>())),
+                        // // std_option_option_std_vec_vec_generic: Some(std::result::Result::Ok(match value.std_option_option_std_vec_vec_generic.0 {
+                        // //         Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(DoggieOptions::from(element))).collect::<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>()),
+                        // //         None => None
+                        // // })),
+                        // // std_vec_vec_std_option_option_generic: Some(std::result::Result::Ok(value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|std::result::Result::Ok(match element {
+                        // //     Some(value) => Some(DoggieOptions::from(value)),
+                        // //     None => None
+                        // // })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>())),
+                        // // std_option_option_std_vec_vec_std_option_option_generic: Some(
+                        // //     std::result::Result::Ok(
+                        // //         match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
+                        // //             Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(match element {
+                        // //                 Some(value) => Some(DoggieOptions::from(value)),
+                        // //                 None => None
+                        // //             })).collect::<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>>()),
+                        // //             None => None
+                        // //         }
+                        // //     )
+                        // // ),
+                    }
+                }
+            }
         }
     };
     let generated = quote::quote!{
@@ -1397,7 +1596,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
         #impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream
         #pub_struct_ident_options_token_stream
-        #impl_std_convert_from_ident_for_ident_options_token_stream
+        // #impl_std_convert_from_ident_for_ident_options_token_stream
     };
     generated.into()
 }
