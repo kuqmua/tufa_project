@@ -1828,6 +1828,273 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
             }
         });
+        //
+        let visit_seq_fields_assignment_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            let field_index_token_stream = {
+                let value = format!("__field{index}");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let index_usize_token_stream = {
+                let value = format!("{index}usize");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let conversion_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
+            {
+                SupportedPredefinedType::StdPrimitiveI8 |
+                SupportedPredefinedType::StdPrimitiveI16 |
+                SupportedPredefinedType::StdPrimitiveI32 |
+                SupportedPredefinedType::StdPrimitiveI64 |
+                SupportedPredefinedType::StdPrimitiveI128 |
+                SupportedPredefinedType::StdPrimitiveU8 |
+                SupportedPredefinedType::StdPrimitiveU16 |
+                SupportedPredefinedType::StdPrimitiveU32 |
+                SupportedPredefinedType::StdPrimitiveU64 |
+                SupportedPredefinedType::StdPrimitiveU128 |
+                SupportedPredefinedType::StdPrimitiveF32 |
+                SupportedPredefinedType::StdPrimitiveF64 |
+                SupportedPredefinedType::StdPrimitiveBool |
+                SupportedPredefinedType::StdStringString
+                => quote::quote!{value},
+
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdStringString
+                => quote::quote!{value},
+
+                SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::StdVecVecStdStringString
+                => quote::quote!{
+                    {
+                        let mut acc = vec![];
+                        for element in value {
+                            match element {
+                                Ok(value) => {
+                                    acc.push(value);
+                                }
+                                Err(error) => {
+                                    return Err(serde::de::Error::custom(error));
+                                }
+                            }
+                        }
+                        acc
+                    }
+                },
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString
+                => quote::quote!{
+                    match value {
+                        Some(value) => {
+                            let mut acc = vec![];
+                            for element in value {
+                                match element {
+                                    Ok(value) => {
+                                        acc.push(value);
+                                    }
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(error));
+                                    }
+                                }
+                            }
+                            Some(acc)
+                        }
+                        None => None
+                    }
+                },
+
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString
+                => quote::quote!{
+                    {
+                        let mut acc = vec![];
+                        for element in value {
+                            match element {
+                                Ok(value) => {
+                                    acc.push(value);
+                                }
+                                Err(error) => {
+                                    return Err(serde::de::Error::custom(error));
+                                }
+                            }
+                        }
+                        acc
+                    }
+                },
+
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
+                => quote::quote!{
+                    match value {
+                        Some(value) => {
+                            let mut acc = vec![];
+                            for element in value {
+                                match element {
+                                    Ok(value) => {
+                                        acc.push(value);
+                                    }
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(error));
+                                    }
+                                }
+                            }
+                            Some(acc)
+                        }
+                        None => None
+                    }
+                },
+
+                SupportedPredefinedType::Generic(_) => quote::quote!{value},
+                SupportedPredefinedType::StdOptionOptionGeneric(_) => quote::quote!{value},
+                SupportedPredefinedType::StdVecVecGeneric(_) => quote::quote!{
+                    {
+                        let mut acc = vec![];
+                        for element in value {
+                            match element {
+                                Ok(value) => {
+                                    acc.push(value);
+                                }
+                                Err(error) => {
+                                    return Err(serde::de::Error::custom(error));
+                                }
+                            }
+                        }
+                        acc
+                    }
+                },
+                SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(_) => quote::quote!{
+                    match value {
+                        Some(value) => {
+                            let mut acc = vec![];
+                            for element in value {
+                                match element {
+                                    Ok(value) => {
+                                        acc.push(value);
+                                    }
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(error));
+                                    }
+                                }
+                            }
+                            Some(acc)
+                        }
+                        None => None
+                    }
+                },
+                SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(_) => quote::quote!{
+                    {
+                        let mut acc = vec![];
+                        for element in value {
+                            match element {
+                                Ok(value) => {
+                                    acc.push(value);
+                                }
+                                Err(error) => {
+                                    return Err(serde::de::Error::custom(error));
+                                }
+                            }
+                        }
+                        acc
+                    }
+                },
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => quote::quote!{
+                    match value {
+                        Some(value) => {
+                            let mut acc = vec![];
+                            for element in value {
+                                match element {
+                                    Ok(value) => {
+                                        acc.push(value);
+                                    }
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(error));
+                                    }
+                                }
+                            }
+                            Some(acc)
+                        }
+                        None => None
+                    }
+                }
+            };
+            quote::quote!{
+                #field_ident: match #field_index_token_stream {
+                    Some(value) => match value {
+                        Ok(value) => Some(crate::value::Value{ value: #conversion_logic_token_stream }),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(error));
+                        }
+                    },
+                    None => None
+                }
+            }
+        });
         quote::quote!{
             impl<'de> serde::Deserialize<'de> for #ident_options_upper_camel_case_token_stream {
                 fn deserialize<__D>(
@@ -1932,153 +2199,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         {
                             #(#visit_seq_fields_initialization_token_stream)*
                             serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
-                                std_string_string: match __field0 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => Some(crate::value::Value{ value }),
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_vec_vec_std_primitive_bool: match __field1 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => {
-                                            let mut acc = vec![];
-                                            for element in value {
-                                                match element {
-                                                    Ok(value) => {
-                                                        acc.push(value);
-                                                    }
-                                                    Err(error) => {
-                                                        return Err(serde::de::Error::custom(error));
-                                                    }
-                                                }
-                                            }
-                                            Some(crate::value::Value{ value: acc })
-                                        },
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                generic: match __field2 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => Some(crate::value::Value{ value }),
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_option_option_generic: match __field3 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => Some(crate::value::Value{ value }),
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_vec_vec_generic: match __field4 {
-                                    Some(value) => match value {
-                                        Ok(value) => {
-                                            let mut acc = vec![];
-                                            for element in value {
-                                                match element {
-                                                    Ok(value) => {
-                                                        acc.push(value);
-                                                    }
-                                                    Err(error) => {
-                                                        return Err(serde::de::Error::custom(error));
-                                                    }
-                                                }
-                                            }
-                                            Some(crate::value::Value{ value: acc })
-                                        },
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_option_option_std_vec_vec_generic: match __field5 {
-                                    Some(value) => match value {
-                                        Ok(value) => match value {
-                                            Some(value) => {
-                                                let mut acc = vec![];
-                                                for element in value {
-                                                    match element {
-                                                        Ok(value) => {
-                                                            acc.push(value);
-                                                        }
-                                                        Err(error) => {
-                                                            return Err(serde::de::Error::custom(error));
-                                                        }
-                                                    }
-                                                }
-                                                Some(crate::value::Value{ value: Some(acc) })
-                                            }
-                                            None => Some(crate::value::Value{ value: None })
-                                        },
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_vec_vec_std_option_option_generic: match __field6 {
-                                    Some(value) => match value {
-                                        Ok(value) => {
-                                            let mut acc = vec![];
-                                            for element in value {
-                                                match element {
-                                                    Ok(value) => {
-                                                        acc.push(value);
-                                                    }
-                                                    Err(error) => {
-                                                        return Err(serde::de::Error::custom(error));
-                                                    }
-                                                }
-                                            }
-                                            Some(crate::value::Value{ value: acc })
-                                        }
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_option_option_std_vec_vec_std_option_option_generic: match __field7 {
-                                    Some(value) => match value {
-                                        Ok(value) => match value {
-                                            Some(value) => {
-                                                let mut acc = vec![];
-                                                for element in value {
-                                                    match element {
-                                                        Ok(value) => {
-                                                            acc.push(value);
-                                                        }
-                                                        Err(error) => {
-                                                            return Err(serde::de::Error::custom(error));
-                                                        }
-                                                    }
-                                                }
-                                                Some(crate::value::Value{ value: Some(acc) })
-                                            }
-                                            None => Some(crate::value::Value{ value: None })
-                                        }
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    }
-                                    None => None
-                                },
+                                #(#visit_seq_fields_assignment_token_stream),*
                             })
                         }
                         #[inline]
