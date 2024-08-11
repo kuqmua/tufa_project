@@ -1330,14 +1330,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait//serde::Deserialize,
             pub struct #ident_options_upper_camel_case_token_stream {
-                std_string_string: std::option::Option<crate::value::Value<std::string::String>>,
-                std_vec_vec_std_primitive_bool: std::option::Option<crate::value::Value<std::vec::Vec<std::primitive::bool>>>,
-                generic: std::option::Option<crate::value::Value<DoggieOptions>>,
-                std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<DoggieOptions>>>,
-                std_vec_vec_generic: std::option::Option<crate::value::Value<std::vec::Vec<DoggieOptions>>>,
-                std_option_option_std_vec_vec_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<DoggieOptions>>>>,
-                std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::vec::Vec<std::option::Option<DoggieOptions>>>>,
-                std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<std::option::Option<DoggieOptions>>>>>,          
+
+                #(#fields_token_stream),*
+
+                // std_string_string: std::option::Option<crate::value::Value<std::string::String>>,
+                // std_vec_vec_std_primitive_bool: std::option::Option<crate::value::Value<std::vec::Vec<std::primitive::bool>>>,
+                // generic: std::option::Option<crate::value::Value<DoggieOptions>>,
+                // std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<DoggieOptions>>>,
+                // std_vec_vec_generic: std::option::Option<crate::value::Value<std::vec::Vec<DoggieOptions>>>,
+                // std_option_option_std_vec_vec_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<DoggieOptions>>>>,
+                // std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::vec::Vec<std::option::Option<DoggieOptions>>>>,
+                // std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<std::option::Option<DoggieOptions>>>>>,
 
                 // std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
                 // std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>, std::string::String>>,
@@ -1383,7 +1386,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
         // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
         #impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream
-        // #pub_struct_ident_options_token_stream
+        #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
     };
     generated.into()

@@ -689,54 +689,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
     }
 }
 
-// SELECT 
-//     jsonb_build_object(
-//         'cats',
-//         (SELECT json_agg(jsonb_build_object('meow', value->>'meow')) 
-//          FROM json_array_elements(
-//                  (SELECT sqlx_types_json_t_as_postgresql_json_b_not_null->'cats')
-//              ) WITH ORDINALITY 
-//              WHERE ordinality BETWEEN 0 AND 4)
-//     ) AS sqlx_types_json_t_as_postgresql_json_b_not_null 
-// FROM jsongeneric 
-// WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1;
-
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait//serde::Deserialize,
-pub struct SomethingOptions {
-    std_string_string: std::option::Option<crate::value::Value<std::string::String>>,
-    std_vec_vec_std_primitive_bool: std::option::Option<crate::value::Value<std::vec::Vec<std::primitive::bool>>>,
-    generic: std::option::Option<crate::value::Value<DoggieOptions>>,
-    std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<DoggieOptions>>>,
-    std_vec_vec_generic: std::option::Option<crate::value::Value<std::vec::Vec<DoggieOptions>>>,
-    std_option_option_std_vec_vec_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<DoggieOptions>>>>,
-    std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::vec::Vec<std::option::Option<DoggieOptions>>>>,
-    std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<crate::value::Value<std::option::Option<std::vec::Vec<std::option::Option<DoggieOptions>>>>>,
-
-    // std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
-    // std_vec_vec_std_primitive_bool: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>, std::string::String>>,
-    // generic: std::option::Option<std::result::Result<DoggieOptions,std::string::String>>,
-    // std_option_option_generic: std::option::Option<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,
-    // std_vec_vec_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>,std::string::String>>,
-    // std_option_option_std_vec_vec_generic: std::option::Option<std::result::Result<
-    //     std::option::Option<std::vec::Vec<std::result::Result<DoggieOptions,std::string::String>>>,
-    //     std::string::String
-    // >>,
-    // std_vec_vec_std_option_option_generic: std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<DoggieOptions>,std::string::String>>,std::string::String>>,
-    // std_option_option_std_vec_vec_std_option_option_generic: std::option::Option<
-    //     std::result::Result<
-    //         std::option::Option<
-    //             std::vec::Vec<
-    //                 std::result::Result<
-    //                     std::option::Option<DoggieOptions>,
-    //                     std::string::String
-    //                 >
-    //             >
-    //         >,
-    //         std::string::String
-    //     >
-    // >,
-}
-
 impl<'de> serde::Deserialize<'de> for SomethingOptions {
     fn deserialize<__D>(
         __deserializer: __D,
@@ -1887,11 +1839,6 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartFromSelfVecErr
             )),
         }
     }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)] //user type must implement utoipa::ToSchema trait
-pub struct DoggieOptions {
-    std_string_string: std::option::Option<crate::value::Value<std::string::String>>,
-    // std_string_string: std::option::Option<std::result::Result<std::string::String, std::string::String>>,
 }
 
 impl<'de> serde::Deserialize<'de> for DoggieOptions {
