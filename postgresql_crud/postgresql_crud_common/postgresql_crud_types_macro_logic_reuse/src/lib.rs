@@ -2373,6 +2373,30 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         });
+        let visit_map_missing_fields_check_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+            let field_index_token_stream = {
+                let value = format!("__field{index}");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let field_ident_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+                &element.ident.as_ref().unwrap_or_else(|| {
+                    panic!(
+                        "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                        naming_conventions::FIELD_IDENT_IS_NONE
+                    );
+                }).to_string(),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{
+                let #field_index_token_stream = match #field_index_token_stream {
+                    serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
+                    serde::__private::None => {
+                        serde::__private::de::missing_field(#field_ident_quotes_token_stream)?
+                    }
+                };
+            }
+        });
         quote::quote!{
             impl<'de> serde::Deserialize<'de> for #ident_options_upper_camel_case_token_stream {
                 fn deserialize<__D>(
@@ -2501,64 +2525,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     }
                                 }
                             }
-                            let __field0 = match __field0 {
-                                serde::__private::Some(__field0) => __field0,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field("std_string_string")?
-                                }
-                            };
-                            let __field1 = match __field1 {
-                                serde::__private::Some(__field1) => __field1,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field(
-                                        "std_vec_vec_std_primitive_bool",
-                                    )?
-                                }
-                            };
-                            let __field2 = match __field2 {
-                                serde::__private::Some(__field2) => __field2,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field("generic")?
-                                }
-                            };
-                            let __field3 = match __field3 {
-                                serde::__private::Some(__field3) => __field3,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field(
-                                        "std_option_option_generic",
-                                    )?
-                                }
-                            };
-                            let __field4 = match __field4 {
-                                serde::__private::Some(__field4) => __field4,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field("std_vec_vec_generic")?
-                                }
-                            };
-                            let __field5 = match __field5 {
-                                serde::__private::Some(__field5) => __field5,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field(
-                                        "std_option_option_std_vec_vec_generic",
-                                    )?
-                                }
-                            };
-                            let __field6 = match __field6 {
-                                serde::__private::Some(__field6) => __field6,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field(
-                                        "std_vec_vec_std_option_option_generic",
-                                    )?
-                                }
-                            };
-                            let __field7 = match __field7 {
-                                serde::__private::Some(__field7) => __field7,
-                                serde::__private::None => {
-                                    serde::__private::de::missing_field(
-                                        "std_option_option_std_vec_vec_std_option_option_generic",
-                                    )?
-                                }
-                            };
+                            #(#visit_map_missing_fields_check_token_stream)*
                             serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
                                 std_string_string: match __field0 {
                                     Some(value) => 
