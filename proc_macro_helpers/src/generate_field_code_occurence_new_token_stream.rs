@@ -5,7 +5,7 @@ pub fn generate_field_code_occurence_new_token_stream(
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
     let code_occurence_new_token_stream = {
-        let file_token_stream = proc_macro_common::generate_quotes::token_stream(
+        let file_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
             file,
             proc_macro_name_upper_camel_case_ident_stringified,
         );

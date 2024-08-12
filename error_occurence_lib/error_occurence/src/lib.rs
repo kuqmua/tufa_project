@@ -101,7 +101,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let element_ident = &element.ident;
                                 quote::quote! {#element_ident,}
                             });
-                            let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                                 &fields.iter().filter(|element|
                                     *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()
                                 ).fold(std::string::String::new(), |mut acc, element| {

@@ -364,7 +364,7 @@ where
         &self,
         table_name_stringified: &str,
     ) -> std::string::String {
-        proc_macro_common::generate_quotes::stringified(&format!(
+        proc_macro_common::generate_quotes::double_quotes_stringified(&format!(
             "/{}/{}",
             table_name_stringified,
             self.to_snake_case_stringified(),
