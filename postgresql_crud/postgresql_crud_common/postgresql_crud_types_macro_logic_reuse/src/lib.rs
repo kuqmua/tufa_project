@@ -839,10 +839,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &ident_options_upper_camel_case_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
+    let ident_wrapper_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::WrapperUpperCamelCase);
     let ident_wrapper_upper_camel_case_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::WrapperUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        ident_wrapper_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_wrapper_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let impl_std_fmt_display_for_ident_token_stream = {
         quote::quote!{
@@ -2572,6 +2572,103 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             pub struct #ident_wrapper_upper_camel_case_token_stream(pub #ident_options_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
         }
     };
+    let impl_serde_deserialize_for_ident_wrapper_token_stream = {
+        let tuple_struct_ident_wrapper_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+            &format!("tuple struct {ident_wrapper_upper_camel_case_stringified}"),
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
+        let tuple_struct_ident_wrapper_with_1_element_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+            &format!("tuple struct {ident_wrapper_upper_camel_case_stringified} with 1 element"),
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
+        let ident_wrapper_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+            &ident_wrapper_upper_camel_case_stringified,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
+        quote::quote!{
+            impl<'de> serde::Deserialize<'de> for #ident_wrapper_upper_camel_case_token_stream {
+                fn deserialize<__D>(
+                    __deserializer: __D,
+                ) -> serde::__private::Result<Self, __D::Error>
+                where
+                    __D: serde::Deserializer<'de>,
+                {
+                    #[doc(hidden)]
+                    struct __Visitor<'de> {
+                        marker: serde::__private::PhantomData<#ident_wrapper_upper_camel_case_token_stream>,
+                        lifetime: serde::__private::PhantomData<&'de ()>,
+                    }
+                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                        type Value = #ident_wrapper_upper_camel_case_token_stream;
+                        fn expecting(
+                            &self,
+                            __formatter: &mut serde::__private::Formatter<'_>,
+                        ) -> serde::__private::fmt::Result {
+                            serde::__private::Formatter::write_str(
+                                __formatter,
+                                #tuple_struct_ident_wrapper_quotes_token_stream,
+                            )
+                        }
+                        #[inline]
+                        fn visit_newtype_struct<__E>(
+                            self,
+                            __e: __E,
+                        ) -> serde::__private::Result<Self::Value, __E::Error>
+                        where
+                            __E: serde::Deserializer<'de>,
+                        {
+                            let __field0: Result<#ident_options_upper_camel_case_token_stream, std::string::String> = <Result<
+                                #ident_options_upper_camel_case_token_stream,
+                                std::string::String,
+                            > as serde::Deserialize>::deserialize(__e)?;
+                            serde::__private::Ok(#ident_wrapper_upper_camel_case_token_stream(match __field0 {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(serde::de::Error::custom(error));
+                                }
+                            }))
+                        }
+                        #[inline]
+                        fn visit_seq<__A>(
+                            self,
+                            mut __seq: __A,
+                        ) -> serde::__private::Result<Self::Value, __A::Error>
+                        where
+                            __A: serde::de::SeqAccess<'de>,
+                        {
+                            let __field0 = match serde::de::SeqAccess::next_element::<
+                                Result<#ident_options_upper_camel_case_token_stream, std::string::String>,
+                            >(&mut __seq)? {
+                                serde::__private::Some(__value) => __value,
+                                serde::__private::None => {
+                                    return serde::__private::Err(
+                                        serde::de::Error::invalid_length(
+                                            0usize,
+                                            &#tuple_struct_ident_wrapper_with_1_element_quotes_token_stream,
+                                        ),
+                                    );
+                                }
+                            };
+                            serde::__private::Ok(#ident_wrapper_upper_camel_case_token_stream(match __field0 {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(serde::de::Error::custom(error));
+                                }
+                            }))
+                        }
+                    }
+                    serde::Deserializer::deserialize_newtype_struct(
+                        __deserializer,
+                        #ident_wrapper_quotes_token_stream,
+                        __Visitor {
+                            marker: serde::__private::PhantomData::<#ident_wrapper_upper_camel_case_token_stream>,
+                            lifetime: serde::__private::PhantomData,
+                        },
+                    )
+                }
+            }
+        }
+    };
     // let impl_serde_deserialize_for_ident_options_token_stream = if ident.to_string() == "Something" {
     //     impl_serde_deserialize_for_ident_options_token_stream   
     // }
@@ -2588,6 +2685,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_std_convert_from_ident_for_ident_options_token_stream
         #impl_serde_deserialize_for_ident_options_token_stream
         #ident_wrapper_token_stream
+        #impl_serde_deserialize_for_ident_wrapper_token_stream
     };
     generated.into()
 }
