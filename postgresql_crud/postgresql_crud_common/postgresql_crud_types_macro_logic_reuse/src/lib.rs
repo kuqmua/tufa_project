@@ -2399,6 +2399,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
             }
         });
+        let fields_array_elements_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+            proc_macro_common::generate_quotes::token_stream(
+                &element.ident.as_ref().unwrap_or_else(|| {
+                    panic!(
+                        "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                        naming_conventions::FIELD_IDENT_IS_NONE
+                    );
+                }).to_string(),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            )
+        });
         quote::quote!{
             impl<'de> serde::Deserialize<'de> for #ident_options_upper_camel_case_token_stream {
                 fn deserialize<__D>(
@@ -2535,14 +2546,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     #[doc(hidden)]
                     const FIELDS: &'static [&'static str] = &[
-                        "std_string_string",
-                        "std_vec_vec_std_primitive_bool",
-                        "generic",
-                        "std_option_option_generic",
-                        "std_vec_vec_generic",
-                        "std_option_option_std_vec_vec_generic",
-                        "std_vec_vec_std_option_option_generic",
-                        "std_option_option_std_vec_vec_std_option_option_generic",
+                        #(#fields_array_elements_token_stream),*
                     ];
                     serde::Deserializer::deserialize_struct(
                         __deserializer,
@@ -2557,12 +2561,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let impl_serde_deserialize_for_ident_options_token_stream = if ident.to_string() == "Something" {
-        impl_serde_deserialize_for_ident_options_token_stream   
-    }
-    else {
-        proc_macro2::TokenStream::new()
-    };
+    // let impl_serde_deserialize_for_ident_options_token_stream = if ident.to_string() == "Something" {
+    //     impl_serde_deserialize_for_ident_options_token_stream   
+    // }
+    // else {
+    //     proc_macro2::TokenStream::new()
+    // };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
