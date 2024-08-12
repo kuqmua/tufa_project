@@ -839,6 +839,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &ident_options_upper_camel_case_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
+    let ident_wrapper_upper_camel_case_token_stream = {
+        let value = format!("{ident}{}", naming_conventions::WrapperUpperCamelCase);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let impl_std_fmt_display_for_ident_token_stream = {
         quote::quote!{
             impl std::fmt::Display for #ident {
@@ -2561,6 +2566,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    let ident_wrapper_token_stream = {
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize
+            pub struct #ident_wrapper_upper_camel_case_token_stream(pub #ident_options_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
+        }
+    };
     // let impl_serde_deserialize_for_ident_options_token_stream = if ident.to_string() == "Something" {
     //     impl_serde_deserialize_for_ident_options_token_stream   
     // }
@@ -2576,6 +2587,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
         #impl_serde_deserialize_for_ident_options_token_stream
+        #ident_wrapper_token_stream
     };
     generated.into()
 }

@@ -618,9 +618,6 @@ impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVec
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize
-pub struct SomethingWrapper(pub SomethingOptions);//pub Result<SomethingOptions,std::string::String>
-
 impl<'de> serde::Deserialize<'de> for SomethingWrapper {
     fn deserialize<__D>(
         __deserializer: __D,
