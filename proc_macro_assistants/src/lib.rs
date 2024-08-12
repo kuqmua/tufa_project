@@ -30,11 +30,11 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
             let variant_ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&variant_ident.to_string());
-            let variant_ident_upper_camel_case_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            let variant_ident_upper_camel_case_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &variant_ident_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_upper_camel_case_quotes_token_stream)}
+            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_upper_camel_case_double_quotes_token_stream)}
         },
         syn::Fields::Named(_) | 
         syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
@@ -95,11 +95,11 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
             let variant_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_ident.to_string());
-            let variant_ident_snake_case_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            let variant_ident_snake_case_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &variant_ident_snake_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_quotes_token_stream)}
+            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
         },
         syn::Fields::Named(_) | 
         syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit")
@@ -161,11 +161,11 @@ pub fn to_screaming_snake_case_stringified(
         syn::Fields::Unit => {
             let variant_ident = &variant.ident;
             let variant_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToScreamingSnakeCaseStringified::to_screaming_snake_case_stringified(&variant_ident.to_string());
-            let variant_ident_snake_case_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            let variant_ident_snake_case_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &variant_ident_snake_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_quotes_token_stream)}
+            quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
         },
         syn::Fields::Named(_) | 
         syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),

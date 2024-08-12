@@ -31,11 +31,11 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
             }
             acc
         });
-        let phrase_part_upper_camel_case_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let phrase_part_upper_camel_case_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &phrase_part_upper_camel_case_stringified,
             &proc_macro_name_snake_case_stringified
         );
-        let phrase_part_snake_case_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let phrase_part_snake_case_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &phrase_part_snake_case_stringified,
             &proc_macro_name_snake_case_stringified
         );
@@ -72,11 +72,11 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
         };
         let upper_camel_case_display_implementation_token_stream = generate_display_implementation_token_stream(
             &phrase_part_upper_camel_case_upper_camel_case_token_stream,
-            &phrase_part_upper_camel_case_quotes_token_stream
+            &phrase_part_upper_camel_case_double_quotes_token_stream
         );
         let snake_case_display_implementation_token_stream = generate_display_implementation_token_stream(
             &phrase_part_snake_case_upper_camel_case_token_stream,
-            &phrase_part_snake_case_quotes_token_stream
+            &phrase_part_snake_case_double_quotes_token_stream
         );
         let generate_to_tokens_implementation_token_stream = |
             struct_name_token_stream: &proc_macro2::TokenStream,

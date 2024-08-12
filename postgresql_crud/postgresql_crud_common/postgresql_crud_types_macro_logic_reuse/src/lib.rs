@@ -835,7 +835,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         ident_options_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_options_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let ident_options_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+    let ident_options_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
         &ident_options_upper_camel_case_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
@@ -871,7 +871,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     naming_conventions::FIELD_IDENT_IS_NONE
                 );
             }).to_string();
-            let serialize_deserialize_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            let serialize_deserialize_field_ident_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &field_ident_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
@@ -1033,8 +1033,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             };
             quote::quote!{
                 #[serde(rename(
-                   serialize = #serialize_deserialize_field_ident_quotes_token_stream,
-                   deserialize = #serialize_deserialize_field_ident_quotes_token_stream
+                   serialize = #serialize_deserialize_field_ident_double_quotes_token_stream,
+                   deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream
                 ))]
                 #variant_ident_upper_camel_case_token_stream #maybe_additional_token_stream
             }
@@ -1543,7 +1543,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         let visit_str_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
-            let field_name_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            let field_name_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &{
                      element.ident.as_ref().unwrap_or_else(|| {
                         panic!(
@@ -1560,17 +1560,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote!{
-                #field_name_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+                #field_name_double_quotes_token_stream=> serde::__private::Ok(__Field::#field_index_token_stream)
             }
         });
         let visit_bytes_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
-            let b_field_name_quotes_token_stream = {
-                let element_ident_quotes_stringified = proc_macro_common::generate_quotes::double_quotes_stringified(
+            let b_field_name_double_quotes_token_stream= {
+                let element_ident_double_quotes_stringified = proc_macro_common::generate_quotes::double_quotes_stringified(
                     &element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                     }).to_string()
                 );
-                let value = format!("b{element_ident_quotes_stringified}");
+                let value = format!("b{element_ident_double_quotes_stringified}");
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
@@ -1580,14 +1580,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote!{
-                #b_field_name_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+                #b_field_name_double_quotes_token_stream=> serde::__private::Ok(__Field::#field_index_token_stream)
             }
         });
-        let struct_ident_options_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let struct_ident_options_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!("struct {ident_options_upper_camel_case_stringified}"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let struct_ident_options_with_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let struct_ident_options_with_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!(
                 "struct {ident_options_upper_camel_case_stringified} with {} elements",
                 vec_syn_field.len()
@@ -1726,7 +1726,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         return serde::__private::Err(
                             serde::de::Error::invalid_length(
                                 #index_usize_token_stream,
-                                &#struct_ident_options_with_quotes_token_stream,
+                                &#struct_ident_options_with_double_quotes_token_stream,
                             ),
                         );
                     }
@@ -2135,7 +2135,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let field_ident_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            let field_ident_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &element.ident.as_ref().unwrap_or_else(|| {
                     panic!(
                         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -2263,7 +2263,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     if serde::__private::Option::is_some(&#field_index_token_stream) {
                         return serde::__private::Err(
                             <__A::Error as serde::de::Error>::duplicate_field(
-                                #field_ident_quotes_token_stream,
+                                #field_ident_double_quotes_token_stream,
                             ),
                         );
                     }
@@ -2286,7 +2286,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let field_ident_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            let field_ident_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &element.ident.as_ref().unwrap_or_else(|| {
                     panic!(
                         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -2299,7 +2299,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let #field_index_token_stream = match #field_index_token_stream {
                     serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
                     serde::__private::None => {
-                        serde::__private::de::missing_field(#field_ident_quotes_token_stream)?
+                        serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
                     }
                 };
             }
@@ -2406,7 +2406,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ) -> serde::__private::fmt::Result {
                             serde::__private::Formatter::write_str(
                                 __formatter,
-                                #struct_ident_options_quotes_token_stream,
+                                #struct_ident_options_double_quotes_token_stream,
                             )
                         }
                         #[inline]
@@ -2455,7 +2455,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ];
                     serde::Deserializer::deserialize_struct(
                         __deserializer,
-                        #ident_options_quotes_token_stream,
+                        #ident_options_double_quotes_token_stream,
                         FIELDS,
                         __Visitor {
                             marker: serde::__private::PhantomData::<#ident_options_upper_camel_case_token_stream>,
@@ -2473,15 +2473,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_serde_deserialize_for_ident_wrapper_token_stream = {
-        let tuple_struct_ident_wrapper_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let tuple_struct_ident_wrapper_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!("tuple struct {ident_wrapper_upper_camel_case_stringified}"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let tuple_struct_ident_wrapper_with_1_element_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let tuple_struct_ident_wrapper_with_1_element_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!("tuple struct {ident_wrapper_upper_camel_case_stringified} with 1 element"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let ident_wrapper_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let ident_wrapper_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &ident_wrapper_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
@@ -2506,7 +2506,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ) -> serde::__private::fmt::Result {
                             serde::__private::Formatter::write_str(
                                 __formatter,
-                                #tuple_struct_ident_wrapper_quotes_token_stream,
+                                #tuple_struct_ident_wrapper_double_quotes_token_stream,
                             )
                         }
                         #[inline]
@@ -2544,7 +2544,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             0usize,
-                                            &#tuple_struct_ident_wrapper_with_1_element_quotes_token_stream,
+                                            &#tuple_struct_ident_wrapper_with_1_element_double_quotes_token_stream,
                                         ),
                                     );
                                 }
@@ -2559,7 +2559,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     serde::Deserializer::deserialize_newtype_struct(
                         __deserializer,
-                        #ident_wrapper_quotes_token_stream,
+                        #ident_wrapper_double_quotes_token_stream,
                         __Visitor {
                             marker: serde::__private::PhantomData::<#ident_wrapper_upper_camel_case_token_stream>,
                             lifetime: serde::__private::PhantomData,
