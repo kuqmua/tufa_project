@@ -249,374 +249,374 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed, SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
-    fn generate_postgresql_query_part_from_self_vec(
-        value: &std::vec::Vec<Self>,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        is_optional: std::primitive::bool,
-    ) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed> {
-        if value.is_empty() {
-            return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::FieldsFilterIsEmpty {
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        let mut unique = vec![];
-        for element in value {
-            if unique.contains(&element) {
-                return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::NotUniqueFieldFilter {
-                    field: element.clone(),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-            else {
-                unique.push(&element);
-            }
-        }
-        let mut acc = std::string::String::default();
-        for element in value {
-            match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
-                Ok(value) => {
-                    acc.push_str(&format!("{value},"));
-                }
-                Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::GeneratePostgresqlQueryPart {
-                        error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            }
-        }
-        let _ = acc.pop();
-        let is_optional_query_part = match is_optional {
-            true => format!(r#"
-                when jsonb_typeof({column_name_and_maybe_field_getter}) = 'null' then
-                    jsonb_build_object(
-                        'Ok',
-                        null
-                    )
-            "#),
-            false => std::string::String::default()
-        };
-        Ok(format!(r#"
-            case 
-                when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then 
-                    jsonb_build_object(
-                        'Ok',
-                        jsonb_build_object({acc})
-                    )
-                {is_optional_query_part}
-                else 
-                    jsonb_build_object(
-                        'Err',
-                        'todo error message'
-                    ) 
-            end
-        "#))
-    }
-    fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
-        match self {
-            Self::StdStringString => Ok(format!(r#"
-                'std_string_string',
-                case 
-                    when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then
-                        jsonb_build_object(
-                            'Ok',
-                            {column_name_and_maybe_field_getter}->'std_string_string'
-                        )
-                    else 
-                        jsonb_build_object('Err','todo this must be error message')
-                end 
-            "#)),
-            Self::StdVecVecStdPrimitiveBool {
-                limit,
-                offset
-            } => {
-                let start = offset;
-                let end = match offset.checked_add(*limit) {
-                    Some(value) => value,
-                    None => {
-                        return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
-                            limit: *limit,
-                            offset: *offset,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                };
-                Ok(format!(r#"
-                    'std_vec_vec_std_primitive_bool',
-                    case 
-                        when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool') = 'array' then 
-                            jsonb_build_object(
-                                'Ok',
-                                (
-                                    select jsonb_agg(
-                                        case 
-                                            when jsonb_typeof(value) = 'boolean' then 
-                                                jsonb_build_object(
-                                                  'Ok', 
-                                                  value
-                                                ) 
-                                          else 
-                                            jsonb_build_object(
-                                                'Err', 
-                                                'todo error message'
-                                            ) 
-                                        end
-                                    ) 
-                                    from jsonb_array_elements(
-                                        (select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')
-                                    )
-                                    with ordinality 
-                                    where ordinality between {start} and {end}
-                                )
-                            )
-                        else 
-                            jsonb_build_object(
-                                'Err', 
-                                'todo this must be error message'
-                            ) 
-                    end
-                "#))
-            },
-            Self::Generic(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                fields_vec,
-                &format!("{column_name_and_maybe_field_getter}->'generic'"),
-                false
-            ) {
-                Ok(value) => Ok(format!("'generic',{value}")),
-                Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
-                        field: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            },
-            Self::StdOptionOptionGeneric(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                fields_vec,
-                &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"),
-                true
-            ) {
-                Ok(value) => Ok(format!("'std_option_option_generic',{value}")),
-                Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
-                        field: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            },
-            Self::StdVecVecGeneric {
-                field_vec,
-                limit,
-                offset
-            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                field_vec,
-                &format!("value"),
-                false
-            ) {
-                Ok(value) => {
-                    let start = offset;
-                    let end = match offset.checked_add(*limit) {
-                        Some(value) => value,
-                        None => {
-                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
-                                limit: *limit,
-                                offset: *offset,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                    };
-                    Ok(format!(r#"
-                        'std_vec_vec_generic',
-                        case 
-                            when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_generic') = 'array' then
-                                jsonb_build_object(
-                                    'Ok',
-                                    (
-                                        select jsonb_agg({value}) 
-                                        from jsonb_array_elements(
-                                            (select {column_name_and_maybe_field_getter}->'std_vec_vec_generic')
-                                        ) 
-                                        with ordinality 
-                                        where ordinality between {start} and {end}
-                                    )
-                                )
-                            else 
-                                jsonb_build_object(
-                                    'Err',
-                                    'todo error message'
-                                )
-                        end
-                    "#))
-                },
-                Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
-                        field: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            },
-            Self::StdOptionOptionStdVecVecGeneric {
-                field_vec,
-                limit,
-                offset
-            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                field_vec,
-                &format!("value"),
-                false
-            ) {
-                Ok(value) => {
-                    let start = offset;
-                    let end = match offset.checked_add(*limit) {
-                        Some(value) => value,
-                        None => {
-                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
-                                limit: *limit,
-                                offset: *offset,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                    };
-                    Ok(format!(r#"
-                        'std_option_option_std_vec_vec_generic',
-                        case 
-                            when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic') = 'array' then
-                                jsonb_build_object(
-                                    'Ok',
-                                    (
-                                        select jsonb_agg({value}) 
-                                        from jsonb_array_elements(
-                                            (select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic')
-                                        ) 
-                                        with ordinality 
-                                        where ordinality between {start} and {end}
-                                    )
-                                )
-                            when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic') = 'null' then
-                                jsonb_build_object(
-                                    'Ok',
-                                    null
-                                )
-                            else 
-                                jsonb_build_object(
-                                    'Err',
-                                    'todo error message'
-                                )
-                        end
-                    "#))
-                },
-                Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
-                        field: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            },
-            Self::StdVecVecStdOptionOptionGeneric {
-                field_vec,
-                limit,
-                offset
-            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                field_vec,
-                &format!("value"),
-                true
-            ) {
-                Ok(value) => {
-                    let start = offset;
-                    let end = match offset.checked_add(*limit) {
-                        Some(value) => value,
-                        None => {
-                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
-                                limit: *limit,
-                                offset: *offset,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                    };
-                    Ok(format!(r#"
-                        'std_vec_vec_std_option_option_generic',
-                        case 
-                        	when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_generic') = 'array' then 
-                        		jsonb_build_object(
-                        			'Ok',
-                        			(
-                        				select jsonb_agg({value}) 
-                        				from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_generic')) 
-                        				with ordinality 
-                        				where ordinality between {start} and {end}
-                        			)
-                        		)
-                        	else 
-                        		jsonb_build_object(
-                        			'Err',
-                        			'todo error message'
-                        		) 
-                        end
-                    "#))
-                },
-                Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
-                        field: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            },
-            Self::StdOptionOptionStdVecVecStdOptionOptionGeneric {
-                field_vec,
-                limit,
-                offset
-            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                field_vec,
-                &format!("value"),
-                true
-            ) {
-                Ok(value) => {
-                    let start = offset;
-                    let end = match offset.checked_add(*limit) {
-                        Some(value) => value,
-                        None => {
-                            return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
-                                limit: *limit,
-                                offset: *offset,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                    };
-                    Ok(format!(r#"
-                        'std_option_option_std_vec_vec_std_option_option_generic',
-                        case 
-                        	when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_generic') = 'array' then 
-                        		jsonb_build_object(
-                        			'Ok',
-                        			(
-                        				select jsonb_agg({value}) 
-                        				from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_generic')) 
-                        				with ordinality 
-                        				where ordinality between {start} and {end}
-                        			)
-                        		)
-                            when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_generic') = 'null' then
-                            	jsonb_build_object(
-                            		'Ok',
-                            		null
-                            	)
-                        	else 
-                        		jsonb_build_object(
-                        			'Err',
-                        			'todo error message'
-                        		) 
-                        end
-                    "#))
-                },
-                Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
-                        field: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            },
-        }
-    }
-}
+// impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed, SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
+//     fn generate_postgresql_query_part_from_self_vec(
+//         value: &std::vec::Vec<Self>,
+//         column_name_and_maybe_field_getter: &std::primitive::str,
+//         is_optional: std::primitive::bool,
+//     ) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed> {
+//         if value.is_empty() {
+//             return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::FieldsFilterIsEmpty {
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             });
+//         }
+//         let mut unique = vec![];
+//         for element in value {
+//             if unique.contains(&element) {
+//                 return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::NotUniqueFieldFilter {
+//                     field: element.clone(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 });
+//             }
+//             else {
+//                 unique.push(&element);
+//             }
+//         }
+//         let mut acc = std::string::String::default();
+//         for element in value {
+//             match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
+//                 Ok(value) => {
+//                     acc.push_str(&format!("{value},"));
+//                 }
+//                 Err(error) => {
+//                     return Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::GeneratePostgresqlQueryPart {
+//                         error,
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             }
+//         }
+//         let _ = acc.pop();
+//         let is_optional_query_part = match is_optional {
+//             true => format!(r#"
+//                 when jsonb_typeof({column_name_and_maybe_field_getter}) = 'null' then
+//                     jsonb_build_object(
+//                         'Ok',
+//                         null
+//                     )
+//             "#),
+//             false => std::string::String::default()
+//         };
+//         Ok(format!(r#"
+//             case 
+//                 when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then 
+//                     jsonb_build_object(
+//                         'Ok',
+//                         jsonb_build_object({acc})
+//                     )
+//                 {is_optional_query_part}
+//                 else 
+//                     jsonb_build_object(
+//                         'Err',
+//                         'todo error message'
+//                     ) 
+//             end
+//         "#))
+//     }
+//     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartErrorNamed> {
+//         match self {
+//             Self::StdStringString => Ok(format!(r#"
+//                 'std_string_string',
+//                 case 
+//                     when jsonb_typeof({column_name_and_maybe_field_getter}->'std_string_string') = 'string' then
+//                         jsonb_build_object(
+//                             'Ok',
+//                             {column_name_and_maybe_field_getter}->'std_string_string'
+//                         )
+//                     else 
+//                         jsonb_build_object('Err','todo this must be error message')
+//                 end 
+//             "#)),
+//             Self::StdVecVecStdPrimitiveBool {
+//                 limit,
+//                 offset
+//             } => {
+//                 let start = offset;
+//                 let end = match offset.checked_add(*limit) {
+//                     Some(value) => value,
+//                     None => {
+//                         return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+//                             limit: *limit,
+//                             offset: *offset,
+//                             code_occurence: error_occurence_lib::code_occurence!(),
+//                         });
+//                     }
+//                 };
+//                 Ok(format!(r#"
+//                     'std_vec_vec_std_primitive_bool',
+//                     case 
+//                         when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool') = 'array' then 
+//                             jsonb_build_object(
+//                                 'Ok',
+//                                 (
+//                                     select jsonb_agg(
+//                                         case 
+//                                             when jsonb_typeof(value) = 'boolean' then 
+//                                                 jsonb_build_object(
+//                                                   'Ok', 
+//                                                   value
+//                                                 ) 
+//                                           else 
+//                                             jsonb_build_object(
+//                                                 'Err', 
+//                                                 'todo error message'
+//                                             ) 
+//                                         end
+//                                     ) 
+//                                     from jsonb_array_elements(
+//                                         (select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_bool')
+//                                     )
+//                                     with ordinality 
+//                                     where ordinality between {start} and {end}
+//                                 )
+//                             )
+//                         else 
+//                             jsonb_build_object(
+//                                 'Err', 
+//                                 'todo this must be error message'
+//                             ) 
+//                     end
+//                 "#))
+//             },
+//             Self::Generic(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+//                 fields_vec,
+//                 &format!("{column_name_and_maybe_field_getter}->'generic'"),
+//                 false
+//             ) {
+//                 Ok(value) => Ok(format!("'generic',{value}")),
+//                 Err(error) => {
+//                     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+//                         field: error,
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             },
+//             Self::StdOptionOptionGeneric(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+//                 fields_vec,
+//                 &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"),
+//                 true
+//             ) {
+//                 Ok(value) => Ok(format!("'std_option_option_generic',{value}")),
+//                 Err(error) => {
+//                     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+//                         field: error,
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             },
+//             Self::StdVecVecGeneric {
+//                 field_vec,
+//                 limit,
+//                 offset
+//             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+//                 field_vec,
+//                 &format!("value"),
+//                 false
+//             ) {
+//                 Ok(value) => {
+//                     let start = offset;
+//                     let end = match offset.checked_add(*limit) {
+//                         Some(value) => value,
+//                         None => {
+//                             return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+//                                 limit: *limit,
+//                                 offset: *offset,
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             });
+//                         }
+//                     };
+//                     Ok(format!(r#"
+//                         'std_vec_vec_generic',
+//                         case 
+//                             when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_generic') = 'array' then
+//                                 jsonb_build_object(
+//                                     'Ok',
+//                                     (
+//                                         select jsonb_agg({value}) 
+//                                         from jsonb_array_elements(
+//                                             (select {column_name_and_maybe_field_getter}->'std_vec_vec_generic')
+//                                         ) 
+//                                         with ordinality 
+//                                         where ordinality between {start} and {end}
+//                                     )
+//                                 )
+//                             else 
+//                                 jsonb_build_object(
+//                                     'Err',
+//                                     'todo error message'
+//                                 )
+//                         end
+//                     "#))
+//                 },
+//                 Err(error) => {
+//                     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+//                         field: error,
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             },
+//             Self::StdOptionOptionStdVecVecGeneric {
+//                 field_vec,
+//                 limit,
+//                 offset
+//             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+//                 field_vec,
+//                 &format!("value"),
+//                 false
+//             ) {
+//                 Ok(value) => {
+//                     let start = offset;
+//                     let end = match offset.checked_add(*limit) {
+//                         Some(value) => value,
+//                         None => {
+//                             return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+//                                 limit: *limit,
+//                                 offset: *offset,
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             });
+//                         }
+//                     };
+//                     Ok(format!(r#"
+//                         'std_option_option_std_vec_vec_generic',
+//                         case 
+//                             when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic') = 'array' then
+//                                 jsonb_build_object(
+//                                     'Ok',
+//                                     (
+//                                         select jsonb_agg({value}) 
+//                                         from jsonb_array_elements(
+//                                             (select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic')
+//                                         ) 
+//                                         with ordinality 
+//                                         where ordinality between {start} and {end}
+//                                     )
+//                                 )
+//                             when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic') = 'null' then
+//                                 jsonb_build_object(
+//                                     'Ok',
+//                                     null
+//                                 )
+//                             else 
+//                                 jsonb_build_object(
+//                                     'Err',
+//                                     'todo error message'
+//                                 )
+//                         end
+//                     "#))
+//                 },
+//                 Err(error) => {
+//                     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+//                         field: error,
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             },
+//             Self::StdVecVecStdOptionOptionGeneric {
+//                 field_vec,
+//                 limit,
+//                 offset
+//             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+//                 field_vec,
+//                 &format!("value"),
+//                 true
+//             ) {
+//                 Ok(value) => {
+//                     let start = offset;
+//                     let end = match offset.checked_add(*limit) {
+//                         Some(value) => value,
+//                         None => {
+//                             return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+//                                 limit: *limit,
+//                                 offset: *offset,
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             });
+//                         }
+//                     };
+//                     Ok(format!(r#"
+//                         'std_vec_vec_std_option_option_generic',
+//                         case 
+//                         	when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_generic') = 'array' then 
+//                         		jsonb_build_object(
+//                         			'Ok',
+//                         			(
+//                         				select jsonb_agg({value}) 
+//                         				from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_generic')) 
+//                         				with ordinality 
+//                         				where ordinality between {start} and {end}
+//                         			)
+//                         		)
+//                         	else 
+//                         		jsonb_build_object(
+//                         			'Err',
+//                         			'todo error message'
+//                         		) 
+//                         end
+//                     "#))
+//                 },
+//                 Err(error) => {
+//                     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+//                         field: error,
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             },
+//             Self::StdOptionOptionStdVecVecStdOptionOptionGeneric {
+//                 field_vec,
+//                 limit,
+//                 offset
+//             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+//                 field_vec,
+//                 &format!("value"),
+//                 true
+//             ) {
+//                 Ok(value) => {
+//                     let start = offset;
+//                     let end = match offset.checked_add(*limit) {
+//                         Some(value) => value,
+//                         None => {
+//                             return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::OffsetPlusLimitIsIntOverflow {
+//                                 limit: *limit,
+//                                 offset: *offset,
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             });
+//                         }
+//                     };
+//                     Ok(format!(r#"
+//                         'std_option_option_std_vec_vec_std_option_option_generic',
+//                         case 
+//                         	when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_generic') = 'array' then 
+//                         		jsonb_build_object(
+//                         			'Ok',
+//                         			(
+//                         				select jsonb_agg({value}) 
+//                         				from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_generic')) 
+//                         				with ordinality 
+//                         				where ordinality between {start} and {end}
+//                         			)
+//                         		)
+//                             when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_generic') = 'null' then
+//                             	jsonb_build_object(
+//                             		'Ok',
+//                             		null
+//                             	)
+//                         	else 
+//                         		jsonb_build_object(
+//                         			'Err',
+//                         			'todo error message'
+//                         		) 
+//                         end
+//                     "#))
+//                 },
+//                 Err(error) => {
+//                     return Err(SomethingGeneratePostgresqlQueryPartErrorNamed::DoggieGeneratePostgresqlQueryPartFromSelfVec {
+//                         field: error,
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             },
+//         }
+//     }
+// }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlQueryPart

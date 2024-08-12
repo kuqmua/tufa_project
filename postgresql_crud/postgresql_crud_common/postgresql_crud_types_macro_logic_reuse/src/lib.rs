@@ -2941,12 +2941,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    // let impl_serde_deserialize_for_ident_options_token_stream = if ident.to_string() == "Something" {
-    //     impl_serde_deserialize_for_ident_options_token_stream   
-    // }
-    // else {
-    //     proc_macro2::TokenStream::new()
-    // };
+    let impl_generate_postgresql_query_part_for_ident_field_token_stream = if ident.to_string() == "Something" {
+        impl_generate_postgresql_query_part_for_ident_field_token_stream   
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
@@ -2958,6 +2958,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_options_token_stream
         #ident_wrapper_token_stream
         #impl_serde_deserialize_for_ident_wrapper_token_stream
+        #impl_generate_postgresql_query_part_for_ident_field_token_stream
     };
     generated.into()
 }
