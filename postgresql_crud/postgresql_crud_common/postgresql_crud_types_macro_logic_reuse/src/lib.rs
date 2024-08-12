@@ -2094,6 +2094,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         });
+        //its just #(#visit_seq_fields_assignment_token_stream),* reusage making move error 
+        let visit_seq_fields_assignment_handle_token_stream = quote::quote!{#(#visit_seq_fields_assignment_token_stream),*};
         let visit_map_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
             let field_index_token_stream = {
                 let value = format!("__field{index}");
@@ -2501,7 +2503,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         {
                             #(#visit_seq_fields_initialization_token_stream)*
                             serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
-                                #(#visit_seq_fields_assignment_token_stream),*
+                                #visit_seq_fields_assignment_handle_token_stream
                             })
                         }
                         #[inline]
@@ -2527,153 +2529,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                             #(#visit_map_missing_fields_check_token_stream)*
                             serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
-                                std_string_string: match __field0 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => Some(crate::value::Value{ value }),
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_vec_vec_std_primitive_bool: match __field1 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => {
-                                            let mut acc = vec![];
-                                            for element in value {
-                                                match element {
-                                                    Ok(value) => {
-                                                        acc.push(value);
-                                                    }
-                                                    Err(error) => {
-                                                        return Err(serde::de::Error::custom(error));
-                                                    }
-                                                }
-                                            }
-                                            Some(crate::value::Value{ value: acc })
-                                        },
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                generic: match __field2 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => Some(crate::value::Value{ value }),
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_option_option_generic: match __field3 {
-                                    Some(value) => 
-                                    match value {
-                                        Ok(value) => Some(crate::value::Value{ value }),
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_vec_vec_generic: match __field4 {
-                                    Some(value) => match value {
-                                        Ok(value) => {
-                                            let mut acc = vec![];
-                                            for element in value {
-                                                match element {
-                                                    Ok(value) => {
-                                                        acc.push(value);
-                                                    }
-                                                    Err(error) => {
-                                                        return Err(serde::de::Error::custom(error));
-                                                    }
-                                                }
-                                            }
-                                            Some(crate::value::Value{ value: acc })
-                                        },
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_option_option_std_vec_vec_generic: match __field5 {
-                                    Some(value) => match value {
-                                        Ok(value) => match value {
-                                            Some(value) => {
-                                                let mut acc = vec![];
-                                                for element in value {
-                                                    match element {
-                                                        Ok(value) => {
-                                                            acc.push(value);
-                                                        }
-                                                        Err(error) => {
-                                                            return Err(serde::de::Error::custom(error));
-                                                        }
-                                                    }
-                                                }
-                                                Some(crate::value::Value{ value: Some(acc) })
-                                            }
-                                            None => Some(crate::value::Value{ value: None })
-                                        },
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_vec_vec_std_option_option_generic: match __field6 {
-                                    Some(value) => match value {
-                                        Ok(value) => {
-                                            let mut acc = vec![];
-                                            for element in value {
-                                                match element {
-                                                    Ok(value) => {
-                                                        acc.push(value);
-                                                    }
-                                                    Err(error) => {
-                                                        return Err(serde::de::Error::custom(error));
-                                                    }
-                                                }
-                                            }
-                                            Some(crate::value::Value{ value: acc })
-                                        }
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    },
-                                    None => None
-                                },
-                                std_option_option_std_vec_vec_std_option_option_generic: match __field7 {
-                                    Some(value) => match value {
-                                        Ok(value) => match value {
-                                            Some(value) => {
-                                                let mut acc = vec![];
-                                                for element in value {
-                                                    match element {
-                                                        Ok(value) => {
-                                                            acc.push(value);
-                                                        }
-                                                        Err(error) => {
-                                                            return Err(serde::de::Error::custom(error));
-                                                        }
-                                                    }
-                                                }
-                                                Some(crate::value::Value{ value: Some(acc) })
-                                            }
-                                            None => Some(crate::value::Value{ value: None })
-                                        }
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    }
-                                    None => None
-                                },
+                                #visit_seq_fields_assignment_handle_token_stream
                             })
                         }
                     }
