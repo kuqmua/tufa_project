@@ -2787,6 +2787,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                         quote::quote!{
+                            //todo add path to GeneratePostgresqlQueryPart trait?
                             Self::#element_ident_upper_camel_case_token_stream(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 fields_vec,
                                 &format!(#first_query_string_token_stream),
@@ -2803,8 +2804,30 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
-                        let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{std::option::Option<#generic_ident_options_upper_camel_case_token_stream>}
+                        let first_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let second_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("'{el_ident_str}',{{value}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            Self::#element_ident_upper_camel_case_token_stream(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                fields_vec,
+                                &format!(#first_query_string_token_stream),
+                                true
+                            ) {
+                                Ok(value) => Ok(format!(#second_query_string_token_stream)),
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            },
+                        }
                     }
                     SupportedPredefinedType::StdVecVecGeneric(type_path) => {
                         let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
