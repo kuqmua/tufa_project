@@ -2620,6 +2620,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         Ok(format!(#query_string_token_stream))
                     }
                 };
+                let generate_optional_simple_json_type = |json_type: JsonType|{
+                    let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!(
+"'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end "
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        Ok(format!(#query_string_token_stream))
+                    }
+                };
                 let generate_vec_simple_json_type = |json_type: JsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!(
@@ -2676,20 +2687,35 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
 
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::primitive::i8>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::primitive::i16>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::primitive::i32>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::primitive::i64>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::primitive::i128>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::primitive::u8>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::primitive::u16>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::primitive::u32>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::primitive::u64>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::primitive::u128>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::primitive::f32>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::primitive::f64>},
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::primitive::bool>},
-                    SupportedPredefinedType::StdOptionOptionStdStringString => quote::quote!{std::option::Option<std::string::String>},
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => {
+                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::Number);
+                        quote::quote!{
+                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => {
+                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::Boolean);
+                        quote::quote!{
+                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdStringString => {
+                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::String);
+                        quote::quote!{
+                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
+                        }
+                    },
 
                     SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
                     SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
