@@ -2871,16 +2871,55 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                     SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
-                        let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<#generic_ident_options_upper_camel_case_token_stream,std::string::String>>>}
+                        let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!(
+"'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end"
+                            ),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            Self::#element_ident_upper_camel_case_token_stream {
+                                field_vec,
+                                limit,
+                                offset
+                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                field_vec,
+                                &format!("value"),
+                                false
+                            ) {
+                                Ok(value) => {
+                                    let start = offset;
+                                    let end = match offset.checked_add(*limit) {
+                                        Some(value) => value,
+                                        None => {
+                                            return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::OffsetPlusLimitIsIntOverflow {
+                                                limit: *limit,
+                                                offset: *offset,
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    };
+                                    Ok(format!(#query_string_token_stream))
+                                },
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
                     }
                     SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
-                        let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>,std::string::String>>}
+                        quote::quote!{
+
+                        }
                     }
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                        let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>,std::string::String>>>}
+                        quote::quote!{
+
+                        }
                     }
                 };
                 //
