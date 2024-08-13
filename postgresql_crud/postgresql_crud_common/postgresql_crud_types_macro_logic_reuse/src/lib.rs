@@ -2726,7 +2726,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
+                let variant_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
                 {
                     SupportedPredefinedType::StdPrimitiveI8 |
                     SupportedPredefinedType::StdPrimitiveI16 |
@@ -2741,21 +2741,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdPrimitiveF32 |
                     SupportedPredefinedType::StdPrimitiveF64 => {
                         let query_part_token_stream = generate_simple_json_type(JsonType::Number);
-                        quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
-                        }
+                        quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdPrimitiveBool => {
                         let query_part_token_stream = generate_simple_json_type(JsonType::Boolean);
-                        quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
-                        }
+                        quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdStringString => {
                         let query_part_token_stream = generate_simple_json_type(JsonType::String);
-                        quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
-                        }
+                        quote::quote!{ => #query_part_token_stream}
                     },
 
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
@@ -2771,21 +2765,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => {
                         let query_part_token_stream = generate_optional_simple_json_type(JsonType::Number);
-                        quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
-                        }
+                        quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => {
                         let query_part_token_stream = generate_optional_simple_json_type(JsonType::Boolean);
-                        quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
-                        }
+                        quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdOptionOptionStdStringString => {
                         let query_part_token_stream = generate_optional_simple_json_type(JsonType::String);
-                        quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream => #query_part_token_stream
-                        }
+                        quote::quote!{ => #query_part_token_stream}
                     },
 
                     SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
@@ -2802,7 +2790,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdPrimitiveF64 => {
                         let query_part_token_stream = generate_vec_simple_json_type(JsonType::Number);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2812,7 +2800,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdPrimitiveBool => {
                         let query_part_token_stream = generate_vec_simple_json_type(JsonType::Boolean);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2821,7 +2809,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdStringString => {
                         let query_part_token_stream = generate_vec_simple_json_type(JsonType::String);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2842,7 +2830,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 => {
                         let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Number);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2851,7 +2839,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool => {
                         let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Boolean);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2860,7 +2848,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString => {
                         let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::String);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2881,7 +2869,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 => {
                         let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Number);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2890,7 +2878,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool => {
                         let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Boolean);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2899,7 +2887,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString => {
                         let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::String);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2920,7 +2908,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
                         let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2929,7 +2917,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
                         let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2938,7 +2926,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => {
                         let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::String);
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 limit,
                                 offset
                             } => #query_part_token_stream
@@ -2957,7 +2945,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                         quote::quote!{
                             //todo add path to GeneratePostgresqlQueryPart trait?
-                            Self::#element_ident_upper_camel_case_token_stream(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                            (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 fields_vec,
                                 &format!(#first_query_string_token_stream),
                                 false
@@ -2983,7 +2971,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream(fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                            (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 fields_vec,
                                 &format!(#first_query_string_token_stream),
                                 true
@@ -3007,7 +2995,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 field_vec,
                                 limit,
                                 offset
@@ -3048,7 +3036,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 field_vec,
                                 limit,
                                 offset
@@ -3089,7 +3077,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 field_vec,
                                 limit,
                                 offset
@@ -3130,7 +3118,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                         quote::quote!{
-                            Self::#element_ident_upper_camel_case_token_stream {
+                            {
                                 field_vec,
                                 limit,
                                 offset
@@ -3162,7 +3150,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         }
                     }
-                }
+                };
+                quote::quote!{Self::#element_ident_upper_camel_case_token_stream #variant_logic_token_stream}
         });
         quote::quote!{
             impl GeneratePostgresqlQueryPart<#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream, #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream> for #ident_field_upper_camel_case_token_stream {
