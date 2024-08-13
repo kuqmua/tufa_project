@@ -228,13 +228,42 @@ pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
-    OffsetPlusLimitIsIntOverflow {
+    StdVecVecStdPrimitiveBoolOffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: std::primitive::u64,
         #[eo_to_std_string_string_serialize_deserialize]
         offset: std::primitive::u64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    StdVecVecGenericOffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::u64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::u64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdOptionOptionStdVecVecGenericOffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::u64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::u64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdVecVecStdOptionOptionGenericOffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::u64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::u64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdOptionOptionStdVecVecStdOptionOptionGenericOffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::u64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::u64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
     FieldsFilterIsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
