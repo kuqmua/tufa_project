@@ -2608,52 +2608,52 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-                let generate_simple_json_type = |json_type: JsonType|{
-                    let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') else jsonb_build_object('Err','todo this must be error message') end "
-                        ),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    quote::quote!{
+            let generate_simple_json_type = |json_type: JsonType|{
+                let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!(
+                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') else jsonb_build_object('Err','todo this must be error message') end "
+                    ),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                quote::quote!{
+                    Ok(format!(#query_string_token_stream))
+                }
+            };
+            let generate_optional_simple_json_type = |json_type: JsonType|{
+                let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!(
+                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end "
+                    ),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                quote::quote!{
+                    Ok(format!(#query_string_token_stream))
+                }
+            };
+            let generate_vec_simple_json_type = |json_type: JsonType|{
+                let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!(
+                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
+                    ),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                quote::quote!{
+                    {
+                        let start = offset;
+                        let end = match offset.checked_add(*limit) {
+                            Some(value) => value,
+                            None => {
+                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::OffsetPlusLimitIsIntOverflow {
+                                    limit: *limit,
+                                    offset: *offset,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        };
                         Ok(format!(#query_string_token_stream))
                     }
-                };
-                let generate_optional_simple_json_type = |json_type: JsonType|{
-                    let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end "
-                        ),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    quote::quote!{
-                        Ok(format!(#query_string_token_stream))
-                    }
-                };
-                let generate_vec_simple_json_type = |json_type: JsonType|{
-                    let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
-                        ),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    quote::quote!{
-                        {
-                            let start = offset;
-                            let end = match offset.checked_add(*limit) {
-                                Some(value) => value,
-                                None => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::OffsetPlusLimitIsIntOverflow {
-                                        limit: *limit,
-                                        offset: *offset,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            };
-                            Ok(format!(#query_string_token_stream))
-                        }
-                    }
-                };
+                }
+            };
             let generate_optional_vec_simple_json_type = |json_type: JsonType|{
                 let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &format!(
