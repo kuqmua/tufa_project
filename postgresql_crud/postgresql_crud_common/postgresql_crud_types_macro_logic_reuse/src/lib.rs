@@ -1110,15 +1110,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let pub_enum_field_generate_postgresql_query_part_error_named_token_stream = {
         let ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream = {
-            let fields_filter_is_empty_variants_token_stream = vec_syn_field.iter().map(|element|{
-                let ident_fields_filter_is_empty_token_stream = {
-                    let ident_fields_filter_is_empty_upper_camel_case_token_stream = generate_ident_fields_filter_is_empty_upper_camel_case_token_stream(&element);
-                    quote::quote!{
-                        #ident_fields_filter_is_empty_upper_camel_case_token_stream {
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    }
-                };
+            let fields_filter_is_empty_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
                 let supported_predefined_type = SupportedPredefinedType::try_from(*element)
                     .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
                 match supported_predefined_type {
@@ -1150,8 +1142,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::StdOptionOptionStdStringString
-                    => proc_macro2::TokenStream::new(),
+                    SupportedPredefinedType::StdOptionOptionStdStringString |
 
                     SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
                     SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
@@ -1212,20 +1203,28 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
-                    => ident_fields_filter_is_empty_token_stream,
+                    => (),
 
                     SupportedPredefinedType::Generic(_) |
-                    SupportedPredefinedType::StdOptionOptionGeneric(_) => proc_macro2::TokenStream::new(),
+                    SupportedPredefinedType::StdOptionOptionGeneric(_) |
                     SupportedPredefinedType::StdVecVecGeneric(_) |
                     SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(_) |
                     SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(_) |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => ident_fields_filter_is_empty_token_stream
-                }
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => {
+                        let ident_fields_filter_is_empty_upper_camel_case_token_stream = generate_ident_fields_filter_is_empty_upper_camel_case_token_stream(&element);
+                        acc.push(quote::quote!{
+                            #ident_fields_filter_is_empty_upper_camel_case_token_stream {
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                            }
+                        });
+                    }
+                };
+                acc
             });
             quote::quote!{
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream {
-                    #(#fields_filter_is_empty_variants_token_stream)*
+                    #(#fields_filter_is_empty_variants_token_stream),*
                     NotUniqueFieldFilter {
                         #[eo_to_std_string_string_serialize_deserialize]
                         field: #ident_field_upper_camel_case_token_stream,
