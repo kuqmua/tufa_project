@@ -263,15 +263,6 @@ pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
         offset: std::primitive::u64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    //
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueStdOptionOptionGenericFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieField,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
     DoggieGeneratePostgresqlQueryPartFromSelfVec {
         #[eo_error_occurence]
         field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
