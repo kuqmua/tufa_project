@@ -1239,7 +1239,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let ident_generate_postgresql_query_part_error_named_token_stream = {
-            let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().map(|element|{
+            let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
                 let ident_offset_plus_limit_is_int_overflow_token_stream = {
                     let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
                     quote::quote!{
@@ -1249,7 +1249,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             #[eo_to_std_string_string_serialize_deserialize]
                             offset: std::primitive::u64,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
+                        }
                     }
                 };
                 let supported_predefined_type = SupportedPredefinedType::try_from(*element)
@@ -1284,7 +1284,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
                     SupportedPredefinedType::StdOptionOptionStdStringString
-                    => proc_macro2::TokenStream::new(),
+                    => (),
 
                     SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
                     SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
@@ -1345,20 +1345,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
-                    => ident_offset_plus_limit_is_int_overflow_token_stream,
+                    => {
+                        acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
+                    },
 
                     SupportedPredefinedType::Generic(_) |
-                    SupportedPredefinedType::StdOptionOptionGeneric(_) => proc_macro2::TokenStream::new(),
+                    SupportedPredefinedType::StdOptionOptionGeneric(_) => (),
                     SupportedPredefinedType::StdVecVecGeneric(_) |
                     SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(_) |
                     SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(_) |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => ident_offset_plus_limit_is_int_overflow_token_stream
-                }
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => {
+                        acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
+                    }
+                };
+                acc
             });
             quote::quote!{
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
-                    #(#offset_plus_limit_is_int_overflow_variants_token_stream)*
+                    #(#offset_plus_limit_is_int_overflow_variants_token_stream),*
                     DoggieGeneratePostgresqlQueryPartFromSelfVec {
                         #[eo_error_occurence]
                         field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
