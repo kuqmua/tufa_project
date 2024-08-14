@@ -226,49 +226,6 @@ pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SomethingGeneratePostgresqlQueryPartErrorNamed {
-    StdVecVecStdPrimitiveBoolOffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdVecVecGenericOffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdOptionOptionStdVecVecGenericOffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdVecVecStdOptionOptionGenericOffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdOptionOptionStdVecVecStdOptionOptionGenericOffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DoggieGeneratePostgresqlQueryPartFromSelfVec {
-        #[eo_error_occurence]
-        field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 // impl GeneratePostgresqlQueryPart<SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed, SomethingGeneratePostgresqlQueryPartErrorNamed> for SomethingField {
 //     fn generate_postgresql_query_part_from_self_vec(
 //         value: &std::vec::Vec<Self>,
@@ -731,6 +688,9 @@ impl GeneratePostgresqlQueryPart<DoggieGeneratePostgresqlQueryPartFromSelfVecErr
         }
     }
 }
+
+/////////////////
+
 
 // select 
 // sqlx_types_json_t_as_postgresql_json_b_not_null

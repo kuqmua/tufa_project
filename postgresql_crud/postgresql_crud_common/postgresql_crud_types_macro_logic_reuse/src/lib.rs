@@ -879,7 +879,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    //
     let generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = |value: &syn::Field|{
         let value = format!(
             "{}OffsetPlusLimitIsIntOverflow",
@@ -902,6 +901,23 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                    naming_conventions::FIELD_IDENT_IS_NONE
                );
             }).to_string()),
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    //
+    let generate_field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = |value: &std::primitive::str|{
+        let value = format!(
+            "{}GeneratePostgresqlQueryPartFromSelfVec",
+            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value),
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let generate_field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = |value: &std::primitive::str|{
+        let value = format!(
+            "{}GeneratePostgresqlQueryPartFromSelfVecErrorNamed",
+            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value),
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -1360,21 +1376,175 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 acc
             });
-            quote::quote!{
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
-                    #(#offset_plus_limit_is_int_overflow_variants_token_stream),*
-                    DoggieGeneratePostgresqlQueryPartFromSelfVec {
-                        #[eo_error_occurence]
-                        field: DoggieGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                }
+            let field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream = {
+                let unique_type_path = vec_syn_field.iter().fold(vec![], |mut acc, element| {
+                    let supported_predefined_type = SupportedPredefinedType::try_from(*element)
+                        .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+                    match supported_predefined_type {
+                        SupportedPredefinedType::StdPrimitiveI8 |
+                        SupportedPredefinedType::StdPrimitiveI16 |
+                        SupportedPredefinedType::StdPrimitiveI32 |
+                        SupportedPredefinedType::StdPrimitiveI64 |
+                        SupportedPredefinedType::StdPrimitiveI128 |
+                        SupportedPredefinedType::StdPrimitiveU8 |
+                        SupportedPredefinedType::StdPrimitiveU16 |
+                        SupportedPredefinedType::StdPrimitiveU32 |
+                        SupportedPredefinedType::StdPrimitiveU64 |
+                        SupportedPredefinedType::StdPrimitiveU128 |
+                        SupportedPredefinedType::StdPrimitiveF32 |
+                        SupportedPredefinedType::StdPrimitiveF64 |
+                        SupportedPredefinedType::StdPrimitiveBool |
+                        SupportedPredefinedType::StdStringString |
+    
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
+                        SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
+                        SupportedPredefinedType::StdOptionOptionStdStringString |
+    
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
+                        SupportedPredefinedType::StdVecVecStdPrimitiveBool |
+                        SupportedPredefinedType::StdVecVecStdStringString |
+    
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
+    
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
+                        SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
+    
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString 
+                        => (),
+    
+                        SupportedPredefinedType::Generic(type_path) => {
+                            if !acc.contains(&type_path) {
+                                acc.push(type_path)
+                            }
+                        },
+                        SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
+                            if !acc.contains(&type_path) {
+                                acc.push(type_path)
+                            }
+                        },
+                        SupportedPredefinedType::StdVecVecGeneric(type_path) => {
+                            if !acc.contains(&type_path) {
+                                acc.push(type_path)
+                            }
+                        },
+                        SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
+                            if !acc.contains(&type_path) {
+                                acc.push(type_path)
+                            }
+                        },
+                        SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
+                            if !acc.contains(&type_path) {
+                                acc.push(type_path)
+                            }
+                        },
+                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                            if !acc.contains(&type_path) {
+                                acc.push(type_path)
+                            }
+                        },
+                    };
+                    acc
+                });
+                unique_type_path.iter().fold(vec![], |mut acc, element| {
+                    acc.push({
+                        let field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
+                        let field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
+                        quote::quote!{
+                            #field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                #[eo_error_occurence]
+                                field: #field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                            }
+                        }
+                    });
+                    acc
+                })
+            };
+            let should_generate_enum = match (offset_plus_limit_is_int_overflow_variants_token_stream.is_empty(),field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream.is_empty()) {
+                (true,true) => false,
+                (true,false) => true,
+                (false,true) => true,
+                (false,false) =>  true,
+            };
+            let maybe_dot_token_stream = match offset_plus_limit_is_int_overflow_variants_token_stream.is_empty() {
+                true => proc_macro2::TokenStream::new(),
+                false => quote::quote!{,}
+            };
+            match should_generate_enum {
+                true => quote::quote!{
+                    #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                    pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
+                        #(#offset_plus_limit_is_int_overflow_variants_token_stream),*
+                        #maybe_dot_token_stream
+                        #(#field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream),*
+                    }
+                },
+                false => proc_macro2::TokenStream::new()
             }
         };
         quote::quote!{
             // #ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
-            // #ident_generate_postgresql_query_part_error_named_token_stream
+            #ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
     let impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream = {
