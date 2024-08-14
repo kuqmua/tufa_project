@@ -905,7 +905,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    //
     let generate_field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = |value: &std::primitive::str|{
         let value = format!(
             "{}GeneratePostgresqlQueryPartFromSelfVec",
@@ -922,7 +921,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    //
     let impl_std_fmt_display_for_ident_token_stream = {
         quote::quote!{
             impl std::fmt::Display for #ident {
@@ -1124,426 +1122,325 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
+        let ident_offset_plus_limit_is_int_overflow_token_stream = {
+            let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
+            quote::quote!{
+                #ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream {
+                    #[eo_to_std_string_string_serialize_deserialize]
+                    limit: std::primitive::u64,
+                    #[eo_to_std_string_string_serialize_deserialize]
+                    offset: std::primitive::u64,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                }
+            }
+        };
+        let supported_predefined_type = SupportedPredefinedType::try_from(*element)
+            .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+        match supported_predefined_type {
+            SupportedPredefinedType::StdPrimitiveI8 |
+            SupportedPredefinedType::StdPrimitiveI16 |
+            SupportedPredefinedType::StdPrimitiveI32 |
+            SupportedPredefinedType::StdPrimitiveI64 |
+            SupportedPredefinedType::StdPrimitiveI128 |
+            SupportedPredefinedType::StdPrimitiveU8 |
+            SupportedPredefinedType::StdPrimitiveU16 |
+            SupportedPredefinedType::StdPrimitiveU32 |
+            SupportedPredefinedType::StdPrimitiveU64 |
+            SupportedPredefinedType::StdPrimitiveU128 |
+            SupportedPredefinedType::StdPrimitiveF32 |
+            SupportedPredefinedType::StdPrimitiveF64 |
+            SupportedPredefinedType::StdPrimitiveBool |
+            SupportedPredefinedType::StdStringString |
+
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
+            SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
+            SupportedPredefinedType::StdOptionOptionStdStringString
+            => (),
+
+            SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
+            SupportedPredefinedType::StdVecVecStdPrimitiveBool |
+            SupportedPredefinedType::StdVecVecStdStringString |
+
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
+
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
+            SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
+
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
+            => {
+                acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
+            },
+
+            SupportedPredefinedType::Generic(_) |
+            SupportedPredefinedType::StdOptionOptionGeneric(_) => (),
+            SupportedPredefinedType::StdVecVecGeneric(_) |
+            SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(_) |
+            SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(_) |
+            SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => {
+                acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
+            }
+        };
+        acc
+    });
+    let field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream = {
+        let unique_type_path = vec_syn_field.iter().fold(vec![], |mut acc, element| {
+            let supported_predefined_type = SupportedPredefinedType::try_from(*element)
+                .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            match supported_predefined_type {
+                SupportedPredefinedType::StdPrimitiveI8 |
+                SupportedPredefinedType::StdPrimitiveI16 |
+                SupportedPredefinedType::StdPrimitiveI32 |
+                SupportedPredefinedType::StdPrimitiveI64 |
+                SupportedPredefinedType::StdPrimitiveI128 |
+                SupportedPredefinedType::StdPrimitiveU8 |
+                SupportedPredefinedType::StdPrimitiveU16 |
+                SupportedPredefinedType::StdPrimitiveU32 |
+                SupportedPredefinedType::StdPrimitiveU64 |
+                SupportedPredefinedType::StdPrimitiveU128 |
+                SupportedPredefinedType::StdPrimitiveF32 |
+                SupportedPredefinedType::StdPrimitiveF64 |
+                SupportedPredefinedType::StdPrimitiveBool |
+                SupportedPredefinedType::StdStringString |
+    
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdStringString |
+    
+                SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::StdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::StdVecVecStdStringString |
+    
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
+    
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
+    
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString 
+                => (),
+    
+                SupportedPredefinedType::Generic(type_path) => {
+                    if !acc.contains(&type_path) {
+                        acc.push(type_path)
+                    }
+                },
+                SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
+                    if !acc.contains(&type_path) {
+                        acc.push(type_path)
+                    }
+                },
+                SupportedPredefinedType::StdVecVecGeneric(type_path) => {
+                    if !acc.contains(&type_path) {
+                        acc.push(type_path)
+                    }
+                },
+                SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
+                    if !acc.contains(&type_path) {
+                        acc.push(type_path)
+                    }
+                },
+                SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
+                    if !acc.contains(&type_path) {
+                        acc.push(type_path)
+                    }
+                },
+                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                    if !acc.contains(&type_path) {
+                        acc.push(type_path)
+                    }
+                },
+            };
+            acc
+        });
+        unique_type_path.iter().fold(vec![], |mut acc, element| {
+            acc.push({
+                let field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
+                let field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
+                quote::quote!{
+                    #field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                        #[eo_error_occurence]
+                        field: #field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    }
+                }
+            });
+            acc
+        })
+    };
+    let should_generate_enum = match (offset_plus_limit_is_int_overflow_variants_token_stream.is_empty(),field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream.is_empty()) {
+        (true,true) => false,
+        (true,false) => true,
+        (false,true) => true,
+        (false,false) =>  true,
+    };
     let pub_enum_field_generate_postgresql_query_part_error_named_token_stream = {
         let ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream = {
-            let fields_filter_is_empty_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
-                let supported_predefined_type = SupportedPredefinedType::try_from(*element)
-                    .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
-                match supported_predefined_type {
-                    SupportedPredefinedType::StdPrimitiveI8 |
-                    SupportedPredefinedType::StdPrimitiveI16 |
-                    SupportedPredefinedType::StdPrimitiveI32 |
-                    SupportedPredefinedType::StdPrimitiveI64 |
-                    SupportedPredefinedType::StdPrimitiveI128 |
-                    SupportedPredefinedType::StdPrimitiveU8 |
-                    SupportedPredefinedType::StdPrimitiveU16 |
-                    SupportedPredefinedType::StdPrimitiveU32 |
-                    SupportedPredefinedType::StdPrimitiveU64 |
-                    SupportedPredefinedType::StdPrimitiveU128 |
-                    SupportedPredefinedType::StdPrimitiveF32 |
-                    SupportedPredefinedType::StdPrimitiveF64 |
-                    SupportedPredefinedType::StdPrimitiveBool |
-                    SupportedPredefinedType::StdStringString |
-
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::StdOptionOptionStdStringString |
-
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveBool |
-                    SupportedPredefinedType::StdVecVecStdStringString |
-
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
-
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
-
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
-                    => (),
-
-                    SupportedPredefinedType::Generic(_) |
-                    SupportedPredefinedType::StdOptionOptionGeneric(_) |
-                    SupportedPredefinedType::StdVecVecGeneric(_) |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(_) |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(_) |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => {
-                        let ident_fields_filter_is_empty_upper_camel_case_token_stream = generate_ident_fields_filter_is_empty_upper_camel_case_token_stream(&element);
-                        acc.push(quote::quote!{
-                            #ident_fields_filter_is_empty_upper_camel_case_token_stream {
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                            }
-                        });
-                    }
-                };
-                acc
-            });
-            quote::quote!{
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream {
-                    #(#fields_filter_is_empty_variants_token_stream),*
-                    NotUniqueFieldFilter {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        field: #ident_field_upper_camel_case_token_stream,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+            let maybe_generate_postgresql_query_part_variant_token_stream = match should_generate_enum {
+                true => quote::quote!{
                     GeneratePostgresqlQueryPart {
                         #[eo_error_occurence]
                         error: #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
+                },
+                false => proc_macro2::TokenStream::new()
+            };
+            quote::quote!{
+                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                pub enum #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream {
+                    FieldsFilterIsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    NotUniqueFieldFilter {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        field: #ident_field_upper_camel_case_token_stream,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    #maybe_generate_postgresql_query_part_variant_token_stream
                 }
             }
         };
         let ident_generate_postgresql_query_part_error_named_token_stream = {
-            let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
-                let ident_offset_plus_limit_is_int_overflow_token_stream = {
-                    let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
-                    quote::quote!{
-                        #ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            limit: std::primitive::u64,
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            offset: std::primitive::u64,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        }
-                    }
-                };
-                let supported_predefined_type = SupportedPredefinedType::try_from(*element)
-                    .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
-                match supported_predefined_type {
-                    SupportedPredefinedType::StdPrimitiveI8 |
-                    SupportedPredefinedType::StdPrimitiveI16 |
-                    SupportedPredefinedType::StdPrimitiveI32 |
-                    SupportedPredefinedType::StdPrimitiveI64 |
-                    SupportedPredefinedType::StdPrimitiveI128 |
-                    SupportedPredefinedType::StdPrimitiveU8 |
-                    SupportedPredefinedType::StdPrimitiveU16 |
-                    SupportedPredefinedType::StdPrimitiveU32 |
-                    SupportedPredefinedType::StdPrimitiveU64 |
-                    SupportedPredefinedType::StdPrimitiveU128 |
-                    SupportedPredefinedType::StdPrimitiveF32 |
-                    SupportedPredefinedType::StdPrimitiveF64 |
-                    SupportedPredefinedType::StdPrimitiveBool |
-                    SupportedPredefinedType::StdStringString |
-
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::StdOptionOptionStdStringString
-                    => (),
-
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
-                    SupportedPredefinedType::StdVecVecStdPrimitiveBool |
-                    SupportedPredefinedType::StdVecVecStdStringString |
-
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
-
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
-
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString
-                    => {
-                        acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
-                    },
-
-                    SupportedPredefinedType::Generic(_) |
-                    SupportedPredefinedType::StdOptionOptionGeneric(_) => (),
-                    SupportedPredefinedType::StdVecVecGeneric(_) |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(_) |
-                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(_) |
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(_) => {
-                        acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
-                    }
-                };
-                acc
-            });
-            let field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream = {
-                let unique_type_path = vec_syn_field.iter().fold(vec![], |mut acc, element| {
-                    let supported_predefined_type = SupportedPredefinedType::try_from(*element)
-                        .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
-                    match supported_predefined_type {
-                        SupportedPredefinedType::StdPrimitiveI8 |
-                        SupportedPredefinedType::StdPrimitiveI16 |
-                        SupportedPredefinedType::StdPrimitiveI32 |
-                        SupportedPredefinedType::StdPrimitiveI64 |
-                        SupportedPredefinedType::StdPrimitiveI128 |
-                        SupportedPredefinedType::StdPrimitiveU8 |
-                        SupportedPredefinedType::StdPrimitiveU16 |
-                        SupportedPredefinedType::StdPrimitiveU32 |
-                        SupportedPredefinedType::StdPrimitiveU64 |
-                        SupportedPredefinedType::StdPrimitiveU128 |
-                        SupportedPredefinedType::StdPrimitiveF32 |
-                        SupportedPredefinedType::StdPrimitiveF64 |
-                        SupportedPredefinedType::StdPrimitiveBool |
-                        SupportedPredefinedType::StdStringString |
-    
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 |
-                        SupportedPredefinedType::StdOptionOptionStdPrimitiveBool |
-                        SupportedPredefinedType::StdOptionOptionStdStringString |
-    
-                        SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveF64 |
-                        SupportedPredefinedType::StdVecVecStdPrimitiveBool |
-                        SupportedPredefinedType::StdVecVecStdStringString |
-    
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString |
-    
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool |
-                        SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString |
-    
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString 
-                        => (),
-    
-                        SupportedPredefinedType::Generic(type_path) => {
-                            if !acc.contains(&type_path) {
-                                acc.push(type_path)
-                            }
-                        },
-                        SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
-                            if !acc.contains(&type_path) {
-                                acc.push(type_path)
-                            }
-                        },
-                        SupportedPredefinedType::StdVecVecGeneric(type_path) => {
-                            if !acc.contains(&type_path) {
-                                acc.push(type_path)
-                            }
-                        },
-                        SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
-                            if !acc.contains(&type_path) {
-                                acc.push(type_path)
-                            }
-                        },
-                        SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
-                            if !acc.contains(&type_path) {
-                                acc.push(type_path)
-                            }
-                        },
-                        SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                            if !acc.contains(&type_path) {
-                                acc.push(type_path)
-                            }
-                        },
-                    };
-                    acc
-                });
-                unique_type_path.iter().fold(vec![], |mut acc, element| {
-                    acc.push({
-                        let field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
-                        let field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
-                        quote::quote!{
-                            #field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                #[eo_error_occurence]
-                                field: #field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                            }
-                        }
-                    });
-                    acc
-                })
-            };
-            let should_generate_enum = match (offset_plus_limit_is_int_overflow_variants_token_stream.is_empty(),field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream.is_empty()) {
-                (true,true) => false,
-                (true,false) => true,
-                (false,true) => true,
-                (false,false) =>  true,
-            };
-            let maybe_dot_token_stream = match offset_plus_limit_is_int_overflow_variants_token_stream.is_empty() {
-                true => proc_macro2::TokenStream::new(),
-                false => quote::quote!{,}
-            };
             match should_generate_enum {
-                true => quote::quote!{
-                    #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                    pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
-                        #(#offset_plus_limit_is_int_overflow_variants_token_stream),*
-                        #maybe_dot_token_stream
-                        #(#field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream),*
+                true => {
+                    let maybe_dot_token_stream = match offset_plus_limit_is_int_overflow_variants_token_stream.is_empty() {
+                        true => proc_macro2::TokenStream::new(),
+                        false => quote::quote!{,}
+                    };
+                    quote::quote!{
+                        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                        pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
+                            #(#offset_plus_limit_is_int_overflow_variants_token_stream),*
+                            #maybe_dot_token_stream
+                            #(#field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream),*
+                        }
                     }
                 },
                 false => proc_macro2::TokenStream::new()
             }
         };
         quote::quote!{
-            // #ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
+            #ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
             #ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
@@ -3009,468 +2906,511 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_generate_postgresql_query_part_for_ident_field_token_stream = {
-        let generate_postgresql_query_part_match_variants_token_stream = vec_syn_field.iter().map(|element|{
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-               panic!(
-                   "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                   naming_conventions::FIELD_IDENT_IS_NONE
-               );
+        let generate_postgresql_query_part_content = |match_value_token_stream: &proc_macro2::TokenStream, wrap_in_ok_token_stream: std::primitive::bool|{
+            let generate_postgresql_query_part_match_variants_token_stream = vec_syn_field.iter().map(|element|{
+                let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                   panic!(
+                       "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                       naming_conventions::FIELD_IDENT_IS_NONE
+                   );
+                });
+                let el_ident_str = element_ident.to_string();
+                let element_ident_upper_camel_case_token_stream = {
+                    let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&el_ident_str);
+                    value.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let gen_maybe_wrap_in_ok_token_stream = |value: &proc_macro2::TokenStream|{
+                    match wrap_in_ok_token_stream {
+                        true => quote::quote!{Ok(#value)},
+                        false => quote::quote!{#value}
+                    }
+                };
+                let gen_simple_types_token_stream = |query_string_token_stream: &proc_macro2::TokenStream|{
+                    gen_maybe_wrap_in_ok_token_stream(&quote::quote!{format!(#query_string_token_stream)})
+                };
+                let gen_vec_simple_types_token_stream = |query_string_token_stream: &proc_macro2::TokenStream|{
+                    let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
+                    let handle_return_token_stream = gen_maybe_wrap_in_ok_token_stream(&quote::quote!{format!(#query_string_token_stream)});
+                    quote::quote!{
+                        {
+                            let start = offset;
+                            let end = match offset.checked_add(*limit) {
+                                Some(value) => value,
+                                None => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream {
+                                        limit: *limit,
+                                        offset: *offset,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            };
+                            #handle_return_token_stream
+                        }
+                    }
+                };
+                let generate_simple_json_type = |json_type: JsonType|{
+                    let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') else jsonb_build_object('Err','todo this must be error message') end "
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    gen_simple_types_token_stream(&query_string_token_stream)
+                };
+                let generate_optional_simple_json_type = |json_type: JsonType|{
+                    let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end "
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    gen_simple_types_token_stream(&query_string_token_stream)
+                };
+                let generate_vec_simple_json_type = |json_type: JsonType|{
+                    gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ))
+                };
+                let generate_optional_vec_simple_json_type = |json_type: JsonType|{
+                    gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end"
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ))
+                };
+                let generate_vec_optional_simple_json_type = |json_type: JsonType|{
+                    gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ))
+                };
+                let generate_optional_vec_optional_simple_json_type = |json_type: JsonType|{
+                    gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' else jsonb_build_object('Err','todo this must be error message') end"
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ))
+                };
+                let variant_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
+                {
+                    SupportedPredefinedType::StdPrimitiveI8 |
+                    SupportedPredefinedType::StdPrimitiveI16 |
+                    SupportedPredefinedType::StdPrimitiveI32 |
+                    SupportedPredefinedType::StdPrimitiveI64 |
+                    SupportedPredefinedType::StdPrimitiveI128 |
+                    SupportedPredefinedType::StdPrimitiveU8 |
+                    SupportedPredefinedType::StdPrimitiveU16 |
+                    SupportedPredefinedType::StdPrimitiveU32 |
+                    SupportedPredefinedType::StdPrimitiveU64 |
+                    SupportedPredefinedType::StdPrimitiveU128 |
+                    SupportedPredefinedType::StdPrimitiveF32 |
+                    SupportedPredefinedType::StdPrimitiveF64 => {
+                        let query_part_token_stream = generate_simple_json_type(JsonType::Number);
+                        quote::quote!{ => #query_part_token_stream}
+                    },
+                    SupportedPredefinedType::StdPrimitiveBool => {
+                        let query_part_token_stream = generate_simple_json_type(JsonType::Boolean);
+                        quote::quote!{ => #query_part_token_stream}
+                    },
+                    SupportedPredefinedType::StdStringString => {
+                        let query_part_token_stream = generate_simple_json_type(JsonType::String);
+                        quote::quote!{ => #query_part_token_stream}
+                    },
+
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => {
+                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::Number);
+                        quote::quote!{ => #query_part_token_stream}
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => {
+                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::Boolean);
+                        quote::quote!{ => #query_part_token_stream}
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdStringString => {
+                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::String);
+                        quote::quote!{ => #query_part_token_stream}
+                    },
+
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
+                    SupportedPredefinedType::StdVecVecStdPrimitiveF64 => {
+                        let query_part_token_stream = generate_vec_simple_json_type(JsonType::Number);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    // generate_vec_imple_json_types
+                    SupportedPredefinedType::StdVecVecStdPrimitiveBool => {
+                        let query_part_token_stream = generate_vec_simple_json_type(JsonType::Boolean);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdVecVecStdStringString => {
+                        let query_part_token_stream = generate_vec_simple_json_type(JsonType::String);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 => {
+                        let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Number);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool => {
+                        let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Boolean);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString => {
+                        let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::String);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 => {
+                        let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Number);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool => {
+                        let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Boolean);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString => {
+                        let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::String);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
+                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
+                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => {
+                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::String);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+
+                    SupportedPredefinedType::Generic(type_path) => {
+                        let first_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("'{el_ident_str}',{{value}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ));
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            //todo add path to GeneratePostgresqlQueryPart trait?
+                            (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                fields_vec,
+                                &format!(#first_query_string_token_stream),
+                                false
+                            ) {
+                                Ok(value) => #simple_types_token_stream,
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream  {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                    },
+                    SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
+                        let first_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("'{el_ident_str}',{{value}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ));
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                fields_vec,
+                                &format!(#first_query_string_token_stream),
+                                true
+                            ) {
+                                Ok(value) => #simple_types_token_stream,
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    SupportedPredefinedType::StdVecVecGeneric(type_path) => {
+                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!(
+                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo error message') end"
+                            ),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ));
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            {
+                                field_vec,
+                                limit,
+                                offset
+                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                field_vec,
+                                &format!("value"),
+                                false
+                            ) {
+                                Ok(value) => #vec_simple_types_token_stream,
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
+                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!(
+                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end"
+                            ),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ));
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            {
+                                field_vec,
+                                limit,
+                                offset
+                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                field_vec,
+                                &format!("value"),
+                                false
+                            ) {
+                                Ok(value) => #vec_simple_types_token_stream,
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
+                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!(
+                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo error message') end"
+                            ),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ));
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            {
+                                field_vec,
+                                limit,
+                                offset
+                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                field_vec,
+                                &format!("value"),
+                                true
+                            ) {
+                                Ok(value) => #vec_simple_types_token_stream,
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!(
+                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end"
+                            ),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        ));
+                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                        quote::quote!{
+                            {
+                                field_vec,
+                                limit,
+                                offset
+                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                field_vec,
+                                &format!("value"),
+                                true
+                            ) {
+                                Ok(value) => #vec_simple_types_token_stream,
+                                Err(error) => {
+                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                        field: error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                };
+                quote::quote!{Self::#element_ident_upper_camel_case_token_stream #variant_logic_token_stream}
             });
-            let el_ident_str = element_ident.to_string();
-            let element_ident_upper_camel_case_token_stream = {
-                let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&el_ident_str);
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let gen_simple_types_token_stream = |query_string_token_stream: &proc_macro2::TokenStream|{
-                quote::quote!{Ok(format!(#query_string_token_stream))}
-            };
-            let gen_vec_simple_types_token_stream = |query_string_token_stream: &proc_macro2::TokenStream|{
-                let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
+            quote::quote!{
+                match #match_value_token_stream {
+                    #(#generate_postgresql_query_part_match_variants_token_stream),*
+                }
+            }
+        };
+        let acc_push_token_stream = match should_generate_enum {
+            true => quote::quote!{
+                match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
+                    Ok(value) => {
+                        acc.push_str(&format!("{value},"));
+                    }
+                    Err(error) => {
+                        return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::GeneratePostgresqlQueryPart {
+                            error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+            },
+            false => {
+                let postgresql_query_part_content_token_stream = generate_postgresql_query_part_content(&quote::quote!{element}, false);
                 quote::quote!{
-                    {
-                        let start = offset;
-                        let end = match offset.checked_add(*limit) {
-                            Some(value) => value,
-                            None => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream {
-                                    limit: *limit,
-                                    offset: *offset,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        };
-                        Ok(format!(#query_string_token_stream))
-                    }
+                    acc.push_str(&format!("{},", #postgresql_query_part_content_token_stream));
                 }
-            };
-            let generate_simple_json_type = |json_type: JsonType|{
-                let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!(
-                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') else jsonb_build_object('Err','todo this must be error message') end "
-                    ),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                gen_simple_types_token_stream(&query_string_token_stream)
-            };
-            let generate_optional_simple_json_type = |json_type: JsonType|{
-                let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!(
-                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end "
-                    ),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                gen_simple_types_token_stream(&query_string_token_stream)
-            };
-            let generate_vec_simple_json_type = |json_type: JsonType|{
-                gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!(
-                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
-                    ),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ))
-            };
-            let generate_optional_vec_simple_json_type = |json_type: JsonType|{
-                gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!(
-                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end"
-                    ),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ))
-            };
-            let generate_vec_optional_simple_json_type = |json_type: JsonType|{
-                gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!(
-                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
-                    ),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ))
-            };
-            let generate_optional_vec_optional_simple_json_type = |json_type: JsonType|{
-                gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!(
-                        "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' else jsonb_build_object('Err','todo this must be error message') end"
-                    ),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ))
-            };
-            let variant_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
-            {
-                SupportedPredefinedType::StdPrimitiveI8 |
-                SupportedPredefinedType::StdPrimitiveI16 |
-                SupportedPredefinedType::StdPrimitiveI32 |
-                SupportedPredefinedType::StdPrimitiveI64 |
-                SupportedPredefinedType::StdPrimitiveI128 |
-                SupportedPredefinedType::StdPrimitiveU8 |
-                SupportedPredefinedType::StdPrimitiveU16 |
-                SupportedPredefinedType::StdPrimitiveU32 |
-                SupportedPredefinedType::StdPrimitiveU64 |
-                SupportedPredefinedType::StdPrimitiveU128 |
-                SupportedPredefinedType::StdPrimitiveF32 |
-                SupportedPredefinedType::StdPrimitiveF64 => {
-                    let query_part_token_stream = generate_simple_json_type(JsonType::Number);
-                    quote::quote!{ => #query_part_token_stream}
-                },
-                SupportedPredefinedType::StdPrimitiveBool => {
-                    let query_part_token_stream = generate_simple_json_type(JsonType::Boolean);
-                    quote::quote!{ => #query_part_token_stream}
-                },
-                SupportedPredefinedType::StdStringString => {
-                    let query_part_token_stream = generate_simple_json_type(JsonType::String);
-                    quote::quote!{ => #query_part_token_stream}
-                },
-
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => {
-                    let query_part_token_stream = generate_optional_simple_json_type(JsonType::Number);
-                    quote::quote!{ => #query_part_token_stream}
-                },
-                SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => {
-                    let query_part_token_stream = generate_optional_simple_json_type(JsonType::Boolean);
-                    quote::quote!{ => #query_part_token_stream}
-                },
-                SupportedPredefinedType::StdOptionOptionStdStringString => {
-                    let query_part_token_stream = generate_optional_simple_json_type(JsonType::String);
-                    quote::quote!{ => #query_part_token_stream}
-                },
-
-                SupportedPredefinedType::StdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::StdVecVecStdPrimitiveF64 => {
-                    let query_part_token_stream = generate_vec_simple_json_type(JsonType::Number);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                // generate_vec_imple_json_types
-                SupportedPredefinedType::StdVecVecStdPrimitiveBool => {
-                    let query_part_token_stream = generate_vec_simple_json_type(JsonType::Boolean);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                SupportedPredefinedType::StdVecVecStdStringString => {
-                    let query_part_token_stream = generate_vec_simple_json_type(JsonType::String);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 => {
-                    let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Number);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool => {
-                    let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Boolean);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString => {
-                    let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::String);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 => {
-                    let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Number);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool => {
-                    let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Boolean);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString => {
-                    let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::String);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
-                    let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
-                    let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                    let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::String);
-                    quote::quote!{
-                        {
-                            limit,
-                            offset
-                        } => #query_part_token_stream
-                    }
-                },
-
-                SupportedPredefinedType::Generic(type_path) => {
-                    let first_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("'{el_ident_str}',{{value}}"),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ));
-                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        //todo add path to GeneratePostgresqlQueryPart trait?
-                        (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                            fields_vec,
-                            &format!(#first_query_string_token_stream),
-                            false
-                        ) {
-                            Ok(value) => #simple_types_token_stream,
-                            Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream  {
-                                    field: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                    }
-                },
-                SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
-                    let first_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("'{el_ident_str}',{{value}}"),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ));
-                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                            fields_vec,
-                            &format!(#first_query_string_token_stream),
-                            true
-                        ) {
-                            Ok(value) => #simple_types_token_stream,
-                            Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                    field: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                    }
-                }
-                SupportedPredefinedType::StdVecVecGeneric(type_path) => {
-                    let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo error message') end"
-                        ),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ));
-                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        {
-                            field_vec,
-                            limit,
-                            offset
-                        } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                            field_vec,
-                            &format!("value"),
-                            false
-                        ) {
-                            Ok(value) => #vec_simple_types_token_stream,
-                            Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                    field: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                    }
-                }
-                SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
-                    let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end"
-                        ),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ));
-                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        {
-                            field_vec,
-                            limit,
-                            offset
-                        } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                            field_vec,
-                            &format!("value"),
-                            false
-                        ) {
-                            Ok(value) => #vec_simple_types_token_stream,
-                            Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                    field: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                    }
-                }
-                SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
-                    let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo error message') end"
-                        ),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ));
-                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        {
-                            field_vec,
-                            limit,
-                            offset
-                        } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                            field_vec,
-                            &format!("value"),
-                            true
-                        ) {
-                            Ok(value) => #vec_simple_types_token_stream,
-                            Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                    field: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                    }
-                }
-                SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                    let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end"
-                        ),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ));
-                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        {
-                            field_vec,
-                            limit,
-                            offset
-                        } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                            field_vec,
-                            &format!("value"),
-                            true
-                        ) {
-                            Ok(value) => #vec_simple_types_token_stream,
-                            Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                    field: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                    }
-                }
-            };
-            quote::quote!{Self::#element_ident_upper_camel_case_token_stream #variant_logic_token_stream}
-        });
+            }
+        };
+        let second_generic_token_stream = match should_generate_enum {
+            true => &ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream,
+            false => &quote::quote!{()}
+        };
+        let postgresql_query_part_content_token_stream = generate_postgresql_query_part_content(&quote::quote!{self}, true);
         quote::quote!{
-            impl GeneratePostgresqlQueryPart<#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream, #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream> for #ident_field_upper_camel_case_token_stream {
+            impl GeneratePostgresqlQueryPart<
+                #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
+                #second_generic_token_stream
+            > for #ident_field_upper_camel_case_token_stream {
                 fn generate_postgresql_query_part_from_self_vec(
                     value: &std::vec::Vec<Self>,
                     column_name_and_maybe_field_getter: &std::primitive::str,
@@ -3495,17 +3435,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     let mut acc = std::string::String::default();
                     for element in value {
-                        match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
-                            Ok(value) => {
-                                acc.push_str(&format!("{value},"));
-                            }
-                            Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::GeneratePostgresqlQueryPart {
-                                    error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
+                        #acc_push_token_stream
                     }
                     let _ = acc.pop();
                     let is_optional_query_part = match is_optional {
@@ -3534,19 +3464,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         end
                     "#))
                 }
-                fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream> {
-                    match self {
-                        #(#generate_postgresql_query_part_match_variants_token_stream),*
-                    }
+                fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, #second_generic_token_stream> {
+                    #postgresql_query_part_content_token_stream
                 }
             }
         }
-    };
-    let impl_generate_postgresql_query_part_for_ident_field_token_stream = if ident.to_string() == "Something" {
-        impl_generate_postgresql_query_part_for_ident_field_token_stream   
-    }
-    else {
-        proc_macro2::TokenStream::new()
     };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
