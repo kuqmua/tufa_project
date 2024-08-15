@@ -818,6 +818,7 @@ impl std::fmt::Display for JsonType {
     }
 }
 //todo maybe generate example of valid json to create
+//todo https://stackoverflow.com/questions/53376451/cannot-pass-more-than-100-arguments-to-a-function-to-json-build-object
 #[proc_macro_derive(GeneratePostgresqlQueryPart)]
 pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
