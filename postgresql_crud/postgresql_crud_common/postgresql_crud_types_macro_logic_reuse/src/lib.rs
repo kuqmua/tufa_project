@@ -589,7 +589,8 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         }
                     };
                     let supported_predefined_type = match path_segment.ident.to_string().as_str() {
-                        "StdPrimitiveI8" => Self::StdPrimitiveI16,
+                        "StdPrimitiveI8" => Self::StdPrimitiveI8,
+                        "StdPrimitiveI16" => Self::StdPrimitiveI16,
                         "StdPrimitiveI32" => Self::StdPrimitiveI32,
                         "StdPrimitiveI64" => Self::StdPrimitiveI64,
                         "StdPrimitiveI128" => Self::StdPrimitiveI128,
@@ -1107,7 +1108,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq, 
             pub enum #ident_field_upper_camel_case_token_stream {
                 #(#variants_token_stream),*
             }
@@ -1466,7 +1467,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             });
             let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
-                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
                 SupportedPredefinedType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
                 SupportedPredefinedType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
                 SupportedPredefinedType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
@@ -1583,7 +1584,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait//Eq, 
             pub struct #ident_options_upper_camel_case_token_stream {
                 #(#fields_token_stream),*
 
@@ -1943,7 +1944,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             };
             let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
-                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
                 SupportedPredefinedType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
                 SupportedPredefinedType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
                 SupportedPredefinedType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
@@ -2345,7 +2346,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             };
             let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
-                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
                 SupportedPredefinedType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
                 SupportedPredefinedType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
                 SupportedPredefinedType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
@@ -2482,7 +2483,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
             let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
-                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::bool},
+                SupportedPredefinedType::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
                 SupportedPredefinedType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
                 SupportedPredefinedType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
                 SupportedPredefinedType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
@@ -2804,7 +2805,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let ident_wrapper_token_stream = {
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize//Eq, 
             pub struct #ident_wrapper_upper_camel_case_token_stream(pub #ident_options_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
         }
     };

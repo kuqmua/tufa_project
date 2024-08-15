@@ -254,7 +254,7 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
 }
 //from_str :: FromStr,
 #[derive(
-    Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Eq, Clone, 
+    Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Clone, //Eq, 
     // Copy,
 )]
 pub enum JsongenericColumn {

@@ -3289,7 +3289,9 @@ pub struct SerdeJsonValueAsPostgresqlJsonBNotNull(pub SerdeJsonValue);
 //todo support variations of init functions as enum
 
 #[derive(Debug)]
-pub struct Test<T> {
+pub struct Test
+// <T> 
+{
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     std_primitive_bool: std::primitive::bool, //BOOL
     // std_primitive_i8: std::primitive::i8,   //“CHAR”//not clear how to make primary key from it
@@ -3356,7 +3358,7 @@ pub struct Test<T> {
     std_net_ip_addr: std::net::IpAddr,             //INET, CIDR
     sqlx_types_mac_address_mac_address: sqlx::types::mac_address::MacAddress, //MACADDR
     sqlx_types_bit_vec: sqlx::types::BitVec,       //BIT, VARBIT
-    sqlx_types_json: sqlx::types::Json<T>,         //JSON, JSONB
+    // sqlx_types_json: sqlx::types::Json<T>,         //JSON, JSONB
     serde_json_value: serde_json::Value,           //JSON, JSONB
                                                    // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
                                                    //maybe Composite types
@@ -3570,7 +3572,9 @@ pub struct TestOption<T> {
 // }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-struct TestNewType<T> {
+struct TestNewType
+// <T> 
+{
     _std_primitive_bool: StdPrimitiveBool,
     _std_primitive_i16: StdPrimitiveI16,
     _std_primitive_i32: StdPrimitiveI32,
@@ -3618,12 +3622,23 @@ struct TestNewType<T> {
     _std_net_ip_addr: StdNetIpAddr,
     _sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddress,
     _sqlx_types_bit_vec: SqlxTypesBitVec,
-    _sqlx_types_json: SqlxTypesJson<T>,
+    // _sqlx_types_json: SqlxTypesJson<T>,
     _serde_json_value: SerdeJsonValue,
 }
 
-impl<T> std::convert::From<Test<T>> for TestNewType<T> {
-    fn from(value: Test<T>) -> Self {
+impl
+// <T> 
+std::convert::From<
+    Test
+    // <T>
+    > for 
+    TestNewType
+    // <T> 
+    {
+    fn from(value: 
+        Test
+        // <T>
+    ) -> Self {
         Self {
             _std_primitive_bool: StdPrimitiveBool(value.std_primitive_bool),
             _std_primitive_i16: StdPrimitiveI16(value.std_primitive_i16),
@@ -3686,7 +3701,7 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
             _std_net_ip_addr: StdNetIpAddr(value.std_net_ip_addr),
             _sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddress(value.sqlx_types_mac_address_mac_address),
             _sqlx_types_bit_vec: SqlxTypesBitVec(value.sqlx_types_bit_vec),
-            _sqlx_types_json: SqlxTypesJson::<T>(value.sqlx_types_json),
+            // _sqlx_types_json: SqlxTypesJson::<T>(value.sqlx_types_json),
             _serde_json_value: SerdeJsonValue(value.serde_json_value),
         }
     }
@@ -4661,7 +4676,9 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
         )
     }
 }
-impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
+impl Default for TestNewType
+// crate::generate_postgresql_query_part::Something> 
+{
     fn default() -> Self {
         //todo unwraps
         let std_primitive_u8_handle = std::primitive::u8::default();
@@ -4932,28 +4949,28 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
                 std_primitive_u8_handle,
             ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
-        let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(crate::generate_postgresql_query_part::Something {
-            std_string_string: generate_postgresql_query_part::StdStringString(std_string_string_handle),
-            std_vec_vec_std_primitive_bool: generate_postgresql_query_part::StdVecVecStdPrimitiveBool(vec![true, false]),
-            generic: generate_postgresql_query_part::Generic(crate::generate_postgresql_query_part::Doggie {
-                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
-            }),
-            std_option_option_generic: generate_postgresql_query_part::StdOptionOptionGeneric(Some(crate::generate_postgresql_query_part::Doggie {
-                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
-            })),
-            std_vec_vec_generic: generate_postgresql_query_part::StdVecVecGeneric(vec![crate::generate_postgresql_query_part::Doggie {
-                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
-            }]),
-            std_option_option_std_vec_vec_generic: generate_postgresql_query_part::StdOptionOptionStdVecVecGeneric(Some(vec![crate::generate_postgresql_query_part::Doggie {
-                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
-            }])),
-            std_vec_vec_std_option_option_generic: generate_postgresql_query_part::StdVecVecStdOptionOptionGeneric(vec![Some(crate::generate_postgresql_query_part::Doggie {
-                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
-            })]),
-            std_option_option_std_vec_vec_std_option_option_generic: generate_postgresql_query_part::StdOptionOptionStdVecVecStdOptionOptionGeneric(Some(vec![Some(crate::generate_postgresql_query_part::Doggie {
-                std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
-            })])),
-        }));
+        // let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(crate::generate_postgresql_query_part::Something {
+        //     std_string_string: generate_postgresql_query_part::StdStringString(std_string_string_handle),
+        //     std_vec_vec_std_primitive_bool: generate_postgresql_query_part::StdVecVecStdPrimitiveBool(vec![true, false]),
+        //     generic: generate_postgresql_query_part::Generic(crate::generate_postgresql_query_part::Doggie {
+        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     }),
+        //     std_option_option_generic: generate_postgresql_query_part::StdOptionOptionGeneric(Some(crate::generate_postgresql_query_part::Doggie {
+        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     })),
+        //     std_vec_vec_generic: generate_postgresql_query_part::StdVecVecGeneric(vec![crate::generate_postgresql_query_part::Doggie {
+        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     }]),
+        //     std_option_option_std_vec_vec_generic: generate_postgresql_query_part::StdOptionOptionStdVecVecGeneric(Some(vec![crate::generate_postgresql_query_part::Doggie {
+        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     }])),
+        //     std_vec_vec_std_option_option_generic: generate_postgresql_query_part::StdVecVecStdOptionOptionGeneric(vec![Some(crate::generate_postgresql_query_part::Doggie {
+        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     })]),
+        //     std_option_option_std_vec_vec_std_option_option_generic: generate_postgresql_query_part::StdOptionOptionStdVecVecStdOptionOptionGeneric(Some(vec![Some(crate::generate_postgresql_query_part::Doggie {
+        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     })])),
+        // }));
         let serde_json_value =
             SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
         Self {
@@ -4996,7 +5013,7 @@ impl Default for TestNewType<crate::generate_postgresql_query_part::Something> {
             _std_net_ip_addr: std_net_ip_addr, 
             _sqlx_types_mac_address_mac_address: sqlx_types_mac_address_mac_address, 
             _sqlx_types_bit_vec: sqlx_types_bit_vec, 
-            _sqlx_types_json: sqlx_types_json, 
+            // _sqlx_types_json: sqlx_types_json, 
             _serde_json_value: serde_json_value
         }
     }
