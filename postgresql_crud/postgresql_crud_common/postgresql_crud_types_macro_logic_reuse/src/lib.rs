@@ -2996,7 +2996,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let generate_optional_vec_optional_simple_json_type = |json_type: JsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!(
-                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' else jsonb_build_object('Err','todo this must be error message') end"
+                            "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end"
                         ),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
@@ -3181,7 +3181,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
+                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Number);
                         quote::quote!{
                             {
                                 limit,
@@ -3485,10 +3485,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_wrapper_token_stream
         #impl_generate_postgresql_query_part_for_ident_field_token_stream
     };
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "www",
-    //     &generated,
-    //     "www",
-    // );
+    // if ident == "" {
+        // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     "www",
+        //     &generated,
+        //     "www",
+        // );
+    // }
     generated.into()
 }
