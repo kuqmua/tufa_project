@@ -55,7 +55,7 @@ let_underscore_drop = { level = "deny", priority = 0 } #non-binding let on a typ
 macro_use_extern_crate = { level = "deny", priority = 0 } #the `#[macro_use]` attribute is now deprecated in favor of using macros via the module system
 meta_variable_misuse = { level = "deny", priority = 0 } #possible meta_variable misuse at macro definition
 missing_abi = { level = "deny", priority = 0 } #No declared ABI for extern declaration
-missing_copy_implementations = { level = "deny", priority = 0 } #detects potentially_forgotten implementations of `Copy`
+missing_copy_implementations = { level = "warn", priority = 0 } #detects potentially_forgotten implementations of `Copy`
 missing_debug_implementations = { level = "deny", priority = 0 } #detects missing implementations of Debug
 missing_docs = { level = "allow", priority = 0 } #detects missing documentation for public members
 non_ascii_idents = { level = "deny", priority = 0 } #detects non_ASCII identifiers
