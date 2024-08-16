@@ -2923,6 +2923,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
+                let wrap_into_jsonb_object_build = |value: std::string::String|{
+                    format!("jsonb_build_object({value})")
+                };
                 let gen_maybe_wrap_in_ok_token_stream = |value: &proc_macro2::TokenStream|{
                     match wrap_in_ok_token_stream {
                         true => quote::quote!{Ok(#value)},
@@ -2954,51 +2957,51 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let generate_simple_json_type = |json_type: JsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
+                        &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') else jsonb_build_object('Err','todo this must be error message') end "
-                        ),
+                        )),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     gen_simple_types_token_stream(&query_string_token_stream)
                 };
                 let generate_optional_simple_json_type = |json_type: JsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
+                        &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end "
-                        ),
+                        )),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     gen_simple_types_token_stream(&query_string_token_stream)
                 };
                 let generate_vec_simple_json_type = |json_type: JsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
+                        &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
-                        ),
+                        )),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
                 let generate_optional_vec_simple_json_type = |json_type: JsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
+                        &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end"
-                        ),
+                        )),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
                 let generate_vec_optional_simple_json_type = |json_type: JsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
+                        &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
-                        ),
+                        )),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
                 let generate_optional_vec_optional_simple_json_type = |json_type: JsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!(
+                        &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end"
-                        ),
+                        )),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
@@ -3387,7 +3390,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             true => quote::quote!{
                 match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
                     Ok(value) => {
-                        acc.push_str(&format!("{value},"));
+                        acc.push_str(&format!("{value}||"));
                     }
                     Err(error) => {
                         return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::GeneratePostgresqlQueryPart {
@@ -3400,7 +3403,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             false => {
                 let postgresql_query_part_content_token_stream = generate_postgresql_query_part_content(&quote::quote!{element}, false);
                 quote::quote!{
-                    acc.push_str(&format!("{},", #postgresql_query_part_content_token_stream));
+                    acc.push_str(&format!("{}||", #postgresql_query_part_content_token_stream));
                 }
             }
         };
@@ -3441,6 +3444,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #acc_push_token_stream
                     }
                     let _ = acc.pop();
+                    let _ = acc.pop();
                     let is_optional_query_part = match is_optional {
                         true => format!(r#"
                             when jsonb_typeof({column_name_and_maybe_field_getter}) = 'null' then
@@ -3456,7 +3460,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then 
                                 jsonb_build_object(
                                     'Ok',
-                                    jsonb_build_object({acc})
+                                    {acc}
                                 )
                             {is_optional_query_part}
                             else 
