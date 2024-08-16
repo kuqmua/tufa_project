@@ -525,8 +525,13 @@ enum SupportedPredefinedTypeTryFromSynField {
     TypePathPathSegmentsIsNotSynTypePath,
     TypePathPathSegmentsLastIsNone,
     PathSegmentArgumentsIsNotSynPathArgumentsNone,
-    PathSegmentArgumentsIsNotSynPathArgumentsAngleBracketed,
     UnsupportedPredefinedTypeWrapper,
+    SynPathArgumentsAngleBracketedArgsLengthNotEqualOne,
+    SynPathArgumentsAngleBracketedFirstSynGenericArgumentTypeSynTypePathSynPathArgumentsNone,
+    SynPathArgumentsAngleBracketedFirstSynGenericArgumentTypeIsNotSynTypePath,
+    SynPathArgumentsAngleBracketedFirstIsNotSynGenericArgumentType,
+    SynPathArgumentsAngleBracketedFirstIsNone,
+    SynPathArgumentsIsNotAngleBracketed,
 }
 impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
     type Error = SupportedPredefinedTypeTryFromSynField;
@@ -535,13 +540,10 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
             syn::Type::Path(type_path) => match type_path.path.segments.last() {
                 Some(path_segment) => {
                     let try_generate_generic_ident_upper_camel_case_token_stream = |path_segment: &syn::PathSegment|{
-                        let proc_macro_name_upper_camel_case_ident_stringified = "123";//todo
                         match &path_segment.arguments {
                             syn::PathArguments::AngleBracketed(value) => {
                                 if value.args.len() != 1 {
-                                    panic!(
-                                        "{proc_macro_name_upper_camel_case_ident_stringified} AngleBracketedGenericArguments args len != 1",
-                                    );
+                                    return Err(Self::Error::SynPathArgumentsAngleBracketedArgsLengthNotEqualOne);
                                 }
                                 match value.args.first() {
                                     Some(value) => if let syn::GenericArgument::Type(value) = value {
@@ -550,41 +552,26 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                                                 for element in &type_path.path.segments {
                                                     if let syn::PathArguments::None = element.arguments {}
                                                     else {
-                                                        panic!(
-                                                            "{proc_macro_name_upper_camel_case_ident_stringified} PathArguments::None",
-                                                        );
+                                                        return Err(Self::Error::SynPathArgumentsAngleBracketedFirstSynGenericArgumentTypeSynTypePathSynPathArgumentsNone);
                                                     }
                                                 }
-                                                type_path.clone()
-                                                // println!("---{}---", quote::quote!{#type_path}.to-string());
-                                                // match type_path.path.segments.last() {
-                                                //     Some(path_segment) => {
-                                                //         path_segment.ident.clone()
-                                                //     }
-                                                //     None => panic!(
-                                                //         "{proc_macro_name_upper_camel_case_ident_stringified} GenericArgument::Type syn::Type::Path last is None",
-                                                //     ),
-                                                // }
+                                                return Ok(type_path.clone());
                                             }
-                                            _ => panic!(
-                                                "{proc_macro_name_upper_camel_case_ident_stringified} GenericArgument::Type value is not syn::Type::Path",
-                                            )
+                                            _ => {
+                                                return Err(Self::Error::SynPathArgumentsAngleBracketedFirstSynGenericArgumentTypeIsNotSynTypePath);
+                                            }
                                         }
                                     }
                                     else {
-                                        panic!(
-                                            "{proc_macro_name_upper_camel_case_ident_stringified} GenericArgument is not GenericArgument::Type",
-                                        );
+                                        return Err(Self::Error::SynPathArgumentsAngleBracketedFirstIsNotSynGenericArgumentType);
                                     },
-                                    None => panic!(
-                                        "{proc_macro_name_upper_camel_case_ident_stringified} AngleBracketedGenericArguments args first is None",
-                                    )
+                                    None => {
+                                        return Err(Self::Error::SynPathArgumentsAngleBracketedFirstIsNone);
+                                    }
                                 }
                             },
                             _ => {
-                                panic!(
-                                    "{proc_macro_name_upper_camel_case_ident_stringified} syn::PathArguments is not AngleBracketed",
-                                )
+                                return Err(Self::Error::SynPathArgumentsIsNotAngleBracketed);
                             }
                         }
                     };
@@ -679,12 +666,12 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool" => Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
                         "StdOptionOptionStdVecVecStdOptionOptionStdStringString" => Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-                        "Generic" => Self::Generic(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
-                        "StdOptionOptionGeneric" => Self::StdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
-                        "StdVecVecGeneric" => Self::StdVecVecGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
-                        "StdOptionOptionStdVecVecGeneric" => Self::StdOptionOptionStdVecVecGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
-                        "StdVecVecStdOptionOptionGeneric" => Self::StdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
-                        "StdOptionOptionStdVecVecStdOptionOptionGeneric" => Self::StdOptionOptionStdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)),
+                        "Generic" => Self::Generic(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
+                        "StdOptionOptionGeneric" => Self::StdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
+                        "StdVecVecGeneric" => Self::StdVecVecGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
+                        "StdOptionOptionStdVecVecGeneric" => Self::StdOptionOptionStdVecVecGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
+                        "StdVecVecStdOptionOptionGeneric" => Self::StdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
+                        "StdOptionOptionStdVecVecStdOptionOptionGeneric" => Self::StdOptionOptionStdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
                         _ => {
                             return Err(Self::Error::UnsupportedPredefinedTypeWrapper);
                         }
@@ -797,23 +784,17 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
         }
     }
 }
-enum JsonType {
+enum PrimitiveJsonType {
     Boolean,
     Number,
     String,
-    Array,
-    Object,
-    Null
 }
-impl std::fmt::Display for JsonType {
+impl std::fmt::Display for PrimitiveJsonType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Boolean => write!(f, "boolean"),
             Self::Number => write!(f, "number"),
             Self::String => write!(f, "string"),
-            Self::Array => write!(f, "array"),
-            Self::Object => write!(f, "object"),
-            Self::Null => write!(f, "null"),
         }
     }
 }
@@ -885,19 +866,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = |value: &syn::Field|{
         let value = format!(
             "{}OffsetPlusLimitIsIntOverflow",
-            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.ident.as_ref().unwrap_or_else(|| {
-               panic!(
-                   "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                   naming_conventions::FIELD_IDENT_IS_NONE
-               );
-            }).to_string()),
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let generate_ident_fields_filter_is_empty_upper_camel_case_token_stream = |value: &syn::Field|{
-        let value = format!(
-            "{}FieldsFilterIsEmpty",
             proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.ident.as_ref().unwrap_or_else(|| {
                panic!(
                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -2084,11 +2052,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let index_usize_token_stream = {
-                let value = format!("{index}usize");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
             let conversion_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
                 SupportedPredefinedType::StdPrimitiveI8 |
@@ -2643,7 +2606,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
             }
         });
-        let fields_array_elements_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+        let fields_array_elements_token_stream = vec_syn_field.iter().map(|element|{
             proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &element.ident.as_ref().unwrap_or_else(|| {
                     panic!(
@@ -2955,7 +2918,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let generate_simple_json_type = |json_type: JsonType|{
+                let generate_simple_json_type = |json_type: PrimitiveJsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') else jsonb_build_object('Err','todo this must be error message') end "
@@ -2964,7 +2927,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     gen_simple_types_token_stream(&query_string_token_stream)
                 };
-                let generate_optional_simple_json_type = |json_type: JsonType|{
+                let generate_optional_simple_json_type = |json_type: PrimitiveJsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = '{json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{el_ident_str}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end "
@@ -2973,7 +2936,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     gen_simple_types_token_stream(&query_string_token_stream)
                 };
-                let generate_vec_simple_json_type = |json_type: JsonType|{
+                let generate_vec_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
@@ -2981,7 +2944,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
-                let generate_optional_vec_simple_json_type = |json_type: JsonType|{
+                let generate_optional_vec_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end"
@@ -2989,7 +2952,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
-                let generate_vec_optional_simple_json_type = |json_type: JsonType|{
+                let generate_vec_optional_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
@@ -2997,7 +2960,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
-                let generate_optional_vec_optional_simple_json_type = |json_type: JsonType|{
+                let generate_optional_vec_optional_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(format!(
                             "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then jsonb_build_object('Ok', value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo error message') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','todo this must be error message') end"
@@ -3019,15 +2982,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdPrimitiveU128 |
                     SupportedPredefinedType::StdPrimitiveF32 |
                     SupportedPredefinedType::StdPrimitiveF64 => {
-                        let query_part_token_stream = generate_simple_json_type(JsonType::Number);
+                        let query_part_token_stream = generate_simple_json_type(PrimitiveJsonType::Number);
                         quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdPrimitiveBool => {
-                        let query_part_token_stream = generate_simple_json_type(JsonType::Boolean);
+                        let query_part_token_stream = generate_simple_json_type(PrimitiveJsonType::Boolean);
                         quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdStringString => {
-                        let query_part_token_stream = generate_simple_json_type(JsonType::String);
+                        let query_part_token_stream = generate_simple_json_type(PrimitiveJsonType::String);
                         quote::quote!{ => #query_part_token_stream}
                     },
 
@@ -3043,15 +3006,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveU128 |
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveF32 |
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::Number);
+                        let query_part_token_stream = generate_optional_simple_json_type(PrimitiveJsonType::Number);
                         quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdOptionOptionStdPrimitiveBool => {
-                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::Boolean);
+                        let query_part_token_stream = generate_optional_simple_json_type(PrimitiveJsonType::Boolean);
                         quote::quote!{ => #query_part_token_stream}
                     },
                     SupportedPredefinedType::StdOptionOptionStdStringString => {
-                        let query_part_token_stream = generate_optional_simple_json_type(JsonType::String);
+                        let query_part_token_stream = generate_optional_simple_json_type(PrimitiveJsonType::String);
                         quote::quote!{ => #query_part_token_stream}
                     },
 
@@ -3067,7 +3030,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdPrimitiveU128 |
                     SupportedPredefinedType::StdVecVecStdPrimitiveF32 |
                     SupportedPredefinedType::StdVecVecStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_vec_simple_json_type(JsonType::Number);
+                        let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::Number);
                         quote::quote!{
                             {
                                 limit,
@@ -3077,7 +3040,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     // generate_vec_imple_json_types
                     SupportedPredefinedType::StdVecVecStdPrimitiveBool => {
-                        let query_part_token_stream = generate_vec_simple_json_type(JsonType::Boolean);
+                        let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::Boolean);
                         quote::quote!{
                             {
                                 limit,
@@ -3086,7 +3049,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdVecVecStdStringString => {
-                        let query_part_token_stream = generate_vec_simple_json_type(JsonType::String);
+                        let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::String);
                         quote::quote!{
                             {
                                 limit,
@@ -3107,7 +3070,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveU128 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF32 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Number);
+                        let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::Number);
                         quote::quote!{
                             {
                                 limit,
@@ -3116,7 +3079,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdPrimitiveBool => {
-                        let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::Boolean);
+                        let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::Boolean);
                         quote::quote!{
                             {
                                 limit,
@@ -3125,7 +3088,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdStringString => {
-                        let query_part_token_stream = generate_optional_vec_simple_json_type(JsonType::String);
+                        let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::String);
                         quote::quote!{
                             {
                                 limit,
@@ -3146,7 +3109,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveU128 |
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF32 |
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Number);
+                        let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::Number);
                         quote::quote!{
                             {
                                 limit,
@@ -3155,7 +3118,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdPrimitiveBool => {
-                        let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::Boolean);
+                        let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::Boolean);
                         quote::quote!{
                             {
                                 limit,
@@ -3164,7 +3127,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdVecVecStdOptionOptionStdStringString => {
-                        let query_part_token_stream = generate_vec_optional_simple_json_type(JsonType::String);
+                        let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::String);
                         quote::quote!{
                             {
                                 limit,
@@ -3185,7 +3148,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Number);
+                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::Number);
                         quote::quote!{
                             {
                                 limit,
@@ -3194,7 +3157,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
-                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::Boolean);
+                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::Boolean);
                         quote::quote!{
                             {
                                 limit,
@@ -3203,7 +3166,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(JsonType::String);
+                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::String);
                         quote::quote!{
                             {
                                 limit,
