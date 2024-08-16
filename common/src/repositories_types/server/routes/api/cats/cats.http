@@ -186,8 +186,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "offset": 0
 }
 
-### todo name and color must be  arrays           
- 
+### todo name and color must be  arrays       
+
 POST http://127.0.0.1:8080/jsongeneric/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
@@ -199,35 +199,35 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             "sqlx_types_json_t_as_postgresql_json_b_not_null":{
                 "filter": [
 
-                    # "std_primitive_i8",
-                    # "std_primitive_i16",
-                    # "std_primitive_i32",
-                    # "std_primitive_i64",
-                    # "std_primitive_i128",
-                    # "std_primitive_u8",
-                    # "std_primitive_u16", 
-                    # "std_primitive_u32",
-                    # "std_primitive_u64",
-                    # "std_primitive_u128",
-                    # "std_primitive_f32",
-                    # "std_primitive_f64",
-                    # "std_primitive_bool",
-                    # "std_string_string",
+                    "std_primitive_i8",
+                    "std_primitive_i16",
+                    "std_primitive_i32",
+                    "std_primitive_i64",
+                    "std_primitive_i128",
+                    "std_primitive_u8",
+                    "std_primitive_u16", 
+                    "std_primitive_u32",
+                    "std_primitive_u64",
+                    "std_primitive_u128",
+                    "std_primitive_f32",
+                    "std_primitive_f64",
+                    "std_primitive_bool",
+                    "std_string_string",
 
                     "std_option_option_std_primitive_i8",
-                    # "std_option_option_std_primitive_i16",  
-                    # "std_option_option_std_primitive_i32",
-                    # "std_option_option_std_primitive_i64",
-                    # "std_option_option_std_primitive_i128",
-                    # "std_option_option_std_primitive_u8",
-                    # "std_option_option_std_primitive_u16", 
-                    # "std_option_option_std_primitive_u32",
-                    # "std_option_option_std_primitive_u64",
-                    # "std_option_option_std_primitive_u128",
-                    # "std_option_option_std_primitive_f32", 
-                    # "std_option_option_std_primitive_f64", 
-                    # "std_option_option_std_primitive_bool",
-                    # "std_option_option_std_string_string",
+                    "std_option_option_std_primitive_i16",  
+                    "std_option_option_std_primitive_i32",
+                    "std_option_option_std_primitive_i64",
+                    "std_option_option_std_primitive_i128",
+                    "std_option_option_std_primitive_u8",
+                    "std_option_option_std_primitive_u16", 
+                    "std_option_option_std_primitive_u32",
+                    "std_option_option_std_primitive_u64",
+                    "std_option_option_std_primitive_u128",
+                    "std_option_option_std_primitive_f32", 
+                    "std_option_option_std_primitive_f64", 
+                    "std_option_option_std_primitive_bool",
+                    "std_option_option_std_string_string",
 
                     {
                         "std_vec_vec_std_primitive_i8": {
@@ -482,143 +482,142 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                             "offset": 0,
                             "limit": 8
                         }
+                    },
+
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+                            "offset": 0,
+                            "limit": 8
+                        }
                     }
-                    # ,
+                    ,
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    }
+                    , 
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_string_string": {
+                            "offset": 0,
+                            "limit": 8
+                        }
+                    },
 
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }
-                    # ,
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }
-                    # , 
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_string_string": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-
-                    # {
-                    #     "generic": ["std_string_string"]
-                    # }
-                    # ,
-                    # {
-                    #     "std_option_option_generic": ["std_string_string"]
-                    # }
-                    # ,
-                    # {
-                    #     "std_vec_vec_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
-                    # ,
-                    # {
-                    #     "std_option_option_std_vec_vec_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
-                    # ,
-                    # {
-                    #     "std_vec_vec_std_option_option_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
-                    # ,
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
+                    {
+                        "generic": ["std_string_string"]
+                    }
+                    ,
+                    {
+                        "std_option_option_generic": ["std_string_string"]
+                    }
+                    ,
+                    {
+                        "std_vec_vec_generic": {
+                            "field_vec": [
+                                "std_string_string"
+                            ],
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }
+                    ,
+                    {
+                        "std_option_option_std_vec_vec_generic": {
+                            "field_vec": [
+                                "std_string_string"
+                            ],
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }
+                    ,
+                    {
+                        "std_vec_vec_std_option_option_generic": {
+                            "field_vec": [
+                                "std_string_string"
+                            ],
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }
+                    ,
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_generic": {
+                            "field_vec": [
+                                "std_string_string"
+                            ],
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }
                 ]
             }
         }
