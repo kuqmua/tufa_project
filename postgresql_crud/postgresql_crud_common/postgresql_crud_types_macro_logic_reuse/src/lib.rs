@@ -892,7 +892,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    //
     let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
         let ident_offset_plus_limit_is_int_overflow_token_stream = {
             let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
@@ -903,7 +902,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #[eo_to_std_string_string_serialize_deserialize]
                     offset: std::primitive::u64,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                }
+                },
             }
         };
         let supported_predefined_type = SupportedPredefinedType::try_from(*element)
@@ -1158,13 +1157,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             acc
         })
     };
-    let should_generate_enum = match (offset_plus_limit_is_int_overflow_variants_token_stream.is_empty(),field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream.is_empty()) {
+    let should_generate_ident_generate_postgresql_query_part_error_named_enum = match (offset_plus_limit_is_int_overflow_variants_token_stream.is_empty(),field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream.is_empty()) {
         (true,true) => false,
         (true,false) => true,
         (false,true) => true,
         (false,false) =>  true,
     };
-    //
     let impl_std_fmt_display_for_ident_token_stream = {
         quote::quote!{
             impl std::fmt::Display for #ident {
@@ -1368,7 +1366,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let pub_enum_field_generate_postgresql_query_part_error_named_token_stream = {
         let ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream = {
-            let maybe_generate_postgresql_query_part_variant_token_stream = match should_generate_enum {
+            let maybe_generate_postgresql_query_part_variant_token_stream = match should_generate_ident_generate_postgresql_query_part_error_named_enum {
                 true => quote::quote!{
                     GeneratePostgresqlQueryPart {
                         #[eo_error_occurence]
@@ -1394,17 +1392,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let ident_generate_postgresql_query_part_error_named_token_stream = {
-            match should_generate_enum {
+            match should_generate_ident_generate_postgresql_query_part_error_named_enum {
                 true => {
-                    let maybe_dot_token_stream = match offset_plus_limit_is_int_overflow_variants_token_stream.is_empty() {
-                        true => proc_macro2::TokenStream::new(),
-                        false => quote::quote!{,}
-                    };
                     quote::quote!{
                         #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                         pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
-                            #(#offset_plus_limit_is_int_overflow_variants_token_stream),*
-                            #maybe_dot_token_stream
+                            #(#offset_plus_limit_is_int_overflow_variants_token_stream)*
                             #(#field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream),*
                         }
                     }
@@ -1895,7 +1888,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
-        let acc_push_token_stream = match should_generate_enum {
+        let acc_push_token_stream = match should_generate_ident_generate_postgresql_query_part_error_named_enum {
             true => quote::quote!{
                 match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
                     Ok(value) => {
@@ -1916,7 +1909,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
-        let second_generic_token_stream = match should_generate_enum {
+        let second_generic_token_stream = match should_generate_ident_generate_postgresql_query_part_error_named_enum {
             true => &ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream,
             false => &quote::quote!{()}
         };
@@ -3442,7 +3435,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #ident_wrapper_token_stream
         #impl_serde_deserialize_for_ident_wrapper_token_stream
     };
-    // if ident == "" {
+    // if ident == "Something" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "www",
     //         &generated,
