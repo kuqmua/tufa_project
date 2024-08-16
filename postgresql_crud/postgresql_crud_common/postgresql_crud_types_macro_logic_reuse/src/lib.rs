@@ -1888,24 +1888,37 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
-        let acc_push_token_stream = match should_generate_ident_generate_postgresql_query_part_error_named_enum {
-            true => quote::quote!{
-                match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
-                    Ok(value) => {
-                        acc.push_str(&format!("{value}||"));
+        let acc_push_token_stream = {
+            let jsonb_build_object_concatenation_stringified = "||";
+            match should_generate_ident_generate_postgresql_query_part_error_named_enum {
+                true => {
+                    let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{value}}{jsonb_build_object_concatenation_stringified}"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
+                            Ok(value) => {
+                                acc.push_str(&format!(#format_handle_token_stream));
+                            }
+                            Err(error) => {
+                                return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::GeneratePostgresqlQueryPart {
+                                    error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        }
                     }
-                    Err(error) => {
-                        return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::GeneratePostgresqlQueryPart {
-                            error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
+                },
+                false => {
+                    let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{}}{jsonb_build_object_concatenation_stringified}"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let postgresql_query_part_content_token_stream = generate_postgresql_query_part_content(&quote::quote!{element}, false);
+                    quote::quote!{
+                        acc.push_str(&format!(#format_handle_token_stream, #postgresql_query_part_content_token_stream));
                     }
-                }
-            },
-            false => {
-                let postgresql_query_part_content_token_stream = generate_postgresql_query_part_content(&quote::quote!{element}, false);
-                quote::quote!{
-                    acc.push_str(&format!("{}||", #postgresql_query_part_content_token_stream));
                 }
             }
         };
