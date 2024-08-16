@@ -1415,18 +1415,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
-    let impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream = {
-        quote::quote!{
-            // impl GeneratePostgresqlQueryPart<CatGeneratePostgresqlQueryPartErrorNamed> for CatField {
-            //     fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, CatGeneratePostgresqlQueryPartErrorNamed> {
-            //         match self {
-            //             Self::Meow => Ok(format!("'meow',{column_name_and_maybe_field_getter}->'meow'")),
-            //             Self::One => Ok(format!("'one',{column_name_and_maybe_field_getter}->'one'")),
-            //         }
-            //     }
-            // }
-        }
-    };
     let pub_struct_ident_options_token_stream = {
         let fields_token_stream = vec_syn_field.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -3445,7 +3433,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_enum_ident_field_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
         #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
-        #impl_generate_postgresql_query_part_field_generate_postgresql_query_part_error_named_for_ident_field_token_stream
         #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
         #impl_serde_deserialize_for_ident_options_token_stream
