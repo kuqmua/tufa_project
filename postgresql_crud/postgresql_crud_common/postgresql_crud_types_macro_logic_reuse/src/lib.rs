@@ -1411,6 +1411,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_generate_postgresql_query_part_for_ident_field_token_stream = {
+        let space_and_not_null = " and not null";
         let generate_postgresql_query_part_content = |match_value_token_stream: &proc_macro2::TokenStream, wrap_in_ok_token_stream: std::primitive::bool|{
             let generate_postgresql_query_part_match_variants_token_stream = vec_syn_field.iter().map(|element|{
                 let element_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -1467,7 +1468,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     )
                 };
                 let array_element_stringified = "[array element]";
-                let space_and_not_null = " and not null";
                 let generate_vec_element_wrong_type_error_message_stringified = |is_optional: std::primitive::bool, json_type: &PrimitiveJsonType|{
                     format!(
                         "type of {{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{array_element_stringified} is not {json_type}{}",
@@ -1928,6 +1928,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             false => &quote::quote!{()}
         };
         let postgresql_query_part_content_token_stream = generate_postgresql_query_part_content(&quote::quote!{self}, true);
+        let space_and_not_null_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            &space_and_not_null,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
         quote::quote!{
             impl GeneratePostgresqlQueryPart<
                 #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
@@ -1963,30 +1967,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let _ = acc.pop();
                     let _ = acc.pop();
                     let is_optional_query_part = match is_optional {
-                        true => format!(r#"
-                            when jsonb_typeof({column_name_and_maybe_field_getter}) = 'null' then
-                                jsonb_build_object(
-                                    'Ok',
-                                    null
-                                )
-                        "#),
+                        true => format!("when jsonb_typeof({column_name_and_maybe_field_getter}) = 'null' then jsonb_build_object('Ok',null)"),
                         false => std::string::String::default()
                     };
-                    Ok(format!(r#"
-                        case 
-                            when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then 
-                                jsonb_build_object(
-                                    'Ok',
-                                    {acc}
-                                )
-                            {is_optional_query_part}
-                            else 
-                                jsonb_build_object(
-                                    'Err',
-                                    'todo this must be error message'
-                                ) 
-                        end
-                    "#))
+                    Ok({
+                        let space_and_not_null = if is_optional {
+                            #space_and_not_null_quotes_token_stream
+                        }
+                        else {
+                            ""
+                        };
+                        format!(
+                            "case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}') end"
+                        )
+                    })
                 }
                 fn generate_postgresql_query_part(
                     &self,
