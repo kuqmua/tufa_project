@@ -1716,8 +1716,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
 
                     SupportedPredefinedType::Generic(type_path) => {
-                        let first_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        let column_name_and_maybe_field_getter_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}"),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
                         let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -1729,7 +1733,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             //todo add path to GeneratePostgresqlQueryPart trait?
                             (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 fields_vec,
-                                &format!(#first_query_string_token_stream),
+                                &format!(#column_name_and_maybe_field_getter_query_string_token_stream),
+                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
                                 false
                             ) {
                                 Ok(value) => #simple_types_token_stream,
@@ -1743,8 +1748,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
-                        let first_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        let column_name_and_maybe_field_getter_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}"),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
                         let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -1755,7 +1764,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{
                             (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 fields_vec,
-                                &format!(#first_query_string_token_stream),
+                                &format!(#column_name_and_maybe_field_getter_query_string_token_stream),
+                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
                                 true
                             ) {
                                 Ok(value) => #simple_types_token_stream,
@@ -1769,6 +1779,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                     SupportedPredefinedType::StdVecVecGeneric(type_path) => {
+                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
                         let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &wrap_into_jsonb_object_build(format!(
                                 "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
@@ -1784,6 +1798,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 field_vec,
                                 &format!("value"),
+                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
                                 false
                             ) {
                                 Ok(value) => #vec_simple_types_token_stream,
@@ -1797,6 +1812,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                     SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
+                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
                         let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &wrap_into_jsonb_object_build(format!(
                                 "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' {then_jsonb_build_object_ok_null} else jsonb_build_object('Err','todo this must be error message') end"
@@ -1812,6 +1831,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 field_vec,
                                 &format!("value"),
+                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
                                 false
                             ) {
                                 Ok(value) => #vec_simple_types_token_stream,
@@ -1825,6 +1845,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                     SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
+                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
                         let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &wrap_into_jsonb_object_build(format!(
                                 "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
@@ -1840,6 +1864,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 field_vec,
                                 &format!("value"),
+                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
                                 true
                             ) {
                                 Ok(value) => #vec_simple_types_token_stream,
@@ -1853,6 +1878,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                     SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
                         let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &wrap_into_jsonb_object_build(format!(
                                 "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' {then_jsonb_build_object_ok_null} else jsonb_build_object('Err','todo this must be error message') end"
@@ -1868,6 +1897,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                                 field_vec,
                                 &format!("value"),
+                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
                                 true
                             ) {
                                 Ok(value) => #vec_simple_types_token_stream,
@@ -1898,7 +1928,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     quote::quote!{
-                        match element.generate_postgresql_query_part(column_name_and_maybe_field_getter) {
+                        match element.generate_postgresql_query_part(
+                            column_name_and_maybe_field_getter,
+                            column_name_and_maybe_field_getter_for_error_message,
+                        ) {
                             Ok(value) => {
                                 acc.push_str(&format!(#format_handle_token_stream));
                             }
@@ -1936,6 +1969,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 fn generate_postgresql_query_part_from_self_vec(
                     value: &std::vec::Vec<Self>,
                     column_name_and_maybe_field_getter: &std::primitive::str,
+                    column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
                     is_optional: std::primitive::bool,
                 ) -> Result<std::string::String, #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream> {
                     if value.is_empty() {
@@ -1987,7 +2021,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         end
                     "#))
                 }
-                fn generate_postgresql_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str) -> Result<std::string::String, #second_generic_token_stream> {
+                fn generate_postgresql_query_part(
+                    &self,
+                    column_name_and_maybe_field_getter: &std::primitive::str,
+                    column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+                ) -> Result<std::string::String, #second_generic_token_stream> {
                     #postgresql_query_part_content_token_stream
                 }
             }
@@ -3449,12 +3487,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #ident_wrapper_token_stream
         #impl_serde_deserialize_for_ident_wrapper_token_stream
     };
-    if ident == "Doggie" {
-        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            "www",
-            &generated,
-            "www",
-        );
-    }
+    // if ident == "" {
+    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "www",
+    //         &generated,
+    //         "www",
+    //     );
+    // }
     generated.into()
 }

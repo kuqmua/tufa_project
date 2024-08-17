@@ -596,6 +596,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
                         filter, 
                         "sqlx_types_json_t_as_postgresql_json_b_not_null",
+                        "sqlx_types_json_t_as_postgresql_json_b_not_null",
                         false
                     ).unwrap()//todo return error
                 )
