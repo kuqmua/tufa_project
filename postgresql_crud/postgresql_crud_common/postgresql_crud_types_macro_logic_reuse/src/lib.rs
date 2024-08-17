@@ -1508,6 +1508,44 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
                 };
+                let generic_and_std_option_option_generic_logic_token_stream = |type_path: &syn::TypePath, is_optional: std::primitive::bool|{
+                    let column_name_and_maybe_field_getter_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &wrap_into_jsonb_object_build(format!("'{el_ident_str}',{{value}}")),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ));
+                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let is_optional_token_stream = if is_optional {
+                        quote::quote!{true}
+                    }
+                    else {
+                        quote::quote!{false}
+                    };
+                    quote::quote!{
+                        //todo add path to GeneratePostgresqlQueryPart trait?
+                        (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                            fields_vec,
+                            &format!(#column_name_and_maybe_field_getter_query_string_token_stream),
+                            &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
+                            #is_optional_token_stream
+                        ) {
+                            Ok(value) => #simple_types_token_stream,
+                            Err(error) => {
+                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream  {
+                                    field: error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        }
+                    }
+                };
                 let variant_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
                 {
                     SupportedPredefinedType::StdPrimitiveI8 |
@@ -1715,69 +1753,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
 
-                    SupportedPredefinedType::Generic(type_path) => {
-                        let column_name_and_maybe_field_getter_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &wrap_into_jsonb_object_build(format!("'{el_ident_str}',{{value}}")),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ));
-                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            //todo add path to GeneratePostgresqlQueryPart trait?
-                            (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                                fields_vec,
-                                &format!(#column_name_and_maybe_field_getter_query_string_token_stream),
-                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
-                                false
-                            ) {
-                                Ok(value) => #simple_types_token_stream,
-                                Err(error) => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream  {
-                                        field: error,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    },
-                    SupportedPredefinedType::StdOptionOptionGeneric(type_path) => {
-                        let column_name_and_maybe_field_getter_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &wrap_into_jsonb_object_build(format!("'{el_ident_str}',{{value}}")),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ));
-                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            (fields_vec) => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                                fields_vec,
-                                &format!(#column_name_and_maybe_field_getter_query_string_token_stream),
-                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
-                                true
-                            ) {
-                                Ok(value) => #simple_types_token_stream,
-                                Err(error) => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                        field: error,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    }
+                    SupportedPredefinedType::Generic(type_path) => generic_and_std_option_option_generic_logic_token_stream(&type_path, false),
+                    SupportedPredefinedType::StdOptionOptionGeneric(type_path) => generic_and_std_option_option_generic_logic_token_stream(&type_path, true),
                     SupportedPredefinedType::StdVecVecGeneric(type_path) => {
                         let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
