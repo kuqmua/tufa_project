@@ -1546,6 +1546,57 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
+                let maybe_std_option_option_std_vec_vec_maybe_std_option_option_generic_logic_token_stream = |
+                    type_path: &syn::TypePath, 
+                    is_optional: std::primitive::bool,
+                    is_std_vec_vec_optional: std::primitive::bool,
+                |{
+                    let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &wrap_into_jsonb_object_build({
+                            let maybe_check_on_null_stringified = if is_std_vec_vec_optional {
+                                format!("when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' {then_jsonb_build_object_ok_null} ")
+                            }
+                            else {
+                                std::string::String::default()
+                            };
+                            format!(
+                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) {maybe_check_on_null_stringified}else jsonb_build_object('Err','todo this must be error message') end"
+                            )
+                        }),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ));
+                    let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let is_optional_token_stream = if is_optional {
+                        quote::quote!{true}
+                    }
+                    else {
+                        quote::quote!{false}
+                    };
+                    quote::quote!{
+                        {
+                            field_vec,
+                            limit,
+                            offset
+                        } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                            field_vec,
+                            &format!("value"),
+                            &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
+                            #is_optional_token_stream
+                        ) {
+                            Ok(value) => #vec_simple_types_token_stream,
+                            Err(error) => {
+                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                    field: error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        }
+                    }
+                };
                 let variant_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
                 {
                     SupportedPredefinedType::StdPrimitiveI8 |
@@ -1755,138 +1806,26 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                     SupportedPredefinedType::Generic(type_path) => generic_and_std_option_option_generic_logic_token_stream(&type_path, false),
                     SupportedPredefinedType::StdOptionOptionGeneric(type_path) => generic_and_std_option_option_generic_logic_token_stream(&type_path, true),
-                    SupportedPredefinedType::StdVecVecGeneric(type_path) => {
-                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &wrap_into_jsonb_object_build(format!(
-                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
-                            )),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ));
-                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec,
-                                limit,
-                                offset
-                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                                field_vec,
-                                &format!("value"),
-                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
-                                false
-                            ) {
-                                Ok(value) => #vec_simple_types_token_stream,
-                                Err(error) => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                        field: error,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => {
-                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &wrap_into_jsonb_object_build(format!(
-                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' {then_jsonb_build_object_ok_null} else jsonb_build_object('Err','todo this must be error message') end"
-                            )),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ));
-                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec,
-                                limit,
-                                offset
-                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                                field_vec,
-                                &format!("value"),
-                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
-                                false
-                            ) {
-                                Ok(value) => #vec_simple_types_token_stream,
-                                Err(error) => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                        field: error,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => {
-                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &wrap_into_jsonb_object_build(format!(
-                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','todo this must be error message') end"
-                            )),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ));
-                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec,
-                                limit,
-                                offset
-                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                                field_vec,
-                                &format!("value"),
-                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
-                                true
-                            ) {
-                                Ok(value) => #vec_simple_types_token_stream,
-                                Err(error) => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                        field: error,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                        let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{column_name_and_maybe_field_getter}}.(some array element).{el_ident_str}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &wrap_into_jsonb_object_build(format!(
-                                "'{el_ident_str}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({{value}}) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{el_ident_str}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{el_ident_str}') = 'null' {then_jsonb_build_object_ok_null} else jsonb_build_object('Err','todo this must be error message') end"
-                            )),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        ));
-                        let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec,
-                                limit,
-                                offset
-                            } => match GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                                field_vec,
-                                &format!("value"),
-                                &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
-                                true
-                            ) {
-                                Ok(value) => #vec_simple_types_token_stream,
-                                Err(error) => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
-                                        field: error,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    }
+                    SupportedPredefinedType::StdVecVecGeneric(type_path) => maybe_std_option_option_std_vec_vec_maybe_std_option_option_generic_logic_token_stream(
+                        &type_path, 
+                        false,
+                        false,
+                    ),
+                    SupportedPredefinedType::StdOptionOptionStdVecVecGeneric(type_path) => maybe_std_option_option_std_vec_vec_maybe_std_option_option_generic_logic_token_stream(
+                        &type_path, 
+                        false,
+                        true,
+                    ),
+                    SupportedPredefinedType::StdVecVecStdOptionOptionGeneric(type_path) => maybe_std_option_option_std_vec_vec_maybe_std_option_option_generic_logic_token_stream(
+                        &type_path, 
+                        true,
+                        false,
+                    ),
+                    SupportedPredefinedType::StdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => maybe_std_option_option_std_vec_vec_maybe_std_option_option_generic_logic_token_stream(
+                        &type_path, 
+                        true,
+                        true,
+                    ),
                 };
                 quote::quote!{Self::#element_ident_upper_camel_case_token_stream #variant_logic_token_stream}
             });
