@@ -1603,7 +1603,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     is_std_vec_vec_optional: std::primitive::bool,
                 |{
                     let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{{column_name_and_maybe_field_getter}}{array_element_stringified}{el_ident_str}"),
+                        &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}{array_element_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
