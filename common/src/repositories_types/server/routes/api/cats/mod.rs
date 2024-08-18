@@ -197,11 +197,11 @@ pub struct Jsongeneric {
     // pub sqlx_types_bit_vec_as_postgresql_var_bit_not_null: postgresql_crud::SqlxTypesBitVecAsPostgresqlVarBitNotNull,
 
     //todo what to do with generic?
-    // pub sqlx_types_json_t_as_postgresql_json: postgresql_crud::SqlxTypesJsonAsPostgresqlJson::<postgresql_crud::Something>,//todo
+    // pub sqlx_types_json_t_as_postgresql_json: postgresql_crud::SqlxTypesJsonAsPostgresqlJson::<Something>,//todo
     // postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,//
-    // pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonNotNull::<postgresql_crud::Something>
-    // pub sqlx_types_json_t_as_postgresql_json_b: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonB::<<postgresql_crud::Something>,//todo
-    pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonBNotNull::<postgresql_crud::Something>,//todo
+    // pub sqlx_types_json_t_as_postgresql_json_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonNotNull::<Something>
+    // pub sqlx_types_json_t_as_postgresql_json_b: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonB::<<Something>,//todo
+    pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJsonAsPostgresqlJsonBNotNull::<Something>,//todo
 
     // pub serde_json_value_as_postgresql_json: postgresql_crud::SerdeJsonValueAsPostgresqlJson,
     // pub serde_json_value_as_postgresql_json_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonNotNull,
@@ -219,7 +219,7 @@ pub struct JsongenericOptions {
         postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
     >,
     pub sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingWrapper>>,//here change
+        postgresql_crud::Value<postgresql_crud::SqlxTypesJson<SomethingWrapper>>,//here change
     >,
 }
 impl std::convert::From<Jsongeneric> for JsongenericOptions {
@@ -243,8 +243,8 @@ impl std::convert::From<Jsongeneric> for JsongenericOptions {
             sqlx_types_json_t_as_postgresql_json_b_not_null: Some(postgresql_crud::Value {
                 value: postgresql_crud::SqlxTypesJson(
                     sqlx::types::Json(
-                        postgresql_crud::SomethingWrapper(
-                            postgresql_crud::SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_b_not_null.0.0.0)
+                        SomethingWrapper(
+                            SomethingOptions::from(value.sqlx_types_json_t_as_postgresql_json_b_not_null.0.0.0)
                         )
                     )
                 ),
@@ -273,7 +273,7 @@ pub enum JsongenericColumn {
         deserialize = "sqlx_types_json_t_as_postgresql_json_b_not_null"
     ))]
     SqlxTypesJsonTAsPostgresqlJsonBNotNull {
-        filter: std::vec::Vec<postgresql_crud::SomethingField>
+        filter: std::vec::Vec<SomethingField>
     },
 }
 impl std::fmt::Display for JsongenericColumn {
@@ -677,7 +677,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                     let mut std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>> = None;
                     let mut std_primitive_i32_as_postgresql_int: std::option::Option<postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>> = None;
                     //todo change type
-                    let mut sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<postgresql_crud::SomethingWrapper>>> = None;
+                    let mut sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<SomethingWrapper>>> = None;
                     for element in &parameters.payload.select {
                         match element
                         {
@@ -753,7 +753,7 @@ DynArcCombinationOfAppStateLogicTraits, >,
                                 }
                             }, 
                             
-                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => match sqlx::Row::try_get::<sqlx::types::Json::<postgresql_crud::SomethingWrapper>, &std::primitive::str>(
+                            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => match sqlx::Row::try_get::<sqlx::types::Json::<SomethingWrapper>, &std::primitive::str>(
                                 &value,
                                 "sqlx_types_json_t_as_postgresql_json_b_not_null"
                             ) {
@@ -1066,3 +1066,117 @@ pub async fn try_read_one(
         },
     )
 }
+
+
+//////////////////////
+//todo enum tree support
+//todo generate wrapper type for all possible json type
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+     postgresql_crud::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
+pub struct Something {
+    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+    pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
+    pub std_primitive_i128: postgresql_crud::JsonStdPrimitiveI128,
+    pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
+    pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
+    pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
+    pub std_primitive_u64: postgresql_crud::JsonStdPrimitiveU64,
+    pub std_primitive_u128: postgresql_crud::JsonStdPrimitiveU128,
+    pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
+    pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
+    pub std_primitive_bool: postgresql_crud::JsonStdPrimitiveBool,
+    pub std_string_string: postgresql_crud::JsonStdStringString,
+
+    pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
+    pub std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdPrimitiveI16,
+    pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
+    pub std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdPrimitiveI64,
+    pub std_option_option_std_primitive_i128: postgresql_crud::JsonStdOptionOptionStdPrimitiveI128,
+    pub std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdPrimitiveU8,
+    pub std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdPrimitiveU16,
+    pub std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdPrimitiveU32,
+    pub std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdPrimitiveU64,
+    pub std_option_option_std_primitive_u128: postgresql_crud::JsonStdOptionOptionStdPrimitiveU128,
+    pub std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdPrimitiveF32,
+    pub std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdPrimitiveF64,
+    pub std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdPrimitiveBool,
+    pub std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdStringString,
+
+    pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
+    pub std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdVecVecStdPrimitiveI16,
+    pub std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdVecVecStdPrimitiveI32,
+    pub std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdVecVecStdPrimitiveI64,
+    pub std_vec_vec_std_primitive_i128: postgresql_crud::JsonStdVecVecStdPrimitiveI128,
+    pub std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdVecVecStdPrimitiveU8,
+    pub std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdVecVecStdPrimitiveU16,
+    pub std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdVecVecStdPrimitiveU32,
+    pub std_vec_vec_std_primitive_u64: postgresql_crud::JsonStdVecVecStdPrimitiveU64,
+    pub std_vec_vec_std_primitive_u128: postgresql_crud::JsonStdVecVecStdPrimitiveU128,
+    pub std_vec_vec_std_primitive_f32: postgresql_crud::JsonStdVecVecStdPrimitiveF32,
+    pub std_vec_vec_std_primitive_f64: postgresql_crud::JsonStdVecVecStdPrimitiveF64,
+    pub std_vec_vec_std_primitive_bool: postgresql_crud::JsonStdVecVecStdPrimitiveBool,
+    pub std_vec_vec_std_string_string: postgresql_crud::JsonStdVecVecStdStringString,
+
+    pub std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8,
+    pub std_option_option_std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI16,
+    pub std_option_option_std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI32,
+    pub std_option_option_std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI64,
+    pub std_option_option_std_vec_vec_std_primitive_i128: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI128,
+    pub std_option_option_std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU8,
+    pub std_option_option_std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU16,
+    pub std_option_option_std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU32,
+    pub std_option_option_std_vec_vec_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU64,
+    pub std_option_option_std_vec_vec_std_primitive_u128: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU128,
+    pub std_option_option_std_vec_vec_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveF32,
+    pub std_option_option_std_vec_vec_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveF64,
+    pub std_option_option_std_vec_vec_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveBool,
+    pub std_option_option_std_vec_vec_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdStringString,
+
+    pub std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8,
+    pub std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI16,
+    pub std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI32,
+    pub std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI64,
+    pub std_vec_vec_std_option_option_std_primitive_i128: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI128,
+    pub std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU8,
+    pub std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU16,
+    pub std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU32,
+    pub std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU64,
+    pub std_vec_vec_std_option_option_std_primitive_u128: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU128,
+    pub std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveF32,
+    pub std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveF64,
+    pub std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveBool,
+    pub std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdVecVecStdOptionOptionStdStringString,
+
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i128: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_u128: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
+    pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
+
+    pub generic: postgresql_crud::JsonGeneric<Doggie>,
+    pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
+    pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
+    pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<Doggie>,
+    pub std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdVecVecStdOptionOptionGeneric<Doggie>,
+    pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+     postgresql_crud::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
+pub struct Doggie {
+    pub std_string_string: postgresql_crud::JsonStdStringString,
+}
+

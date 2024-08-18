@@ -1,0 +1,18 @@
+[package]
+name = "generate_postgresql_query_part"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = {version = "=1.0.81"}
+quote = {version = "=1.0.36"}
+syn = {version = "=2.0.60"}
+proc_macro_common = {path = "../../proc_macro_common"}
+naming_conventions = {path = "../../naming_conventions"}
+
+[lints]
+workspace = true

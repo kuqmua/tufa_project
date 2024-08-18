@@ -35,6 +35,7 @@ tracing-bunyan-formatter = {version = "=0.3"}
 tracing-log = {version = "=0.1"}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 # utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
+schemars = {version = "=0.8.21"}
 git_info = {path = "../git_info"}
 from_str = {path = "../from_str"}
 # from_sqlx_postgres_error = {path = "../from_sqlx_postgres_error"}

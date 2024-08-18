@@ -9,6 +9,7 @@ edition = "2021"
 strum_macros = {version = "=0.24.3"}
 futures = {version = "=0.3.28"}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
+generate_postgresql_query_part = {path = "./generate_postgresql_query_part"}
 postgresql_crud_common = {path = "./postgresql_crud_common"}
 app_state = {path = "../app_state"}
 http_logic = {path = "../http_logic"}

@@ -16,6 +16,7 @@ members = [
   "integration_tests",
   "postgresql_crud",
   "postgresql_crud/generate_postgresql_crud",
+  "postgresql_crud/generate_postgresql_query_part",
   "postgresql_crud/postgresql_crud_common",
   "postgresql_crud/postgresql_crud_common/postgresql_crud_types_macro_logic_reuse",
   "proc_macro_assistants",
