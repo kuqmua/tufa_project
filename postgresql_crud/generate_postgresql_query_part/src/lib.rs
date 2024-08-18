@@ -594,7 +594,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let unique_type_path = vec_syn_field.iter().fold(vec![], |mut acc, element| {
             let supported_predefined_type = SupportedPredefinedType::try_from(*element)
                 .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
-            match supported_predefined_type {
+            let option_type_path = match supported_predefined_type {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdPrimitiveI16 |
                 SupportedPredefinedType::JsonStdPrimitiveI32 |
@@ -684,39 +684,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString 
-                => (),
+                => None,
     
-                SupportedPredefinedType::JsonGeneric(type_path) => {
-                    if !acc.contains(&type_path) {
-                        acc.push(type_path)
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    if !acc.contains(&type_path) {
-                        acc.push(type_path)
-                    }
-                },
-                SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
-                    if !acc.contains(&type_path) {
-                        acc.push(type_path)
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => {
-                    if !acc.contains(&type_path) {
-                        acc.push(type_path)
-                    }
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => {
-                    if !acc.contains(&type_path) {
-                        acc.push(type_path)
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                    if !acc.contains(&type_path) {
-                        acc.push(type_path)
-                    }
-                },
+                SupportedPredefinedType::JsonGeneric(type_path) => Some(type_path),
+                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => Some(type_path),
+                SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => Some(type_path),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => Some(type_path),
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => Some(type_path),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => Some(type_path),
             };
+            if let Some(value) = option_type_path {
+                if !acc.contains(&value) {
+                    acc.push(value)
+                }
+            }
             acc
         });
         unique_type_path.iter().fold(vec![], |mut acc, element| {
