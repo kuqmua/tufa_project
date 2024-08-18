@@ -941,6 +941,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let impl_generate_postgresql_query_part_for_ident_field_token_stream = {
         let type_of_space_stringified = "type of ";
         let space_and_not_null_stringified = " and not null";
+        let space_is_not_space_stringified = " is not ";
         let generate_postgresql_query_part_content = |match_value_token_stream: &proc_macro2::TokenStream, wrap_in_ok_token_stream: std::primitive::bool|{
             let generate_postgresql_query_part_match_variants_token_stream = vec_syn_field.iter().map(|element|{
                 let element_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -989,7 +990,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let generate_wrong_type_error_message_stringified = |is_optional: std::primitive::bool, json_type: &PrimitiveJsonType|{
                     format!(
-                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str} is not {json_type}{}",
+                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{space_is_not_space_stringified}{json_type}{}",
                         match is_optional {
                             true => " and not null",
                             false => ""
@@ -999,7 +1000,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let array_element_stringified = "[array element]";
                 let generate_vec_element_wrong_type_error_message_stringified = |is_optional: std::primitive::bool, json_type: &PrimitiveJsonType|{
                     format!(
-                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{array_element_stringified} is not {json_type}{}",
+                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{array_element_stringified}{space_is_not_space_stringified}{json_type}{}",
                         match is_optional {
                             true => space_and_not_null_stringified,
                             false => ""
@@ -1008,7 +1009,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let generate_vec_wrong_type_error_message_stringified = |is_optional: std::primitive::bool|{
                     format!(
-                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str} is not array{}",
+                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{space_is_not_space_stringified}array{}",
                         match is_optional {
                             true => space_and_not_null_stringified,
                             false => ""
@@ -1463,7 +1464,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         let query_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!(
-                "case when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'object' then jsonb_build_object('Ok',{{acc}}){{is_optional_query_part}} else jsonb_build_object('Err','{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}} is not object{{space_and_not_null}}') end"
+                "case when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'object' then jsonb_build_object('Ok',{{acc}}){{is_optional_query_part}} else jsonb_build_object('Err','{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}{space_is_not_space_stringified}object{{space_and_not_null}}') end"
             ),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
