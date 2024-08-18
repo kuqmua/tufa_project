@@ -995,9 +995,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
+                let column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified = format!("{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}");
                 let generate_wrong_type_error_message_stringified = |is_optional: std::primitive::bool, json_type: &PrimitiveJsonType|{
                     format!(
-                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{space_is_not_space_stringified}{json_type}{}",
+                        "{type_of_space_stringified}{column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified}{space_is_not_space_stringified}{json_type}{}",
                         match is_optional {
                             true => " and not null",
                             false => ""
@@ -1007,7 +1008,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let array_element_stringified = "[array element]";
                 let generate_vec_element_wrong_type_error_message_stringified = |is_optional: std::primitive::bool, json_type: &PrimitiveJsonType|{
                     format!(
-                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{array_element_stringified}{space_is_not_space_stringified}{json_type}{}",
+                        "{type_of_space_stringified}{column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified}{array_element_stringified}{space_is_not_space_stringified}{json_type}{}",
                         match is_optional {
                             true => space_and_not_null_stringified,
                             false => ""
@@ -1016,7 +1017,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let generate_vec_wrong_type_error_message_stringified = |is_optional: std::primitive::bool|{
                     format!(
-                        "{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}.{el_ident_str}{space_is_not_space_stringified}array{}",
+                        "{type_of_space_stringified}{column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified}{space_is_not_space_stringified}array{}",
                         match is_optional {
                             true => space_and_not_null_stringified,
                             false => ""
@@ -1107,7 +1108,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}"),
+                        &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -1145,7 +1146,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     is_std_vec_vec_optional: std::primitive::bool,
                 |{
                     let column_name_and_maybe_field_getter_for_error_message_query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{{column_name_and_maybe_field_getter}}.{el_ident_str}{array_element_stringified}"),
+                        &format!("{column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified}{array_element_stringified}"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     let vec_simple_types_token_stream = gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
