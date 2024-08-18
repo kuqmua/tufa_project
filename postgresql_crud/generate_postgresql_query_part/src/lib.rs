@@ -949,7 +949,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let generate_space_else_space_jsonb_build_object_err_stringified = |value: &std::primitive::str|{
             format!(" else jsonb_build_object('Err','{value}')")
         };
-        //
         let generate_vec_wrong_type_error_message_stringified = |is_optional: std::primitive::bool, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str|{
             format!(
                 "{type_of_space_stringified}{column_name_and_maybe_field_getter_for_error_message}{space_is_not_space_stringified}array{}",
@@ -959,7 +958,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             )
         };
-        //
         let generate_postgresql_query_part_content = |match_value_token_stream: &proc_macro2::TokenStream, wrap_in_ok_token_stream: std::primitive::bool|{
             let generate_postgresql_query_part_match_variants_token_stream = vec_syn_field.iter().map(|element|{
                 let element_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -1479,8 +1477,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         let query_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
             &{
+                let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&format!("{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}{space_is_not_space_stringified}object{{space_and_not_null}}"));
                 format!(
-                    "case when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'object' then jsonb_build_object('Ok',{{acc}}){{is_optional_query_part}} else jsonb_build_object('Err','{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}{space_is_not_space_stringified}object{{space_and_not_null}}') end"
+                    "case when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'object' then jsonb_build_object('Ok',{{acc}}){{is_optional_query_part}}{space_else_space_jsonb_build_object_err_stringified} end"
                 )
             },
             &proc_macro_name_upper_camel_case_ident_stringified
