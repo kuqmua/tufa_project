@@ -1468,6 +1468,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             ),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
+        let check_optional_query_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+            &format!(
+                "when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'null' then jsonb_build_object('Ok',null)"
+            ),
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
         quote::quote!{
             impl postgresql_crud::GeneratePostgresqlQueryPart<
                 #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
@@ -1503,7 +1509,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let _ = acc.pop();
                     let _ = acc.pop();
                     let is_optional_query_part = match is_optional {
-                        true => format!("when jsonb_typeof({column_name_and_maybe_field_getter}) = 'null' then jsonb_build_object('Ok',null)"),
+                        true => format!(#check_optional_query_token_stream),
                         false => std::string::String::default()
                     };
                     Ok({
