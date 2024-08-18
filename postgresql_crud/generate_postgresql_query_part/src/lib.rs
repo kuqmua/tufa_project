@@ -746,6 +746,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let maybe_additional_token_stream = {
                 let supported_predefined_type = SupportedPredefinedType::try_from(*element)
                     .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+                let generate_std_vec_vec_generic_ident_field_token_stream = |type_path: &syn::TypePath|{
+                    let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{
+                        (std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>)
+                    }
+                };
+                let generate_field_vec_limit_offset_token_stream = |type_path: &syn::TypePath|{
+                    let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{
+                        {
+                            field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
+                            limit: std::primitive::u64,
+                            offset: std::primitive::u64,
+                        }
+                    }
+                };
                 match supported_predefined_type {
                     SupportedPredefinedType::JsonStdPrimitiveI8 |
                     SupportedPredefinedType::JsonStdPrimitiveI16 |
@@ -844,58 +860,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
 
-                    SupportedPredefinedType::JsonGeneric(type_path) => {
-                        let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            (std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>)
-                        }
-                    }
-                    SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                        let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            (std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>)
-                        }
-                    }
-                    SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
-                        let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
-                                limit: std::primitive::u64,
-                                offset: std::primitive::u64,
-                            }
-                        }
-                    }
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => {
-                        let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
-                                limit: std::primitive::u64,
-                                offset: std::primitive::u64,
-                            }
-                        }
-                    }
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => {
-                        let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
-                                limit: std::primitive::u64,
-                                offset: std::primitive::u64,
-                            }
-                        }
-                    }
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                        let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                        quote::quote!{
-                            {
-                                field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
-                                limit: std::primitive::u64,
-                                offset: std::primitive::u64,
-                            }
-                        }
-                    }
+                    SupportedPredefinedType::JsonGeneric(type_path) => generate_std_vec_vec_generic_ident_field_token_stream(&type_path),
+                    SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => generate_std_vec_vec_generic_ident_field_token_stream(&type_path),
+                    SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
+                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
+                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
+                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
                 }
             };
             quote::quote!{
