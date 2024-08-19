@@ -1580,13 +1580,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let check_optional_query_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &{
-                let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("null");
-                let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified("{column_name_and_maybe_field_getter}");
-                format!(
-                    "when {wraped_into_jsonb_typeof_stringified} = 'null' then {wraped_into_jsonb_build_object_ok_stringified}"
-                )
-            },
+            &generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified("{column_name_and_maybe_field_getter}"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         quote::quote!{
