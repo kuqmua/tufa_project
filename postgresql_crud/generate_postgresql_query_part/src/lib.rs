@@ -1037,13 +1037,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let add_el_ident_str_comma_prefix_stringified = |value: &std::primitive::str|{
                     format!("'{el_ident_str}',{value}")
                 };
+                let wrap_into_case_end_stringified = |value: &std::primitive::str|{
+                    format!("case {value} end")
+                };
                 let generate_simple_json_type = |json_type: PrimitiveJsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_wrong_type_error_message_stringified(false, &json_type));
                             let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
                             add_el_ident_str_comma_prefix_stringified(&format!(
-                                "case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = '{json_type}' then {wraped_into_jsonb_build_object_ok_stringified}{space_else_space_jsonb_build_object_err_stringified} end "
+                                "{} ",
+                                wrap_into_case_end_stringified(&format!(
+                                    "when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = '{json_type}' then {wraped_into_jsonb_build_object_ok_stringified}{space_else_space_jsonb_build_object_err_stringified}"
+                                )) 
                             ))
                         }),
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -1057,7 +1063,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_wrong_type_error_message_stringified(true, &json_type));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
                             add_el_ident_str_comma_prefix_stringified(&format!(
-                                "case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = '{json_type}' then {wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{space_else_space_jsonb_build_object_err_stringified} end "
+                                "{} ",
+                                wrap_into_case_end_stringified(&format!(
+                                    "when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = '{json_type}' then {wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{space_else_space_jsonb_build_object_err_stringified}"
+                                ))
                             ))
                         }),
                         &proc_macro_name_upper_camel_case_ident_stringified
