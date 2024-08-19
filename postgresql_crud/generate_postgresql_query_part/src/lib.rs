@@ -1088,12 +1088,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let wrap_into_scopes_stringified = |value: &std::primitive::str|{
                     format!("({value})")
                 };
+                let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified("value");
                 let generate_vec_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(false, &json_type));
-                                let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified("value");
                                 let wraped_into_jsonb_agg_stringified = wrap_into_jsonb_agg_stringified(&
                                     wrap_into_case_end_stringified(&format!("when {wraped_into_jsonb_typeof_stringified} = '{json_type}' then {jsonb_build_object_ok_value_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified}"))
                                 );
@@ -1115,7 +1115,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &wrap_into_jsonb_object_build(&{
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(false, &json_type));
-                                let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified("value");
                                 let wraped_into_jsonb_agg_stringified = wrap_into_jsonb_agg_stringified(&wrap_into_case_end_stringified(
                                     &format!("when {wraped_into_jsonb_typeof_stringified} = '{json_type}' then {jsonb_build_object_ok_value_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified}")
                                 ));
@@ -1139,7 +1138,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
                                 let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified("value");
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(true, &json_type));
-                                let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified("value");
                                 let wraped_into_jsonb_agg_stringified = wrap_into_jsonb_agg_stringified(
                                     &wrap_into_case_end_stringified(
                                         &format!("when {wraped_into_jsonb_typeof_stringified} = '{json_type}' then {jsonb_build_object_ok_value_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified}")
@@ -1166,7 +1164,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
                                 let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_element_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified("value");
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(true, &json_type));
-                                let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified("value");
                                 let wraped_into_jsonb_agg_stringified = wrap_into_jsonb_agg_stringified(
                                     &wrap_into_case_end_stringified(&format!(
                                         "when {wraped_into_jsonb_typeof_stringified} = '{json_type}' then {jsonb_build_object_ok_value_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_element_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified}"
