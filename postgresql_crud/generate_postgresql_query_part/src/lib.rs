@@ -1057,13 +1057,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     gen_simple_types_token_stream(&query_string_token_stream)
                 };
+                let generate_jsonb_array_elements_stringified = |value: &std::primitive::str|{
+                    format!("jsonb_array_elements({value})")
+                };
                 let generate_vec_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let vec_element_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("value");
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(false, &json_type));
-                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {vec_element_wraped_into_jsonb_build_object_ok_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from jsonb_array_elements((select {column_name_and_maybe_field_getter_el_ident_str_stringified})) with ordinality where ordinality between {{start}} and {{end}})")
+                                let jsonb_array_elements_stringified = generate_jsonb_array_elements_stringified(&format!("(select {column_name_and_maybe_field_getter_el_ident_str_stringified})"));
+                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {vec_element_wraped_into_jsonb_build_object_ok_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_stringified} with ordinality where ordinality between {{start}} and {{end}})")
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             format!(
