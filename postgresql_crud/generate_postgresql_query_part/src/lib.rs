@@ -376,7 +376,6 @@ impl std::fmt::Display for PrimitiveJsonType {
     }
 }
 //todo maybe generate example of valid json to create - maybe with serde_json::to_string() adn #[derive(Default)} then println or write into file 
-//todo https://stackoverflow.com/questions/53376451/cannot-pass-more-than-100-arguments-to-a-function-to-json-build-object
 //todo maybe in many few dimantional array error message would be wrong. test it 
 #[proc_macro_derive(GeneratePostgresqlQueryPart)]
 pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
