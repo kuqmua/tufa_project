@@ -1502,8 +1502,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let query_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
             &{
                 let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&format!("{type_of_space_stringified}{{column_name_and_maybe_field_getter_for_error_message}}{space_is_not_space_stringified}object{{space_and_not_null}}"));
+                let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("{acc}");
                 format!(
-                    "case when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'object' then jsonb_build_object('Ok',{{acc}}){{is_optional_query_part}}{space_else_space_jsonb_build_object_err_stringified} end"
+                    "case when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'object' then {wraped_into_jsonb_build_object_ok_stringified}{{is_optional_query_part}}{space_else_space_jsonb_build_object_err_stringified} end"
                 )
             },
             &proc_macro_name_upper_camel_case_ident_stringified
