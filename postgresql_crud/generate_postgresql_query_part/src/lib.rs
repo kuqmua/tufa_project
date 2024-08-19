@@ -1089,6 +1089,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     format!("({value})")
                 };
                 let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified("value");
+                let jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified_space_with_ordinality_where_ordinality_between_start_and_end_stringified = format!(
+                    "{jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified}{space_with_ordinality_where_ordinality_between_start_and_end_stringified}"
+                );
                 let generate_vec_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
@@ -1099,7 +1102,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 );
                                 wrap_into_scopes_stringified(&generate_select_from_stringified(
                                     &wraped_into_jsonb_agg_stringified,
-                                    &format!("{jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified}{space_with_ordinality_where_ordinality_between_start_and_end_stringified}")
+                                    &jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified_space_with_ordinality_where_ordinality_between_start_and_end_stringified
                                 ))
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
@@ -1120,7 +1123,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 ));
                                 wrap_into_scopes_stringified(&generate_select_from_stringified(
                                     &wraped_into_jsonb_agg_stringified,
-                                    &format!("{jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified}{space_with_ordinality_where_ordinality_between_start_and_end_stringified}")
+                                    &jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified_space_with_ordinality_where_ordinality_between_start_and_end_stringified
                                 ))
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
@@ -1145,7 +1148,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 );
                                 wrap_into_scopes_stringified(&generate_select_from_stringified(
                                     &wraped_into_jsonb_agg_stringified,
-                                    &format!("{jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified}{space_with_ordinality_where_ordinality_between_start_and_end_stringified}")
+                                    &jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified_space_with_ordinality_where_ordinality_between_start_and_end_stringified
                                 ))
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
@@ -1171,7 +1174,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 );
                                 wrap_into_scopes_stringified(&generate_select_from_stringified(
                                     &wraped_into_jsonb_agg_stringified,
-                                    &format!("{jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified}{space_with_ordinality_where_ordinality_between_start_and_end_stringified}")
+                                    &jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified_space_with_ordinality_where_ordinality_between_start_and_end_stringified
                                 ))
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
@@ -1237,7 +1240,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let wraped_into_jsonb_agg_stringified = wrap_into_jsonb_agg_stringified("{value}");
                                 wrap_into_scopes_stringified(&generate_select_from_stringified(
                                     &wraped_into_jsonb_agg_stringified,
-                                    &format!("{jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified}{space_with_ordinality_where_ordinality_between_start_and_end_stringified}")
+                                    &jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified_space_with_ordinality_where_ordinality_between_start_and_end_stringified
                                 ))
                             });
                             let maybe_check_on_null_stringified = if is_std_vec_vec_optional {
