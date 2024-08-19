@@ -1095,9 +1095,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
-                            format!(
-                                "'{el_ident_str}',case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{vec_space_else_space_jsonb_build_object_err_stringified} end"
-                            )
+                            add_el_ident_str_comma_prefix_stringified(&format!(
+                                "case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{vec_space_else_space_jsonb_build_object_err_stringified} end"
+                            ))
                         }),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
@@ -1112,7 +1112,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 format!("(select jsonb_agg(case when {wraped_into_jsonb_typeof_stringified} = '{json_type}' then {jsonb_build_object_ok_value_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
-                            format!("'{el_ident_str}',case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified}{vec_space_else_space_jsonb_build_object_err_stringified} end")
+                            add_el_ident_str_comma_prefix_stringified(&format!("case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified}{vec_space_else_space_jsonb_build_object_err_stringified} end"))
                         }),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
@@ -1128,9 +1128,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
-                            format!(
-                                "'{el_ident_str}',case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified}{when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_stringified}{vec_space_else_space_jsonb_build_object_err_stringified} end"
-                            )
+                            add_el_ident_str_comma_prefix_stringified(&format!(
+                                "case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified}{when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_stringified}{vec_space_else_space_jsonb_build_object_err_stringified} end"
+                            ))
                         }),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ))
@@ -1145,7 +1145,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     let simple_types_token_stream = gen_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &wrap_into_jsonb_object_build(&format!("'{el_ident_str}',{{value}}")),
+                        &wrap_into_jsonb_object_build(&add_el_ident_str_comma_prefix_stringified("{value}")),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
@@ -1193,9 +1193,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 std::string::String::default()
                             };
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(is_std_vec_vec_optional, "{{column_name_and_maybe_field_getter_for_error_message}}"));
-                            format!(
-                                "'{el_ident_str}',case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified}{maybe_check_on_null_stringified}{space_else_space_jsonb_build_object_err_stringified} end"
-                            )
+                            add_el_ident_str_comma_prefix_stringified(&format!(
+                                "case when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified}{maybe_check_on_null_stringified}{space_else_space_jsonb_build_object_err_stringified} end"
+                            ))
                         }),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
