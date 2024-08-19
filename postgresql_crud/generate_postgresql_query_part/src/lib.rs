@@ -1061,13 +1061,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     format!("jsonb_array_elements({value})")
                 };
                 let jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified = generate_jsonb_array_elements_stringified(&format!("(select {column_name_and_maybe_field_getter_el_ident_str_stringified})"));
+                let jsonb_build_object_ok_value_stringified = wrap_into_jsonb_build_object_ok_stringified("value");
                 let generate_vec_simple_json_type = |json_type: PrimitiveJsonType|{
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
-                            let vec_element_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("value");
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(false, &json_type));
-                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {vec_element_wraped_into_jsonb_build_object_ok_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
+                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {jsonb_build_object_ok_value_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             format!(
@@ -1081,9 +1081,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
-                                let vec_element_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("value");
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(false, &json_type));
-                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {vec_element_wraped_into_jsonb_build_object_ok_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
+                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {jsonb_build_object_ok_value_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
@@ -1098,10 +1097,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
-                                let vec_element_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("value");
                                 let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified("value");
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(true, &json_type));
-                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {vec_element_wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
+                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {jsonb_build_object_ok_value_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             format!("'{el_ident_str}',case when jsonb_typeof({column_name_and_maybe_field_getter_el_ident_str_stringified}) = 'array' then {vec_wraped_into_jsonb_build_object_ok_stringified}{vec_space_else_space_jsonb_build_object_err_stringified} end")
@@ -1113,10 +1111,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     gen_vec_simple_types_token_stream(&proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let vec_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&{
-                                let vec_element_wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("value");
                                 let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_element_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified("value");
                                 let vec_element_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_element_wrong_type_error_message_stringified(true, &json_type));
-                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {vec_element_wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_element_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
+                                format!("(select jsonb_agg(case when jsonb_typeof(value) = '{json_type}' then {jsonb_build_object_ok_value_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_element_stringified}{vec_element_space_else_space_jsonb_build_object_err_stringified} end) from {jsonb_array_elements_select_column_name_and_maybe_field_getter_el_ident_str_stringified} with ordinality where ordinality between {{start}} and {{end}})")
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
