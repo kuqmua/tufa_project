@@ -962,9 +962,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = |value: &std::primitive::str|{
             let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("null");
-            let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified(value);
             let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                &wraped_into_jsonb_typeof_stringified,
+                &wrap_into_jsonb_typeof_stringified(value),
                 &PrimitiveJsonType::Null
             );
             format!("{wraped_into_when_space_value_space_equals_space_null_stringified} then {wraped_into_jsonb_build_object_ok_stringified}")
@@ -1054,15 +1053,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let add_el_ident_str_comma_prefix_stringified = |value: &std::primitive::str|{
                     format!("{el_ident_str_single_quotes_stringified},{value}")
                 };
+                let wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified = |json_type: &PrimitiveJsonType|{
+                    wrap_into_when_space_value_space_equals_space_null_stringified(
+                        &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
+                        json_type
+                    )
+                };
                 let generate_simple_json_type = |json_type: PrimitiveJsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_wrong_type_error_message_stringified(false, &json_type));
                             let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
-                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
-                                &json_type
-                            );
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&json_type);
                             add_el_ident_str_comma_prefix_stringified(&format!(
                                 "{} ",
                                 wrap_into_case_end_stringified(&format!(
@@ -1080,10 +1082,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_wrong_type_error_message_stringified(true, &json_type));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
-                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
-                                &json_type
-                            );
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&json_type);
                             add_el_ident_str_comma_prefix_stringified(&format!(
                                 "{} ",
                                 wrap_into_case_end_stringified(&format!(
@@ -1132,10 +1131,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 ))
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
-                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
-                                &PrimitiveJsonType::Array
-                            );
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&PrimitiveJsonType::Array);
                             add_el_ident_str_comma_prefix_stringified(&wrap_into_case_end_stringified(&format!(
                                 "{wraped_into_when_space_value_space_equals_space_null_stringified} then {vec_wraped_into_jsonb_build_object_ok_stringified}{vec_space_else_space_jsonb_build_object_err_stringified}"
                             )))
@@ -1162,10 +1158,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
-                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
-                                &PrimitiveJsonType::Array
-                            );
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&PrimitiveJsonType::Array);
                             add_el_ident_str_comma_prefix_stringified(&wrap_into_case_end_stringified(&format!(
                                 "{wraped_into_when_space_value_space_equals_space_null_stringified} then {vec_wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{vec_space_else_space_jsonb_build_object_err_stringified}"
                             )))
@@ -1194,10 +1187,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 ))
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(false, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
-                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
-                                &PrimitiveJsonType::Array
-                            );
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&PrimitiveJsonType::Array);
                             add_el_ident_str_comma_prefix_stringified(
                                 &wrap_into_case_end_stringified(
                                     &format!("{wraped_into_when_space_value_space_equals_space_null_stringified} then {vec_wraped_into_jsonb_build_object_ok_stringified}{vec_space_else_space_jsonb_build_object_err_stringified}")
@@ -1229,10 +1219,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                             let vec_space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(true, &column_name_and_maybe_field_getter_for_error_message_el_ident_str_stringified));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
-                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
-                                &PrimitiveJsonType::Array
-                            );
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&PrimitiveJsonType::Array);
                             add_el_ident_str_comma_prefix_stringified(
                                 &wrap_into_case_end_stringified(&format!(
                                     "{wraped_into_when_space_value_space_equals_space_null_stringified} then {vec_wraped_into_jsonb_build_object_ok_stringified}{when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_vec_stringified}{vec_space_else_space_jsonb_build_object_err_stringified}"
@@ -1304,10 +1291,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 std::string::String::default()
                             };
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_vec_wrong_type_error_message_stringified(is_std_vec_vec_optional, "{{column_name_and_maybe_field_getter_for_error_message}}"));
-                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
-                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
-                                &PrimitiveJsonType::Array
-                            );
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&PrimitiveJsonType::Array);
                             add_el_ident_str_comma_prefix_stringified(&wrap_into_case_end_stringified(&format!(
                                 "{wraped_into_when_space_value_space_equals_space_null_stringified} then {vec_wraped_into_jsonb_build_object_ok_stringified}{maybe_check_on_null_stringified}{space_else_space_jsonb_build_object_err_stringified}"
                             )))
