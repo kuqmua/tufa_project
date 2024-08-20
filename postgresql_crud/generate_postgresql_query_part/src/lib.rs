@@ -266,22 +266,59 @@ impl SupportedPredefinedOriginalType {
         let value = self.full_type_path_token_stream();
         quote::quote!{std::option::Option<#value>}
     }
-    fn std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    fn std_vec_vec_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
         let value = self.full_type_path_token_stream();
-        quote::quote!{std::vec::Vec<std::result::Result<#value,std::string::String>>}
+        quote::quote!{std::vec::Vec<#value>}
     }
-    fn std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    fn std_option_option_std_vec_vec_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
         let value = self.full_type_path_token_stream();
-        quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<#value,std::string::String>>>}
+        quote::quote!{std::option::Option<std::vec::Vec<#value>>}
     }
-    fn std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    fn std_vec_vec_std_option_option_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
         let value = self.full_type_path_token_stream();
-        quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<#value>,std::string::String>>}
+        quote::quote!{std::vec::Vec<std::option::Option<#value>>}
     }
-    fn std_option_option_std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    fn std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
         let value = self.full_type_path_token_stream();
-        quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<#value>,std::string::String>>>}
+        quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#value>>>}
     }
+
+
+    // std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>
+    
+
+
+
+
+    // fn std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    //     let value = self.full_type_path_token_stream();
+    //     quote::quote!{std::vec::Vec<std::result::Result<#value,std::string::String>>}
+    // }
+    // fn std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    //     let value = self.full_type_path_token_stream();
+    //     quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<#value,std::string::String>>>}
+    // }
+    // fn std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    //     let value = self.full_type_path_token_stream();
+    //     quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<#value>,std::string::String>>}
+    // }
+    // fn std_option_option_std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+    //     let value = self.full_type_path_token_stream();
+    //     quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<#value>,std::string::String>>>}
+    // }
+    //
+                // SupportedPredefinedType::JsonStdPrimitiveI8 |
+
+                // SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8 |
+
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::primitive::i8>},
+
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i8>>},
+
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i8>>},
+
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>},
+    //
 }
 #[derive(Debug)]
 enum SupportedPredefinedTypeTryFromSynField {
@@ -1889,100 +1926,106 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let wrap_into_std_primitive_token_stream = |value: &proc_macro2::TokenStream|{
                 quote::quote!{std::primitive::#value}
             };
-            // let wrap_into_std_option_option
-            let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
+            let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            let type_token_stream = match supported_predefined_type
             {
-                SupportedPredefinedType::JsonStdPrimitiveI8 => quote::quote!{std::primitive::i8},
-                SupportedPredefinedType::JsonStdPrimitiveI16 => quote::quote!{std::primitive::i16},
-                SupportedPredefinedType::JsonStdPrimitiveI32 => quote::quote!{std::primitive::i32},
-                SupportedPredefinedType::JsonStdPrimitiveI64 => quote::quote!{std::primitive::i64},
-                SupportedPredefinedType::JsonStdPrimitiveI128 => quote::quote!{std::primitive::i128},
-                SupportedPredefinedType::JsonStdPrimitiveU8 => quote::quote!{std::primitive::u8},
-                SupportedPredefinedType::JsonStdPrimitiveU16 => quote::quote!{std::primitive::u16},
-                SupportedPredefinedType::JsonStdPrimitiveU32 => quote::quote!{std::primitive::u32},
-                SupportedPredefinedType::JsonStdPrimitiveU64 => quote::quote!{std::primitive::u64},
-                SupportedPredefinedType::JsonStdPrimitiveU128 => quote::quote!{std::primitive::u128},
-                SupportedPredefinedType::JsonStdPrimitiveF32 => quote::quote!{std::primitive::f32},
-                SupportedPredefinedType::JsonStdPrimitiveF64 => quote::quote!{std::primitive::f64},
-                SupportedPredefinedType::JsonStdPrimitiveBool => quote::quote!{std::primitive::bool},
-                SupportedPredefinedType::JsonStdStringString => quote::quote!{std::string::String},
+                SupportedPredefinedType::JsonStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdStringString => supported_predefined_type.to_original_type().full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::primitive::i8>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::primitive::i16>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::primitive::i32>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::primitive::i64>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::primitive::i128>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::primitive::u8>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::primitive::u16>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::primitive::u32>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::primitive::u64>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::primitive::u128>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::primitive::f32>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::primitive::f64>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::primitive::bool>},
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString => quote::quote!{std::option::Option<std::string::String>},
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
+                
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::primitive::i8>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::primitive::i16>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::primitive::i32>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::primitive::i64>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 => quote::quote!{std::vec::Vec<std::primitive::i128>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::primitive::u8>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::primitive::u16>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::primitive::u32>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::primitive::u64>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 => quote::quote!{std::vec::Vec<std::primitive::u128>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::primitive::f32>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::primitive::f64>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool => quote::quote!{std::vec::Vec<std::primitive::bool>},
-                SupportedPredefinedType::JsonStdVecVecStdStringString => quote::quote!{std::vec::Vec<std::string::String>},
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i8>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i16>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i32>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i64>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i128>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u8>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u16>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u32>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u64>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u128>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f32>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f64>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::bool>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::string::String>>},
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i8>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i16>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i32>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i64>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i128>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u8>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u16>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u32>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u64>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u128>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f32>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f64>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::bool>>},
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => quote::quote!{std::vec::Vec<std::option::Option<std::string::String>>},
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i128>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u128>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>},
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>},
-
-                SupportedPredefinedType::JsonGeneric(type_path) => generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string()),
+                SupportedPredefinedType::JsonGeneric(ref type_path) => {
+                    // let f = supported_predefined_type.to_original_type().full_type_path_token_stream();
+                    // println!("@@@{f}");
+                    let f = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    // println!("!!!{g}");
+                    f
+                },//   
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{std::option::Option<#generic_ident_options_upper_camel_case_token_stream>}
