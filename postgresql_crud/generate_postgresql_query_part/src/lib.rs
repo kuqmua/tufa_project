@@ -1069,17 +1069,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         json_type
                     )
                 };
+                let add_then_space_prefix_wraped_into_jsonb_build_object_ok_column_name_and_maybe_field_getter_el_ident_str_stringified = add_then_space_prefix_stringified(&wrap_into_jsonb_build_object_ok_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified));
                 let generate_simple_json_type = |json_type: PrimitiveJsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_wrong_type_error_message_stringified(false, &json_type));
-                            let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
                             let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&json_type);
-                            let add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified = add_then_space_prefix_stringified(&wraped_into_jsonb_build_object_ok_stringified);
                             add_el_ident_str_comma_prefix_stringified(&format!(
                                 "{} ",
                                 wrap_into_case_end_stringified(&format!(
-                                    "{wraped_into_when_space_value_space_equals_space_null_stringified} {add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified}{space_else_space_jsonb_build_object_err_stringified}"
+                                    "{wraped_into_when_space_value_space_equals_space_null_stringified} {add_then_space_prefix_wraped_into_jsonb_build_object_ok_column_name_and_maybe_field_getter_el_ident_str_stringified}{space_else_space_jsonb_build_object_err_stringified}"
                                 )) 
                             ))
                         }),
@@ -1090,15 +1089,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let generate_optional_simple_json_type = |json_type: PrimitiveJsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &wrap_into_jsonb_object_build(&{
-                            let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_wrong_type_error_message_stringified(true, &json_type));
                             let when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
                             let wraped_into_when_space_value_space_equals_space_null_stringified = wraped_into_when_space_value_space_equals_space_null_column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified(&json_type);
-                            let add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified = add_then_space_prefix_stringified(&wraped_into_jsonb_build_object_ok_stringified);
                             add_el_ident_str_comma_prefix_stringified(&format!(
                                 "{} ",
                                 wrap_into_case_end_stringified(&format!(
-                                    "{wraped_into_when_space_value_space_equals_space_null_stringified} {add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{space_else_space_jsonb_build_object_err_stringified}"
+                                    "{wraped_into_when_space_value_space_equals_space_null_stringified} {add_then_space_prefix_wraped_into_jsonb_build_object_ok_column_name_and_maybe_field_getter_el_ident_str_stringified} {when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified}{space_else_space_jsonb_build_object_err_stringified}"
                                 ))
                             ))
                         }),
