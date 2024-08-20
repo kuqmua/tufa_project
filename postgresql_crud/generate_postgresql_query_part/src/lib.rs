@@ -960,13 +960,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let wrap_into_when_space_value_space_equals_space_null_stringified = |value: &std::primitive::str, primitive_json_type: &PrimitiveJsonType|{
             format!("when {value} = '{primitive_json_type}'")
         };
+        let add_then_space_prefix_stringified = |value: &std::primitive::str|{
+            format!("then {value}")
+        };
         let generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = |value: &std::primitive::str|{
-            let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("null");
+            let add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified = add_then_space_prefix_stringified(&wrap_into_jsonb_build_object_ok_stringified("null"));
             let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
                 &wrap_into_jsonb_typeof_stringified(value),
                 &PrimitiveJsonType::Null
             );
-            format!("{wraped_into_when_space_value_space_equals_space_null_stringified} then {wraped_into_jsonb_build_object_ok_stringified}")
+            format!("{wraped_into_when_space_value_space_equals_space_null_stringified} {add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified}")
         };
         let generate_space_else_space_jsonb_build_object_err_stringified = |value: &std::primitive::str|{
             let wraped_into_jsonb_object_build = wrap_into_jsonb_object_build(&format!("'Err','{value}'"));
