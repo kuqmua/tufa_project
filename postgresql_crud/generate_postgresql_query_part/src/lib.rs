@@ -1627,8 +1627,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &wraped_into_jsonb_typeof_stringified,
                     &PrimitiveJsonType::Object
                 );
+                let add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified = add_then_space_prefix_stringified(&wraped_into_jsonb_build_object_ok_stringified);
                 wrap_into_case_end_stringified(&format!(
-                    "{wraped_into_when_space_value_space_equals_space_null_stringified} then {wraped_into_jsonb_build_object_ok_stringified}{{is_optional_query_part}}{space_else_space_jsonb_build_object_err_stringified}"
+                    "{wraped_into_when_space_value_space_equals_space_null_stringified} {add_then_space_prefix_wraped_into_jsonb_build_object_ok_stringified}{{is_optional_query_part}}{space_else_space_jsonb_build_object_err_stringified}"
                 ))
             },
             &proc_macro_name_upper_camel_case_ident_stringified
