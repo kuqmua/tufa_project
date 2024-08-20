@@ -1035,10 +1035,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     )
                 };
-                let column_name_and_maybe_field_getter_el_ident_str_stringified = format!("{{column_name_and_maybe_field_getter}}->'{el_ident_str}'");
+                let el_ident_str_single_quotes_stringified = format!("'{el_ident_str}'");
+                let column_name_and_maybe_field_getter_el_ident_str_stringified = format!("{{column_name_and_maybe_field_getter}}->{el_ident_str_single_quotes_stringified}");
                 let column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
                 let add_el_ident_str_comma_prefix_stringified = |value: &std::primitive::str|{
-                    format!("'{el_ident_str}',{value}")
+                    format!("{el_ident_str_single_quotes_stringified},{value}")
                 };
                 let generate_simple_json_type = |json_type: PrimitiveJsonType|{
                     let query_string_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
