@@ -365,6 +365,9 @@ enum PrimitiveJsonType {
     Boolean,
     Number,
     String,
+    Array,
+    Object,
+    Null,
 }
 impl std::fmt::Display for PrimitiveJsonType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -372,6 +375,9 @@ impl std::fmt::Display for PrimitiveJsonType {
             Self::Boolean => write!(f, "boolean"),
             Self::Number => write!(f, "number"),
             Self::String => write!(f, "string"),
+            Self::Array => write!(f, "array"),
+            Self::Object => write!(f, "object"),
+            Self::Null => write!(f, "null"),
         }
     }
 }
@@ -951,10 +957,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let wrap_into_jsonb_typeof_stringified = |value: &std::primitive::str|{
             format!("jsonb_typeof({value})")
         };
+        let wrap_into_when_space_value_space_equals_space_null_stringified = |value: &std::primitive::str, primitive_json_type: &PrimitiveJsonType|{
+            format!("when {value} = '{primitive_json_type}'")
+        };
         let generate_when_jsonb_typeof_value_equal_null_then_jsob_build_object_ok_null_stringified = |value: &std::primitive::str|{
             let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified("null");
             let wraped_into_jsonb_typeof_stringified = wrap_into_jsonb_typeof_stringified(value);
-            format!("when {wraped_into_jsonb_typeof_stringified} = 'null' then {wraped_into_jsonb_build_object_ok_stringified}")
+            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
+                &wraped_into_jsonb_typeof_stringified,
+                &PrimitiveJsonType::Null
+            );
+            format!("{wraped_into_when_space_value_space_equals_space_null_stringified} then {wraped_into_jsonb_build_object_ok_stringified}")
         };
         let generate_space_else_space_jsonb_build_object_err_stringified = |value: &std::primitive::str|{
             let wraped_into_jsonb_object_build = wrap_into_jsonb_object_build(&format!("'Err','{value}'"));
@@ -1046,10 +1059,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &wrap_into_jsonb_object_build(&{
                             let space_else_space_jsonb_build_object_err_stringified = generate_space_else_space_jsonb_build_object_err_stringified(&generate_wrong_type_error_message_stringified(false, &json_type));
                             let wraped_into_jsonb_build_object_ok_stringified = wrap_into_jsonb_build_object_ok_stringified(&column_name_and_maybe_field_getter_el_ident_str_stringified);
+                            let wraped_into_when_space_value_space_equals_space_null_stringified = wrap_into_when_space_value_space_equals_space_null_stringified(
+                                &column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified,
+                                &json_type
+                            );
                             add_el_ident_str_comma_prefix_stringified(&format!(
                                 "{} ",
                                 wrap_into_case_end_stringified(&format!(
-                                    "when {column_name_and_maybe_field_getter_el_ident_str_wraped_into_jsonb_typeof_stringified} = '{json_type}' then {wraped_into_jsonb_build_object_ok_stringified}{space_else_space_jsonb_build_object_err_stringified}"
+                                    "{wraped_into_when_space_value_space_equals_space_null_stringified} then {wraped_into_jsonb_build_object_ok_stringified}{space_else_space_jsonb_build_object_err_stringified}"
                                 )) 
                             ))
                         }),
