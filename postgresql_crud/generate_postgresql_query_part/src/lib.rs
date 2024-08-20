@@ -97,6 +97,192 @@ enum SupportedPredefinedType {
     JsonStdVecVecStdOptionOptionGeneric(syn::TypePath), 
     JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(syn::TypePath), 
 }
+impl SupportedPredefinedType {
+    fn to_original_type(&self) -> SupportedPredefinedOriginalType {
+        match self {
+            Self::JsonStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            Self::JsonStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            Self::JsonStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            Self::JsonStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            Self::JsonStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            Self::JsonStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            Self::JsonStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            Self::JsonStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            Self::JsonStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            Self::JsonStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            Self::JsonStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            Self::JsonStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            Self::JsonStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            Self::JsonStdStringString => SupportedPredefinedOriginalType::String,
+
+            Self::JsonStdOptionOptionStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            Self::JsonStdOptionOptionStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            Self::JsonStdOptionOptionStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            Self::JsonStdOptionOptionStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            Self::JsonStdOptionOptionStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            Self::JsonStdOptionOptionStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            Self::JsonStdOptionOptionStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            Self::JsonStdOptionOptionStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            Self::JsonStdOptionOptionStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            Self::JsonStdOptionOptionStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            Self::JsonStdOptionOptionStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            Self::JsonStdOptionOptionStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            Self::JsonStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            Self::JsonStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
+
+            Self::JsonStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            Self::JsonStdVecVecStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            Self::JsonStdVecVecStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            Self::JsonStdVecVecStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            Self::JsonStdVecVecStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            Self::JsonStdVecVecStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            Self::JsonStdVecVecStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            Self::JsonStdVecVecStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            Self::JsonStdVecVecStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            Self::JsonStdVecVecStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            Self::JsonStdVecVecStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            Self::JsonStdVecVecStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            Self::JsonStdVecVecStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            Self::JsonStdVecVecStdStringString => SupportedPredefinedOriginalType::String,
+
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            Self::JsonStdOptionOptionStdVecVecStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            Self::JsonStdOptionOptionStdVecVecStdStringString => SupportedPredefinedOriginalType::String,
+
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            Self::JsonStdVecVecStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            Self::JsonStdVecVecStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
+
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
+
+            Self::JsonGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
+            Self::JsonStdOptionOptionGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
+            Self::JsonStdVecVecGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
+            Self::JsonStdOptionOptionStdVecVecGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
+            Self::JsonStdVecVecStdOptionOptionGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
+            Self::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
+        }
+    }
+}
+#[derive(Debug)]
+enum SupportedPredefinedOriginalType {
+    I8, 
+    I16, 
+    I32, 
+    I64, 
+    I128,
+    U8, 
+    U16, 
+    U32, 
+    U64, 
+    U128, 
+    F32, 
+    F64, 
+    Bool, 
+    String, 
+    Generic(syn::TypePath),
+}
+impl SupportedPredefinedOriginalType {
+    fn to_token_stream(&self) -> proc_macro2::TokenStream {
+        match self {
+            Self::I8 => quote::quote!{i8},
+            Self::I16 => quote::quote!{i16},
+            Self::I32 => quote::quote!{i32},
+            Self::I64 => quote::quote!{i64},
+            Self::I128 => quote::quote!{i128},
+            Self::U8 => quote::quote!{u8},
+            Self::U16 => quote::quote!{u16},
+            Self::U32 => quote::quote!{u32},
+            Self::U64 => quote::quote!{u64},
+            Self::U128 => quote::quote!{u128},
+            Self::F32 => quote::quote!{f32},
+            Self::F64 => quote::quote!{f64},
+            Self::Bool => quote::quote!{bool},
+            Self::String => quote::quote!{String},
+            Self::Generic(type_path) => quote::quote!{#type_path},
+        }
+    }
+    fn full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
+        let wrap_into_std_primitive_token_stream = |value: proc_macro2::TokenStream|{
+            quote::quote!{std::primitive::#value}
+        };
+        match self {
+            Self::I8 |
+            Self::I16 |
+            Self::I32 |
+            Self::I64 |
+            Self::I128 |
+            Self::U8 |
+            Self::U16 |
+            Self::U32 |
+            Self::U64 |
+            Self::U128 |
+            Self::F32 |
+            Self::F64 |
+            Self::Bool => wrap_into_std_primitive_token_stream(self.to_token_stream()), 
+            Self::String => {
+                let value = self.to_token_stream();
+                quote::quote!{std::string::#value}
+            },
+            Self::Generic(_) => self.to_token_stream(),
+        }
+    }
+    fn std_option_option_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.full_type_path_token_stream();
+        quote::quote!{std::option::Option<#value>}
+    }
+    fn std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.full_type_path_token_stream();
+        quote::quote!{std::vec::Vec<std::result::Result<#value,std::string::String>>}
+    }
+    fn std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.full_type_path_token_stream();
+        quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<#value,std::string::String>>>}
+    }
+    fn std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.full_type_path_token_stream();
+        quote::quote!{std::vec::Vec<std::result::Result<std::option::Option<#value>,std::string::String>>}
+    }
+    fn std_option_option_std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.full_type_path_token_stream();
+        quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<#value>,std::string::String>>>}
+    }
+}
 #[derive(Debug)]
 enum SupportedPredefinedTypeTryFromSynField {
     TypePathPathSegmentsIsNotSynTypePath,
@@ -1700,6 +1886,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     naming_conventions::FIELD_IDENT_IS_NONE
                 );
             });
+            let wrap_into_std_primitive_token_stream = |value: &proc_macro2::TokenStream|{
+                quote::quote!{std::primitive::#value}
+            };
+            // let wrap_into_std_option_option
             let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
                 SupportedPredefinedType::JsonStdPrimitiveI8 => quote::quote!{std::primitive::i8},
