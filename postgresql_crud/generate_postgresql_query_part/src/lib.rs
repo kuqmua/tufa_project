@@ -2293,17 +2293,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         });
+        let generate_field_index_token_stream = |index: std::primitive::usize|{
+            let value = format!("__field{index}");
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
         let visit_u64_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, _)|{
             let index_u64_token_stream = {
                 let value = format!("{index}u64");
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             quote::quote!{
                 #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
             }
@@ -2320,11 +2321,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 },
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             quote::quote!{
                 #field_name_double_quotes_token_stream=> serde::__private::Ok(__Field::#field_index_token_stream)
             }
@@ -2340,11 +2337,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             quote::quote!{
                 #b_field_name_double_quotes_token_stream=> serde::__private::Ok(__Field::#field_index_token_stream)
             }
@@ -2462,11 +2455,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let visit_seq_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             let index_usize_token_stream = {
                 let value = format!("{index}usize");
                 value.parse::<proc_macro2::TokenStream>()
@@ -2494,11 +2483,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     naming_conventions::FIELD_IDENT_IS_NONE
                 );
             });
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             let conversion_logic_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
             {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
@@ -2751,11 +2736,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         //its just #(#visit_seq_fields_assignment_token_stream),* reusage making move error 
         let visit_seq_fields_assignment_handle_token_stream = quote::quote!{#(#visit_seq_fields_assignment_token_stream),*};
         let visit_map_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             let type_token_stream = generate_type_token_stream(element);
             quote::quote!{
                 let mut #field_index_token_stream: serde::__private::Option<
@@ -2766,11 +2747,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         let visit_map_match_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             let field_ident_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &element.ident.as_ref().unwrap_or_else(|| {
                     panic!(
@@ -2804,11 +2781,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         let visit_map_missing_fields_check_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
-            let field_index_token_stream = {
-                let value = format!("__field{index}");
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
+            let field_index_token_stream = generate_field_index_token_stream(index);
             let field_ident_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &element.ident.as_ref().unwrap_or_else(|| {
                     panic!(
@@ -2996,12 +2969,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_serde_deserialize_for_ident_wrapper_token_stream = {
+        let tuple_struct_space_stringified = "tuple struct ";
         let tuple_struct_ident_wrapper_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("tuple struct {ident_wrapper_upper_camel_case_stringified}"),
+            &format!("{tuple_struct_space_stringified}{ident_wrapper_upper_camel_case_stringified}"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let tuple_struct_ident_wrapper_with_1_element_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("tuple struct {ident_wrapper_upper_camel_case_stringified} with 1 element"),
+            &format!("{tuple_struct_space_stringified}{ident_wrapper_upper_camel_case_stringified} with 1 element"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let ident_wrapper_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -3112,4 +3086,4 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //     );
     // }
     generated.into()
-}
+}    
