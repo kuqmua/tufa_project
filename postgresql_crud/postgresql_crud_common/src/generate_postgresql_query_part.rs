@@ -199,6 +199,6 @@ pub trait GeneratePostgresqlQueryPart<T1, T2> {
     ) -> Result<std::string::String, T2>;
 }
 
-pub trait StdDefaultDefaultStdOptionOptionSomeStdResultResultOk: Sized {
+pub trait StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdResultResultIsAlwaysOk: Sized {
     fn default() -> Self;
 }
