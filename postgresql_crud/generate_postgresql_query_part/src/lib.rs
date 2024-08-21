@@ -2392,37 +2392,37 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let type_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) 
-            {
-                SupportedPredefinedType::JsonStdPrimitiveI8 => quote::quote!{std::primitive::i8},
-                SupportedPredefinedType::JsonStdPrimitiveI16 => quote::quote!{std::primitive::i16},
-                SupportedPredefinedType::JsonStdPrimitiveI32 => quote::quote!{std::primitive::i32},
-                SupportedPredefinedType::JsonStdPrimitiveI64 => quote::quote!{std::primitive::i64},
-                SupportedPredefinedType::JsonStdPrimitiveI128 => quote::quote!{std::primitive::i128},
-                SupportedPredefinedType::JsonStdPrimitiveU8 => quote::quote!{std::primitive::u8},
-                SupportedPredefinedType::JsonStdPrimitiveU16 => quote::quote!{std::primitive::u16},
-                SupportedPredefinedType::JsonStdPrimitiveU32 => quote::quote!{std::primitive::u32},
-                SupportedPredefinedType::JsonStdPrimitiveU64 => quote::quote!{std::primitive::u64},
-                SupportedPredefinedType::JsonStdPrimitiveU128 => quote::quote!{std::primitive::u128},
-                SupportedPredefinedType::JsonStdPrimitiveF32 => quote::quote!{std::primitive::f32},
-                SupportedPredefinedType::JsonStdPrimitiveF64 => quote::quote!{std::primitive::f64},
-                SupportedPredefinedType::JsonStdPrimitiveBool => quote::quote!{std::primitive::bool},
-                SupportedPredefinedType::JsonStdStringString => quote::quote!{std::string::String},
+            let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            let type_token_stream = match supported_predefined_type {
+                SupportedPredefinedType::JsonStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdStringString => supported_predefined_type.to_original_type().full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::primitive::i8>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::primitive::i16>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::primitive::i32>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::primitive::i64>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI128 => quote::quote!{std::option::Option<std::primitive::i128>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::primitive::u8>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::primitive::u16>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::primitive::u32>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::primitive::u64>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU128 => quote::quote!{std::option::Option<std::primitive::u128>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::primitive::f32>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::primitive::f64>},
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::primitive::bool>},
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString => quote::quote!{std::option::Option<std::string::String>},
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
 
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i8,std::string::String>>},
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i16,std::string::String>>},
