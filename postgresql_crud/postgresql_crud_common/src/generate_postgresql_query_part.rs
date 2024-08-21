@@ -1,30 +1,30 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveI8(pub std::primitive::i8);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveI16(pub std::primitive::i16);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveI32(pub std::primitive::i32);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveI64(pub std::primitive::i64);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveI128(pub std::primitive::i128);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveU8(pub std::primitive::u8);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveU16(pub std::primitive::u16);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveU32(pub std::primitive::u32);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveU64(pub std::primitive::u64);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveU128(pub std::primitive::u128);
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveF32(pub std::primitive::f32);
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveF64(pub std::primitive::f64);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdPrimitiveBool(pub std::primitive::bool);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
 pub struct JsonStdStringString(pub std::string::String);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -202,3 +202,133 @@ pub trait GeneratePostgresqlQueryPart<T1, T2> {
 pub trait StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement: Sized {
     fn default() -> Self;
 }
+//
+
+
+// #[derive(Debug)]
+// pub struct JsonStdPrimitiveI8(pub std::primitive::i8);
+// #[automatically_derived]
+// impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8 {
+//     #[inline]
+//     fn default() -> JsonStdPrimitiveI8 {
+//         JsonStdPrimitiveI8(StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default())
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdOptionOptionStdPrimitiveI8(
+//     pub std::option::Option<std::primitive::i8>,
+// );
+// #[automatically_derived]
+// impl ::core::default::Default for JsonStdOptionOptionStdPrimitiveI8 {
+//     #[inline]
+//     fn default() -> JsonStdOptionOptionStdPrimitiveI8 {
+//         JsonStdOptionOptionStdPrimitiveI8(Some(::core::default::Default::default()))
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdVecVecStdPrimitiveI8(pub std::vec::Vec<std::primitive::i8>);
+// #[automatically_derived]
+// impl ::core::default::Default for JsonStdVecVecStdPrimitiveI8 {
+//     #[inline]
+//     fn default() -> JsonStdVecVecStdPrimitiveI8 {
+//         JsonStdVecVecStdPrimitiveI8(vec![::core::default::Default::default()])
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI8(
+//     pub std::option::Option<std::vec::Vec<std::primitive::i8>>,
+// );
+// #[automatically_derived]
+// impl ::core::default::Default for JsonStdOptionOptionStdVecVecStdPrimitiveI8 {
+//     #[inline]
+//     fn default() -> JsonStdOptionOptionStdVecVecStdPrimitiveI8 {
+//         JsonStdOptionOptionStdVecVecStdPrimitiveI8(Some(vec![::core::default::Default::default()]))
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI8(
+//     pub std::vec::Vec<std::option::Option<std::primitive::i8>>,
+// );
+// #[automatically_derived]
+// impl ::core::default::Default for JsonStdVecVecStdOptionOptionStdPrimitiveI8 {
+//     #[inline]
+//     fn default() -> JsonStdVecVecStdOptionOptionStdPrimitiveI8 {
+//         JsonStdVecVecStdOptionOptionStdPrimitiveI8(vec![Some(::core::default::Default::default())])
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(
+//     pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>,
+// );
+// #[automatically_derived]
+// impl ::core::default::Default
+// for JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 {
+//     #[inline]
+//     fn default() -> JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 {
+//         JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(Some(vec![Some(::core::default::Default::default())]))
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonGeneric<T>(pub T);
+// #[automatically_derived]
+// impl<T: ::core::default::Default> ::core::default::Default for JsonGeneric<T> {
+//     #[inline]
+//     fn default() -> JsonGeneric<T> {
+//         JsonGeneric(::core::default::Default::default())
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdOptionOptionGeneric<T>(pub std::option::Option<T>);
+// #[automatically_derived]
+// impl<T: ::core::default::Default> ::core::default::Default
+// for JsonStdOptionOptionGeneric<T> {
+//     #[inline]
+//     fn default() -> JsonStdOptionOptionGeneric<T> {
+//         JsonStdOptionOptionGeneric(Some(::core::default::Default::default()))
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdVecVecGeneric<T>(pub std::vec::Vec<T>);
+// #[automatically_derived]
+// impl<T: ::core::default::Default> ::core::default::Default for JsonStdVecVecGeneric<T> {
+//     #[inline]
+//     fn default() -> JsonStdVecVecGeneric<T> {
+//         JsonStdVecVecGeneric(vec![::core::default::Default::default()])
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdOptionOptionStdVecVecGeneric<T>(
+//     pub std::option::Option<std::vec::Vec<T>>,
+// );
+// #[automatically_derived]
+// impl<T: ::core::default::Default> ::core::default::Default
+// for JsonStdOptionOptionStdVecVecGeneric<T> {
+//     #[inline]
+//     fn default() -> JsonStdOptionOptionStdVecVecGeneric<T> {
+//         JsonStdOptionOptionStdVecVecGeneric(Some(vec![::core::default::Default::default()]))
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdVecVecStdOptionOptionGeneric<T>(
+//     pub std::vec::Vec<std::option::Option<T>>,
+// );
+// #[automatically_derived]
+// impl<T: ::core::default::Default> ::core::default::Default
+// for JsonStdVecVecStdOptionOptionGeneric<T> {
+//     #[inline]
+//     fn default() -> JsonStdVecVecStdOptionOptionGeneric<T> {
+//         JsonStdVecVecStdOptionOptionGeneric(vec![Some(::core::default::Default::default())])
+//     }
+// }
+// #[derive(Debug)]
+// pub struct JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<T>(
+//     pub std::option::Option<std::vec::Vec<std::option::Option<T>>>,
+// );
+// #[automatically_derived]
+// impl<T: ::core::default::Default> ::core::default::Default
+// for JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<T> {
+//     #[inline]
+//     fn default() -> JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<T> {
+//         JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(Some(vec![Some(::core::default::Default::default())]))
+//     }
+// }

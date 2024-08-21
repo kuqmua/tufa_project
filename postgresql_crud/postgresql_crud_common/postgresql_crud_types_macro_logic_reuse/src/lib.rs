@@ -419,3 +419,25 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
     };
     generated.into()
 }
+
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {error}",
+            proc_macro_common::constants::AST_PARSE_FAILED
+        )
+    });
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
+            #[inline]
+            fn default() -> Self {
+                Self(::core::default::Default::default())
+            }
+        }
+    };
+    generated.into()
+}
