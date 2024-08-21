@@ -289,18 +289,11 @@ impl SupportedPredefinedOriginalType {
         let value = self.full_type_path_token_stream();
         quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#value>>>}
     }
-
-
-    // std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>
-    
-
-
-
-
-    // fn std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
-    //     let value = self.full_type_path_token_stream();
-    //     quote::quote!{std::vec::Vec<std::result::Result<#value,std::string::String>>}
-    // }
+    // quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i8,std::string::String>>},
+    fn std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.full_type_path_token_stream();
+        quote::quote!{std::vec::Vec<std::result::Result<#value,std::string::String>>}
+    }
     // fn std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(&self) -> proc_macro2::TokenStream {
     //     let value = self.full_type_path_token_stream();
     //     quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<#value,std::string::String>>>}
@@ -2424,20 +2417,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i8,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i16,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i32,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i64,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::i128,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u8,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u16,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u32,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u64,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::u128,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::f32,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::f64,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool => quote::quote!{std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>},
-                SupportedPredefinedType::JsonStdVecVecStdStringString => quote::quote!{std::vec::Vec<std::result::Result<std::string::String,std::string::String>>},
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
 
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i8,std::string::String>>>},
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i16,std::string::String>>>},
