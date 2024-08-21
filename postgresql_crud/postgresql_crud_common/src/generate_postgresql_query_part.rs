@@ -198,3 +198,7 @@ pub trait GeneratePostgresqlQueryPart<T1, T2> {
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
     ) -> Result<std::string::String, T2>;
 }
+
+pub trait StdDefaultDefaultStdOptionOptionSomeStdResultResultOk: Sized {
+    fn default() -> Self;
+}
