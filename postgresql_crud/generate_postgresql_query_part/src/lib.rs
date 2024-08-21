@@ -217,6 +217,13 @@ enum SupportedPredefinedOriginalType {
     String, 
     Generic(syn::TypePath),
 }
+
+fn generate_ident_options_upper_camel_case_token_stream(value: &std::primitive::str) -> proc_macro2::TokenStream {
+    let value = format!("{value}{}", naming_conventions::OptionsUpperCamelCase);
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+
 impl SupportedPredefinedOriginalType {
     fn to_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
@@ -234,7 +241,7 @@ impl SupportedPredefinedOriginalType {
             Self::F64 => quote::quote!{f64},
             Self::Bool => quote::quote!{bool},
             Self::String => quote::quote!{String},
-            Self::Generic(type_path) => quote::quote!{#type_path},
+            Self::Generic(type_path) => generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string()),
         }
     }
     fn full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
@@ -1923,9 +1930,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     naming_conventions::FIELD_IDENT_IS_NONE
                 );
             });
-            let wrap_into_std_primitive_token_stream = |value: &proc_macro2::TokenStream|{
-                quote::quote!{std::primitive::#value}
-            };
             let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
             let type_token_stream = match supported_predefined_type
             {
@@ -2019,33 +2023,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonGeneric(ref type_path) => {
-                    // let f = supported_predefined_type.to_original_type().full_type_path_token_stream();
-                    // println!("@@@{f}");
-                    let f = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    // println!("!!!{g}");
-                    f
-                },//   
-                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::option::Option<#generic_ident_options_upper_camel_case_token_stream>}
-                }
-                SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>}
-                }
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::option::Option<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>}
-                }
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>}
-                }
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>>}
-                }
+                SupportedPredefinedType::JsonGeneric(_) => supported_predefined_type.to_original_type().full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
             };
             quote::quote!{
                 #element_ident: std::option::Option<postgresql_crud::Value<#type_token_stream>>
