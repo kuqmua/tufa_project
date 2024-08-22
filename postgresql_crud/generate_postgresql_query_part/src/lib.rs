@@ -3053,7 +3053,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream = {
-        let fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+        let fields_initialization_token_stream = vec_syn_field.iter().map(|element|{
             let field_ident = element.ident.as_ref().unwrap_or_else(||panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE));
             quote::quote!{
                 #field_ident: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()

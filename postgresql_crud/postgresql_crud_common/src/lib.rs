@@ -5061,7 +5061,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 }
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
-#[derive(Debug, Clone, Copy, PartialEq, Eq,
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq,
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema, 
@@ -5073,7 +5073,7 @@ impl PostgresqlOrder for StdPrimitiveBool {}
 impl AsPostgresqlBool for StdOptionOptionStdPrimitiveBool {}
 impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq,
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq,
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
@@ -5084,7 +5084,7 @@ impl AsPostgresqlSmallSerial for StdPrimitiveI16 {}
 impl AsPostgresqlInt2 for StdPrimitiveI16 {}
 impl PostgresqlOrder for StdPrimitiveI16 {}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -5094,7 +5094,7 @@ impl AsPostgresqlSerial for StdPrimitiveI32 {}
 impl AsPostgresqlInt4 for StdPrimitiveI32 {}
 impl PostgresqlOrder for StdPrimitiveI32 {}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord,
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Ord,
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
@@ -5105,7 +5105,7 @@ impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl AsPostgresqlInt8 for StdPrimitiveI64 {}
 impl PostgresqlOrder for StdPrimitiveI64 {}
 
-#[derive(Debug, Clone, Copy, PartialEq,
+#[derive(Debug, Default, Clone, Copy, PartialEq,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl
@@ -5115,7 +5115,7 @@ impl AsPostgresqlReal for StdPrimitiveF32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveF32 {}
 impl PostgresqlOrder for StdPrimitiveF32 {}
 
-#[derive(Debug, Clone, Copy, PartialEq,
+#[derive(Debug, Default, Clone, Copy, PartialEq,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl
@@ -5125,7 +5125,7 @@ impl AsPostgresqlDoublePrecision for StdPrimitiveF64 {}
 impl AsPostgresqlFloat8 for StdPrimitiveF64 {}
 impl PostgresqlOrder for StdPrimitiveF64 {}
 
-#[derive(Debug, Clone, PartialEq, Eq, 
+#[derive(Debug, Default, Clone, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
@@ -5137,7 +5137,7 @@ impl AsPostgresqlText for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
 
-#[derive(Debug, Clone, PartialEq, Eq, 
+#[derive(Debug, Default, Clone, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
