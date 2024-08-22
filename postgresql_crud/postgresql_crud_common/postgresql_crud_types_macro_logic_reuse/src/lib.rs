@@ -420,6 +420,40 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
     generated.into()
 }
 
+
+
+enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant {
+    FullTypePath,
+    StdOptionOptionFullTypePath,
+    StdVecVecFullTypePath,
+    StdOptionOptionStdVecVecFullTypePath,
+    StdVecVecStdOptionOptionFullTypePath,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+    GenericFullTypePath,
+    StdOptionOptionGenericFullTypePath,
+    StdVecVecGenericFullTypePath,
+    StdOptionOptionStdVecVecGenericFullTypePath,
+    StdVecVecStdOptionOptionGenericFullTypePath,
+    StdOptionOptionStdVecVecStdOptionOptionGenericFullTypePath
+}
+
+fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(
+    ident: &syn::Ident,
+    variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant,
+) -> proc_macro2::TokenStream {
+    let is_generic = match &variant {
+    };
+    quote::quote!{
+        impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
+            #[inline]
+            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                Self(::core::default::Default::default())
+            }
+        }
+    }
+}
+
+
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
