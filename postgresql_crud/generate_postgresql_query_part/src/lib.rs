@@ -3052,6 +3052,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    let impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream = {
+        let fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
+            let field_ident = element.ident.as_ref().unwrap_or_else(||panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE));
+            quote::quote!{
+                #field_ident: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+            }
+        });
+        quote::quote!{
+            impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
+                #[inline]
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    Self {
+                        #(#fields_initialization_token_stream),*
+                    }
+                }
+            }
+        }
+    };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
@@ -3063,6 +3081,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_options_token_stream
         #ident_wrapper_token_stream
         #impl_serde_deserialize_for_ident_wrapper_token_stream
+        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(

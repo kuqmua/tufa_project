@@ -1180,94 +1180,14 @@ pub struct Doggie {
     pub std_string_string: postgresql_crud::JsonStdStringString,
 }
 
-impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Doggie {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_string_string: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        }
-    }
-}
-
-
-// #[derive(Debug)]
-// pub struct Something {
-//     pub std_primitive_i8: JsonStdPrimitiveI8,
-//     pub std_option_option_std_primitive_i8: JsonStdOptionOptionStdPrimitiveI8,
-//     pub std_vec_vec_std_primitive_i8: JsonStdVecVecStdPrimitiveI8,
-//     pub std_option_option_std_vec_vec_std_primitive_i8: JsonStdOptionOptionStdVecVecStdPrimitiveI8,
-//     pub std_vec_vec_std_option_option_std_primitive_i8: JsonStdVecVecStdOptionOptionStdPrimitiveI8,
-//     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
-//     pub generic: JsonGeneric<Doggie>,
-//     pub std_option_option_generic: JsonStdOptionOptionGeneric<Doggie>,
-//     pub std_vec_vec_generic: JsonStdVecVecGeneric<Doggie>,
-//     pub std_option_option_std_vec_vec_generic: JsonStdOptionOptionStdVecVecGeneric<
-//         Doggie,
-//     >,
-//     pub std_vec_vec_std_option_option_generic: JsonStdVecVecStdOptionOptionGeneric<
-//         Doggie,
-//     >,
-//     pub std_option_option_std_vec_vec_std_option_option_generic: JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<
-//         Doggie,
-//     >,
-// }
-// #[automatically_derived]
-// impl ::core::default::Default for Something {
-//     #[inline]
-//     fn default() -> Something {
-//         Something {
-//             std_primitive_i8: ::core::default::Default::default(),
-//             std_option_option_std_primitive_i8: ::core::default::Default::default(),
-//             std_vec_vec_std_primitive_i8: ::core::default::Default::default(),
-//             std_option_option_std_vec_vec_std_primitive_i8: ::core::default::Default::default(),
-//             std_vec_vec_std_option_option_std_primitive_i8: ::core::default::Default::default(),
-//             std_option_option_std_vec_vec_std_option_option_std_primitive_i8: ::core::default::Default::default(),
-//             generic: ::core::default::Default::default(),
-//             std_option_option_generic: ::core::default::Default::default(),
-//             std_vec_vec_generic: ::core::default::Default::default(),
-//             std_option_option_std_vec_vec_generic: ::core::default::Default::default(),
-//             std_vec_vec_std_option_option_generic: ::core::default::Default::default(),
-//             std_option_option_std_vec_vec_std_option_option_generic: ::core::default::Default::default(),
-//         }
-//     }
-// }
-// #[derive(Debug)]
-// pub struct Doggie {
-//     pub std_primitive_i8: JsonStdPrimitiveI8,
-//     pub std_option_option_std_primitive_i8: JsonStdOptionOptionStdPrimitiveI8,
-//     pub std_vec_vec_std_primitive_i8: JsonStdVecVecStdPrimitiveI8,
-//     pub std_option_option_std_vec_vec_std_primitive_i8: JsonStdOptionOptionStdVecVecStdPrimitiveI8,
-//     pub std_vec_vec_std_option_option_std_primitive_i8: JsonStdVecVecStdOptionOptionStdPrimitiveI8,
-//     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
-// }
-// #[automatically_derived]
-// impl ::core::default::Default for Doggie {
-//     #[inline]
-//     fn default() -> Doggie {
-//         Doggie {
-//             std_primitive_i8: ::core::default::Default::default(),
-//             std_option_option_std_primitive_i8: ::core::default::Default::default(),
-//             std_vec_vec_std_primitive_i8: ::core::default::Default::default(),
-//             std_option_option_std_vec_vec_std_primitive_i8: ::core::default::Default::default(),
-//             std_vec_vec_std_option_option_std_primitive_i8: ::core::default::Default::default(),
-//             std_option_option_std_vec_vec_std_option_option_std_primitive_i8: ::core::default::Default::default(),
-//         }
-//     }
-// }
-// fn main() {
-//     let f = Something::default();
-//     println!("{f:#?}");
-// }
-
 #[test]
-fn checkjs() {
-    // use postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    // let f = postgresql_crud::JsonStdPrimitiveI8::default();
-    let f = postgresql_crud::JsonGeneric(Doggie::default());
-    // <dyn postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::
-    let d: postgresql_crud::JsonGeneric::<Doggie> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
-    println!("{d:#?}");
-
-
-
+fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() {
+    let default = postgresql_crud::JsonGeneric(Something::default());
+    println!("{default:#?}");
+    let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element: postgresql_crud::JsonGeneric::<Something> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
+    println!("{default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element:#?}");
+    let serialized = serde_json::to_string(&default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element).unwrap();
+    println!("{serialized:#?}");
+    let deserialized: postgresql_crud::JsonGeneric::<Something> = serde_json::from_str(&serialized).unwrap();
+    println!("{deserialized:#?}");
 }
