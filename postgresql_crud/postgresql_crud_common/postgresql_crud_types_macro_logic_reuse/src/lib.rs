@@ -483,7 +483,6 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     };
     generated.into()
 }
-// pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI8(pub std::option::Option<std::vec::Vec<std::primitive::i8>>);
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -500,6 +499,48 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
             #[inline]
             fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                 Self(Some(vec![::core::default::Default::default()]))
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {error}",
+            proc_macro_common::constants::AST_PARSE_FAILED
+        )
+    });
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
+            #[inline]
+            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                Self(vec![Some(::core::default::Default::default())])
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {error}",
+            proc_macro_common::constants::AST_PARSE_FAILED
+        )
+    });
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
+            #[inline]
+            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                Self(Some(vec![Some(::core::default::Default::default())]))
             }
         }
     };
