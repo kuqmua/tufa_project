@@ -1180,6 +1180,16 @@ pub struct Doggie {
     pub std_string_string: postgresql_crud::JsonStdStringString,
 }
 
+impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Doggie {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            std_string_string: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+        }
+    }
+}
+
+
 // #[derive(Debug)]
 // pub struct Something {
 //     pub std_primitive_i8: JsonStdPrimitiveI8,
@@ -1248,3 +1258,16 @@ pub struct Doggie {
 //     let f = Something::default();
 //     println!("{f:#?}");
 // }
+
+#[test]
+fn checkjs() {
+    // use postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    // let f = postgresql_crud::JsonStdPrimitiveI8::default();
+    let f = postgresql_crud::JsonGeneric(Doggie::default());
+    // <dyn postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::
+    let d: postgresql_crud::JsonGeneric::<Doggie> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
+    println!("{d:#?}");
+
+
+
+}
