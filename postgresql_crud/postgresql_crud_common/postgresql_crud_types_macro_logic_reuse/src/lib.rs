@@ -513,7 +513,7 @@ fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec
         },
     };
     let generated = quote::quote!{
-        impl #impl_maybe_generic_token_stream StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident #impl_maybe_generic_token_stream 
+        impl #impl_maybe_generic_token_stream crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident #impl_maybe_generic_token_stream 
         #maybe_where_generic_implements_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
         {
             #[inline]

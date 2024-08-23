@@ -5065,7 +5065,8 @@ pub trait CheckSupportedPostgresqlColumnType {
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema, 
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
 impl AsPostgresqlBool for StdPrimitiveBool {}
@@ -5076,7 +5077,8 @@ impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 #[derive(Debug, Clone, Copy, PartialEq, Eq,
     serde::Serialize,
     serde::Deserialize, 
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 impl AsPostgresqlSmallInt for StdPrimitiveI16 {}
@@ -5087,7 +5089,9 @@ impl PostgresqlOrder for StdPrimitiveI16 {}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
 impl AsPostgresqlInt for StdPrimitiveI32 {}
 impl AsPostgresqlSerial for StdPrimitiveI32 {}
@@ -5097,7 +5101,8 @@ impl PostgresqlOrder for StdPrimitiveI32 {}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord,
     serde::Serialize,
     serde::Deserialize, 
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
 impl AsPostgresqlBigInt for StdPrimitiveI64 {}
@@ -5108,7 +5113,8 @@ impl PostgresqlOrder for StdPrimitiveI64 {}
 #[derive(Debug, Clone, Copy, PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
 impl AsPostgresqlReal for StdPrimitiveF32 {}
@@ -5118,7 +5124,8 @@ impl PostgresqlOrder for StdPrimitiveF32 {}
 #[derive(Debug, Clone, Copy, PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
 impl AsPostgresqlDoublePrecision for StdPrimitiveF64 {}
@@ -5128,7 +5135,8 @@ impl PostgresqlOrder for StdPrimitiveF64 {}
 #[derive(Debug, Clone, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct StdStringString(pub std::string::String);
 impl AsPostgresqlVarchar for StdStringString {}
