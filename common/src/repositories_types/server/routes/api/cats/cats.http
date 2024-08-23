@@ -161,6 +161,12 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 ###
 
+GET http://127.0.0.1:8080/jsongeneric/create_one_payload_example HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+###
+
 POST http://127.0.0.1:8080/jsongeneric/read_many HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8

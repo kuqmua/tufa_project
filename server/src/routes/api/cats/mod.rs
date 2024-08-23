@@ -38,6 +38,12 @@ fn crud(
             "/create_one",
             axum::routing::post(common::repositories_types::server::routes::api::cats::try_create_one_route_logic),
         )
+        .route(
+            "/create_one_payload_example",
+            axum::routing::get(
+                common::repositories_types::server::routes::api::cats::create_one_payload_example_route_logic,
+            ),
+        )
         // .route(
         //     "/read_many",
         //     axum::routing::post(
@@ -70,6 +76,7 @@ fn crud(
                 common::repositories_types::server::routes::api::cats::try_delete_one_route_logic,
             ),
         )
+        //
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
         //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,
         // ))

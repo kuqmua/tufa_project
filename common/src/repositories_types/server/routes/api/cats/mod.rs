@@ -1193,3 +1193,14 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     let deserialized: postgresql_crud::JsonGeneric::<Something> = serde_json::from_str(&serialized).unwrap();
     println!("{deserialized:#?}");
 }
+
+pub async fn create_one_payload_example_route_logic(
+    app_state : axum :: extract :: State < crate ::
+repositories_types :: server :: routes :: app_state ::
+DynArcCombinationOfAppStateLogicTraits, >,
+    request: axum::extract::Request,
+) -> axum::response::Response {
+    let mut response = axum::response::IntoResponse::into_response(axum::Json(<CreateOnePayload as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()));
+    *response.status_mut() = axum::http::StatusCode::OK;
+    return response;
+}

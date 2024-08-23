@@ -944,6 +944,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let status_code_token_stream = syn_variant_wrapper.get_option_status_code()
             .unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_status_code is None"))
             .to_axum_http_status_code_token_stream();
+        //todo make explicit serde_json::to_vec https://docs.rs/serde_json/1.0.125/serde_json/fn.to_vec.html coz axum::Json() in case of error returns http response - and that is bad
+        // proof https://docs.rs/axum/latest/src/axum/json.rs.html#182-210
         quote::quote! {
             let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
             #eprintln_error_token_stream
