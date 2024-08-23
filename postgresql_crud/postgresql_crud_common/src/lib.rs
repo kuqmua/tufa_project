@@ -5530,6 +5530,15 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     }
 }
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Included(::core::default::Default::default()),
+        })
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
@@ -5808,6 +5817,15 @@ for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Included(::core::default::Default::default()),
+        })
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
@@ -6086,6 +6104,15 @@ for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Included(::core::default::Default::default()),
+        })
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
@@ -6363,6 +6390,21 @@ for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(sqlx::types::time::OffsetDateTime::new_utc(
+                sqlx::types::time::Date::MIN, 
+                sqlx::types::time::Time::MIDNIGHT
+            )),
+            end: std::ops::Bound::Included(sqlx::types::time::OffsetDateTime::new_utc(
+                sqlx::types::time::Date::MIN, 
+                sqlx::types::time::Time::MIDNIGHT
+            )),
+        })
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
