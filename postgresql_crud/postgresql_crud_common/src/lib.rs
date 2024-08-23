@@ -7537,6 +7537,15 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate 
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(sqlx::types::time::Date::MIN),
+            end: std::ops::Bound::Included(sqlx::types::time::Date::MIN),
+        })
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
