@@ -209,19 +209,10 @@ pub struct Jsongeneric {
     // pub serde_json_value_as_postgresql_json_b_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 
-//////////
-impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for CreateOnePayload {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i32_as_postgresql_int: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
-    }
-}
-//////////
+
+
 //todo "serde_json": "unknown variant `ddfd`, expected one of `something`, `omega`, `doggie` at line 6 column 45"
 //if doggie is object - wrong message. fix it
-
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct JsongenericOptions {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
