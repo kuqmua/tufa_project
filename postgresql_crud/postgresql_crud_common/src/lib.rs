@@ -5272,16 +5272,25 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
 }
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+impl std::default::Default for SqlxPostgresTypesPgInterval {
+    fn default() -> Self {
         Self(sqlx::postgres::types::PgInterval {
-            months: 0,
-            days: 0,
-            microseconds: 0,
+            months: ::core::default::Default::default(),
+            days: ::core::default::Default::default(),
+            microseconds: ::core::default::Default::default(),
         })
     }
 }
+// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
+//     #[inline]
+//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(sqlx::postgres::types::PgInterval {
+//             months: ::core::default::Default::default(),
+//             days: ::core::default::Default::default(),
+//             microseconds: ::core::default::Default::default(),
+//         })
+//     }
+// }
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
@@ -5395,6 +5404,14 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     }
 }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
+// impl std::default::Default for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+//     fn default() -> Self {
+//         Self(sqlx::postgres::types::PgRange {
+//             start: ::core::default::Default::default(),
+//             end: ::core::default::Default::default(),
+//         })
+//     }
+// }
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
