@@ -1665,8 +1665,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let generate_filter_not_unique_column_http_request_token_stream = |operation: &Operation|{
-         let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
-         let not_unique_column_syn_variant_wrapper_initialization_token_stream = generate_initialization_token_stream(
+        let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+        let not_unique_column_syn_variant_wrapper_initialization_token_stream = generate_initialization_token_stream(
             &not_unique_column_syn_variant_wrapper,
             file!(),
             line!(),
@@ -3182,9 +3182,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let create_one_payload_example_token_stream = {
+            let operation_payload_example_route_logic_snake_case_token_stream = naming_conventions::SelfPayloadExampleRouteLogicSnakeCaseTokenStream::self_payload_example_route_logic_snake_case_token_stream(&operation);
+            let operation_payload_upper_camel_case_token_stream = naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
             quote::quote!{
-                pub async fn create_one_payload_example_route_logic() -> axum::response::Response {
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(<CreateOnePayload as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()));
+                pub async fn #operation_payload_example_route_logic_snake_case_token_stream() -> axum::response::Response {
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                        <#operation_payload_upper_camel_case_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    ));
                     *response.status_mut() = axum::http::StatusCode::OK;
                     return response;
                 }
