@@ -5061,7 +5061,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 }
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq,
+#[derive(Debug, Clone, Copy, PartialEq, Eq,
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema, 
@@ -5073,7 +5073,7 @@ impl PostgresqlOrder for StdPrimitiveBool {}
 impl AsPostgresqlBool for StdOptionOptionStdPrimitiveBool {}
 impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq,
+#[derive(Debug, Clone, Copy, PartialEq, Eq,
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
@@ -5084,7 +5084,7 @@ impl AsPostgresqlSmallSerial for StdPrimitiveI16 {}
 impl AsPostgresqlInt2 for StdPrimitiveI16 {}
 impl PostgresqlOrder for StdPrimitiveI16 {}
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
@@ -5094,7 +5094,7 @@ impl AsPostgresqlSerial for StdPrimitiveI32 {}
 impl AsPostgresqlInt4 for StdPrimitiveI32 {}
 impl PostgresqlOrder for StdPrimitiveI32 {}
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Ord,
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord,
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
@@ -5105,7 +5105,7 @@ impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl AsPostgresqlInt8 for StdPrimitiveI64 {}
 impl PostgresqlOrder for StdPrimitiveI64 {}
 
-#[derive(Debug, Default, Clone, Copy, PartialEq,
+#[derive(Debug, Clone, Copy, PartialEq,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl
@@ -5115,7 +5115,7 @@ impl AsPostgresqlReal for StdPrimitiveF32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveF32 {}
 impl PostgresqlOrder for StdPrimitiveF32 {}
 
-#[derive(Debug, Default, Clone, Copy, PartialEq,
+#[derive(Debug, Clone, Copy, PartialEq,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl
@@ -5125,7 +5125,7 @@ impl AsPostgresqlDoublePrecision for StdPrimitiveF64 {}
 impl AsPostgresqlFloat8 for StdPrimitiveF64 {}
 impl PostgresqlOrder for StdPrimitiveF64 {}
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, 
+#[derive(Debug, Clone, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
     postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
@@ -5137,7 +5137,7 @@ impl AsPostgresqlText for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, 
+#[derive(Debug, Clone, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
@@ -5272,8 +5272,9 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
 }
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
-impl std::default::Default for SqlxPostgresTypesPgInterval {
-    fn default() -> Self {
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgInterval {
             months: ::core::default::Default::default(),
             days: ::core::default::Default::default(),
@@ -5281,16 +5282,6 @@ impl std::default::Default for SqlxPostgresTypesPgInterval {
         })
     }
 }
-// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
-//     #[inline]
-//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self(sqlx::postgres::types::PgInterval {
-//             months: ::core::default::Default::default(),
-//             days: ::core::default::Default::default(),
-//             microseconds: ::core::default::Default::default(),
-//         })
-//     }
-// }
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
@@ -5404,14 +5395,14 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     }
 }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
-// impl std::default::Default for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-//     fn default() -> Self {
-//         Self(sqlx::postgres::types::PgRange {
-//             start: ::core::default::Default::default(),
-//             end: ::core::default::Default::default(),
-//         })
-//     }
-// }
+impl std::default::Default for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    fn default() -> Self {
+        Self(sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Included(::core::default::Default::default()),
+        })
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
