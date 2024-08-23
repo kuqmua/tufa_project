@@ -5395,8 +5395,9 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     }
 }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
-impl std::default::Default for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-    fn default() -> Self {
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
             end: std::ops::Bound::Included(::core::default::Default::default()),
