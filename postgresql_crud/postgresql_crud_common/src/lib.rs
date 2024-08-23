@@ -8212,8 +8212,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     }
 }
 
-#[derive(Debug, Clone, PartialEq,
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
     postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 impl serde::Serialize for SqlxPostgresTypesPgCiText {
@@ -8302,14 +8306,15 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgCiText {
     }
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgCiText {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
-#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 impl serde::Serialize for SqlxTypesBigDecimal {
     fn serialize<__S>(
@@ -8556,101 +8561,90 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesBigDecimal {
 }
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesBigDecimal {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesDecimal {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
 impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 impl AsPostgresqlTimestamp for SqlxTypesChronoNaiveDateTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesChronoNaiveDateTime {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+#[derive(
+    Debug, 
+    Clone, 
+    Copy, 
+    PartialEq, 
+    Eq, 
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesChronoNaiveDate {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, 
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
     serde::Serialize,
     serde::Deserialize, 
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesChronoNaiveTime {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl)]
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
@@ -9862,7 +9856,17 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 }
 
 //todo maybe its possible to not use Clone (refactor where .clone() used)
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 impl serde::Serialize for SqlxTypesUuidUuid {
     fn serialize<__S>(
@@ -9960,12 +9964,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
     }
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesUuidUuid {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, 
     serde::Serialize,
@@ -10000,7 +9998,15 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 impl serde::Serialize for SqlxTypesMacAddressMacAddress {
     fn serialize<__S>(
@@ -10090,15 +10096,14 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
     }
 }
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesMacAddressMacAddress {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
-#[derive(Debug, Clone, PartialEq, Eq,
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, 
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 impl serde::Serialize for SqlxTypesBitVec {
@@ -10192,12 +10197,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesBitVec {
 impl AsPostgresqlBit for SqlxTypesBitVec {}
 impl AsPostgresqlVarBit for SqlxTypesBitVec {}
 impl PostgresqlOrder for SqlxTypesBitVec {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesBitVec {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesJson<T>(pub sqlx::types::Json<T>);
@@ -10541,17 +10540,12 @@ where T: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOpt
 #[derive(Debug, Clone, PartialEq, Eq, 
     serde::Serialize,
     serde::Deserialize, 
-    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl
+    postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct SerdeJsonValue(pub serde_json::Value);
 impl AsPostgresqlJson for SerdeJsonValue {}
 impl AsPostgresqlJsonB for SerdeJsonValue {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SerdeJsonValue {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
 
 pub fn test_check_supported_postgresql_column_type() {
     //todo check if init functions are not panics. change to not panic init functions
