@@ -3053,10 +3053,14 @@ pub struct StdStringStringAsPostgresqlTextNotNull(pub StdStringString);
 pub struct StdStringStringAsPostgresqlCiText(pub StdOptionOptionStdStringString);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCiTextNotNull(pub StdStringString);
-#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
-pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(pub StdOptionOptionStdVecVecStdPrimitiveU8);
-#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
-pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(pub StdVecVecStdPrimitiveU8);
+
+
+// #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
+// pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(pub StdOptionOptionStdVecVecStdPrimitiveU8);
+// #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
+// pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(pub StdVecVecStdPrimitiveU8);
+
+
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(pub StdOptionOptionSqlxPostgresTypesPgInterval);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
@@ -3582,7 +3586,7 @@ struct TestNewType
     _std_primitive_f32: StdPrimitiveF32,
     _std_primitive_f64: StdPrimitiveF64,
     _std_string_string: StdStringString,
-    _std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8,
+    // _std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8,
     _sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgInterval,
     _sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64,
     _sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32,
@@ -3647,7 +3651,7 @@ std::convert::From<
             _std_primitive_f32: StdPrimitiveF32(value.std_primitive_f32),
             _std_primitive_f64: StdPrimitiveF64(value.std_primitive_f64),
             _std_string_string: StdStringString(value.std_string_string),
-            _std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8(value.std_vec_vec_std_primitive_u8),
+            // _std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8(value.std_vec_vec_std_primitive_u8),
             _sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgInterval(value.sqlx_postgres_types_pg_interval),
             _sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64(value.sqlx_postgres_types_pg_range_std_primitive_i64),
             _sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32(value.sqlx_postgres_types_pg_range_std_primitive_i32),
@@ -4776,8 +4780,8 @@ impl Default for TestNewType
         let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
         let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
         let std_string_string = StdStringString(std_string_string_handle.clone());
-        let std_vec_vec_std_primitive_u8 =
-            StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle]);
+        // let std_vec_vec_std_primitive_u8 =
+        //     StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle]);
         let sqlx_postgres_types_pg_interval =
             SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
                 months: std_primitive_i32_handle,
@@ -4981,7 +4985,7 @@ impl Default for TestNewType
             _std_primitive_f32: std_primitive_f32, 
             _std_primitive_f64: std_primitive_f64, 
             _std_string_string: std_string_string, 
-            _std_vec_vec_std_primitive_u8: std_vec_vec_std_primitive_u8, 
+            // _std_vec_vec_std_primitive_u8: std_vec_vec_std_primitive_u8, 
             _sqlx_postgres_types_pg_interval: sqlx_postgres_types_pg_interval, 
             _sqlx_postgres_types_pg_range_std_primitive_i64: sqlx_postgres_types_pg_range_std_primitive_i64, 
             _sqlx_postgres_types_pg_range_std_primitive_i32: sqlx_postgres_types_pg_range_std_primitive_i32, 
@@ -5145,11 +5149,11 @@ impl AsPostgresqlText for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
 
-#[derive(Debug, Clone, PartialEq, Eq, 
-    serde::Serialize,
-    serde::Deserialize, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
-pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
-impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
+// #[derive(Debug, Clone, PartialEq, Eq, 
+//     serde::Serialize,
+//     serde::Deserialize, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+// pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+// impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
@@ -10293,7 +10297,7 @@ pub fn test_check_supported_postgresql_column_type() {
     StdPrimitiveF32::check_supported_postgresql_column_type();
     StdPrimitiveF64::check_supported_postgresql_column_type();
     StdStringString::check_supported_postgresql_column_type();
-    StdVecVecStdPrimitiveU8::check_supported_postgresql_column_type();
+    // StdVecVecStdPrimitiveU8::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgInterval::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeStdPrimitiveI64::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeStdPrimitiveI32::check_supported_postgresql_column_type();

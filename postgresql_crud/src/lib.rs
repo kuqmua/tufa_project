@@ -74,8 +74,8 @@ pub use postgresql_crud_common::StdStringStringAsPostgresqlTextNotNull;
 pub use postgresql_crud_common::StdStringStringAsPostgresqlVarchar;
 pub use postgresql_crud_common::StdStringStringAsPostgresqlVarcharNotNull;
 
-pub use postgresql_crud_common::StdVecVecStdPrimitiveU8AsPostgresqlBytea;
-pub use postgresql_crud_common::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull;
+// pub use postgresql_crud_common::StdVecVecStdPrimitiveU8AsPostgresqlBytea;
+// pub use postgresql_crud_common::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull;
 
 pub use postgresql_crud_common::SqlxPostgresTypesPgIntervalAsPostgresqlInterval;
 pub use postgresql_crud_common::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull;
@@ -201,7 +201,7 @@ pub use postgresql_crud_common::StdPrimitiveF64;
 
 pub use postgresql_crud_common::StdStringString;
 
-pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
+// pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 
 pub use postgresql_crud_common::SqlxPostgresTypesPgInterval;
 
@@ -283,7 +283,7 @@ pub use postgresql_crud_common::WhereStdPrimitiveF64;
 
 pub use postgresql_crud_common::WhereStdStringString;
 
-pub use postgresql_crud_common::WhereStdVecVecStdPrimitiveU8;
+// pub use postgresql_crud_common::WhereStdVecVecStdPrimitiveU8;
 
 pub use postgresql_crud_common::WhereSqlxPostgresTypesPgInterval;
 
@@ -365,7 +365,7 @@ pub use postgresql_crud_common::StdOptionOptionStdPrimitiveF64;
 
 pub use postgresql_crud_common::StdOptionOptionStdStringString;
 
-pub use postgresql_crud_common::StdOptionOptionStdVecVecStdPrimitiveU8;
+// pub use postgresql_crud_common::StdOptionOptionStdVecVecStdPrimitiveU8;
 
 pub use postgresql_crud_common::StdOptionOptionSqlxPostgresTypesPgInterval;
 
@@ -447,7 +447,7 @@ pub use postgresql_crud_common::WhereStdOptionOptionStdPrimitiveF64;
 
 pub use postgresql_crud_common::WhereStdOptionOptionStdStringString;
 
-pub use postgresql_crud_common::WhereStdOptionOptionStdVecVecStdPrimitiveU8;
+// pub use postgresql_crud_common::WhereStdOptionOptionStdVecVecStdPrimitiveU8;
 
 pub use postgresql_crud_common::WhereStdOptionOptionSqlxPostgresTypesPgInterval;
 
