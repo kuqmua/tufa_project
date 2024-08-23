@@ -2285,9 +2285,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             // // #swagger_open_api_token_stream
             pub async fn #try_operation_route_logic_snake_case_token_stream(
-                #app_state_snake_case: axum::extract::State<
-                    crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
-                >,
+                #app_state_snake_case: axum::extract::State<crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits>,
                 #request_snake_case: axum::extract::Request,
             ) -> axum::response::Response {
                 #request_parts_preparation_token_stream
@@ -3183,12 +3181,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
+        let create_one_payload_example_token_stream = {
+            quote::quote!{
+                pub async fn create_one_payload_example_route_logic() -> axum::response::Response {
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(<CreateOnePayload as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()));
+                    *response.status_mut() = axum::http::StatusCode::OK;
+                    return response;
+                }
+            }
+        };
         (
             quote::quote! {
                 #parameters_token_stream
                 #try_operation_route_logic_token_stream
                 #try_operation_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
+                #create_one_payload_example_token_stream
             },
             // try_operation_test_token_stream,
             quote::quote! {}
