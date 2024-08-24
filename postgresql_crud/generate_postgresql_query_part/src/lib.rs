@@ -646,8 +646,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = |value: &std::primitive::str|{
+        format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase)
+    };
     let ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = {
-        let value = format!("{ident}GeneratePostgresqlQueryPartFromSelfVecErrorNamed");
+        let value = add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified(&ident.to_string());
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -678,10 +681,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let generate_field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = |value: &std::primitive::str|{
-        let value = format!(
-            "{}GeneratePostgresqlQueryPartFromSelfVecErrorNamed",
-            proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value),
-        );
+        let value = add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value));
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
