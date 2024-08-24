@@ -570,8 +570,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let serde_serialize = token_patterns::SerdeSerialize;
     let serde_deserialize = token_patterns::SerdeDeserialize;
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    let from_str_upper_camel_case = naming_conventions::FromStrUpperCamelCase;
-    let from_str_snake_case = naming_conventions::FromStrSnakeCase;
+    // let from_str_upper_camel_case = naming_conventions::FromStrUpperCamelCase;
+    // let from_str_snake_case = naming_conventions::FromStrSnakeCase;
     let sqlx_row = token_patterns::SqlxRow;
     let struct_options_ident_token_stream = {
         let value = format!(

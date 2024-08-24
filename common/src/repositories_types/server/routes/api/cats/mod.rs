@@ -885,6 +885,7 @@ pub async fn try_read_one(
             not_unique_column_json_reader,
             code_occurence,
         },
+        TryReadOneRouteLogicResponseVariants::SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed { .. } => todo!(),
     };
     Err(
         TryReadOneErrorNamed::TryReadOneRouteLogicErrorNamedWithSerializeDeserialize {

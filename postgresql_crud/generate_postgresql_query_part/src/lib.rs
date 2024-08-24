@@ -1123,7 +1123,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 false => proc_macro2::TokenStream::new()
             };
             quote::quote!{
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream {
                     FieldsFilterIsEmpty {
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -1137,11 +1137,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
+        let impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream = {
+            quote::quote!{
+                impl error_occurence_lib::ToStdStringString for #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream {
+                    fn to_std_string_string(&self) -> std::string::String {
+                        format!("{self:?}")
+                    }
+                }
+            }
+        };
         let ident_generate_postgresql_query_part_error_named_token_stream = {
             match should_generate_ident_generate_postgresql_query_part_error_named_enum {
                 true => {
                     quote::quote!{
-                        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                        #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                         pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
                             #(#offset_plus_limit_is_int_overflow_variants_token_stream)*
                             #(#field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream),*
@@ -1153,6 +1162,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         quote::quote!{
             #ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
+            #impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
             #ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
