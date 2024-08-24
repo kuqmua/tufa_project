@@ -329,11 +329,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
                     match &maybe_generic_token_stream {
                         Some(value) => {
-                            let cloned_value = (*value).clone();
-                            if cloned_value.args.len() != 1 {
-                                panic!("cloned_value.args.len() != 1");
+                            if value.args.len() != 1 {
+                                panic!("value.args.len() != 1");
                             }
-                            if let Some(value) = cloned_value.args.first() {
+                            if let Some(value) = value.args.first() {
                                 if let syn::GenericArgument::Type(value) = value {
                                     if let syn::Type::Path(value) = value {
                                         if value.path.segments.len() != 1 {
