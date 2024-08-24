@@ -436,10 +436,9 @@ DynArcCombinationOfAppStateLogicTraits, >,
     let query_string = format!
     ("select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
     {
-        let mut value =
-        parameters.payload.select.iter().fold(std::string::String::from(""), | mut acc, element |
-        {
-            acc.push_str(&match element {
+        let mut value = std::string::String::from("");
+        for element in &parameters.payload.select {
+            value.push_str(&match element {
                 JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
                 JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => format!(
@@ -451,41 +450,34 @@ DynArcCombinationOfAppStateLogicTraits, >,
                         false
                     ) {
                         Ok(value) => value,
-                        Err(error) => {
-                            //SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
-                            
-                            // let f: bool = error;
-
-
-                            // let error = TryReadOneRouteLogicErrorNamed::Postgresql {
-                            //     postgresql: error_0,
-                            //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            //         file!().to_owned(),
-                            //         line!(),
-                            //         column!(),
-                            //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            //             file: std::string::String::from(
-                            //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            //             ),
-                            //             line: 2252,
-                            //             column: 17,
-                            //         }),
-                            //     ),
-                            // };
-                            // eprintln!("{error}");
-                            // let mut response = axum::response::IntoResponse::into_response(axum::Json(
-                            //     TryReadOneRouteLogicResponseVariants::from(error),
-                            // ));
-                            // *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                            // return response;
-                            todo!()
+                        Err(error_0) => {
+                            let error = TryReadOneRouteLogicErrorNamed::SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
+                                something_generate_postgresql_query_part_from_self_vec_error_named: error_0,
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                    file!().to_owned(),
+                                    line!(),
+                                    column!(),
+                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                        file: std::string::String::from(
+                                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                        ),
+                                        line: 2252,
+                                        column: 17,
+                                    }),
+                                ),
+                            };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                                TryReadOneRouteLogicResponseVariants::from(error),
+                            ));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
                         }
                     }
                 )
             }); 
-            acc.push_str(","); 
-            acc
-        }); 
+            value.push_str(","); 
+        }
         let _ = value.pop();
         value
     },);

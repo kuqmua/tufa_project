@@ -328,7 +328,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let generate_generic_option_string = |maybe_generic_token_stream: &std::option::Option<&'a syn::AngleBracketedGenericArguments>, postfix: &std::primitive::str| -> Result<Option<std::string::String>, std::string::String>{
+            enum Case {
+                UpperCamel,
+                Snake
+            }
+            let generate_generic_option_string = |
+                maybe_generic_token_stream: &std::option::Option<&'a syn::AngleBracketedGenericArguments>,
+                postfix: &std::primitive::str,
+                case: Case,
+            | -> Result<Option<std::string::String>, std::string::String>{
                 match maybe_generic_token_stream {
                     Some(value) => {
                         if value.args.len() != 1 {
@@ -341,7 +349,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         return Err("value.path.segments.len() != 1".to_string());
                                     }
                                     if let Some(value) = value.path.segments.first() {
-                                        Ok(Some(format!("{}{postfix}", &value.ident)))
+                                        Ok(Some(match case {
+                                            Case::UpperCamel => proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
+                                            Case::Snake => proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&format!("{}_{postfix}", &value.ident)),
+                                        }))
                                     }
                                     else {
                                         return Err("value.path.segments.first() is None".to_string());
@@ -364,7 +375,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let option_generic_wrapper_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
-                &naming_conventions::WrapperUpperCamelCase.to_string()
+                &naming_conventions::WrapperUpperCamelCase.to_string(),
+                Case::UpperCamel,
             ) {
                 Ok(value) => value,
                 Err(error) => {
@@ -373,7 +385,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let option_generic_options_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
-                &naming_conventions::OptionsUpperCamelCase.to_string()
+                &naming_conventions::OptionsUpperCamelCase.to_string(),
+                Case::UpperCamel,
             ) {
                 Ok(value) => value,
                 Err(error) => {
@@ -382,7 +395,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let option_generic_field_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
-                &naming_conventions::FieldUpperCamelCase.to_string()
+                &naming_conventions::FieldUpperCamelCase.to_string(),
+                Case::UpperCamel,
             ) {
                 Ok(value) => value,
                 Err(error) => {
@@ -391,7 +405,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
-                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string()
+                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string(),
+                Case::UpperCamel,
             ) {
                 Ok(value) => value,
                 Err(error) => {
@@ -400,7 +415,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
-                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedSnakeCase.to_string()
+                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedSnakeCase.to_string(),
+                Case::Snake
             ) {
                 Ok(value) => value,
                 Err(error) => {
