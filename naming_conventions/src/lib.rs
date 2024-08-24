@@ -289,7 +289,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
         ["rows"],
         ["results"],
         ["executor"],
-        ["prefix"]
+        ["prefix"],
+        ["empty", "column", "json", "reader"],
+        ["not", "unique", "column", "json", "reader"]
     ]
 );
 

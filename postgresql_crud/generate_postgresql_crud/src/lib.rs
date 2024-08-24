@@ -471,6 +471,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
+    let contains_generic_json = {
+        let mut contains_generic_json = false;
+        for element in &syn_field_with_additional_info_fields_named {
+            if element.maybe_generic_token_stream.is_some() {
+                contains_generic_json = true;
+                break;
+            }
+        }
+        contains_generic_json
+    };
     let postgresql_crud_snake_case_stringified = &naming_conventions::PostgresqlCrudSnakeCase.to_string();
     let primary_key_syn_field_with_additional_info = {
         let mut primary_key_field_option = None;
@@ -1492,6 +1502,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &naming_conventions::NotUniqueColumnSnakeCase,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &[&ident_column_upper_camel_case_stringified],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                )
+            )
+        ],
+    );
+    let json_ident_column_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::ColumnUpperCamelCase);
+    let empty_column_json_reader_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::EmptyColumnJsonReaderUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                &naming_conventions::EmptyColumnJsonReaderSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &[&json_ident_column_upper_camel_case_stringified],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                )
+            )
+        ],
+    );
+    let not_unique_column_json_reader_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::NotUniqueColumnJsonReaderUpperCamelCase,
+        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                &naming_conventions::NotUniqueColumnJsonReaderSnakeCase,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &[&json_ident_column_upper_camel_case_stringified],
                     &proc_macro_name_upper_camel_case_ident_stringified
                 )
             )
@@ -3901,6 +3940,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         read_one_http_request_test_expect_fail_token_stream,
     ) = {
         let operation = Operation::ReadOne;
+        //todo maybe reuse later for other operations
+        let empty_column_json_reader_syn_variant_wrapper = new_syn_variant_wrapper(
+            &naming_conventions::EmptyColumnJsonReaderUpperCamelCase,
+            Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    &naming_conventions::EmptyColumnJsonReaderSnakeCase,
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &[&json_ident_column_upper_camel_case_stringified],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    )
+                )
+            ],
+        );
+        let not_unique_column_json_reader_syn_variant_wrapper = new_syn_variant_wrapper(
+            &naming_conventions::NotUniqueColumnJsonReaderUpperCamelCase,
+            Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    &naming_conventions::NotUniqueColumnJsonReaderSnakeCase,
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &[&json_ident_column_upper_camel_case_stringified],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    )
+                )
+            ],
+        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -3908,6 +3976,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(&not_unique_column_syn_variant_wrapper.get_syn_variant());
+                if contains_generic_json {
+                    value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
+                    value.push(&not_unique_column_json_reader_syn_variant_wrapper.get_syn_variant());
+                }
                 value
             },
             &operation,
@@ -3929,6 +4001,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &struct_options_ident_token_stream,
                 &type_variants_from_request_response_syn_variants,
             );
+            // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(
                     &operation,
@@ -4000,7 +4073,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
-                #try_operation_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
             }
         };
         // println!("{try_operation_route_logic_token_stream}");
@@ -4120,7 +4193,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
             quote::quote! {},
