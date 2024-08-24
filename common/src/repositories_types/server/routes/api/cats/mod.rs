@@ -214,17 +214,6 @@ pub struct Jsongeneric {
 //todo "serde_json": "unknown variant `ddfd`, expected one of `something`, `omega`, `doggie` at line 6 column 45"
 //if doggie is object - wrong message. fix it
 //from_str :: FromStr,
-impl std::fmt::Display for JsongenericColumn {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        //here change
-        write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))
-    }
-}
-impl error_occurence_lib::ToStdStringString for JsongenericColumn {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
 /////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ReadOnePayload {
