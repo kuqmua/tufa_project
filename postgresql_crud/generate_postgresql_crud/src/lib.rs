@@ -4120,8 +4120,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                #try_operation_route_logic_token_stream
-                #try_operation_token_stream
+                // #try_operation_route_logic_token_stream
+                // #try_operation_token_stream
             },
             quote::quote! {},
             // http_request_test_expect_success_token_stream,
@@ -5288,7 +5288,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_many_token_stream
             #create_one_token_stream
             // #read_many_token_stream
-            // #read_one_token_stream
+            #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream

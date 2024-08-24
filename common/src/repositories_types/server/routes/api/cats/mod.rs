@@ -215,15 +215,6 @@ pub struct Jsongeneric {
 //if doggie is object - wrong message. fix it
 //from_str :: FromStr,
 /////
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct ReadOnePayload {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdPrimitiveI64,
-    pub select: std::vec::Vec<JsongenericColumn>,
-}
-#[derive(Debug)]
-pub struct ReadOneParameters {
-    pub payload: ReadOnePayload,
-}
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryReadOneRouteLogicResponseVariants {
     Desirable(JsongenericOptions),
