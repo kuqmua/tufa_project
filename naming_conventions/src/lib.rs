@@ -292,6 +292,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
         ["prefix"],
         ["empty", "column", "json", "reader"],
         ["not", "unique", "column", "json", "reader"],
+        ["generate", "postgresql", "query", "part", "from", "self", "vec"],
         ["generate", "postgresql", "query", "part", "from", "self", "vec", "error", "named"]
     ]
 );
