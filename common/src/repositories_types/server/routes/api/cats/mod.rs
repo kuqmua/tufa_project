@@ -214,29 +214,6 @@ pub struct Jsongeneric {
 //todo "serde_json": "unknown variant `ddfd`, expected one of `something`, `omega`, `doggie` at line 6 column 45"
 //if doggie is object - wrong message. fix it
 //from_str :: FromStr,
-#[derive(
-    Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Clone, //Eq, 
-    // Copy,
-)]
-pub enum JsongenericColumn {
-    #[serde(rename(
-        serialize = "std_primitive_i32_as_postgresql_int",
-        deserialize = "std_primitive_i32_as_postgresql_int"
-    ))]
-    StdPrimitiveI32AsPostgresqlInt,
-    #[serde(rename(
-        serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
-        deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-    ))]
-    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
-    #[serde(rename(
-        serialize = "sqlx_types_json_t_as_postgresql_json_b_not_null",
-        deserialize = "sqlx_types_json_t_as_postgresql_json_b_not_null"
-    ))]
-    SqlxTypesJsonTAsPostgresqlJsonBNotNull {
-        filter: std::vec::Vec<SomethingField>
-    },
-}
 impl std::fmt::Display for JsongenericColumn {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         //here change
