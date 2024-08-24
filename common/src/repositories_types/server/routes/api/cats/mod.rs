@@ -612,50 +612,6 @@ DynArcCombinationOfAppStateLogicTraits, >,
     *response.status_mut() = axum::http::StatusCode::OK;
     return response;
 }
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryReadOneErrorNamed {
-    SerdeJsonToString {
-        #[eo_to_std_string_string]
-        serde_json_to_string: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    FailedToGetResponseText {
-        #[eo_to_std_string_string]
-        status_code: http::StatusCode,
-        #[eo_to_std_string_string]
-        headers: reqwest::header::HeaderMap,
-        #[eo_to_std_string_string]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DeserializeResponse {
-        #[eo_to_std_string_string]
-        status_code: http::StatusCode,
-        #[eo_to_std_string_string]
-        headers: reqwest::header::HeaderMap,
-        #[eo_to_std_string_string_serialize_deserialize]
-        response_text: std::string::String,
-        #[eo_to_std_string_string]
-        serde: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Reqwest {
-        #[eo_to_std_string_string]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueColumn {
-        #[eo_to_std_string_string_serialize_deserialize]
-        not_unique_column: JsongenericColumn,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    TryReadOneRouteLogicErrorNamedWithSerializeDeserialize {
-        #[eo_to_std_string_string]
-        try_read_one_route_logic_error_named_with_serialize_deserialize:
-            TryReadOneRouteLogicErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 pub async fn try_read_one(
     server_location: &std::primitive::str,
     parameters: ReadOneParameters,
