@@ -209,6 +209,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         inner_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
         generic_option_string_wrapper: std::option::Option<std::string::String>,
         generic_option_string_options: std::option::Option<std::string::String>,
+        generic_option_string_field: std::option::Option<std::string::String>,
         // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
@@ -377,6 +378,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
+            let generic_option_string_field = match generate_generic_option_string(
+                &maybe_generic_token_stream,
+                &naming_conventions::FieldUpperCamelCase.to_string()
+            ) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            };
             let generate_generic_string = |maybe_generic_token_stream: &std::option::Option<&'a syn::AngleBracketedGenericArguments>, postfix: &std::primitive::str| -> Result<proc_macro2::TokenStream, std::string::String>{
                 let value = format!(
                     "{}{}",
@@ -443,6 +453,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 inner_type_with_generic_wrapper_token_stream,
                 generic_option_string_wrapper,
                 generic_option_string_options,
+                generic_option_string_field,
                 // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
