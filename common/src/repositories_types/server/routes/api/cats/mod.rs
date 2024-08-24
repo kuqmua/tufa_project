@@ -213,17 +213,6 @@ pub struct Jsongeneric {
 
 //todo "serde_json": "unknown variant `ddfd`, expected one of `something`, `omega`, `doggie` at line 6 column 45"
 //if doggie is object - wrong message. fix it
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub struct JsongenericOptions {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        std::option::Option<postgresql_crud::Value<postgresql_crud::StdPrimitiveI64>>,
-    pub std_primitive_i32_as_postgresql_int: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::StdOptionOptionStdPrimitiveI32>,
-    >,
-    pub sqlx_types_json_t_as_postgresql_json_b_not_null: std::option::Option<
-        postgresql_crud::Value<postgresql_crud::SqlxTypesJson<SomethingWrapper>>,//here change
-    >,
-}
 impl std::convert::From<Jsongeneric> for JsongenericOptions {
     fn from(value: Jsongeneric) -> Self {
         Self {

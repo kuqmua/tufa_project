@@ -206,6 +206,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         original_type_with_generic_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
+        inner_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
         // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
@@ -314,7 +315,52 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         Some(value) => quote::quote!{#value}.to_string(),
                         None => std::string::String::default()
                     }
-                ); //todo generic for json
+                );
+                match value.parse::<proc_macro2::TokenStream>() {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
+                }
+            };
+            let inner_type_with_generic_wrapper_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
+                    match &maybe_generic_token_stream {
+                        Some(value) => {
+                            let cloned_value = (*value).clone();
+                            if cloned_value.args.len() != 1 {
+                                panic!("cloned_value.args.len() != 1");
+                            }
+                            if let Some(value) = cloned_value.args.first() {
+                                if let syn::GenericArgument::Type(value) = value {
+                                    if let syn::Type::Path(value) = value {
+                                        if value.path.segments.len() != 1 {
+                                            panic!("value.path.segments.len() != 1");
+                                        }
+                                        if let Some(value) = value.path.segments.first() {
+                                            format!("<{}{}>", &value.ident, naming_conventions::WrapperUpperCamelCase)
+                                        }
+                                        else {
+                                            panic!("value.path.segments.first() is None");
+                                        }
+                                    }
+                                    else {
+                                        panic!("value is not syn::Type::Path");
+                                    }
+                                }
+                                else {
+                                    panic!("value is not syn::GenericArgument::Type");
+                                }
+                            }
+                            else {
+                                panic!("value.args.first() is None");
+                            }
+                        },
+                        None => std::string::String::default()
+                    }
+                );
                 match value.parse::<proc_macro2::TokenStream>() {
                     Ok(value) => value,
                     Err(error) => {
@@ -365,6 +411,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 original_type_with_generic_token_stream,
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
+                inner_type_with_generic_wrapper_token_stream,
                 // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
@@ -486,7 +533,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
             let field_vis = &element.field.vis;
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_wrapper_token_stream);
             quote::quote!{
                 // #serde_skip_serializing_if_value_attribute_token_stream
                 #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
@@ -5128,7 +5175,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{emulate_crud_api_usage_test_token_stream}");
     let common_token_stream = quote::quote! {
         pub const TABLE_NAME: #ref_std_primitive_str = #table_name_double_quotes_token_stream;
-        // #struct_options_token_stream
+        #struct_options_token_stream
         // #from_ident_for_ident_options_token_stream
         // #column_token_stream
         #allow_methods_token_stream
