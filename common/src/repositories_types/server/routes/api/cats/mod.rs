@@ -453,7 +453,10 @@ DynArcCombinationOfAppStateLogicTraits, >,
                         Ok(value) => value,
                         Err(error) => {
                             //SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
-                            let f: bool = error;
+                            
+                            // let f: bool = error;
+
+
                             // let error = TryReadOneRouteLogicErrorNamed::Postgresql {
                             //     postgresql: error_0,
                             //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(

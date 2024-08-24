@@ -207,10 +207,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
-        generic_option_string_wrapper: std::option::Option<std::string::String>,
-        generic_option_string_options: std::option::Option<std::string::String>,
-        generic_option_string_field: std::option::Option<std::string::String>,
-        generic_option_string_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream: std::option::Option<std::string::String>,
+        option_generic_wrapper_stringified: std::option::Option<std::string::String>,
+        option_generic_options_stringified: std::option::Option<std::string::String>,
+        option_generic_field_stringified: std::option::Option<std::string::String>,
+        option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified: std::option::Option<std::string::String>,
         // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
@@ -361,7 +361,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     None => Ok(None)
                 }
             };
-            let generic_option_string_wrapper = match generate_generic_option_string(
+            let option_generic_wrapper_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::WrapperUpperCamelCase.to_string()
             ) {
@@ -370,7 +370,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
-            let generic_option_string_options = match generate_generic_option_string(
+            let option_generic_options_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::OptionsUpperCamelCase.to_string()
             ) {
@@ -379,7 +379,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
-            let generic_option_string_field = match generate_generic_option_string(
+            let option_generic_field_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::FieldUpperCamelCase.to_string()
             ) {
@@ -388,7 +388,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
-            let generic_option_string_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream = match generate_generic_option_string(
+            let option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string()
             ) {
@@ -397,24 +397,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
-            let generate_generic_string = |maybe_generic_token_stream: &std::option::Option<&'a syn::AngleBracketedGenericArguments>, postfix: &std::primitive::str| -> Result<proc_macro2::TokenStream, std::string::String>{
+            let inner_type_with_generic_wrapper_token_stream = {
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-                    match &generic_option_string_wrapper {
+                    match &option_generic_wrapper_stringified {
                         Some(value) => format!("<{value}>"),
                         None => std::string::String::default()
                     }
                 );
                 match value.parse::<proc_macro2::TokenStream>() {
-                    Ok(value) => Ok(value),
-                    Err(error) => Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                }
-            };
-            let inner_type_with_generic_wrapper_token_stream = match generate_generic_string(&maybe_generic_token_stream, &naming_conventions::WrapperUpperCamelCase.to_string()) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
                 }
             };
             // let where_inner_type_token_stream = {
@@ -461,10 +457,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
                 inner_type_with_generic_wrapper_token_stream,
-                generic_option_string_wrapper,
-                generic_option_string_options,
-                generic_option_string_field,
-                generic_option_string_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream,
+                option_generic_wrapper_stringified,
+                option_generic_options_stringified,
+                option_generic_field_stringified,
+                option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified,
                 // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
@@ -623,12 +619,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&match &element.maybe_generic_token_stream {
                 Some(_) => {
                     let generic_option_string_wrapper_token_stream = {
-                        let value = element.generic_option_string_wrapper.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_wrapper is None"));
+                        let value = element.option_generic_wrapper_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_wrapper is None"));
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let generic_option_string_options_token_stream = {
-                        let value = element.generic_option_string_options.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_options is None"));
+                        let value = element.option_generic_options_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_options is None"));
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
@@ -675,7 +671,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
-                let maybe_generic_filter_declaration_token_stream = match &element.generic_option_string_field {
+                let maybe_generic_filter_declaration_token_stream = match &element.option_generic_field_stringified {
                     Some(value) => {
                         let ident_field_upper_camel_case_token_stream = value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
