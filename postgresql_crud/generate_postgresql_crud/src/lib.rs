@@ -210,6 +210,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generic_option_string_wrapper: std::option::Option<std::string::String>,
         generic_option_string_options: std::option::Option<std::string::String>,
         generic_option_string_field: std::option::Option<std::string::String>,
+        generic_option_string_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream: std::option::Option<std::string::String>,
         // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
@@ -387,6 +388,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
+            let generic_option_string_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream = match generate_generic_option_string(
+                &maybe_generic_token_stream,
+                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string()
+            ) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            };
             let generate_generic_string = |maybe_generic_token_stream: &std::option::Option<&'a syn::AngleBracketedGenericArguments>, postfix: &std::primitive::str| -> Result<proc_macro2::TokenStream, std::string::String>{
                 let value = format!(
                     "{}{}",
@@ -454,6 +464,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 generic_option_string_wrapper,
                 generic_option_string_options,
                 generic_option_string_field,
+                generic_option_string_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream,
                 // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
@@ -1832,7 +1843,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let mut #acc_snake_case = std::vec::Vec::new();
             for #element_snake_case in &#value_snake_case.#select_snake_case {
                 if #acc_snake_case.contains(&#element_snake_case) {
-                    let #error_0_token_stream = *#element_snake_case;
+                    let #error_0_token_stream = #element_snake_case.clone();
                     #not_unique_column_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                 }
                 else {
@@ -3969,6 +3980,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             ],
         );
+        //
+
+        // syn_field_with_additional_info_fields_named
+
+
+//         let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers = element.iter().fold(std::string::String::from(""), |mut acc, element| {
+//             if &element.maybe_generic_token_stream.is_some() {
+// inner_type_with_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream
+//             }
+//             // acc.push_str(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(element));
+//             acc
+//         });
+
+
+    // let contains_generic_json = {
+    //     let mut contains_generic_json = false;
+        // for element in &syn_field_with_additional_info_fields_named {
+        //     println!("{element:#?}");
+        //     // if element.maybe_generic_token_stream.is_some() {
+        //     //     contains_generic_json = true;
+        //     //     break;
+        //     // }
+        // }
+    //     contains_generic_json
+    // };
+        // SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
+        //
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -4012,6 +4050,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                          }
                     },
                 );
+                // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
                     let query_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1"),
