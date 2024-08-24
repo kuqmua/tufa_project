@@ -207,10 +207,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
-        option_generic_wrapper_stringified: std::option::Option<std::string::String>,
-        option_generic_options_stringified: std::option::Option<std::string::String>,
-        option_generic_field_stringified: std::option::Option<std::string::String>,
-        option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified: std::option::Option<std::string::String>,
+        option_generic_wrapper_upper_camel_case_stringified: std::option::Option<std::string::String>,
+        option_generic_options_upper_camel_case_stringified: std::option::Option<std::string::String>,
+        option_generic_field_upper_camel_case_stringified: std::option::Option<std::string::String>,
+        option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified: std::option::Option<std::string::String>,
         // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
@@ -361,7 +361,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     None => Ok(None)
                 }
             };
-            let option_generic_wrapper_stringified = match generate_generic_option_string(
+            let option_generic_wrapper_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::WrapperUpperCamelCase.to_string()
             ) {
@@ -370,7 +370,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
-            let option_generic_options_stringified = match generate_generic_option_string(
+            let option_generic_options_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::OptionsUpperCamelCase.to_string()
             ) {
@@ -379,7 +379,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
-            let option_generic_field_stringified = match generate_generic_option_string(
+            let option_generic_field_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::FieldUpperCamelCase.to_string()
             ) {
@@ -388,7 +388,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
-            let option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified = match generate_generic_option_string(
+            let option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string()
             ) {
@@ -401,7 +401,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-                    match &option_generic_wrapper_stringified {
+                    match &option_generic_wrapper_upper_camel_case_stringified {
                         Some(value) => format!("<{value}>"),
                         None => std::string::String::default()
                     }
@@ -457,10 +457,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
                 inner_type_with_generic_wrapper_token_stream,
-                option_generic_wrapper_stringified,
-                option_generic_options_stringified,
-                option_generic_field_stringified,
-                option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified,
+                option_generic_wrapper_upper_camel_case_stringified,
+                option_generic_options_upper_camel_case_stringified,
+                option_generic_field_upper_camel_case_stringified,
+                option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
                 // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
@@ -619,12 +619,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&match &element.maybe_generic_token_stream {
                 Some(_) => {
                     let generic_option_string_wrapper_token_stream = {
-                        let value = element.option_generic_wrapper_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_wrapper is None"));
+                        let value = element.option_generic_wrapper_upper_camel_case_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_wrapper is None"));
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let generic_option_string_options_token_stream = {
-                        let value = element.option_generic_options_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_options is None"));
+                        let value = element.option_generic_options_upper_camel_case_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_options is None"));
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
@@ -671,7 +671,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
-                let maybe_generic_filter_declaration_token_stream = match &element.option_generic_field_stringified {
+                let maybe_generic_filter_declaration_token_stream = match &element.option_generic_field_upper_camel_case_stringified {
                     Some(value) => {
                         let ident_field_upper_camel_case_token_stream = value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3981,18 +3981,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // syn_field_with_additional_info_fields_named
 
 
-//         let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers = element.iter().fold(std::string::String::from(""), |mut acc, element| {
-//             if &element.maybe_generic_token_stream.is_some() {
-// inner_type_with_generic_generate_postgresql_query_part_from_self_vec_error_named_token_stream
-//             }
-//             // acc.push_str(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(element));
-//             acc
-//         });
+        // let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers = element.iter().fold(vec![], |mut acc, element| {
+        //     if let Some(value) = &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified {
+        //         //here
+        //         acc.push_str(new_syn_variant_wrapper(
+        //             &value,
+        //             Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+        //             vec![
+        //                 (
+        //                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+        //                     &naming_conventions::NotUniqueColumnJsonReaderSnakeCase,
+        //                     proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+        //                         &[&json_ident_column_upper_camel_case_stringified],
+        //                         &proc_macro_name_upper_camel_case_ident_stringified
+        //                     )
+        //                 )
+        //             ],
+        //         ));
+        //         // SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
+        //     }
+        //     acc
+        // });
 
 
     // let contains_generic_json = {
     //     let mut contains_generic_json = false;
         // for element in &syn_field_with_additional_info_fields_named {
+        //     // option_generic_generate_postgresql_query_part_from_self_vec_error_named_stringified
         //     println!("{element:#?}");
         //     // if element.maybe_generic_token_stream.is_some() {
         //     //     contains_generic_json = true;
@@ -4001,8 +4016,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // }
     //     contains_generic_json
     // };
-        // SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
-        //
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
