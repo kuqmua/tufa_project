@@ -50,12 +50,12 @@ fn crud(
                 common::repositories_types::server::routes::api::cats::create_one_payload_example_route_logic,
             ),
         )
-        // .route(
-        //     "/read_many",
-        //     axum::routing::post(
-        //         common::repositories_types::server::routes::api::cats::try_read_many_route_logic
-        //     ),
-        // )
+        .route(
+            "/read_many",
+            axum::routing::post(
+                common::repositories_types::server::routes::api::cats::try_read_many_route_logic
+            ),
+        )
         .route(
             "/read_one",
             axum::routing::post(common::repositories_types::server::routes::api::cats::try_read_one_route_logic),

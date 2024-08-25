@@ -3055,6 +3055,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream = quote::quote!{
         {#fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
     };
+    let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().fold(vec![], |mut acc, element| {
+        match (
+            &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
+            &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
+        ) {
+            (Some(upper_camel_case_value), Some(snake_case_value)) => {
+                acc.push(new_syn_variant_wrapper(
+                    &upper_camel_case_value,
+                    Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+                    vec![
+                        (
+                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                            &snake_case_value,
+                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                                &[&upper_camel_case_value],
+                                &proc_macro_name_upper_camel_case_ident_stringified
+                            )
+                        )
+                    ],
+                ));
+            },
+            (Some(_), None) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified is None"),
+            (None, Some(_)) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified is None"),
+            (None, None) => (),
+        }
+        acc
+    });
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let expected_length_snake_case = naming_conventions::ExpectedLengthSnakeCase;
@@ -3542,6 +3569,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(&not_unique_column_syn_variant_wrapper.get_syn_variant());
                 not_unique_fields_syn_variants_wrappers.iter().for_each(|element|{
                     value.push(element.get_syn_variant());
+                });
+                generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers.iter().for_each(|element|{
+                    value.push(&element.get_syn_variant());
                 });
                 value
             },
@@ -4087,33 +4117,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             ],
         );
-        let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().fold(vec![], |mut acc, element| {
-            match (
-                &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
-                &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
-            ) {
-                (Some(upper_camel_case_value), Some(snake_case_value)) => {
-                    acc.push(new_syn_variant_wrapper(
-                        &upper_camel_case_value,
-                        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
-                        vec![
-                            (
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                                &snake_case_value,
-                                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                    &[&upper_camel_case_value],
-                                    &proc_macro_name_upper_camel_case_ident_stringified
-                                )
-                            )
-                        ],
-                    ));
-                },
-                (Some(_), None) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified is None"),
-                (None, Some(_)) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified is None"),
-                (None, None) => (),
-            }
-            acc
-        });
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
@@ -5513,7 +5516,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             #create_many_token_stream
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream
             #update_one_token_stream
