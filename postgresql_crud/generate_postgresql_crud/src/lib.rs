@@ -1945,6 +1945,62 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             line!(),
             column!(),
         );
+        let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers_token_stream = {
+            let generics_fiter_checks_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element| {
+                let field_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element.field_ident.to_string());
+                if element.maybe_generic_token_stream.is_some() {
+                    let empty_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &empty_column_json_reader_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!(),
+                    );
+                    let not_unique_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &not_unique_column_json_reader_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!(),
+                    );
+                    quote::quote!{
+                        #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream { filter } => {//todo reuse { filter }
+                            if filter.is_empty() {
+                                let #error_0_token_stream = #element_snake_case.clone();//here
+                                #empty_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                            }
+                            {
+                                let mut #acc_snake_case = vec![];
+                                for element_handle in filter {
+                                    match #acc_snake_case.contains(&element_handle) {
+                                        true => {
+                                            let #error_0_token_stream = #element_snake_case.clone();//here
+                                            #not_unique_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                        },
+                                        false => {
+                                            #acc_snake_case.push(element_handle);
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    }
+                }
+                else {
+                    quote::quote!{#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => ()}
+                }
+            }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+            if contains_generic_json {
+                quote::quote!{
+                    match &#element_snake_case {
+                        #(#generics_fiter_checks_token_stream),*
+                    }
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            }
+        };
         quote::quote!{
             let mut #acc_snake_case = std::vec::Vec::new();
             for #element_snake_case in &#value_snake_case.#select_snake_case {
@@ -1953,6 +2009,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #not_unique_column_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                 }
                 else {
+                    #generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers_token_stream
                     #acc_snake_case.push(#element_snake_case);
                 }
             }
@@ -3570,6 +3627,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 not_unique_fields_syn_variants_wrappers.iter().for_each(|element|{
                     value.push(element.get_syn_variant());
                 });
+                if contains_generic_json {
+                    value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
+                    value.push(&not_unique_column_json_reader_syn_variant_wrapper.get_syn_variant());
+                }
                 generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers.iter().for_each(|element|{
                     value.push(&element.get_syn_variant());
                 });
@@ -4088,35 +4149,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         read_one_http_request_test_expect_fail_token_stream,
     ) = {
         let operation = Operation::ReadOne;
-        //todo maybe reuse later for other operations
-        let empty_column_json_reader_syn_variant_wrapper = new_syn_variant_wrapper(
-            &naming_conventions::EmptyColumnJsonReaderUpperCamelCase,
-            Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                    &naming_conventions::EmptyColumnJsonReaderSnakeCase,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &[&json_ident_column_upper_camel_case_stringified],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    )
-                )
-            ],
-        );
-        let not_unique_column_json_reader_syn_variant_wrapper = new_syn_variant_wrapper(
-            &naming_conventions::NotUniqueColumnJsonReaderUpperCamelCase,
-            Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                    &naming_conventions::NotUniqueColumnJsonReaderSnakeCase,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &[&json_ident_column_upper_camel_case_stringified],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    )
-                )
-            ],
-        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
