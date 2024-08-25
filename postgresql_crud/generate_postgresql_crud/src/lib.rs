@@ -1970,7 +1970,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let mut #acc_snake_case = std::vec::Vec::new();
             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.#select_snake_case {
                 if #acc_snake_case.contains(&#element_snake_case) {
-                    let #error_0_token_stream = *#element_snake_case;
+                    let #error_0_token_stream = #element_snake_case.clone();
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#not_unique_column_syn_variant_wrapper_initialization_token_stream);
                 } else {
                     #acc_snake_case.push(#element_snake_case);
@@ -4254,6 +4254,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{#value_snake_case}
                 },
             );
+            // println!("{try_operation_token_stream}");
             // let try_operation_test_token_stream = {
             //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
             //         let field_ident = &element.field_ident;
@@ -4288,7 +4289,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 quote::quote! {
                     #try_operation_error_named_token_stream
-                    // #try_operation_token_stream
+                    #try_operation_token_stream
                 },
                 quote::quote! {}
                 // try_operation_test_token_stream,
