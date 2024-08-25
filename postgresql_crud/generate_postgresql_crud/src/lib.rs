@@ -776,33 +776,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let parameters_snake_case = naming_conventions::ParametersSnakeCase;
     let payload_snake_case = naming_conventions::PayloadSnakeCase;
     let select_snake_case = naming_conventions::SelectSnakeCase;
-    let query_vec_column_token_stream = {
-        let variants_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element|{
-            let field_ident_upper_camel_case_token_stream = syn_ident_to_upper_camel_case_token_stream(element.field_ident);
-            let field_ident_string_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &element.field_ident.to_string(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => #field_ident_string_double_quotes_token_stream}
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {
-            {
-                let mut #value_snake_case = #parameters_snake_case.#payload_snake_case.#select_snake_case.iter().fold(#std_string_string::#from_snake_case(""), |mut #acc_snake_case, #element_snake_case| {
-                    #acc_snake_case += match #element_snake_case {
-                        #(#variants_token_stream),*
-                    };
-                    #acc_snake_case += ",";
-                    #acc_snake_case
-                });
-                let _ = #value_snake_case.pop();
-                #value_snake_case
-            }
-        }
-    };
-    let sqlx_error_syn_punctuated_punctuated = proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-        &["sqlx","Error"],
-        &proc_macro_name_upper_camel_case_ident_stringified
-    );
     #[derive(Debug)]
     struct SynVariantWrapper {
         variant: syn::Variant,
@@ -948,6 +921,138 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let wrap_into_axum_response_token_stream = |
+        axum_json_content_token_stream: &proc_macro2::TokenStream,
+        status_code_token_stream: &proc_macro2::TokenStream,
+    |{
+        //todo make explicit serde_json::to_vec https://docs.rs/serde_json/1.0.125/serde_json/fn.to_vec.html coz axum::Json() in case of error returns http response - and that is bad
+        // proof https://docs.rs/axum/latest/src/axum/json.rs.html#182-210
+        quote::quote!{
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(#axum_json_content_token_stream));
+            *response.status_mut() = #status_code_token_stream;
+            return response;
+        }
+    };
+    let generate_operation_error_initialization_eprintln_response_creation_token_stream = |
+        operation: &Operation,
+        syn_variant_wrapper: &SynVariantWrapper,
+        file: &'static str,
+        line: std::primitive::u32,
+        column: std::primitive::u32,
+    | {
+        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
+        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
+        let response_snake_case = naming_conventions::ResponseSnakeCase;
+        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
+        let syn_variant_initialization_token_stream = generate_initialization_token_stream(
+            syn_variant_wrapper,
+            &file,
+            line,
+            column,
+        );
+        let status_code_token_stream = syn_variant_wrapper.get_option_status_code()
+            .unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_status_code is None"))
+            .to_axum_http_status_code_token_stream();
+        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
+            &quote::quote!{#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)},
+            &status_code_token_stream
+        );
+        quote::quote! {
+            let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
+            #eprintln_error_token_stream
+            #wraped_into_axum_response_token_stream
+        }
+    };
+    let error_0_token_stream = token_patterns::Error0;
+    let error_1_token_stream = token_patterns::Error1;
+    let error_2_token_stream = token_patterns::Error2;
+    let error_3_token_stream = token_patterns::Error3;
+    let generate_query_vec_column_token_stream = |operation: &Operation|{
+        let variants_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element|{
+            let field_ident_upper_camel_case_token_stream = syn_ident_to_upper_camel_case_token_stream(element.field_ident);
+            //todo refactor it. can be rewriten witout double match. just put in one struct with maybe_generic_token_stream and others
+            let initialization_token_stream = match (
+                &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
+                &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
+            ) {
+                (Some(upper_camel_case_value), Some(snake_case_value)) => {
+                    let element_field_ident = &element.field_ident;
+                    let filter_as_field_ident_string_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{}} as {}", &element_field_ident),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let element_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &element_field_ident.to_string(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let generic_syn_variant_wrapper = new_syn_variant_wrapper(
+                        &upper_camel_case_value,
+                        Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+                        vec![
+                            (
+                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                                &snake_case_value,
+                                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                                    &[&upper_camel_case_value],
+                                    &proc_macro_name_upper_camel_case_ident_stringified
+                                )
+                            )
+                        ],
+                    );
+                    let generic_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &generic_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!(),
+                    );
+                    quote::quote! {
+                        { filter } => format!(
+                            #filter_as_field_ident_string_double_quotes_token_stream,//todo should support arrays or "key: array" is enough? 
+                            match postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                                filter, 
+                                #element_field_ident_double_quotes_token_stream,
+                                #element_field_ident_double_quotes_token_stream,
+                                false
+                            ) {
+                                Ok(#value_snake_case) => #value_snake_case,
+                                Err(#error_0_token_stream) => {
+                                    #generic_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                }
+                            }
+                        )
+                    }
+                },
+                (Some(_), None) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified is None"),
+                (None, Some(_)) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified is None"),
+                (None, None) => {
+                    let field_ident_string_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &element.field_ident.to_string(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    quote::quote! {=> #field_ident_string_double_quotes_token_stream.to_string()}
+                }
+            };
+            quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #initialization_token_stream}
+        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        quote::quote! {
+            {
+                let mut #value_snake_case = #std_string_string::default();
+                for #element_snake_case in &#parameters_snake_case.#payload_snake_case.#select_snake_case {
+                    #value_snake_case.push_str(&match #element_snake_case {
+                        #(#variants_token_stream),*
+                    }); 
+                    #value_snake_case.push_str(","); 
+                }
+                let _ = #value_snake_case.pop();
+                #value_snake_case
+            }
+        }
+    };
+    let sqlx_error_syn_punctuated_punctuated = proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+        &["sqlx","Error"],
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming_conventions::PostgresqlUpperCamelCase,
         Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
@@ -960,10 +1065,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
     );
     let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
-    let error_0_token_stream = token_patterns::Error0;
-    let error_1_token_stream = token_patterns::Error1;
-    let error_2_token_stream = token_patterns::Error2;
-    let error_3_token_stream = token_patterns::Error3;
     //todo find out how to declare lifetime on closures
     //todo refactor as &[&'a SynRust...]
     let generate_self_fields_token_stream = |fields: &[&syn::Field]| -> std::vec::Vec<syn::Ident> {
@@ -1094,48 +1195,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     }
-    let wrap_into_axum_response_token_stream = |
-        axum_json_content_token_stream: &proc_macro2::TokenStream,
-        status_code_token_stream: &proc_macro2::TokenStream,
-    |{
-        //todo make explicit serde_json::to_vec https://docs.rs/serde_json/1.0.125/serde_json/fn.to_vec.html coz axum::Json() in case of error returns http response - and that is bad
-        // proof https://docs.rs/axum/latest/src/axum/json.rs.html#182-210
-        quote::quote!{
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(#axum_json_content_token_stream));
-            *response.status_mut() = #status_code_token_stream;
-            return response;
-        }
-    };
-    let generate_operation_error_initialization_eprintln_response_creation_token_stream = |
-        operation: &Operation,
-        syn_variant_wrapper: &SynVariantWrapper,
-        file: &'static str,
-        line: std::primitive::u32,
-        column: std::primitive::u32,
-    | {
-        let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
-        let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-        let response_snake_case = naming_conventions::ResponseSnakeCase;
-        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
-        let syn_variant_initialization_token_stream = generate_initialization_token_stream(
-            syn_variant_wrapper,
-            &file,
-            line,
-            column,
-        );
-        let status_code_token_stream = syn_variant_wrapper.get_option_status_code()
-            .unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_status_code is None"))
-            .to_axum_http_status_code_token_stream();
-        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
-            &quote::quote!{#try_operation_route_logic_response_variants_upper_camel_case_token_stream::#from_snake_case(#error_snake_case)},
-            &status_code_token_stream
-        );
-        quote::quote! {
-            let #error_snake_case = #try_operation_route_logic_error_named_upper_camel_case_token_stream::#syn_variant_initialization_token_stream;
-            #eprintln_error_token_stream
-            #wraped_into_axum_response_token_stream
-        }
-    };
     #[derive(proc_macro_assistants::ToSnakeCaseStringified)]
     enum OperationHttpMethod {
         Post,
@@ -3629,6 +3688,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                     };
                     let column_snake_case = naming_conventions::ColumnSnakeCase;
+                    let query_vec_column_token_stream = generate_query_vec_column_token_stream(&operation);
                     quote::quote! {
                         {
                             format!(
@@ -4082,6 +4142,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1"),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let query_vec_column_token_stream = generate_query_vec_column_token_stream(&operation);
+                    // println!("{query_vec_column_token_stream}");
                     quote::quote! {
                         format!(
                             #query_token_stream,

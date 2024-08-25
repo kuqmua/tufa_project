@@ -433,54 +433,107 @@ DynArcCombinationOfAppStateLogicTraits, >,
     };
     //
     println!("{:#?}", parameters);
-    let query_string = format!
-    ("select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
+    let query_string = 
+    
+    // format!
+    // ("select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
+    // {
+    //     let mut value = std::string::String::from("");
+    //     for element in &parameters.payload.select {
+    //         value.push_str(&match element {
+    //             JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
+    //             JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
+    //             JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => format!(
+    //                 "{} as sqlx_types_json_t_as_postgresql_json_b_not_null",//todo should support arrays or "key: array" is enough? 
+    //                 match postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+    //                     filter, 
+    //                     "sqlx_types_json_t_as_postgresql_json_b_not_null",
+    //                     "sqlx_types_json_t_as_postgresql_json_b_not_null",
+    //                     false
+    //                 ) {
+    //                     Ok(value) => value,
+    //                     Err(error_0) => {
+    //                         let error = TryReadOneRouteLogicErrorNamed::SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
+    //                             something_generate_postgresql_query_part_from_self_vec_error_named: error_0,
+    //                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+    //                                 file!().to_owned(),
+    //                                 line!(),
+    //                                 column!(),
+    //                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
+    //                                     file: std::string::String::from(
+    //                                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+    //                                     ),
+    //                                     line: 2252,
+    //                                     column: 17,
+    //                                 }),
+    //                             ),
+    //                         };
+    //                         eprintln!("{error}");
+    //                         let mut response = axum::response::IntoResponse::into_response(axum::Json(
+    //                             TryReadOneRouteLogicResponseVariants::from(error),
+    //                         ));
+    //                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+    //                         return response;
+    //                     }
+    //                 }
+    //             )
+    //         }); 
+    //         value.push_str(","); 
+    //     }
+    //     let _ = value.pop();
+    //     value
+    // },)
+    
+format!
+("select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
+{
+    let mut value = std :: string :: String :: default(); for element in &
+    parameters.payload.select
     {
-        let mut value = std::string::String::from("");
-        for element in &parameters.payload.select {
-            value.push_str(&match element {
-                JsongenericColumn::StdPrimitiveI32AsPostgresqlInt => "std_primitive_i32_as_postgresql_int".to_string(), 
-                JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
-                JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => format!(
-                    "{} as sqlx_types_json_t_as_postgresql_json_b_not_null",//todo should support arrays or "key: array" is enough? 
-                    match postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-                        filter, 
-                        "sqlx_types_json_t_as_postgresql_json_b_not_null",
-                        "sqlx_types_json_t_as_postgresql_json_b_not_null",
-                        false
-                    ) {
-                        Ok(value) => value,
-                        Err(error_0) => {
-                            let error = TryReadOneRouteLogicErrorNamed::SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
-                                something_generate_postgresql_query_part_from_self_vec_error_named: error_0,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from(
-                                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                        ),
-                                        line: 2252,
-                                        column: 17,
-                                    }),
-                                ),
-                            };
-                            eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(
-                                TryReadOneRouteLogicResponseVariants::from(error),
-                            ));
-                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                            return response;
-                        }
-                    }
-                )
-            }); 
-            value.push_str(","); 
-        }
-        let _ = value.pop();
-        value
-    },);
+        value.push_str(& match element
+        {
+            JsongenericColumn :: StdPrimitiveI32AsPostgresqlInt =>
+            "std_primitive_i32_as_postgresql_int".to_string(),
+            JsongenericColumn ::
+            StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey =>
+            "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
+            JsongenericColumn :: SqlxTypesJsonTAsPostgresqlJsonBNotNull
+            { filter } => format!
+            ("{} as sqlx_types_json_t_as_postgresql_json_b_not_null", match
+            postgresql_crud :: GeneratePostgresqlQueryPart ::
+            generate_postgresql_query_part_from_self_vec(filter,
+            "sqlx_types_json_t_as_postgresql_json_b_not_null",
+            "sqlx_types_json_t_as_postgresql_json_b_not_null", false)
+            {
+                Ok(value) => value, Err(error_0) =>
+                {
+                    let error = TryReadOneRouteLogicErrorNamed ::
+                    SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
+                    {
+                        something_generate_postgresql_query_part_from_self_vec_error_named
+                        : error_0, code_occurence : error_occurence_lib ::
+                        code_occurence :: CodeOccurence ::
+                        new(file! ().to_owned(), line! (), column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        {
+                            file : std :: string :: String ::
+                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line : 1006, column : 25,
+                        }))
+                    }; eprintln! ("{error}"); let mut response = axum ::
+                    response :: IntoResponse ::
+                    into_response(axum ::
+                    Json(TryReadOneRouteLogicResponseVariants :: from(error)));
+                    * response.status_mut() = axum :: http :: StatusCode ::
+                    INTERNAL_SERVER_ERROR; return response;
+                }
+            })
+        }); value.push_str(",");
+    } let _ = value.pop(); value
+},)
+    
+    
+    ;
     println!("{}", query_string);
     let binded_query = {
         let query = sqlx::query::<sqlx::Postgres>(&query_string);
