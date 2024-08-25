@@ -197,25 +197,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     #[derive(Debug, Clone)]
+    struct Generic<'a> {
+        syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
+        wrapper_upper_camel_case_stringified: std::string::String,
+        options_upper_camel_case_stringified: std::string::String,
+        field_upper_camel_case_stringified: std::string::String,
+        generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified: std::string::String,
+        generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified: std::string::String,
+    }
+    #[derive(Debug, Clone)]
     struct SynFieldWithAdditionalInfo<'a> {
         field: &'a syn::Field,
         field_ident: &'a syn::Ident,
         rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
-        maybe_generic_token_stream: std::option::Option<&'a syn::AngleBracketedGenericArguments>,
         original_type_token_stream: proc_macro2::TokenStream,
         original_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
-        option_generic_wrapper_upper_camel_case_stringified: std::option::Option<std::string::String>,
-        option_generic_options_upper_camel_case_stringified: std::option::Option<std::string::String>,
-        option_generic_field_upper_camel_case_stringified: std::option::Option<std::string::String>,
-        option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified: std::option::Option<std::string::String>,
-        option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified: std::option::Option<std::string::String>,
         // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
+        option_generic: std::option::Option<Generic<'a>>,
     }   
     impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
         type Error = std::string::String;
@@ -227,7 +231,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(format!("{name} field ident is none"));
                 }
             };
-            let (rust_sqlx_map_to_postgres_type_variant, maybe_generic_token_stream) = match &value.ty {
+            let (rust_sqlx_map_to_postgres_type_variant, option_generic) = match &value.ty {
                 syn::Type::Path(value) => {
                     if value.path.segments.len() != 2 {
                         return Err(std::string::String::from("value.path.segments.len() != 2"));
@@ -263,16 +267,115 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {error}"));
                             },
                         };
-                    let maybe_generic_token_stream = match &second_element.arguments {
+                    let option_generic = match &second_element.arguments {
                         syn::PathArguments::None => None,
-                        syn::PathArguments::AngleBracketed(value) => Some(value),
+                        syn::PathArguments::AngleBracketed(value) => Some({
+                            enum Case {
+                                UpperCamel,
+                                Snake
+                            }
+                            let generate_generic_option_string = |
+                                syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
+                                postfix: &std::primitive::str,
+                                case: Case,
+                            | -> Result<std::string::String, std::string::String>{
+                                if syn_angle_bracketed_generic_arguments.args.len() != 1 {
+                                    return Err("value.args.len() != 1".to_string());
+                                }
+                                if let Some(value) = syn_angle_bracketed_generic_arguments.args.first() {
+                                    if let syn::GenericArgument::Type(value) = value {
+                                        if let syn::Type::Path(value) = value {
+                                            if value.path.segments.len() != 1 {
+                                                return Err("value.path.segments.len() != 1".to_string());
+                                            }
+                                            if let Some(value) = value.path.segments.first() {
+                                                Ok(match case {
+                                                    Case::UpperCamel => proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
+                                                    Case::Snake => proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&format!("{}_{postfix}", &value.ident)),
+                                                })
+                                            }
+                                            else {
+                                                return Err("value.path.segments.first() is None".to_string());
+                                            }
+                                        }
+                                        else {
+                                            return Err("value is not syn::Type::Path".to_string());
+                                        }
+                                    }
+                                    else {
+                                        return Err("value is not syn::GenericArgument::Type".to_string());
+                                    }
+                                }
+                                else {
+                                    return Err("value.args.first() is None".to_string());
+                                }
+                            };
+                            let wrapper_upper_camel_case_stringified = match generate_generic_option_string(
+                                &value,
+                                &naming_conventions::WrapperUpperCamelCase.to_string(),
+                                Case::UpperCamel,
+                            ) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            let options_upper_camel_case_stringified = match generate_generic_option_string(
+                                &value,
+                                &naming_conventions::OptionsUpperCamelCase.to_string(),
+                                Case::UpperCamel,
+                            ) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            let field_upper_camel_case_stringified = match generate_generic_option_string(
+                                &value,
+                                &naming_conventions::FieldUpperCamelCase.to_string(),
+                                Case::UpperCamel,
+                            ) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            let generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(
+                                &value,
+                                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string(),
+                                Case::UpperCamel,
+                            ) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            let generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified = match generate_generic_option_string(
+                                &value,
+                                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedSnakeCase.to_string(),
+                                Case::Snake
+                            ) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            Generic {
+                                syn_angle_bracketed_generic_arguments: value,
+                                wrapper_upper_camel_case_stringified,
+                                options_upper_camel_case_stringified,
+                                field_upper_camel_case_stringified,
+                                generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
+                                generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
+                            }
+                        }),
                         syn::PathArguments::Parenthesized(_) => {
                             return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
                         }
                     };
                     (
                         rust_sqlx_map_to_postgres_type_variant,
-                        maybe_generic_token_stream,
+                        option_generic,
                     )
                 }
                 _ => {
@@ -292,11 +395,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""),
-                    match &maybe_generic_token_stream {
-                        Some(value) => quote::quote!{#value}.to_string(),
+                    match &option_generic {
+                        Some(value) => {
+                            let value = &value.syn_angle_bracketed_generic_arguments;
+                            quote::quote!{#value}.to_string()
+                        },
                         None => std::string::String::default()
                     }
-                ); //todo generic for json
+                );
                 match value.parse::<proc_macro2::TokenStream>() {
                     Ok(value) => value,
                     Err(error) => {
@@ -304,66 +410,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let generate_generic_option_string = |
-                maybe_generic_token_stream: &std::option::Option<&'a syn::AngleBracketedGenericArguments>,
-                postfix: &std::primitive::str,
-                case: Case,
-            | -> Result<Option<std::string::String>, std::string::String>{
-                match maybe_generic_token_stream {
-                    Some(value) => {
-                        if value.args.len() != 1 {
-                            return Err("value.args.len() != 1".to_string());
-                        }
-                        if let Some(value) = value.args.first() {
-                            if let syn::GenericArgument::Type(value) = value {
-                                if let syn::Type::Path(value) = value {
-                                    if value.path.segments.len() != 1 {
-                                        return Err("value.path.segments.len() != 1".to_string());
-                                    }
-                                    if let Some(value) = value.path.segments.first() {
-                                        Ok(Some(match case {
-                                            Case::UpperCamel => proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
-                                            Case::Snake => proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&format!("{}_{postfix}", &value.ident)),
-                                        }))
-                                    }
-                                    else {
-                                        return Err("value.path.segments.first() is None".to_string());
-                                    }
-                                }
-                                else {
-                                    return Err("value is not syn::Type::Path".to_string());
-                                }
-                            }
-                            else {
-                                return Err("value is not syn::GenericArgument::Type".to_string());
-                            }
-                        }
-                        else {
-                            return Err("value.args.first() is None".to_string());
-                        }
-                    },
-                    None => Ok(None)
-                }
-            };
-            let option_generic_wrapper_upper_camel_case_stringified = match generate_generic_option_string(
-                &maybe_generic_token_stream,
-                &naming_conventions::WrapperUpperCamelCase.to_string(),
-                Case::UpperCamel,
-            ) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
             let original_type_with_generic_wrapper_token_stream = {
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""),
-                    match &option_generic_wrapper_upper_camel_case_stringified {
-                        Some(value) => format!("<{value}>"),
+                    match &option_generic {
+                        Some(value) => format!("<{}>", &value.wrapper_upper_camel_case_stringified),
                         None => std::string::String::default()
                     }
-                ); //todo generic for json
+                );
                 match value.parse::<proc_macro2::TokenStream>() {
                     Ok(value) => value,
                     Err(error) => {
@@ -384,8 +439,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-                    match &maybe_generic_token_stream {
-                        Some(value) => quote::quote!{#value}.to_string(),
+                    match &option_generic {
+                        Some(value) => {
+                            let value = &value.syn_angle_bracketed_generic_arguments;
+                            quote::quote!{#value}.to_string()
+                        },
                         None => std::string::String::default()
                     }
                 );
@@ -396,56 +454,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            enum Case {
-                UpperCamel,
-                Snake
-            }
-            let option_generic_options_upper_camel_case_stringified = match generate_generic_option_string(
-                &maybe_generic_token_stream,
-                &naming_conventions::OptionsUpperCamelCase.to_string(),
-                Case::UpperCamel,
-            ) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
-            let option_generic_field_upper_camel_case_stringified = match generate_generic_option_string(
-                &maybe_generic_token_stream,
-                &naming_conventions::FieldUpperCamelCase.to_string(),
-                Case::UpperCamel,
-            ) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
-            let option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(
-                &maybe_generic_token_stream,
-                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string(),
-                Case::UpperCamel,
-            ) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
-            let option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified = match generate_generic_option_string(
-                &maybe_generic_token_stream,
-                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedSnakeCase.to_string(),
-                Case::Snake
-            ) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
             let inner_type_with_generic_wrapper_token_stream = {
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-                    match &option_generic_wrapper_upper_camel_case_stringified {
-                        Some(value) => format!("<{value}>"),
+                    match &option_generic {
+                        Some(value) => format!("<{}>", &value.wrapper_upper_camel_case_stringified),
                         None => std::string::String::default()
                     }
                 );
@@ -469,8 +483,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified(""),
-                    match &maybe_generic_token_stream {
-                        Some(value) => quote::quote!{#value}.to_string(),
+                    match &option_generic {
+                        Some(value) => {
+                            let value = &value.syn_angle_bracketed_generic_arguments;
+                            quote::quote!{#value}.to_string()
+                        },
                         None => std::string::String::default()
                     }
                 );
@@ -494,21 +511,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 field: value,
                 field_ident,
                 rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
-                maybe_generic_token_stream, //todo rename
                 original_type_token_stream,
                 original_type_with_generic_token_stream,
                 original_type_with_generic_wrapper_token_stream,
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
                 inner_type_with_generic_wrapper_token_stream,
-                option_generic_wrapper_upper_camel_case_stringified,
-                option_generic_options_upper_camel_case_stringified,
-                option_generic_field_upper_camel_case_stringified,
-                option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
-                option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
                 // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
+                option_generic,
             })
         }
     }
@@ -526,7 +538,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let contains_generic_json = {
         let mut contains_generic_json = false;
         for element in &syn_field_with_additional_info_fields_named {
-            if element.maybe_generic_token_stream.is_some() {
+            if element.option_generic.is_some() {
                 contains_generic_json = true;
                 break;
             }
@@ -661,18 +673,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let ident_option_variants_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
             let field_ident = &element.field_ident;
             let inner_type_token_stream = &element.inner_type_token_stream;
-            let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&match &element.maybe_generic_token_stream {
-                Some(_) => {
-                    let generic_option_string_wrapper_token_stream = {
-                        let value = element.option_generic_wrapper_upper_camel_case_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_wrapper is None"));
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
-                    let generic_option_string_options_token_stream = {
-                        let value = element.option_generic_options_upper_camel_case_stringified.as_ref().unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} generic_option_string_options is None"));
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+            let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&match &element.option_generic {
+                Some(value) => {
+                    let generic_option_string_wrapper_token_stream = value.wrapper_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.wrapper_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    let generic_option_string_options_token_stream = value.options_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.options_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                     quote::quote!{
                         #inner_type_token_stream (
                             sqlx::types::Json(
@@ -716,10 +722,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
-                let maybe_generic_filter_declaration_token_stream = match &element.option_generic_field_upper_camel_case_stringified {
+                let maybe_generic_filter_declaration_token_stream = match &element.option_generic {
                     Some(value) => {
-                        let ident_field_upper_camel_case_token_stream = value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                        let ident_field_upper_camel_case_token_stream = value.field_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.field_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                         quote::quote! {{ filter: std::vec::Vec<#ident_field_upper_camel_case_token_stream> }}
                     }
                     None => proc_macro2::TokenStream::new()
@@ -988,12 +994,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_query_vec_column_token_stream = |operation: &Operation|{
         let variants_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element|{
             let field_ident_upper_camel_case_token_stream = syn_ident_to_upper_camel_case_token_stream(element.field_ident);
-            //todo refactor it. can be rewriten witout double match. just put in one struct with maybe_generic_token_stream and others
-            let initialization_token_stream = match (
-                &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
-                &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
-            ) {
-                (Some(upper_camel_case_value), Some(snake_case_value)) => {
+            //todo refactor it. can be rewriten witout double match. just put in one struct with syn_angle_bracketed_generic_arguments and others
+            let initialization_token_stream = match &element.option_generic {
+                Some(value) => {
                     let element_field_ident = &element.field_ident;
                     let filter_as_field_ident_string_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("{{}} as {}", &element_field_ident),
@@ -1004,14 +1007,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let generic_syn_variant_wrapper = new_syn_variant_wrapper(
-                        &upper_camel_case_value,
+                        &value.generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
                         Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
                         vec![
                             (
                                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                                &snake_case_value,
+                                &value.generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
                                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                    &[&upper_camel_case_value],
+                                    &[&value.generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified],
                                     &proc_macro_name_upper_camel_case_ident_stringified
                                 )
                             )
@@ -1041,9 +1044,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         )
                     }
                 },
-                (Some(_), None) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified is None"),
-                (None, Some(_)) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified is None"),
-                (None, None) => {
+                None => {
                     let field_ident_string_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &element.field_ident.to_string(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -1277,7 +1278,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let maybe_generic_filter_token_stream = if element.maybe_generic_token_stream.is_some() {
+            let maybe_generic_filter_token_stream = if element.option_generic.is_some() {
                 quote::quote! {{ filter }}
             }
             else {
@@ -1948,7 +1949,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers_token_stream = {
             let generics_fiter_checks_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element| {
                 let field_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element.field_ident.to_string());
-                if element.maybe_generic_token_stream.is_some() {
+                if element.option_generic.is_some() {
                     let empty_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
                         &empty_column_json_reader_syn_variant_wrapper,
@@ -2197,8 +2198,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 ).to_string(),
                                 proc_macro2::Span::call_site()
                             ),
-                            arguments: match &element.maybe_generic_token_stream {
-                                Some(value) => syn::PathArguments::AngleBracketed((*value).clone()),
+                            arguments: match &element.option_generic {
+                                Some(value) => syn::PathArguments::AngleBracketed((*value.syn_angle_bracketed_generic_arguments).clone()),
                                 None => syn::PathArguments::None
                             },
                         });
@@ -3113,29 +3114,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         {#fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
     };
     let generics_generate_postgresql_query_part_from_self_vec_error_named_syn_variants_wrappers = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().fold(vec![], |mut acc, element| {
-        match (
-            &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
-            &element.option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
-        ) {
-            (Some(upper_camel_case_value), Some(snake_case_value)) => {
-                acc.push(new_syn_variant_wrapper(
-                    &upper_camel_case_value,
-                    Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                            &snake_case_value,
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &[&upper_camel_case_value],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            )
+        if let Some(value) = &element.option_generic {
+            acc.push(new_syn_variant_wrapper(
+                &value.generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
+                Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                        &value.generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
+                        proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &[&value.generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified],
+                            &proc_macro_name_upper_camel_case_ident_stringified
                         )
-                    ],
-                ));
-            },
-            (Some(_), None) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified is None"),
-            (None, Some(_)) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} option_generic_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified is None"),
-            (None, None) => (),
+                    )
+                ],
+            ));
         }
         acc
     });
