@@ -204,6 +204,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         maybe_generic_token_stream: std::option::Option<&'a syn::AngleBracketedGenericArguments>,
         original_type_token_stream: proc_macro2::TokenStream,
         original_type_with_generic_token_stream: proc_macro2::TokenStream,
+        original_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
@@ -303,35 +304,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let inner_type_token_stream = {
-                let value = rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-                match value.parse::<proc_macro2::TokenStream>() {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                    }
-                }
-            };
-            let inner_type_with_generic_token_stream = {
-                let value = format!(
-                    "{}{}",
-                    &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-                    match &maybe_generic_token_stream {
-                        Some(value) => quote::quote!{#value}.to_string(),
-                        None => std::string::String::default()
-                    }
-                );
-                match value.parse::<proc_macro2::TokenStream>() {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                    }
-                }
-            };
-            enum Case {
-                UpperCamel,
-                Snake
-            }
             let generate_generic_option_string = |
                 maybe_generic_token_stream: &std::option::Option<&'a syn::AngleBracketedGenericArguments>,
                 postfix: &std::primitive::str,
@@ -383,6 +355,51 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     return Err(error);
                 }
             };
+            let original_type_with_generic_wrapper_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""),
+                    match &option_generic_wrapper_upper_camel_case_stringified {
+                        Some(value) => format!("<{value}>"),
+                        None => std::string::String::default()
+                    }
+                ); //todo generic for json
+                match value.parse::<proc_macro2::TokenStream>() {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
+                }
+            };
+            let inner_type_token_stream = {
+                let value = rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
+                match value.parse::<proc_macro2::TokenStream>() {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
+                }
+            };
+            let inner_type_with_generic_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
+                    match &maybe_generic_token_stream {
+                        Some(value) => quote::quote!{#value}.to_string(),
+                        None => std::string::String::default()
+                    }
+                );
+                match value.parse::<proc_macro2::TokenStream>() {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    }
+                }
+            };
+            enum Case {
+                UpperCamel,
+                Snake
+            }
             let option_generic_options_upper_camel_case_stringified = match generate_generic_option_string(
                 &maybe_generic_token_stream,
                 &naming_conventions::OptionsUpperCamelCase.to_string(),
@@ -480,6 +497,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 maybe_generic_token_stream, //todo rename
                 original_type_token_stream,
                 original_type_with_generic_token_stream,
+                original_type_with_generic_wrapper_token_stream,
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
                 inner_type_with_generic_wrapper_token_stream,
@@ -1210,7 +1228,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let declaration_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element|{
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_wrapper_token_stream);
             quote::quote! {
                 let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
             }
@@ -1259,7 +1277,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let original_type_with_generic_token_stream = &element.original_type_with_generic_token_stream;
+            let maybe_generic_filter_token_stream = if element.maybe_generic_token_stream.is_some() {
+                quote::quote! {{ filter }}
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
+            let original_type_with_generic_wrapper_token_stream = &element.original_type_with_generic_wrapper_token_stream;
             let field_ident_string_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &element.field_ident.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -1288,8 +1312,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             quote::quote! {
-                #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => match sqlx::Row::try_get::<
-                    #original_type_with_generic_token_stream, 
+                #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream => match sqlx::Row::try_get::<
+                    #original_type_with_generic_wrapper_token_stream, 
                     #ref_std_primitive_str
                 >(
                     &#value_snake_case, 
@@ -4179,6 +4203,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #value_snake_case
                     }
                 };
+                // println!("{postgresql_logic_token_stream}");
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
@@ -4200,7 +4225,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
             }
         };
         // println!("{try_operation_route_logic_token_stream}");
