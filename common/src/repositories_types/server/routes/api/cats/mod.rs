@@ -547,6 +547,30 @@ DynArcCombinationOfAppStateLogicTraits >,
     };
     println!("{:#?}", parameters);
     let query_string = {
+        //
+        //   update 
+        //     jsongeneric 
+        //   set 
+        //     std_primitive_i32_as_postgresql_int = 42,
+        //     sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(sqlx_types_json_t_as_postgresql_json_b_not_null, '{generic,std_string_string}', '"dark"', false)
+        //   where 
+        //     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+
+        // 5. Append a New Element to an Array
+        // Scenario: Add "Go" to Bob's skills array.
+
+        // UPDATE users
+        // SET details = jsonb_set(details, '{skills}', details->'skills' || '"Go"')
+        // WHERE name = 'Bob';
+
+        // 6. Update Multiple Keys at Once
+
+        // UPDATE users
+        // SET details = details
+        //     || jsonb_build_object('age', 31)
+        //     || jsonb_build_object('city', 'San Diego')
+        // WHERE name = 'Bob';
+        //
         let mut increment: std::primitive::u64 = 0;
         let mut query = std::string::String::from("update jsongeneric set ");
         if let Some(value) = &parameters
