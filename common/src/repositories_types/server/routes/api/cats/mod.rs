@@ -547,7 +547,6 @@ DynArcCombinationOfAppStateLogicTraits >,
     };
     println!("{:#?}", parameters);
     let query_string = {
-        //
         //   update 
         //     jsongeneric 
         //   set 
@@ -615,11 +614,6 @@ DynArcCombinationOfAppStateLogicTraits >,
 
         // update jsongeneric set sqlx_types_json_t_as_postgresql_json_b_not_null = $1 where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $2 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
 
-        //
-
-
-
-
 // update 
 //   jsongeneric 
 // set 
@@ -635,14 +629,6 @@ DynArcCombinationOfAppStateLogicTraits >,
         let mut increment: std::primitive::u64 = 0;
         let mut query = std::string::String::from("update jsongeneric set ");
         if let Some(value) = &parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
-
-            // pub sqlx_types_json_t_as_postgresql_json_b_not_null:
-        // std::option::Option<Field<postgresql_crud::SqlxTypesJson<SomethingOptionsToUpdate>>>
-
-
-            // let f : bool = &value.value.0.0;
-
-
 // #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
 // enum SomethingOptionToUpdate {
 //     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
@@ -685,17 +671,6 @@ DynArcCombinationOfAppStateLogicTraits >,
                 }
             }
             query.push_str(" ");
-
-// #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
-// enum SomethingOptionToUpdate {
-//     StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
-//     StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>)
-// }
-// #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
-// pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>)
-
-
-
         }
         let _ = query.pop();
         match postgresql_crud::BindQuery::try_increment(
@@ -737,58 +712,11 @@ DynArcCombinationOfAppStateLogicTraits >,
         ));
         query
     };
-    //
-    // let query_string = format!(
-    //     "select {} from jsongeneric where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
-    //     {
-    //         let mut value = std::string::String::default();
-    //         for element in &parameters.payload.select {
-    //             value.push_str(&match element {
-    //                 JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key".to_string(),
-    //                 JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull{ filter } => format!(
-    //                     "{} as sqlx_types_json_t_as_postgresql_json_b_not_null",
-    //                     match postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
-    //                         filter,
-    //                         "sqlx_types_json_t_as_postgresql_json_b_not_null",
-    //                         "sqlx_types_json_t_as_postgresql_json_b_not_null",
-    //                         false
-    //                     ) {
-    //                         Ok(value) => value,
-    //                         Err(error_0) => {
-    //                             let error = TryReadOneRouteLogicErrorNamed::SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
-    //                                 something_generate_postgresql_query_part_from_self_vec_error_named: error_0,
-    //                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-    //                                     file!().to_owned(),
-    //                                     line!(),
-    //                                     column!(),
-    //                                     Some(error_occurence_lib::code_occurence::MacroOccurence {
-    //                                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-    //                                         line: 1029,
-    //                                         column: 25,
-    //                                     })
-    //                                 )
-    //                             };
-    //                             eprintln! ("{error}");
-    //                             let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadOneRouteLogicResponseVariants::from(error)));
-    //                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-    //                             return response;
-    //                         }
-    //                     }
-    //                 )
-    //             });
-    //             value.push_str(",");
-    //         }
-    //         let _ = value.pop();
-    //         value
-    //     }
-    // );
-    //
     println!("{}", query_string);
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
             for element in value.value.0.0.0 {
-                println!("{element:#?}");
                 query = postgresql_crud::BindQuery::bind_value_to_query(element, query);
             }
         }
@@ -1730,15 +1658,6 @@ enum SomethingOptionToUpdate {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
 
-
-
-// pub trait BindQuery<'a> {
-//     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed>;
-//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
-//     fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-// }
-
-
 impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(|| Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
@@ -1754,8 +1673,8 @@ impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
             Some(incr) => {
                 *increment = incr;
                 increments.push_str(&match &self {
-                    SomethingOptionToUpdate::StdPrimitiveI8(_) => format!("|| ${increment} "),//format!("|| jsonb_build_object('std_primitive_i8', ${increment})"),
-                    SomethingOptionToUpdate::StdPrimitiveI16(_) => format!("|| ${increment} ")// format!("|| jsonb_build_object('std_primitive_i16', ${increment})"),
+                    SomethingOptionToUpdate::StdPrimitiveI8(_) => format!("|| jsonb_build_object('std_primitive_i8', ${increment})"),
+                    SomethingOptionToUpdate::StdPrimitiveI16(_) => format!("|| jsonb_build_object('std_primitive_i16', ${increment})"),
                 });
             }
             None => {
@@ -1767,42 +1686,17 @@ impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
         Ok(increments)
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        #[derive(Debug, serde::Serialize, serde::Deserialize)]
-        struct One {
-            std_primitive_i8: std::primitive::i8,
-        }
-        #[derive(Debug, serde::Serialize, serde::Deserialize)]
-        struct Two {
-            std_primitive_i16: std::primitive::i16,
-        }
         match self {
             SomethingOptionToUpdate::StdPrimitiveI8(value) => {
-                let f = value.value;
-                println!("1@{f}");
-                query = query.bind(sqlx::types::Json(One {
-                    std_primitive_i8: f,
-                }));
+                query = query.bind(sqlx::types::Json(value.value));
             }
             SomethingOptionToUpdate::StdPrimitiveI16(value) => {
-                let f = value.value;
-                println!("2@{f}");
-                query = query.bind(sqlx::types::Json(Two {
-                    std_primitive_i16: f,
-                }));
+                query = query.bind(sqlx::types::Json(value.value));
             }
         }
         query
     }
 }
-
-// update 
-//   jsongeneric 
-// set 
-//   sqlx_types_json_t_as_postgresql_json_b_not_null = sqlx_types_json_t_as_postgresql_json_b_not_null
-//         || jsonb_build_object('std_primitive_i8', 2)
-//         || jsonb_build_object('std_primitive_i16', 2)
-// where 
-//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
 
 #[test]
 fn test_dd() {
