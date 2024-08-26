@@ -642,6 +642,17 @@ DynArcCombinationOfAppStateLogicTraits >,
 
             // let f : bool = &value.value.0.0;
 
+
+// #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
+// enum SomethingOptionToUpdate {
+//     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+//     StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
+//     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
+//     StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>)
+// }
+// #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
+// pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
+
             query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = sqlx_types_json_t_as_postgresql_json_b_not_null ");
             for element in &value.value.0.0.0 {
                 match postgresql_crud::BindQuery::try_generate_bind_increments(element, &mut increment) {
@@ -1743,8 +1754,8 @@ impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
             Some(incr) => {
                 *increment = incr;
                 increments.push_str(&match &self {
-                    SomethingOptionToUpdate::StdPrimitiveI8(_) => format!("|| jsonb_build_object('std_primitive_i8', ${increment})"),
-                    SomethingOptionToUpdate::StdPrimitiveI16(_) => format!("|| jsonb_build_object('std_primitive_i16', ${increment})"),
+                    SomethingOptionToUpdate::StdPrimitiveI8(_) => format!("|| ${increment} "),//format!("|| jsonb_build_object('std_primitive_i8', ${increment})"),
+                    SomethingOptionToUpdate::StdPrimitiveI16(_) => format!("|| ${increment} ")// format!("|| jsonb_build_object('std_primitive_i16', ${increment})"),
                 });
             }
             None => {
@@ -1756,12 +1767,28 @@ impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
         Ok(increments)
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        #[derive(Debug, serde::Serialize, serde::Deserialize)]
+        struct One {
+            std_primitive_i8: std::primitive::i8,
+        }
+        #[derive(Debug, serde::Serialize, serde::Deserialize)]
+        struct Two {
+            std_primitive_i16: std::primitive::i16,
+        }
         match self {
             SomethingOptionToUpdate::StdPrimitiveI8(value) => {
-                query = query.bind(value.value);
+                let f = value.value;
+                println!("1@{f}");
+                query = query.bind(sqlx::types::Json(One {
+                    std_primitive_i8: f,
+                }));
             }
             SomethingOptionToUpdate::StdPrimitiveI16(value) => {
-                query = query.bind(value.value);
+                let f = value.value;
+                println!("2@{f}");
+                query = query.bind(sqlx::types::Json(Two {
+                    std_primitive_i16: f,
+                }));
             }
         }
         query

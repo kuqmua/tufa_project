@@ -1538,15 +1538,22 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #     "value": 44
     # },
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
-        "value": [
+        "value": 
+        # {
+        #     "std_primitive_i8": 11,
+        #     "std_primitive_i16": 40
+        # }
+
+        
+            [
             {
                 "std_primitive_i8": {
-                    "value": 12
+                    "value": 33
                 }
             },
             {
                 "std_primitive_i16": {
-                    "value": 78
+                    "value": 79
                 }
             }
         ]
