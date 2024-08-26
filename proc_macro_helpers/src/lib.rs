@@ -10,6 +10,7 @@ pub mod wrap_derive;
 pub mod write_token_stream_into_file;
 pub mod generate_impl_std_convert_from_token_stream;
 pub mod generate_impl_std_convert_try_from_token_stream;
+pub mod generate_serde_skip_serializing_if_value_attribute_token_stream;
 
 // impl OperationHttpMethod {
 //     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
