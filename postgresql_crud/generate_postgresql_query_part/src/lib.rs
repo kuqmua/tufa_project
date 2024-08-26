@@ -3084,6 +3084,67 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    //
+    // let ident_option_to_update_token_stream = {
+    //     quote::quote!{
+    //         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
+    //         enum SomethingOptionToUpdate {
+    //             #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+    //             StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
+    //             #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
+    //             StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>)
+    //         }
+    //     }
+    // };
+    // let ident_options_to_update_token_stream = {
+    //     quote::quote!{
+    //         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
+    //         pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
+    //     }
+    // };
+    // let impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate_token_stream = {
+    //     quote::quote!{
+    //         impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
+    //             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+    //                 increment.checked_add(1).map_or_else(|| Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+    //                     code_occurence: error_occurence_lib::code_occurence!(),
+    //                 }), |incr| {
+    //                     *increment = incr;
+    //                     Ok(())
+    //                 })
+    //             }
+    //             fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+    //                 let mut increments = std::string::String::default();
+    //                 match increment.checked_add(1) {
+    //                     Some(incr) => {
+    //                         *increment = incr;
+    //                         increments.push_str(&match &self {
+    //                             SomethingOptionToUpdate::StdPrimitiveI8(_) => format!("|| jsonb_build_object('std_primitive_i8', ${increment})"),
+    //                             SomethingOptionToUpdate::StdPrimitiveI16(_) => format!("|| jsonb_build_object('std_primitive_i16', ${increment})"),
+    //                         });
+    //                     }
+    //                     None => {
+    //                         return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+    //                             code_occurence: error_occurence_lib::code_occurence!(),
+    //                         });
+    //                     }
+    //                 }
+    //                 Ok(increments)
+    //             }
+    //             fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    //                 match self {
+    //                     SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+    //                         query = query.bind(sqlx::types::Json(value.value));
+    //                     }
+    //                     SomethingOptionToUpdate::StdPrimitiveI16(value) => {
+    //                         query = query.bind(sqlx::types::Json(value.value));
+    //                     }
+    //                 }
+    //                 query
+    //             }
+    //         }
+    //     }
+    // };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
