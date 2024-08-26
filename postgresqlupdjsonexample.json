@@ -1,38 +1,80 @@
 {
-    "boolean": true,
-    "number": 42,
+    "boolean": false,
+    "number": 0,
     "string": "",
 
-    "maybenullboolean": null,
-    "maybenullnumber": null,
-    "maybenullstring": null,
+    "maybenullboolean1": false,
+    "maybenullboolean2": null,
+    "maybenullnumber1": 0,
+    "maybenullnumber2": null,
+    "maybenullstring1": "",
+    "maybenullstring2": null,
 
-    "arrayboolean": [true],
+    "arrayboolean": [false],
     "arraynumber": [0],
     "arraystring": [""],
 
-    "maybenullarrayboolean": null,
-    "maybenullarraynumber": null,
-    "maybenullarraystring": null,
+    "maybenullarrayboolean1": [false],
+    "maybenullarrayboolean2": null,
+    "maybenullarraynumber1": [0],
+    "maybenullarraynumber2": null,
+    "maybenullarraystring1": [""],
+    "maybenullarraystring2": null,
 
-    "arraymaybenullboolean": [null],
-    "arraymaybenullnumber": [null],
-    "arraymaybenullstring": [null],
+    "arraymaybenullboolean": [false, null],
+    "arraymaybenullnumber": [0, null],
+    "arraymaybenullstring": ["", null],
 
-    "maybenullarraymaybenullboolean": null,
-    "maybenullarraymaybenullnumber": null,
-    "maybenullarraymaybenullstring": null,
+    "maybenullarraymaybenullboolean1": [true],
+    "maybenullarraymaybenullboolean2": [true, null],
+    "maybenullarraymaybenullboolean3": null,
+    "maybenullarraymaybenullnumber1": [0],
+    "maybenullarraymaybenullnumber2": [0, null],
+    "maybenullarraymaybenullnumber3": null,
+    "maybenullarraymaybenullstring1": [""],
+    "maybenullarraymaybenullstring2": ["", null],
+    "maybenullarraymaybenullstring3": null,
 
     "object": {
-        "boolean": true
+        "boolean": false
     },
-    "maybenullobject": null,
+    
+    "maybenullobject1": {
+        "boolean": false
+    },
+    "maybenullobject2": null,
+
     "arrayobject": [
         {
-            "boolean": true
+            "boolean": false
         }
     ],
-    "maybenullarrayobject": null,
-    "arraymaybenullobject": [null],
-    "maybenullarraymaybenullobject": null
+    
+    "maybenullarrayobject1": [
+        {
+            "boolean": false
+        }
+    ],
+    "maybenullarrayobject2": null,
+
+
+    "arraymaybenullobject": [
+        {
+            "boolean": false
+        },
+        null
+    ],
+
+    "maybenullarraymaybenullobject1": [
+        {
+            "boolean": false
+        }
+    ],
+    "maybenullarraymaybenullobject2": [
+        {
+            "boolean": false
+        },
+        null
+    ],
+    "maybenullarraymaybenullobject3": null
 }
