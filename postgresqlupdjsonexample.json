@@ -1,0 +1,38 @@
+{
+    "boolean": true,
+    "number": 42,
+    "string": "",
+
+    "maybenullboolean": null,
+    "maybenullnumber": null,
+    "maybenullstring": null,
+
+    "arrayboolean": [true],
+    "arraynumber": [0],
+    "arraystring": [""],
+
+    "maybenullarrayboolean": null,
+    "maybenullarraynumber": null,
+    "maybenullarraystring": null,
+
+    "arraymaybenullboolean": [null],
+    "arraymaybenullnumber": [null],
+    "arraymaybenullstring": [null],
+
+    "maybenullarraymaybenullboolean": null,
+    "maybenullarraymaybenullnumber": null,
+    "maybenullarraymaybenullstring": null,
+
+    "object": {
+        "boolean": true
+    },
+    "maybenullobject": null,
+    "arrayobject": [
+        {
+            "boolean": true
+        }
+    ],
+    "maybenullarrayobject": null,
+    "arraymaybenullobject": [null],
+    "maybenullarraymaybenullobject": null
+}
