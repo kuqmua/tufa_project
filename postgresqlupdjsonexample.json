@@ -1,3 +1,39 @@
+* update key boolean
+* update key number
+* update key string
+
+* update key boolean or null
+* update key number or null
+* update key string or null
+
+* update key boolean array: fully rewrite array
+* update key boolean array: add one element in array start
+* update key boolean array: add one element in array end
+* update key boolean array: add many elements in array start
+* update key boolean array: add many elements in array end
+* update key boolean array: add one element in array from random position
+* update key boolean array: add many elements in array from random position
+* update key boolean array: add many elements in array with random positions
+
+* update key boolean array: remove one element in array start
+* update key boolean array: remove one element in array end
+* update key boolean array: remove many elements in array start
+* update key boolean array: remove many elements in array end
+* update key boolean array: remove one element in array from random position
+* update key boolean array: remove many elements in array from random position
+* update key boolean array: remove many elements in array with random positions
+
+* update key boolean array: replace one element in array by index
+* update key boolean array: replace one element in array where condition
+
+* update key boolean array: replace many elements in array in diapazon
+* update key boolean array: replace many elements in array where
+
+
+
+
+
+
 {
     "boolean": false,
     "number": 0,
