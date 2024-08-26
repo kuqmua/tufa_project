@@ -185,6 +185,7 @@ pub struct JsonStdVecVecStdOptionOptionGeneric<T>(pub std::vec::Vec<std::option:
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionGenericFullTypePath)]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
 /////////////////////
+//todo rename it coz it applied to read_one and read_many
 pub trait GeneratePostgresqlQueryPart<T1, T2> {
     fn generate_postgresql_query_part_from_self_vec(
         value: &std::vec::Vec<Self>,
