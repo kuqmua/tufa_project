@@ -1651,9 +1651,9 @@ for Something
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
 enum SomethingOptionToUpdate {
     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
+    StdPrimitiveI8(postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI8>),
     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-    StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>)
+    StdPrimitiveI16(postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI16>)
 }
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
@@ -1688,10 +1688,10 @@ impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
             SomethingOptionToUpdate::StdPrimitiveI8(value) => {
-                query = query.bind(sqlx::types::Json(value.value));
+                query = query.bind(sqlx::types::Json(value.value.0));
             }
             SomethingOptionToUpdate::StdPrimitiveI16(value) => {
-                query = query.bind(sqlx::types::Json(value.value));
+                query = query.bind(sqlx::types::Json(value.value.0));
             }
         }
         query
@@ -1701,8 +1701,8 @@ impl postgresql_crud::BindQuery<'_> for SomethingOptionToUpdate {
 #[test]
 fn test_dd() {
     let d = SomethingOptionsToUpdate(vec![
-        SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value{ value: 4 }),
-        SomethingOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{ value: 5 })
+        SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value{ value: postgresql_crud::JsonStdPrimitiveI8(4) }),
+        SomethingOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{ value: postgresql_crud::JsonStdPrimitiveI16(5) })
     ]);
     println!("{d:#?}");
     let serialized = serde_json::to_string(&d).unwrap();
