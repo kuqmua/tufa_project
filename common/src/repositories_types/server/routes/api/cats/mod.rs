@@ -627,6 +627,7 @@ DynArcCombinationOfAppStateLogicTraits >,
         let mut query = std::string::String::from("update jsongeneric set ");
         if let Some(value) = &parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
             //todo add check on duplicate and empty array
+            query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = sqlx_types_json_t_as_postgresql_json_b_not_null ");
             match postgresql_crud::BindQuery::try_generate_bind_increments(&value.value.0.0, &mut increment) {
                 Ok(value) => {
                     query.push_str(&value);

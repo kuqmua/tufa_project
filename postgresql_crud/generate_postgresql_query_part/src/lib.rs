@@ -3274,7 +3274,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     Ok(())
                 }
                 fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-                    let mut increments = std::string::String::from("sqlx_types_json_t_as_postgresql_json_b_not_null = sqlx_types_json_t_as_postgresql_json_b_not_null ");
+                    let mut increments = std::string::String::default();
                     for element in &self.0 {
                         match increment.checked_add(1) {
                             Some(value) => {
@@ -3303,6 +3303,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    // println!("{impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream}");
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
