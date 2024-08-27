@@ -477,22 +477,22 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
     # "std_primitive_i32_as_postgresql_int": 83,
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "std_primitive_i8": 0,
-        "std_primitive_i16": 0,
-        "std_primitive_i32": 0,
-        "std_primitive_i64": 0,
-        "std_primitive_i128": 0,
-        "std_primitive_u8": 0,
-        "std_primitive_u16": 0, 
-        "std_primitive_u32": 0,
-        "std_primitive_u64": 0,
-        "std_primitive_u128": 0,
-        "std_primitive_f32": 0.9,
-        "std_primitive_f64": 0.9,
-        "std_primitive_bool": true,
-        "std_string_string": ""
-        # ,
+        # "std_primitive_i16": 0,
+        # "std_primitive_i32": 0,
+        # "std_primitive_i64": 0,
+        # "std_primitive_i128": 0,
+        # "std_primitive_u8": 0,
+        # "std_primitive_u16": 0, 
+        # "std_primitive_u32": 0,
+        # "std_primitive_u64": 0,
+        # "std_primitive_u128": 0,
+        # "std_primitive_f32": 0.9,
+        # "std_primitive_f64": 0.9,
+        # "std_primitive_bool": true,
+        # "std_string_string": "",
 
-        # "std_option_option_std_primitive_i8": 0,
+        "std_option_option_std_primitive_i8": 0
+        # ,
         # "std_option_option_std_primitive_i16": 0,  
         # "std_option_option_std_primitive_i32": 0,
         # "std_option_option_std_primitive_i64": 0,
@@ -1075,22 +1075,23 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                 "filter": [
 
                     "std_primitive_i8",
-                    "std_primitive_i16",
-                    "std_primitive_i32",
-                    "std_primitive_i64",
-                    "std_primitive_i128",
-                    "std_primitive_u8",
-                    "std_primitive_u16", 
-                    "std_primitive_u32",
-                    "std_primitive_u64",
-                    "std_primitive_u128",
-                    "std_primitive_f32",
-                    "std_primitive_f64",
-                    "std_primitive_bool",
-                    "std_string_string"
+                    # "std_primitive_i16",
+                    # "std_primitive_i32",
+                    # "std_primitive_i64",
+                    # "std_primitive_i128",
+                    # "std_primitive_u8",
+                    # "std_primitive_u16", 
+                    # "std_primitive_u32",
+                    # "std_primitive_u64",
+                    # "std_primitive_u128",
+                    # "std_primitive_f32",
+                    # "std_primitive_f64",
+                    # "std_primitive_bool",
+                    # "std_string_string"
                     # ,
 
-                    # "std_option_option_std_primitive_i8",
+                    "std_option_option_std_primitive_i8"
+                    # ,
                     # "std_option_option_std_primitive_i16",  
                     # "std_option_option_std_primitive_i32",
                     # "std_option_option_std_primitive_i64",
@@ -1544,71 +1545,77 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     "value": 10
                 }
             },
+            # {
+            #     "std_primitive_i16": {
+            #         "value": 27
+            #     }
+            # },
+            # {
+            #     "std_primitive_i32": {
+            #         "value": 100
+            #     }
+            # },
+            # {
+            #     "std_primitive_i64": {
+            #         "value": 1
+            #     }
+            # },
+            # {
+            #     "std_primitive_i128": {
+            #         "value": 4
+            #     }
+            # },
+            # {
+            #     "std_primitive_u8": {
+            #         "value": 1
+            #     }
+            # },
+            # {
+            #     "std_primitive_u16": {
+            #         "value": 1
+            #     }
+            # },
+            # {
+            #     "std_primitive_u32": {
+            #         "value": 1
+            #     }
+            # },
+            # {
+            #     "std_primitive_u64": {
+            #         "value": 1
+            #     }
+            # },
+            # {
+            #     "std_primitive_u128": {
+            #         "value": 1
+            #     }
+            # },
+            # {
+            #     "std_primitive_f32": {
+            #         "value": 1.0
+            #     }
+            # },
+            # {
+            #     "std_primitive_f64": {
+            #         "value": 1.0
+            #     }
+            # },
+            # {
+            #     "std_primitive_bool": {
+            #         "value": true
+            #     }
+            # },
+            # {
+            #     "std_string_string": {
+            #         "value": "meow"
+            #     }
+            # },
             {
-                "std_primitive_i16": {
-                    "value": 27
-                }
-            },
-            {
-                "std_primitive_i32": {
-                    "value": 100
-                }
-            },
-            {
-                "std_primitive_i64": {
-                    "value": 1
-                }
-            },
-            {
-                "std_primitive_i128": {
-                    "value": 4
-                }
-            },
-            {
-                "std_primitive_u8": {
-                    "value": 1
-                }
-            },
-            {
-                "std_primitive_u16": {
-                    "value": 1
-                }
-            },
-            {
-                "std_primitive_u32": {
-                    "value": 1
-                }
-            },
-            {
-                "std_primitive_u64": {
-                    "value": 1
-                }
-            },
-            {
-                "std_primitive_u128": {
-                    "value": 1
-                }
-            },
-            {
-                "std_primitive_f32": {
-                    "value": 1.0
-                }
-            },
-            {
-                "std_primitive_f64": {
-                    "value": 1.0
-                }
-            },
-            {
-                "std_primitive_bool": {
-                    "value": true
-                }
-            },
-            {
-                "std_string_string": {
-                    "value": "meow"
+                "std_option_option_std_primitive_i8": {
+                    "value": null
                 }
             }
+            # ,
         ]
     }
 }
