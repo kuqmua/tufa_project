@@ -1276,16 +1276,6 @@ fn test_dd() {
 }
 
 ////////////////////////////////////////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum SomethingOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
-    #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    Generic(postgresql_crud::Value<DoggieOptionsToUpdate>),
-}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
-
 #[derive(
     Debug,
     Clone,
@@ -1428,15 +1418,6 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
     }
 }
 ///////////////////////////////////////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum DoggieOptionToUpdate {
-    #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
-    StdStringString(postgresql_crud::Value<std::string::String>),
-}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DoggieOptionsToUpdate(std::vec::Vec<DoggieOptionToUpdate>);
-
-
 #[derive(
     Debug,
     Clone,
