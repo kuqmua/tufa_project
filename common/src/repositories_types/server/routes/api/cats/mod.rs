@@ -1276,14 +1276,6 @@ fn test_dd() {
 }
 
 ////////////////////////////////////////////////////////////////
-impl error_occurence_lib::ToStdStringString for SomethingKey {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::StdPrimitiveI8 => "std_primitive_i8".to_owned(),
-            Self::Generic => "generic".to_owned(),
-        } 
-    }
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     FieldsIsEmpty {
@@ -1403,13 +1395,6 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
     }
 }
 ///////////////////////////////////////////////////////////////
-impl error_occurence_lib::ToStdStringString for DoggieKey {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::StdStringString => "std_string_string".to_owned(),
-        } 
-    }
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     FieldsIsEmpty {
