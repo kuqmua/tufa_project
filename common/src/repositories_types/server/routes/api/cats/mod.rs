@@ -1276,20 +1276,6 @@ fn test_dd() {
 }
 
 ////////////////////////////////////////////////////////////////
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingKey,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionsToUpdate {
     fn try_generate_bind_increments(
         &self,
@@ -1370,7 +1356,14 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                         Ok(value) => {
                             acc = value;
                         }
-                        Err(error) => todo!()
+                        Err(error) => {
+                            return Err(
+                                SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Doggie {
+                                    doggie: error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                },
+                            );
+                        }
                     }
                 }
             }
@@ -1395,20 +1388,6 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
     }
 }
 ///////////////////////////////////////////////////////////////
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieKey,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for DoggieOptionsToUpdate {
     fn try_generate_bind_increments(
         &self,
