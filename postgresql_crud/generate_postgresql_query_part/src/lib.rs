@@ -651,6 +651,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let ident_key_upper_camel_case_token_stream = {
+        let value = format!("{ident}{}", naming_conventions::KeyUpperCamelCase);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = {
         let value = format!("{ident}GeneratePostgresqlQueryPartErrorNamed");
         value.parse::<proc_macro2::TokenStream>()
@@ -3308,6 +3313,39 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //     }
     // };
     // println!("{impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream}");
+    let pub_enum_ident_key_token_stream = {
+        let variants_token_stream = vec_syn_field.iter().map(|element|{
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            let element_ident_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &element_ident.to_string(),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            let element_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
+            quote::quote!{
+                #[serde(rename(serialize = #element_ident_double_quotes_token_stream, deserialize = #element_ident_double_quotes_token_stream))]
+                #element_ident_upper_camel_case_token_stream
+            }
+        });
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+                utoipa::ToSchema,
+                schemars::JsonSchema,
+            )]
+            pub enum #ident_key_upper_camel_case_token_stream {
+                #(#variants_token_stream),*
+            }
+        }
+    };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
@@ -3321,6 +3359,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_wrapper_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
+        #pub_enum_ident_key_token_stream
         #pub_enum_ident_option_to_update_token_stream
         #pub_struct_ident_options_to_update_token_stream
         // #impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream

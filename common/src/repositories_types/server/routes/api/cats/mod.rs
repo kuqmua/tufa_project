@@ -1276,21 +1276,6 @@ fn test_dd() {
 }
 
 ////////////////////////////////////////////////////////////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum SomethingKey {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8,
-    #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    Generic,
-}
 impl error_occurence_lib::ToStdStringString for SomethingKey {
     fn to_std_string_string(&self) -> std::string::String {
         match &self {
@@ -1418,19 +1403,6 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
     }
 }
 ///////////////////////////////////////////////////////////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum DoggieKey {
-    #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
-    StdStringString,
-}
 impl error_occurence_lib::ToStdStringString for DoggieKey {
     fn to_std_string_string(&self) -> std::string::String {
         match &self {
