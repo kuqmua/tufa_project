@@ -701,7 +701,7 @@ DynArcCombinationOfAppStateLogicTraits >,
             //         ],
             //     ),
             // )
-            println!("!!!!{:#?}", value.value.0.0);
+            println!("!!!!{:#?}", value.value.0.0.0);
 
             // {
             //     "generic": {
@@ -709,10 +709,36 @@ DynArcCombinationOfAppStateLogicTraits >,
             //     },
             //     "std_primitive_i8": 0
             // }
-            increment = increment.checked_add(1).unwrap();
-            increment = increment.checked_add(1).unwrap();
-            query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(jsonb_set(sqlx_types_json_t_as_postgresql_json_b_not_null, '{generic,std_string_string}', $1), '{std_primitive_i8}', $2) ");
+            
+            // increment = increment.checked_add(1).unwrap();
+            // query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(jsonb_set(sqlx_types_json_t_as_postgresql_json_b_not_null, '{generic,std_string_string}', $1), '{std_primitive_i8}', $2) ");
 
+            query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = ");
+            let mut jsonb_set_acc = std::string::String::from("sqlx_types_json_t_as_postgresql_json_b_not_null");
+            for element in &value.value.0.0.0 {
+                match &element {
+                    SomethingOptionToUpdate::StdPrimitiveI8(_) => {
+                        increment = increment.checked_add(1).unwrap();
+                        jsonb_set_acc = format!("jsonb_set({jsonb_set_acc}, '{{std_primitive_i8}}', ${increment})");
+                    }
+                    SomethingOptionToUpdate::Generic(value) => {
+                        // increment = increment.checked_add(1).unwrap();
+                        for element in &value.value.0 {
+                            increment = increment.checked_add(1).unwrap();
+                            match &element {
+                                DoggieOptionToUpdate::StdStringString(_) => {
+                                    jsonb_set_acc = format!("jsonb_set({jsonb_set_acc}, '{{generic,std_string_string}}', ${increment})");
+                                }
+                            }
+                        }
+                    }
+                }
+                // jsonb_set_acc = format!("jsonb_set({jsonb_set_acc}, )");
+            }
+            query.push_str(&jsonb_set_acc);
+
+
+            query.push_str(" ");
 
             //todo add check on duplicate and empty array
             
@@ -790,7 +816,26 @@ DynArcCombinationOfAppStateLogicTraits >,
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
-            query = postgresql_crud::BindQuery::bind_value_to_query(value.value.0.0, query);
+            for element in value.value.0.0.0 {
+                match element {
+                    SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+                        query = query.bind(sqlx::types::Json(value.value));//sqlx::types::Json
+                    }
+                    SomethingOptionToUpdate::Generic(value) => {
+                        for element in value.value.0 {
+                            match element {
+                                DoggieOptionToUpdate::StdStringString(value) => {
+                                    query = query.bind(sqlx::types::Json(value.value));
+                                }
+                            }
+                        }
+                    }
+                }
+                // jsonb_set_acc = format!("jsonb_set({jsonb_set_acc}, )");
+            }
+            
+            // query = query.bind(sqlx::types::Json(value.value));
+            // query = postgresql_crud::BindQuery::bind_value_to_query(value.value.0.0, query);
             // query = postgresql_crud::BindQuery::bind_value_to_query(sqlx::types::Json(postgresql_crud::JsonStdStringString(std::string::String::new("cat"))), query);
             // query = postgresql_crud::BindQuery::bind_value_to_query(sqlx::types::Json(postgresql_crud::JsonStdPrimitiveI8(42)), query);
         }
