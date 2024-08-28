@@ -1541,9 +1541,10 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         "value": [
             {
                 "std_primitive_i8": {
-                    "value": 16
+                    "value": 19
                 }
-            },
+            }
+            ,
             # {
             #     "std_primitive_i16": {
             #         "value": 27
@@ -1978,7 +1979,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     "value": [
                         {
                             "std_string_string": {
-                                "value": "wwwwwwwwwwwww"
+                                "value": "xxxx"
                             }
                         }
                     ]

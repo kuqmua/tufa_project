@@ -719,7 +719,7 @@ DynArcCombinationOfAppStateLogicTraits >,
                 match &element {
                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
                         increment = increment.checked_add(1).unwrap();
-                        jsonb_set_acc = format!("jsonb_set({jsonb_set_acc}, '{{std_primitive_i8}}', ${increment})");
+                        jsonb_set_acc = format!("jsonb_set({jsonb_set_acc},'{{std_primitive_i8}}',${increment})");
                     }
                     SomethingOptionToUpdate::Generic(value) => {
                         // increment = increment.checked_add(1).unwrap();
@@ -727,7 +727,7 @@ DynArcCombinationOfAppStateLogicTraits >,
                             increment = increment.checked_add(1).unwrap();
                             match &element {
                                 DoggieOptionToUpdate::StdStringString(_) => {
-                                    jsonb_set_acc = format!("jsonb_set({jsonb_set_acc}, '{{generic,std_string_string}}', ${increment})");
+                                    jsonb_set_acc = format!("jsonb_set({jsonb_set_acc},'{{generic,std_string_string}}',${increment})");
                                 }
                             }
                         }
