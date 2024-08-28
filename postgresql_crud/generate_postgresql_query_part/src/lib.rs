@@ -3304,6 +3304,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     // println!("{impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream}");
+    let f = quote::quote!{
+        #pub_enum_ident_option_to_update_token_stream
+        #pub_struct_ident_options_to_update_token_stream
+        #impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream
+    };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
@@ -3317,9 +3322,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_wrapper_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
-        #pub_enum_ident_option_to_update_token_stream
-        #pub_struct_ident_options_to_update_token_stream
-        #impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream
+        // #pub_enum_ident_option_to_update_token_stream
+        // #pub_struct_ident_options_to_update_token_stream
+        // #impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
