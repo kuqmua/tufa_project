@@ -701,7 +701,6 @@ DynArcCombinationOfAppStateLogicTraits >,
             //         ],
             //     ),
             // )
-            println!("!!!!{:#?}", value.value.0.0.0);
 
             // {
             //     "generic": {
@@ -710,63 +709,46 @@ DynArcCombinationOfAppStateLogicTraits >,
             //     "std_primitive_i8": 0
             // }
             
-            // increment = increment.checked_add(1).unwrap();
-            // query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(jsonb_set(sqlx_types_json_t_as_postgresql_json_b_not_null, '{generic,std_string_string}', $1), '{std_primitive_i8}', $2) ");
 
             query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = ");
-            let mut jsonb_set_acc = std::string::String::from("sqlx_types_json_t_as_postgresql_json_b_not_null");
-            for element in &value.value.0.0.0 {
-                match &element {
-                    SomethingOptionToUpdate::StdPrimitiveI8(_) => {
-                        increment = increment.checked_add(1).unwrap();
-                        jsonb_set_acc = format!("jsonb_set({jsonb_set_acc},'{{std_primitive_i8}}',${increment})");
-                    }
-                    SomethingOptionToUpdate::Generic(value) => {
-                        for element in &value.value.0 {
-                            increment = increment.checked_add(1).unwrap();
-                            match &element {
-                                DoggieOptionToUpdate::StdStringString(_) => {
-                                    jsonb_set_acc = format!("jsonb_set({jsonb_set_acc},'{{generic,std_string_string}}',${increment})");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            query.push_str(&jsonb_set_acc);
-            query.push_str(" ");
-
-            //todo add check on duplicate and empty array
-            
-            // query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = sqlx_types_json_t_as_postgresql_json_b_not_null ");
-            // match postgresql_crud::BindQuery::try_generate_bind_increments(&value.value.0.0, &mut increment) {
-            //     Ok(value) => {
-            //         query.push_str(&value);
-            //     }
-            //     Err(error_0) => {
-            //         let error = TryUpdateOneRouteLogicErrorNamed::BindQuery {
-            //             bind_query: error_0,
-            //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-            //                 file!().to_owned(),
-            //                 line!(),
-            //                 column!(),
-            //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
-            //                     file: std::string::String::from(
-            //                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-            //                     ),
-            //                     line: 4822,
-            //                     column: 25,
-            //                 }),
-            //             ),
-            //         };
-            //         eprintln!("{error}");
-            //         let mut response = axum::response::IntoResponse::into_response(axum::Json(
-            //             TryUpdateOneRouteLogicResponseVariants::from(error),
-            //         ));
-            //         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-            //         return response;
+            // let mut jsonb_set_acc = std::string::String::from("sqlx_types_json_t_as_postgresql_json_b_not_null");
+            // for element in &value.value.0.0.0 {
+            //     match &element {
+            //         SomethingOptionToUpdate::StdPrimitiveI8(_) => {
+            //             increment = increment.checked_add(1).unwrap();
+            //             jsonb_set_acc = format!("jsonb_set({jsonb_set_acc},'{{std_primitive_i8}}',${increment})");
+            //         }
+            //         SomethingOptionToUpdate::Generic(value) => {
+            //             for element in &value.value.0 {
+            //                 increment = increment.checked_add(1).unwrap();
+            //                 match &element {
+            //                     DoggieOptionToUpdate::StdStringString(_) => {
+            //                         jsonb_set_acc = format!("jsonb_set({jsonb_set_acc},'{{generic,std_string_string}}',${increment})");
+            //                     }
+            //                 }
+            //             }
+            //         }
             //     }
             // }
+            // query.push_str(&jsonb_set_acc);
+            // query.push_str(" ");
+
+
+            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                &value.value.0.0,
+                "sqlx_types_json_t_as_postgresql_json_b_not_null",
+                None,
+                &mut increment
+            ) {
+                Ok(value) => {
+                    // let f: bool =  value;
+                    query.push_str(&value);
+                },
+                Err(error) => {
+                    todo!()
+                }
+            }
+            query.push_str(" ");
         }
         let _ = query.pop();
         match postgresql_crud::BindQuery::try_increment(
@@ -812,23 +794,23 @@ DynArcCombinationOfAppStateLogicTraits >,
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
-            for element in value.value.0.0.0 {
-                match element {
-                    SomethingOptionToUpdate::StdPrimitiveI8(value) => {
-                        query = query.bind(sqlx::types::Json(value.value));//sqlx::types::Json
-                    }
-                    SomethingOptionToUpdate::Generic(value) => {
-                        for element in value.value.0 {
-                            match element {
-                                DoggieOptionToUpdate::StdStringString(value) => {
-                                    query = query.bind(sqlx::types::Json(value.value));
-                                }
-                            }
-                        }
-                    }
-                }
-                // jsonb_set_acc = format!("jsonb_set({jsonb_set_acc}, )");
-            }
+            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.0.0, query);
+            // for element in value.value.0.0.0 {
+            //     match element {
+            //         SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+            //             query = query.bind(sqlx::types::Json(value.value));//sqlx::types::Json
+            //         }
+            //         SomethingOptionToUpdate::Generic(value) => {
+            //             for element in value.value.0 {
+            //                 match element {
+            //                     DoggieOptionToUpdate::StdStringString(value) => {
+            //                         query = query.bind(sqlx::types::Json(value.value));
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
             
             // query = query.bind(sqlx::types::Json(value.value));
             // query = postgresql_crud::BindQuery::bind_value_to_query(value.value.0.0, query);
@@ -1381,6 +1363,114 @@ pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
 //         query
 //     }
 // }
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
+    CheckedAdd {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionsToUpdate {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_acc: &std::primitive::str,
+        option_path: std::option::Option<&std::primitive::str>,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+        //todo check if epmty and unique keys, not full unique through partialEq and Eq
+        let mut acc = std::string::String::from(jsonb_set_acc);
+        let previous_path = match &option_path {
+            Some(value) => format!("{value},"),
+            None => std::string::String::default()
+        };
+        for element in &self.0 {
+            match &element {
+                // SomethingOptionToUpdate::StdStringString(_) => {
+                //     match increment.checked_add(1) {
+                //         Some(value) => {
+                //             *increment = value;
+                //             acc = format!("jsonb_set({acc},'{{{path},std_string_string}}',${increment})");
+                //         }
+                //         None => {
+                //             return Err(
+                //                 SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                //                     code_occurence: error_occurence_lib::code_occurence!(),
+                //                 },
+                //             );
+                //         }
+                //     }
+                // }
+                SomethingOptionToUpdate::StdPrimitiveI8(_) => {
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            // let pervious_path = match &path
+                            acc = format!("jsonb_set({acc},'{{{previous_path}std_primitive_i8}}',${increment})");
+                        }
+                        None => {
+                            return Err(
+                                SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                },
+                            );
+                        }
+                    }
+                }
+                SomethingOptionToUpdate::Generic(value) => {
+                    match value.value.try_generate_bind_increments(
+                        &acc,
+                        Some("generic"),
+                        increment,
+                    ) {
+                        Ok(value) => {
+                            acc = value;
+                        }
+                        Err(error) => todo!()
+                    }
+                    // for element in &value.value.0 {
+                    //     increment = increment.checked_add(1).unwrap();
+                    //     match &element {
+                    //         DoggieOptionToUpdate::StdStringString(_) => {
+                    //             jsonb_set_acc = format!("jsonb_set({jsonb_set_acc},'{{generic,std_string_string}}',${increment})");
+                    //         }
+                    //     }
+                    // }
+                }
+            }
+        }
+        Ok(acc)
+    }
+    fn bind_value_to_query<'a>(
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        // for element in self.0 {
+        //     match element {
+        //         // DoggieOptionToUpdate::StdStringString(value) => {
+        //         //     query = query.bind(sqlx::types::Json(value.value));
+        //         // }
+        //     }
+        // }
+        // query
+        for element in self.0 {
+            match element {
+                SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+                    query = query.bind(sqlx::types::Json(value.value));//sqlx::types::Json
+                }
+                SomethingOptionToUpdate::Generic(value) => {
+                    query = value.value.bind_value_to_query(query);
+                    // for element in value.value.0 {
+                    //     match element {
+                    //         DoggieOptionToUpdate::StdStringString(value) => {
+                    //             query = query.bind(sqlx::types::Json(value.value));
+                    //         }
+                    //     }
+                    // }
+                }
+            }
+        }
+        query
+    }
+}
 ///////////////////////////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 enum DoggieOptionToUpdate {
@@ -1453,31 +1543,35 @@ pub struct DoggieOptionsToUpdate(std::vec::Vec<DoggieOptionToUpdate>);
 
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed {
+pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-
-impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed> for DoggieOptionsToUpdate {
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for DoggieOptionsToUpdate {
     fn try_generate_bind_increments(
         &self,
         jsonb_set_acc: &std::primitive::str,
-        path: &std::primitive::str,
+        option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed> {
+    ) -> Result<std::string::String, DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+        //todo check if epmty and unique keys, not full unique through partialEq and Eq
         let mut acc = std::string::String::from(jsonb_set_acc);
+        let previous_path = match &option_path {
+            Some(value) => format!("{value},"),
+            None => std::string::String::default()
+        };
         for element in &self.0 {
             match &element {
                 DoggieOptionToUpdate::StdStringString(_) => {
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
-                            acc = format!("jsonb_set({acc},'{{{path},std_string_string}}',${increment})");
+                            acc = format!("jsonb_set({acc},'{{{previous_path}std_string_string}}',${increment})");
                         }
                         None => {
                             return Err(
-                                GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 },
                             );

@@ -208,7 +208,7 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
     fn try_generate_bind_increments(
         &self,
         jsonb_set_acc: &std::primitive::str,
-        path: &std::primitive::str,
+        option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, T1>;
     fn bind_value_to_query<'a>(
