@@ -203,3 +203,16 @@ pub trait GeneratePostgresqlQueryPart<T1, T2> {
 pub trait StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement: Sized {
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self;
 }
+
+pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_acc: &std::primitive::str,
+        path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, T1>;
+    fn bind_value_to_query<'a>(
+        self,
+        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+}

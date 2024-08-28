@@ -1453,19 +1453,19 @@ pub struct DoggieOptionsToUpdate(std::vec::Vec<DoggieOptionToUpdate>);
 
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryGenerateBindIncrementsErrorNamedd {
+pub enum GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 
-impl DoggieOptionsToUpdate {
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed> for DoggieOptionsToUpdate {
     fn try_generate_bind_increments(
         &self,
         jsonb_set_acc: &std::primitive::str,
         path: &std::primitive::str,
         increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamedd> {
+    ) -> Result<std::string::String, GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::from(jsonb_set_acc);
         for element in &self.0 {
             match &element {
@@ -1477,7 +1477,7 @@ impl DoggieOptionsToUpdate {
                         }
                         None => {
                             return Err(
-                                TryGenerateBindIncrementsErrorNamedd::CheckedAdd {
+                                GeneratePostgresqlQueryPartToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 },
                             );
@@ -1488,10 +1488,10 @@ impl DoggieOptionsToUpdate {
         }
         Ok(acc)
     }
-    fn bind_value_to_query(
+    fn bind_value_to_query<'a>(
         self,
-        mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.0 {
             match element {
                 DoggieOptionToUpdate::StdStringString(value) => {
