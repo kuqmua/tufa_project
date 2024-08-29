@@ -740,7 +740,8 @@ DynArcCombinationOfAppStateLogicTraits >,
                 &value.value.0.0,
                 "sqlx_types_json_t_as_postgresql_json_b_not_null",
                 None,
-                &mut increment
+                &mut increment,
+                false,
             ) {
                 Ok(value) => {
                     query.push_str(&value);
@@ -819,7 +820,7 @@ DynArcCombinationOfAppStateLogicTraits >,
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
-            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.0.0, query);
+            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.0.0, query, false);
             // for element in value.value.0.0.0 {
             //     match element {
             //         SomethingOptionToUpdate::StdPrimitiveI8(value) => {
@@ -1369,6 +1370,7 @@ impl
         jsonb_set_acc: &std::primitive::str,
         option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
+        is_optional: std::primitive::bool,
     ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
     {
         if self.0.is_empty() {
@@ -1453,7 +1455,7 @@ impl
                 SomethingOptionToUpdate::Generic(value) => {
                     match value
                         .value
-                        .try_generate_bind_increments(&acc, Some("generic"), increment)
+                        .try_generate_bind_increments(&acc, Some("generic"), increment, false)
                     {
                         Ok(value) => {
                             acc = value;
@@ -1470,13 +1472,14 @@ impl
                     }
                 }
                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => {
-                    // let doggie_option_to_update_length = 3;
                     match &value.value {
                         Some(value) => {
+                            // let doggie_option_to_update_length = 3;
                             match value.try_generate_bind_increments(
                                 &acc,
                                 Some("std_option_option_generic"),
                                 increment,
+                                true,
                             ) {
                                 Ok(value) => {
                                     acc = value;
@@ -1516,6 +1519,7 @@ impl
     fn bind_value_to_query<'a>(
         self,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        is_optional: std::primitive::bool,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.0 {
             match element {
@@ -1523,13 +1527,13 @@ impl
                     query = query.bind(sqlx::types::Json(value.value));
                 }
                 SomethingOptionToUpdate::Generic(value) => {
-                    query = value.value.bind_value_to_query(query);
+                    query = value.value.bind_value_to_query(query, false);
                 }
                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => {
                     //here
                     match value.value {
                         Some(value) => {
-                            query = value.bind_value_to_query(query);
+                            query = value.bind_value_to_query(query, true);
                         }
                         None => {
                             query = query.bind(sqlx::types::Json(None::<std::option::Option<DoggieOptionsToUpdate>>));
@@ -1613,6 +1617,7 @@ impl
         jsonb_set_acc: &std::primitive::str,
         option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
+        is_optional: std::primitive::bool,
     ) -> Result<std::string::String, DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
         if self.0.is_empty() {
             return Err(
@@ -1731,6 +1736,7 @@ impl
     fn bind_value_to_query<'a>(
         self,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        is_optional: std::primitive::bool,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.0 {
             match element {

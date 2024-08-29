@@ -210,9 +210,11 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
         jsonb_set_acc: &std::primitive::str,
         option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
+        is_optional: std::primitive::bool,
     ) -> Result<std::string::String, T1>;
     fn bind_value_to_query<'a>(
         self,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        is_optional: std::primitive::bool,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
