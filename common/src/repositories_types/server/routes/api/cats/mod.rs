@@ -317,6 +317,8 @@ pub struct Something {
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
     pub std_string_string: postgresql_crud::JsonStdStringString,
 }
 
@@ -749,6 +751,29 @@ DynArcCombinationOfAppStateLogicTraits >,
                 }
             }
             query.push_str(" ");
+
+
+
+            // UPDATE jsongeneric
+            // SET sqlx_types_json_t_as_postgresql_json_b_not_null = 
+            //     jsonb_set(
+            //         jsonb_set(
+            //             jsonb_set(
+            //                 sqlx_types_json_t_as_postgresql_json_b_not_null, 
+            //                 '{std_primitive_i8}', 
+            //                 '44'
+            //             ), 
+            //             '{generic,std_string_string}', 
+            //             '"something"'
+            //         ), 
+            //         '{std_option_option_generic}', 
+            //         -- jsonb_build_object('std_option_option_generic', 'yeees')
+            //         'null'
+            //     )
+            // WHERE std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14
+            // RETURNING std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
+
+
         }
         let _ = query.pop();
         match postgresql_crud::BindQuery::try_increment(
@@ -1333,12 +1358,6 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
         doggie: DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    //todo maybe unique
-    // Doggie {
-    //     #[eo_error_occurence]
-    //     doggie: DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
 }
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
@@ -1451,9 +1470,11 @@ impl
                     }
                 }
                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => {
+                    //here
                     match &value.value  {
                         Some(value) => match value.try_generate_bind_increments(&acc, Some("std_option_option_generic"), increment) {
                             Ok(value) => {
+                                println!("here {value}");
                                 acc = value;
                             }
                             Err(error) => {
@@ -1492,6 +1513,7 @@ impl
                     query = value.value.bind_value_to_query(query);
                 }
                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => {
+                    //here
                     match value.value {
                         Some(value) => {
                             query = value.bind_value_to_query(query);
@@ -1506,7 +1528,7 @@ impl
         query
     }
 }
-/////
+//
 #[derive(
     Debug,
     Clone,
@@ -1517,18 +1539,38 @@ impl
     schemars :: JsonSchema,
 )]
 pub enum DoggieKey {
+    #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
+    StdPrimitiveI16,
+    #[serde(rename(
+        serialize = "std_option_option_std_primitive_i32",
+        deserialize = "std_option_option_std_primitive_i32"
+    ))]
+    StdOptionOptionStdPrimitiveI32,
     #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
     StdStringString,
 }
 impl error_occurence_lib::ToStdStringString for DoggieKey {
     fn to_std_string_string(&self) -> std::string::String {
         match &self {
+            Self::StdPrimitiveI16 => "std_primitive_i16".to_owned(),
+            Self::StdOptionOptionStdPrimitiveI32 => {
+                "std_option_option_std_primitive_i32".to_owned()
+            }
             Self::StdStringString => "std_string_string".to_owned(),
         }
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 enum DoggieOptionToUpdate {
+    #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
+    StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>),
+    #[serde(rename(
+        serialize = "std_option_option_std_primitive_i32",
+        deserialize = "std_option_option_std_primitive_i32"
+    ))]
+    StdOptionOptionStdPrimitiveI32(
+        postgresql_crud::Value<std::option::Option<std::primitive::i32>>,
+    ),
     #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
     StdStringString(postgresql_crud::Value<std::string::String>),
 }
@@ -1570,6 +1612,34 @@ impl
             let mut acc = vec![];
             for element in &self.0 {
                 match element {
+                    DoggieOptionToUpdate::StdPrimitiveI16(_) => {
+                        let value = DoggieKey::StdPrimitiveI16;
+                        if acc.contains(&value) {
+                            return
+                                Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                                :: NotUniqueField
+                                {
+                                    field : value, code_occurence : error_occurence_lib ::
+                                    code_occurence! (),
+                                },);
+                        } else {
+                            acc.push(value);
+                        }
+                    }
+                    DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(_) => {
+                        let value = DoggieKey::StdOptionOptionStdPrimitiveI32;
+                        if acc.contains(&value) {
+                            return
+                                Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                                :: NotUniqueField
+                                {
+                                    field : value, code_occurence : error_occurence_lib ::
+                                    code_occurence! (),
+                                },);
+                        } else {
+                            acc.push(value);
+                        }
+                    }
                     DoggieOptionToUpdate::StdStringString(_) => {
                         let value = DoggieKey::StdStringString;
                         if acc.contains(&value) {
@@ -1594,6 +1664,38 @@ impl
         };
         for element in &self.0 {
             match &element {
+                DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
+                    Some(value) => {
+                        *increment = value;
+                        acc = format!(
+                            "jsonb_set({acc},'{{{previous_path}std_primitive_i16}}',${increment})"
+                        );
+                    }
+                    None => {
+                        return Err(
+                            DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            },
+                        );
+                    }
+                },
+                DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(_) => {
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            acc = format!
+                                ("jsonb_set({acc},'{{{previous_path}std_option_option_std_primitive_i32}}',${increment})");
+                        }
+                        None => {
+                            return
+                                Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                                :: CheckedAdd
+                                {
+                                    code_occurence : error_occurence_lib :: code_occurence! (),
+                                },);
+                        }
+                    }
+                }
                 DoggieOptionToUpdate::StdStringString(_) => match increment.checked_add(1) {
                     Some(value) => {
                         *increment = value;
@@ -1619,6 +1721,12 @@ impl
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.0 {
             match element {
+                DoggieOptionToUpdate::StdPrimitiveI16(value) => {
+                    query = query.bind(sqlx::types::Json(value.value));
+                }
+                DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(value) => {
+                    query = query.bind(sqlx::types::Json(value.value));
+                }
                 DoggieOptionToUpdate::StdStringString(value) => {
                     query = query.bind(sqlx::types::Json(value.value));
                 }

@@ -3215,7 +3215,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 },
-                SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
+                    let type_path_options_to_update_upper_camel_case = {
+                        let value = format!("{}{}", quote::quote!{#type_path}.to_string(), naming_conventions::OptionsToUpdateUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{std::option::Option<#type_path_options_to_update_upper_camel_case>}
+                },
                 SupportedPredefinedType::JsonStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
@@ -3379,9 +3386,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream = {
-        let additional_generic_variants = vec_syn_field.iter().map(|element|{
+        let mut acc = vec![];
+        vec_syn_field.iter().for_each(|element|{
             let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
-            let option_generic_ident_stringified = match &supported_predefined_type {
+            match &supported_predefined_type {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdPrimitiveI16 |
                 SupportedPredefinedType::JsonStdPrimitiveI32 |
@@ -3470,33 +3478,55 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => None,
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => (),
 
-                SupportedPredefinedType::JsonGeneric(type_path) => Some(quote::quote!{#type_path}.to_string()),
-                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => Some(quote::quote!{#type_path}.to_string()),
-                SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => Some(quote::quote!{#type_path}.to_string()),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => Some(quote::quote!{#type_path}.to_string()),
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => Some(quote::quote!{#type_path}.to_string()),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => Some(quote::quote!{#type_path}.to_string()),
-            };
-            match option_generic_ident_stringified {
-                Some(value) => {
-                    let generic_ident_token_stream = value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                    let generic_ident_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&value);
-                    let generic_ident_options_to_update_try_generate_bind_increments_error_named_token_stream = {
-                        let value = format!("{value}{}", naming_conventions::OptionsToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase);
-                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
-                    quote::quote!{
-                        #generic_ident_token_stream {
-                            #[eo_error_occurence]
-                            #generic_ident_snake_case_token_stream: #generic_ident_options_to_update_try_generate_bind_increments_error_named_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
+                SupportedPredefinedType::JsonGeneric(type_path) => {
+                    if !acc.contains(type_path) {
+                        acc.push(type_path.clone());
                     }
                 },
-                None => proc_macro2::TokenStream::new()
+                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
+                    if !acc.contains(type_path) {
+                        acc.push(type_path.clone());
+                    }
+                },
+                SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
+                    if !acc.contains(type_path) {
+                        acc.push(type_path.clone());
+                    }
+                },
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => {
+                    if !acc.contains(type_path) {
+                        acc.push(type_path.clone());
+                    }
+                },
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => {
+                    if !acc.contains(type_path) {
+                        acc.push(type_path.clone());
+                    }
+                },
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                    if !acc.contains(type_path) {
+                        acc.push(type_path.clone());
+                    }
+                },
+            }
+        });
+        let additional_generic_variants = acc.iter().map(|element| {
+            let value = quote::quote!{#element}.to_string();
+            let generic_ident_token_stream = value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            let generic_ident_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&value);
+            let generic_ident_options_to_update_try_generate_bind_increments_error_named_token_stream = {
+                let value = format!("{value}{}", naming_conventions::OptionsToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase);
+                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #generic_ident_token_stream {
+                    #[eo_error_occurence]
+                    #generic_ident_snake_case_token_stream: #generic_ident_options_to_update_try_generate_bind_increments_error_named_token_stream,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                }
             }
         });
         quote::quote!{
@@ -3513,7 +3543,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 CheckedAdd {
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
-                #(#additional_generic_variants)*
+                #(#additional_generic_variants),*
             }
         }
     };
@@ -3904,6 +3934,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    let f = quote::quote!{
+        #pub_enum_ident_key_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
+        #pub_enum_ident_option_to_update_token_stream
+        #pub_struct_ident_options_to_update_token_stream
+        #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+        #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
+    };
+    // if ident == "" {
+    //     println!("{f}");
+    // }
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
