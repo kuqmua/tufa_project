@@ -1470,28 +1470,41 @@ impl
                     }
                 }
                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => {
-                    //here
-                    match &value.value  {
-                        Some(value) => match value.try_generate_bind_increments(&acc, Some("std_option_option_generic"), increment) {
-                            Ok(value) => {
-                                println!("here {value}");
-                                acc = value;
-                            }
-                            Err(error) => {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Doggie {
-                                    doggie : error, code_occurence : error_occurence_lib ::code_occurence! (),
-                                });
+                    // let doggie_option_to_update_length = 3;
+                    match &value.value {
+                        Some(value) => {
+                            match value.try_generate_bind_increments(
+                                &acc,
+                                Some("std_option_option_generic"),
+                                increment,
+                            ) {
+                                Ok(value) => {
+                                    acc = value;
+                                }
+                                Err(error) => {
+                                    return
+                                        Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                                        :: Doggie
+                                        {
+                                            doggie : error, code_occurence : error_occurence_lib ::
+                                            code_occurence! (),
+                                        },);
+                                }
                             }
                         }
-                        None => match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                acc = format!("jsonb_set({acc},'{{{previous_path}std_option_option_generic}}',${increment})");
-                            }
-                            None => {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
+                        None => {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    acc = format!(
+                                        "jsonb_set({acc},'{{{previous_path}std_option_option_generic}}',${increment})"
+                                    );
+                                }
+                                None => {
+                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
                             }
                         }
                     }
