@@ -3693,7 +3693,34 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 },
-                SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => todo!(),
+                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
+                    let element_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &element_ident.to_string(),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let element_ident_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{
+                        (value) => {
+                            match value.value.try_generate_bind_increments(
+                                &acc,
+                                Some(#element_ident_double_quotes_token_stream),
+                                increment,
+                            ) {
+                                Ok(value) => {
+                                    acc = value;
+                                }
+                                Err(error) => {
+                                    return Err(
+                                        #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#type_path {
+                                            #element_ident_snake_case_token_stream: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        },
+                                    );
+                                }
+                            }
+                        }
+                    }
+                },
                 SupportedPredefinedType::JsonStdVecVecGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => todo!(),
@@ -3812,7 +3839,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         value.value.bind_value_to_query(query);
                     }
                 },
-                SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => todo!(),
+                SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => {
+                    quote::quote!{
+                        value.value.bind_value_to_query(query);
+                    }
+                },
                 SupportedPredefinedType::JsonStdVecVecGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => todo!(),
@@ -3886,12 +3917,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_wrapper_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
-        #pub_enum_ident_key_token_stream
-        #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
-        #pub_enum_ident_option_to_update_token_stream
-        #pub_struct_ident_options_to_update_token_stream
-        #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
-        #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
+        // #pub_enum_ident_key_token_stream
+        // #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
+        // #pub_enum_ident_option_to_update_token_stream
+        // #pub_struct_ident_options_to_update_token_stream
+        // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+        // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
+
+
         // #impl_postgresql_crud_bind_query_for_ident_option_to_update_token_stream
     };
     // if ident == "" {
