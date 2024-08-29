@@ -1808,6 +1808,46 @@ impl
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
+
+// update 
+//   jsongeneric 
+// set 
+//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
+//   	jsonb_set(
+// 	  sqlx_types_json_t_as_postgresql_json_b_not_null,
+// 	  '{std_primitive_i8}',
+// 	  '87'
+//   	),
+// 	'{std_option_option_generic}',
+//   	case 
+//   		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'null' 
+// 		then 
+// 			jsonb_build_object('std_primitive_i16', 88) || 
+// 			jsonb_build_object('std_option_option_std_primitive_i32', 88) || 
+// 			jsonb_build_object('std_string_string', '88') 
+// 		else 
+// 	  		sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic' ||
+// 			jsonb_build_object('std_primitive_i16', 99) || 
+// 			jsonb_build_object('std_option_option_std_primitive_i32', 99) || 
+// 			jsonb_build_object('std_string_string', '99') 
+// -- 			jsonb_set(
+// -- 				jsonb_set(
+// --       				jsonb_set(
+// --         				sqlx_types_json_t_as_postgresql_json_b_not_null, 
+// --         				'{std_option_option_generic,std_primitive_i16}', 
+// --         				$1
+// --       				), 
+// --       				'{std_option_option_generic,std_option_option_std_primitive_i32}', 
+// --       				$2
+// --     			), 
+// --     			'{std_option_option_generic,std_string_string}', 
+// --     			$3
+// --   			) 
+//   	end 
+// )
+// where 
+//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+
             println!("{initialization_variant_with_defaults_if_current_is_null}");
             Ok(format!(
                 "case 
