@@ -1615,6 +1615,7 @@ impl
     fn try_generate_bind_increments(
         &self,
         jsonb_set_acc: &std::primitive::str,
+        //todo maybe add another path for check on null like "column_name->'field_name_one'->'field_name_two'"
         option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
         is_optional: std::primitive::bool,
@@ -1680,11 +1681,46 @@ impl
             Some(value) => format!("{value},"),
             None => std::string::String::default(),
         };
+
+        let max_doggie_option_to_update = 3;
+        // let mut fields_to_update = vec![];
+        struct FieldsToUpdate {
+            std_primitive_i16: std::primitive::bool,
+            std_option_option_std_primitive_i32: std::primitive::bool,
+            std_string_string: std::primitive::bool,
+        }
+        let mut fields_to_update = FieldsToUpdate {
+            std_primitive_i16: false,
+            std_option_option_std_primitive_i32: false,
+            std_string_string: false, 
+        };
+
+        //check if not null
+        //and check
+
+            // case 
+            //     when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'null'
+            //     then 
+            //         jsonb_set(
+            //             sqlx_types_json_t_as_postgresql_json_b_not_null,
+            //             '{std_primitive_i8}',
+            //             '1'
+            //         )
+            //     else 
+            //         jsonb_set(
+            //             sqlx_types_json_t_as_postgresql_json_b_not_null,
+            //             '{std_primitive_i8}',
+            //             '2'
+            //         )
+            // end
+        let mut initialization_variant_with_defaults_if_current_is_null = "".to_string();
+        let mut initialization_variant_without_defaults_if_current_is_not_null = "".to_string();
         for element in &self.0 {
             match &element {
                 DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
                     Some(value) => {
                         *increment = value;
+                        fields_to_update.std_primitive_i16 = true;
                         acc = format!(
                             "jsonb_set({acc},'{{{previous_path}std_primitive_i16}}',${increment})"
                         );
@@ -1701,6 +1737,7 @@ impl
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
+                            fields_to_update.std_option_option_std_primitive_i32 = true;
                             acc = format!
                                 ("jsonb_set({acc},'{{{previous_path}std_option_option_std_primitive_i32}}',${increment})");
                         }
@@ -1717,6 +1754,7 @@ impl
                 DoggieOptionToUpdate::StdStringString(_) => match increment.checked_add(1) {
                     Some(value) => {
                         *increment = value;
+                        fields_to_update.std_string_string = true;
                         acc = format!(
                             "jsonb_set({acc},'{{{previous_path}std_string_string}}',${increment})"
                         );
@@ -1731,7 +1769,8 @@ impl
                 },
             }
         }
-        Ok(acc)
+        // Ok(acc)
+        Ok(format!("case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' then {} else {} end"))
     }
     fn bind_value_to_query<'a>(
         self,
