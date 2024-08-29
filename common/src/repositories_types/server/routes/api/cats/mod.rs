@@ -1676,7 +1676,7 @@ impl
                 }
             }
         }
-        let mut acc = std::string::String::from(jsonb_set_acc);
+        // let mut acc = std::string::String::from(jsonb_set_acc);
         let previous_path = match &option_path {
             Some(value) => format!("{value},"),
             None => std::string::String::default(),
@@ -1713,8 +1713,8 @@ impl
             //             '2'
             //         )
             // end
-        let mut initialization_variant_with_defaults_if_current_is_null = "".to_string();
-        let mut initialization_variant_without_defaults_if_current_is_not_null = "".to_string();
+        let mut initialization_variant_with_defaults_if_current_is_null = std::string::String::from(jsonb_set_acc);
+        let mut initialization_variant_without_defaults_if_current_is_not_null = std::string::String::from(jsonb_set_acc);
         for element in &self.0 {
             match &element {
                 DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
