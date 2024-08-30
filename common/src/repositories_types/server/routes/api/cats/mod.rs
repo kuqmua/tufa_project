@@ -1870,10 +1870,12 @@ impl
 
 
 //
-trait DoesContainInnerGeneric {
-    fn does_contain_inner_generic() -> std::primitive::bool;
+trait UpdateOneDoesContainInnerGeneric {
+    fn update_one_does_contain_inner_generic() -> std::primitive::bool;
 }
-
+trait UpdateOnePathToNullable {
+    fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String>;
+}
 
 #[derive(Debug)]
 pub struct One {
@@ -1924,7 +1926,11 @@ pub struct OneUpdateOneNullObjectChecker {
    pub generic: TwoUpdateOneNullObjectChecker,//if inner not contain than skip
    pub std_option_option_generic_six: SixUpdateOneNullObjectChecker,
 }
-
+impl UpdateOneDoesContainInnerGeneric for OneUpdateOneNullObjectChecker {
+    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+        true
+    }
+}
 #[derive(Debug)]
 pub struct TwoUpdateOneNullObjectChecker {
     pub std_primitive_i16: std::primitive::bool,
@@ -1933,40 +1939,68 @@ pub struct TwoUpdateOneNullObjectChecker {
     pub std_option_option_generic_three: ThreeUpdateOneNullObjectChecker,
     pub std_option_option_generic_four: FourUpdateOneNullObjectChecker,
 }
-
+impl UpdateOneDoesContainInnerGeneric for TwoUpdateOneNullObjectChecker {
+    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+        true
+    }
+}
 #[derive(Debug)]
 pub struct ThreeUpdateOneNullObjectChecker {
     pub std_primitive_i16: std::primitive::bool,
     pub std_string_string: std::primitive::bool,
 }
-
+impl UpdateOneDoesContainInnerGeneric for ThreeUpdateOneNullObjectChecker {
+    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+        false
+    }
+}
 #[derive(Debug)]
 pub struct FourUpdateOneNullObjectChecker {
     pub std_string_string: std::primitive::bool,
     pub std_option_option_generic: FiveUpdateOneNullObjectChecker,
 }
-impl DoesContainInnerGeneric for FourUpdateOneNullObjectChecker {
-    fn does_contain_inner_generic() -> std::primitive::bool {
+impl UpdateOneDoesContainInnerGeneric for FourUpdateOneNullObjectChecker {
+    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
         true
     }
 }
+// impl UpdateOnePathToNullable for FourUpdateOneNullObjectChecker {
+//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
+//         let mut vec = vec![];
+//         for element in &self.std_option_option_generic.update_one_path_to_nullable() {
+//             vec.push(format!("std_option_option_generic->{element}"));
+//         }
+//         vec.push("std_option_option_generic");
+//         vec
+//     }
+// }
 #[derive(Debug)]
 pub struct FiveUpdateOneNullObjectChecker {
     pub std_primitive_i8: std::primitive::bool,
     pub std_string_string: std::primitive::bool,
 }
-impl DoesContainInnerGeneric for FiveUpdateOneNullObjectChecker {
-    fn does_contain_inner_generic() -> std::primitive::bool {
+impl UpdateOneDoesContainInnerGeneric for FiveUpdateOneNullObjectChecker {
+    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
         false
+    }
+}
+impl UpdateOnePathToNullable for FiveUpdateOneNullObjectChecker {
+    fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
+        vec![]
     }
 }
 #[derive(Debug)]
 pub struct SixUpdateOneNullObjectChecker {
     pub std_primitive_i8: std::primitive::bool,
 }
-impl DoesContainInnerGeneric for SixUpdateOneNullObjectChecker {
-    fn does_contain_inner_generic() -> std::primitive::bool {
+impl UpdateOneDoesContainInnerGeneric for SixUpdateOneNullObjectChecker {
+    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
         false
+    }
+}
+impl UpdateOnePathToNullable for SixUpdateOneNullObjectChecker {
+    fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
+        vec![]
     }
 }
 
