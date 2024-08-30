@@ -1707,15 +1707,17 @@ impl
             //         )
             // end
             let mut initialization_variant_with_defaults_if_current_is_null = std::string::String::default();
-            let mut initialization_variant_without_defaults_if_current_is_not_null = std::string::String::from(jsonb_set_acc);
+            let mut initialization_variant_without_defaults_if_current_is_not_null = std::string::String::default();//std::string::String::from(jsonb_set_acc);
             for element in &self.0 {
                 match &element {
                     DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
                             fields_to_update.std_primitive_i16 = true;
-                            initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_primitive_i16', ${increment}) ||"));
-                            initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_primitive_i16}}',${increment})");
+                            let value = format!("jsonb_build_object('std_primitive_i16', ${increment}) ||");
+                            initialization_variant_with_defaults_if_current_is_null.push_str(&value);
+                            // initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_primitive_i16}}',${increment})");
+                            initialization_variant_without_defaults_if_current_is_not_null.push_str(&value);
                         }
                         None => {
                             return Err(
@@ -1730,8 +1732,10 @@ impl
                             Some(value) => {
                                 *increment = value;
                                 fields_to_update.std_option_option_std_primitive_i32 = true;
-                                initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_option_option_std_primitive_i32', ${increment}) ||"));
-                                initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_option_option_std_primitive_i32}}',${increment})");
+                                let value = format!("jsonb_build_object('std_option_option_std_primitive_i32', ${increment}) ||");
+                                initialization_variant_with_defaults_if_current_is_null.push_str(&value);
+                                // initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_option_option_std_primitive_i32}}',${increment})");
+                                initialization_variant_without_defaults_if_current_is_not_null.push_str(&value);
                             }
                             None => {
                                 return
@@ -1747,8 +1751,10 @@ impl
                         Some(value) => {
                             *increment = value;
                             fields_to_update.std_string_string = true;
-                            initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_string_string', ${increment}) ||"));
-                            initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_string_string}}',${increment})");
+                            let value  = format!("jsonb_build_object('std_string_string', ${increment}) ||");
+                            initialization_variant_with_defaults_if_current_is_null.push_str(&value);
+                            // initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_string_string}}',${increment})");
+                            initialization_variant_without_defaults_if_current_is_not_null.push_str(&value);
                         }
                         None => {
                             return Err(
@@ -1760,109 +1766,36 @@ impl
                     },
                 }
             }
+            let _ = initialization_variant_without_defaults_if_current_is_not_null.pop();
+            let _ = initialization_variant_without_defaults_if_current_is_not_null.pop();
+            let _ = initialization_variant_without_defaults_if_current_is_not_null.pop();
             if !fields_to_update.std_primitive_i16 {
-                match increment.checked_add(1) {
-                    Some(value) => {
-                        *increment = value;
-                        initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_primitive_i16', '0') ||"));
-                    }
-                    None => {
-                        return Err(
-                            DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            },
-                        );
-                    }
-                }
+                initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_primitive_i16', '0') ||"));
             }
             if !fields_to_update.std_option_option_std_primitive_i32 {
-                match increment.checked_add(1) {
-                    Some(value) => {
-                            *increment = value;
-                            initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_option_option_std_primitive_i32', '0') ||"));
-                    }
-                    None => {
-                        return Err(
-                            DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            },
-                        );
-                    }
-                }
+                initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_option_option_std_primitive_i32', '0') ||"));
             }
             if !fields_to_update.std_string_string {
-                match increment.checked_add(1) {
-                    Some(value) => {
-                        *increment = value;
-                        initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_string_string', '\"\"') ||"));
-                    }
-                    None => {
-                        return Err(
-                            DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            },
-                        );
-                    }
-                }
+                initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_string_string', '') ||"));
             }
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
-
-// update 
-//   jsongeneric 
-// set 
-//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
-//   	jsonb_set(
-// 	  sqlx_types_json_t_as_postgresql_json_b_not_null,
-// 	  '{std_primitive_i8}',
-// 	  '87'
-//   	),
-// 	'{std_option_option_generic}',
-//   	case 
-//   		when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'null' 
-// 		then 
-// 			jsonb_build_object('std_primitive_i16', 88) || 
-// 			jsonb_build_object('std_option_option_std_primitive_i32', 88) || 
-// 			jsonb_build_object('std_string_string', '88') 
-// 		else 
-// 	  		sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic' ||
-// 			jsonb_build_object('std_primitive_i16', 99) || 
-// 			jsonb_build_object('std_option_option_std_primitive_i32', 99) || 
-// 			jsonb_build_object('std_string_string', '99') 
-// -- 			jsonb_set(
-// -- 				jsonb_set(
-// --       				jsonb_set(
-// --         				sqlx_types_json_t_as_postgresql_json_b_not_null, 
-// --         				'{std_option_option_generic,std_primitive_i16}', 
-// --         				$1
-// --       				), 
-// --       				'{std_option_option_generic,std_option_option_std_primitive_i32}', 
-// --       				$2
-// --     			), 
-// --     			'{std_option_option_generic,std_string_string}', 
-// --     			$3
-// --   			) 
-//   	end 
-// )
-// where 
-//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
-
             println!("{initialization_variant_with_defaults_if_current_is_null}");
-            Ok(format!(
-                "case 
-                    when 
-                    jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' 
-                    then 
-                        {initialization_variant_with_defaults_if_current_is_null}
-                    else 
-                        {initialization_variant_without_defaults_if_current_is_not_null} 
-                end"
-                //
-                        // jsonb_build_object('std_primitive_i16', '99') ||
-                        // jsonb_build_object('std_option_option_std_primitive_i32', '99') ||
-                        // jsonb_build_object('std_string_string', '\"99\"')
-            ))
+            // Ok(format!(
+            //     "case 
+            //         when 
+            //         jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' 
+            //         then 
+            //             {initialization_variant_with_defaults_if_current_is_null}
+            //         else 
+            //             {initialization_variant_without_defaults_if_current_is_not_null} 
+            //     end"
+            //     //
+            //             // jsonb_build_object('std_primitive_i16', '99') ||
+            //             // jsonb_build_object('std_option_option_std_primitive_i32', '99') ||
+            //             // jsonb_build_object('std_string_string', '\"99\"')
+            // ))
             // Ok(format!("
             //     case 
             //         when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null'
@@ -1886,6 +1819,19 @@ impl
             //             )
             //     end
             // "))
+            Ok(format!("
+                jsonb_set(
+                    {jsonb_set_acc},
+                    '{{std_option_option_generic}}',
+                    case 
+                        when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null'
+                        then
+                            {initialization_variant_with_defaults_if_current_is_null}
+                        else 
+                            {initialization_variant_without_defaults_if_current_is_not_null}
+                    end
+                )
+            "))
         }
         else {
             let mut acc = std::string::String::from(jsonb_set_acc);
