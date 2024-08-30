@@ -1607,11 +1607,6 @@ pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-struct FieldsToUpdate {
-    std_primitive_i16: std::primitive::bool,
-    std_option_option_std_primitive_i32: std::primitive::bool,
-    std_string_string: std::primitive::bool,
-}
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
         DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
@@ -1686,37 +1681,20 @@ impl
             None => std::string::String::default(),
         };
         if is_optional {
-            let mut fields_to_update = FieldsToUpdate {
-                std_primitive_i16: false,
-                std_option_option_std_primitive_i32: false,
-                std_string_string: false, 
-            };
-            // case 
-            //     when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'null'
-            //     then 
-            //         jsonb_set(
-            //             sqlx_types_json_t_as_postgresql_json_b_not_null,
-            //             '{std_primitive_i8}',
-            //             '1'
-            //         )
-            //     else 
-            //         jsonb_set(
-            //             sqlx_types_json_t_as_postgresql_json_b_not_null,
-            //             '{std_primitive_i8}',
-            //             '2'
-            //         )
-            // end
+            let mut will_std_primitive_i16_be_updated = false;
+            let mut will_std_option_option_std_primitive_i32_be_updated = false;
+            let mut will_std_string_string_be_updated = false;
+
             let mut initialization_variant_with_defaults_if_current_is_null = std::string::String::default();
-            let mut initialization_variant_without_defaults_if_current_is_not_null = std::string::String::default();//std::string::String::from(jsonb_set_acc);
+            let mut initialization_variant_without_defaults_if_current_is_not_null = std::string::String::from("sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic' ||");
             for element in &self.0 {
                 match &element {
                     DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
-                            fields_to_update.std_primitive_i16 = true;
+                            will_std_primitive_i16_be_updated = true;
                             let value = format!("jsonb_build_object('std_primitive_i16', ${increment}) ||");
                             initialization_variant_with_defaults_if_current_is_null.push_str(&value);
-                            // initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_primitive_i16}}',${increment})");
                             initialization_variant_without_defaults_if_current_is_not_null.push_str(&value);
                         }
                         None => {
@@ -1731,10 +1709,9 @@ impl
                         match increment.checked_add(1) {
                             Some(value) => {
                                 *increment = value;
-                                fields_to_update.std_option_option_std_primitive_i32 = true;
+                                will_std_option_option_std_primitive_i32_be_updated = true;
                                 let value = format!("jsonb_build_object('std_option_option_std_primitive_i32', ${increment}) ||");
                                 initialization_variant_with_defaults_if_current_is_null.push_str(&value);
-                                // initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_option_option_std_primitive_i32}}',${increment})");
                                 initialization_variant_without_defaults_if_current_is_not_null.push_str(&value);
                             }
                             None => {
@@ -1750,7 +1727,7 @@ impl
                     DoggieOptionToUpdate::StdStringString(_) => match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
-                            fields_to_update.std_string_string = true;
+                            will_std_string_string_be_updated = true;
                             let value  = format!("jsonb_build_object('std_string_string', ${increment}) ||");
                             initialization_variant_with_defaults_if_current_is_null.push_str(&value);
                             // initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_string_string}}',${increment})");
@@ -1769,56 +1746,18 @@ impl
             let _ = initialization_variant_without_defaults_if_current_is_not_null.pop();
             let _ = initialization_variant_without_defaults_if_current_is_not_null.pop();
             let _ = initialization_variant_without_defaults_if_current_is_not_null.pop();
-            if !fields_to_update.std_primitive_i16 {
+            if !will_std_primitive_i16_be_updated {
                 initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_primitive_i16', '0') ||"));
             }
-            if !fields_to_update.std_option_option_std_primitive_i32 {
+            if !will_std_option_option_std_primitive_i32_be_updated {
                 initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_option_option_std_primitive_i32', '0') ||"));
             }
-            if !fields_to_update.std_string_string {
+            if !will_std_string_string_be_updated {
                 initialization_variant_with_defaults_if_current_is_null.push_str(&format!("jsonb_build_object('std_string_string', '') ||"));
             }
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
             let _ = initialization_variant_with_defaults_if_current_is_null.pop();
-            println!("{initialization_variant_with_defaults_if_current_is_null}");
-            // Ok(format!(
-            //     "case 
-            //         when 
-            //         jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' 
-            //         then 
-            //             {initialization_variant_with_defaults_if_current_is_null}
-            //         else 
-            //             {initialization_variant_without_defaults_if_current_is_not_null} 
-            //     end"
-            //     //
-            //             // jsonb_build_object('std_primitive_i16', '99') ||
-            //             // jsonb_build_object('std_option_option_std_primitive_i32', '99') ||
-            //             // jsonb_build_object('std_string_string', '\"99\"')
-            // ))
-            // Ok(format!("
-            //     case 
-            //         when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null'
-            //         then
-            //             jsonb_set(
-            //                 {acc},
-            //                 '{{{previous_path}}}',
-            //                 jsob_build_object('std_primitive_i16', '3') ||
-            //                 jsob_build_object('std_option_option_std_primitive_i32', '3') ||
-            //                 jsob_build_object('std_string_string', '3')
-            //             )
-            //         else 
-            //             jsonb_set(
-            //                 {acc},
-            //                 '{{{previous_path}std_primitive_i16}}',
-
-
-            //                 jsob_build_object('std_primitive_i16', '3') ||
-            //                 jsob_build_object('std_option_option_std_primitive_i32', '3') ||
-            //                 jsob_build_object('std_string_string', '3')
-            //             )
-            //     end
-            // "))
             Ok(format!("
                 jsonb_set(
                     {jsonb_set_acc},
@@ -1902,89 +1841,6 @@ impl
                 }
             }
         }
-        // if is_optional {
-        //     let mut fields_to_update = FieldsToUpdate {
-        //         std_primitive_i16: false,
-        //         std_option_option_std_primitive_i32: false,
-        //         std_string_string: false, 
-        //     };
-        //     for element in self.0 {
-        //         match element {
-        //             DoggieOptionToUpdate::StdPrimitiveI16(value) => {
-        //                 fields_to_update.std_primitive_i16 = true;
-        //                 query = query.bind(sqlx::types::Json(value.value));
-        //             }
-        //             DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(value) => {
-        //                 fields_to_update.std_option_option_std_primitive_i32 = true;
-        //                 query = query.bind(sqlx::types::Json(value.value));
-        //             }
-        //             DoggieOptionToUpdate::StdStringString(value) => {
-        //                 fields_to_update.std_string_string = true;
-        //                 query = query.bind(sqlx::types::Json(value.value));
-        //             }
-        //         }
-        //     }
-        //     // if !fields_to_update.std_primitive_i16 {
-        //     //     match increment.checked_add(1) {
-        //     //         Some(value) => {
-        //     //             *increment = value;
-        //     //             query = query.bind(sqlx::types::Json(postgresql_crud::JsonStdPrimitiveI16::default()));
-        //     //         }
-        //     //         None => {
-        //     //             return Err(
-        //     //                 DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-        //     //                     code_occurence: error_occurence_lib::code_occurence!(),
-        //     //                 },
-        //     //             );
-        //     //         }
-        //     //     }
-        //     // }
-        //     // if !fields_to_update.std_option_option_std_primitive_i32 {
-        //     //     match increment.checked_add(1) {
-        //     //         Some(value) => {
-        //     //             *increment = value;
-        //     //             query = query.bind(sqlx::types::Json(postgresql_crud::JsonStdOptionOptionStdPrimitiveI32::default()));
-        //     //         }
-        //     //         None => {
-        //     //             return Err(
-        //     //                 DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-        //     //                     code_occurence: error_occurence_lib::code_occurence!(),
-        //     //                 },
-        //     //             );
-        //     //         }
-        //     //     }
-        //     // }
-        //     // if !fields_to_update.std_string_string {
-        //     //     match increment.checked_add(1) {
-        //     //         Some(value) => {
-        //     //             *increment = value;
-        //     //             query = query.bind(sqlx::types::Json(postgresql_crud::JsonStdStringString::default()));
-        //     //         }
-        //     //         None => {
-        //     //             return Err(
-        //     //                 DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-        //     //                     code_occurence: error_occurence_lib::code_occurence!(),
-        //     //                 },
-        //     //             );
-        //     //         }
-        //     //     }
-        //     // }
-        // }
-        // else {
-        //     for element in self.0 {
-        //         match element {
-        //             DoggieOptionToUpdate::StdPrimitiveI16(value) => {
-        //                 query = query.bind(sqlx::types::Json(value.value));
-        //             }
-        //             DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(value) => {
-        //                 query = query.bind(sqlx::types::Json(value.value));
-        //             }
-        //             DoggieOptionToUpdate::StdStringString(value) => {
-        //                 query = query.bind(sqlx::types::Json(value.value));
-        //             }
-        //         }
-        //     }
-        // }
         query
     }
 }

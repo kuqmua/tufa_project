@@ -2005,17 +2005,18 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                                 "value": 88
                             }
                         }
-                        # ,
-                        # {
-                        #     "std_option_option_std_primitive_i32": {
-                        #         "value": 88
-                        #     }
-                        # },
-                        # {
-                        #     "std_string_string": {
-                        #         "value": "88"
-                        #     }
-                        # }
+                        ,
+                        {
+                            "std_option_option_std_primitive_i32": {
+                                "value": 55
+                            }
+                        }
+                        ,
+                        {
+                            "std_string_string": {
+                                "value": "88"
+                            }
+                        }
                     ]
                 }
             }
