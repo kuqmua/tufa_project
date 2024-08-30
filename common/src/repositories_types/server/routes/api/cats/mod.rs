@@ -1869,6 +1869,12 @@ impl
 // )] //user type must implement utoipa::ToSchema trait
 
 
+//
+trait DoesContainInnerGeneric {
+    fn does_contain_inner_generic() -> std::primitive::bool;
+}
+
+
 #[derive(Debug)]
 pub struct One {
    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
@@ -1939,16 +1945,29 @@ pub struct FourUpdateOneNullObjectChecker {
     pub std_string_string: std::primitive::bool,
     pub std_option_option_generic: FiveUpdateOneNullObjectChecker,
 }
-
+impl DoesContainInnerGeneric for FourUpdateOneNullObjectChecker {
+    fn does_contain_inner_generic() -> std::primitive::bool {
+        true
+    }
+}
 #[derive(Debug)]
 pub struct FiveUpdateOneNullObjectChecker {
     pub std_primitive_i8: std::primitive::bool,
     pub std_string_string: std::primitive::bool,
 }
-
+impl DoesContainInnerGeneric for FiveUpdateOneNullObjectChecker {
+    fn does_contain_inner_generic() -> std::primitive::bool {
+        false
+    }
+}
 #[derive(Debug)]
 pub struct SixUpdateOneNullObjectChecker {
     pub std_primitive_i8: std::primitive::bool,
+}
+impl DoesContainInnerGeneric for SixUpdateOneNullObjectChecker {
+    fn does_contain_inner_generic() -> std::primitive::bool {
+        false
+    }
 }
 
 fn emulate_route() {
