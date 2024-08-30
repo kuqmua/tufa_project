@@ -1730,7 +1730,6 @@ impl
                             will_std_string_string_be_updated = true;
                             let value  = format!("jsonb_build_object('std_string_string', ${increment}) ||");
                             initialization_variant_with_defaults_if_current_is_null.push_str(&value);
-                            // initialization_variant_without_defaults_if_current_is_not_null = format!("jsonb_set({initialization_variant_without_defaults_if_current_is_not_null},'{{{previous_path}std_string_string}}',${increment})");
                             initialization_variant_without_defaults_if_current_is_not_null.push_str(&value);
                         }
                         None => {
