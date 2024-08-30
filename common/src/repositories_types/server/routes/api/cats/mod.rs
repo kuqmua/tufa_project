@@ -1546,6 +1546,8 @@ impl
     }
 }
 //
+
+//
 #[derive(
     Debug,
     Clone,
@@ -1842,4 +1844,150 @@ impl
         }
         query
     }
+}
+
+
+//////////////////////////
+
+// #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize)]
+// enum NullableObject<T> {
+//     Yes(T),
+//     No
+
+
+//     NullableWithInner(T),
+//     NullableWioutInner,
+
+
+// }
+
+
+
+
+// #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+//     postgresql_crud::GeneratePostgresqlQueryPart
+// )] //user type must implement utoipa::ToSchema trait
+
+
+#[derive(Debug)]
+pub struct One {
+   pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+   pub std_option_option_generic_two: postgresql_crud::JsonStdOptionOptionGeneric<Two>,
+   pub generic: postgresql_crud::JsonGeneric<Two>,
+   pub std_option_option_generic_six: postgresql_crud::JsonStdOptionOptionGeneric<Six>,
+}
+
+#[derive(Debug)]
+pub struct Two{
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
+    pub std_string_string: postgresql_crud::JsonStdStringString,
+    pub std_option_option_generic_three: postgresql_crud::JsonStdOptionOptionGeneric<Three>,
+    pub std_option_option_generic_four: postgresql_crud::JsonStdOptionOptionGeneric<Four>,
+}
+
+#[derive(Debug)]
+pub struct Three{
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub std_string_string: postgresql_crud::JsonStdStringString,
+}
+
+#[derive(Debug)]
+pub struct Four{
+    pub std_string_string: postgresql_crud::JsonStdStringString,
+    pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Five>,
+}
+
+#[derive(Debug)]
+pub struct Five{
+    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+    pub std_string_string: postgresql_crud::JsonStdStringString,
+}
+
+#[derive(Debug)]
+pub struct Six{
+    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+}
+
+//////
+
+#[derive(Debug)]
+pub struct OneUpdateOneNullObjectChecker {
+   pub std_primitive_i8: std::primitive::bool,
+   pub std_option_option_generic_two: TwoUpdateOneNullObjectChecker,//if inner not contain even than check
+   pub generic: TwoUpdateOneNullObjectChecker,//if inner not contain than skip
+   pub std_option_option_generic_six: SixUpdateOneNullObjectChecker,
+}
+
+#[derive(Debug)]
+pub struct TwoUpdateOneNullObjectChecker {
+    pub std_primitive_i16: std::primitive::bool,
+    pub std_option_option_std_primitive_i32: std::primitive::bool,
+    pub std_string_string: std::primitive::bool,
+    pub std_option_option_generic_three: ThreeUpdateOneNullObjectChecker,
+    pub std_option_option_generic_four: FourUpdateOneNullObjectChecker,
+}
+
+#[derive(Debug)]
+pub struct ThreeUpdateOneNullObjectChecker {
+    pub std_primitive_i16: std::primitive::bool,
+    pub std_string_string: std::primitive::bool,
+}
+
+#[derive(Debug)]
+pub struct FourUpdateOneNullObjectChecker {
+    pub std_string_string: std::primitive::bool,
+    pub std_option_option_generic: FiveUpdateOneNullObjectChecker,
+}
+
+#[derive(Debug)]
+pub struct FiveUpdateOneNullObjectChecker {
+    pub std_primitive_i8: std::primitive::bool,
+    pub std_string_string: std::primitive::bool,
+}
+
+#[derive(Debug)]
+pub struct SixUpdateOneNullObjectChecker {
+    pub std_primitive_i8: std::primitive::bool,
+}
+
+fn emulate_route() {
+    let f = OneUpdateOneNullObjectChecker {
+        std_primitive_i8: false,
+        std_option_option_generic_two: TwoUpdateOneNullObjectChecker {
+            std_primitive_i16: false,
+            std_option_option_std_primitive_i32: false,
+            std_string_string: false,
+            std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
+                std_primitive_i16: false,
+                std_string_string: false,
+            },
+            std_option_option_generic_four: FourUpdateOneNullObjectChecker {
+                std_string_string: false,
+                std_option_option_generic: FiveUpdateOneNullObjectChecker {
+                    std_primitive_i8: false,
+                    std_string_string: false,
+                },
+            }
+        },
+        generic: TwoUpdateOneNullObjectChecker {
+            std_primitive_i16: false,
+            std_option_option_std_primitive_i32: false,
+            std_string_string: false,
+            std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
+                std_primitive_i16: false,
+                std_string_string: false,
+            },
+            std_option_option_generic_four: FourUpdateOneNullObjectChecker {
+                std_string_string: false,
+                std_option_option_generic: FiveUpdateOneNullObjectChecker {
+                    std_primitive_i8: false,
+                    std_string_string: false,
+                },
+            }
+        },
+        std_option_option_generic_six: SixUpdateOneNullObjectChecker {
+            std_primitive_i8: false,
+        }
+     };
 }
