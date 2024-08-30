@@ -216,7 +216,7 @@ pub struct Jsongeneric {
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-    // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
     // pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
     // pub std_primitive_i128: postgresql_crud::JsonStdPrimitiveI128,
@@ -305,8 +305,8 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub generic: postgresql_crud::JsonGeneric<Doggie>,
-    pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
+    // pub generic: postgresql_crud::JsonGeneric<Doggie>,
+    // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
     // pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
     // pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<Doggie>,
     // pub std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdVecVecStdOptionOptionGeneric<Doggie>,
@@ -324,14 +324,24 @@ pub struct Doggie {
 
 #[test]
 fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() {
-    let default = postgresql_crud::JsonGeneric(Something::default());
-    println!("{default:#?}");
-    let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element: postgresql_crud::JsonGeneric::<Something> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
-    println!("{default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element:#?}");
-    let serialized = serde_json::to_string(&default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element).unwrap();
-    println!("{serialized:#?}");
-    let deserialized: postgresql_crud::JsonGeneric::<Something> = serde_json::from_str(&serialized).unwrap();
-    println!("{deserialized:#?}");
+//     let default = postgresql_crud::JsonGeneric(Something::default());
+//     println!("{default:#?}");
+//     let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element: postgresql_crud::JsonGeneric::<Something> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
+//     println!("{default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element:#?}");
+//     let serialized = serde_json::to_string(&default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element).unwrap();
+//     println!("{serialized:#?}");
+//     let deserialized: postgresql_crud::JsonGeneric::<Something> = serde_json::from_str(&serialized).unwrap();
+//     println!("{deserialized:#?}");
+
+
+    // let s = Something {
+    //     std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8(8),
+    //     std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16(16),
+    // };
+
+
+    let schema = schemars::schema_for!(Something);
+    println!("{}", serde_json::to_string_pretty(&schema).unwrap());
 }
 
 // /////////start block code for trying implement partial
@@ -2023,3 +2033,52 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
 //      };
 // }
 // /////////end block code for trying implement partial
+
+
+
+
+
+
+// CREATE TABLE IF NOT EXISTS 
+// jsongeneric (
+// 	std_primitive_i64_as_postgresql_big_serial_not_null_primary_key BIGSERIAL PRIMARY KEY,
+// 	sqlx_types_json_t_as_postgresql_json_b_not_null JSONB NOT NULL,
+	
+	
+// 	check (
+//         jsonb_matches_schema(
+// 			'{
+//   				"$schema": "http://json-schema.org/draft-07/schema#",
+//   				"title": "Something",
+//   				"type": "object",
+//   				"required": [
+//     				"std_primitive_i16",
+//     				"std_primitive_i8"
+//   				],
+//   				"properties": {
+//     				"std_primitive_i16": {
+//       					"$ref": "#/definitions/JsonStdPrimitiveI16"
+//     				},
+//     				"std_primitive_i8": {
+//       					"$ref": "#/definitions/JsonStdPrimitiveI8"
+//     				}
+//   				},
+//   				"definitions": {
+//     				"JsonStdPrimitiveI16": {
+//       					"type": "integer",
+//       					"format": "int16"
+//     				},
+//     				"JsonStdPrimitiveI8": {
+//       					"type": "integer",
+//       					"format": "int8"
+//     				}
+//   				}
+// 			}',
+// 			sqlx_types_json_t_as_postgresql_json_b_not_null
+// 		)
+// 	)
+// )
+
+
+// insert into jsongeneric(sqlx_types_json_t_as_postgresql_json_b_not_null)
+// values ('{"std_primitive_i8": 257, "std_primitive_i16": 2}');
