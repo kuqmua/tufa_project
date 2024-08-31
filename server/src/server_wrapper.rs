@@ -7,7 +7,7 @@ pub(crate) async fn server_wrapper(
         .await
         .unwrap();
     println!("create_table_if_not_exists...");
-    // common::repositories_types::server::routes::api::cats::create_table_if_not_exists(&pg_pool).await;
+    common::repositories_types::server::routes::api::cats::create_table_if_not_exists(&pg_pool).await;
     // println!("trying to create redis session storage...");
     // let redis_session_storage = match {
     //     use common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
