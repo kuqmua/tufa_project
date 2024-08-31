@@ -209,18 +209,6 @@ pub struct Jsongeneric {
     // pub serde_json_value_as_postgresql_json_b_not_null: postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 
-pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
-    let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
-    println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
-    let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(pool).await.unwrap();
-    let create_table_if_not_exists_query_stringified = format!(
-        "CREATE TABLE IF NOT EXISTS jsongeneric (std_primitive_i64_as_postgresql_big_serial_not_null_primary_key BIGSERIAL PRIMARY KEY,sqlx_types_json_t_as_postgresql_json_b_not_null JSONB NOT NULL, check (jsonb_matches_schema('{}', sqlx_types_json_t_as_postgresql_json_b_not_null)))",
-        serde_json::to_string(&schemars::schema_for!(Something)).unwrap()
-    );
-    println!("{create_table_if_not_exists_query_stringified}");
-    let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(pool).await.unwrap();
-}
-
 //todo enum tree support
 //todo generate wrapper type for all possible json type
 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,

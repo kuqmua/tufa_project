@@ -199,6 +199,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     #[derive(Debug, Clone)]
     struct Generic<'a> {
         syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
+        upper_camel_case_stringified: std::string::String,
         wrapper_upper_camel_case_stringified: std::string::String,
         options_upper_camel_case_stringified: std::string::String,
         field_upper_camel_case_stringified: std::string::String,
@@ -310,6 +311,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     return Err("value.args.first() is None".to_string());
                                 }
                             };
+                            let upper_camel_case_stringified = match generate_generic_option_string(
+                                &value,
+                                "",
+                                Case::UpperCamel,
+                            ) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
                             let wrapper_upper_camel_case_stringified = match generate_generic_option_string(
                                 &value,
                                 &naming_conventions::WrapperUpperCamelCase.to_string(),
@@ -362,6 +373,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             Generic {
                                 syn_angle_bracketed_generic_arguments: value,
+                                upper_camel_case_stringified,
                                 wrapper_upper_camel_case_stringified,
                                 options_upper_camel_case_stringified,
                                 field_upper_camel_case_stringified,
@@ -1416,6 +1428,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         acc
                     }
                 );
+                syn_field_with_additional_info_fields_named.iter().for_each(|element| {
+                    if let Some(value) = &element.option_generic {
+                        acc.push_str(&format!(
+                            " check (jsonb_matches_schema('{{}}', {})),",
+                            &element.field_ident,
+                        ));
+                    }
+                });
                 let _ = acc.pop();
                 acc
             };
@@ -1424,14 +1444,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
             )
         };
+        let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = syn_field_with_additional_info_fields_named.iter().fold(vec![], |mut acc, element| {
+                if let Some(value) = &element.option_generic {
+                    let generic_ident_token_stream = {
+                        let value = &value.upper_camel_case_stringified;
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    acc.push(quote::quote!{serde_json::to_string(&schemars::schema_for!(#generic_ident_token_stream)).unwrap()});
+                }
+                acc
+            }
+        );
         quote::quote!{
             pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
-                //todo how to check if table schema to potentially create equals to actual postgresql table schema if it exists?
-                let value = #create_table_if_not_exists_double_quotes_token_stream;
-                println!("{value}");
-                let _ = sqlx::query(value)
-            	.execute(#pool_snake_case)
-            	.await.unwrap();//assuming it will be called on service start
+                let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
+                println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
+                let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await.unwrap();
+                let create_table_if_not_exists_query_stringified = format!(
+                    #create_table_if_not_exists_double_quotes_token_stream,
+                    #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
+                );
+                println!("{create_table_if_not_exists_query_stringified}");
+                let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(#pool_snake_case).await.unwrap();
             }
         }
     };
@@ -5518,7 +5553,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #ident_column_read_permission_token_stream
         #(#reexport_postgresql_sqlx_column_types_token_stream)*
         #field_token_stream
-        // #create_table_if_not_exists_function_token_stream
+        #create_table_if_not_exists_function_token_stream
 
         // #[cfg(test)]
         // mod test_try_create_many {
