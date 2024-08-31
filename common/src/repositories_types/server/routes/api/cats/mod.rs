@@ -219,7 +219,6 @@ pub struct Something {
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
     // pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
-    // pub std_primitive_i128: postgresql_crud::JsonStdPrimitiveI128,
     // pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
     // pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
     // pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
@@ -234,7 +233,6 @@ pub struct Something {
     // pub std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdPrimitiveI16,
     // pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
     // pub std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdPrimitiveI64,
-    // pub std_option_option_std_primitive_i128: postgresql_crud::JsonStdOptionOptionStdPrimitiveI128,
     // pub std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdPrimitiveU8,
     // pub std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdPrimitiveU16,
     // pub std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdPrimitiveU32,
@@ -249,7 +247,6 @@ pub struct Something {
     // pub std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdVecVecStdPrimitiveI16,
     // pub std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdVecVecStdPrimitiveI32,
     // pub std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdVecVecStdPrimitiveI64,
-    // pub std_vec_vec_std_primitive_i128: postgresql_crud::JsonStdVecVecStdPrimitiveI128,
     // pub std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdVecVecStdPrimitiveU8,
     // pub std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdVecVecStdPrimitiveU16,
     // pub std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdVecVecStdPrimitiveU32,
@@ -264,7 +261,6 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI16,
     // pub std_option_option_std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI32,
     // pub std_option_option_std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI64,
-    // pub std_option_option_std_vec_vec_std_primitive_i128: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI128,
     // pub std_option_option_std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU8,
     // pub std_option_option_std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU16,
     // pub std_option_option_std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU32,
@@ -279,7 +275,6 @@ pub struct Something {
     // pub std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI16,
     // pub std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI32,
     // pub std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI64,
-    // pub std_vec_vec_std_option_option_std_primitive_i128: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI128,
     // pub std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU8,
     // pub std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU16,
     // pub std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU32,
@@ -294,7 +289,6 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i128: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
@@ -341,10 +335,17 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
 
     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
     struct Thing {
-        #[validate(range(min = -128, max = 127))]
-        std_primitive_i8: std::primitive::i8,
-        // #[validate(range(min = -32768, max = 32767))]
-        // std_primitive_i16: std::primitive::i16,
+        pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+        pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+        pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+        pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
+        pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
+        // pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
+        // pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
+        // pub std_primitive_u64: postgresql_crud::JsonStdPrimitiveU64,
+        // pub std_primitive_u128: postgresql_crud::JsonStdPrimitiveU128,
+        // pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
+        // pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
     }
     let schema = schemars::schema_for!(Thing);
     println!("{}", serde_json::to_string_pretty(&schema).unwrap());
