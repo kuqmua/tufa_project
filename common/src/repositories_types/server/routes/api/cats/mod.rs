@@ -339,8 +339,14 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     //     std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16(16),
     // };
 
-
-    let schema = schemars::schema_for!(Something);
+    #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+    struct Thing {
+        #[validate(range(min = -128, max = 127))]
+        std_primitive_i8: std::primitive::i8,
+        // #[validate(range(min = -32768, max = 32767))]
+        // std_primitive_i16: std::primitive::i16,
+    }
+    let schema = schemars::schema_for!(Thing);
     println!("{}", serde_json::to_string_pretty(&schema).unwrap());
 }
 

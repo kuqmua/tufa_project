@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MyStruct",
+  "type": "object",
+  "properties": {
+    "readable": {
+      "type": "string",
+      "readOnly": true,
+      "default": ""
+    },
+    "writable": {
+      "type": "number",
+      "format": "float",
+      "writeOnly": true
+    },
+    "included": {
+      "type": "null"
+    }
+  },
+  "required": [
+    "writable",
+    "included"
+  ]
+}

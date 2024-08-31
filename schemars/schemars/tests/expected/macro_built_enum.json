@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OuterEnum",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "InnerStruct": {
+          "$ref": "#/$defs/InnerStruct"
+        }
+      },
+      "required": [
+        "InnerStruct"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "InnerStruct": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "x"
+      ]
+    }
+  }
+}
