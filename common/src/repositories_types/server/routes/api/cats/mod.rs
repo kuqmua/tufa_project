@@ -337,8 +337,8 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
         pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
         pub std_primitive_u64: postgresql_crud::JsonStdPrimitiveU64,
-        // pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
-        // pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
+        pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
+        pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
     }
     let schema = schemars::schema_for!(Thing);
     println!("{}", serde_json::to_string_pretty(&schema).unwrap());

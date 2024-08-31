@@ -52,12 +52,12 @@ pub struct JsonStdPrimitiveU64(
 // );
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
 pub struct JsonStdPrimitiveF32(
-    // #[validate(range(min = , max = ))]
+    #[validate(range(min = -3.40282347E+38f32, max = 3.40282347E+38f32))]//todo maybe its not correct. https://doc.rust-lang.org/std/primitive.f32.html
     pub std::primitive::f32
 );
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
 pub struct JsonStdPrimitiveF64(
-    // #[validate(range(min = , max = ))]
+    #[validate(range(min = -1.7976931348623157E+308f64, max = 1.7976931348623157E+308f64))]//todo maybe its not correct. https://doc.rust-lang.org/core/primitive.f64.html
     pub std::primitive::f64
 );
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
