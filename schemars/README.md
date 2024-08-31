@@ -1,3 +1,5 @@
+# TODO MIGRATE TO NEW VERSION. schemars = "0.8.21" does not work. this is just copy of https://github.com/GREsau/schemars/tree/5d58a4d3f04473b160987a3b84dda8db3484c75b
+
 # Schemars
 
 > [!NOTE]
