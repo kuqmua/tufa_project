@@ -306,7 +306,7 @@ pub struct Something {
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-    pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
+    // pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
     pub std_string_string: postgresql_crud::JsonStdStringString,
 }
 
@@ -353,7 +353,18 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         pub std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdPrimitiveBool,
         pub std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdStringString,
 
-        
+        // pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
+        // pub std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdVecVecStdPrimitiveI16,
+        // pub std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdVecVecStdPrimitiveI32,
+        // pub std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdVecVecStdPrimitiveI64,
+        // pub std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdVecVecStdPrimitiveU8,
+        // pub std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdVecVecStdPrimitiveU16,
+        // pub std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdVecVecStdPrimitiveU32,
+        // pub std_vec_vec_std_primitive_u64: postgresql_crud::JsonStdVecVecStdPrimitiveU64,
+        // pub std_vec_vec_std_primitive_f32: postgresql_crud::JsonStdVecVecStdPrimitiveF32,
+        // pub std_vec_vec_std_primitive_f64: postgresql_crud::JsonStdVecVecStdPrimitiveF64,
+        // pub std_vec_vec_std_primitive_bool: postgresql_crud::JsonStdVecVecStdPrimitiveBool,
+        // pub std_vec_vec_std_string_string: postgresql_crud::JsonStdVecVecStdStringString,
     }
     let schema = schemars::schema_for!(Thing);
     println!("{}", serde_json::to_string_pretty(&schema).unwrap());
@@ -2097,3 +2108,13 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
 
 // insert into jsongeneric(sqlx_types_json_t_as_postgresql_json_b_not_null)
 // values ('{"std_primitive_i8": 257, "std_primitive_i16": 2}');
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////

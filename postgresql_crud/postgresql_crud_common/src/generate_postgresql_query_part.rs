@@ -66,65 +66,35 @@ pub struct JsonStdPrimitiveBool(pub std::primitive::bool);
 pub struct JsonStdStringString(pub std::string::String);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveI8(
-    #[validate(range(min = -128i8, max = 127i8))]
-    pub std::option::Option<std::primitive::i8>
-);
+pub struct JsonStdOptionOptionStdPrimitiveI8(pub std::option::Option<JsonStdPrimitiveI8>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveI16(
-    #[validate(range(min = -32_768i16, max = 32_767i16))]
-    pub std::option::Option<std::primitive::i16>
-);
+pub struct JsonStdOptionOptionStdPrimitiveI16(pub std::option::Option<JsonStdPrimitiveI16>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveI32(
-    #[validate(range(min = -2_147_483_648i32, max = 2_147_483_647i32))]
-    pub std::option::Option<std::primitive::i32>
-);
+pub struct JsonStdOptionOptionStdPrimitiveI32(pub std::option::Option<JsonStdPrimitiveI32>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveI64(
-    #[validate(range(min = -9_223_372_036_854_775_808i64, max = 9_223_372_036_854_775_807i64))]
-    pub std::option::Option<std::primitive::i64>
-);
+pub struct JsonStdOptionOptionStdPrimitiveI64(pub std::option::Option<JsonStdPrimitiveI64>);
 //the trait `From<i128>` is not implemented for `JsonValue`, which is required by `i128: Into<JsonValue>` - schemars::JsonSchema validate range error
 // #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
 // pub struct JsonStdOptionOptionStdPrimitiveI128(pub std::option::Option<std::primitive::i128>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveU8(
-    #[validate(range(min = 0u8, max = 255u8))]
-    pub std::option::Option<std::primitive::u8>
-);
+pub struct JsonStdOptionOptionStdPrimitiveU8(pub std::option::Option<JsonStdPrimitiveU8>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveU16(
-    #[validate(range(min = 0u16, max = 65_535u16))]
-    pub std::option::Option<std::primitive::u16>
-);
+pub struct JsonStdOptionOptionStdPrimitiveU16(pub std::option::Option<JsonStdPrimitiveU16>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveU32(
-    #[validate(range(min = 0u32, max = 4_294_967_295u32))]
-    pub std::option::Option<std::primitive::u32>
-);
+pub struct JsonStdOptionOptionStdPrimitiveU32(pub std::option::Option<JsonStdPrimitiveU32>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveU64(
-    #[validate(range(min = 0u64, max = 18_446_744_073_709_551_615u64))]
-    pub std::option::Option<std::primitive::u64>
-);
+pub struct JsonStdOptionOptionStdPrimitiveU64(pub std::option::Option<JsonStdPrimitiveU64>);
 // the trait `From<u128>` is not implemented for `JsonValue`, which is required by `u128: Into<JsonValue>` - schemars::JsonSchema validate range error
 // #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
 // pub struct JsonStdOptionOptionStdPrimitiveU128(pub std::option::Option<std::primitive::u128>);
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveF32(
-    #[validate(range(min = -3.40282347E+38f32, max = 3.40282347E+38f32))]
-    pub std::option::Option<std::primitive::f32>
-);
+pub struct JsonStdOptionOptionStdPrimitiveF32(pub std::option::Option<JsonStdPrimitiveF32>);
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveF64(
-    #[validate(range(min = -1.7976931348623157E+308f64, max = 1.7976931348623157E+308f64))]
-    pub std::option::Option<std::primitive::f64>
-);
+pub struct JsonStdOptionOptionStdPrimitiveF64(pub std::option::Option<JsonStdPrimitiveF64>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
+pub struct JsonStdOptionOptionStdPrimitiveBool(pub std::option::Option<JsonStdPrimitiveBool>);
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath)]
-pub struct JsonStdOptionOptionStdStringString(pub std::option::Option<std::string::String>);
+pub struct JsonStdOptionOptionStdStringString(pub std::option::Option<JsonStdStringString>);
 
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath)]
 pub struct JsonStdVecVecStdPrimitiveI8(pub std::vec::Vec<std::primitive::i8>);
