@@ -567,15 +567,15 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
         # "std_option_option_std_vec_vec_std_option_option_std_string_string": ["one", "two", "three", null]
         # ,
 
-        "generic": {
-            "std_primitive_i16": 0,
-            "std_option_option_std_primitive_i32": 0,
-            "std_string_string": "one"
-        }
-        ,
+        # "generic": {
+        #     "std_primitive_i16": 0,
+        #     "std_option_option_std_primitive_i32": 0,
+        #     "std_string_string": "one"
+        # }
+        # ,
         "std_option_option_generic": {
             "std_primitive_i16": 0,
-            "std_option_option_std_primitive_i32": 0,
+            # "std_option_option_std_primitive_i32": 0,
             "std_string_string": "two"
         }
         # ,
@@ -1544,17 +1544,17 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     # },
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "value": [
-            # {
-            #     "std_primitive_i8": {
-            #         "value": 79
-            #     }
-            # }
-            # ,
-            # {
-            #     "std_primitive_i16": {
-            #         "value": 27
-            #     }
-            # },
+            {
+                "std_primitive_i8": {
+                    "value": 79
+                }
+            }
+            ,
+            {
+                "std_primitive_i16": {
+                    "value": 27
+                }
+            },
             # {
             #     "std_primitive_i32": {
             #         "value": 240
@@ -1998,26 +1998,26 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             {
                 "std_option_option_generic": {
                     "value": 
-                    # null
-                    [
-                        {
-                            "std_primitive_i16": {
-                                "value": 88
-                            }
-                        }
-                        ,
-                        {
-                            "std_option_option_std_primitive_i32": {
-                                "value": 55
-                            }
-                        }
-                        ,
-                        {
-                            "std_string_string": {
-                                "value": "88"
-                            }
-                        }
-                    ]
+                    null
+                    # [
+                    #     {
+                    #         "std_primitive_i16": {
+                    #             "value": 88
+                    #         }
+                    #     }
+                    #     ,
+                    #     {
+                    #         "std_option_option_std_primitive_i32": {
+                    #             "value": 55
+                    #         }
+                    #     }
+                    #     ,
+                    #     {
+                    #         "std_string_string": {
+                    #             "value": "88"
+                    #         }
+                    #     }
+                    # ]
                 }
             }
         ]

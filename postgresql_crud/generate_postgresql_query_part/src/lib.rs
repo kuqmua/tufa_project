@@ -2129,7 +2129,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString
                 => quote::quote!{
                     match value.#element_ident.0 {
-                        Some(value) => Some(value),
+                        Some(value) => Some(value.0),
                         None => None,
                     }
                 },
@@ -2148,7 +2148,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdVecVecStdStringString
-                => quote::quote!{value.#element_ident.0},
+                => quote::quote!{value.#element_ident.0.into_iter().map(|element|element.0).collect()},
 
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
@@ -2166,7 +2166,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString
                 => quote::quote!{
                     match value.#element_ident.0 {
-                        Some(value) => Some(value),
+                        Some(value) => Some(value.into_iter().map(|element|element.0).collect()),
                         None => None
                     }
                 },
@@ -2187,7 +2187,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString
                 => quote::quote!{
                     value.#element_ident.0.into_iter().map(|element|match element {
-                        Some(value) => Some(value),
+                        Some(value) => Some(value.0),
                         None => None
                     }).collect()
                 },
@@ -2209,7 +2209,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 => quote::quote!{
                     match value.#element_ident.0 {
                         Some(value) => Some(value.into_iter().map(|element|match element {
-                            Some(value) => Some(value),
+                            Some(value) => Some(value.0),
                             None => None
                         }).collect()),
                         None => None
