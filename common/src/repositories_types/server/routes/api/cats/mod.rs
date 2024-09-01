@@ -1380,25 +1380,6 @@ fn test_dd() {
     println!("{deserialized:#?}");
 }
 ///////////
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingKey,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Doggie {
-        #[eo_error_occurence]
-        doggie: DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
         SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
@@ -1585,20 +1566,6 @@ impl
     }
 }
 ///
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieKey,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
         DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
