@@ -258,6 +258,7 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
         jsonb_set_acc: &std::primitive::str,
         option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
+        is_array_object_element: std::primitive::bool,
     ) -> Result<std::string::String, T1>;
     fn bind_value_to_query<'a>(
         self,

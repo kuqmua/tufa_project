@@ -578,12 +578,20 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
             "std_option_option_std_primitive_i32": 0,
             "std_string_string": "two"
         }
+        ,
+        "std_vec_vec_generic": [
+            {
+                "std_primitive_i16": 0,
+                "std_option_option_std_primitive_i32": 0,
+                "std_string_string": "two"
+            },
+            {
+                "std_primitive_i16": 0,
+                "std_option_option_std_primitive_i32": 0,
+                "std_string_string": "two"
+            }
+        ]
         # ,
-        # "std_vec_vec_generic": [
-        #     {
-        #         "std_string_string": "sdss"
-        #     }
-        # ],
         # "std_option_option_std_vec_vec_generic": [
         #     {
         #         "std_string_string": "sdss"
@@ -1544,12 +1552,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     # },
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "value": [
-            {
-                "std_primitive_i8": {
-                    "value": 65
-                }
-            }
-            ,
+            # {
+            #     "std_primitive_i8": {
+            #         "value": 65
+            #     }
+            # }
+            # ,
             # {
             #     "std_primitive_i16": {
             #         "value": 27
@@ -1973,50 +1981,108 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             # },
 
 
+            # {
+            #     "generic": {
+            #         "value": [
+            #             {
+            #                 "std_primitive_i16": {
+            #                     "value": 55
+            #                 }
+            #             },
+            #             # {
+            #             #     "std_option_option_std_primitive_i32": {
+            #             #         "value": 5
+            #             #     }
+            #             # },
+            #             {
+            #                 "std_string_string": {
+            #                     "value": "cats"
+            #                 }
+            #             }
+            #         ]
+            #     }
+            # }
+            # ,
+            # {
+            #     "std_option_option_generic": {
+            #         "value": 
+            #         # null
+            #         [
+            #             {
+            #                 "std_primitive_i16": {
+            #                     "value": 88
+            #                 }
+            #             }
+            #             ,
+            #             {
+            #                 "std_option_option_std_primitive_i32": {
+            #                     "value": 55
+            #                 }
+            #             }
+            #             ,
+            #             {
+            #                 "std_string_string": {
+            #                     "value": "88----"
+            #                 }
+            #             }
+            #         ]
+            #     }
+            # }
+            # ,
             {
-                "generic": {
+                "std_vec_vec_generic": {
                     "value": [
-                        {
-                            "std_primitive_i16": {
-                                "value": 55
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 1
+                                }
+                            },
+                            {
+                                "std_option_option_std_primitive_i32": {
+                                    "value": 1
+                                }
+                            },
+                            {
+                                "std_string_string": {
+                                    "value": "1"
+                                }
                             }
-                        },
-                        # {
-                        #     "std_option_option_std_primitive_i32": {
-                        #         "value": 5
-                        #     }
-                        # },
-                        {
-                            "std_string_string": {
-                                "value": "cats"
+                        ],
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 2
+                                }
+                            },
+                            {
+                                "std_option_option_std_primitive_i32": {
+                                    "value": 2
+                                }
+                            },
+                            {
+                                "std_string_string": {
+                                    "value": "2"
+                                }
                             }
-                        }
-                    ]
-                }
-            }
-            ,
-            {
-                "std_option_option_generic": {
-                    "value": 
-                    # null
-                    [
-                        {
-                            "std_primitive_i16": {
-                                "value": 88
+                        ],
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_option_option_std_primitive_i32": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_string_string": {
+                                    "value": "3"
+                                }
                             }
-                        }
-                        ,
-                        {
-                            "std_option_option_std_primitive_i32": {
-                                "value": 55
-                            }
-                        }
-                        ,
-                        {
-                            "std_string_string": {
-                                "value": "88----"
-                            }
-                        }
+                        ]
                     ]
                 }
             }
