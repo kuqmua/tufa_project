@@ -1380,8 +1380,6 @@ fn test_dd() {
     println!("{deserialized:#?}");
 }
 ///////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     FieldsIsEmpty {
@@ -1587,8 +1585,6 @@ impl
     }
 }
 ///
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DoggieOptionsToUpdate(std::vec::Vec<DoggieOptionToUpdate>);
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     FieldsIsEmpty {
