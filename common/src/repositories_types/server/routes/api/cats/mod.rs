@@ -1815,6 +1815,32 @@ impl
 // FROM updated_data
 // WHERE my_table.id = updated_data.id;
 
+// update 
+//   test 
+// set 
+//   jsoncolumn = jsonb_set(
+//     jsonb_set(
+//       jsoncolumn, 
+//       '{std_vec_vec_generic,0}', 
+//       jsonb_build_object(
+//         'std_primitive_i16', '0',
+// 		'std_option_option_std_primitive_i32', '0',
+// 		'std_string_string', '0'
+//       )
+//     ), 
+//     '{std_vec_vec_generic,1}', 
+//     jsonb_build_object(
+//       'std_primitive_i16', '1',
+// 	  'std_option_option_std_primitive_i32', '1',
+// 	  'std_string_string', jsonb_set(
+//       	(jsoncolumn -> 'std_vec_vec_generic' -> 0), 
+//       	'{std_vec_vec_generic,0,std_string_string}', 
+//       	'"anotherbulshit"'
+//       )
+//     )
+//   ) 
+// where 
+//   id = 1 returning id
 
 
                 // let mut acc = std::string::String::from(jsonb_set_acc);
