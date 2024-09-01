@@ -1380,15 +1380,6 @@ fn test_dd() {
     println!("{deserialized:#?}");
 }
 ///////////
-impl error_occurence_lib::ToStdStringString for SomethingKey {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::StdPrimitiveI8 => "std_primitive_i8".to_owned(),
-            Self::Generic => "generic".to_owned(),
-            Self::StdOptionOptionGeneric => "std_option_option_generic".to_owned(),
-        }
-    }
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 enum SomethingOptionToUpdate {
     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
@@ -1608,17 +1599,6 @@ impl
     }
 }
 ///
-impl error_occurence_lib::ToStdStringString for DoggieKey {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::StdPrimitiveI16 => "std_primitive_i16".to_owned(),
-            Self::StdOptionOptionStdPrimitiveI32 => {
-                "std_option_option_std_primitive_i32".to_owned()
-            }
-            Self::StdStringString => "std_string_string".to_owned(),
-        }
-    }
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 enum DoggieOptionToUpdate {
     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
