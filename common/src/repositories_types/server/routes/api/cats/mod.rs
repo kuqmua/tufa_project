@@ -1788,6 +1788,35 @@ impl
 // 	)
 
 
+
+// WITH updated_data AS (
+//     SELECT
+//         id,  -- Assuming you have an id or some unique identifier for your rows
+//         data,
+//         -- Construct the new array with the element at the specified index
+//         CASE
+//             WHEN jsonb_array_length(data->'one') > 2 THEN
+//                 jsonb_set(
+//                     data->'one',
+//                     '{2}',
+//                     '{"five": "fivevalueupdated"}'::jsonb
+//                 )
+//             ELSE
+//                 -- If the array is shorter, extend it and then set the element at the new index
+//                 (data->'one') || jsonb_build_array(
+//                     (jsonb_build_array(NULL, NULL, NULL) -- Extend the array to have the required index
+//                     || jsonb_build_array(NULL, NULL, '{"five": "fivevalueupdated"}'::jsonb))
+//                 )
+//         END AS new_array
+//     FROM my_table
+// )
+// UPDATE my_table
+// SET data = jsonb_set(data, '{one}', updated_data.new_array)
+// FROM updated_data
+// WHERE my_table.id = updated_data.id;
+
+
+
                 // let mut acc = std::string::String::from(jsonb_set_acc);
                 let mut acc = std::string::String::default();
                 for element in &self.0 {
