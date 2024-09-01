@@ -293,7 +293,7 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    // pub generic: postgresql_crud::JsonGeneric<Doggie>,
+    pub generic: postgresql_crud::JsonGeneric<Doggie>,
     pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
     // pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
     // pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<Doggie>,
@@ -1380,26 +1380,6 @@ fn test_dd() {
     println!("{deserialized:#?}");
 }
 ///////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum SomethingKey {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8,
-    #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    Generic,
-    #[serde(rename(
-        serialize = "std_option_option_generic",
-        deserialize = "std_option_option_generic"
-    ))]
-    StdOptionOptionGeneric,
-}
 impl error_occurence_lib::ToStdStringString for SomethingKey {
     fn to_std_string_string(&self) -> std::string::String {
         match &self {
@@ -1627,29 +1607,7 @@ impl
         query
     }
 }
-//
-
-//
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum DoggieKey {
-    #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-    StdPrimitiveI16,
-    #[serde(rename(
-        serialize = "std_option_option_std_primitive_i32",
-        deserialize = "std_option_option_std_primitive_i32"
-    ))]
-    StdOptionOptionStdPrimitiveI32,
-    #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
-    StdStringString,
-}
+///
 impl error_occurence_lib::ToStdStringString for DoggieKey {
     fn to_std_string_string(&self) -> std::string::String {
         match &self {
@@ -1930,180 +1888,180 @@ impl
 
 
 //////////////////////////
-trait UpdateOneDoesContainInnerGeneric {
-    fn update_one_does_contain_inner_generic() -> std::primitive::bool;
-}
-trait UpdateOnePathToNullable {
-    fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String>;
-}
+// trait UpdateOneDoesContainInnerGeneric {
+//     fn update_one_does_contain_inner_generic() -> std::primitive::bool;
+// }
+// trait UpdateOnePathToNullable {
+//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String>;
+// }
 
-#[derive(Debug)]
-pub struct One {
-   pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-   pub std_option_option_generic_two: postgresql_crud::JsonStdOptionOptionGeneric<Two>,
-   pub generic: postgresql_crud::JsonGeneric<Two>,
-   pub std_option_option_generic_six: postgresql_crud::JsonStdOptionOptionGeneric<Six>,
-}
+// #[derive(Debug)]
+// pub struct One {
+//    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+//    pub std_option_option_generic_two: postgresql_crud::JsonStdOptionOptionGeneric<Two>,
+//    pub generic: postgresql_crud::JsonGeneric<Two>,
+//    pub std_option_option_generic_six: postgresql_crud::JsonStdOptionOptionGeneric<Six>,
+// }
 
-#[derive(Debug)]
-pub struct Two{
-    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-    pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
-    pub std_string_string: postgresql_crud::JsonStdStringString,
-    pub std_option_option_generic_three: postgresql_crud::JsonStdOptionOptionGeneric<Three>,
-    pub std_option_option_generic_four: postgresql_crud::JsonStdOptionOptionGeneric<Four>,
-}
+// #[derive(Debug)]
+// pub struct Two{
+//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+//     pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
+//     pub std_string_string: postgresql_crud::JsonStdStringString,
+//     pub std_option_option_generic_three: postgresql_crud::JsonStdOptionOptionGeneric<Three>,
+//     pub std_option_option_generic_four: postgresql_crud::JsonStdOptionOptionGeneric<Four>,
+// }
 
-#[derive(Debug)]
-pub struct Three{
-    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-    pub std_string_string: postgresql_crud::JsonStdStringString,
-}
+// #[derive(Debug)]
+// pub struct Three{
+//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+//     pub std_string_string: postgresql_crud::JsonStdStringString,
+// }
 
-#[derive(Debug)]
-pub struct Four{
-    pub std_string_string: postgresql_crud::JsonStdStringString,
-    pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Five>,
-}
+// #[derive(Debug)]
+// pub struct Four{
+//     pub std_string_string: postgresql_crud::JsonStdStringString,
+//     pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Five>,
+// }
 
-#[derive(Debug)]
-pub struct Five{
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-    pub std_string_string: postgresql_crud::JsonStdStringString,
-}
+// #[derive(Debug)]
+// pub struct Five{
+//     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+//     pub std_string_string: postgresql_crud::JsonStdStringString,
+// }
 
-#[derive(Debug)]
-pub struct Six{
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-}
+// #[derive(Debug)]
+// pub struct Six{
+//     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+// }
 
-//////
+// //////
 
-#[derive(Debug)]
-pub struct OneUpdateOneNullObjectChecker {
-   pub std_primitive_i8: std::primitive::bool,
-   pub std_option_option_generic_two: TwoUpdateOneNullObjectChecker,//if inner not contain even than check
-   pub generic: TwoUpdateOneNullObjectChecker,//if inner not contain than skip
-   pub std_option_option_generic_six: SixUpdateOneNullObjectChecker,
-}
-impl UpdateOneDoesContainInnerGeneric for OneUpdateOneNullObjectChecker {
-    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-        true
-    }
-}
-#[derive(Debug)]
-pub struct TwoUpdateOneNullObjectChecker {
-    pub std_primitive_i16: std::primitive::bool,
-    pub std_option_option_std_primitive_i32: std::primitive::bool,
-    pub std_string_string: std::primitive::bool,
-    pub std_option_option_generic_three: ThreeUpdateOneNullObjectChecker,
-    pub std_option_option_generic_four: FourUpdateOneNullObjectChecker,
-}
-impl UpdateOneDoesContainInnerGeneric for TwoUpdateOneNullObjectChecker {
-    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-        true
-    }
-}
-#[derive(Debug)]
-pub struct ThreeUpdateOneNullObjectChecker {
-    pub std_primitive_i16: std::primitive::bool,
-    pub std_string_string: std::primitive::bool,
-}
-impl UpdateOneDoesContainInnerGeneric for ThreeUpdateOneNullObjectChecker {
-    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-        false
-    }
-}
-#[derive(Debug)]
-pub struct FourUpdateOneNullObjectChecker {
-    pub std_string_string: std::primitive::bool,
-    pub std_option_option_generic: FiveUpdateOneNullObjectChecker,
-}
-impl UpdateOneDoesContainInnerGeneric for FourUpdateOneNullObjectChecker {
-    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-        true
-    }
-}
-// impl UpdateOnePathToNullable for FourUpdateOneNullObjectChecker {
-//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
-//         let mut vec = vec![];
-//         for element in &self.std_option_option_generic.update_one_path_to_nullable() {
-//             vec.push(format!("std_option_option_generic->{element}"));
-//         }
-//         vec.push("std_option_option_generic");
-//         vec
+// #[derive(Debug)]
+// pub struct OneUpdateOneNullObjectChecker {
+//    pub std_primitive_i8: std::primitive::bool,
+//    pub std_option_option_generic_two: TwoUpdateOneNullObjectChecker,//if inner not contain even than check
+//    pub generic: TwoUpdateOneNullObjectChecker,//if inner not contain than skip
+//    pub std_option_option_generic_six: SixUpdateOneNullObjectChecker,
+// }
+// impl UpdateOneDoesContainInnerGeneric for OneUpdateOneNullObjectChecker {
+//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+//         true
 //     }
 // }
-#[derive(Debug)]
-pub struct FiveUpdateOneNullObjectChecker {
-    pub std_primitive_i8: std::primitive::bool,
-    pub std_string_string: std::primitive::bool,
-}
-impl UpdateOneDoesContainInnerGeneric for FiveUpdateOneNullObjectChecker {
-    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-        false
-    }
-}
-impl UpdateOnePathToNullable for FiveUpdateOneNullObjectChecker {
-    fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
-        vec![]
-    }
-}
-#[derive(Debug)]
-pub struct SixUpdateOneNullObjectChecker {
-    pub std_primitive_i8: std::primitive::bool,
-}
-impl UpdateOneDoesContainInnerGeneric for SixUpdateOneNullObjectChecker {
-    fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-        false
-    }
-}
-impl UpdateOnePathToNullable for SixUpdateOneNullObjectChecker {
-    fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
-        vec![]
-    }
-}
+// #[derive(Debug)]
+// pub struct TwoUpdateOneNullObjectChecker {
+//     pub std_primitive_i16: std::primitive::bool,
+//     pub std_option_option_std_primitive_i32: std::primitive::bool,
+//     pub std_string_string: std::primitive::bool,
+//     pub std_option_option_generic_three: ThreeUpdateOneNullObjectChecker,
+//     pub std_option_option_generic_four: FourUpdateOneNullObjectChecker,
+// }
+// impl UpdateOneDoesContainInnerGeneric for TwoUpdateOneNullObjectChecker {
+//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+//         true
+//     }
+// }
+// #[derive(Debug)]
+// pub struct ThreeUpdateOneNullObjectChecker {
+//     pub std_primitive_i16: std::primitive::bool,
+//     pub std_string_string: std::primitive::bool,
+// }
+// impl UpdateOneDoesContainInnerGeneric for ThreeUpdateOneNullObjectChecker {
+//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+//         false
+//     }
+// }
+// #[derive(Debug)]
+// pub struct FourUpdateOneNullObjectChecker {
+//     pub std_string_string: std::primitive::bool,
+//     pub std_option_option_generic: FiveUpdateOneNullObjectChecker,
+// }
+// impl UpdateOneDoesContainInnerGeneric for FourUpdateOneNullObjectChecker {
+//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+//         true
+//     }
+// }
+// // impl UpdateOnePathToNullable for FourUpdateOneNullObjectChecker {
+// //     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
+// //         let mut vec = vec![];
+// //         for element in &self.std_option_option_generic.update_one_path_to_nullable() {
+// //             vec.push(format!("std_option_option_generic->{element}"));
+// //         }
+// //         vec.push("std_option_option_generic");
+// //         vec
+// //     }
+// // }
+// #[derive(Debug)]
+// pub struct FiveUpdateOneNullObjectChecker {
+//     pub std_primitive_i8: std::primitive::bool,
+//     pub std_string_string: std::primitive::bool,
+// }
+// impl UpdateOneDoesContainInnerGeneric for FiveUpdateOneNullObjectChecker {
+//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+//         false
+//     }
+// }
+// impl UpdateOnePathToNullable for FiveUpdateOneNullObjectChecker {
+//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
+//         vec![]
+//     }
+// }
+// #[derive(Debug)]
+// pub struct SixUpdateOneNullObjectChecker {
+//     pub std_primitive_i8: std::primitive::bool,
+// }
+// impl UpdateOneDoesContainInnerGeneric for SixUpdateOneNullObjectChecker {
+//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
+//         false
+//     }
+// }
+// impl UpdateOnePathToNullable for SixUpdateOneNullObjectChecker {
+//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
+//         vec![]
+//     }
+// }
 
-fn emulate_route() {
-    let f = OneUpdateOneNullObjectChecker {
-        std_primitive_i8: false,
-        std_option_option_generic_two: TwoUpdateOneNullObjectChecker {
-            std_primitive_i16: false,
-            std_option_option_std_primitive_i32: false,
-            std_string_string: false,
-            std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
-                std_primitive_i16: false,
-                std_string_string: false,
-            },
-            std_option_option_generic_four: FourUpdateOneNullObjectChecker {
-                std_string_string: false,
-                std_option_option_generic: FiveUpdateOneNullObjectChecker {
-                    std_primitive_i8: false,
-                    std_string_string: false,
-                },
-            }
-        },
-        generic: TwoUpdateOneNullObjectChecker {
-            std_primitive_i16: false,
-            std_option_option_std_primitive_i32: false,
-            std_string_string: false,
-            std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
-                std_primitive_i16: false,
-                std_string_string: false,
-            },
-            std_option_option_generic_four: FourUpdateOneNullObjectChecker {
-                std_string_string: false,
-                std_option_option_generic: FiveUpdateOneNullObjectChecker {
-                    std_primitive_i8: false,
-                    std_string_string: false,
-                },
-            }
-        },
-        std_option_option_generic_six: SixUpdateOneNullObjectChecker {
-            std_primitive_i8: false,
-        }
-     };
-}
+// fn emulate_route() {
+//     let f = OneUpdateOneNullObjectChecker {
+//         std_primitive_i8: false,
+//         std_option_option_generic_two: TwoUpdateOneNullObjectChecker {
+//             std_primitive_i16: false,
+//             std_option_option_std_primitive_i32: false,
+//             std_string_string: false,
+//             std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
+//                 std_primitive_i16: false,
+//                 std_string_string: false,
+//             },
+//             std_option_option_generic_four: FourUpdateOneNullObjectChecker {
+//                 std_string_string: false,
+//                 std_option_option_generic: FiveUpdateOneNullObjectChecker {
+//                     std_primitive_i8: false,
+//                     std_string_string: false,
+//                 },
+//             }
+//         },
+//         generic: TwoUpdateOneNullObjectChecker {
+//             std_primitive_i16: false,
+//             std_option_option_std_primitive_i32: false,
+//             std_string_string: false,
+//             std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
+//                 std_primitive_i16: false,
+//                 std_string_string: false,
+//             },
+//             std_option_option_generic_four: FourUpdateOneNullObjectChecker {
+//                 std_string_string: false,
+//                 std_option_option_generic: FiveUpdateOneNullObjectChecker {
+//                     std_primitive_i8: false,
+//                     std_string_string: false,
+//                 },
+//             }
+//         },
+//         std_option_option_generic_six: SixUpdateOneNullObjectChecker {
+//             std_primitive_i8: false,
+//         }
+//      };
+// }
 /////////end block code for trying implement partial
 
 
