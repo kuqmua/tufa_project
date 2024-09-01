@@ -252,13 +252,22 @@ pub trait StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysConta
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self;
 }
 
+#[derive(Debug, Clone)]
+pub enum ArrayObjectElementOrSimple {
+    ArrayObjectElement {
+        jsonb_set_path: std::string::String,
+        index: usize,
+    },
+    Simple
+}
+
 pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
     fn try_generate_bind_increments(
         &self,
         jsonb_set_acc: &std::primitive::str,
         option_path: std::option::Option<&std::primitive::str>,
         increment: &mut std::primitive::u64,
-        is_array_object_element: std::primitive::bool,
+        is_array_object_element: ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, T1>;
     fn bind_value_to_query<'a>(
         self,

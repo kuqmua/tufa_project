@@ -544,6 +544,7 @@ pub use generate_postgresql_query_part::GeneratePostgresqlQueryPart;
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPart;
 pub use postgresql_crud_common::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToUpdate;
+pub use postgresql_crud_common::generate_postgresql_query_part::ArrayObjectElementOrSimple;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI16;

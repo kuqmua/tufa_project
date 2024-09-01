@@ -2035,12 +2035,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                         [
                             {
                                 "std_primitive_i16": {
-                                    "value": 1
+                                    "value": 2
                                 }
                             },
                             {
                                 "std_option_option_std_primitive_i32": {
-                                    "value": 1
+                                    "value": 14
                                 }
                             },
                             {
@@ -2080,6 +2080,74 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                             {
                                 "std_string_string": {
                                     "value": "3"
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_option_option_std_primitive_i32": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_string_string": {
+                                    "value": "3"
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_option_option_std_primitive_i32": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_string_string": {
+                                    "value": "3"
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_option_option_std_primitive_i32": {
+                                    "value": 3
+                                }
+                            },
+                            {
+                                "std_string_string": {
+                                    "value": "3"
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 34
+                                }
+                            },
+                            {
+                                "std_option_option_std_primitive_i32": {
+                                    "value": 34
+                                }
+                            },
+                            {
+                                "std_string_string": {
+                                    "value": "34"
                                 }
                             }
                         ]
