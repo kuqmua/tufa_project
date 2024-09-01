@@ -1381,18 +1381,6 @@ fn test_dd() {
 }
 ///////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum SomethingOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
-    #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    Generic(postgresql_crud::Value<DoggieOptionsToUpdate>),
-    #[serde(rename(
-        serialize = "std_option_option_generic",
-        deserialize = "std_option_option_generic"
-    ))]
-    StdOptionOptionGeneric(postgresql_crud::Value<std::option::Option<DoggieOptionsToUpdate>>),
-}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
@@ -1599,20 +1587,6 @@ impl
     }
 }
 ///
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum DoggieOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-    StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>),
-    #[serde(rename(
-        serialize = "std_option_option_std_primitive_i32",
-        deserialize = "std_option_option_std_primitive_i32"
-    ))]
-    StdOptionOptionStdPrimitiveI32(
-        postgresql_crud::Value<std::option::Option<std::primitive::i32>>,
-    ),
-    #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
-    StdStringString(postgresql_crud::Value<std::string::String>),
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DoggieOptionsToUpdate(std::vec::Vec<DoggieOptionToUpdate>);
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
