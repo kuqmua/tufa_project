@@ -264,3 +264,83 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
+
+//
+// pub enum JsonArrayUpdate<T> {
+//     AddElements,
+//     RemoveFromStart
+//     RemoveFromEnd
+//     //Where 
+// }
+/////////////////
+
+//update by index (dont want to support)
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//     jsonb_set(
+//         jsoncolumn,
+//         '{one,0}',
+//         '{"two": "twovalue1updated", "three": "threevalue1updated"}',
+//         true
+//     ),
+//     '{one,1,three}',
+//     '"threevalue2updated"',
+//     true
+// )
+// WHERE id = 1 returning id;
+
+//update adding one element
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//         jsoncolumn,
+//         '{one}',
+// 		(jsoncolumn->'one') || '{"two": "20", "three": "20"}'
+//     )
+// WHERE id = 1 returning id;
+
+
+
+
+
+// remove first two elements
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//     jsoncolumn,
+//     '{one}',
+//     COALESCE(
+//         (
+//             SELECT jsonb_agg(elem)
+//             FROM (
+//                 SELECT elem
+//                 FROM jsonb_array_elements(jsoncolumn->'one') WITH ORDINALITY arr(elem, ord)
+//                 WHERE ord > 2  -- Exclude the first element (ordinal 1)
+//             ) sub
+//         ),
+//         '[]'::jsonb  -- Default to an empty array if the result is NULL
+//     )
+// )
+// WHERE id = 1 returning id;
+
+// remove two last elements
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//     jsoncolumn,
+//     '{one}',
+//     COALESCE(
+//         (
+//             SELECT jsonb_agg(elem)
+//             FROM (
+//                 SELECT elem
+//                 FROM jsonb_array_elements(jsoncolumn->'one') WITH ORDINALITY arr(elem, ord)
+//                 WHERE ord <= (SELECT count(*) FROM jsonb_array_elements(jsoncolumn->'one')) - 2
+//             ) sub
+//         ),
+//         '[]'::jsonb  -- Default to an empty array if no elements are left
+//     )
+// )
+// WHERE id = 1 returning id;
+//
