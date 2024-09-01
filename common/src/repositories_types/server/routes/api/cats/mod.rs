@@ -330,87 +330,6 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     // #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
     // struct Thing {
     //     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-    //     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-    //     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-    //     pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
-    //     pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
-    //     pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
-    //     pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
-    //     pub std_primitive_u64: postgresql_crud::JsonStdPrimitiveU64,
-    //     pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
-    //     pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
-
-    //     pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
-    //     pub std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdPrimitiveI16,
-    //     pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
-    //     pub std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdPrimitiveI64,
-    //     pub std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdPrimitiveU8,
-    //     pub std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdPrimitiveU16,
-    //     pub std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdPrimitiveU32,
-    //     pub std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdPrimitiveU64,
-    //     pub std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdPrimitiveF32,
-    //     pub std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdPrimitiveF64,
-    //     pub std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdPrimitiveBool,
-    //     pub std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdStringString,
-
-    //     pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
-    //     pub std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdVecVecStdPrimitiveI16,
-    //     pub std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdVecVecStdPrimitiveI32,
-    //     pub std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdVecVecStdPrimitiveI64,
-    //     pub std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdVecVecStdPrimitiveU8,
-    //     pub std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdVecVecStdPrimitiveU16,
-    //     pub std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdVecVecStdPrimitiveU32,
-    //     pub std_vec_vec_std_primitive_u64: postgresql_crud::JsonStdVecVecStdPrimitiveU64,
-    //     pub std_vec_vec_std_primitive_f32: postgresql_crud::JsonStdVecVecStdPrimitiveF32,
-    //     pub std_vec_vec_std_primitive_f64: postgresql_crud::JsonStdVecVecStdPrimitiveF64,
-    //     pub std_vec_vec_std_primitive_bool: postgresql_crud::JsonStdVecVecStdPrimitiveBool,
-    //     pub std_vec_vec_std_string_string: postgresql_crud::JsonStdVecVecStdStringString,
-
-    //     pub std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8,
-    //     pub std_option_option_std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI16,
-    //     pub std_option_option_std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI32,
-    //     pub std_option_option_std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI64,
-    //     pub std_option_option_std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU8,
-    //     pub std_option_option_std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU16,
-    //     pub std_option_option_std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU32,
-    //     pub std_option_option_std_vec_vec_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU64,
-    //     pub std_option_option_std_vec_vec_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveF32,
-    //     pub std_option_option_std_vec_vec_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveF64,
-    //     pub std_option_option_std_vec_vec_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveBool,
-    //     pub std_option_option_std_vec_vec_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdStringString,
-
-    //     pub std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8,
-    //     pub std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI16,
-    //     pub std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI32,
-    //     pub std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI64,
-    //     pub std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU8,
-    //     pub std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU16,
-    //     pub std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU32,
-    //     pub std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU64,
-    //     pub std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveF32,
-    //     pub std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveF64,
-    //     pub std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveBool,
-    //     pub std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdVecVecStdOptionOptionStdStringString,
-
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
-    //     pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
-
-    //     pub generic: postgresql_crud::JsonGeneric<Doggie>,
-    //     pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
-    //     pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
-    //     pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<Doggie>,
-    //     pub std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdVecVecStdOptionOptionGeneric<Doggie>,
-    //     pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
     // }
     // let schema = schemars::schema_for!(Thing);
     // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
@@ -1378,179 +1297,567 @@ fn test_dd() {
     let deserialized: SomethingOptionsToUpdate = serde_json::from_str(&serialized).unwrap();
     println!("{deserialized:#?}");
 }
-//////////////////////////
-// trait UpdateOneDoesContainInnerGeneric {
-//     fn update_one_does_contain_inner_generic() -> std::primitive::bool;
-// }
-// trait UpdateOnePathToNullable {
-//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String>;
-// }
 
-// #[derive(Debug)]
-// pub struct One {
-//    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-//    pub std_option_option_generic_two: postgresql_crud::JsonStdOptionOptionGeneric<Two>,
-//    pub generic: postgresql_crud::JsonGeneric<Two>,
-//    pub std_option_option_generic_six: postgresql_crud::JsonStdOptionOptionGeneric<Six>,
-// }
 
-// #[derive(Debug)]
-// pub struct Two{
-//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-//     pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
-//     pub std_string_string: postgresql_crud::JsonStdStringString,
-//     pub std_option_option_generic_three: postgresql_crud::JsonStdOptionOptionGeneric<Three>,
-//     pub std_option_option_generic_four: postgresql_crud::JsonStdOptionOptionGeneric<Four>,
+//////////
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde :: Serialize,
+//     serde :: Deserialize,
+//     utoipa :: ToSchema,
+//     schemars :: JsonSchema,
+// )]
+// pub enum SomethingKey {
+//     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+//     StdPrimitiveI8,
+//     #[serde(rename(serialize = "generic", deserialize = "generic"))]
+//     Generic,
+//     #[serde(rename(
+//         serialize = "std_option_option_generic",
+//         deserialize = "std_option_option_generic"
+//     ))]
+//     StdOptionOptionGeneric,
+//     #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
+//     StdVecVecGeneric,
 // }
-
-// #[derive(Debug)]
-// pub struct Three{
-//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-//     pub std_string_string: postgresql_crud::JsonStdStringString,
-// }
-
-// #[derive(Debug)]
-// pub struct Four{
-//     pub std_string_string: postgresql_crud::JsonStdStringString,
-//     pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Five>,
-// }
-
-// #[derive(Debug)]
-// pub struct Five{
-//     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-//     pub std_string_string: postgresql_crud::JsonStdStringString,
-// }
-
-// #[derive(Debug)]
-// pub struct Six{
-//     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-// }
-
-// //////
-
-// #[derive(Debug)]
-// pub struct OneUpdateOneNullObjectChecker {
-//    pub std_primitive_i8: std::primitive::bool,
-//    pub std_option_option_generic_two: TwoUpdateOneNullObjectChecker,//if inner not contain even than check
-//    pub generic: TwoUpdateOneNullObjectChecker,//if inner not contain than skip
-//    pub std_option_option_generic_six: SixUpdateOneNullObjectChecker,
-// }
-// impl UpdateOneDoesContainInnerGeneric for OneUpdateOneNullObjectChecker {
-//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-//         true
-//     }
-// }
-// #[derive(Debug)]
-// pub struct TwoUpdateOneNullObjectChecker {
-//     pub std_primitive_i16: std::primitive::bool,
-//     pub std_option_option_std_primitive_i32: std::primitive::bool,
-//     pub std_string_string: std::primitive::bool,
-//     pub std_option_option_generic_three: ThreeUpdateOneNullObjectChecker,
-//     pub std_option_option_generic_four: FourUpdateOneNullObjectChecker,
-// }
-// impl UpdateOneDoesContainInnerGeneric for TwoUpdateOneNullObjectChecker {
-//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-//         true
-//     }
-// }
-// #[derive(Debug)]
-// pub struct ThreeUpdateOneNullObjectChecker {
-//     pub std_primitive_i16: std::primitive::bool,
-//     pub std_string_string: std::primitive::bool,
-// }
-// impl UpdateOneDoesContainInnerGeneric for ThreeUpdateOneNullObjectChecker {
-//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-//         false
-//     }
-// }
-// #[derive(Debug)]
-// pub struct FourUpdateOneNullObjectChecker {
-//     pub std_string_string: std::primitive::bool,
-//     pub std_option_option_generic: FiveUpdateOneNullObjectChecker,
-// }
-// impl UpdateOneDoesContainInnerGeneric for FourUpdateOneNullObjectChecker {
-//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-//         true
-//     }
-// }
-// // impl UpdateOnePathToNullable for FourUpdateOneNullObjectChecker {
-// //     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
-// //         let mut vec = vec![];
-// //         for element in &self.std_option_option_generic.update_one_path_to_nullable() {
-// //             vec.push(format!("std_option_option_generic->{element}"));
-// //         }
-// //         vec.push("std_option_option_generic");
-// //         vec
-// //     }
-// // }
-// #[derive(Debug)]
-// pub struct FiveUpdateOneNullObjectChecker {
-//     pub std_primitive_i8: std::primitive::bool,
-//     pub std_string_string: std::primitive::bool,
-// }
-// impl UpdateOneDoesContainInnerGeneric for FiveUpdateOneNullObjectChecker {
-//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-//         false
-//     }
-// }
-// impl UpdateOnePathToNullable for FiveUpdateOneNullObjectChecker {
-//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
-//         vec![]
-//     }
-// }
-// #[derive(Debug)]
-// pub struct SixUpdateOneNullObjectChecker {
-//     pub std_primitive_i8: std::primitive::bool,
-// }
-// impl UpdateOneDoesContainInnerGeneric for SixUpdateOneNullObjectChecker {
-//     fn update_one_does_contain_inner_generic() -> std::primitive::bool {
-//         false
-//     }
-// }
-// impl UpdateOnePathToNullable for SixUpdateOneNullObjectChecker {
-//     fn update_one_path_to_nullable(&self) -> std::vec::Vec<std::string::String> {
-//         vec![]
-//     }
-// }
-
-// fn emulate_route() {
-//     let f = OneUpdateOneNullObjectChecker {
-//         std_primitive_i8: false,
-//         std_option_option_generic_two: TwoUpdateOneNullObjectChecker {
-//             std_primitive_i16: false,
-//             std_option_option_std_primitive_i32: false,
-//             std_string_string: false,
-//             std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
-//                 std_primitive_i16: false,
-//                 std_string_string: false,
-//             },
-//             std_option_option_generic_four: FourUpdateOneNullObjectChecker {
-//                 std_string_string: false,
-//                 std_option_option_generic: FiveUpdateOneNullObjectChecker {
-//                     std_primitive_i8: false,
-//                     std_string_string: false,
-//                 },
-//             }
-//         },
-//         generic: TwoUpdateOneNullObjectChecker {
-//             std_primitive_i16: false,
-//             std_option_option_std_primitive_i32: false,
-//             std_string_string: false,
-//             std_option_option_generic_three: ThreeUpdateOneNullObjectChecker {
-//                 std_primitive_i16: false,
-//                 std_string_string: false,
-//             },
-//             std_option_option_generic_four: FourUpdateOneNullObjectChecker {
-//                 std_string_string: false,
-//                 std_option_option_generic: FiveUpdateOneNullObjectChecker {
-//                     std_primitive_i8: false,
-//                     std_string_string: false,
-//                 },
-//             }
-//         },
-//         std_option_option_generic_six: SixUpdateOneNullObjectChecker {
-//             std_primitive_i8: false,
+// impl error_occurence_lib::ToStdStringString for SomethingKey {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         match &self {
+//             Self::StdPrimitiveI8 => "std_primitive_i8".to_owned(),
+//             Self::Generic => "generic".to_owned(),
+//             Self::StdOptionOptionGeneric => "std_option_option_generic".to_owned(),
+//             Self::StdVecVecGeneric => "std_vec_vec_generic".to_owned(),
 //         }
-//      };
+//     }
 // }
-/////////end block code for trying implement partial
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// enum SomethingOptionToUpdate {
+//     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+//     StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
+//     #[serde(rename(serialize = "generic", deserialize = "generic"))]
+//     Generic(postgresql_crud::Value<DoggieOptionsToUpdate>),
+//     #[serde(rename(
+//         serialize = "std_option_option_generic",
+//         deserialize = "std_option_option_generic"
+//     ))]
+//     StdOptionOptionGeneric(postgresql_crud::Value<std::option::Option<DoggieOptionsToUpdate>>),
+//     #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
+//     StdVecVecGeneric(postgresql_crud::Value<std::vec::Vec<DoggieOptions>>),
+// }
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
+//     FieldsIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueField {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: SomethingKey,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     CheckedAdd {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Doggie {
+//         #[eo_error_occurence]
+//         doggie: DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl
+//     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
+//         SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+//     > for SomethingOptionsToUpdate
+// {
+//     fn try_generate_bind_increments(
+//         &self,
+//         jsonb_set_acc: &std::primitive::str,
+//         option_path: std::option::Option<&std::primitive::str>,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
+//     {
+//         if self.0.is_empty() {
+//             return Err(
+//                 SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 },
+//             );
+//         }
+//         {
+//             let mut acc = vec![];
+//             for element in &self.0 {
+//                 match element {
+//                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
+//                         let value = SomethingKey::StdPrimitiveI8;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                     SomethingOptionToUpdate::Generic(_) => {
+//                         let value = SomethingKey::Generic;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                     SomethingOptionToUpdate::StdOptionOptionGeneric(_) => {
+//                         let value = SomethingKey::StdOptionOptionGeneric;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                     SomethingOptionToUpdate::StdVecVecGeneric(_) => {
+//                         let value = SomethingKey::StdVecVecGeneric;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         let mut acc = std::string::String::from(jsonb_set_acc);
+//         let previous_path = match &option_path {
+//             Some(value) => format!("{value},"),
+//             None => std::string::String::default(),
+//         };
+//         for element in &self.0 {
+//             match &element {
+//                 SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
+//                     Some(value) => {
+//                         *increment = value;
+//                         acc =
+//                             format!
+//                             ("jsonb_set({acc},'{{{previous_path}std_primitive_i8}}',${increment})");
+//                     }
+//                     None => {
+//                         return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: CheckedAdd
+//                             {
+//                                 code_occurence : error_occurence_lib :: code_occurence! (),
+//                             },);
+//                     }
+//                 },
+//                 SomethingOptionToUpdate::Generic(value) => {
+//                     match value
+//                         .value
+//                         .try_generate_bind_increments(&acc, Some("generic"), increment)
+//                     {
+//                         Ok(value) => {
+//                             acc = value;
+//                         }
+//                         Err(error) => {
+//                             return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: Doggie
+//                             {
+//                                 doggie : error, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         }
+//                     }
+//                 }
+//                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => match &value.value {
+//                     Some(value) => {
+//                         match value.try_generate_bind_increments(
+//                             &acc,
+//                             Some("std_option_option_generic"),
+//                             increment,
+//                         ) {
+//                             Ok(value) => {
+//                                 acc = value;
+//                             }
+//                             Err(error) => {
+//                                 return
+//                                     Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                                     :: Doggie
+//                                     {
+//                                         doggie : error, code_occurence : error_occurence_lib ::
+//                                         code_occurence! (),
+//                                     });
+//                             }
+//                         }
+//                     }
+//                     None => match increment.checked_add(1) {
+//                         Some(value) => {
+//                             *increment = value;
+//                             acc = format!
+//                                     ("jsonb_set({acc},'{{{previous_path}std_option_option_generic}}',${increment})");
+//                         }
+//                         None => {
+//                             return
+//                                     Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                                     :: CheckedAdd
+//                                     {
+//                                         code_occurence : error_occurence_lib :: code_occurence! (),
+//                                     });
+//                         }
+//                     },
+//                 },
+//                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
+//                     match value.value.try_generate_bind_increments(
+//                         &acc,
+//                         Some("std_vec_vec_generic"),
+//                         increment,
+//                     ) {
+//                         Ok(value) => {
+//                             acc = value;
+//                         }
+//                         Err(error) => {
+//                             return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: Doggie
+//                             {
+//                                 doggie : error, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         Ok(acc)
+//     }
+//     fn bind_value_to_query<'a>(
+//         self,
+//         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         for element in self.0 {
+//             match element {
+//                 SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+//                     query = query.bind(sqlx::types::Json(value.value));
+//                 }
+//                 SomethingOptionToUpdate::Generic(value) => {
+//                     query = value.value.bind_value_to_query(query);
+//                 }
+//                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => match value.value {
+//                     Some(value) => {
+//                         query = value.bind_value_to_query(query);
+//                     }
+//                     None => {
+//                         query = query.bind(sqlx::types::Json(
+//                             None::<std::option::Option<SomethingOptionsToUpdate>>,
+//                         ));
+//                     }
+//                 },
+//                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
+//                     query = value.value.bind_value_to_query(query);
+//                 }
+//             }
+//         }
+//         query
+//     }
+// }
+// ////
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde :: Serialize,
+//     serde :: Deserialize,
+//     utoipa :: ToSchema,
+//     schemars :: JsonSchema,
+// )]
+// pub enum DoggieKey {
+//     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
+//     StdPrimitiveI16,
+//     #[serde(rename(
+//         serialize = "std_option_option_std_primitive_i32",
+//         deserialize = "std_option_option_std_primitive_i32"
+//     ))]
+//     StdOptionOptionStdPrimitiveI32,
+//     #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
+//     StdStringString,
+// }
+// impl error_occurence_lib::ToStdStringString for DoggieKey {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         match &self {
+//             Self::StdPrimitiveI16 => "std_primitive_i16".to_owned(),
+//             Self::StdOptionOptionStdPrimitiveI32 => {
+//                 "std_option_option_std_primitive_i32".to_owned()
+//             }
+//             Self::StdStringString => "std_string_string".to_owned(),
+//         }
+//     }
+// }
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// enum DoggieOptionToUpdate {
+//     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
+//     StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>),
+//     #[serde(rename(
+//         serialize = "std_option_option_std_primitive_i32",
+//         deserialize = "std_option_option_std_primitive_i32"
+//     ))]
+//     StdOptionOptionStdPrimitiveI32(
+//         postgresql_crud::Value<std::option::Option<std::primitive::i32>>,
+//     ),
+//     #[serde(rename(serialize = "std_string_string", deserialize = "std_string_string"))]
+//     StdStringString(postgresql_crud::Value<std::string::String>),
+// }
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct DoggieOptionsToUpdate(std::vec::Vec<DoggieOptionToUpdate>);
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
+//     FieldsIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueField {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: DoggieKey,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     CheckedAdd {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl
+//     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
+//         DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+//     > for DoggieOptionsToUpdate
+// {
+//     fn try_generate_bind_increments(
+//         &self,
+//         jsonb_set_acc: &std::primitive::str,
+//         option_path: std::option::Option<&std::primitive::str>,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<std::string::String, DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+//         if self.0.is_empty() {
+//             return Err(
+//                 DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 },
+//             );
+//         }
+//         {
+//             let mut acc = vec![];
+//             for element in &self.0 {
+//                 match element {
+//                     DoggieOptionToUpdate::StdPrimitiveI16(_) => {
+//                         let value = DoggieKey::StdPrimitiveI16;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                     DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(_) => {
+//                         let value = DoggieKey::StdOptionOptionStdPrimitiveI32;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                     DoggieOptionToUpdate::StdStringString(_) => {
+//                         let value = DoggieKey::StdStringString;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         let mut acc = std::string::String::from(jsonb_set_acc);
+//         let previous_path = match &option_path {
+//             Some(value) => format!("{value},"),
+//             None => std::string::String::default(),
+//         };
+//         for element in &self.0 {
+//             match &element {
+//                 DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
+//                     Some(value) => {
+//                         *increment = value;
+//                         acc = format!(
+//                             "jsonb_set({acc},'{{{previous_path}std_primitive_i16}}',${increment})"
+//                         );
+//                     }
+//                     None => {
+//                         return Err(
+//                             DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             },
+//                         );
+//                     }
+//                 },
+//                 DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(_) => {
+//                     match increment.checked_add(1) {
+//                         Some(value) => {
+//                             *increment = value;
+//                             acc = format!
+//                             ("jsonb_set({acc},'{{{previous_path}std_option_option_std_primitive_i32}}',${increment})");
+//                         }
+//                         None => {
+//                             return
+//                             Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: CheckedAdd
+//                             {
+//                                 code_occurence : error_occurence_lib :: code_occurence! (),
+//                             },);
+//                         }
+//                     }
+//                 }
+//                 DoggieOptionToUpdate::StdStringString(_) => match increment.checked_add(1) {
+//                     Some(value) => {
+//                         *increment = value;
+//                         acc = format!(
+//                             "jsonb_set({acc},'{{{previous_path}std_string_string}}',${increment})"
+//                         );
+//                     }
+//                     None => {
+//                         return Err(
+//                             DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             },
+//                         );
+//                     }
+//                 },
+//             }
+//         }
+//         Ok(acc)
+//     }
+//     fn bind_value_to_query<'a>(
+//         self,
+//         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         for element in self.0 {
+//             match element {
+//                 DoggieOptionToUpdate::StdPrimitiveI16(value) => {
+//                     query = query.bind(sqlx::types::Json(value.value));
+//                 }
+//                 DoggieOptionToUpdate::StdOptionOptionStdPrimitiveI32(value) => {
+//                     query = query.bind(sqlx::types::Json(value.value));
+//                 }
+//                 DoggieOptionToUpdate::StdStringString(value) => {
+//                     query = query.bind(sqlx::types::Json(value.value));
+//                 }
+//             }
+//         }
+//         query
+//     }
+// }
+
+/////////////////
+
+//update by index (dont want to support)
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//     jsonb_set(
+//         jsoncolumn,
+//         '{one,0}',
+//         '{"two": "twovalue1updated", "three": "threevalue1updated"}',
+//         true
+//     ),
+//     '{one,1,three}',
+//     '"threevalue2updated"',
+//     true
+// )
+// WHERE id = 1 returning id;
+
+//update adding one element
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//         jsoncolumn,
+//         '{one}',
+// 		(jsoncolumn->'one') || '{"two": "20", "three": "20"}'
+//     )
+// WHERE id = 1 returning id;
+
+
+
+
+
+// remove first two elements
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//     jsoncolumn,
+//     '{one}',
+//     COALESCE(
+//         (
+//             SELECT jsonb_agg(elem)
+//             FROM (
+//                 SELECT elem
+//                 FROM jsonb_array_elements(jsoncolumn->'one') WITH ORDINALITY arr(elem, ord)
+//                 WHERE ord > 2  -- Exclude the first element (ordinal 1)
+//             ) sub
+//         ),
+//         '[]'::jsonb  -- Default to an empty array if the result is NULL
+//     )
+// )
+// WHERE id = 1 returning id;
+
+// remove two last elements
+
+// UPDATE test
+// SET jsoncolumn = jsonb_set(
+//     jsoncolumn,
+//     '{one}',
+//     COALESCE(
+//         (
+//             SELECT jsonb_agg(elem)
+//             FROM (
+//                 SELECT elem
+//                 FROM jsonb_array_elements(jsoncolumn->'one') WITH ORDINALITY arr(elem, ord)
+//                 WHERE ord <= (SELECT count(*) FROM jsonb_array_elements(jsoncolumn->'one')) - 2
+//             ) sub
+//         ),
+//         '[]'::jsonb  -- Default to an empty array if no elements are left
+//     )
+// )
+// WHERE id = 1 returning id;
