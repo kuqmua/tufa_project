@@ -264,8 +264,9 @@ pub enum ArrayObjectElementOrSimple {
 pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
     fn try_generate_bind_increments(
         &self,
-        jsonb_set_acc: &std::primitive::str,
-        option_path: std::option::Option<&std::primitive::str>,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
         is_array_object_element: ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, T1>;
@@ -353,4 +354,3 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
 //     )
 // )
 // WHERE id = 1 returning id;
-//

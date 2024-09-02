@@ -2045,7 +2045,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                         [
                             {
                                 "std_primitive_i16": {
-                                    "value": 150
+                                    "value": 22
                                 }
                             },
                             {
@@ -2053,13 +2053,51 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                                     "value": [
                                         {
                                             "std_primitive_i32": {
-                                                "value": 200
+                                                "value": 888
                                             }
                                         }
                                     ]
                                 }
                             }
                         ]
+                        ,
+                        [
+                            {
+                                "std_primitive_i16": {
+                                    "value": 43
+                                }
+                            },
+                            {
+                                "generic": {
+                                    "value": [
+                                        {
+                                            "std_primitive_i32": {
+                                                "value": 229
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                        # ,
+                        # [
+                        #     {
+                        #         "std_primitive_i16": {
+                        #             "value": 11
+                        #         }
+                        #     },
+                        #     {
+                        #         "generic": {
+                        #             "value": [
+                        #                 {
+                        #                     "std_primitive_i32": {
+                        #                         "value": 44
+                        #                     }
+                        #                 }
+                        #             ]
+                        #         }
+                        #     }
+                        # ]
                     ]
                 }
             }
