@@ -215,6 +215,8 @@ pub struct Jsongeneric {
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
+    //id: postgresql_crud::JsonStdStringString,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+
     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
     // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
@@ -305,6 +307,8 @@ pub struct Something {
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
+    //id: postgresql_crud::JsonStdStringString,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     pub generic: postgresql_crud::JsonGeneric<Cat>,
 }
@@ -313,7 +317,9 @@ pub struct Doggie {
     postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
-   pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+    //id: postgresql_crud::JsonStdStringString,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+
+    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
 }
 
 
@@ -1831,3 +1837,12 @@ impl
 //     )
 // )
 // WHERE id = 1; -- or any condition that matches your row
+
+
+// UPDATE my_table
+// SET my_jsonb_column = jsonb_set(
+//     my_jsonb_column,
+//     '{f}',  -- Path to the key where UUID will be inserted
+//     to_jsonb(gen_random_uuid())  -- Convert UUID to JSONB format
+// )
+// WHERE id = 1;  -- Condition to specify which row to update
