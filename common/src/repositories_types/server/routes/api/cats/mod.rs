@@ -1568,6 +1568,22 @@ impl
                             }
                         }
                     }
+                    //
+// //         CASE
+// //             WHEN jsonb_array_length(data->'one') > 2 THEN
+// //                 jsonb_set(
+// //                     data->'one',
+// //                     '{2}',
+// //                     '{"five": "fivevalueupdated"}'::jsonb
+// //                 )
+// //             ELSE
+// //                 -- If the array is shorter, extend it and then set the element at the new index
+// //                 (data->'one') || jsonb_build_array(
+// //                     (jsonb_build_array(NULL, NULL, NULL) -- Extend the array to have the required index
+// //                     || jsonb_build_array(NULL, NULL, '{"five": "fivevalueupdated"}'::jsonb))
+// //                 )
+// //         END AS new_array
+                    //
                 }
                 Ok(acc)
             }
@@ -1801,3 +1817,17 @@ impl
 //   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 
 // RETURNING 
 //   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
+
+
+
+// UPDATE my_table
+// SET my_jsonb_column = jsonb_set(
+//     my_jsonb_column,
+//     '{items}', -- path to the array
+//     (
+//         SELECT jsonb_agg(elem)
+//         FROM jsonb_array_elements(my_jsonb_column->'items') elem
+//         WHERE elem != '3'
+//     )
+// )
+// WHERE id = 1; -- or any condition that matches your row
