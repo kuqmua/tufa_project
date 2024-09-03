@@ -273,7 +273,7 @@ impl SupportedPredefinedOriginalType {
                 quote::quote!{std::string::#value}
             },
             Self::Generic(_) => self.to_token_stream(),
-            Self::Uuid => quote::quote!{Uuid},
+            Self::Uuid => quote::quote!{uuid::Uuid},
         }
     }
     fn std_option_option_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
@@ -3992,8 +3992,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
         #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
         #impl_generate_postgresql_query_part_for_ident_field_token_stream
-        // #pub_struct_ident_options_token_stream
-        // #impl_std_convert_from_ident_for_ident_options_token_stream
+        #pub_struct_ident_options_token_stream
+        #impl_std_convert_from_ident_for_ident_options_token_stream
         // #impl_serde_deserialize_for_ident_options_token_stream
         // #ident_wrapper_token_stream
         // #impl_serde_deserialize_for_ident_wrapper_token_stream

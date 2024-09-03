@@ -1848,23 +1848,6 @@ fn test_dd() {
 
 
 /////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
-pub struct SomethingOptions {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: std::option::Option<postgresql_crud::Value<uuid::Uuid>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    std_primitive_i8: std::option::Option<postgresql_crud::Value<std::primitive::i8>>,
-}
-impl std::convert::From<Something> for SomethingOptions {
-    fn from(value: Something) -> Self {
-        Self {
-            id: Some(postgresql_crud::Value { value: value.id.0 }),
-            std_primitive_i8: Some(postgresql_crud::Value {
-                value: value.std_primitive_i8.0,
-            }),
-        }
-    }
-}
 impl<'de> serde::Deserialize<'de> for SomethingOptions {
     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
     where
