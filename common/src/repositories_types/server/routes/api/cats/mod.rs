@@ -1848,11 +1848,6 @@ fn test_dd() {
 
 
 /////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct SomethingOptionsToUpdate{
-    id: uuid::Uuid,
-    update: std::vec::Vec<SomethingOptionToUpdate>,
-}
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     FieldsIsEmpty {
@@ -1867,8 +1862,6 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-
-//
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
         SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,

@@ -720,6 +720,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let id_snake_case = naming_conventions::IdSnakeCase;
     let id_snake_case_stringified = id_snake_case.to_string();
+    let update_snake_case = naming_conventions::UpdateSnakeCase;
+    let uuid_uuid_token_stream = quote::quote!{uuid::Uuid};
     let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
         let ident_offset_plus_limit_is_int_overflow_token_stream = {
             let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
@@ -3291,8 +3293,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let pub_struct_ident_options_to_update_token_stream = {
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema)]
-            pub struct #ident_options_to_update_upper_camel_case_token_stream(std::vec::Vec<#ident_option_to_update_upper_camel_case_token_stream>);
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+            pub struct #ident_options_to_update_upper_camel_case_token_stream{
+                #id_snake_case: #uuid_uuid_token_stream,
+                #update_snake_case: std::vec::Vec<#ident_option_to_update_upper_camel_case_token_stream>,
+            }
         }
     };
     let pub_enum_ident_key_token_stream = {
@@ -4028,7 +4033,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_enum_ident_key_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
         #pub_enum_ident_option_to_update_token_stream
-        // #pub_struct_ident_options_to_update_token_stream
+        #pub_struct_ident_options_to_update_token_stream
         // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
 
         // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
