@@ -212,7 +212,7 @@ pub struct Jsongeneric {
 //todo enum tree support
 //todo generate wrapper type for all possible json type
 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
-    //  postgresql_crud::GeneratePostgresqlQueryPart
+     postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -1848,31 +1848,6 @@ fn test_dd() {
 
 
 /////////////////////////////
-impl std::fmt::Display for Something {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", &self)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum SomethingField {
-    #[serde(rename(serialize = "id", deserialize = "id"))]
-    Id,
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8,
-}
-impl error_occurence_lib::ToStdStringString for SomethingField {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
 #[derive(
     Debug,
     serde :: Serialize,
