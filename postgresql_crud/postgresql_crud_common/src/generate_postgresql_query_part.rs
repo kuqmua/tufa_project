@@ -235,14 +235,14 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<T>(pub std::option
 
 
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
-pub struct JsonUuidV4(pub uuid::Uuid);
-impl schemars::JsonSchema for JsonUuidV4 {
+pub struct JsonUuid(pub uuid::Uuid);
+impl schemars::JsonSchema for JsonUuid {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("JsonUuidV4")
+        schemars::_private::alloc::borrow::Cow::Borrowed("JsonUuid")
     }
     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
         schemars::_private::alloc::borrow::Cow::Borrowed(
-            "postgresql_crud_common::f::JsonUuidV4",
+            "postgresql_crud_common::f::JsonUuid",
         )
     }
     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {

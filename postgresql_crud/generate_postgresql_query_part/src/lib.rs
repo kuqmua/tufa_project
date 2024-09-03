@@ -95,7 +95,9 @@ enum SupportedPredefinedType {
     JsonStdVecVecGeneric(syn::TypePath), 
     JsonStdOptionOptionStdVecVecGeneric(syn::TypePath), 
     JsonStdVecVecStdOptionOptionGeneric(syn::TypePath), 
-    JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(syn::TypePath), 
+    JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(syn::TypePath),
+
+    JsonUuid,
 }
 impl SupportedPredefinedType {
     fn to_original_type(&self) -> SupportedPredefinedOriginalType {
@@ -196,6 +198,8 @@ impl SupportedPredefinedType {
             Self::JsonStdOptionOptionStdVecVecGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
             Self::JsonStdVecVecStdOptionOptionGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
             Self::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
+
+            Self::JsonUuid => SupportedPredefinedOriginalType::Uuid,
         }
     }
 }
@@ -216,6 +220,7 @@ enum SupportedPredefinedOriginalType {
     Bool, 
     String, 
     Generic(syn::TypePath),
+    Uuid,
 }
 
 fn generate_ident_options_upper_camel_case_token_stream(value: &std::primitive::str) -> proc_macro2::TokenStream {
@@ -242,6 +247,7 @@ impl SupportedPredefinedOriginalType {
             Self::Bool => quote::quote!{bool},
             Self::String => quote::quote!{String},
             Self::Generic(type_path) => generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string()),
+            Self::Uuid => quote::quote!{Uuid},
         }
     }
     fn full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
@@ -267,6 +273,7 @@ impl SupportedPredefinedOriginalType {
                 quote::quote!{std::string::#value}
             },
             Self::Generic(_) => self.to_token_stream(),
+            Self::Uuid => quote::quote!{Uuid},
         }
     }
     fn std_option_option_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
@@ -458,6 +465,8 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         "JsonStdOptionOptionStdVecVecGeneric" => Self::JsonStdOptionOptionStdVecVecGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
                         "JsonStdVecVecStdOptionOptionGeneric" => Self::JsonStdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
                         "JsonStdOptionOptionStdVecVecStdOptionOptionGeneric" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
+
+                        "JsonUuid" => Self::JsonUuid,
                         _ => {
                             return Err(Self::Error::UnsupportedPredefinedTypeWrapper);
                         }
@@ -551,7 +560,9 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
                         SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                         SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString |
+
+                        SupportedPredefinedType::JsonUuid
                         => {
                             match path_segment.arguments{
                                 syn::PathArguments::None => (),
@@ -824,7 +835,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) |
             SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => {
                 acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
-            }
+            },
+
+            SupportedPredefinedType::JsonUuid => (),
         };
         acc
     });
@@ -930,6 +943,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => Some(type_path),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => Some(type_path),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => Some(type_path),
+
+                SupportedPredefinedType::JsonUuid => None,
             };
             if let Some(value) = option_type_path {
                 if !acc.contains(&value) {
@@ -1104,6 +1119,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
                     SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
                     SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
+
+                    SupportedPredefinedType::JsonUuid => proc_macro2::TokenStream::new(),
                 }
             };
             quote::quote!{
@@ -1799,6 +1816,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         true,
                         true,
                     ),
+
+                    SupportedPredefinedType::JsonUuid => {
+                        let query_part_token_stream = generate_simple_json_type(PrimitiveJsonType::String);
+                        quote::quote!{ => #query_part_token_stream}
+                    },
                 };
                 quote::quote!{Self::#element_ident_upper_camel_case_token_stream #variant_logic_token_stream}
             });
@@ -2041,6 +2063,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
+
+                SupportedPredefinedType::JsonUuid => supported_predefined_type.to_original_type().full_type_path_token_stream(),
             };
             let serde_skip_serializing_if_value_attribute_token_stream = proc_macro_helpers::generate_serde_skip_serializing_if_value_attribute_token_stream::generate_serde_skip_serializing_if_value_attribute_token_stream();
             quote::quote!{
@@ -2267,6 +2291,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 }
+
+                SupportedPredefinedType::JsonUuid => quote::quote!{value.#element_ident.0},
             };
             quote::quote!{
                 #element_ident: Some(postgresql_crud::Value{ value: #conversion_token_stream })
@@ -2487,6 +2513,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
+
+                SupportedPredefinedType::JsonUuid => supported_predefined_type.to_original_type().full_type_path_token_stream(),
             }
         };
         let visit_seq_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)|{
@@ -2754,7 +2782,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                         None => None
                     }
-                }
+                },
+
+                SupportedPredefinedType::JsonUuid => quote::quote!{value},
             };
             quote::quote!{
                 #field_ident: match #field_index_token_stream {
@@ -3234,6 +3264,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
+
+                SupportedPredefinedType::JsonUuid => supported_predefined_type.to_original_type().full_type_path_token_stream(),
             };
             quote::quote!{
                 #[serde(rename(serialize = #element_ident_double_quotes_token_stream, deserialize = #element_ident_double_quotes_token_stream))]
@@ -3438,6 +3470,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         acc.push(type_path.clone());
                     }
                 },
+
+                SupportedPredefinedType::JsonUuid => (),
             }
         });
         let additional_generic_variants = acc.iter().map(|element| {
@@ -3725,6 +3759,30 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => todo!(),
+
+                SupportedPredefinedType::JsonUuid => {
+                    let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("jsonb_set({{acc}},'{{{{{{previous_path}}{element_ident}}}}}',${{increment}})"),//element_ident.to_string(),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        (_) => {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    acc = format!(#format_handle_token_stream);
+                                }
+                                None => {
+                                    return Err(
+                                        #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        },
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
             };
             quote::quote!{
                 #ident_option_to_update_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream #content_token_stream
@@ -3859,6 +3917,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => todo!(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => todo!(),
+
+                SupportedPredefinedType::JsonUuid => {
+                    quote::quote!{
+                        query = query.bind(sqlx::types::Json(value.value));
+                    }
+                }
             };
             quote::quote!{
                 #ident_option_to_update_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream(value) => {

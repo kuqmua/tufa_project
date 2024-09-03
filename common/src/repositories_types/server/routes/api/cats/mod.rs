@@ -215,7 +215,7 @@ pub struct Jsongeneric {
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
-    //id: postgresql_crud::JsonStdStringString,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
     // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
@@ -307,7 +307,7 @@ pub struct Something {
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    //id: postgresql_crud::JsonStdStringString,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     pub generic: postgresql_crud::JsonGeneric<Cat>,
@@ -317,7 +317,7 @@ pub struct Doggie {
     postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
-    //id: postgresql_crud::JsonStdStringString,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
 }
