@@ -4034,7 +4034,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
         #pub_enum_ident_option_to_update_token_stream
         #pub_struct_ident_options_to_update_token_stream
-        // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+        #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
 
         // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
     };

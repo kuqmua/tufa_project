@@ -1848,20 +1848,6 @@ fn test_dd() {
 
 
 /////////////////////////////
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingKey,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
         SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
