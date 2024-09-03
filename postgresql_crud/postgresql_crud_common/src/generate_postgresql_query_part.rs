@@ -232,6 +232,50 @@ pub struct JsonStdOptionOptionStdVecVecGeneric<T>(pub std::option::Option<std::v
 pub struct JsonStdVecVecStdOptionOptionGeneric<T>(pub std::vec::Vec<std::option::Option<T>>);
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionGenericFullTypePath)]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<T>(pub std::option::Option<std::vec::Vec<std::option::Option<T>>>);
+
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
+pub struct JsonUuidV4(pub uuid::Uuid);
+impl schemars::JsonSchema for JsonUuidV4 {
+    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("JsonUuidV4")
+    }
+    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed(
+            "postgresql_crud_common::f::JsonUuidV4",
+        )
+    }
+    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+        {
+            let mut schema = generator.subschema_for::<std::string::String>();
+            schemars::_private::insert_validation_property(
+                &mut schema,
+                "string",
+                "minLength",
+                36,
+            );
+            schemars::_private::insert_validation_property(
+                &mut schema,
+                "string",
+                "maxLength",
+                36,
+            );
+            schemars::_private::insert_validation_property(
+                &mut schema,
+                "array",
+                "minItems",
+                36,
+            );
+            schemars::_private::insert_validation_property(
+                &mut schema,
+                "array",
+                "maxItems",
+                36,
+            );
+            schema
+        }
+    }
+}
 /////////////////////
 //todo rename it coz it applied to read_one and read_many
 pub trait GeneratePostgresqlQueryPart<T1, T2> {
