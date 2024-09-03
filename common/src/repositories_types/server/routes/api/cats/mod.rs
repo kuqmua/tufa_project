@@ -1848,82 +1848,6 @@ fn test_dd() {
 
 
 /////////////////////////////
-impl
-    postgresql_crud::GeneratePostgresqlQueryPart<
-        SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed,
-        (),
-    > for SomethingField
-{
-    fn generate_postgresql_query_part_from_self_vec(
-        value: &std::vec::Vec<Self>,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_optional: std::primitive::bool,
-    ) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed>
-    {
-        if value.is_empty() {
-            return Err(
-                SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed::FieldsFilterIsEmpty {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                },
-            );
-        }
-        let mut unique = vec![];
-        for element in value {
-            if unique.contains(&element) {
-                return
-                Err(SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
-                :: NotUniqueFieldFilter
-                {
-                    field : element.clone(), code_occurence :
-                    error_occurence_lib :: code_occurence! (),
-                });
-            } else {
-                unique.push(&element);
-            }
-        }
-        let mut acc = std::string::String::default();
-        for element in value {
-            acc.push_str(& format!
-            ("{}||", match element
-            {
-                Self :: Id => format!
-                ("jsonb_build_object('id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'id') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'id') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.id is not string')) end )"),
-                Self :: StdPrimitiveI8 => format!
-                ("jsonb_build_object('std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i8') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number')) end )")
-            }));
-        }
-        let _ = acc.pop();
-        let _ = acc.pop();
-        let is_optional_query_part =
-        match is_optional
-        {
-            true => format!
-            ("when jsonb_typeof({column_name_and_maybe_field_getter}) = 'null' then jsonb_build_object('Ok',null)"),
-            false => std :: string :: String :: default()
-        };
-        Ok({
-            let space_and_not_null = if is_optional { " and not null" } else { "" };
-            format!
-            ("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
-        })
-    }
-    fn generate_postgresql_query_part(
-        &self,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-    ) -> Result<std::string::String, ()> {
-        match self
-        {
-            Self :: Id =>
-            Ok(format!
-            ("jsonb_build_object('id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'id') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'id') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.id is not string')) end )")),
-            Self :: StdPrimitiveI8 =>
-            Ok(format!
-            ("jsonb_build_object('std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i8') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number')) end )"))
-        }
-    }
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
 pub struct SomethingOptions {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2271,6 +2195,9 @@ for Something
         }
     }
 }
+
+
+
 #[derive(
     Debug,
     Clone,
