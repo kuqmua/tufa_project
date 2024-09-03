@@ -1848,37 +1848,6 @@ fn test_dd() {
 
 
 /////////////////////////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum SomethingKey {
-    #[serde(rename(serialize = "id", deserialize = "id"))]
-    Id,
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8,
-}
-impl error_occurence_lib::ToStdStringString for SomethingKey {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::Id => "id".to_owned(),
-            Self::StdPrimitiveI8 => "std_primitive_i8".to_owned(),
-        }
-    }
-}
-
-//here starts update
-
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum SomethingOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate{
     id: uuid::Uuid,

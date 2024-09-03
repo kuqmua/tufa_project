@@ -718,6 +718,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let id_snake_case = naming_conventions::IdSnakeCase;
+    let id_snake_case_stringified = id_snake_case.to_string();
     let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
         let ident_offset_plus_limit_is_int_overflow_token_stream = {
             let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
@@ -3135,7 +3137,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_enum_ident_option_to_update_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().map(|element|{
+        let variants_token_stream = vec_syn_field.iter().filter(|element|{
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            element_ident != &id_snake_case_stringified
+        }).map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3286,7 +3296,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_enum_ident_key_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().map(|element|{
+        let variants_token_stream = vec_syn_field.iter().filter(|element|{
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            element_ident != &id_snake_case_stringified
+        }).map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3319,7 +3337,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().map(|element|{
+        let variants_token_stream = vec_syn_field.iter().filter(|element|{
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            element_ident != &id_snake_case_stringified
+        }).map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3999,9 +4025,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_wrapper_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
-        // #pub_enum_ident_key_token_stream
-        // #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
-        // #pub_enum_ident_option_to_update_token_stream
+        #pub_enum_ident_key_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
+        #pub_enum_ident_option_to_update_token_stream
         // #pub_struct_ident_options_to_update_token_stream
         // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
 
