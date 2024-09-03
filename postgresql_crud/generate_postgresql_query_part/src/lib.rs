@@ -627,6 +627,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
     // println!("{vec_syn_field:#?}");
+    let id_snake_case = naming_conventions::IdSnakeCase;
+    let vec_syn_field_filtered_id_iter = vec_syn_field.iter().filter(|element|{
+        let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+            panic!(
+                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                naming_conventions::FIELD_IDENT_IS_NONE
+            );
+        });
+        element_ident != &id_snake_case.to_string()
+    }).collect::<std::vec::Vec<&&syn::Field>>();
     let generate_ident_field_upper_camel_case_token_stream = |value: &std::primitive::str|{
         let value = format!("{value}{}", naming_conventions::FieldUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
@@ -718,8 +728,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let id_snake_case = naming_conventions::IdSnakeCase;
-    let id_snake_case_stringified = id_snake_case.to_string();
     let update_snake_case = naming_conventions::UpdateSnakeCase;
     let uuid_uuid_token_stream = quote::quote!{uuid::Uuid};
     let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
@@ -3139,15 +3147,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_enum_ident_option_to_update_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().filter(|element|{
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                    naming_conventions::FIELD_IDENT_IS_NONE
-                );
-            });
-            element_ident != &id_snake_case_stringified
-        }).map(|element|{
+        let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3159,7 +3159,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
             let element_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
-            let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
             let type_token_stream = match &supported_predefined_type
             {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
@@ -3301,15 +3301,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_enum_ident_key_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().filter(|element|{
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                    naming_conventions::FIELD_IDENT_IS_NONE
-                );
-            });
-            element_ident != &id_snake_case_stringified
-        }).map(|element|{
+        let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3342,15 +3334,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().filter(|element|{
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                    naming_conventions::FIELD_IDENT_IS_NONE
-                );
-            });
-            element_ident != &id_snake_case_stringified
-        }).map(|element|{
+        let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3378,8 +3362,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream = {
         let mut acc = vec![];
-        vec_syn_field.iter().for_each(|element|{
-            let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+        vec_syn_field_filtered_id_iter.iter().for_each(|element|{
+            let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
             match &supported_predefined_type {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdPrimitiveI16 |
@@ -3541,7 +3525,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream = {
-        let check_not_unique_field_token_stream = vec_syn_field.iter().map(|element|{
+        let check_not_unique_field_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3566,7 +3550,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         });
-        let query_part_generation_token_stream = vec_syn_field.iter().map(|element|{
+        let query_part_generation_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3574,7 +3558,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
             });
             let element_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
-            let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
             let content_token_stream = match &supported_predefined_type {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdPrimitiveI16 |
@@ -3819,7 +3803,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #ident_option_to_update_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream #content_token_stream
             }
         });
-        let bind_query_token_stream = vec_syn_field.iter().map(|element|{
+        let bind_query_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -3827,7 +3811,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
             });
             let element_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
-            let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
             let content_token_stream = match &supported_predefined_type {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdPrimitiveI16 |
