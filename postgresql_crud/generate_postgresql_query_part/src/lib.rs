@@ -3994,10 +3994,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_generate_postgresql_query_part_for_ident_field_token_stream
         #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
-        // #impl_serde_deserialize_for_ident_options_token_stream
-        // #ident_wrapper_token_stream
-        // #impl_serde_deserialize_for_ident_wrapper_token_stream
-        // #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
+        #impl_serde_deserialize_for_ident_options_token_stream
+        #ident_wrapper_token_stream
+        #impl_serde_deserialize_for_ident_wrapper_token_stream
+        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
         // #pub_enum_ident_key_token_stream
         // #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
