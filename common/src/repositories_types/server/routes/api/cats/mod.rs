@@ -1848,30 +1848,6 @@ fn test_dd() {
 
 
 /////////////////////////////
-#[derive(
-    Debug,
-    serde :: Serialize,
-    serde :: Deserialize,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed {
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingField,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl error_occurence_lib::ToStdStringString
-    for SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed
-{
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
 impl
     postgresql_crud::GeneratePostgresqlQueryPart<
         SomethingGeneratePostgresqlQueryPartFromSelfVecErrorNamed,

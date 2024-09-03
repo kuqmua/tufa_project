@@ -3990,7 +3990,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
-        // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
+        #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
         // #impl_generate_postgresql_query_part_for_ident_field_token_stream
         // #pub_struct_ident_options_token_stream
         // #impl_std_convert_from_ident_for_ident_options_token_stream
