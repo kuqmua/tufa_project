@@ -628,6 +628,29 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     // println!("{vec_syn_field:#?}");
     let id_snake_case = naming_conventions::IdSnakeCase;
+    {
+        let mut is_id_field_exists = false;
+        for element in &vec_syn_field {
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            if element_ident == &id_snake_case.to_string() {
+                if let SupportedPredefinedType::JsonUuid = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
+                    is_id_field_exists = true;
+                    break;
+                }
+                else {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} is not SupportedPredefinedType::JsonUuid");
+                };
+            }
+        }
+        if !is_id_field_exists {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} does not exist");
+        }
+    }
     let vec_syn_field_filtered_id_iter = vec_syn_field.iter().filter(|element|{
         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
             panic!(
