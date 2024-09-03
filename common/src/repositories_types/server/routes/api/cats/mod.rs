@@ -297,30 +297,30 @@ pub struct Something {
 
     // pub generic: postgresql_crud::JsonGeneric<Doggie>,
     // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
-    // pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
+    pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
     // pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<Doggie>,
     // pub std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdVecVecStdOptionOptionGeneric<Doggie>,
     // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
 
-// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
-//      postgresql_crud::GeneratePostgresqlQueryPart
-// )] //user type must implement utoipa::ToSchema trait
-// pub struct Doggie {
-//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+     postgresql_crud::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
+pub struct Doggie {
+    pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
-//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-//     pub generic: postgresql_crud::JsonGeneric<Cat>,
-// }
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub generic: postgresql_crud::JsonGeneric<Cat>,
+}
 
-// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
-//     postgresql_crud::GeneratePostgresqlQueryPart
-// )] //user type must implement utoipa::ToSchema trait
-// pub struct Cat {
-//     pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+    postgresql_crud::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
+pub struct Cat {
+    pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
-//     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-// }
+    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+}
 
 
 #[test]
@@ -1291,406 +1291,406 @@ fn test_dd() {
 }
 
 //////////
-// impl
-//     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
-//         SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-//     > for SomethingOptionsToUpdate
-// {
-//     fn try_generate_bind_increments(
-//         &self,
-//         jsonb_set_accumulator: &std::primitive::str,
-//         jsonb_set_target: &std::primitive::str,
-//         jsonb_set_path: &std::primitive::str,
-//         increment: &mut std::primitive::u64,
-//         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-//     ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
-//     {
-//         if self.0.is_empty() {
-//             return Err(
-//                 SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
-//                     code_occurence: error_occurence_lib::code_occurence!(),
-//                 },
-//             );
-//         }
-//         {
-//             let mut acc = vec![];
-//             for element in &self.0 {
-//                 match element {
-//                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
-//                         let value = SomethingKey::StdPrimitiveI8;
-//                         if acc.contains(&value) {
-//                             return
-//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-//                             :: NotUniqueField
-//                             {
-//                                 field : value, code_occurence : error_occurence_lib ::
-//                                 code_occurence! (),
-//                             },);
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdVecVecGeneric(_) => {
-//                         let value = SomethingKey::StdVecVecGeneric;
-//                         if acc.contains(&value) {
-//                             return
-//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-//                             :: NotUniqueField
-//                             {
-//                                 field : value, code_occurence : error_occurence_lib ::
-//                                 code_occurence! (),
-//                             },);
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//         let mut acc = std::string::String::from(jsonb_set_accumulator);
-//         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-//             true => std::string::String::default(),
-//             false => format!("{jsonb_set_path},"),
-//         };
-//         for element in &self.0 {
-//             match &element {
-//                 SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i8}}',${increment})");
-//                     }
-//                     None => {
-//                         return
-//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-//                             :: CheckedAdd
-//                             {
-//                                 code_occurence : error_occurence_lib :: code_occurence! (),
-//                             },);
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
-//                     for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-//                         match element.try_generate_bind_increments(
-//                             &acc,
-//                             &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
-//                             &format!("{{std_vec_vec_generic,{index}}}"),
-//                             increment,
-//                             postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
-//                                 jsonb_set_path: format!("std_vec_vec_generic,{index}"),
-//                                 index: index.clone(),
-//                             },//for arrays it must be true?
-//                         ) {
-//                             Ok(value) => {
-//                                 acc = value;
-//                             }
-//                             Err(error) => {
-//                                 return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Doggie {
-//                                     doggie : error, code_occurence : error_occurence_lib ::
-//                                     code_occurence! (),
-//                                 },);
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//         Ok(acc)
-//     }
-//     fn bind_value_to_query<'a>(
-//         self,
-//         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         for element in self.0 {
-//             match element {
-//                 SomethingOptionToUpdate::StdPrimitiveI8(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
-//                     for element in value.value {
-//                         query = element.bind_value_to_query(query);
-//                     }
-//                 }
-//             }
-//         }
-//         query
-//     }
-// }
-// //
-// impl
-//     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
-//         DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-//     > for DoggieOptionsToUpdate
-// {
-//     fn try_generate_bind_increments(
-//         &self,
-//         jsonb_set_accumulator: &std::primitive::str,
-//         jsonb_set_target: &std::primitive::str,
-//         jsonb_set_path: &std::primitive::str,
-//         increment: &mut std::primitive::u64,
-//         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-//     ) -> Result<std::string::String, DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
-//         if self.0.is_empty() {
-//             return Err(
-//                 DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
-//                     code_occurence: error_occurence_lib::code_occurence!(),
-//                 },
-//             );
-//         }
-//         {
-//             let mut acc = vec![];
-//             for element in &self.0 {
-//                 match element {
-//                     DoggieOptionToUpdate::StdPrimitiveI16(_) => {
-//                         let value = DoggieKey::StdPrimitiveI16;
-//                         if acc.contains(&value) {
-//                             return
-//                             Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-//                             :: NotUniqueField
-//                             {
-//                                 field : value, code_occurence : error_occurence_lib ::
-//                                 code_occurence! (),
-//                             },);
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     DoggieOptionToUpdate::Generic(_) => {
-//                         let value = DoggieKey::Generic;
-//                         if acc.contains(&value) {
-//                             return
-//                             Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-//                             :: NotUniqueField
-//                             {
-//                                 field : value, code_occurence : error_occurence_lib ::
-//                                 code_occurence! (),
-//                             },);
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//         match &is_array_object_element {
-//             postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
-//                 jsonb_set_path,
-//                 index
-//             } => {
-//                 let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-//                     true => std::string::String::default(),
-//                     false => format!("{jsonb_set_path}"),
-//                 };
-//                 let mut acc = std::string::String::default();
-//                 for element in &self.0 {
-//                     match &element {
-//                         DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
-//                             Some(value) => {
-//                                 *increment = value;
-//                                 acc.push_str(&format!("'std_primitive_i16',${increment}"));
-//                             }
-//                             None => {
-//                                 return Err(
-//                                     DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-//                                         code_occurence: error_occurence_lib::code_occurence!(),
-//                                     },
-//                                 );
-//                             }
-//                         },
-//                         DoggieOptionToUpdate::Generic(value) => {
-//                             match value.value.try_generate_bind_increments(
-//                                 &format!("{jsonb_set_target}->{index}->'generic'"),
-//                                 &format!("{jsonb_set_target}->{index}->'generic'"),
-//                                 "",
-//                                 increment,
-//                                 is_array_object_element.clone()
-//                             ) {
-//                                 Ok(value) => {
-//                                     acc.push_str(&format!("'generic', {value}"));
-//                                 }
-//                                 Err(error) => {
-//                                     return Err(
-//                                         DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Cat {
-//                                             cat: error,
-//                                             code_occurence: error_occurence_lib::code_occurence!(),
-//                                         },
-//                                     );
-//                                 }
-//                             }
-//                         }
-//                     }
-//                     acc.push_str(",");
-//                 }
-//                 let _ = acc.pop();
-//                 let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-//                     true => std::string::String::default(),
-//                     false => format!("{jsonb_set_path}"),
-//                 };
-//                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{previous_jsonb_set_path}}}',jsonb_build_object({acc}))"))
-//             },
-//             postgresql_crud::ArrayObjectElementOrSimple::Simple => {
-//                 let mut acc = std::string::String::from(jsonb_set_accumulator);
-//                 let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-//                     true => std::string::String::default(),
-//                     false => format!("{jsonb_set_path},"),
-//                 };
-//                 for element in &self.0 {
-//                     match &element {
-//                         DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
-//                             Some(value) => {
-//                                 *increment = value;
-//                                 acc = format!(
-//                                     "jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i16}}',${increment})"
-//                                 );
-//                             }
-//                             None => {
-//                                 return Err(
-//                                     DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-//                                         code_occurence: error_occurence_lib::code_occurence!(),
-//                                     },
-//                                 );
-//                             }
-//                         },
-//                         DoggieOptionToUpdate::Generic(value) => {
-//                             match value.value.try_generate_bind_increments(
-//                                 &acc,
-//                                 &format!("{jsonb_set_target}->'generic'"),
-//                                 "generic",
-//                                 increment,
-//                                 is_array_object_element.clone(),
-//                             )
-//                             {
-//                                 Ok(value) => {
-//                                     acc = value;
-//                                 }
-//                                 Err(error) => {
-//                                     return Err(
-//                                         DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Cat {
-//                                             cat: error,
-//                                             code_occurence: error_occurence_lib::code_occurence!(),
-//                                         },
-//                                     );
-//                                 }
-//                             }
-//                         }
-//                     }
-//                     //
-// // //         CASE
-// // //             WHEN jsonb_array_length(data->'one') > 2 THEN
-// // //                 jsonb_set(
-// // //                     data->'one',
-// // //                     '{2}',
-// // //                     '{"five": "fivevalueupdated"}'::jsonb
-// // //                 )
-// // //             ELSE
-// // //                 -- If the array is shorter, extend it and then set the element at the new index
-// // //                 (data->'one') || jsonb_build_array(
-// // //                     (jsonb_build_array(NULL, NULL, NULL) -- Extend the array to have the required index
-// // //                     || jsonb_build_array(NULL, NULL, '{"five": "fivevalueupdated"}'::jsonb))
-// // //                 )
-// // //         END AS new_array
-//                     //
-//                 }
-//                 Ok(acc)
-//             }
-//         }
-//     }
-//     fn bind_value_to_query<'a>(
-//         self,
-//         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         for element in self.0 {
-//             match element {
-//                 DoggieOptionToUpdate::StdPrimitiveI16(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 DoggieOptionToUpdate::Generic(value) => {
-//                     query = value.value.bind_value_to_query(query);
-//                 }
-//             }
-//         }
-//         query
-//     }
-// }
-// //
-// impl
-//     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
-//         CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-//     > for CatOptionsToUpdate
-// {
-//     fn try_generate_bind_increments(
-//         &self,
-//         jsonb_set_accumulator: &std::primitive::str,
-//         jsonb_set_target: &std::primitive::str,
-//         jsonb_set_path: &std::primitive::str,
-//         increment: &mut std::primitive::u64,
-//         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-//     ) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
-//         if self.0.is_empty() {
-//             return Err(
-//                 CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
-//                     code_occurence: error_occurence_lib::code_occurence!(),
-//                 },
-//             );
-//         }
-//         {
-//             let mut acc = vec![];
-//             for element in &self.0 {
-//                 match element {
-//                     CatOptionToUpdate::StdPrimitiveI32(_) => {
-//                         let value = CatKey::StdPrimitiveI32;
-//                         if acc.contains(&value) {
-//                             return
-//                             Err(CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed ::
-//                             NotUniqueField
-//                             {
-//                                 field : value, code_occurence : error_occurence_lib ::
-//                                 code_occurence! (),
-//                             },);
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//         let mut acc = std::string::String::from(jsonb_set_accumulator);
-//         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-//             true => std::string::String::default(),
-//             false => format!("{jsonb_set_path},"),
-//         };
-//         for element in &self.0 {
-//             match &element {
-//                 CatOptionToUpdate::StdPrimitiveI32(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i32}}',${increment})");
-//                     }
-//                     None => {
-//                         return Err(
-//                             CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-//                                 code_occurence: error_occurence_lib::code_occurence!(),
-//                             },
-//                         );
-//                     }
-//                 },
-//             }
-//         }
-//         Ok(acc)
-//     }
-//     fn bind_value_to_query<'a>(
-//         self,
-//         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         for element in self.0 {
-//             match element {
-//                 CatOptionToUpdate::StdPrimitiveI32(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//             }
-//         }
-//         query
-//     }
-// }
+impl
+    postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
+        SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+    > for SomethingOptionsToUpdate
+{
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
+    {
+        if self.0.is_empty() {
+            return Err(
+                SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                },
+            );
+        }
+        {
+            let mut acc = vec![];
+            for element in &self.0 {
+                match element {
+                    SomethingOptionToUpdate::StdPrimitiveI8(_) => {
+                        let value = SomethingKey::StdPrimitiveI8;
+                        if acc.contains(&value) {
+                            return
+                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                            :: NotUniqueField
+                            {
+                                field : value, code_occurence : error_occurence_lib ::
+                                code_occurence! (),
+                            },);
+                        } else {
+                            acc.push(value);
+                        }
+                    }
+                    SomethingOptionToUpdate::StdVecVecGeneric(_) => {
+                        let value = SomethingKey::StdVecVecGeneric;
+                        if acc.contains(&value) {
+                            return
+                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                            :: NotUniqueField
+                            {
+                                field : value, code_occurence : error_occurence_lib ::
+                                code_occurence! (),
+                            },);
+                        } else {
+                            acc.push(value);
+                        }
+                    }
+                }
+            }
+        }
+        let mut acc = std::string::String::from(jsonb_set_accumulator);
+        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+            true => std::string::String::default(),
+            false => format!("{jsonb_set_path},"),
+        };
+        for element in &self.0 {
+            match &element {
+                SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
+                    Some(value) => {
+                        *increment = value;
+                        acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i8}}',${increment})");
+                    }
+                    None => {
+                        return
+                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                            :: CheckedAdd
+                            {
+                                code_occurence : error_occurence_lib :: code_occurence! (),
+                            },);
+                    }
+                },
+                SomethingOptionToUpdate::StdVecVecGeneric(value) => {
+                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
+                        match element.try_generate_bind_increments(
+                            &acc,
+                            &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
+                            &format!("{{std_vec_vec_generic,{index}}}"),
+                            increment,
+                            postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
+                                jsonb_set_path: format!("std_vec_vec_generic,{index}"),
+                                index: index.clone(),
+                            },//for arrays it must be true?
+                        ) {
+                            Ok(value) => {
+                                acc = value;
+                            }
+                            Err(error) => {
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Doggie {
+                                    doggie : error, code_occurence : error_occurence_lib ::
+                                    code_occurence! (),
+                                },);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Ok(acc)
+    }
+    fn bind_value_to_query<'a>(
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            match element {
+                SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+                    query = query.bind(sqlx::types::Json(value.value));
+                }
+                SomethingOptionToUpdate::StdVecVecGeneric(value) => {
+                    for element in value.value {
+                        query = element.bind_value_to_query(query);
+                    }
+                }
+            }
+        }
+        query
+    }
+}
+//
+impl
+    postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
+        DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+    > for DoggieOptionsToUpdate
+{
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+        if self.0.is_empty() {
+            return Err(
+                DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                },
+            );
+        }
+        {
+            let mut acc = vec![];
+            for element in &self.0 {
+                match element {
+                    DoggieOptionToUpdate::StdPrimitiveI16(_) => {
+                        let value = DoggieKey::StdPrimitiveI16;
+                        if acc.contains(&value) {
+                            return
+                            Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                            :: NotUniqueField
+                            {
+                                field : value, code_occurence : error_occurence_lib ::
+                                code_occurence! (),
+                            },);
+                        } else {
+                            acc.push(value);
+                        }
+                    }
+                    DoggieOptionToUpdate::Generic(_) => {
+                        let value = DoggieKey::Generic;
+                        if acc.contains(&value) {
+                            return
+                            Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                            :: NotUniqueField
+                            {
+                                field : value, code_occurence : error_occurence_lib ::
+                                code_occurence! (),
+                            },);
+                        } else {
+                            acc.push(value);
+                        }
+                    }
+                }
+            }
+        }
+        match &is_array_object_element {
+            postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
+                jsonb_set_path,
+                index
+            } => {
+                let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                    true => std::string::String::default(),
+                    false => format!("{jsonb_set_path}"),
+                };
+                let mut acc = std::string::String::default();
+                for element in &self.0 {
+                    match &element {
+                        DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                acc.push_str(&format!("'std_primitive_i16',${increment}"));
+                            }
+                            None => {
+                                return Err(
+                                    DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    },
+                                );
+                            }
+                        },
+                        DoggieOptionToUpdate::Generic(value) => {
+                            match value.value.try_generate_bind_increments(
+                                &format!("{jsonb_set_target}->{index}->'generic'"),
+                                &format!("{jsonb_set_target}->{index}->'generic'"),
+                                "",
+                                increment,
+                                is_array_object_element.clone()
+                            ) {
+                                Ok(value) => {
+                                    acc.push_str(&format!("'generic', {value}"));
+                                }
+                                Err(error) => {
+                                    return Err(
+                                        DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Cat {
+                                            cat: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        },
+                                    );
+                                }
+                            }
+                        }
+                    }
+                    acc.push_str(",");
+                }
+                let _ = acc.pop();
+                let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                    true => std::string::String::default(),
+                    false => format!("{jsonb_set_path}"),
+                };
+                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{previous_jsonb_set_path}}}',jsonb_build_object({acc}))"))
+            },
+            postgresql_crud::ArrayObjectElementOrSimple::Simple => {
+                let mut acc = std::string::String::from(jsonb_set_accumulator);
+                let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                    true => std::string::String::default(),
+                    false => format!("{jsonb_set_path},"),
+                };
+                for element in &self.0 {
+                    match &element {
+                        DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                acc = format!(
+                                    "jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i16}}',${increment})"
+                                );
+                            }
+                            None => {
+                                return Err(
+                                    DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    },
+                                );
+                            }
+                        },
+                        DoggieOptionToUpdate::Generic(value) => {
+                            match value.value.try_generate_bind_increments(
+                                &acc,
+                                &format!("{jsonb_set_target}->'generic'"),
+                                "generic",
+                                increment,
+                                is_array_object_element.clone(),
+                            )
+                            {
+                                Ok(value) => {
+                                    acc = value;
+                                }
+                                Err(error) => {
+                                    return Err(
+                                        DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Cat {
+                                            cat: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        },
+                                    );
+                                }
+                            }
+                        }
+                    }
+                    //
+// //         CASE
+// //             WHEN jsonb_array_length(data->'one') > 2 THEN
+// //                 jsonb_set(
+// //                     data->'one',
+// //                     '{2}',
+// //                     '{"five": "fivevalueupdated"}'::jsonb
+// //                 )
+// //             ELSE
+// //                 -- If the array is shorter, extend it and then set the element at the new index
+// //                 (data->'one') || jsonb_build_array(
+// //                     (jsonb_build_array(NULL, NULL, NULL) -- Extend the array to have the required index
+// //                     || jsonb_build_array(NULL, NULL, '{"five": "fivevalueupdated"}'::jsonb))
+// //                 )
+// //         END AS new_array
+                    //
+                }
+                Ok(acc)
+            }
+        }
+    }
+    fn bind_value_to_query<'a>(
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            match element {
+                DoggieOptionToUpdate::StdPrimitiveI16(value) => {
+                    query = query.bind(sqlx::types::Json(value.value));
+                }
+                DoggieOptionToUpdate::Generic(value) => {
+                    query = value.value.bind_value_to_query(query);
+                }
+            }
+        }
+        query
+    }
+}
+//
+impl
+    postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
+        CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+    > for CatOptionsToUpdate
+{
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+        if self.0.is_empty() {
+            return Err(
+                CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                },
+            );
+        }
+        {
+            let mut acc = vec![];
+            for element in &self.0 {
+                match element {
+                    CatOptionToUpdate::StdPrimitiveI32(_) => {
+                        let value = CatKey::StdPrimitiveI32;
+                        if acc.contains(&value) {
+                            return
+                            Err(CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed ::
+                            NotUniqueField
+                            {
+                                field : value, code_occurence : error_occurence_lib ::
+                                code_occurence! (),
+                            },);
+                        } else {
+                            acc.push(value);
+                        }
+                    }
+                }
+            }
+        }
+        let mut acc = std::string::String::from(jsonb_set_accumulator);
+        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+            true => std::string::String::default(),
+            false => format!("{jsonb_set_path},"),
+        };
+        for element in &self.0 {
+            match &element {
+                CatOptionToUpdate::StdPrimitiveI32(_) => match increment.checked_add(1) {
+                    Some(value) => {
+                        *increment = value;
+                        acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i32}}',${increment})");
+                    }
+                    None => {
+                        return Err(
+                            CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            },
+                        );
+                    }
+                },
+            }
+        }
+        Ok(acc)
+    }
+    fn bind_value_to_query<'a>(
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            match element {
+                CatOptionToUpdate::StdPrimitiveI32(value) => {
+                    query = query.bind(sqlx::types::Json(value.value));
+                }
+            }
+        }
+        query
+    }
+}
 
 
 // //maybe should for to have an id field ?
@@ -1848,84 +1848,84 @@ fn test_dd() {
 
 
 /////////////////////////////
-impl
-    postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
-        SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-    > for SomethingOptionsToUpdate
-{
-    fn try_generate_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
-    {
-        if self.update.is_empty() {
-            return Err(
-                SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                },
-            );
-        }
-        {
-            let mut acc = vec![];
-            for element in &self.update {
-                match element {
-                    SomethingOptionToUpdate::StdPrimitiveI8(_) => {
-                        let value = SomethingKey::StdPrimitiveI8;
-                        if acc.contains(&value) {
-                            return
-                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                            :: NotUniqueField
-                            {
-                                field : value, code_occurence : error_occurence_lib ::
-                                code_occurence! (),
-                            },);
-                        } else {
-                            acc.push(value);
-                        }
-                    }
-                }
-            }
-        }
-        let mut acc = std::string::String::from(jsonb_set_accumulator);
-        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-            true => std::string::String::default(),
-            false => format!("{jsonb_set_path},"),
-        };
-        for element in &self.update {
-            match &element {
-                SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
-                    Some(value) => {
-                        *increment = value;
-                        acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i8}}',${increment})");
-                    }
-                    None => {
-                        return
-                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                            :: CheckedAdd
-                            {
-                                code_occurence : error_occurence_lib :: code_occurence! (),
-                            },);
-                    }
-                },
-            }
-        }
-        Ok(acc)
-    }
-    fn bind_value_to_query<'a>(
-        self,
-        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in self.update {
-            match element {
-                SomethingOptionToUpdate::StdPrimitiveI8(value) => {
-                    query = query.bind(sqlx::types::Json(value.value));
-                }
-            }
-        }
-        query
-    }
-}
+// impl
+//     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
+//         SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+//     > for SomethingOptionsToUpdate
+// {
+//     fn try_generate_bind_increments(
+//         &self,
+//         jsonb_set_accumulator: &std::primitive::str,
+//         jsonb_set_target: &std::primitive::str,
+//         jsonb_set_path: &std::primitive::str,
+//         increment: &mut std::primitive::u64,
+//         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+//     ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
+//     {
+//         if self.update.is_empty() {
+//             return Err(
+//                 SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 },
+//             );
+//         }
+//         {
+//             let mut acc = vec![];
+//             for element in &self.update {
+//                 match element {
+//                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
+//                         let value = SomethingKey::StdPrimitiveI8;
+//                         if acc.contains(&value) {
+//                             return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: NotUniqueField
+//                             {
+//                                 field : value, code_occurence : error_occurence_lib ::
+//                                 code_occurence! (),
+//                             },);
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         let mut acc = std::string::String::from(jsonb_set_accumulator);
+//         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+//             true => std::string::String::default(),
+//             false => format!("{jsonb_set_path},"),
+//         };
+//         for element in &self.update {
+//             match &element {
+//                 SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
+//                     Some(value) => {
+//                         *increment = value;
+//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i8}}',${increment})");
+//                     }
+//                     None => {
+//                         return
+//                             Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+//                             :: CheckedAdd
+//                             {
+//                                 code_occurence : error_occurence_lib :: code_occurence! (),
+//                             },);
+//                     }
+//                 },
+//             }
+//         }
+//         Ok(acc)
+//     }
+//     fn bind_value_to_query<'a>(
+//         self,
+//         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         for element in self.update {
+//             match element {
+//                 SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+//                     query = query.bind(sqlx::types::Json(value.value));
+//                 }
+//             }
+//         }
+//         query
+//     }
+// }
