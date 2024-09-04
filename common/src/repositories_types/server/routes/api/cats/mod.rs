@@ -303,6 +303,141 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
 
+//
+impl<'a> postgresql_crud::BindQuery<'a> for Something {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        //implementation not necessary
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        // Ok(())
+        todo!()
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        // // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+        // pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+        // pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("'std_primitive_i8',${increment},"));
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("'std_vec_vec_generic',${increment},"));
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        let _ = increments.pop();
+        Ok(format!("jsonb_build_object({increments})"))
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
+    {
+        query = query.bind(sqlx::types::Json(self.std_primitive_i8.0));
+        query = query.bind(sqlx::types::Json(self.std_vec_vec_generic.0));
+        query
+    }
+}
+impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        //implementation not necessary
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        // Ok(())
+        todo!()
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        println!("1MUST BE CALLED");
+        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("'std_primitive_i8',${increment},"));
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        {
+            let mut acc = std::string::String::default();
+            for element in &self.std_vec_vec_generic.0 {
+                match element.try_generate_bind_increments(increment) {
+                    Ok(value) => {
+                        acc.push_str(&format!("{value},"));
+                    }
+                    Err(error) => {
+                        return Err(error);
+                    }
+                }
+            }
+            let _ = acc.pop();
+            increments.push_str(&format!("'std_vec_vec_generic',jsonb_build_array({acc}),"));
+        }
+
+        let _ = increments.pop();
+        Ok(format!("jsonb_build_object({increments})"))
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
+    {
+        query = query.bind(sqlx::types::Json(self.std_primitive_i8.0));
+        // query = query.bind(sqlx::types::Json(self.std_vec_vec_generic.0));
+        for element in self.std_vec_vec_generic.0 {
+            query = element.bind_value_to_query(query);
+        }
+        query
+    }
+}
+//
+
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
@@ -313,6 +448,57 @@ pub struct Doggie {
     pub generic: postgresql_crud::JsonGeneric<Cat>,
 }
 
+impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        println!("2MUST BE CALLED");
+        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("'std_primitive_i16',${increment},"));
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        // Ok(format!("jsonb_build_object({increments})"))
+        todo!()
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        println!("1MUST BE CALLED");
+        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("'std_primitive_i16',${increment},"));
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        match self.generic.0.try_generate_bind_increments(increment) {
+            Ok(value) => {
+                increments.push_str(&format!("'generic',{value},"));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        let _ = increments.pop();
+        Ok(format!("jsonb_build_object({increments})"))
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
+    {
+        query = query.bind(sqlx::types::Json(self.std_primitive_i16.0));
+        query = self.generic.0.bind_value_to_query(query);
+        query
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
     postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
@@ -320,6 +506,48 @@ pub struct Cat {
     pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+}
+
+impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        println!("2MUST BE CALLED");
+        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("'std_primitive_i16',${increment},"));
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        // Ok(format!("jsonb_build_object({increments})"))
+        todo!()
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        println!("1MUST BE CALLED");
+        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                increments.push_str(&format!("'std_primitive_i32',${increment},"));
+            }
+            None => {
+                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        }
+        let _ = increments.pop();
+        Ok(format!("jsonb_build_object({increments})"))
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
+    {
+        query = query.bind(sqlx::types::Json(self.std_primitive_i32.0));
+        query
+    }
 }
 
 
@@ -1929,3 +2157,756 @@ impl
 //         query
 //     }
 // }
+
+///////////////////////////////
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct CreateOnePayload {
+    pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJson<SomethingToCreate>,
+}
+#[derive(Debug)]
+pub struct CreateOneParameters {
+    pub payload: CreateOnePayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum TryCreateOneRouteLogicResponseVariants {
+    Desirable(postgresql_crud::StdPrimitiveI64),
+    CheckBodySize {
+        check_body_size:
+            postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        postgresql: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        serde_json: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        row: std::string::String,
+        rollback: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryCreateOneRouteLogicErrorNamed>
+    for TryCreateOneRouteLogicResponseVariants
+{
+    fn from(value: TryCreateOneRouteLogicErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize {
+                check_body_size,
+                code_occurence,
+            } => Self::CheckBodySize {
+                check_body_size,
+                code_occurence,
+            },
+            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
+                postgresql,
+                code_occurence,
+            } => Self::Postgresql {
+                postgresql,
+                code_occurence,
+            },
+            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::SerdeJson {
+                serde_json,
+                code_occurence,
+            } => Self::SerdeJson {
+                serde_json,
+                code_occurence,
+            },
+            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit {
+                check_commit,
+                code_occurence,
+            } => Self::CheckCommit {
+                check_commit,
+                code_occurence,
+            },
+            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollback {
+                row,
+                rollback,
+                code_occurence,
+            } => Self::RowAndRollback {
+                row,
+                rollback,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum TryCreateOneRouteLogicErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+pub async fn try_create_one_route_logic(
+    app_state : axum :: extract :: State < crate ::
+repositories_types :: server :: routes :: app_state ::
+DynArcCombinationOfAppStateLogicTraits >,
+    request: axum::extract::Request,
+) -> axum::response::Response {
+    let (parts, body) = request.into_parts();
+    let headers = parts.headers;
+    let body_bytes = match postgresql_crud::check_body_size::check_body_size(
+        body,
+        *app_state.get_maximum_size_of_http_body_in_bytes(),
+    )
+    .await
+    {
+        Ok(value) => value,
+        Err(error_0) => {
+            let error = TryCreateOneRouteLogicErrorNamed::CheckBodySize {
+                check_body_size: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2612,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                TryCreateOneRouteLogicResponseVariants::from(error),
+            ));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+    };
+    let parameters = CreateOneParameters {
+        payload: match serde_json::from_slice::<CreateOnePayload>(&body_bytes) {
+            Ok(value) => {
+                let value = CreateOnePayload::from(value);
+                value
+            }
+            Err(error_0) => {
+                let error = TryCreateOneRouteLogicErrorNamed::SerdeJson {
+                    serde_json: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2703,
+                            column: 13,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                    TryCreateOneRouteLogicResponseVariants::from(error),
+                ));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        },
+    };
+    println!("{:#?}", parameters);
+    //////
+    let query_string = {
+        let mut increment: std::primitive::u64 = 0;
+        format!(
+            "insert into jsongeneric (sqlx_types_json_t_as_postgresql_json_b_not_null) values ({}) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+            match postgresql_crud::BindQuery::try_generate_bind_increments(&parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null, &mut increment) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = TryUpdateOneRouteLogicErrorNamed::BindQuery {
+                        bind_query: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 4857,
+                                column: 25,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                        TryUpdateOneRouteLogicResponseVariants::from(error),
+                    ));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+        )
+        // let mut query = std::string::String::from("insert into jsongeneric ");
+        // if let Some(value) = &parameters
+        //     .payload
+        //     .sqlx_types_json_t_as_postgresql_json_b_not_null
+        // {
+        //     match postgresql_crud::BindQuery::try_increment(&value.value, &mut increment) {
+        //         Ok(_) => {
+        //             query.push_str(&format!(
+        //                 "sqlx_types_json_t_as_postgresql_json_b_not_null = ${},",
+        //                 increment
+        //             ));
+        //         }
+        //         Err(error_0) => {
+
+        //         }
+        //     }
+        // }
+        // let _ = query.pop();
+        // match postgresql_crud::BindQuery::try_increment(
+        //     &parameters
+        //         .payload
+        //         .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+        //     &mut increment,
+        // ) {
+        //     Ok(_) => {
+        //         query.push_str(& format!
+        //         (" where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = ${increment}"));
+        //     }
+        //     Err(error_0) => {
+        //         let error = TryUpdateOneRouteLogicErrorNamed::BindQuery {
+        //             bind_query: error_0,
+        //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+        //                 file!().to_owned(),
+        //                 line!(),
+        //                 column!(),
+        //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
+        //                     file: std::string::String::from(
+        //                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+        //                     ),
+        //                     line: 4857,
+        //                     column: 25,
+        //                 }),
+        //             ),
+        //         };
+        //         eprintln!("{error}");
+        //         let mut response = axum::response::IntoResponse::into_response(axum::Json(
+        //             TryUpdateOneRouteLogicResponseVariants::from(error),
+        //         ));
+        //         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+        //         return response;
+        //     }
+        // }
+        // query.push_str(&format!(
+        //     " returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+        // ));
+        // query
+    };
+    // println!("{}", query_string);
+
+    ///////
+    // let query_string =
+    // "insert into jsongeneric (sqlx_types_json_t_as_postgresql_json_b_not_null) values ($1) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key";
+    println!("@@@{}", query_string);
+
+
+
+
+    // let binded_query = {
+    //     let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+    //     if let Some(value) = parameters
+    //         .payload
+    //         .sqlx_types_json_t_as_postgresql_json_b_not_null
+    //     {
+    //         query = postgresql_crud::BindQuery::bind_value_to_query(value.value, query);
+    //     }
+    //     query = postgresql_crud::BindQuery::bind_value_to_query(
+    //         parameters
+    //             .payload
+    //             .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+    //         query,
+    //     );
+    //     query
+    // };
+    let binded_query = {
+        let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+        query = postgresql_crud::BindQuery::bind_value_to_query(
+            parameters
+                .payload
+                .sqlx_types_json_t_as_postgresql_json_b_not_null,
+            query,
+        );
+        query
+    };
+    let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+        Ok(value) => value,
+        Err(error_0) => {
+            let error = TryCreateOneRouteLogicErrorNamed::Postgresql {
+                postgresql: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2644,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                TryCreateOneRouteLogicResponseVariants::from(error),
+            ));
+            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+            return response;
+        }
+    };
+    let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+        Ok(value) => value,
+        Err(error_0) => {
+            let error = TryCreateOneRouteLogicErrorNamed::Postgresql {
+                postgresql: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2644,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                TryCreateOneRouteLogicResponseVariants::from(error),
+            ));
+            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+            return response;
+        }
+    };
+    let value = {
+        let mut executor = match sqlx::Acquire::begin(executor).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = TryCreateOneRouteLogicErrorNamed::Postgresql {
+                    postgresql: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2324,
+                            column: 17,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                    TryCreateOneRouteLogicResponseVariants::from(error),
+                ));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            match binded_query.fetch_one(executor.as_mut()).await {
+                Ok(value) => {
+                    match sqlx::Row::try_get::<std::primitive::i64, &std::primitive::str>(
+                        &value,
+                        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+                    ) {
+                        Ok(value) => postgresql_crud::StdPrimitiveI64(value),
+                        Err(error_0) => match executor.rollback().await {
+                            Ok(_) => {
+                                let error = TryCreateOneRouteLogicErrorNamed :: Postgresql
+                                    {
+                                        postgresql : error_0, code_occurence : error_occurence_lib
+                                        :: code_occurence :: CodeOccurence ::
+                                        new(file! ().to_owned(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 3093, column : 17,
+                                        }))
+                                    };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(
+                                    axum::Json(TryCreateOneRouteLogicResponseVariants::from(error)),
+                                );
+                                *response.status_mut() =
+                                    axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = TryCreateOneRouteLogicErrorNamed ::
+                                    RowAndRollback
+                                    {
+                                        row : error_0, rollback : error_1, code_occurence :
+                                        error_occurence_lib :: code_occurence :: CodeOccurence ::
+                                        new(file! ().to_owned(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 3096, column : 17,
+                                        }))
+                                    };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(
+                                    axum::Json(TryCreateOneRouteLogicResponseVariants::from(error)),
+                                );
+                                *response.status_mut() =
+                                    axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        },
+                    }
+                }
+                Err(error_0) => {
+                    match executor.rollback().await {
+                        Ok(_) => {
+                            let error = TryCreateOneRouteLogicErrorNamed :: Postgresql
+                            {
+                                postgresql : error_0, code_occurence : error_occurence_lib
+                                :: code_occurence :: CodeOccurence ::
+                                new(file! ().to_owned(), line! (), column! (),
+                                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                {
+                                    file : std :: string :: String ::
+                                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line : 3103, column : 13,
+                                }))
+                            };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(
+                                axum::Json(TryCreateOneRouteLogicResponseVariants::from(error)),
+                            );
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                        Err(error_1) => {
+                            let error = TryCreateOneRouteLogicErrorNamed ::
+                            RowAndRollback
+                            {
+                                row : error_0, rollback : error_1, code_occurence :
+                                error_occurence_lib :: code_occurence :: CodeOccurence ::
+                                new(file! ().to_owned(), line! (), column! (),
+                                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                {
+                                    file : std :: string :: String ::
+                                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line : 3106, column : 13,
+                                }))
+                            };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(
+                                axum::Json(TryCreateOneRouteLogicResponseVariants::from(error)),
+                            );
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    }
+                }
+            }
+        };
+        if let Err(error_0) = executor.commit().await {
+            let error = TryCreateOneRouteLogicErrorNamed::Postgresql {
+                postgresql: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2342,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(
+                TryCreateOneRouteLogicResponseVariants::from(error),
+            ));
+            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+            return response;
+        }
+        value
+    };
+    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+        TryCreateOneRouteLogicResponseVariants::Desirable(value),
+    ));
+    *response.status_mut() = axum::http::StatusCode::CREATED;
+    return response;
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum TryCreateOneErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        try_create_one_route_logic_error_named_with_serialize_deserialize:
+            TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+pub async fn try_create_one(
+    server_location: &std::primitive::str,
+    parameters: CreateOneParameters,
+) -> Result<postgresql_crud::StdPrimitiveI64, TryCreateOneErrorNamed> {
+    let payload = {
+        let value = CreateOnePayload::from(parameters.payload);
+        match serde_json::to_string(&value) {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(TryCreateOneErrorNamed::SerdeJsonToString {
+                    serde_json_to_string: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2746,
+                            column: 17,
+                        }),
+                    ),
+                });
+            }
+        }
+    };
+    let url = format!("{}/jsongeneric/create_one", server_location,);
+    let future = reqwest::Client::new()
+        .post(&url)
+        .header(
+            &postgresql_crud::CommitSnakeCase.to_string(),
+            git_info::PROJECT_GIT_INFO.commit,
+        )
+        .header(reqwest::header::CONTENT_TYPE, "application/json")
+        .body(payload)
+        .send();
+    let response = match future.await {
+        Ok(value) => value,
+        Err(error_0) => {
+            return Err(TryCreateOneErrorNamed::Reqwest {
+                reqwest: error_0,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2809,
+                        column: 17,
+                    }),
+                ),
+            });
+        }
+    };
+    let error_0 = response.status();
+    let error_1 = response.headers().clone();
+    let error_2 = match response.text().await {
+        Ok(value) => value,
+        Err(error_2) => {
+            return Err(TryCreateOneErrorNamed::FailedToGetResponseText {
+                status_code: error_0,
+                headers: error_1,
+                reqwest: error_2,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2831,
+                        column: 17,
+                    }),
+                ),
+            });
+        }
+    };
+    let expected_response =
+        match serde_json::from_str::<TryCreateOneRouteLogicResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(TryCreateOneErrorNamed::DeserializeResponse {
+                    status_code: error_0,
+                    headers: error_1,
+                    response_text: error_2,
+                    serde: error_3,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2849,
+                            column: 17,
+                        }),
+                    ),
+                });
+            }
+        };
+    let try_create_one_route_logic_error_named_with_serialize_deserialize = match expected_response
+    {
+        TryCreateOneRouteLogicResponseVariants::Desirable(value) => {
+            let value = postgresql_crud::StdPrimitiveI64::from(value);
+            return Ok(value);
+        }
+        TryCreateOneRouteLogicResponseVariants::CheckBodySize {
+            check_body_size,
+            code_occurence,
+        } => TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize {
+            check_body_size,
+            code_occurence,
+        },
+        TryCreateOneRouteLogicResponseVariants::Postgresql {
+            postgresql,
+            code_occurence,
+        } => TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
+            postgresql,
+            code_occurence,
+        },
+        TryCreateOneRouteLogicResponseVariants::SerdeJson {
+            serde_json,
+            code_occurence,
+        } => TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::SerdeJson {
+            serde_json,
+            code_occurence,
+        },
+        TryCreateOneRouteLogicResponseVariants::CheckCommit {
+            check_commit,
+            code_occurence,
+        } => TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit {
+            check_commit,
+            code_occurence,
+        },
+        TryCreateOneRouteLogicResponseVariants::RowAndRollback {
+            row,
+            rollback,
+            code_occurence,
+        } => TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollback {
+            row,
+            rollback,
+            code_occurence,
+        },
+    };
+    Err(
+        TryCreateOneErrorNamed::TryCreateOneRouteLogicErrorNamedWithSerializeDeserialize {
+            try_create_one_route_logic_error_named_with_serialize_deserialize,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_owned(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 2892,
+                    column: 17,
+                }),
+            ),
+        },
+    )
+}
+impl postgresql_crud ::
+StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+for CreateOnePayload
+{
+    fn
+    default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+    -> Self
+    {
+        Self
+        {
+            sqlx_types_json_t_as_postgresql_json_b_not_null : postgresql_crud
+            ::
+            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+            ::
+            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+        }
+    }
+}
+pub async fn create_one_payload_example_route_logic() -> axum::response::Response {
+    let mut response = axum :: response :: IntoResponse ::
+    into_response(axum ::
+    Json(< CreateOnePayload as postgresql_crud ::
+    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+    > ::
+    default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()));
+    *response.status_mut() = axum::http::StatusCode::OK;
+    return response;
+}

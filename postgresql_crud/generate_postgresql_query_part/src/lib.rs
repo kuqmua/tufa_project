@@ -4039,8 +4039,188 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
             });
             let element_type = &element.ty;
-            quote::quote!{
-                pub #element_ident: #element_type
+            let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            match &supported_predefined_type {
+                SupportedPredefinedType::JsonStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdStringString |
+
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
+                
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdVecVecStdStringString |
+
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
+                    quote::quote!{
+                        pub #element_ident: #element_type
+                    }
+                },
+
+                SupportedPredefinedType::JsonGeneric(type_path) => {
+                    let element_type = {
+                        let value = format!(
+                            "{}{}",
+                            quote::quote!{#type_path}.to_string(),
+                            naming_conventions::ToCreateUpperCamelCase,
+                        );
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{
+                        pub #element_ident: postgresql_crud::JsonGeneric<#element_type>
+                    }
+                },
+                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
+                    let element_type = {
+                        let value = format!(
+                            "{}{}",
+                            quote::quote!{#type_path}.to_string(),
+                            naming_conventions::ToCreateUpperCamelCase,
+                        );
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{
+                        pub #element_ident: postgresql_crud::JsonStdOptionOptionGeneric<#element_type>
+                    }
+                },
+                SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
+                    let element_type = {
+                        let value = format!(
+                            "{}{}",
+                            quote::quote!{#type_path}.to_string(),
+                            naming_conventions::ToCreateUpperCamelCase,
+                        );
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{
+                        pub #element_ident: postgresql_crud::JsonStdVecVecGeneric<#element_type>
+                    }
+                },
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => {
+                    let element_type = {
+                        let value = format!(
+                            "{}{}",
+                            quote::quote!{#type_path}.to_string(),
+                            naming_conventions::ToCreateUpperCamelCase,
+                        );
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{
+                        pub #element_ident: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<#element_type>
+                    }
+                },
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => {
+                    let element_type = {
+                        let value = format!(
+                            "{}{}",
+                            quote::quote!{#type_path}.to_string(),
+                            naming_conventions::ToCreateUpperCamelCase,
+                        );
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{
+                        pub #element_ident: postgresql_crud::JsonStdVecVecStdOptionOptionGeneric<#element_type>
+                    }
+                },
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
+                    let element_type = {
+                        let value = format!(
+                            "{}{}",
+                            quote::quote!{#type_path}.to_string(),
+                            naming_conventions::ToCreateUpperCamelCase,
+                        );
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{
+                        pub #element_ident: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<#element_type>
+                    }
+                },
+
+                SupportedPredefinedType::JsonUuid => panic!("{proc_macro_name_upper_camel_case_ident_stringified} cannot be JsonUuid"),
             }
         });
         quote::quote!{
@@ -4048,6 +4228,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
            pub struct #ident_to_create_upper_camel_case_token_stream {
                #(#variants_token_stream),*
            }
+        }
+    };
+    let impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream = {
+        let fields_initialization_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
+            let field_ident = element.ident.as_ref().unwrap_or_else(||panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE));
+            quote::quote!{
+                #field_ident: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+            }
+        });
+        quote::quote!{
+            impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_to_create_upper_camel_case_token_stream {
+                #[inline]
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    Self {
+                        #(#fields_initialization_token_stream),*
+                    }
+                }
+            }
         }
     };
     let generated = quote::quote!{
@@ -4072,6 +4270,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
 
         #pub_struct_ident_to_create_token_stream
+        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(

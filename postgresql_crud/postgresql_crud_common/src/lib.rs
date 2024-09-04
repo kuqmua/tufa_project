@@ -10308,36 +10308,22 @@ impl<T> SqlxTypesJson<T> {
             .collect()
     }
 }
-impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for SqlxTypesJson<T> {
+impl<'a, T: serde::Serialize + std::marker::Send + BindQuery<'a> + 'a> BindQuery<'a> for SqlxTypesJson<T> {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(())
-            }
-            None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
+        match self.0.try_increment(increment) {
+            Ok(_) => Ok(()),
+            Err(error) => Err(error)
         }
     }
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::default();
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("${increment}"));
-            }
-            None => {
-                return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
+        match self.0.try_generate_bind_increments(increment) {
+            Ok(value) => Ok(value),
+            Err(error) => Err(error)
         }
-        Ok(increments)
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
     {
-        query = query.bind(self.0);
+        query = self.0.0.bind_value_to_query(query);
         query
     }
 }
@@ -10365,6 +10351,7 @@ where T: std::fmt::Debug
 }
 impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for WhereSqlxTypesJson<T> {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+        //todo rewrite to support inner type BindQuery for t
         increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
             code_occurence: error_occurence_lib::code_occurence!(),
         }), |incr| {
@@ -10376,6 +10363,7 @@ impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for WhereSq
         std::string::String,
         TryGenerateBindIncrementsErrorNamed,
     > {
+        //todo rewrite to support inner type BindQuery for t
         increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
             code_occurence: error_occurence_lib::code_occurence!(),
         }), |incr| {
@@ -10384,6 +10372,7 @@ impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for WhereSq
         })
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        //todo rewrite to support inner type BindQuery for t
         query = query.bind(self.value.0);
         query
     }
@@ -10448,6 +10437,7 @@ impl<T> StdOptionOptionSqlxTypesJson<T> {
 }
 impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + sqlx::Encode<'a, sqlx::Postgres> + 'a> BindQuery<'a> for StdOptionOptionSqlxTypesJson<T> {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+        //todo rewrite to support inner type BindQuery for t
         increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
             code_occurence: error_occurence_lib::code_occurence!(),
         }), |incr| {
@@ -10459,6 +10449,7 @@ impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + 
         std::string::String,
         TryGenerateBindIncrementsErrorNamed,
     > {
+        //todo rewrite to support inner type BindQuery for t
         increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
             code_occurence: error_occurence_lib::code_occurence!(),
         }), |incr| {
@@ -10467,6 +10458,7 @@ impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + 
         })
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        //todo rewrite to support inner type BindQuery for t
         query = query.bind(match self.0 {
             Some(value) => Some(value.0),
             None => None
@@ -10499,6 +10491,7 @@ impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJson
 }
 impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + sqlx::Encode<'a, sqlx::Postgres> + 'a> BindQuery<'a> for WhereStdOptionOptionSqlxTypesJson<T> {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+        //todo rewrite to support inner type BindQuery for t
         increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
             code_occurence: error_occurence_lib::code_occurence!(),
         }), |incr| {
@@ -10510,6 +10503,7 @@ impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + 
         std::string::String,
         TryGenerateBindIncrementsErrorNamed,
     > {
+        //todo rewrite to support inner type BindQuery for t
         increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
             code_occurence: error_occurence_lib::code_occurence!(),
         }), |incr| {
@@ -10518,6 +10512,7 @@ impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + 
         })
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        //todo rewrite to support inner type BindQuery for t
         query = query.bind(match self.value.0 {
             Some(value) => Some(value.0),
             None => None

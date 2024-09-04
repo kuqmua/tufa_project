@@ -467,7 +467,7 @@ GET http://127.0.0.1:8080/jsongeneric/create_many_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-###
+###  
 
 POST http://127.0.0.1:8080/jsongeneric/create_one HTTP/1.1
 content-type: application/json
@@ -476,8 +476,6 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 {
     # "std_primitive_i32_as_postgresql_int": 83,
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
-        "id": "e4ee0a77-15fa-4c12-b1f5-71feff7939aa",
-
         "std_primitive_i8": 8,
         # "std_primitive_i16": 16,
         # "std_primitive_i32": 0,
@@ -591,18 +589,14 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
         # ,
         "std_vec_vec_generic": [
             {
-              "id": "e4ee0a77-15fa-4c12-b1f5-71feff7939aa",
               "std_primitive_i16": 0,
               "generic": {
-                "id": "e4ee0a77-15fa-4c12-b1f5-71feff7939aa",
                 "std_primitive_i32": 0
               }
             },
             {
-              "id": "e4ee0a77-15fa-4c12-b1f5-71feff7939aa",
               "std_primitive_i16": 0,
               "generic": {
-                "id": "e4ee0a77-15fa-4c12-b1f5-71feff7939aa",
                 "std_primitive_i32": 0
               }
             }
