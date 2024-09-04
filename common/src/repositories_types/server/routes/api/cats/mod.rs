@@ -303,7 +303,6 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
 
-//
 impl<'a> postgresql_crud::BindQuery<'a> for Something {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
         //implementation not necessary
@@ -367,75 +366,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
         query
     }
 }
-impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        //implementation not necessary
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        // Ok(())
-        todo!()
-    }
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("'std_primitive_i8',${increment},"));
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        {
-            let mut acc = std::string::String::default();
-            for element in &self.std_vec_vec_generic.0 {
-                match element.try_generate_bind_increments(increment) {
-                    Ok(value) => {
-                        acc.push_str(&format!("{value},"));
-                    }
-                    Err(error) => {
-                        return Err(error);
-                    }
-                }
-            }
-            let _ = acc.pop();
-            increments.push_str(&format!("'std_vec_vec_generic',jsonb_build_array({acc}),"));
-        }
-
-        let _ = increments.pop();
-        Ok(format!("jsonb_build_object({increments})"))
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
-    {
-        query = query.bind(sqlx::types::Json(self.std_primitive_i8.0));
-        // query = query.bind(sqlx::types::Json(self.std_vec_vec_generic.0));
-        for element in self.std_vec_vec_generic.0 {
-            query = element.bind_value_to_query(query);
-        }
-        query
-    }
-}
-//
 
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
      postgresql_crud::GeneratePostgresqlQueryPart
@@ -447,55 +377,6 @@ pub struct Doggie {
     pub generic: postgresql_crud::JsonGeneric<Cat>,
 }
 
-impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("'std_primitive_i16',${increment},"));
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        // Ok(format!("jsonb_build_object({increments})"))
-        todo!()
-    }
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("'std_primitive_i16',${increment},"));
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        match self.generic.0.try_generate_bind_increments(increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'generic',{value},"));
-            }
-            Err(error) => {
-                return Err(error);
-            }
-        }
-        let _ = increments.pop();
-        Ok(format!("jsonb_build_object({increments})"))
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
-    {
-        query = query.bind(sqlx::types::Json(self.std_primitive_i16.0));
-        query = self.generic.0.bind_value_to_query(query);
-        query
-    }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
     postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
@@ -504,47 +385,6 @@ pub struct Cat {
 
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
 }
-
-impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("'std_primitive_i16',${increment},"));
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        // Ok(format!("jsonb_build_object({increments})"))
-        todo!()
-    }
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("'std_primitive_i32',${increment},"));
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        let _ = increments.pop();
-        Ok(format!("jsonb_build_object({increments})"))
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
-    {
-        query = query.bind(sqlx::types::Json(self.std_primitive_i32.0));
-        query
-    }
-}
-
 
 #[test]
 fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() {
@@ -2428,7 +2268,7 @@ DynArcCombinationOfAppStateLogicTraits >,
     ///////
     // let query_string =
     // "insert into jsongeneric (sqlx_types_json_t_as_postgresql_json_b_not_null) values ($1) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key";
-    println!("@@@{}", query_string);
+    println!("{}", query_string);
 
 
 
