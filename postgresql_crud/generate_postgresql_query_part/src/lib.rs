@@ -705,6 +705,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let ident_to_create_upper_camel_case_token_stream = {
+        let value = format!("{ident}{}", naming_conventions::ToCreateUpperCamelCase);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = {
         let value = format!("{ident}GeneratePostgresqlQueryPartErrorNamed");
         value.parse::<proc_macro2::TokenStream>()
@@ -4024,6 +4029,27 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // if ident == "" {
     //     println!("{f}");
     // }
+
+    let pub_struct_ident_to_create_token_stream = {
+        let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            let element_type = &element.ty;
+            quote::quote!{
+                pub #element_ident: #element_type
+            }
+        });
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+           pub struct #ident_to_create_upper_camel_case_token_stream {
+               #(#variants_token_stream),*
+           }
+        }
+    };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
@@ -4044,6 +4070,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
 
         // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
+
+        #pub_struct_ident_to_create_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(

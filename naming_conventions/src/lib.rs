@@ -298,7 +298,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
         ["option", "to", "update"],
         ["options", "to", "update"],
         ["options", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
-        ["id"]
+        ["id"],
+        ["to", "create"]
     ]
 );
 
