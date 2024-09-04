@@ -705,11 +705,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let ident_to_create_upper_camel_case_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::ToCreateUpperCamelCase);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let ident_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&ident);
     let ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = {
         let value = format!("{ident}GeneratePostgresqlQueryPartErrorNamed");
         value.parse::<proc_macro2::TokenStream>()
@@ -4140,85 +4136,37 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 },
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
-                    let element_type = {
-                        let value = format!(
-                            "{}{}",
-                            quote::quote!{#type_path}.to_string(),
-                            naming_conventions::ToCreateUpperCamelCase,
-                        );
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote!{
                         pub #element_ident: postgresql_crud::JsonGeneric<#element_type>
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let element_type = {
-                        let value = format!(
-                            "{}{}",
-                            quote::quote!{#type_path}.to_string(),
-                            naming_conventions::ToCreateUpperCamelCase,
-                        );
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote!{
                         pub #element_ident: postgresql_crud::JsonStdOptionOptionGeneric<#element_type>
                     }
                 },
                 SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
-                    let element_type = {
-                        let value = format!(
-                            "{}{}",
-                            quote::quote!{#type_path}.to_string(),
-                            naming_conventions::ToCreateUpperCamelCase,
-                        );
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote!{
                         pub #element_ident: postgresql_crud::JsonStdVecVecGeneric<#element_type>
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => {
-                    let element_type = {
-                        let value = format!(
-                            "{}{}",
-                            quote::quote!{#type_path}.to_string(),
-                            naming_conventions::ToCreateUpperCamelCase,
-                        );
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote!{
                         pub #element_ident: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<#element_type>
                     }
                 },
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => {
-                    let element_type = {
-                        let value = format!(
-                            "{}{}",
-                            quote::quote!{#type_path}.to_string(),
-                            naming_conventions::ToCreateUpperCamelCase,
-                        );
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote!{
                         pub #element_ident: postgresql_crud::JsonStdVecVecStdOptionOptionGeneric<#element_type>
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                    let element_type = {
-                        let value = format!(
-                            "{}{}",
-                            quote::quote!{#type_path}.to_string(),
-                            naming_conventions::ToCreateUpperCamelCase,
-                        );
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote!{
                         pub #element_ident: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<#element_type>
                     }

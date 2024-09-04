@@ -2725,8 +2725,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWithAdditionalInfo<'_>| {
         let field_ident = &element.field_ident;
         let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
+        let field_type_token_stream = match &element.option_generic {
+            Some(value) => naming_conventions::tokens_to_create_upper_camel_case_token_stream(&{
+                let value = &value.upper_camel_case_stringified;
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            }),
+            None => inner_type_token_stream.clone()
+        };
         quote::quote! {
-            pub #field_ident: #inner_type_token_stream
+            pub #field_ident: #field_type_token_stream
         }
     });
     let generate_try_operation_token_stream = |
@@ -3627,10 +3635,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                #try_operation_route_logic_token_stream
-                #try_operation_token_stream
-                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
-                #operation_payload_example_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
+                // #try_operation_token_stream
+                // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
+                // #operation_payload_example_route_logic_token_stream
             },
             // try_operation_test_token_stream,
             quote::quote! {}
@@ -5578,7 +5586,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             #create_many_token_stream
-            // #create_one_token_stream
+            #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream

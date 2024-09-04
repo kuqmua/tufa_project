@@ -1994,14 +1994,6 @@ impl
 // }
 
 ///////////////////////////////
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct CreateOnePayload {
-    pub sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::SqlxTypesJson<SomethingToCreate>,
-}
-#[derive(Debug)]
-pub struct CreateOneParameters {
-    pub payload: CreateOnePayload,
-}
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryCreateOneRouteLogicResponseVariants {
     Desirable(postgresql_crud::StdPrimitiveI64),

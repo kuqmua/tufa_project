@@ -457,3 +457,13 @@ where
 //     url_handle_stringified.parse::<proc_macro2::TokenStream>()
 //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {url_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 // }
+
+pub fn tokens_to_create_upper_camel_case_token_stream(type_path: &impl quote::ToTokens) -> proc_macro2::TokenStream {
+    let value = format!(
+        "{}{}",
+        quote::quote!{#type_path}.to_string(),
+        ToCreateUpperCamelCase,
+    );
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
