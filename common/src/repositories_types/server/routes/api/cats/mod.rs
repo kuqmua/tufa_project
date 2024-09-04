@@ -394,7 +394,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
         todo!()
     }
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        println!("1MUST BE CALLED");
         let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
         match increment.checked_add(1) {
             Some(incr) => {
@@ -450,7 +449,6 @@ pub struct Doggie {
 
 impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        println!("2MUST BE CALLED");
         let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
         match increment.checked_add(1) {
             Some(incr) => {
@@ -467,7 +465,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
         todo!()
     }
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        println!("1MUST BE CALLED");
         let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
         match increment.checked_add(1) {
             Some(incr) => {
@@ -510,7 +507,6 @@ pub struct Cat {
 
 impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        println!("2MUST BE CALLED");
         let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
         match increment.checked_add(1) {
             Some(incr) => {
@@ -527,7 +523,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
         todo!()
     }
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        println!("1MUST BE CALLED");
         let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
         match increment.checked_add(1) {
             Some(incr) => {
