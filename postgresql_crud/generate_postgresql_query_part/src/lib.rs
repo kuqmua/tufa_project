@@ -30,65 +30,65 @@ enum SupportedPredefinedType {
     JsonStdOptionOptionStdPrimitiveBool, 
     JsonStdOptionOptionStdStringString, 
 
-    JsonStdVecVecStdPrimitiveI8, 
-    JsonStdVecVecStdPrimitiveI16, 
-    JsonStdVecVecStdPrimitiveI32, 
-    JsonStdVecVecStdPrimitiveI64, 
-    JsonStdVecVecStdPrimitiveI128, 
-    JsonStdVecVecStdPrimitiveU8, 
-    JsonStdVecVecStdPrimitiveU16, 
-    JsonStdVecVecStdPrimitiveU32, 
-    JsonStdVecVecStdPrimitiveU64, 
-    JsonStdVecVecStdPrimitiveU128, 
-    JsonStdVecVecStdPrimitiveF32, 
-    JsonStdVecVecStdPrimitiveF64, 
-    JsonStdVecVecStdPrimitiveBool, 
-    JsonStdVecVecStdStringString, 
+    // JsonStdVecVecStdPrimitiveI8, 
+    // JsonStdVecVecStdPrimitiveI16, 
+    // JsonStdVecVecStdPrimitiveI32, 
+    // JsonStdVecVecStdPrimitiveI64, 
+    // JsonStdVecVecStdPrimitiveI128, 
+    // JsonStdVecVecStdPrimitiveU8, 
+    // JsonStdVecVecStdPrimitiveU16, 
+    // JsonStdVecVecStdPrimitiveU32, 
+    // JsonStdVecVecStdPrimitiveU64, 
+    // JsonStdVecVecStdPrimitiveU128, 
+    // JsonStdVecVecStdPrimitiveF32, 
+    // JsonStdVecVecStdPrimitiveF64, 
+    // JsonStdVecVecStdPrimitiveBool, 
+    // JsonStdVecVecStdStringString, 
 
-    JsonStdOptionOptionStdVecVecStdPrimitiveI8, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveI16, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveI32, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveI64, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveI128, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveU8, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveU16, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveU32, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveU64, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveU128, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveF32, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveF64, 
-    JsonStdOptionOptionStdVecVecStdPrimitiveBool, 
-    JsonStdOptionOptionStdVecVecStdStringString, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveI8, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveI16, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveI32, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveI64, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveI128, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveU8, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveU16, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveU32, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveU64, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveU128, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveF32, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveF64, 
+    // JsonStdOptionOptionStdVecVecStdPrimitiveBool, 
+    // JsonStdOptionOptionStdVecVecStdStringString, 
 
-    JsonStdVecVecStdOptionOptionStdPrimitiveI8, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveI16, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveI32, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveI64, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveI128, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveU8, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveU16, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveU32, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveU64, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveU128, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveF32, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveF64, 
-    JsonStdVecVecStdOptionOptionStdPrimitiveBool, 
-    JsonStdVecVecStdOptionOptionStdStringString, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveI8, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveI16, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveI32, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveI64, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveI128, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveU8, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveU16, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveU32, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveU64, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveU128, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveF32, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveF64, 
+    // JsonStdVecVecStdOptionOptionStdPrimitiveBool, 
+    // JsonStdVecVecStdOptionOptionStdStringString, 
 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool, 
-    JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool, 
+    // JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString, 
 
     JsonGeneric(syn::TypePath), 
     JsonStdOptionOptionGeneric(syn::TypePath), 
@@ -132,65 +132,65 @@ impl SupportedPredefinedType {
             Self::JsonStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
             Self::JsonStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
 
-            Self::JsonStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
-            Self::JsonStdVecVecStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
-            Self::JsonStdVecVecStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
-            Self::JsonStdVecVecStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
-            Self::JsonStdVecVecStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
-            Self::JsonStdVecVecStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
-            Self::JsonStdVecVecStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
-            Self::JsonStdVecVecStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
-            Self::JsonStdVecVecStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
-            Self::JsonStdVecVecStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
-            Self::JsonStdVecVecStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
-            Self::JsonStdVecVecStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
-            Self::JsonStdVecVecStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
-            Self::JsonStdVecVecStdStringString => SupportedPredefinedOriginalType::String,
+            // Self::JsonStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            // Self::JsonStdVecVecStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            // Self::JsonStdVecVecStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            // Self::JsonStdVecVecStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            // Self::JsonStdVecVecStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            // Self::JsonStdVecVecStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            // Self::JsonStdVecVecStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            // Self::JsonStdVecVecStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            // Self::JsonStdVecVecStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            // Self::JsonStdVecVecStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            // Self::JsonStdVecVecStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            // Self::JsonStdVecVecStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            // Self::JsonStdVecVecStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            // Self::JsonStdVecVecStdStringString => SupportedPredefinedOriginalType::String,
 
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
-            Self::JsonStdOptionOptionStdVecVecStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
-            Self::JsonStdOptionOptionStdVecVecStdStringString => SupportedPredefinedOriginalType::String,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            // Self::JsonStdOptionOptionStdVecVecStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            // Self::JsonStdOptionOptionStdVecVecStdStringString => SupportedPredefinedOriginalType::String,
 
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
-            Self::JsonStdVecVecStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
-            Self::JsonStdVecVecStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            // Self::JsonStdVecVecStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            // Self::JsonStdVecVecStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
 
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 => SupportedPredefinedOriginalType::I128,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => SupportedPredefinedOriginalType::U8,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => SupportedPredefinedOriginalType::U16,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => SupportedPredefinedOriginalType::U32,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => SupportedPredefinedOriginalType::U64,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 => SupportedPredefinedOriginalType::U128,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => SupportedPredefinedOriginalType::F32,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => SupportedPredefinedOriginalType::F64,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
+            // Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
 
             Self::JsonGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
             Self::JsonStdOptionOptionGeneric(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
@@ -399,65 +399,65 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         "JsonStdOptionOptionStdPrimitiveBool" => Self::JsonStdOptionOptionStdPrimitiveBool,
                         "JsonStdOptionOptionStdStringString" => Self::JsonStdOptionOptionStdStringString,
 
-                        "JsonStdVecVecStdPrimitiveI8" => Self::JsonStdVecVecStdPrimitiveI8,
-                        "JsonStdVecVecStdPrimitiveI16" => Self::JsonStdVecVecStdPrimitiveI16,
-                        "JsonStdVecVecStdPrimitiveI32" => Self::JsonStdVecVecStdPrimitiveI32,
-                        "JsonStdVecVecStdPrimitiveI64" => Self::JsonStdVecVecStdPrimitiveI64,
-                        "JsonStdVecVecStdPrimitiveI128" => Self::JsonStdVecVecStdPrimitiveI128,
-                        "JsonStdVecVecStdPrimitiveU8" => Self::JsonStdVecVecStdPrimitiveU8,
-                        "JsonStdVecVecStdPrimitiveU16" => Self::JsonStdVecVecStdPrimitiveU16,
-                        "JsonStdVecVecStdPrimitiveU32" => Self::JsonStdVecVecStdPrimitiveU32,
-                        "JsonStdVecVecStdPrimitiveU64" => Self::JsonStdVecVecStdPrimitiveU64,
-                        "JsonStdVecVecStdPrimitiveU128" => Self::JsonStdVecVecStdPrimitiveU128,
-                        "JsonStdVecVecStdPrimitiveF32" => Self::JsonStdVecVecStdPrimitiveF32,
-                        "JsonStdVecVecStdPrimitiveF64" => Self::JsonStdVecVecStdPrimitiveF64,
-                        "JsonStdVecVecStdPrimitiveBool" => Self::JsonStdVecVecStdPrimitiveBool,
-                        "JsonStdVecVecStdStringString" => Self::JsonStdVecVecStdStringString,
+                        // "JsonStdVecVecStdPrimitiveI8" => Self::JsonStdVecVecStdPrimitiveI8,
+                        // "JsonStdVecVecStdPrimitiveI16" => Self::JsonStdVecVecStdPrimitiveI16,
+                        // "JsonStdVecVecStdPrimitiveI32" => Self::JsonStdVecVecStdPrimitiveI32,
+                        // "JsonStdVecVecStdPrimitiveI64" => Self::JsonStdVecVecStdPrimitiveI64,
+                        // "JsonStdVecVecStdPrimitiveI128" => Self::JsonStdVecVecStdPrimitiveI128,
+                        // "JsonStdVecVecStdPrimitiveU8" => Self::JsonStdVecVecStdPrimitiveU8,
+                        // "JsonStdVecVecStdPrimitiveU16" => Self::JsonStdVecVecStdPrimitiveU16,
+                        // "JsonStdVecVecStdPrimitiveU32" => Self::JsonStdVecVecStdPrimitiveU32,
+                        // "JsonStdVecVecStdPrimitiveU64" => Self::JsonStdVecVecStdPrimitiveU64,
+                        // "JsonStdVecVecStdPrimitiveU128" => Self::JsonStdVecVecStdPrimitiveU128,
+                        // "JsonStdVecVecStdPrimitiveF32" => Self::JsonStdVecVecStdPrimitiveF32,
+                        // "JsonStdVecVecStdPrimitiveF64" => Self::JsonStdVecVecStdPrimitiveF64,
+                        // "JsonStdVecVecStdPrimitiveBool" => Self::JsonStdVecVecStdPrimitiveBool,
+                        // "JsonStdVecVecStdStringString" => Self::JsonStdVecVecStdStringString,
 
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveI8" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI8,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveI16" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI16,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveI32" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI32,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveI64" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI64,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveI128" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI128,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveU8" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU8,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveU16" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU16,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveU32" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU32,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveU64" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU64,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveU128" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU128,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveF32" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveF32,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveF64" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveF64,
-                        "JsonStdOptionOptionStdVecVecStdPrimitiveBool" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveBool,
-                        "JsonStdOptionOptionStdVecVecStdStringString" => Self::JsonStdOptionOptionStdVecVecStdStringString,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveI8" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI8,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveI16" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI16,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveI32" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI32,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveI64" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI64,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveI128" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveI128,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveU8" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU8,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveU16" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU16,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveU32" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU32,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveU64" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU64,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveU128" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveU128,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveF32" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveF32,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveF64" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveF64,
+                        // "JsonStdOptionOptionStdVecVecStdPrimitiveBool" => Self::JsonStdOptionOptionStdVecVecStdPrimitiveBool,
+                        // "JsonStdOptionOptionStdVecVecStdStringString" => Self::JsonStdOptionOptionStdVecVecStdStringString,
 
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveI8" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI8,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveI16" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI16,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveI32" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI32,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveI64" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI64,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveI128" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI128,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveU8" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU8,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveU16" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU16,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveU32" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU32,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveU64" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU64,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveU128" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU128,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveF32" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveF32,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveF64" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveF64,
-                        "JsonStdVecVecStdOptionOptionStdPrimitiveBool" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveBool,
-                        "JsonStdVecVecStdOptionOptionStdStringString" => Self::JsonStdVecVecStdOptionOptionStdStringString,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveI8" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI8,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveI16" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI16,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveI32" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI32,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveI64" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI64,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveI128" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveI128,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveU8" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU8,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveU16" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU16,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveU32" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU32,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveU64" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU64,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveU128" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveU128,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveF32" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveF32,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveF64" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveF64,
+                        // "JsonStdVecVecStdOptionOptionStdPrimitiveBool" => Self::JsonStdVecVecStdOptionOptionStdPrimitiveBool,
+                        // "JsonStdVecVecStdOptionOptionStdStringString" => Self::JsonStdVecVecStdOptionOptionStdStringString,
 
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
+                        // "JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
                         "JsonGeneric" => Self::JsonGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
                         "JsonStdOptionOptionGeneric" => Self::JsonStdOptionOptionGeneric(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
@@ -502,65 +502,65 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                         SupportedPredefinedType::JsonStdOptionOptionStdStringString |
 
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                        SupportedPredefinedType::JsonStdVecVecStdStringString |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                        // SupportedPredefinedType::JsonStdVecVecStdStringString |
 
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
 
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                        SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                        // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                        SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                        // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString |
 
                         SupportedPredefinedType::JsonUuid
                         => {
@@ -805,68 +805,68 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             SupportedPredefinedType::JsonStdOptionOptionStdStringString
             => (),
 
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-            SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-            SupportedPredefinedType::JsonStdVecVecStdStringString |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+            // SupportedPredefinedType::JsonStdVecVecStdStringString |
 
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
 
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+            // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
-            => {
-                acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
-            },
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+            // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+            // => {
+            //     acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
+            // },
 
             SupportedPredefinedType::JsonGeneric(_) |
             SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => (),
@@ -914,68 +914,69 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
-    
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString |
-    
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
-    
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
-    
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString 
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString
                 => None,
+    
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString |
+    
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+    
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+    
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString 
+                // => None,
     
                 SupportedPredefinedType::JsonGeneric(type_path) => Some(type_path),
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => Some(type_path),
@@ -1087,71 +1088,71 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::JsonStdOptionOptionStdStringString
                     => proc_macro2::TokenStream::new(),
 
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                    SupportedPredefinedType::JsonStdVecVecStdStringString |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                    // SupportedPredefinedType::JsonStdVecVecStdStringString |
 
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
 
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
-                    => quote::quote!{
-                        {
-                            limit: std::primitive::u64,
-                            offset: std::primitive::u64,
-                        }
-                    },
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+                    // => quote::quote!{
+                    //     {
+                    //         limit: std::primitive::u64,
+                    //         offset: std::primitive::u64,
+                    //     }
+                    // },
 
                     SupportedPredefinedType::JsonGeneric(type_path) => generate_std_vec_vec_generic_ident_field_token_stream(&type_path),
                     SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => generate_std_vec_vec_generic_ident_field_token_stream(&type_path),
@@ -1677,162 +1678,162 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{ => #query_part_token_stream}
                     },
 
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::Number);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    // generate_vec_imple_json_types
-                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool => {
-                        let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::Boolean);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    SupportedPredefinedType::JsonStdVecVecStdStringString => {
-                        let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::String);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 => {
+                    //     let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::Number);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // // generate_vec_imple_json_types
+                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool => {
+                    //     let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::Boolean);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // SupportedPredefinedType::JsonStdVecVecStdStringString => {
+                    //     let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::String);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
 
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::Number);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool => {
-                        let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::Boolean);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => {
-                        let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::String);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 => {
+                    //     let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::Number);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool => {
+                    //     let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::Boolean);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => {
+                    //     let query_part_token_stream = generate_optional_vec_simple_json_type(PrimitiveJsonType::String);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
 
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::Number);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool => {
-                        let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::Boolean);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => {
-                        let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::String);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 => {
+                    //     let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::Number);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool => {
+                    //     let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::Boolean);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => {
+                    //     let query_part_token_stream = generate_vec_optional_simple_json_type(PrimitiveJsonType::String);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
 
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
-                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::Number);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
-                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::Boolean);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                        let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::String);
-                        quote::quote!{
-                            {
-                                limit,
-                                offset
-                            } => #query_part_token_stream
-                        }
-                    },
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
+                    //     let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::Number);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
+                    //     let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::Boolean);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
+                    // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
+                    //     let query_part_token_stream = generate_optional_vec_optional_simple_json_type(PrimitiveJsonType::String);
+                    //     quote::quote!{
+                    //         {
+                    //             limit,
+                    //             offset
+                    //         } => #query_part_token_stream
+                    //     }
+                    // },
 
                     SupportedPredefinedType::JsonGeneric(type_path) => generic_and_std_option_option_generic_logic_token_stream(&type_path, false),
                     SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => generic_and_std_option_option_generic_logic_token_stream(&type_path, true),
@@ -2037,65 +2038,65 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
                 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
 
                 SupportedPredefinedType::JsonGeneric(_) => supported_predefined_type.to_original_type().full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
@@ -2198,87 +2199,87 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString
-                => quote::quote!{value.#element_ident.0.into_iter().map(|element|element.0).collect()},
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString
+                // => quote::quote!{value.#element_ident.0.into_iter().map(|element|element.0).collect()},
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString
-                => quote::quote!{
-                    match value.#element_ident.0 {
-                        Some(value) => Some(value.into_iter().map(|element|element.0).collect()),
-                        None => None
-                    }
-                },
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString
+                // => quote::quote!{
+                //     match value.#element_ident.0 {
+                //         Some(value) => Some(value.into_iter().map(|element|element.0).collect()),
+                //         None => None
+                //     }
+                // },
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString
-                => quote::quote!{
-                    value.#element_ident.0.into_iter().map(|element|match element {
-                        Some(value) => Some(value.0),
-                        None => None
-                    }).collect()
-                },
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString
+                // => quote::quote!{
+                //     value.#element_ident.0.into_iter().map(|element|match element {
+                //         Some(value) => Some(value.0),
+                //         None => None
+                //     }).collect()
+                // },
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
-                => quote::quote!{
-                    match value.#element_ident.0 {
-                        Some(value) => Some(value.into_iter().map(|element|match element {
-                            Some(value) => Some(value.0),
-                            None => None
-                        }).collect()),
-                        None => None
-                    }
-                },
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+                // => quote::quote!{
+                //     match value.#element_ident.0 {
+                //         Some(value) => Some(value.into_iter().map(|element|match element {
+                //             Some(value) => Some(value.0),
+                //             None => None
+                //         }).collect()),
+                //         None => None
+                //     }
+                // },
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
                     let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
@@ -2487,65 +2488,65 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
     
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
     
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
     
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
     
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
     
                 SupportedPredefinedType::JsonGeneric(_) => supported_predefined_type.to_original_type().full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
@@ -2621,135 +2622,135 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString
                 => quote::quote!{value},
 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString
-                => quote::quote!{
-                    {
-                        let mut acc = vec![];
-                        for element in value {
-                            match element {
-                                Ok(value) => {
-                                    acc.push(value);
-                                }
-                                Err(error) => {
-                                    return Err(serde::de::Error::custom(error));
-                                }
-                            }
-                        }
-                        acc
-                    }
-                },
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString
+                // => quote::quote!{
+                //     {
+                //         let mut acc = vec![];
+                //         for element in value {
+                //             match element {
+                //                 Ok(value) => {
+                //                     acc.push(value);
+                //                 }
+                //                 Err(error) => {
+                //                     return Err(serde::de::Error::custom(error));
+                //                 }
+                //             }
+                //         }
+                //         acc
+                //     }
+                // },
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString
-                => quote::quote!{
-                    match value {
-                        Some(value) => {
-                            let mut acc = vec![];
-                            for element in value {
-                                match element {
-                                    Ok(value) => {
-                                        acc.push(value);
-                                    }
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(error));
-                                    }
-                                }
-                            }
-                            Some(acc)
-                        }
-                        None => None
-                    }
-                },
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString
+                // => quote::quote!{
+                //     match value {
+                //         Some(value) => {
+                //             let mut acc = vec![];
+                //             for element in value {
+                //                 match element {
+                //                     Ok(value) => {
+                //                         acc.push(value);
+                //                     }
+                //                     Err(error) => {
+                //                         return Err(serde::de::Error::custom(error));
+                //                     }
+                //                 }
+                //             }
+                //             Some(acc)
+                //         }
+                //         None => None
+                //     }
+                // },
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString
-                => quote::quote!{
-                    {
-                        let mut acc = vec![];
-                        for element in value {
-                            match element {
-                                Ok(value) => {
-                                    acc.push(value);
-                                }
-                                Err(error) => {
-                                    return Err(serde::de::Error::custom(error));
-                                }
-                            }
-                        }
-                        acc
-                    }
-                },
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString
+                // => quote::quote!{
+                //     {
+                //         let mut acc = vec![];
+                //         for element in value {
+                //             match element {
+                //                 Ok(value) => {
+                //                     acc.push(value);
+                //                 }
+                //                 Err(error) => {
+                //                     return Err(serde::de::Error::custom(error));
+                //                 }
+                //             }
+                //         }
+                //         acc
+                //     }
+                // },
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
-                => quote::quote!{
-                    match value {
-                        Some(value) => {
-                            let mut acc = vec![];
-                            for element in value {
-                                match element {
-                                    Ok(value) => {
-                                        acc.push(value);
-                                    }
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(error));
-                                    }
-                                }
-                            }
-                            Some(acc)
-                        }
-                        None => None
-                    }
-                },
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+                // => quote::quote!{
+                //     match value {
+                //         Some(value) => {
+                //             let mut acc = vec![];
+                //             for element in value {
+                //                 match element {
+                //                     Ok(value) => {
+                //                         acc.push(value);
+                //                     }
+                //                     Err(error) => {
+                //                         return Err(serde::de::Error::custom(error));
+                //                     }
+                //                 }
+                //             }
+                //             Some(acc)
+                //         }
+                //         None => None
+                //     }
+                // },
 
                 SupportedPredefinedType::JsonGeneric(_) => quote::quote!{value},
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => quote::quote!{value},
@@ -3220,65 +3221,65 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
                 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
                     let value = format!("{}{}", quote::quote!{#type_path}.to_string(), naming_conventions::OptionsToUpdateUpperCamelCase);
@@ -3421,67 +3422,68 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString 
                 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => (),
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString 
+                => (),
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
                     if !acc.contains(type_path) {
@@ -3616,67 +3618,68 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString
                 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+                => {
                     let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("jsonb_set({{acc}},'{{{{{{previous_path}}{element_ident}}}}}',${{increment}})"),//element_ident.to_string(),
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -3871,69 +3874,69 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                    quote::quote!{
-                        query = query.bind(sqlx::types::Json(value.value));
-                    }
-                }
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
+                //     quote::quote!{
+                //         query = query.bind(sqlx::types::Json(value.value));
+                //     }
+                // }
 
                 SupportedPredefinedType::JsonGeneric(_) => {
                     quote::quote!{
@@ -4069,67 +4072,68 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString
                 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+                => {
                     quote::quote!{
                         pub #element_ident: #element_type
                     }
