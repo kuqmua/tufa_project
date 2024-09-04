@@ -1279,15 +1279,15 @@ pub async fn try_update_one(
 
 #[test]
 fn test_dd() {
-    let d = SomethingOptionsToUpdate(vec![
-        SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value{ value: 4 }),
-        SomethingOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{ value: 5 })
-    ]);
-    println!("{d:#?}");
-    let serialized = serde_json::to_string(&d).unwrap();
-    println!("{serialized:#?}");
-    let deserialized: SomethingOptionsToUpdate = serde_json::from_str(&serialized).unwrap();
-    println!("{deserialized:#?}");
+    // let d = SomethingOptionsToUpdate(vec![
+    //     SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value{ value: 4 }),
+    //     SomethingOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{ value: 5 })
+    // ]);
+    // println!("{d:#?}");
+    // let serialized = serde_json::to_string(&d).unwrap();
+    // println!("{serialized:#?}");
+    // let deserialized: SomethingOptionsToUpdate = serde_json::from_str(&serialized).unwrap();
+    // println!("{deserialized:#?}");
 }
 
 //////////
@@ -1305,7 +1305,7 @@ impl
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
     {
-        if self.0.is_empty() {
+        if self.update.is_empty() {
             return Err(
                 SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -1314,7 +1314,7 @@ impl
         }
         {
             let mut acc = vec![];
-            for element in &self.0 {
+            for element in &self.update {
                 match element {
                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
                         let value = SomethingKey::StdPrimitiveI8;
@@ -1352,7 +1352,7 @@ impl
             true => std::string::String::default(),
             false => format!("{jsonb_set_path},"),
         };
-        for element in &self.0 {
+        for element in &self.update {
             match &element {
                 SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
                     Some(value) => {
@@ -1400,7 +1400,7 @@ impl
         self,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in self.0 {
+        for element in self.update {
             match element {
                 SomethingOptionToUpdate::StdPrimitiveI8(value) => {
                     query = query.bind(sqlx::types::Json(value.value));
@@ -1429,7 +1429,7 @@ impl
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
-        if self.0.is_empty() {
+        if self.update.is_empty() {
             return Err(
                 DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -1438,7 +1438,7 @@ impl
         }
         {
             let mut acc = vec![];
-            for element in &self.0 {
+            for element in &self.update {
                 match element {
                     DoggieOptionToUpdate::StdPrimitiveI16(_) => {
                         let value = DoggieKey::StdPrimitiveI16;
@@ -1481,7 +1481,7 @@ impl
                     false => format!("{jsonb_set_path}"),
                 };
                 let mut acc = std::string::String::default();
-                for element in &self.0 {
+                for element in &self.update {
                     match &element {
                         DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
                             Some(value) => {
@@ -1533,7 +1533,7 @@ impl
                     true => std::string::String::default(),
                     false => format!("{jsonb_set_path},"),
                 };
-                for element in &self.0 {
+                for element in &self.update {
                     match &element {
                         DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
                             Some(value) => {
@@ -1598,7 +1598,7 @@ impl
         self,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in self.0 {
+        for element in self.update {
             match element {
                 DoggieOptionToUpdate::StdPrimitiveI16(value) => {
                     query = query.bind(sqlx::types::Json(value.value));
@@ -1625,7 +1625,7 @@ impl
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
-        if self.0.is_empty() {
+        if self.update.is_empty() {
             return Err(
                 CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -1634,7 +1634,7 @@ impl
         }
         {
             let mut acc = vec![];
-            for element in &self.0 {
+            for element in &self.update {
                 match element {
                     CatOptionToUpdate::StdPrimitiveI32(_) => {
                         let value = CatKey::StdPrimitiveI32;
@@ -1658,7 +1658,7 @@ impl
             true => std::string::String::default(),
             false => format!("{jsonb_set_path},"),
         };
-        for element in &self.0 {
+        for element in &self.update {
             match &element {
                 CatOptionToUpdate::StdPrimitiveI32(_) => match increment.checked_add(1) {
                     Some(value) => {
@@ -1681,7 +1681,7 @@ impl
         self,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in self.0 {
+        for element in self.update {
             match element {
                 CatOptionToUpdate::StdPrimitiveI32(value) => {
                     query = query.bind(sqlx::types::Json(value.value));
