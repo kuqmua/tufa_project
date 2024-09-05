@@ -223,14 +223,14 @@ enum SupportedPredefinedOriginalType {
     Uuid,
 }
 
-fn generate_ident_options_upper_camel_case_token_stream(value: &std::primitive::str) -> proc_macro2::TokenStream {
-    let value = format!("{value}{}", naming_conventions::OptionsUpperCamelCase);
+fn generate_ident_options_to_read_upper_camel_case_token_stream(value: &std::primitive::str) -> proc_macro2::TokenStream {
+    let value = format!("{value}{}", naming_conventions::OptionsToReadUpperCamelCase);
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
 
 impl SupportedPredefinedOriginalType {
-    fn to_token_stream(&self) -> proc_macro2::TokenStream {
+    fn to_read_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
             Self::I8 => quote::quote!{i8},
             Self::I16 => quote::quote!{i16},
@@ -246,7 +246,7 @@ impl SupportedPredefinedOriginalType {
             Self::F64 => quote::quote!{f64},
             Self::Bool => quote::quote!{bool},
             Self::String => quote::quote!{String},
-            Self::Generic(type_path) => generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string()),
+            Self::Generic(type_path) => generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string()),
             Self::Uuid => quote::quote!{Uuid},
         }
     }
@@ -267,12 +267,12 @@ impl SupportedPredefinedOriginalType {
             Self::U128 |
             Self::F32 |
             Self::F64 |
-            Self::Bool => wrap_into_std_primitive_token_stream(self.to_token_stream()), 
+            Self::Bool => wrap_into_std_primitive_token_stream(self.to_read_token_stream()), 
             Self::String => {
-                let value = self.to_token_stream();
+                let value = self.to_read_token_stream();
                 quote::quote!{std::string::#value}
             },
-            Self::Generic(_) => self.to_token_stream(),
+            Self::Generic(_) => self.to_read_token_stream(),
             Self::Uuid => quote::quote!{uuid::Uuid},
         }
     }
@@ -665,8 +665,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let generate_ident_options_upper_camel_case_token_stream = |value: &std::primitive::str|{
-        let value = format!("{value}{}", naming_conventions::OptionsUpperCamelCase);
+    let generate_ident_options_to_read_upper_camel_case_token_stream = |value: &std::primitive::str|{
+        let value = format!("{value}{}", naming_conventions::OptionsToReadUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -2278,13 +2278,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 // },
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         #generic_ident_options_upper_camel_case_token_stream::from(value.#element_ident.0)
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         match value.#element_ident.0 {
                             Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
@@ -2293,13 +2293,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         value.#element_ident.0.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         match value.#element_ident.0 {
                             Some(value) => Some(value.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()),
@@ -2308,7 +2308,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         value.#element_ident.0.into_iter().map(|element|match element {
                             Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
@@ -2317,7 +2317,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         match value.#element_ident.0 {
                             Some(value) => Some(value.into_iter().map(|element|match element {
@@ -2336,7 +2336,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         quote::quote!{
-            impl std::convert::From<#ident> for #ident_options_upper_camel_case_token_stream {
+            impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
                 fn from(value: #ident) -> Self {
                     Self {
                         #(#fields_token_stream),*
@@ -2441,12 +2441,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         let struct_ident_options_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("struct {ident_options_upper_camel_case_stringified}"),
+            &format!("struct {ident_options_to_read_upper_camel_case_stringified}"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let struct_ident_options_with_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!(
-                "struct {ident_options_upper_camel_case_stringified} with {} elements",
+                "struct {ident_options_to_read_upper_camel_case_stringified} with {} elements",
                 vec_syn_field.len()
             ),
             &proc_macro_name_upper_camel_case_ident_stringified
@@ -2899,7 +2899,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         });
         let fields_array_elements_token_stream = vec_syn_field.iter().map(|element|generate_field_ident_double_quotes_token_stream(&element));
         quote::quote!{
-            impl<'de> serde::Deserialize<'de> for #ident_options_upper_camel_case_token_stream {
+            impl<'de> serde::Deserialize<'de> for #ident_options_to_read_upper_camel_case_token_stream {
                 fn deserialize<__D>(
                     __deserializer: __D,
                 ) -> serde::__private::Result<Self, __D::Error>
@@ -2978,11 +2978,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     #[doc(hidden)]
                     struct __Visitor<'de> {
-                        marker: serde::__private::PhantomData<#ident_options_upper_camel_case_token_stream>,
+                        marker: serde::__private::PhantomData<#ident_options_to_read_upper_camel_case_token_stream>,
                         lifetime: serde::__private::PhantomData<&'de ()>,
                     }
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #ident_options_upper_camel_case_token_stream;
+                        type Value = #ident_options_to_read_upper_camel_case_token_stream;
                         fn expecting(
                             &self,
                             __formatter: &mut serde::__private::Formatter<'_>,
@@ -3001,7 +3001,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             __A: serde::de::SeqAccess<'de>,
                         {
                             #(#visit_seq_fields_initialization_token_stream)*
-                            serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
+                            serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream {
                                 #visit_seq_fields_assignment_handle_token_stream
                             })
                         }
@@ -3027,7 +3027,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 }
                             }
                             #(#visit_map_missing_fields_check_token_stream)*
-                            serde::__private::Ok(#ident_options_upper_camel_case_token_stream {
+                            serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream {
                                 #visit_seq_fields_assignment_handle_token_stream
                             })
                         }
@@ -3038,10 +3038,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ];
                     serde::Deserializer::deserialize_struct(
                         __deserializer,
-                        #ident_options_double_quotes_token_stream,
+                        #ident_options_to_read_double_quotes_token_stream,
                         FIELDS,
                         __Visitor {
-                            marker: serde::__private::PhantomData::<#ident_options_upper_camel_case_token_stream>,
+                            marker: serde::__private::PhantomData::<#ident_options_to_read_upper_camel_case_token_stream>,
                             lifetime: serde::__private::PhantomData,
                         },
                     )
@@ -3052,7 +3052,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let ident_wrapper_token_stream = {
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize//Eq, 
-            pub struct #ident_wrapper_upper_camel_case_token_stream(pub #ident_options_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
+            pub struct #ident_wrapper_upper_camel_case_token_stream(pub #ident_options_to_read_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
         }
     };
     let impl_serde_deserialize_for_ident_wrapper_token_stream = {
@@ -3101,8 +3101,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         where
                             __E: serde::Deserializer<'de>,
                         {
-                            let __field0: Result<#ident_options_upper_camel_case_token_stream, std::string::String> = <Result<
-                                #ident_options_upper_camel_case_token_stream,
+                            let __field0: Result<#ident_options_to_read_upper_camel_case_token_stream, std::string::String> = <Result<
+                                #ident_options_to_read_upper_camel_case_token_stream,
                                 std::string::String,
                             > as serde::Deserialize>::deserialize(__e)?;
                             serde::__private::Ok(#ident_wrapper_upper_camel_case_token_stream(match __field0 {
@@ -3121,7 +3121,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             __A: serde::de::SeqAccess<'de>,
                         {
                             let __field0 = match serde::de::SeqAccess::next_element::<
-                                Result<#ident_options_upper_camel_case_token_stream, std::string::String>,
+                                Result<#ident_options_to_read_upper_camel_case_token_stream, std::string::String>,
                             >(&mut __seq)? {
                                 serde::__private::Some(__value) => __value,
                                 serde::__private::None => {
@@ -4569,12 +4569,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
         #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
     };
-    if ident == "Cat" {
-        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            "www",
-            &generated,
-            "www",
-        );
-    }
+    // if ident == "" {
+    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "www",
+    //         &generated,
+    //         "www",
+    //     );
+    // }
     generated.into()
 }    
