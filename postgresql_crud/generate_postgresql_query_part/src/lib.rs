@@ -695,8 +695,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let ident_key_upper_camel_case_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::KeyUpperCamelCase);
+    let ident_field_to_update_upper_camel_case_token_stream = {
+        let value = format!("{ident}{}", naming_conventions::FieldToUpdateUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -3325,7 +3325,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let pub_enum_ident_key_token_stream = {
+    let pub_enum_ident_field_to_update_token_stream = {
         let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
@@ -3353,12 +3353,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 utoipa::ToSchema,
                 schemars::JsonSchema,
             )]
-            pub enum #ident_key_upper_camel_case_token_stream {
+            pub enum #ident_field_to_update_upper_camel_case_token_stream {
                 #(#variants_token_stream),*
             }
         }
     };
-    let impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream = {
+    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream = {
         let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
@@ -3376,7 +3376,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         });
         quote::quote!{
-            impl error_occurence_lib::ToStdStringString for #ident_key_upper_camel_case_token_stream {
+            impl error_occurence_lib::ToStdStringString for #ident_field_to_update_upper_camel_case_token_stream {
                 fn to_std_string_string(&self) -> std::string::String {
                     match &self {
                         #(#variants_token_stream),*
@@ -3540,7 +3540,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 },
                 NotUniqueField {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    field: #ident_key_upper_camel_case_token_stream,
+                    field: #ident_field_to_update_upper_camel_case_token_stream,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
                 CheckedAdd {
@@ -3561,7 +3561,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let element_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
             quote::quote!{
                 #ident_option_to_update_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream(_) => {
-                    let value = #ident_key_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream;
+                    let value = #ident_field_to_update_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream;
                     if acc.contains(&value) {
                         return Err(
                             #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::NotUniqueField {
@@ -4557,8 +4557,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_reader_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
-        #pub_enum_ident_key_token_stream
-        #impl_error_occurence_lib_to_std_string_string_for_ident_key_token_stream
+        #pub_enum_ident_field_to_update_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
         #pub_enum_ident_option_to_update_token_stream
         #pub_struct_ident_options_to_update_token_stream
         #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream

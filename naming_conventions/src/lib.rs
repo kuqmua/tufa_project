@@ -304,7 +304,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
         ["id"],
         ["to", "create"],
         ["reader"],
-        ["field", "to", "read"]
+        ["field", "to", "read"],
+        ["field", "to", "update"]
     ]
 );
 
