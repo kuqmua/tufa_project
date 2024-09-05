@@ -202,7 +202,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         upper_camel_case_stringified: std::string::String,
         reader_upper_camel_case_stringified: std::string::String,
         options_to_read_upper_camel_case_stringified: std::string::String,
-        field_upper_camel_case_stringified: std::string::String,
+        field_to_read_upper_camel_case_stringified: std::string::String,
         generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified: std::string::String,
         generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified: std::string::String,
     }
@@ -341,9 +341,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     return Err(error);
                                 }
                             };
-                            let field_upper_camel_case_stringified = match generate_generic_option_string(
+                            let field_to_read_upper_camel_case_stringified = match generate_generic_option_string(
                                 &value,
-                                &naming_conventions::FieldUpperCamelCase.to_string(),
+                                &naming_conventions::FieldToReadUpperCamelCase.to_string(),
                                 Case::UpperCamel,
                             ) {
                                 Ok(value) => value,
@@ -376,7 +376,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 upper_camel_case_stringified,
                                 reader_upper_camel_case_stringified,
                                 options_to_read_upper_camel_case_stringified,
-                                field_upper_camel_case_stringified,
+                                field_to_read_upper_camel_case_stringified,
                                 generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
                                 generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified,
                             }
@@ -737,8 +737,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let maybe_generic_filter_declaration_token_stream = match &element.option_generic {
                     Some(value) => {
-                        let ident_field_upper_camel_case_token_stream = value.field_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.field_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                        let ident_field_upper_camel_case_token_stream = value.field_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.field_to_read_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                         quote::quote! {{ #filter_snake_case: std::vec::Vec<#ident_field_upper_camel_case_token_stream> }}
                     }
                     None => proc_macro2::TokenStream::new()

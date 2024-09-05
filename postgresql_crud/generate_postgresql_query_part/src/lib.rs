@@ -660,8 +660,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         });
         element_ident != &id_snake_case.to_string()
     }).collect::<std::vec::Vec<&&syn::Field>>();
-    let generate_ident_field_upper_camel_case_token_stream = |value: &std::primitive::str|{
-        let value = format!("{value}{}", naming_conventions::FieldUpperCamelCase);
+    let generate_ident_field_to_read_upper_camel_case_token_stream = |value: &std::primitive::str|{
+        let value = format!("{value}{}", naming_conventions::FieldToReadUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -670,7 +670,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&ident.to_string());
+    let ident_field_to_read_upper_camel_case_token_stream = generate_ident_field_to_read_upper_camel_case_token_stream(&ident.to_string());
     let ident_options_to_read_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::OptionsToReadUpperCamelCase);
     let ident_options_to_read_upper_camel_case_token_stream = {
         ident_options_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
@@ -1037,16 +1037,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let supported_predefined_type = SupportedPredefinedType::try_from(*element)
                     .unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
                 let generate_std_vec_vec_generic_ident_field_token_stream = |type_path: &syn::TypePath|{
-                    let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_field_to_read_upper_camel_case_token_stream = generate_ident_field_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
-                        (std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>)
+                        (std::vec::Vec<#generic_ident_field_to_read_upper_camel_case_token_stream>)
                     }
                 };
                 let generate_field_vec_limit_offset_token_stream = |type_path: &syn::TypePath|{
-                    let generic_ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let generic_ident_field_to_read_upper_camel_case_token_stream = generate_ident_field_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         {
-                            field_vec: std::vec::Vec<#generic_ident_field_upper_camel_case_token_stream>,
+                            field_vec: std::vec::Vec<#generic_ident_field_to_read_upper_camel_case_token_stream>,
                             limit: std::primitive::u64,
                             offset: std::primitive::u64,
                         }
@@ -1170,14 +1170,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         });
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq, 
-            pub enum #ident_field_upper_camel_case_token_stream {
+            pub enum #ident_field_to_read_upper_camel_case_token_stream {
                 #(#variants_token_stream),*
             }
         }
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream = {
         quote::quote!{
-            impl error_occurence_lib::ToStdStringString for #ident_field_upper_camel_case_token_stream {
+            impl error_occurence_lib::ToStdStringString for #ident_field_to_read_upper_camel_case_token_stream {
                 fn to_std_string_string(&self) -> std::string::String {
                     format!("{self:?}")
                 }
@@ -1204,7 +1204,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     NotUniqueFieldFilter {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        field: #ident_field_upper_camel_case_token_stream,
+                        field: #ident_field_to_read_upper_camel_case_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #maybe_generate_postgresql_query_part_variant_token_stream
@@ -1937,7 +1937,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             impl postgresql_crud::GeneratePostgresqlQueryPartToRead<
                 #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
                 #second_generic_token_stream
-            > for #ident_field_upper_camel_case_token_stream {
+            > for #ident_field_to_read_upper_camel_case_token_stream {
                 fn generate_postgresql_query_part_to_read_from_self_vec(
                     value: &std::vec::Vec<Self>,
                     column_name_and_maybe_field_getter: &std::primitive::str,
@@ -3049,19 +3049,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let ident_wrapper_token_stream = {
+    let ident_reader_token_stream = {
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize//Eq, 
             pub struct #ident_reader_upper_camel_case_token_stream(pub #ident_options_to_read_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
         }
     };
-    let impl_serde_deserialize_for_ident_wrapper_token_stream = {
+    let impl_serde_deserialize_for_ident_reader_token_stream = {
         let tuple_struct_space_stringified = "tuple struct ";
-        let tuple_struct_ident_wrapper_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let tuple_struct_ident_reader_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!("{tuple_struct_space_stringified}{ident_reader_upper_camel_case_stringified}"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let tuple_struct_ident_wrapper_with_1_element_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
+        let tuple_struct_ident_reader_with_1_element_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!("{tuple_struct_space_stringified}{ident_reader_upper_camel_case_stringified} with 1 element"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
@@ -3090,7 +3090,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ) -> serde::__private::fmt::Result {
                             serde::__private::Formatter::write_str(
                                 __formatter,
-                                #tuple_struct_ident_wrapper_double_quotes_token_stream,
+                                #tuple_struct_ident_reader_double_quotes_token_stream,
                             )
                         }
                         #[inline]
@@ -3128,7 +3128,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     return serde::__private::Err(
                                         serde::de::Error::invalid_length(
                                             0usize,
-                                            &#tuple_struct_ident_wrapper_with_1_element_double_quotes_token_stream,
+                                            &#tuple_struct_ident_reader_with_1_element_double_quotes_token_stream,
                                         ),
                                     );
                                 }
@@ -4553,8 +4553,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_struct_ident_options_to_read_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
         #impl_serde_deserialize_for_ident_options_token_stream
-        #ident_wrapper_token_stream
-        #impl_serde_deserialize_for_ident_wrapper_token_stream
+        #ident_reader_token_stream
+        #impl_serde_deserialize_for_ident_reader_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
         #pub_enum_ident_key_token_stream
