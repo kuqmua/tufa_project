@@ -200,7 +200,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     struct Generic<'a> {
         syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
         upper_camel_case_stringified: std::string::String,
-        wrapper_upper_camel_case_stringified: std::string::String,
+        reader_upper_camel_case_stringified: std::string::String,
         options_to_read_upper_camel_case_stringified: std::string::String,
         field_upper_camel_case_stringified: std::string::String,
         generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified: std::string::String,
@@ -213,10 +213,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
         original_type_token_stream: proc_macro2::TokenStream,
         original_type_with_generic_token_stream: proc_macro2::TokenStream,
-        original_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
+        original_type_with_generic_reader_token_stream: proc_macro2::TokenStream,
         inner_type_token_stream: proc_macro2::TokenStream,
         inner_type_with_generic_token_stream: proc_macro2::TokenStream,
-        inner_type_with_generic_wrapper_token_stream: proc_macro2::TokenStream,
+        inner_type_with_generic_reader_token_stream: proc_macro2::TokenStream,
         // where_inner_type_token_stream: proc_macro2::TokenStream,
         where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
         original_wrapper_type_token_stream: proc_macro2::TokenStream,
@@ -321,9 +321,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     return Err(error);
                                 }
                             };
-                            let wrapper_upper_camel_case_stringified = match generate_generic_option_string(
+                            let reader_upper_camel_case_stringified = match generate_generic_option_string(
                                 &value,
-                                &naming_conventions::WrapperUpperCamelCase.to_string(),
+                                &naming_conventions::ReaderUpperCamelCase.to_string(),
                                 Case::UpperCamel,
                             ) {
                                 Ok(value) => value,
@@ -374,7 +374,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             Generic {
                                 syn_angle_bracketed_generic_arguments: value,
                                 upper_camel_case_stringified,
-                                wrapper_upper_camel_case_stringified,
+                                reader_upper_camel_case_stringified,
                                 options_to_read_upper_camel_case_stringified,
                                 field_upper_camel_case_stringified,
                                 generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified,
@@ -422,12 +422,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let original_type_with_generic_wrapper_token_stream = {
+            let original_type_with_generic_reader_token_stream = {
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""),
                     match &option_generic {
-                        Some(value) => format!("<{}>", &value.wrapper_upper_camel_case_stringified),
+                        Some(value) => format!("<{}>", &value.reader_upper_camel_case_stringified),
                         None => std::string::String::default()
                     }
                 );
@@ -466,12 +466,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let inner_type_with_generic_wrapper_token_stream = {
+            let inner_type_with_generic_reader_token_stream = {
                 let value = format!(
                     "{}{}",
                     &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
                     match &option_generic {
-                        Some(value) => format!("<{}>", &value.wrapper_upper_camel_case_stringified),
+                        Some(value) => format!("<{}>", &value.reader_upper_camel_case_stringified),
                         None => std::string::String::default()
                     }
                 );
@@ -525,10 +525,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
                 original_type_token_stream,
                 original_type_with_generic_token_stream,
-                original_type_with_generic_wrapper_token_stream,
+                original_type_with_generic_reader_token_stream,
                 inner_type_token_stream,
                 inner_type_with_generic_token_stream,
-                inner_type_with_generic_wrapper_token_stream,
+                inner_type_with_generic_reader_token_stream,
                 // where_inner_type_token_stream,
                 where_inner_type_with_generic_token_stream,
                 original_wrapper_type_token_stream,
@@ -661,7 +661,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
             let field_vis = &element.field.vis;
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_wrapper_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_reader_token_stream);
             quote::quote!{
                 #serde_skip_serializing_if_value_attribute_token_stream
                 #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
@@ -687,14 +687,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let inner_type_token_stream = &element.inner_type_token_stream;
             let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&match &element.option_generic {
                 Some(value) => {
-                    let generic_option_string_wrapper_token_stream = value.wrapper_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.wrapper_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    let generic_option_string_reader_token_stream = value.reader_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.reader_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                     let generic_option_string_options_token_stream = value.options_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} {}", &value.options_to_read_upper_camel_case_stringified, proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                     quote::quote!{
                         #inner_type_token_stream (
                             sqlx::types::Json(
-                                #generic_option_string_wrapper_token_stream(
+                                #generic_option_string_reader_token_stream(
                                     #generic_option_string_options_token_stream::#from_snake_case(#value_snake_case.#field_ident.0.0.0)
                                 )
                             )
@@ -1243,7 +1243,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let declaration_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element|{
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_wrapper_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_reader_token_stream);
             quote::quote! {
                 let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
             }
@@ -1298,7 +1298,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             else {
                 &proc_macro2::TokenStream::new()
             };
-            let original_type_with_generic_wrapper_token_stream = &element.original_type_with_generic_wrapper_token_stream;
+            let original_type_with_generic_reader_token_stream = &element.original_type_with_generic_reader_token_stream;
             let field_ident_string_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &element.field_ident.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -1328,7 +1328,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             quote::quote! {
                 #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream => match sqlx::Row::try_get::<
-                    #original_type_with_generic_wrapper_token_stream, 
+                    #original_type_with_generic_reader_token_stream, 
                     #ref_std_primitive_str
                 >(
                     &#value_snake_case, 

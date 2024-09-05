@@ -680,10 +680,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &ident_options_to_read_upper_camel_case_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
-    let ident_wrapper_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::WrapperUpperCamelCase);
-    let ident_wrapper_upper_camel_case_token_stream = {
-        ident_wrapper_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_wrapper_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    let ident_reader_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::ReaderUpperCamelCase);
+    let ident_reader_upper_camel_case_token_stream = {
+        ident_reader_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_reader_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let ident_option_to_update_upper_camel_case_token_stream = {
         let value = format!("{ident}{}", naming_conventions::OptionToUpdateUpperCamelCase);
@@ -3052,25 +3052,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let ident_wrapper_token_stream = {
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize//Eq, 
-            pub struct #ident_wrapper_upper_camel_case_token_stream(pub #ident_options_to_read_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
+            pub struct #ident_reader_upper_camel_case_token_stream(pub #ident_options_to_read_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
         }
     };
     let impl_serde_deserialize_for_ident_wrapper_token_stream = {
         let tuple_struct_space_stringified = "tuple struct ";
         let tuple_struct_ident_wrapper_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("{tuple_struct_space_stringified}{ident_wrapper_upper_camel_case_stringified}"),
+            &format!("{tuple_struct_space_stringified}{ident_reader_upper_camel_case_stringified}"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let tuple_struct_ident_wrapper_with_1_element_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("{tuple_struct_space_stringified}{ident_wrapper_upper_camel_case_stringified} with 1 element"),
+            &format!("{tuple_struct_space_stringified}{ident_reader_upper_camel_case_stringified} with 1 element"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let ident_wrapper_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &ident_wrapper_upper_camel_case_stringified,
+            &ident_reader_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         quote::quote!{
-            impl<'de> serde::Deserialize<'de> for #ident_wrapper_upper_camel_case_token_stream {
+            impl<'de> serde::Deserialize<'de> for #ident_reader_upper_camel_case_token_stream {
                 fn deserialize<__D>(
                     __deserializer: __D,
                 ) -> serde::__private::Result<Self, __D::Error>
@@ -3079,11 +3079,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 {
                     #[doc(hidden)]
                     struct __Visitor<'de> {
-                        marker: serde::__private::PhantomData<#ident_wrapper_upper_camel_case_token_stream>,
+                        marker: serde::__private::PhantomData<#ident_reader_upper_camel_case_token_stream>,
                         lifetime: serde::__private::PhantomData<&'de ()>,
                     }
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #ident_wrapper_upper_camel_case_token_stream;
+                        type Value = #ident_reader_upper_camel_case_token_stream;
                         fn expecting(
                             &self,
                             __formatter: &mut serde::__private::Formatter<'_>,
@@ -3105,7 +3105,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 #ident_options_to_read_upper_camel_case_token_stream,
                                 std::string::String,
                             > as serde::Deserialize>::deserialize(__e)?;
-                            serde::__private::Ok(#ident_wrapper_upper_camel_case_token_stream(match __field0 {
+                            serde::__private::Ok(#ident_reader_upper_camel_case_token_stream(match __field0 {
                                 Ok(value) => value,
                                 Err(error) => {
                                     return Err(serde::de::Error::custom(error));
@@ -3133,7 +3133,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     );
                                 }
                             };
-                            serde::__private::Ok(#ident_wrapper_upper_camel_case_token_stream(match __field0 {
+                            serde::__private::Ok(#ident_reader_upper_camel_case_token_stream(match __field0 {
                                 Ok(value) => value,
                                 Err(error) => {
                                     return Err(serde::de::Error::custom(error));
@@ -3145,7 +3145,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         __deserializer,
                         #ident_wrapper_double_quotes_token_stream,
                         __Visitor {
-                            marker: serde::__private::PhantomData::<#ident_wrapper_upper_camel_case_token_stream>,
+                            marker: serde::__private::PhantomData::<#ident_reader_upper_camel_case_token_stream>,
                             lifetime: serde::__private::PhantomData,
                         },
                     )
