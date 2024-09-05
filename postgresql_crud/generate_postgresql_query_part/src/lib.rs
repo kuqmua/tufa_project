@@ -707,12 +707,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&ident);
     let ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = {
-        let value = format!("{ident}GeneratePostgresqlQueryPartErrorNamed");
+        let value = format!("{ident}{}", naming_conventions::GeneratePostgresqlQueryPartToReadErrorNamedUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = |value: &std::primitive::str|{
-        format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase)
+        format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecErrorNamedUpperCamelCase)
     };
     let ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = {
         let value = add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified(&ident.to_string());
@@ -720,7 +720,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let add_postfix_generate_postgresql_query_part_from_self_vec_upper_camel_case_stringified = |value: &std::primitive::str|{
-        format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartFromSelfVecUpperCamelCase)
+        format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecUpperCamelCase)
     };
     let generate_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = |value: &std::primitive::str|{
         let value = add_postfix_generate_postgresql_query_part_from_self_vec_upper_camel_case_stringified(value);
@@ -1240,7 +1240,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
-    let impl_generate_postgresql_query_part_for_ident_field_token_stream = {
+    let impl_generate_postgresql_query_part_to_read_for_ident_field_token_stream = {
         let type_of_space_stringified = "type of ";
         let space_and_not_null_stringified = " and not null";
         let space_is_not_space_stringified = " is not ";
@@ -1547,7 +1547,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{false}
                     };
                     quote::quote!{
-                        (fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                        (fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(
                             fields_vec,
                             &format!(#column_name_and_maybe_field_getter_query_string_token_stream),
                             &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
@@ -1608,7 +1608,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             field_vec,
                             limit,
                             offset
-                        } => match postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                        } => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(
                             field_vec,
                             &format!("value"),
                             &format!(#column_name_and_maybe_field_getter_for_error_message_query_string_token_stream),
@@ -1876,7 +1876,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     quote::quote!{
-                        match element.generate_postgresql_query_part(
+                        match element.generate_postgresql_query_part_to_read(
                             column_name_and_maybe_field_getter,
                             column_name_and_maybe_field_getter_for_error_message,
                         ) {
@@ -1934,11 +1934,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         quote::quote!{
-            impl postgresql_crud::GeneratePostgresqlQueryPart<
+            impl postgresql_crud::GeneratePostgresqlQueryPartToRead<
                 #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
                 #second_generic_token_stream
             > for #ident_field_upper_camel_case_token_stream {
-                fn generate_postgresql_query_part_from_self_vec(
+                fn generate_postgresql_query_part_to_read_from_self_vec(
                     value: &std::vec::Vec<Self>,
                     column_name_and_maybe_field_getter: &std::primitive::str,
                     column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
@@ -1983,7 +1983,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         )
                     })
                 }
-                fn generate_postgresql_query_part(
+                fn generate_postgresql_query_part_to_read(
                     &self,
                     column_name_and_maybe_field_getter: &std::primitive::str,
                     column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
@@ -4549,7 +4549,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_enum_ident_field_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
         #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
-        #impl_generate_postgresql_query_part_for_ident_field_token_stream
+        #impl_generate_postgresql_query_part_to_read_for_ident_field_token_stream
         #pub_struct_ident_options_token_stream
         #impl_std_convert_from_ident_for_ident_options_token_stream
         #impl_serde_deserialize_for_ident_options_token_stream

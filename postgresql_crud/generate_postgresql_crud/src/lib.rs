@@ -353,7 +353,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             let generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(
                                 &value,
-                                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedUpperCamelCase.to_string(),
+                                &naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecErrorNamedUpperCamelCase.to_string(),
                                 Case::UpperCamel,
                             ) {
                                 Ok(value) => value,
@@ -363,7 +363,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             let generate_postgresql_query_part_from_self_vec_error_named_snake_case_stringified = match generate_generic_option_string(
                                 &value,
-                                &naming_conventions::GeneratePostgresqlQueryPartFromSelfVecErrorNamedSnakeCase.to_string(),
+                                &naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecErrorNamedSnakeCase.to_string(),
                                 Case::Snake
                             ) {
                                 Ok(value) => value,
@@ -1044,7 +1044,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #curly_brace_space_filter_snake_case_space_curly_braces_token_stream => format!(
                             #filter_as_field_ident_string_double_quotes_token_stream,//todo should support arrays or "key: array" is enough? 
-                            match postgresql_crud::GeneratePostgresqlQueryPart::generate_postgresql_query_part_from_self_vec(
+                            match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(
                                 #filter_snake_case, 
                                 #element_field_ident_double_quotes_token_stream,
                                 #element_field_ident_double_quotes_token_stream,
