@@ -303,6 +303,7 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
 
+//todo this need for old version of update_many. later need to refactor update many and remove this
 impl<'a> postgresql_crud::BindQuery<'a> for Something {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
         //implementation not necessary

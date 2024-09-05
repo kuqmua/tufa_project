@@ -1,462 +1,472 @@
 #need to enable vscode rest client  extension https://marketplace.visualstudio.com/items?itemName=humao.rest-client to send requests
-
+ 
 POST http://127.0.0.1:8080/jsongeneric/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
     {
-        "std_primitive_i32_as_postgresql_int": 0,
+        "std_primitive_bool_as_postgresql_bool_not_null": false,
+        # "std_primitive_i32_as_postgresql_int": 0,
         "sqlx_types_json_t_as_postgresql_json_b_not_null": {
             "std_primitive_i8": 0,
-            "std_primitive_i16": 0,
-            "std_primitive_i32": 0,
-            "std_primitive_i64": 0,
-            "std_primitive_i128": 0,
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0,
-            "std_primitive_u32": 0,
-            "std_primitive_u64": 0,
-            "std_primitive_u128": 0,
-            "std_primitive_f32": 0.0,
-            "std_primitive_f64": 0.0,
-            "std_primitive_bool": false,
-            "std_string_string": "",
-            "std_option_option_std_primitive_i8": 0,
-            "std_option_option_std_primitive_i16": 0,
-            "std_option_option_std_primitive_i32": 0,
-            "std_option_option_std_primitive_i64": 0,
-            "std_option_option_std_primitive_i128": 0,
-            "std_option_option_std_primitive_u8": 0,
-            "std_option_option_std_primitive_u16": 0,
-            "std_option_option_std_primitive_u32": 0,
-            "std_option_option_std_primitive_u64": 0,
-            "std_option_option_std_primitive_u128": 0,
-            "std_option_option_std_primitive_f32": 0.0,
-            "std_option_option_std_primitive_f64": 0.0,
-            "std_option_option_std_primitive_bool": false,
-            "std_option_option_std_string_string": "",
-            "std_vec_vec_std_primitive_i8": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i16": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i32": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i64": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i128": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u8": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u16": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u32": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u64": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u128": [
-                0
-            ],
-            "std_vec_vec_std_primitive_f32": [
-                0.0
-            ],
-            "std_vec_vec_std_primitive_f64": [
-                0.0
-            ],
-            "std_vec_vec_std_primitive_bool": [
-                false
-            ],
-            "std_vec_vec_std_string_string": [
-                ""
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_f32": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_f64": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_bool": [
-                false
-            ],
-            "std_option_option_std_vec_vec_std_string_string": [
-                ""
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i8": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i16": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i32": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i64": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i128": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u8": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u16": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u32": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u64": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u128": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_f32": [
-                0.0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_f64": [
-                0.0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_bool": [
-                false
-            ],
-            "std_vec_vec_std_option_option_std_string_string": [
-                ""
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": [
-                false
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_string_string": [
-                ""
-            ],
-            "generic": {
-                "std_string_string": ""
-            },
-            "std_option_option_generic": {
-                "std_string_string": ""
-            },
+            # "std_primitive_i16": 0,
+            # "std_primitive_i32": 0,
+            # "std_primitive_i64": 0,
+            # "std_primitive_i128": 0,
+            # "std_primitive_u8": 0,
+            # "std_primitive_u16": 0,
+            # "std_primitive_u32": 0,
+            # "std_primitive_u64": 0,
+            # "std_primitive_u128": 0,
+            # "std_primitive_f32": 0.0,
+            # "std_primitive_f64": 0.0,
+            # "std_primitive_bool": false,
+            # "std_string_string": "",
+            # "std_option_option_std_primitive_i8": 0,
+            # "std_option_option_std_primitive_i16": 0,
+            # "std_option_option_std_primitive_i32": 0,
+            # "std_option_option_std_primitive_i64": 0,
+            # "std_option_option_std_primitive_i128": 0,
+            # "std_option_option_std_primitive_u8": 0,
+            # "std_option_option_std_primitive_u16": 0,
+            # "std_option_option_std_primitive_u32": 0,
+            # "std_option_option_std_primitive_u64": 0,
+            # "std_option_option_std_primitive_u128": 0,
+            # "std_option_option_std_primitive_f32": 0.0,
+            # "std_option_option_std_primitive_f64": 0.0,
+            # "std_option_option_std_primitive_bool": false,
+            # "std_option_option_std_string_string": "",
+            # "std_vec_vec_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_vec_vec_std_string_string": [
+            #     ""
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_option_option_std_vec_vec_std_string_string": [
+            #     ""
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_vec_vec_std_option_option_std_string_string": [
+            #     ""
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_string_string": [
+            #     ""
+            # ],
+            # "generic": {
+            #     "std_string_string": ""
+            # },
+            # "std_option_option_generic": {
+            #     "std_string_string": ""
+            # },
             "std_vec_vec_generic": [
                 {
-                    "std_string_string": ""
-                }
-            ],
-            "std_option_option_std_vec_vec_generic": [
-                {
-                    "std_string_string": ""
-                }
-            ],
-            "std_vec_vec_std_option_option_generic": [
-                {
-                    "std_string_string": ""
-                }
-            ],
-            "std_option_option_std_vec_vec_std_option_option_generic": [
-                {
-                    "std_string_string": ""
+                  "std_primitive_i16": 0,
+                  "generic": {
+                    "std_primitive_i32": 0
+                  }
                 }
             ]
+            # ,
+            # "std_option_option_std_vec_vec_generic": [
+            #     {
+            #         "std_string_string": ""
+            #     }
+            # ],
+            # "std_vec_vec_std_option_option_generic": [
+            #     {
+            #         "std_string_string": ""
+            #     }
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_generic": [
+            #     {
+            #         "std_string_string": ""
+            #     }
+            # ]
         }
     },
     {
-        "std_primitive_i32_as_postgresql_int": 0,
+        "std_primitive_bool_as_postgresql_bool_not_null": false,
+        # "std_primitive_i32_as_postgresql_int": 0,
         "sqlx_types_json_t_as_postgresql_json_b_not_null": {
             "std_primitive_i8": 0,
-            "std_primitive_i16": 0,
-            "std_primitive_i32": 0,
-            "std_primitive_i64": 0,
-            "std_primitive_i128": 0,
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0,
-            "std_primitive_u32": 0,
-            "std_primitive_u64": 0,
-            "std_primitive_u128": 0,
-            "std_primitive_f32": 0.0,
-            "std_primitive_f64": 0.0,
-            "std_primitive_bool": false,
-            "std_string_string": "",
-            "std_option_option_std_primitive_i8": 0,
-            "std_option_option_std_primitive_i16": 0,
-            "std_option_option_std_primitive_i32": 0,
-            "std_option_option_std_primitive_i64": 0,
-            "std_option_option_std_primitive_i128": 0,
-            "std_option_option_std_primitive_u8": 0,
-            "std_option_option_std_primitive_u16": 0,
-            "std_option_option_std_primitive_u32": 0,
-            "std_option_option_std_primitive_u64": 0,
-            "std_option_option_std_primitive_u128": 0,
-            "std_option_option_std_primitive_f32": 0.0,
-            "std_option_option_std_primitive_f64": 0.0,
-            "std_option_option_std_primitive_bool": false,
-            "std_option_option_std_string_string": "",
-            "std_vec_vec_std_primitive_i8": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i16": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i32": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i64": [
-                0
-            ],
-            "std_vec_vec_std_primitive_i128": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u8": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u16": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u32": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u64": [
-                0
-            ],
-            "std_vec_vec_std_primitive_u128": [
-                0
-            ],
-            "std_vec_vec_std_primitive_f32": [
-                0.0
-            ],
-            "std_vec_vec_std_primitive_f64": [
-                0.0
-            ],
-            "std_vec_vec_std_primitive_bool": [
-                false
-            ],
-            "std_vec_vec_std_string_string": [
-                ""
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_i128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_u128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_f32": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_f64": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_primitive_bool": [
-                false
-            ],
-            "std_option_option_std_vec_vec_std_string_string": [
-                ""
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i8": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i16": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i32": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i64": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_i128": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u8": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u16": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u32": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u64": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_u128": [
-                0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_f32": [
-                0.0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_f64": [
-                0.0
-            ],
-            "std_vec_vec_std_option_option_std_primitive_bool": [
-                false
-            ],
-            "std_vec_vec_std_option_option_std_string_string": [
-                ""
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": [
-                0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": [
-                0.0
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": [
-                false
-            ],
-            "std_option_option_std_vec_vec_std_option_option_std_string_string": [
-                ""
-            ],
-            "generic": {
-                "std_string_string": ""
-            },
-            "std_option_option_generic": {
-                "std_string_string": ""
-            },
+            # "std_primitive_i16": 0,
+            # "std_primitive_i32": 0,
+            # "std_primitive_i64": 0,
+            # "std_primitive_i128": 0,
+            # "std_primitive_u8": 0,
+            # "std_primitive_u16": 0,
+            # "std_primitive_u32": 0,
+            # "std_primitive_u64": 0,
+            # "std_primitive_u128": 0,
+            # "std_primitive_f32": 0.0,
+            # "std_primitive_f64": 0.0,
+            # "std_primitive_bool": false,
+            # "std_string_string": "",
+            # "std_option_option_std_primitive_i8": 0,
+            # "std_option_option_std_primitive_i16": 0,
+            # "std_option_option_std_primitive_i32": 0,
+            # "std_option_option_std_primitive_i64": 0,
+            # "std_option_option_std_primitive_i128": 0,
+            # "std_option_option_std_primitive_u8": 0,
+            # "std_option_option_std_primitive_u16": 0,
+            # "std_option_option_std_primitive_u32": 0,
+            # "std_option_option_std_primitive_u64": 0,
+            # "std_option_option_std_primitive_u128": 0,
+            # "std_option_option_std_primitive_f32": 0.0,
+            # "std_option_option_std_primitive_f64": 0.0,
+            # "std_option_option_std_primitive_bool": false,
+            # "std_option_option_std_string_string": "",
+            # "std_vec_vec_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_vec_vec_std_string_string": [
+            #     ""
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_option_option_std_vec_vec_std_string_string": [
+            #     ""
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_vec_vec_std_option_option_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_vec_vec_std_option_option_std_string_string": [
+            #     ""
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": [
+            #     0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": [
+            #     0.0
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": [
+            #     false
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_std_string_string": [
+            #     ""
+            # ],
+            # "generic": {
+            #     "std_string_string": ""
+            # },
+            # "std_option_option_generic": {
+            #     "std_string_string": ""
+            # },
             "std_vec_vec_generic": [
                 {
-                    "std_string_string": ""
-                }
-            ],
-            "std_option_option_std_vec_vec_generic": [
-                {
-                    "std_string_string": ""
-                }
-            ],
-            "std_vec_vec_std_option_option_generic": [
-                {
-                    "std_string_string": ""
-                }
-            ],
-            "std_option_option_std_vec_vec_std_option_option_generic": [
-                {
-                    "std_string_string": ""
+                  "std_primitive_i16": 0,
+                  "generic": {
+                    "std_primitive_i32": 0
+                  }
                 }
             ]
+            # ,
+            # "std_option_option_std_vec_vec_generic": [
+            #     {
+            #         "std_string_string": ""
+            #     }
+            # ],
+            # "std_vec_vec_std_option_option_generic": [
+            #     {
+            #         "std_string_string": ""
+            #     }
+            # ],
+            # "std_option_option_std_vec_vec_std_option_option_generic": [
+            #     {
+            #         "std_string_string": ""
+            #     }
+            # ]
         }
     }
 ]
@@ -467,7 +477,7 @@ GET http://127.0.0.1:8080/jsongeneric/create_many_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-###  
+### 
 
 POST http://127.0.0.1:8080/jsongeneric/create_one HTTP/1.1
 content-type: application/json

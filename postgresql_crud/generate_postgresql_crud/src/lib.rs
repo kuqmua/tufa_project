@@ -3229,6 +3229,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 common_route_syn_variants.iter().for_each(|element|{
                     value.push(*element);
                 });
+                value.push(&bind_query_syn_variant_wrapper.get_syn_variant());
                 value.push(&checked_add_syn_variant_wrapper.get_syn_variant());
                 value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(&unexpected_rows_length_syn_variant_wrapper.get_syn_variant());
@@ -3268,24 +3269,45 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         acc
                     });
                     let column_increments_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element|{
-                        let field_ident = &element.field_ident;
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-                            &operation,
-                            &checked_add_syn_variant_wrapper,
-                            file!(),
-                            line!(),
-                            column!(),
-                        );
-                        quote::quote!{
-                            match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
-                                &#element_snake_case.#field_ident,
-                                &mut #increment_snake_case,
-                            ) {
-                                Ok(_) => {
-                                    #value_snake_case.push_str(&format!("${},", #increment_snake_case));
+                        let element_field_ident = &element.field_ident;
+                        if element.option_generic.is_some() {
+                            let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                                &operation,
+                                &bind_query_syn_variant_wrapper,
+                                file!(),
+                                line!(),
+                                column!(),
+                            );
+                            quote::quote!{
+                                match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                                    Ok(#value_snake_case) => {
+                                        #acc_snake_case.push_str(&format!("{value},"));
+                                    },
+                                    Err(#error_0_token_stream) => {
+                                        #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
                                 }
-                                Err(_) => {//todo try_increment has own error. is it must be used? or no?
-                                    #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                            }
+                        }
+                        else {
+                            let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                                &operation,
+                                &checked_add_syn_variant_wrapper,
+                                file!(),
+                                line!(),
+                                column!(),
+                            );
+                            quote::quote!{
+                                match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
+                                    &#element_snake_case.#element_field_ident,
+                                    &mut #increment_snake_case,
+                                ) {
+                                    Ok(_) => {
+                                        #acc_snake_case.push_str(&format!("${},", #increment_snake_case));
+                                    }
+                                    Err(_) => {//todo try_increment has own error. is it must be used? or no?
+                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
                                 }
                             }
                         }
@@ -3299,10 +3321,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #increment_initialization_token_stream
                             let mut values = #std_string_string::default();
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                let mut #value_snake_case = #std_string_string::default();
+                                let mut #acc_snake_case = #std_string_string::default();
                                 #(#column_increments_token_stream)*
-                                let _ = #value_snake_case.pop();
-                                values.push_str(&format!("({value}),"));
+                                let _ = #acc_snake_case.pop();
+                                values.push_str(&format!("({acc}),"));
                             }
                             let _ = values.pop();
                             format!(#query_token_stream)
