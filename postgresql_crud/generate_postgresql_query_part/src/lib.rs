@@ -671,13 +671,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let ident_field_upper_camel_case_token_stream = generate_ident_field_upper_camel_case_token_stream(&ident.to_string());
-    let ident_options_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::OptionsUpperCamelCase);
-    let ident_options_upper_camel_case_token_stream = {
-        ident_options_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_options_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    let ident_options_to_read_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::OptionsToReadUpperCamelCase);
+    let ident_options_to_read_upper_camel_case_token_stream = {
+        ident_options_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_options_to_read_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let ident_options_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
-        &ident_options_upper_camel_case_stringified,
+    let ident_options_to_read_double_quotes_token_stream= proc_macro_common::generate_quotes::double_quotes_token_stream(
+        &ident_options_to_read_upper_camel_case_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
     let ident_wrapper_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::WrapperUpperCamelCase);
@@ -2111,7 +2111,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         });
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait//Eq, 
-            pub struct #ident_options_upper_camel_case_token_stream {
+            pub struct #ident_options_to_read_upper_camel_case_token_stream {
                 #(#fields_token_stream),*
 
                 // std_string_string: std::option::Option<postgresql_crud::Value<std::string::String>>,
@@ -4569,12 +4569,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
         #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
     };
-    // if ident == "" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "www",
-    //         &generated,
-    //         "www",
-    //     );
-    // }
+    if ident == "Cat" {
+        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "www",
+            &generated,
+            "www",
+        );
+    }
     generated.into()
 }    

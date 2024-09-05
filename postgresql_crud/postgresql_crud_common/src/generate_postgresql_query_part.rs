@@ -304,7 +304,6 @@ pub enum ArrayObjectElementOrSimple {
     },
     Simple
 }
-
 pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
     fn try_generate_bind_increments(
         &self,
