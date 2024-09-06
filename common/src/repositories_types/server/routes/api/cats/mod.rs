@@ -303,8 +303,8 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
 
-impl postgresql_crud::GetUuid for Something {
-    fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
+impl postgresql_crud::GetJsonId for Something {
+    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
         &self.id
     }
 }
@@ -384,8 +384,8 @@ pub struct Doggie {
     pub generic: postgresql_crud::JsonGeneric<Cat>,
 }
 
-impl postgresql_crud::GetUuid for Doggie {
-    fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
+impl postgresql_crud::GetJsonId for Doggie {
+    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
         &self.id
     }
 }
@@ -399,8 +399,8 @@ pub struct Cat {
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
 }
 
-impl postgresql_crud::GetUuid for Cat {
-    fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
+impl postgresql_crud::GetJsonId for Cat {
+    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
         &self.id
     }
 }
