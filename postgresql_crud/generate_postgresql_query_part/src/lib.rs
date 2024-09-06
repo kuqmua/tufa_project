@@ -3315,12 +3315,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_struct_ident_options_to_update_token_stream = {
+        let content_token_stream = if is_id_field_exists {
+            quote::quote!{
+                {
+                    #id_snake_case: #uuid_uuid_token_stream,
+                    #update_snake_case: std::vec::Vec<#ident_option_to_update_upper_camel_case_token_stream>,
+                }
+            }
+        }
+        else {
+            quote::quote!{
+                (std::vec::Vec<#ident_option_to_update_upper_camel_case_token_stream>);
+            }
+        };
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-            pub struct #ident_options_to_update_upper_camel_case_token_stream{
-                #id_snake_case: #uuid_uuid_token_stream,
-                #update_snake_case: std::vec::Vec<#ident_option_to_update_upper_camel_case_token_stream>,
-            }
+            pub struct #ident_options_to_update_upper_camel_case_token_stream #content_token_stream
         }
     };
     let pub_enum_ident_field_to_update_token_stream = {
@@ -4706,7 +4716,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_enum_ident_field_to_update_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
         #pub_enum_ident_option_to_update_token_stream
-        // #pub_struct_ident_options_to_update_token_stream
+        #pub_struct_ident_options_to_update_token_stream
         #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
 
         // // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream

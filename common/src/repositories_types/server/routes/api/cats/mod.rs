@@ -1689,7 +1689,7 @@ impl
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
-        if self.update.is_empty() {
+        if self.0.is_empty() {
             return Err(
                 CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -1698,7 +1698,7 @@ impl
         }
         {
             let mut acc = vec![];
-            for element in &self.update {
+            for element in &self.0 {
                 match element {
                     CatOptionToUpdate::StdPrimitiveI32(_) => {
                         let value = CatFieldToUpdate::StdPrimitiveI32;
@@ -1722,7 +1722,7 @@ impl
             true => std::string::String::default(),
             false => format!("{jsonb_set_path},"),
         };
-        for element in &self.update {
+        for element in &self.0 {
             match &element {
                 CatOptionToUpdate::StdPrimitiveI32(_) => match increment.checked_add(1) {
                     Some(value) => {
@@ -1745,7 +1745,7 @@ impl
         self,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in self.update {
+        for element in self.0 {
             match element {
                 CatOptionToUpdate::StdPrimitiveI32(value) => {
                     query = query.bind(sqlx::types::Json(value.value));
@@ -2325,12 +2325,6 @@ impl
 // }
 
 // ////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
-// {
-//     id: uuid::Uuid,
-//     update: std::vec::Vec<SomethingOptionToUpdate>,
-// }
 impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
     fn try_increment(
         &self,
@@ -2386,11 +2380,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
     }
 }
 //
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DoggieOptionsToUpdate {
-    id: uuid::Uuid,
-    update: std::vec::Vec<DoggieOptionToUpdate>,
-}
 impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
     fn try_increment(
         &self,
@@ -2437,11 +2426,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
     }
 }
 //
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct CatOptionsToUpdate {
-    id: uuid::Uuid,
-    update: std::vec::Vec<CatOptionToUpdate>,
-}
 impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
     fn try_increment(
         &self,
