@@ -322,30 +322,81 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
 pub trait GetUuid {
     fn get_uuid(&self) -> &JsonUuid;
 }
-impl<T: GetUuid> GetUuid for JsonGeneric<T> {
-    fn get_uuid(&self) -> &JsonUuid {
-        GetUuid::get_uuid(&self.0)
-    }
-}
+
+
+
+
+// impl<T: GetUuid> GetUuid for JsonGeneric<T> {
+//     fn get_uuid(&self) -> &JsonUuid {
+//         GetUuid::get_uuid(&self.0)
+//     }
+// }
 
 
 pub trait GetJsonGenericUuid {
-    fn get_json_generic_uuid(&self) -> &JsonUuid;
+    fn get_json_generic_uuid(&self);// -> &JsonUuid;
 }
+impl<T: GetUuid> GetJsonGenericUuid for T {
+    fn get_json_generic_uuid(&self) {}
+}
+
+// impl<T: GetJsonGenericUuid> GetJsonGenericUuid for JsonGeneric<T> {
+//     fn get_json_generic_uuid(&self) -> &JsonUuid {
+//         GetJsonGenericUuid::get_json_generic_uuid(&self.0)
+//     }
+// }
+
 pub trait GetJsonStdOptionOptionGenericUuid {
-    fn get_json_std_option_option_generic_uuid(&self) -> &std::option::Option<JsonUuid>;
+    fn get_json_std_option_option_generic_uuid(&self);// -> &std::option::Option<JsonUuid>;
 }
+impl<T: GetUuid> GetJsonStdOptionOptionGenericUuid for T {
+    fn get_json_std_option_option_generic_uuid(&self) {}
+}
+// impl<T: GetJsonStdOptionOptionGenericUuid> GetJsonStdOptionOptionGenericUuid for JsonStdOptionOptionGeneric<T> {
+//     fn get_json_std_option_option_generic_uuid(&self) -> &std::option::Option<JsonUuid> {
+//         match &self.0 {
+//             Some(value) => GetJsonStdOptionOptionGenericUuid::get_json_std_option_option_generic_uuid(value),
+//             None => &None,
+//         }
+//     }
+// }
+
 pub trait GetJsonStdVecVecGenericUuid {
-    fn get_json_std_vec_vec_generic_uuid(&self) -> &std::vec::Vec<JsonUuid>;
+    fn get_json_std_vec_vec_generic_uuid(&self);// -> &std::vec::Vec<JsonUuid>;
 }
+impl<T: GetUuid> GetJsonStdVecVecGenericUuid for T {
+    fn get_json_std_vec_vec_generic_uuid(&self) {}
+}
+// impl<T: GetJsonStdVecVecGenericUuid> GetJsonStdVecVecGenericUuid for JsonStdVecVecGeneric<T> {
+//     fn get_json_std_vec_vec_generic_uuid(&self) -> &std::vec::Vec<JsonUuid> {
+//         self.0.iter().map(|element|).collect()
+//         // GetJsonStdVecVecGenericUuid::get_json_std_vec_vec_generic_uuid(self)
+//         // match &self.0 {
+//         //     Some(value) =>,
+//         //     None => &None,
+//         // }
+//     }
+// }
+
 pub trait GetJsonStdOptionOptionStdVecVecGenericUuid  {
-    fn get_json_std_option_option_std_vec_vec_generic_uuid(&self) -> &std::option::Option<std::vec::Vec<JsonUuid>>;
+    fn get_json_std_option_option_std_vec_vec_generic_uuid(&self);// -> &std::option::Option<std::vec::Vec<JsonUuid>>;
 }
+impl<T: GetUuid> GetJsonStdOptionOptionStdVecVecGenericUuid for T {
+    fn get_json_std_option_option_std_vec_vec_generic_uuid(&self) {}
+}
+
 pub trait GetJsonStdVecVecStdOptionOptionGenericUuid {
-    fn get_json_std_vec_vec_std_option_option_generic_uuid(&self) -> &std::vec::Vec<std::option::Option<JsonUuid>>;
+    fn get_json_std_vec_vec_std_option_option_generic_uuid(&self);// -> &std::vec::Vec<std::option::Option<JsonUuid>>;
 }
+impl<T: GetUuid> GetJsonStdVecVecStdOptionOptionGenericUuid for T {
+    fn get_json_std_vec_vec_std_option_option_generic_uuid(&self) {}
+}
+
 pub trait GetJsonStdOptionOptionStdVecVecStdOptionOptionGeneric {
-    fn get_json_std_option_option_std_vec_vec_std_option_option_generic(&self) -> &std::option::Option<std::vec::Vec<std::option::Option<JsonUuid>>>;
+    fn get_json_std_option_option_std_vec_vec_std_option_option_generic(&self);// -> &std::option::Option<std::vec::Vec<std::option::Option<JsonUuid>>>;
+}
+impl<T: GetUuid> GetJsonStdOptionOptionStdVecVecStdOptionOptionGeneric for T {
+    fn get_json_std_option_option_std_vec_vec_std_option_option_generic(&self) {}
 }
 
 //
