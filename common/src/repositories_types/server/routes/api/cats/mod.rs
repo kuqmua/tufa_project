@@ -2326,35 +2326,9 @@ impl
 
 // ////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum SomethingOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
-    #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
-    StdVecVecGeneric(postgresql_crud::Value<std::vec::Vec<DoggieOptionsToUpdate>>),
-}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate {
     id: uuid::Uuid,
     update: std::vec::Vec<SomethingOptionToUpdate>,
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingFieldToUpdate,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Doggie {
-        #[eo_error_occurence]
-        doggie: DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
 }
 impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
     fn try_increment(
@@ -2412,35 +2386,9 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
 }
 //
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum DoggieOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-    StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>),
-    #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    Generic(postgresql_crud::Value<CatOptionsToUpdate>),
-}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DoggieOptionsToUpdate {
     id: uuid::Uuid,
     update: std::vec::Vec<DoggieOptionToUpdate>,
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieFieldToUpdate,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Cat {
-        #[eo_error_occurence]
-        cat: CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
 }
 impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
     fn try_increment(
@@ -2489,28 +2437,9 @@ impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
 }
 //
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum CatOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-    StdPrimitiveI32(postgresql_crud::Value<std::primitive::i32>),
-}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CatOptionsToUpdate {
     id: uuid::Uuid,
     update: std::vec::Vec<CatOptionToUpdate>,
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: CatFieldToUpdate,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
 }
 impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
     fn try_increment(
