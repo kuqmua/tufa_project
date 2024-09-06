@@ -4544,16 +4544,39 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // if ident == "" {
     //     println!("{impl_postgresql_crud_bind_query_for_ident_to_create_token_stream}");
     // }
-    
-    // let impl postgresql_crud::GetUuid for Cat_token_stream = {
-    //     quote::quote!{
-    //         impl postgresql_crud::GetUuid for Cat {
-    //             fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
-    //                 &self.id
-    //             }
-    //         }
-    //     }
-    // };
+
+    let impl_postgresql_crud_get_json_id_for_ident_token_stream = {
+        let mut is_id_field_exists = false;
+        for element in &vec_syn_field {
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            if element_ident == &id_snake_case.to_string() {
+                if let SupportedPredefinedType::JsonUuid = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
+                    is_id_field_exists = true;
+                    break;
+                }
+                else {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} is not SupportedPredefinedType::JsonUuid");
+                };
+            }
+        }
+        if is_id_field_exists {
+            quote::quote!{
+                impl postgresql_crud::GetJsonId for #ident {
+                    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
+                        &self.id
+                    }
+                }
+            } 
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        }
+    };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
@@ -4578,6 +4601,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_struct_ident_to_create_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
         #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
+        #impl_postgresql_crud_get_json_id_for_ident_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(

@@ -303,12 +303,6 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
 
-impl postgresql_crud::GetJsonId for Something {
-    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-        &self.id
-    }
-}
-
 impl postgresql_crud::CheckIdExistsInJsonGenericFields for Something {
     fn check_id_exists_in_json_generic_fields(&self) {
         let _: () = postgresql_crud::CheckIdExistsInJsonStdVecVecGeneric::check_id_exists_in_json_std_vec_vec_generic(&self.std_vec_vec_generic);
@@ -390,12 +384,6 @@ pub struct Doggie {
     pub generic: postgresql_crud::JsonGeneric<Cat>,
 }
 
-impl postgresql_crud::GetJsonId for Doggie {
-    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-        &self.id
-    }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
     postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
@@ -403,12 +391,6 @@ pub struct Cat {
     pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-}
-
-impl postgresql_crud::GetJsonId for Cat {
-    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-        &self.id
-    }
 }
 
 #[test]
