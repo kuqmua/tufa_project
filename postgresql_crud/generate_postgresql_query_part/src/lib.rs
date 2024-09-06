@@ -1992,14 +1992,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let pub_struct_ident_options_to_read_token_stream = {
-        let fields_token_stream = vec_syn_field.iter().map(|element|{
+        let maybe_id_token_stream = if is_id_field_exists {
+            quote::quote!{
+                #id_snake_case: std::option::Option<uuid::Uuid>,
+            }
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
+        let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
                     naming_conventions::FIELD_IDENT_IS_NONE
                 );
             });
-            let supported_predefined_type = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
             let type_token_stream = match supported_predefined_type
             {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
@@ -2110,6 +2118,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait//Eq, 
             pub struct #ident_options_to_read_upper_camel_case_token_stream {
+                #maybe_id_token_stream
                 #(#fields_token_stream),*
 
                 // std_string_string: std::option::Option<postgresql_crud::Value<std::string::String>>,
@@ -2148,14 +2157,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
-        let fields_token_stream = vec_syn_field.iter().map(|element|{
+        let maybe_id_token_stream = if is_id_field_exists {
+            quote::quote!{
+                #id_snake_case: Some(value.#id_snake_case.0),
+            }
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
+        let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
                     "{proc_macro_name_upper_camel_case_ident_stringified} {}",
                     naming_conventions::FIELD_IDENT_IS_NONE
                 );
             });
-            let conversion_token_stream = match SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
+            let conversion_token_stream = match SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdPrimitiveI16 |
                 SupportedPredefinedType::JsonStdPrimitiveI32 |
@@ -2337,6 +2354,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
                 fn from(value: #ident) -> Self {
                     Self {
+                        #maybe_id_token_stream
                         #(#fields_token_stream),*
 
                         //just for case if must return result impl
@@ -2821,10 +2839,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 SupportedPredefinedType::JsonUuid => quote::quote!{value},
             };
+            let ok_some_content_token_stream = if field_ident == &id_snake_case.to_string() {
+                conversion_logic_token_stream
+            }
+            else {
+                quote::quote!{
+                    postgresql_crud::Value{ value: #conversion_logic_token_stream }
+                }
+            };
             quote::quote!{
                 #field_ident: match #field_index_token_stream {
                     Some(value) => match value {
-                        Ok(value) => Some(postgresql_crud::Value{ value: #conversion_logic_token_stream }),
+                        Ok(value) => Some(#ok_some_content_token_stream),
                         Err(error) => {
                             return Err(serde::de::Error::custom(error));
                         }
