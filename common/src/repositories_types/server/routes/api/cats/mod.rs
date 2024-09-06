@@ -2324,57 +2324,7 @@ impl
 //     return response;
 // }
 
-////
-#[derive(
-    Debug,
-    serde :: Serialize,
-    serde :: Deserialize,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed {
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingFieldToRead,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    GeneratePostgresqlQueryPart {
-        #[eo_error_occurence]
-        error: SomethingGeneratePostgresqlQueryPartToReadErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl error_occurence_lib::ToStdStringString
-    for SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed
-{
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
-#[derive(
-    Debug,
-    serde :: Serialize,
-    serde :: Deserialize,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum SomethingGeneratePostgresqlQueryPartToReadErrorNamed {
-    StdVecVecGenericOffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DoggieGeneratePostgresqlQueryPartToReadFromSelfVec {
-        #[eo_error_occurence]
-        field: DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
+// ////
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToRead<
         SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed,
@@ -2970,7 +2920,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
         &self,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        let mut increments = std::string::String::from("");//'id', to_jsonb(gen_random_uuid()),
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
@@ -3013,57 +2963,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
         query
     }
 }
-impl postgresql_crud::CheckIdExistsInJsonGenericFields for Something {
-    fn check_id_exists_in_json_generic_fields(&self) {
-        let _ : () = postgresql_crud :: CheckIdExistsInJsonStdVecVecGeneric ::
-        check_id_exists_in_json_std_vec_vec_generic(&
-        self.std_vec_vec_generic);
-    }
-}
 //
-#[derive(
-    Debug,
-    serde :: Serialize,
-    serde :: Deserialize,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed {
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieFieldToRead,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    GeneratePostgresqlQueryPart {
-        #[eo_error_occurence]
-        error: DoggieGeneratePostgresqlQueryPartToReadErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl error_occurence_lib::ToStdStringString
-    for DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed
-{
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
-#[derive(
-    Debug,
-    serde :: Serialize,
-    serde :: Deserialize,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum DoggieGeneratePostgresqlQueryPartToReadErrorNamed {
-    CatGeneratePostgresqlQueryPartToReadFromSelfVec {
-        #[eo_error_occurence]
-        field: CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToRead<
         DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed,
@@ -3682,39 +3582,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
         query
     }
 }
-impl postgresql_crud::GetJsonId for Doggie {
-    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-        &self.id
-    }
-}
-impl postgresql_crud::CheckIdExistsInJsonGenericFields for Doggie {
-    fn check_id_exists_in_json_generic_fields(&self) {}
-}
 //
-#[derive(
-    Debug,
-    serde :: Serialize,
-    serde :: Deserialize,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed {
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: CatFieldToRead,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl error_occurence_lib::ToStdStringString
-    for CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed
-{
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToRead<
         CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed,
@@ -4128,7 +3996,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
         &self,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+        let mut increments = std::string::String::from("");//'id', to_jsonb(gen_random_uuid()),
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
@@ -4152,7 +4020,4 @@ impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
         query = query.bind(sqlx::types::Json(self.std_primitive_i32.0));
         query
     }
-}
-impl postgresql_crud::CheckIdExistsInJsonGenericFields for Cat {
-    fn check_id_exists_in_json_generic_fields(&self) {}
 }

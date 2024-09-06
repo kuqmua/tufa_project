@@ -1485,19 +1485,20 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     #     "generic": ["std_string_string"]
                     # }
                     # ,
-                    {
-                        "std_option_option_generic": ["std_string_string"]
-                    }
-                    # ,
                     # {
-                    #     "std_vec_vec_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
+                    #     "std_option_option_generic": ["std_string_string"]
                     # }
+                    # ,
+                    {
+                        "std_vec_vec_generic": {
+                            "field_vec": [
+                                "id",
+                                "std_primitive_i16"
+                            ],
+                            "offset": 0,
+                            "limit": 3
+                        }
+                    }
                     # ,
                     # {
                     #     "std_option_option_std_vec_vec_generic": {
@@ -1575,9 +1576,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "value": [
             {
-                "id": {
-                    "value": "03ac2b59-6cf6-4b4b-9b80-f03c6ed1c22c"
-                },
                 "std_primitive_i8": {
                     "value": 65
                 }
@@ -2059,9 +2057,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     "value": [
                         [
                             {
-                                "id": {
-                                    "value": "03ac2b59-6cf6-4b4b-9b80-f03c6ed1c22c"
-                                },
+                                "id": "03ac2b59-6cf6-4b4b-9b80-f03c6ed1c22c",
                             },
                             {
                                 "std_primitive_i16": {
@@ -2071,11 +2067,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                             {
                                 "generic": {
                                     "value": [
-                                        {
-                                            "id": {
-                                                "value": "03ac2b59-6cf6-4b4b-9b80-f03c6ed1c22c"
-                                            },
-                                        },
                                         {
                                             "std_primitive_i32": {
                                                 "value": 888
@@ -2100,11 +2091,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                             {
                                 "generic": {
                                     "value": [
-                                        {
-                                            "id": {
-                                                "value": "03ac2b59-6cf6-4b4b-9b80-f03c6ed1c22c"
-                                            },
-                                        },
                                         {
                                             "std_primitive_i32": {
                                                 "value": 229

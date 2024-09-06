@@ -711,11 +711,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified = |value: &std::primitive::str|{
+    let add_postfix_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_stringified = |value: &std::primitive::str|{
         format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecErrorNamedUpperCamelCase)
     };
-    let ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = {
-        let value = add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified(&ident.to_string());
+    let ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream = {
+        let value = add_postfix_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_stringified(&ident.to_string());
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -747,8 +747,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let generate_field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = |value: &std::primitive::str|{
-        let value = add_postfix_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_stringified(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value));
+    let generate_field_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream = |value: &std::primitive::str|{
+        let value = add_postfix_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_stringified(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value));
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -993,11 +993,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         unique_type_path.iter().fold(vec![], |mut acc, element| {
             acc.push({
                 let field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
-                let field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
+                let field_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream = generate_field_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream(&quote::quote!{#element}.to_string());
                 quote::quote!{
                     #field_ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
                         #[eo_error_occurence]
-                        field: #field_ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
+                        field: #field_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     }
                 }
@@ -1184,8 +1184,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let pub_enum_field_generate_postgresql_query_part_error_named_token_stream = {
-        let ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream = {
+    let pub_enum_field_generate_postgresql_query_part_to_read_error_named_token_stream = {
+        let ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream = {
             let maybe_generate_postgresql_query_part_variant_token_stream = match should_generate_ident_generate_postgresql_query_part_error_named_enum {
                 true => quote::quote!{
                     GeneratePostgresqlQueryPart {
@@ -1198,7 +1198,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             };
             quote::quote!{
                 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream {
+                pub enum #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream {
                     FieldsFilterIsEmpty {
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
@@ -1211,9 +1211,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
-        let impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream = {
+        let impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream = {
             quote::quote!{
-                impl error_occurence_lib::ToStdStringString for #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream {
+                impl error_occurence_lib::ToStdStringString for #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream {
                     fn to_std_string_string(&self) -> std::string::String {
                         format!("{self:?}")
                     }
@@ -1235,8 +1235,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         quote::quote!{
-            #ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_from_self_vec_error_named_token_stream
+            #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
+            #impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
             #ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
@@ -1884,7 +1884,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 acc.push_str(&format!(#format_handle_token_stream));
                             }
                             Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::GeneratePostgresqlQueryPart {
+                                return Err(#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream::GeneratePostgresqlQueryPart {
                                     error,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
@@ -1935,7 +1935,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         quote::quote!{
             impl postgresql_crud::GeneratePostgresqlQueryPartToRead<
-                #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream,
+                #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream,
                 #second_generic_token_stream
             > for #ident_field_to_read_upper_camel_case_token_stream {
                 fn generate_postgresql_query_part_to_read_from_self_vec(
@@ -1943,16 +1943,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     column_name_and_maybe_field_getter: &std::primitive::str,
                     column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
                     is_optional: std::primitive::bool,
-                ) -> Result<std::string::String, #ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream> {
+                ) -> Result<std::string::String, #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream> {
                     if value.is_empty() {
-                        return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::FieldsFilterIsEmpty {
+                        return Err(#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream::FieldsFilterIsEmpty {
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
                     let mut unique = vec![];
                     for element in value {
                         if unique.contains(&element) {
-                            return Err(#ident_generate_postgresql_query_part_from_self_vec_error_named_upper_camel_case_token_stream::NotUniqueFieldFilter {
+                            return Err(#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream::NotUniqueFieldFilter {
                                 field: element.clone(),
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
@@ -4717,7 +4717,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_to_read_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream
-        // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
+        #pub_enum_field_generate_postgresql_query_part_to_read_error_named_token_stream
         // #impl_generate_postgresql_query_part_to_read_for_ident_field_to_read_token_stream
         // #pub_struct_ident_options_to_read_token_stream
         // #impl_std_convert_from_ident_for_ident_options_token_stream
@@ -4737,8 +4737,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_struct_ident_to_create_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
         // #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
-        // #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
-        // #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
+        #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
+        #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
