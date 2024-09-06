@@ -323,6 +323,19 @@ pub trait GetUuid {
     fn get_uuid(&self) -> &JsonUuid;
 }
 
+pub trait GetJsonStdVecVecGenericUuid {
+    fn get_json_std_vec_vec_generic_uuid(&self) -> &std::vec::Vec<JsonUuid>;
+}
+pub trait GetJsonStdOptionOptionStdVecVecGenericUuid  {
+    fn get_json_std_option_option_std_vec_vec_generic_uuid(&self) -> &std::option::Option<std::vec::Vec<JsonUuid>>;
+}
+pub trait GetJsonStdVecVecStdOptionOptionGenericUuid {
+    fn get_json_std_vec_vec_std_option_option_generic_uuid(&self) -> &std::vec::Vec<std::option::Option<JsonUuid>>;
+}
+pub trait GetJsonStdOptionOptionStdVecVecStdOptionOptionGeneric {
+    fn get_json_std_option_option_std_vec_vec_std_option_option_generic(&self) -> &std::option::Option<std::vec::Vec<std::option::Option<JsonUuid>>>;
+}
+
 //
 // pub enum JsonArrayUpdate<T> {
 //     AddElements,

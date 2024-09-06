@@ -646,3 +646,8 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuid;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::GetUuid;
+
+pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonStdVecVecGenericUuid;
+pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonStdOptionOptionStdVecVecGenericUuid;
+pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonStdVecVecStdOptionOptionGenericUuid;
+pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonStdOptionOptionStdVecVecStdOptionOptionGeneric;

@@ -303,6 +303,12 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
 }
 
+impl postgresql_crud::GetUuid for Something {
+    fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
+        &self.id
+    }
+}
+
 //todo this need for old version of update_many. later need to refactor update many and remove this
 impl<'a> postgresql_crud::BindQuery<'a> for Something {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
@@ -376,6 +382,12 @@ pub struct Doggie {
 
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     pub generic: postgresql_crud::JsonGeneric<Cat>,
+}
+
+impl postgresql_crud::GetUuid for Doggie {
+    fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
+        &self.id
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,

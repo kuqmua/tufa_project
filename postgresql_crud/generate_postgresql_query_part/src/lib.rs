@@ -4544,6 +4544,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // if ident == "" {
     //     println!("{impl_postgresql_crud_bind_query_for_ident_to_create_token_stream}");
     // }
+    
+    // let impl postgresql_crud::GetUuid for Cat_token_stream = {
+    //     quote::quote!{
+    //         impl postgresql_crud::GetUuid for Cat {
+    //             fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
+    //                 &self.id
+    //             }
+    //         }
+    //     }
+    // };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_token_stream
