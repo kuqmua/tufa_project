@@ -322,6 +322,11 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
 pub trait GetUuid {
     fn get_uuid(&self) -> &JsonUuid;
 }
+impl<T: GetUuid> GetUuid for JsonGeneric<T> {
+    fn get_uuid(&self) -> &JsonUuid {
+        GetUuid::get_uuid(&self.0)
+    }
+}
 
 pub trait GetJsonStdVecVecGenericUuid {
     fn get_json_std_vec_vec_generic_uuid(&self) -> &std::vec::Vec<JsonUuid>;
