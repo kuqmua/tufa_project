@@ -387,6 +387,12 @@ pub struct Cat {
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
 }
 
+impl postgresql_crud::GetUuid for Cat {
+    fn get_uuid(&self) -> &postgresql_crud::JsonUuid {
+        &self.id
+    }
+}
+
 #[test]
 fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() {
 //     let default = postgresql_crud::JsonGeneric(Something::default());
