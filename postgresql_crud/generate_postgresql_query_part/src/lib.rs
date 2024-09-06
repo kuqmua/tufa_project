@@ -628,29 +628,29 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     // println!("{vec_syn_field:#?}");
     let id_snake_case = naming_conventions::IdSnakeCase;
-    {
-        let mut is_id_field_exists = false;
-        for element in &vec_syn_field {
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                    naming_conventions::FIELD_IDENT_IS_NONE
-                );
-            });
-            if element_ident == &id_snake_case.to_string() {
-                if let SupportedPredefinedType::JsonUuid = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
-                    is_id_field_exists = true;
-                    break;
-                }
-                else {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} is not SupportedPredefinedType::JsonUuid");
-                };
-            }
-        }
-        if !is_id_field_exists {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} does not exist");
-        }
-    }
+    // {
+    //     let mut is_id_field_exists = false;
+    //     for element in &vec_syn_field {
+    //         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+    //             panic!(
+    //                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+    //                 naming_conventions::FIELD_IDENT_IS_NONE
+    //             );
+    //         });
+    //         if element_ident == &id_snake_case.to_string() {
+    //             if let SupportedPredefinedType::JsonUuid = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
+    //                 is_id_field_exists = true;
+    //                 break;
+    //             }
+    //             else {
+    //                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} is not SupportedPredefinedType::JsonUuid");
+    //             };
+    //         }
+    //     }
+    //     if !is_id_field_exists {
+    //         panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} does not exist");
+    //     }
+    // }
     let vec_syn_field_filtered_id_iter = vec_syn_field.iter().filter(|element|{
         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
             panic!(
@@ -1020,7 +1020,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let pub_enum_ident_field_token_stream = {
+    let pub_enum_ident_field_to_read_token_stream = {
         let variants_token_stream = vec_syn_field.iter().map(|element|{
             let field_ident_stringified = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
@@ -1175,7 +1175,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream = {
+    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream = {
         quote::quote!{
             impl error_occurence_lib::ToStdStringString for #ident_field_to_read_upper_camel_case_token_stream {
                 fn to_std_string_string(&self) -> std::string::String {
@@ -4715,30 +4715,30 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
-        #pub_enum_ident_field_token_stream
-        #impl_error_occurence_lib_to_std_string_string_for_ident_field_token_stream
-        #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
-        #impl_generate_postgresql_query_part_to_read_for_ident_field_token_stream
-        #pub_struct_ident_options_to_read_token_stream
-        #impl_std_convert_from_ident_for_ident_options_token_stream
-        #impl_serde_deserialize_for_ident_options_token_stream
-        #ident_reader_token_stream
-        #impl_serde_deserialize_for_ident_reader_token_stream
-        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
+        #pub_enum_ident_field_to_read_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream
+        // #pub_enum_field_generate_postgresql_query_part_error_named_token_stream
+        // #impl_generate_postgresql_query_part_to_read_for_ident_field_token_stream
+        // #pub_struct_ident_options_to_read_token_stream
+        // #impl_std_convert_from_ident_for_ident_options_token_stream
+        // #impl_serde_deserialize_for_ident_options_token_stream
+        // #ident_reader_token_stream
+        // #impl_serde_deserialize_for_ident_reader_token_stream
+        // #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
-        #pub_enum_ident_field_to_update_token_stream
-        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
-        #pub_enum_ident_option_to_update_token_stream
-        #pub_struct_ident_options_to_update_token_stream
-        #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+        // #pub_enum_ident_field_to_update_token_stream
+        // #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
+        // #pub_enum_ident_option_to_update_token_stream
+        // #pub_struct_ident_options_to_update_token_stream
+        // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
 
-        // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
+        // // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
 
-        #pub_struct_ident_to_create_token_stream
-        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
-        #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
-        #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
-        #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
+        // #pub_struct_ident_to_create_token_stream
+        // #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
+        // #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
+        // #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
+        // #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
