@@ -2325,29 +2325,6 @@ impl
 // }
 
 // ////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum SomethingFieldToUpdate {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8,
-    #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
-    StdVecVecGeneric,
-}
-impl error_occurence_lib::ToStdStringString for SomethingFieldToUpdate {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::StdPrimitiveI8 => "std_primitive_i8".to_owned(),
-            Self::StdVecVecGeneric => "std_vec_vec_generic".to_owned(),
-        }
-    }
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 enum SomethingOptionToUpdate {
     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
@@ -2434,29 +2411,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
     }
 }
 //
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum DoggieFieldToUpdate {
-    #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-    StdPrimitiveI16,
-    #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    Generic,
-}
-impl error_occurence_lib::ToStdStringString for DoggieFieldToUpdate {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::StdPrimitiveI16 => "std_primitive_i16".to_owned(),
-            Self::Generic => "generic".to_owned(),
-        }
-    }
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 enum DoggieOptionToUpdate {
     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
@@ -2534,26 +2488,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
     }
 }
 //
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub enum CatFieldToUpdate {
-    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-    StdPrimitiveI32,
-}
-impl error_occurence_lib::ToStdStringString for CatFieldToUpdate {
-    fn to_std_string_string(&self) -> std::string::String {
-        match &self {
-            Self::StdPrimitiveI32 => "std_primitive_i32".to_owned(),
-        }
-    }
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 enum CatOptionToUpdate {
     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
