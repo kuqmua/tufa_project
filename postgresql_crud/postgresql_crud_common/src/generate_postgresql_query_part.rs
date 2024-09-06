@@ -328,6 +328,13 @@ impl<T: GetUuid> GetUuid for JsonGeneric<T> {
     }
 }
 
+
+pub trait GetJsonGenericUuid {
+    fn get_json_generic_uuid(&self) -> &JsonUuid;
+}
+pub trait GetJsonStdOptionOptionGenericUuid {
+    fn get_json_std_option_option_generic_uuid(&self) -> &std::option::Option<JsonUuid>;
+}
 pub trait GetJsonStdVecVecGenericUuid {
     fn get_json_std_vec_vec_generic_uuid(&self) -> &std::vec::Vec<JsonUuid>;
 }
