@@ -628,29 +628,27 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     // println!("{vec_syn_field:#?}");
     let id_snake_case = naming_conventions::IdSnakeCase;
-    // {
-    //     let mut is_id_field_exists = false;
-    //     for element in &vec_syn_field {
-    //         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-    //             panic!(
-    //                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-    //                 naming_conventions::FIELD_IDENT_IS_NONE
-    //             );
-    //         });
-    //         if element_ident == &id_snake_case.to_string() {
-    //             if let SupportedPredefinedType::JsonUuid = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
-    //                 is_id_field_exists = true;
-    //                 break;
-    //             }
-    //             else {
-    //                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} is not SupportedPredefinedType::JsonUuid");
-    //             };
-    //         }
-    //     }
-    //     if !is_id_field_exists {
-    //         panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} does not exist");
-    //     }
-    // }
+    let is_id_field_exists = {
+        let mut is_id_field_exists = false;
+        for element in &vec_syn_field {
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                    naming_conventions::FIELD_IDENT_IS_NONE
+                );
+            });
+            if element_ident == &id_snake_case.to_string() {
+                if let SupportedPredefinedType::JsonUuid = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
+                    is_id_field_exists = true;
+                    break;
+                }
+                else {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} is not SupportedPredefinedType::JsonUuid");
+                };
+            }
+        }
+        is_id_field_exists
+    };
     let vec_syn_field_filtered_id_iter = vec_syn_field.iter().filter(|element|{
         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
             panic!(
@@ -4544,38 +4542,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // if ident == "" {
     //     println!("{impl_postgresql_crud_bind_query_for_ident_to_create_token_stream}");
     // }
-
-    let maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream = {
-        let mut is_id_field_exists = false;
-        for element in &vec_syn_field {
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                    naming_conventions::FIELD_IDENT_IS_NONE
-                );
-            });
-            if element_ident == &id_snake_case.to_string() {
-                if let SupportedPredefinedType::JsonUuid = SupportedPredefinedType::try_from(*element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
-                    is_id_field_exists = true;
-                    break;
+    let maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream = if is_id_field_exists {
+        quote::quote!{
+            impl postgresql_crud::GetJsonId for #ident {
+                fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
+                    &self.id
                 }
-                else {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} field {id_snake_case} is not SupportedPredefinedType::JsonUuid");
-                };
             }
-        }
-        if is_id_field_exists {
-            quote::quote!{
-                impl postgresql_crud::GetJsonId for #ident {
-                    fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-                        &self.id
-                    }
-                }
-            } 
-        }
-        else {
-            proc_macro2::TokenStream::new()
-        }
+        } 
+    }
+    else {
+        proc_macro2::TokenStream::new()
     };
     let impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream = {
         let check_id_exists_in_json_std_vec_vec_generic_token_stream = vec_syn_field_filtered_id_iter.iter().fold(vec![], |mut acc, element| {

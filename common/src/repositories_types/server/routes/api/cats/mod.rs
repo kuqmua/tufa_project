@@ -1369,7 +1369,7 @@ impl
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
     {
-        if self.update.is_empty() {
+        if self.0.is_empty() {
             return Err(
                 SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -1378,7 +1378,7 @@ impl
         }
         {
             let mut acc = vec![];
-            for element in &self.update {
+            for element in &self.0 {
                 match element {
                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
                         let value = SomethingFieldToUpdate::StdPrimitiveI8;
@@ -1416,7 +1416,7 @@ impl
             true => std::string::String::default(),
             false => format!("{jsonb_set_path},"),
         };
-        for element in &self.update {
+        for element in &self.0 {
             match &element {
                 SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
                     Some(value) => {
@@ -1464,7 +1464,7 @@ impl
         self,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in self.update {
+        for element in self.0 {
             match element {
                 SomethingOptionToUpdate::StdPrimitiveI8(value) => {
                     query = query.bind(sqlx::types::Json(value.value));
@@ -2326,10 +2326,11 @@ impl
 
 // ////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct SomethingOptionsToUpdate {
-    id: uuid::Uuid,
-    update: std::vec::Vec<SomethingOptionToUpdate>,
-}
+pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
+// {
+//     id: uuid::Uuid,
+//     update: std::vec::Vec<SomethingOptionToUpdate>,
+// }
 impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
     fn try_increment(
         &self,
