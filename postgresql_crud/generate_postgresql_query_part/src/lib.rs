@@ -2149,7 +2149,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let impl_std_convert_from_ident_for_ident_options_token_stream = {
+    let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
         let fields_token_stream = vec_syn_field.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
@@ -2382,7 +2382,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let impl_serde_deserialize_for_ident_options_token_stream = {
+    let impl_serde_deserialize_for_ident_options_to_read_token_stream = {
         let field_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, _)|{
             let value = format!(
                 "__{}{index}",
@@ -4719,12 +4719,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream
         #pub_enum_field_generate_postgresql_query_part_to_read_error_named_token_stream
         #impl_generate_postgresql_query_part_to_read_for_ident_field_to_read_token_stream
-        // #pub_struct_ident_options_to_read_token_stream
-        // #impl_std_convert_from_ident_for_ident_options_token_stream
-        // #impl_serde_deserialize_for_ident_options_token_stream
-        // #ident_reader_token_stream
-        // #impl_serde_deserialize_for_ident_reader_token_stream
-        // #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
+        #pub_struct_ident_options_to_read_token_stream
+        #impl_std_convert_from_ident_for_ident_options_to_read_token_stream
+        #impl_serde_deserialize_for_ident_options_to_read_token_stream
+        #ident_reader_token_stream
+        #impl_serde_deserialize_for_ident_reader_token_stream
+        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
         // #pub_enum_ident_field_to_update_token_stream
         // #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
