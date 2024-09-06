@@ -648,8 +648,8 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuid;
 pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonId;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGenericFields;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGeneric;
-pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionGeneric;
+// pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGeneric;
+// pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionGeneric;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecGeneric;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecGeneric ;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecStdOptionOptionGeneric;

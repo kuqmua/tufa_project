@@ -335,19 +335,19 @@ pub trait CheckIdExistsInJsonGenericFields {
 }
 
 
-pub trait CheckIdExistsInJsonGeneric {
-    fn check_id_exists_in_json_generic(&self);// -> &JsonUuid;
-}
-impl<T: GetJsonId> CheckIdExistsInJsonGeneric for JsonGeneric<T> {
-    fn check_id_exists_in_json_generic(&self) {}
-}
+// pub trait CheckIdExistsInJsonGeneric {
+//     fn check_id_exists_in_json_generic(&self);// -> &JsonUuid;
+// }
+// impl<T: GetJsonId> CheckIdExistsInJsonGeneric for JsonGeneric<T> {
+//     fn check_id_exists_in_json_generic(&self) {}
+// }
 
-pub trait CheckIdExistsInJsonStdOptionOptionGeneric {
-    fn check_id_exists_in_json_std_option_option_generic(&self);// -> &std::option::Option<JsonUuid>;
-}
-impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionGeneric for JsonStdOptionOptionGeneric<T> {
-    fn check_id_exists_in_json_std_option_option_generic(&self) {}
-}
+// pub trait CheckIdExistsInJsonStdOptionOptionGeneric {
+//     fn check_id_exists_in_json_std_option_option_generic(&self);// -> &std::option::Option<JsonUuid>;
+// }
+// impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionGeneric for JsonStdOptionOptionGeneric<T> {
+//     fn check_id_exists_in_json_std_option_option_generic(&self) {}
+// }
 
 pub trait CheckIdExistsInJsonStdVecVecGeneric {
     fn check_id_exists_in_json_std_vec_vec_generic(&self);// -> &std::vec::Vec<JsonUuid>;
