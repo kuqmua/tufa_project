@@ -319,6 +319,10 @@ pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
+pub trait GetUuid {
+    fn get_uuid(&self) -> &JsonUuid;
+}
+
 //
 // pub enum JsonArrayUpdate<T> {
 //     AddElements,
