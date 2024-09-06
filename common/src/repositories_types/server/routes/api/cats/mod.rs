@@ -2959,42 +2959,6 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Default,
-    serde :: Serialize,
-    serde ::
-Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub struct SomethingToCreate {
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-    pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<DoggieToCreate>,
-}
-impl postgresql_crud ::
-StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-for SomethingToCreate
-{
-    #[inline] fn
-    default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-    -> Self
-    {
-        Self
-        {
-            std_primitive_i8 : postgresql_crud ::
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            ::
-            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_vec_vec_generic : postgresql_crud ::
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            ::
-            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        }
-    }
-}
 impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
     fn try_increment(
         &self,
@@ -3673,42 +3637,6 @@ pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Default,
-    serde :: Serialize,
-    serde ::
-Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub struct DoggieToCreate {
-    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-    pub generic: postgresql_crud::JsonGeneric<CatToCreate>,
-}
-impl postgresql_crud ::
-StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-for DoggieToCreate
-{
-    #[inline] fn
-    default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-    -> Self
-    {
-        Self
-        {
-            std_primitive_i16 : postgresql_crud ::
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            ::
-            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            generic : postgresql_crud ::
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            ::
-            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        }
-    }
-}
 impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
     fn try_increment(
         &self,
@@ -4188,37 +4116,6 @@ pub enum CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Default,
-    serde :: Serialize,
-    serde ::
-Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub struct CatToCreate {
-    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-}
-impl postgresql_crud ::
-StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-for CatToCreate
-{
-    #[inline] fn
-    default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-    -> Self
-    {
-        Self
-        {
-            std_primitive_i32 : postgresql_crud ::
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            ::
-            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        }
-    }
 }
 impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
     fn try_increment(
