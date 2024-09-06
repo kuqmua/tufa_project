@@ -4029,13 +4029,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    // println!("{}");
-    let f = quote::quote!{
-        #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
-    };
-    // if ident == "" {
-    //     println!("{f}");
-    // }
 
     let pub_struct_ident_to_create_token_stream = {
         let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
@@ -4555,9 +4548,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    // if ident == "" {
-    //     println!("{impl_postgresql_crud_bind_query_for_ident_to_create_token_stream}");
-    // }
     let maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream = if is_id_field_exists {
         quote::quote!{
             impl postgresql_crud::GetJsonId for #ident {
@@ -4706,6 +4696,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    //
+    let update = quote::quote!{
+        #pub_enum_ident_field_to_update_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
+        #pub_enum_ident_option_to_update_token_stream
+        #pub_struct_ident_options_to_update_token_stream
+        #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+    };
+    let f = if ident != "Doggie" {
+        // println!("{update}");
+        update
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    //
     let generated = quote::quote!{
         #impl_std_fmt_display_for_ident_token_stream
         #pub_enum_ident_field_to_read_token_stream
@@ -4719,13 +4725,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_serde_deserialize_for_ident_reader_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
-        #pub_enum_ident_field_to_update_token_stream
-        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
-        #pub_enum_ident_option_to_update_token_stream
-        #pub_struct_ident_options_to_update_token_stream
-        #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
-
-        // // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
+        #f
+        // #pub_enum_ident_field_to_update_token_stream
+        // #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
+        // #pub_enum_ident_option_to_update_token_stream
+        // #pub_struct_ident_options_to_update_token_stream
+        // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+        // // // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
 
         #pub_struct_ident_to_create_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
