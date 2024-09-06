@@ -4209,6 +4209,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_postgresql_crud_bind_query_for_ident_to_create_token_stream = {
+        let maybe_id_initialization_token_stream = if is_id_field_exists {
+            quote::quote!{"'id', to_jsonb(gen_random_uuid()),"}
+        }
+        else {
+            quote::quote!{""}
+        };
         let try_generate_bind_increments_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!(
@@ -4537,7 +4543,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     todo!()//not usefull here - refactor later
                 }
                 fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-                    let mut increments = std::string::String::from("'id', to_jsonb(gen_random_uuid()),");
+                    let mut increments = std::string::String::from(#maybe_id_initialization_token_stream);
                     #(#try_generate_bind_increments_token_stream)*
                     let _ = increments.pop();
                     Ok(format!("jsonb_build_object({increments})"))
@@ -4723,7 +4729,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         #pub_struct_ident_to_create_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
-        // #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
+        #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
         #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
         #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
     };
