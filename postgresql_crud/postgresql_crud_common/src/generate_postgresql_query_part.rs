@@ -377,6 +377,13 @@ impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionStdVecVecStdOptionOptionGen
     fn check_id_exists_in_json_std_option_option_std_vec_vec_std_option_option_generic(&self) {}
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonArrayChange<CreateGeneric, UpdateGeneric> {
+    create: std::vec::Vec<CreateGeneric>,
+    update: std::vec::Vec<UpdateGeneric>,
+    delete: std::vec::Vec<JsonUuid>
+}
+
 //
 // pub enum JsonArrayUpdate<T> {
 //     AddElements,

@@ -1711,7 +1711,11 @@ enum DoggieOptionToUpdate {
 pub struct DoggieOptionsToUpdate {
     id: uuid::Uuid,
     update: std::vec::Vec<DoggieOptionToUpdate>,
+    //here
+    change: postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionToUpdate>,
+
 }
+
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     FieldsIsEmpty {
