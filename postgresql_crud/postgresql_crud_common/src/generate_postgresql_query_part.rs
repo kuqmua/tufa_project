@@ -399,7 +399,7 @@ pub trait JsonArrayElementQueryPart<CreateErrorGeneric, UpdateErrorGeneric> {
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
         is_array_object_element: ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, CreateErrorGeneric>;
+    ) -> Result<std::option::Option<std::string::String>, CreateErrorGeneric>;
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     fn try_generate_update_query_part(
         &self,
@@ -408,7 +408,7 @@ pub trait JsonArrayElementQueryPart<CreateErrorGeneric, UpdateErrorGeneric> {
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
         is_array_object_element: ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, UpdateErrorGeneric>;
+    ) -> Result<std::option::Option<std::string::String>, UpdateErrorGeneric>;
     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     fn try_generate_delete_query_part(
         &self,
@@ -417,7 +417,7 @@ pub trait JsonArrayElementQueryPart<CreateErrorGeneric, UpdateErrorGeneric> {
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
         is_array_object_element: ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
+    ) -> Result<std::option::Option<std::string::String>, crate::TryGenerateBindIncrementsErrorNamed>;
     fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 

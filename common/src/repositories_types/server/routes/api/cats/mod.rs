@@ -1616,6 +1616,46 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     // )
 //
 
+// i have a jsonb in postgresql
+
+// {
+//     "std_primitive_i8": 8,
+//     "std_vec_vec_generic": [
+//         {
+//             "id": "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4",
+//             "std_primitive_i16": 5
+//         },
+//         {
+//             "id": "951240e0-990e-4cb8-909d-5183ff7725a4",
+//             "std_primitive_i16": 6
+//         },
+//         {
+//             "id": "5d628632-13f0-409f-8288-42b356cc033c",
+//             "std_primitive_i16": 2
+//         },
+//         {
+//             "id": "63b83936-24c8-429b-ab67-ee2c76856f18",
+//             "std_primitive_i16": 3
+//         }
+//     ]
+// }
+
+// i want to set key "std_primitive_i8" to 7.
+
+// and i want to add element { "id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10 } to array in key "std_vec_vec_generic". 
+
+// and i want to add element { "id": "847e5f32-d1a5-4d6a-9c55-040cbf60f229", "std_primitive_i16": 20 } to array in key "std_vec_vec_generic". 
+
+// and i want to update key "std_primitive_i16" to value 44 where key "id" is "5d628632-13f0-409f-8288-42b356cc033c". 
+
+// and i want to update key "std_primitive_i16" to value 55 where key "id" is "63b83936-24c8-429b-ab67-ee2c76856f18". 
+
+// and i want to delete element in value of key "std_vec_vec_generic" where key "id" = "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4". 
+
+// and i want to delete element in value of key "std_vec_vec_generic" where key "id" = "951240e0-990e-4cb8-909d-5183ff7725a4". 
+
+// please write a query for it
+
 #[derive(Debug)]
 pub enum DoggieOptionsToUpdateCreateError {
     Something,
@@ -1632,7 +1672,8 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateCreateError
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, DoggieOptionsToUpdateCreateError> {
+    ) -> Result<std::option::Option<std::string::String>, DoggieOptionsToUpdateCreateError> {
+		// || '[{"id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10}]'::jsonb
         todo!()
     }
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
