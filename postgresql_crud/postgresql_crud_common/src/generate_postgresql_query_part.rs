@@ -392,11 +392,32 @@ pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
 }
 
 pub trait JsonArrayElementQueryPart<CreateErrorGeneric, UpdateErrorGeneric> {
-    fn try_generate_create_query_part(&self) -> Result<std::string::String, CreateErrorGeneric>;
+    fn try_generate_create_query_part(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, CreateErrorGeneric>;
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    fn try_generate_update_query_part(&self) -> Result<std::string::String, UpdateErrorGeneric>;
+    fn try_generate_update_query_part(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, UpdateErrorGeneric>;
     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    fn try_generate_delete_query_part(&self) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
+    fn try_generate_delete_query_part(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
     fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
