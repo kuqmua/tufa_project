@@ -655,4 +655,4 @@ pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJ
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecStdOptionOptionGeneric;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecStdOptionOptionGeneric;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayChange;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementChange;

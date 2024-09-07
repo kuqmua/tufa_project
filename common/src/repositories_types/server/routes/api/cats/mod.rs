@@ -1479,6 +1479,64 @@ impl
         query
     }
 }
+
+////
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde :: Serialize,
+    serde :: Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub enum SomethingFieldToUpdate {
+    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+    StdPrimitiveI8,
+    #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
+    StdVecVecGeneric,
+}
+impl error_occurence_lib::ToStdStringString for SomethingFieldToUpdate {
+    fn to_std_string_string(&self) -> std::string::String {
+        match &self {
+            Self::StdPrimitiveI8 => "std_primitive_i8".to_owned(),
+            Self::StdVecVecGeneric => "std_vec_vec_generic".to_owned(),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+enum SomethingOptionToUpdate {
+    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+    StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
+    #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
+    StdVecVecGeneric(postgresql_crud::Value<std::vec::Vec<DoggieOptionsToUpdate>>),
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
+    FieldsIsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueField {
+        #[eo_to_std_string_string_serialize_deserialize]
+        field: SomethingFieldToUpdate,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckedAdd {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Doggie {
+        #[eo_error_occurence]
+        doggie: DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+
+////
+
+
+
 //
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
@@ -1707,14 +1765,22 @@ enum DoggieOptionToUpdate {
     #[serde(rename(serialize = "generic", deserialize = "generic"))]
     Generic(postgresql_crud::Value<CatOptionsToUpdate>),
 }
+
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DoggieOptionsToUpdate {
     id: uuid::Uuid,
     update: std::vec::Vec<DoggieOptionToUpdate>,
     //here
-    change: postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionToUpdate>,
+    // change: postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionToUpdate>,
 
 }
+
+//
+// postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionToUpdate>,
+//
 
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
@@ -1736,7 +1802,8 @@ pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     },
 }
 
-////
+
+
 impl
     postgresql_crud::GeneratePostgresqlQueryPartToUpdate<
         CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
@@ -1817,6 +1884,51 @@ impl
     }
 }
 
+
+/////
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde :: Serialize,
+    serde :: Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub enum CatFieldToUpdate {
+    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
+    StdPrimitiveI32,
+}
+impl error_occurence_lib::ToStdStringString for CatFieldToUpdate {
+    fn to_std_string_string(&self) -> std::string::String {
+        match &self {
+            Self::StdPrimitiveI32 => "std_primitive_i32".to_owned(),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+enum CatOptionToUpdate {
+    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
+    StdPrimitiveI32(postgresql_crud::Value<std::primitive::i32>),
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct CatOptionsToUpdate(std::vec::Vec<CatOptionToUpdate>);
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
+    FieldsIsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueField {
+        #[eo_to_std_string_string_serialize_deserialize]
+        field: CatFieldToUpdate,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckedAdd {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+
+/////
 
 // //maybe should for to have an id field ?
 
