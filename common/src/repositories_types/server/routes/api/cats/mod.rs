@@ -1559,91 +1559,6 @@ impl
 //         jsonb_set(
 //             sqlx_types_json_t_as_postgresql_json_b_not_null,
 //             '{std_primitive_i8}',
-//             '7'::jsonb
-//         ),
-//         '{std_vec_vec_generic}',
-//         CASE
-//             WHEN sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic' @> '[{"id": "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4"}]'
-//             THEN (
-//                 SELECT jsonb_agg(
-//                     CASE
-//                         WHEN elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c'
-//                         THEN jsonb_set(elem, '{std_primitive_i16}', '44'::jsonb)
-//                         ELSE elem
-//                     END
-//                 )
-//                 FROM jsonb_array_elements(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic') AS elem
-//                 WHERE elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'
-//             ) || '[{"id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10}]'::jsonb
-//             ELSE sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic'
-//         END
-//     );
-//
-
-
-// UPDATE jsongeneric
-// SET sqlx_types_json_t_as_postgresql_json_b_not_null = 
-//     jsonb_set(
-//         jsonb_set(
-//             sqlx_types_json_t_as_postgresql_json_b_not_null,
-//             '{std_primitive_i8}',
-//             '27'::jsonb
-//         ),
-//         '{std_vec_vec_generic}',
-//         CASE
-//             WHEN sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic' @> '[{"id": "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4"}]'
-//             THEN (
-//                 SELECT jsonb_agg(
-//                     CASE
-//                         WHEN elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c'
-//                         THEN jsonb_set(elem, '{std_primitive_i16}', '44'::jsonb)
-//                         ELSE elem
-//                     END
-//                 )
-//                 FROM jsonb_array_elements(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic') AS elem
-//                 WHERE elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'
-//             ) || '[{"id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10}]'::jsonb
-//             ELSE sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic'
-//         END
-//     )
-// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
-
-// {
-//   "std_primitive_i8": 8,
-//   "std_vec_vec_generic": [
-//     {
-//       "id": "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4",
-//       "std_primitive_i16": 0
-//     },
-//     {
-//       "id": "5d628632-13f0-409f-8288-42b356cc033c",
-//       "std_primitive_i16": 0
-//     }
-//   ]
-// }
-
-// {
-//   "std_primitive_i8": 27,
-//   "std_vec_vec_generic": [
-//     {
-//       "id": "5d628632-13f0-409f-8288-42b356cc033c",
-//       "std_primitive_i16": 44
-//     },
-//     {
-//       "id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3",
-//       "std_primitive_i16": 10
-//     }
-//   ]
-// }
-
-
-
-// UPDATE jsongeneric
-// SET sqlx_types_json_t_as_postgresql_json_b_not_null = 
-//     jsonb_set(
-//         jsonb_set(
-//             sqlx_types_json_t_as_postgresql_json_b_not_null,
-//             '{std_primitive_i8}',
 //             '27'::jsonb
 //         ),
 //         '{std_vec_vec_generic}',
@@ -1652,12 +1567,18 @@ impl
 //                     CASE
 //                         WHEN elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c'
 //                         THEN jsonb_set(elem, '{std_primitive_i16}', '44'::jsonb)
+					
+//                         WHEN elem->>'id' = '63b83936-24c8-429b-ab67-ee2c76856f18'
+//                         THEN jsonb_set(elem, '{std_primitive_i16}', '55'::jsonb)
+					
 //                         ELSE elem
 //                     END
 //                 )
 //                 FROM jsonb_array_elements(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic') AS elem
-//                 WHERE elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'
-//          ) || '[{"id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10}]'::jsonb
+//                 WHERE elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4' and elem->>'id' <> '951240e0-990e-4cb8-909d-5183ff7725a4'
+//          ) 
+// 		|| '[{"id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10}]'::jsonb
+// 		|| '[{"id": "847e5f32-d1a5-4d6a-9c55-040cbf60f229", "std_primitive_i16": 20}]'::jsonb
 //     )
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
 
@@ -1667,9 +1588,22 @@ impl
             true => std::string::String::default(),
             false => format!("{jsonb_set_path},"),
         };
+
+
+        SELECT jsonb_agg(
+            CASE
+                WHEN elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c'
+                THEN jsonb_set(elem, '{std_primitive_i16}', '44'::jsonb)
+                ELSE elem
+            END
+        )
+        FROM jsonb_array_elements(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic') AS elem
+        WHERE elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'
+
+
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Create(value) => {
-
+                //  || '[{"id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10}]'::jsonb
             },
             postgresql_crud::JsonArrayElementChange::Update(value) => {
                 for element in &value.update {
