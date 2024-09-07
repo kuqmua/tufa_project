@@ -391,6 +391,15 @@ pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
     Delete(JsonUuid),
 }
 
+pub trait JsonArrayElementQueryPart<CreateErrorGeneric, UpdateErrorGeneric> {
+    fn try_generate_create_query_part(&self) -> Result<std::string::String, CreateErrorGeneric>;
+    fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    fn try_generate_update_query_part(&self) -> Result<std::string::String, UpdateErrorGeneric>;
+    fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    fn try_generate_delete_query_part(&self) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
+    fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+}
+
 //
 // pub enum JsonArrayUpdate<T> {
 //     AddElements,
