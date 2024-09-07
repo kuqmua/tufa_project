@@ -1608,6 +1608,33 @@ impl
 //     )
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
 
+// {
+//   "std_primitive_i8": 8,
+//   "std_vec_vec_generic": [
+//     {
+//       "id": "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4",
+//       "std_primitive_i16": 0
+//     },
+//     {
+//       "id": "5d628632-13f0-409f-8288-42b356cc033c",
+//       "std_primitive_i16": 0
+//     }
+//   ]
+// }
+
+// {
+//   "std_primitive_i8": 27,
+//   "std_vec_vec_generic": [
+//     {
+//       "id": "5d628632-13f0-409f-8288-42b356cc033c",
+//       "std_primitive_i16": 44
+//     },
+//     {
+//       "id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3",
+//       "std_primitive_i16": 10
+//     }
+//   ]
+// }
 
 
         //
