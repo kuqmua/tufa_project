@@ -1734,7 +1734,7 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateCreateError
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::option::Option<std::string::String>, DoggieOptionsToUpdateCreateError> {
-		// || '[{"id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10}]'::jsonb
+        // jsonb_build_object('id', '1ff4db66-1395-4d58-bcf5-8bf69f1b90d3', 'std_primitive_i16', 10)
         todo!()
     }
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1748,6 +1748,8 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateCreateError
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::option::Option<std::string::String>, DoggieOptionsToUpdateUodateError> {
+        // WHEN elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c'
+        // THEN jsonb_set(elem, '{std_primitive_i16}', '44'::jsonb)
         todo!()
     }
     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1761,6 +1763,7 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateCreateError
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        // elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'
         todo!()
     }
     fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
