@@ -1654,11 +1654,10 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateCreateError
         // <DoggieToCreate, DoggieOptionsToUpdateSSS>
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Create(value) => {
-                Ok(Some("".to_string()))
+                Ok(Some(format!("jsonb_build_object('id', '1ff4db66-1395-4d58-bcf5-8bf69f1b90d3', 'std_primitive_i16', 10)")))
             },
             _ => Ok(None)
         }
-        // jsonb_build_object('id', '1ff4db66-1395-4d58-bcf5-8bf69f1b90d3', 'std_primitive_i16', 10)
     }
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         todo!()
@@ -1673,12 +1672,10 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateCreateError
     ) -> Result<std::option::Option<std::string::String>, DoggieOptionsToUpdateUodateError> {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Update(value) => {
-                Ok(Some("".to_string()))
+                Ok(Some(format!("when elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c' THEN jsonb_set(elem, '{{std_primitive_i16}}', '44'::jsonb)")))
             },
             _ => Ok(None)
         }
-        // WHEN elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c'
-        // THEN jsonb_set(elem, '{std_primitive_i16}', '44'::jsonb)
     }
     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         todo!()
@@ -1693,11 +1690,10 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateCreateError
     ) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                Ok(Some("".to_string()))
+                Ok(Some(format!("elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'")))
             },
             _ => Ok(None)
         }
-        // elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'
     }
     fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         todo!()
