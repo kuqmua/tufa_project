@@ -386,8 +386,11 @@ impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionStdVecVecStdOptionOptionGen
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
+    #[serde(rename(serialize = "create", deserialize = "create"))]
     Create(CreateGeneric),
+    #[serde(rename(serialize = "update", deserialize = "update"))]
     Update(UpdateGeneric),
+    #[serde(rename(serialize = "delete", deserialize = "delete"))]
     Delete(JsonUuid),
 }
 

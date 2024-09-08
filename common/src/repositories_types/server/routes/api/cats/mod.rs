@@ -389,11 +389,13 @@ pub struct Doggie {
 
 #[test]
 fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() {
-//     let default = postgresql_crud::JsonGeneric(Something::default());
-//     println!("{default:#?}");
-//     let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element: postgresql_crud::JsonGeneric::<Something> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
+    // let default = postgresql_crud::JsonGeneric(Something{
+
+    // });
+    // println!("{default:#?}");
+    // let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element: postgresql_crud::JsonGeneric::<Something> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
 //     println!("{default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element:#?}");
-//     let serialized = serde_json::to_string(&default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element).unwrap();
+    // let serialized = serde_json::to_string(&default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element).unwrap();
 //     println!("{serialized:#?}");
 //     let deserialized: postgresql_crud::JsonGeneric::<Something> = serde_json::from_str(&serialized).unwrap();
 //     println!("{deserialized:#?}");
@@ -410,6 +412,34 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     // }
     // let schema = schemars::schema_for!(Thing);
     // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
+
+    let f = SomethingOptionsToUpdate(vec![
+        SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value {
+            value: std::primitive::i8::default()
+        }),
+        SomethingOptionToUpdate::StdVecVecGeneric(postgresql_crud::Value {
+            value: vec![
+                DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Create(DoggieToCreate {
+                    std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16::default(),
+                })),
+
+
+                //
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct DoggieOptionsToUpdateSSS {
+//     id: uuid::Uuid,
+//     update: std::vec::Vec<DoggieOptionToUpdate>,
+// }
+
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionsToUpdateSSS>);
+                //
+            ]
+        }),
+    ]);
+    println!("{f:#?}");
+    let serialized = serde_json::to_string(&f).unwrap();
+    println!("{serialized:#?}");
 }
 
 /////////start block code for trying implement partial
