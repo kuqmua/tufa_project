@@ -391,15 +391,8 @@ pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
     Delete(JsonUuid),
 }
 
-pub trait JsonArrayElementQueryPart<CreateErrorGeneric, UpdateErrorGeneric> {
-    fn try_generate_create_query_part(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: ArrayObjectElementOrSimple,
-    ) -> Result<std::option::Option<std::string::String>, CreateErrorGeneric>;
+pub trait JsonArrayElementQueryPart<UpdateErrorGeneric> {
+    fn try_generate_create_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, crate::TryGenerateBindIncrementsErrorNamed>;
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     fn try_generate_update_query_part(
         &self,
