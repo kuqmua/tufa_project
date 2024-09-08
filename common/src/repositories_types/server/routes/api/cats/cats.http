@@ -2071,16 +2071,11 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                                             "value": 58
                                         }
                                     }
-# enum DoggieOptionToUpdate {
-#     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-#     StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>),
-#     // #[serde(rename(serialize = "generic", deserialize = "generic"))]
-#     // Generic(postgresql_crud::Value<CatOptionsToUpdate>),
-# }
                                 ]
-                                
-                                # std::vec::Vec<DoggieOptionToUpdate>,
                             }
+                        },
+                        {
+                            "delete": "d6a4aa72-b154-4699-889f-33ef34a8c7f2"
                         }
 
 

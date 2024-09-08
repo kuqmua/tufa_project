@@ -423,7 +423,7 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
                     std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16::default(),
                 })),
 
-
+                DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Delete(postgresql_crud::JsonUuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")))),
                 //
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 // pub struct DoggieOptionsToUpdateSSS {
@@ -1768,6 +1768,7 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateUodateError
                 match increment.checked_add(1) {
                     Some(new_increment_value) => {
                         *increment = new_increment_value;
+                        //fix state of increment to apply after
                         let id_increment = format!("${increment}");
                         // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
                         //     true => std::string::String::default(),
@@ -1853,14 +1854,23 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateUodateError
     ) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                Ok(Some(format!("elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4'")))
+                match increment.checked_add(1) {
+                    Some(value) => {
+                        *increment = value;
+                        Ok(Some(format!("elem->>'id' <> ${increment}")))
+                    }
+                    //todo maybe change type of error
+                    None => Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
             },
             _ => Ok(None)
         }
     }
     fn bind_delete_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         if let postgresql_crud::JsonArrayElementChange::Delete(value) = self.0 {
-            query = query.bind(sqlx::types::Json(value));
+            query = query.bind(value.0.to_string());
         }
         query
     }
