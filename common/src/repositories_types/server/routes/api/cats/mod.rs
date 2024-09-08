@@ -1764,16 +1764,11 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateUodateError
 //     id: uuid::Uuid,
 //     fields: std::vec::Vec<DoggieOptionToUpdate>,
 // 
-                let value_id = &value.id;
-                // let inc = *increment + 1;
-                // println!("inc {inc}");
                 //first checked_add for id
                 match increment.checked_add(1) {
                     Some(new_increment_value) => {
                         *increment = new_increment_value;
                         let id_increment = format!("${increment}");
-                        println!("id_increment {id_increment}");
-                        ///////
                         // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
                         //     true => std::string::String::default(),
                         //     false => format!("{jsonb_set_path}"),
@@ -1825,8 +1820,6 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateUodateError
                         //     true => std::string::String::default(),
                         //     false => format!("{jsonb_set_path}"),
                         // };
-                        // '{id_increment}'
-                        // Ok(Some(format!("when elem->>'id' = '{value_id}' then jsonb_set(elem,{acc})")))
                         Ok(Some(format!("when elem->>'id' = {id_increment} then jsonb_set(elem,{acc})")))
                     }
                     None => Err(DoggieOptionsToUpdateUodateErrorNamed::CheckedAdd {
@@ -1839,10 +1832,7 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateUodateError
     }
     fn bind_update_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         if let postgresql_crud::JsonArrayElementChange::Update(value) = self.0 {
-            let f = value.id.to_string();
-            println!("update f {f}");
-            // query = query.bind(sqlx::types::Json(value.id.to_string()));
-            query = query.bind("8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4");
+            query = query.bind(value.id.to_string());
             for element in value.fields {
                 match element {
                     DoggieOptionToUpdate::StdPrimitiveI16(value) => {

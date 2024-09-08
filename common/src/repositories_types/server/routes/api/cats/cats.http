@@ -2068,7 +2068,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                                 "fields": [
                                     {
                                         "std_primitive_i16": {
-                                            "value": 53
+                                            "value": 58
                                         }
                                     }
 # enum DoggieOptionToUpdate {
