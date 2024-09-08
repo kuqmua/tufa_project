@@ -428,7 +428,7 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 // pub struct DoggieOptionsToUpdateSSS {
 //     id: uuid::Uuid,
-//     update: std::vec::Vec<DoggieOptionToUpdate>,
+//     fields: std::vec::Vec<DoggieOptionToUpdate>,
 // }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
@@ -1465,20 +1465,8 @@ impl
                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
                     let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
 
-                    let mut create_query_part_acc = std::string::String::default();
                     let mut update_query_part_acc = std::string::String::default();
-                    let mut delete_query_part_acc = std::string::String::default();
                     for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-                        match postgresql_crud::JsonArrayElementQueryPart::try_generate_create_query_part(*element, increment) {
-                            Ok(value) => {
-                                if let Some(value) = value {
-                                    create_query_part_acc.push_str(&format!("{value},"));
-                                }
-                            },
-                            Err(error) => {
-                                todo!()
-                            }
-                        }
                         match postgresql_crud::JsonArrayElementQueryPart::try_generate_update_query_part(
                             *element,
                             &jsonb_set_accumulator,
@@ -1496,6 +1484,9 @@ impl
                                 todo!()
                             }
                         }
+                    }
+                    let mut delete_query_part_acc = std::string::String::default();
+                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
                         match postgresql_crud::JsonArrayElementQueryPart::try_generate_delete_query_part(
                             *element,
                             &jsonb_set_accumulator,
@@ -1520,6 +1511,20 @@ impl
                             }
                         }
                     }
+                    let mut create_query_part_acc = std::string::String::default();
+                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
+                        match postgresql_crud::JsonArrayElementQueryPart::try_generate_create_query_part(*element, increment) {
+                            Ok(value) => {
+                                if let Some(value) = value {
+                                    create_query_part_acc.push_str(&format!("{value},"));
+                                }
+                            },
+                            Err(error) => {
+                                todo!()
+                            }
+                        }
+                    }
+                    //
                     let _ = create_query_part_acc.pop();
                     //
                     // for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
@@ -1578,10 +1583,14 @@ impl
                     query = query.bind(sqlx::types::Json(value.value));
                 }
                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
-                    for element in value.value {
-                        //first update then delete then create. order matters!
+                    //first update then delete then create. order matters!
+                    for element in &value.value {
                         query = postgresql_crud::JsonArrayElementQueryPart::bind_update_value_to_query(element.clone(), query);
+                    }
+                    for element in &value.value {
                         query = postgresql_crud::JsonArrayElementQueryPart::bind_delete_value_to_query(element.clone(), query);
+                    }
+                    for element in &value.value {
                         query = postgresql_crud::JsonArrayElementQueryPart::bind_create_value_to_query(element.clone(), query);
                     }
                 }
@@ -1753,32 +1762,35 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateUodateError
             postgresql_crud::JsonArrayElementChange::Update(value) => {
 // pub struct DoggieOptionsToUpdateSSS {
 //     id: uuid::Uuid,
-//     update: std::vec::Vec<DoggieOptionToUpdate>,
+//     fields: std::vec::Vec<DoggieOptionToUpdate>,
 // 
-                let id = &value.id;
+                let value_id = &value.id;
                 //first checked_add for id
-                match increment.checked_add(1) {
-                    Some(new_increment_value) => {
-                        *increment = new_increment_value;
+                // match increment.checked_add(1) {
+                //     Some(new_increment_value) => {
+                //         *increment = new_increment_value;
+                //         let id_increment = format!("${increment}");
                         ///////
                         // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
                         //     true => std::string::String::default(),
                         //     false => format!("{jsonb_set_path}"),
                         // };
                         let mut acc = std::string::String::default();
-                        for element in &value.update {
+                        for element in &value.fields {
                             match &element {
-                                DoggieOptionToUpdate::StdPrimitiveI16(_) => match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        acc.push_str(&format!("'std_primitive_i16',${increment}"));
-                                    }
-                                    None => {
-                                        return Err(
-                                            DoggieOptionsToUpdateUodateErrorNamed::CheckedAdd {
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            },
-                                        );
+                                DoggieOptionToUpdate::StdPrimitiveI16(_) => {
+                                    match increment.checked_add(1) {
+                                        Some(value) => {
+                                            *increment = value;
+                                            acc.push_str(&format!("'{{std_primitive_i16}}',${increment}"));
+                                        }
+                                        None => {
+                                            return Err(
+                                                DoggieOptionsToUpdateUodateErrorNamed::CheckedAdd {
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                },
+                                            );
+                                        }
                                     }
                                 },
                                 // DoggieOptionToUpdate::Generic(value) => {
@@ -1810,22 +1822,23 @@ impl postgresql_crud::JsonArrayElementQueryPart<DoggieOptionsToUpdateUodateError
                         //     true => std::string::String::default(),
                         //     false => format!("{jsonb_set_path}"),
                         // };
-                        // Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{previous_jsonb_set_path}}}',jsonb_build_object({acc}))"))
-                        ///////
-                        Ok(Some(format!("when elem->>'id' = '${increment}' then jsonb_set({acc})")))
-                        // Ok(Some(format!("when elem->>'id' = '${increment}' then jsonb_set(elem, '{{std_primitive_i16}}', '44'::jsonb)")))
-                    }
-                    None => Err(DoggieOptionsToUpdateUodateErrorNamed::CheckedAdd {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+                        // '{id_increment}'
+                        Ok(Some(format!("when elem->>'id' = '{value_id}' then jsonb_set(elem,{acc})")))
+                //     }
+                //     None => Err(DoggieOptionsToUpdateUodateErrorNamed::CheckedAdd {
+                //         code_occurence: error_occurence_lib::code_occurence!(),
+                //     })
+                // }
             },
             _ => Ok(None)
         }
     }
     fn bind_update_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         if let postgresql_crud::JsonArrayElementChange::Update(value) = self.0 {
-            for element in value.update {
+            let f = value.id.to_string();
+            println!("update f {f}");
+            // query = query.bind(sqlx::types::Json(value.id.to_string()));
+            for element in value.fields {
                 match element {
                     DoggieOptionToUpdate::StdPrimitiveI16(value) => {
                         query = query.bind(sqlx::types::Json(value.value));
@@ -2160,7 +2173,7 @@ enum DoggieOptionToUpdate {
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DoggieOptionsToUpdateSSS {
     id: uuid::Uuid,
-    update: std::vec::Vec<DoggieOptionToUpdate>,
+    fields: std::vec::Vec<DoggieOptionToUpdate>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
