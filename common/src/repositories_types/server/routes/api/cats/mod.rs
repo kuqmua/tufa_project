@@ -1466,7 +1466,7 @@ impl
                     let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
 
                     let mut update_query_part_acc = std::string::String::default();
-                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
+                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
                         match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
                             *element,
                             &jsonb_set_accumulator,
@@ -1486,7 +1486,7 @@ impl
                         }
                     }
                     let mut delete_query_part_acc = std::string::String::default();
-                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
+                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
                         match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(
                             *element,
                             &jsonb_set_accumulator,
@@ -1512,7 +1512,7 @@ impl
                         }
                     }
                     let mut create_query_part_acc = std::string::String::default();
-                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
+                    for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
                         match postgresql_crud::JsonArrayElementBindQuery::try_generate_create_bind_increments(*element, increment) {
                             Ok(value) => {
                                 if let Some(value) = value {
@@ -1629,7 +1629,7 @@ enum SomethingOptionToUpdate {
     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
     StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
     #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
-    StdVecVecGeneric(postgresql_crud::Value<std::vec::Vec<DoggieOptionsToUpdate>>),
+    StdVecVecGeneric(postgresql_crud::Value<std::vec::Vec<DoggieJsonArrayElementChange>>),
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
@@ -1727,19 +1727,19 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
 // where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
 
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum DoggieOptionsToUpdateUodateErrorNamed {
+pub enum DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed {
     CheckedAdd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //here will be additional variants
 }
-impl postgresql_crud::JsonArrayElementBindQuery<DoggieOptionsToUpdateUodateErrorNamed> for DoggieOptionsToUpdate {
-    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateCreateBindIncrementsErrorNamed> {
+impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> for DoggieJsonArrayElementChange {
+    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed> {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Create(value) => {
                 match postgresql_crud::BindQuery::try_generate_bind_increments(value, increment) {
                     Ok(value) => Ok(Some(value)),
-                    Err(error) => Err(postgresql_crud::TryGenerateCreateBindIncrementsErrorNamed::TryGenerateBindIncrements {
+                    Err(error) => Err(postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed::TryGenerateBindIncrements {
                         error: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
@@ -1761,7 +1761,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieOptionsToUpdateUodateError
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::option::Option<std::string::String>, DoggieOptionsToUpdateUodateErrorNamed> {
+    ) -> Result<std::option::Option<std::string::String>, DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Update(value) => {
                 //first checked_add for id
@@ -1781,7 +1781,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieOptionsToUpdateUodateError
                                         }
                                         None => {
                                             return Err(
-                                                DoggieOptionsToUpdateUodateErrorNamed::CheckedAdd {
+                                                DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::CheckedAdd {
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 },
                                             );
@@ -1815,7 +1815,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieOptionsToUpdateUodateError
                         let _ = acc.pop();
                         Ok(Some(format!("when elem->>'id' = {id_increment} then jsonb_set(elem,{acc})")))
                     }
-                    None => Err(DoggieOptionsToUpdateUodateErrorNamed::CheckedAdd {
+                    None => Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::CheckedAdd {
                         code_occurence: error_occurence_lib::code_occurence!(),
                     })
                 }
@@ -2168,13 +2168,13 @@ enum DoggieOptionToUpdate {
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DoggieOptionsToUpdateSSS {
+pub struct DoggieOptionsToUpdate {
     id: uuid::Uuid,
     fields: std::vec::Vec<DoggieOptionToUpdate>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionsToUpdateSSS>);
+pub struct DoggieJsonArrayElementChange(postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionsToUpdate>);
 
 
 

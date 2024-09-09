@@ -395,7 +395,7 @@ pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
 }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryGenerateCreateBindIncrementsErrorNamed {
+pub enum TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed {
     TryGenerateBindIncrements {
         #[eo_error_occurence]
         error: crate::TryGenerateBindIncrementsErrorNamed,
@@ -403,7 +403,7 @@ pub enum TryGenerateCreateBindIncrementsErrorNamed {
     },
 }
 pub trait JsonArrayElementBindQuery<UpdateErrorGeneric> {
-    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateCreateBindIncrementsErrorNamed>;
+    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed>;
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     fn try_generate_update_bind_increments(
         &self,
