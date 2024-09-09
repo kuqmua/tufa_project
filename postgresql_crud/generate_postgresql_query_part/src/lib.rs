@@ -3315,12 +3315,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{std::option::Option<#type_path_options_to_update_upper_camel_case>}
                 },
                 SupportedPredefinedType::JsonStdVecVecGeneric(type_path) => {
-                    let type_path_options_to_update_upper_camel_case = {
-                        let value = format!("{}{}", quote::quote!{#type_path}.to_string(), naming_conventions::OptionsToUpdateUpperCamelCase);
+                    let type_path_json_array_element_change_upper_camel_case = {
+                        let value = format!("{}{}", quote::quote!{#type_path}.to_string(), naming_conventions::JsonArrayElementChangeUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
-                    quote::quote!{std::vec::Vec<#type_path_options_to_update_upper_camel_case>}
+                    quote::quote!{
+                        std::vec::Vec<#type_path_json_array_element_change_upper_camel_case>
+                    }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGeneric(_) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
@@ -4746,7 +4748,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         #pub_enum_ident_field_to_update_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
-        // #pub_enum_ident_option_to_update_token_stream
+        #pub_enum_ident_option_to_update_token_stream
         // #pub_struct_ident_options_to_update_token_stream
         // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
         // // // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream

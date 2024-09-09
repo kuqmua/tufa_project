@@ -1615,13 +1615,6 @@ impl
 
 ////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum SomethingOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8(postgresql_crud::Value<std::primitive::i8>),
-    #[serde(rename(serialize = "std_vec_vec_generic", deserialize = "std_vec_vec_generic"))]
-    StdVecVecGeneric(postgresql_crud::Value<std::vec::Vec<DoggieJsonArrayElementChange>>),
-}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
@@ -1947,15 +1940,6 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
         query
     }
 }
-
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-enum DoggieOptionToUpdate {
-    #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-    StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>),
-    // #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    // Generic(postgresql_crud::Value<CatOptionsToUpdate>),
-}
-
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
