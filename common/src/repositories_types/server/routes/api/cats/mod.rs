@@ -1487,14 +1487,7 @@ impl
                     }
                     let mut delete_query_part_acc = std::string::String::default();
                     for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
-                        match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(
-                            *element,
-                            &jsonb_set_accumulator,
-                            &jsonb_set_target,
-                            &jsonb_set_path,
-                            increment,
-                            is_array_object_element.clone(),
-                        ) {
+                        match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(*element, increment) {
                             Ok(value) => {
                                 if let Some(value) = value {
                                     let maybe_space_and_space = if delete_query_part_acc.is_empty() {
@@ -1883,14 +1876,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
         }
         query
     }
-    fn try_generate_delete_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed> {
+    fn try_generate_delete_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed> {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Delete(value) => {
                 match increment.checked_add(1) {

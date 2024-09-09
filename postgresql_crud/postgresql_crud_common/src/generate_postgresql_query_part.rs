@@ -420,14 +420,7 @@ pub trait JsonArrayElementBindQuery<UpdateErrorGeneric> {
         is_array_object_element: ArrayObjectElementOrSimple,
     ) -> Result<std::option::Option<std::string::String>, UpdateErrorGeneric>;
     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    fn try_generate_delete_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: ArrayObjectElementOrSimple,
-    ) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed>;
+    fn try_generate_delete_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed>;
     fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
