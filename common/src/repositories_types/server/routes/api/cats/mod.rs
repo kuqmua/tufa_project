@@ -1765,26 +1765,6 @@ pub enum DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed {
     //here will be additional variants
 }
 impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> for DoggieJsonArrayElementChange {
-    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed> {
-        match &self.0 {
-            postgresql_crud::JsonArrayElementChange::Create(value) => {
-                match postgresql_crud::BindQuery::try_generate_bind_increments(value, increment) {
-                    Ok(value) => Ok(Some(value)),
-                    Err(error) => Err(postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed::TryGenerateBindIncrements {
-                        error: error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                }
-            },
-            _ => Ok(None)
-        }
-    }
-    fn bind_create_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        if let postgresql_crud::JsonArrayElementChange::Create(value) = self.0 {
-            query = postgresql_crud::BindQuery::bind_value_to_query(value, query);
-        }
-        query
-    }
     fn try_generate_update_bind_increments(
         &self,
         jsonb_set_accumulator: &std::primitive::str,
@@ -1959,6 +1939,26 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
     fn bind_delete_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         if let postgresql_crud::JsonArrayElementChange::Delete(value) = self.0 {
             query = query.bind(value.0.to_string());
+        }
+        query
+    }
+    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed> {
+        match &self.0 {
+            postgresql_crud::JsonArrayElementChange::Create(value) => {
+                match postgresql_crud::BindQuery::try_generate_bind_increments(value, increment) {
+                    Ok(value) => Ok(Some(value)),
+                    Err(error) => Err(postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed::TryGenerateBindIncrements {
+                        error: error,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                }
+            },
+            _ => Ok(None)
+        }
+    }
+    fn bind_create_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        if let postgresql_crud::JsonArrayElementChange::Create(value) = self.0 {
+            query = postgresql_crud::BindQuery::bind_value_to_query(value, query);
         }
         query
     }
