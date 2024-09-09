@@ -306,7 +306,14 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
         ["reader"],
         ["field", "to", "read"],
         ["field", "to", "update"],
-        ["json", "array", "element", "change"]
+        ["json", "array", "element", "change"],
+        ["not", "unique", "id"],
+        ["try", "generate", "json", "array", "element", "update", "bind", "increments"],
+        ["try", "generate", "json", "array", "element", "update", "bind", "increments", "error", "named"],
+        ["try", "generate", "json", "array", "element", "delete", "bind", "increments"],
+        ["try", "generate", "json", "array", "element", "delete", "bind", "increments", "error", "named"],
+        ["try", "generate", "json", "array", "element", "create", "bind", "increments"],
+        ["try", "generate", "json", "array", "element", "create", "bind", "increments", "error", "named"]
     ]
 );
 

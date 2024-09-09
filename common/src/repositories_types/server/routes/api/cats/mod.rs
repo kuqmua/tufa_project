@@ -1465,8 +1465,8 @@ impl
                             match &element.0 {
                                 postgresql_crud::JsonArrayElementChange::Update(value) => {
                                     if ids.contains(&&value.id) {
-                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueId {
-                                            id: value.id,
+                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieNotUniqueId {
+                                            std_vec_vec_generic_doggie_not_unique_id: value.id,
                                             code_occurence: error_occurence_lib::code_occurence!(),
                                         });
                                     }
@@ -1476,8 +1476,8 @@ impl
                                 },
                                 postgresql_crud::JsonArrayElementChange::Delete(value) => {
                                     if ids.contains(&value) {
-                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueId {
-                                            id: *value,
+                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieNotUniqueId {
+                                            std_vec_vec_generic_doggie_not_unique_id: *value,
                                             code_occurence: error_occurence_lib::code_occurence!(),
                                         });
                                     }
@@ -1516,8 +1516,8 @@ impl
                                 }
                             },
                             Err(error) => {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::DoggieTryGenerateJsonArrayElementUpdateBindIncrements {
-                                    doggie_try_generate_json_array_element_update_bind_increments: error,
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
+                                    std_vec_vec_generic_doggie_try_generate_json_array_element_update_bind_increments: error,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
@@ -1538,8 +1538,8 @@ impl
                                 }
                             },
                             Err(error) => {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::DoggieTryGenerateJsonArrayElementDeleteBindIncrements {
-                                    doggie_try_generate_json_array_element_delete_bind_increments: error,
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementDeleteBindIncrements {
+                                    std_vec_vec_generic_doggie_try_generate_json_array_element_delete_bind_increments: error,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
@@ -1554,8 +1554,8 @@ impl
                                 }
                             },
                             Err(error) => {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::DoggieTryGenerateJsonArrayElementCreateBindIncrements {
-                                    doggie_try_generate_json_array_element_create_bind_increments: error,
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementCreateBindIncrements {
+                                    std_vec_vec_generic_doggie_try_generate_json_array_element_create_bind_increments: error,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
@@ -1611,44 +1611,6 @@ impl
         }
         query
     }
-}
-
-////
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingFieldToUpdate,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-    NotUniqueId {
-        #[eo_to_std_string_string_serialize_deserialize]
-        id: postgresql_crud::JsonUuid,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-    DoggieTryGenerateJsonArrayElementUpdateBindIncrements {
-        #[eo_error_occurence]
-        doggie_try_generate_json_array_element_update_bind_increments: DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DoggieTryGenerateJsonArrayElementDeleteBindIncrements {
-        #[eo_error_occurence]
-        doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DoggieTryGenerateJsonArrayElementCreateBindIncrements {
-        #[eo_error_occurence]
-        doggie_try_generate_json_array_element_create_bind_increments: postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
 }
 
 // i have a jsonb in postgresql
@@ -1942,25 +1904,3 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DoggieJsonArrayElementChange(postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionsToUpdate>);
-
-
-
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
-    FieldsIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueField {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieFieldToUpdate,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckedAdd {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    // Cat {
-    //     #[eo_error_occurence]
-    //     cat: CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-}
