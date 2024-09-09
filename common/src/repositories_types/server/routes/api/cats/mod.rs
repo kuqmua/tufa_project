@@ -1614,8 +1614,6 @@ impl
 }
 
 ////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct SomethingOptionsToUpdate(std::vec::Vec<SomethingOptionToUpdate>);
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     FieldsIsEmpty {
@@ -1941,12 +1939,6 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
     }
 }
 
-
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DoggieOptionsToUpdate {
-    id: postgresql_crud::JsonUuid,
-    fields: std::vec::Vec<DoggieOptionToUpdate>,
-}
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DoggieJsonArrayElementChange(postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionsToUpdate>);
