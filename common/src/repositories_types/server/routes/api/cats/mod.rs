@@ -1399,6 +1399,7 @@ impl
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed>
     {
+        //todo maybe put checks into serialize and deserialize implementation
         if self.0.is_empty() {
             return Err(
                 SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
@@ -1414,11 +1415,9 @@ impl
                         let value = SomethingFieldToUpdate::StdPrimitiveI8;
                         if acc.contains(&value) {
                             return
-                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                            :: NotUniqueField
-                            {
-                                field : value, code_occurence : error_occurence_lib ::
-                                code_occurence! (),
+                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
+                                field: value,
+                                code_occurence: error_occurence_lib::code_occurence!(),
                             },);
                         } else {
                             acc.push(value);
@@ -1427,13 +1426,10 @@ impl
                     SomethingOptionToUpdate::StdVecVecGeneric(_) => {
                         let value = SomethingFieldToUpdate::StdVecVecGeneric;
                         if acc.contains(&value) {
-                            return
-                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                            :: NotUniqueField
-                            {
-                                field : value, code_occurence : error_occurence_lib ::
-                                code_occurence! (),
-                            },);
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
+                                field: value,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
                         } else {
                             acc.push(value);
                         }
@@ -1463,8 +1459,10 @@ impl
                     }
                 },
                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
-                    let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
+                    //
 
+                    //
+                    let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
                     let mut update_query_part_acc = std::string::String::default();
                     for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
                         match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
@@ -1474,6 +1472,16 @@ impl
                             &jsonb_set_path,
                             increment,
                             is_array_object_element.clone(),
+                            //
+                    //         &acc,
+                    //         &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
+                    //         &format!("{{std_vec_vec_generic,{index}}}"),
+                    //         increment,
+                    //         postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
+                    //             jsonb_set_path: format!("std_vec_vec_generic,{index}"),
+                    //             index: index.clone(),
+                    //         },//for arrays it must be true?
+                            //
                         ) {
                             Ok(value) => {
                                 if let Some(value) = value {
@@ -1517,31 +1525,7 @@ impl
                             }
                         }
                     }
-                    //
                     let _ = create_query_part_acc.pop();
-                    //
-                    // for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-                    //     match element.try_generate_bind_increments(
-                    //         &acc,
-                    //         &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
-                    //         &format!("{{std_vec_vec_generic,{index}}}"),
-                    //         increment,
-                    //         postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
-                    //             jsonb_set_path: format!("std_vec_vec_generic,{index}"),
-                    //             index: index.clone(),
-                    //         },//for arrays it must be true?
-                    //     ) {
-                    //         Ok(value) => {
-                    //             acc = value;
-                    //         }
-                    //         Err(error) => {
-                    //             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Doggie {
-                    //                 doggie : error, code_occurence : error_occurence_lib ::
-                    //                 code_occurence! (),
-                    //             },);
-                    //         }
-                    //     }
-                    // }
                     let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
                         std::string::String::from("elem")
                     }
@@ -1865,7 +1849,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
     }
     fn bind_update_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         if let postgresql_crud::JsonArrayElementChange::Update(value) = self.0 {
-            query = query.bind(value.id.to_string());
+            query = query.bind(value.id.0.to_string());
             for element in value.fields {
                 match element {
                     DoggieOptionToUpdate::StdPrimitiveI16(value) => {
@@ -2160,7 +2144,7 @@ enum DoggieOptionToUpdate {
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DoggieOptionsToUpdate {
-    id: uuid::Uuid,
+    id: postgresql_crud::JsonUuid,
     fields: std::vec::Vec<DoggieOptionToUpdate>,
 }
 
