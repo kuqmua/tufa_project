@@ -1459,9 +1459,31 @@ impl
                     }
                 },
                 SomethingOptionToUpdate::StdVecVecGeneric(value) => {
-                    //
-
-                    //
+                    {
+                        let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+                        for element in &value.value {
+                            match &element.0 {
+                                postgresql_crud::JsonArrayElementChange::Update(value) => {
+                                    if ids.contains(&&value.id) {
+                                        todo!()
+                                    }
+                                    else {
+                                        ids.push(&value.id);
+                                    }
+                                },
+                                postgresql_crud::JsonArrayElementChange::Delete(value) => {
+                                    ids.push(value);
+                                    if ids.contains(&value) {
+                                        todo!()
+                                    }
+                                    else {
+                                        ids.push(&value);
+                                    }
+                                },
+                                _ => ()
+                            }
+                        }
+                    }
                     let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
                     let mut update_query_part_acc = std::string::String::default();
                     for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
