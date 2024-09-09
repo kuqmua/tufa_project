@@ -1731,6 +1731,14 @@ pub enum DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed {
     CheckedAdd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    FieldsIsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueField {
+        #[eo_to_std_string_string_serialize_deserialize]
+        field: DoggieFieldToUpdate,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
     //here will be additional variants
 }
 impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> for DoggieJsonArrayElementChange {
@@ -1768,6 +1776,45 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
                 match increment.checked_add(1) {
                     Some(new_increment_value) => {
                         *increment = new_increment_value;
+                        if value.fields.is_empty() {
+                            return Err(
+                                DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::FieldsIsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                },
+                            );
+                        }
+                        {
+                            let mut acc = vec![];
+                            for element in &value.fields {
+                                match element {
+                                    DoggieOptionToUpdate::StdPrimitiveI16(_) => {
+                                        let value = DoggieFieldToUpdate::StdPrimitiveI16;
+                                        if acc.contains(&value) {
+                                            return Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::NotUniqueField {
+                                                field: value,
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        } else {
+                                            acc.push(value);
+                                        }
+                                    }
+                                    // DoggieOptionToUpdate::Generic(_) => {
+                                    //     let value = DoggieFieldToUpdate::Generic;
+                                    //     if acc.contains(&value) {
+                                    //         return
+                                    //         Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                                    //         :: NotUniqueField
+                                    //         {
+                                    //             field : value, code_occurence : error_occurence_lib ::
+                                    //             code_occurence! (),
+                                    //         },);
+                                    //     } else {
+                                    //         acc.push(value);
+                                    //     }
+                                    // }
+                                }
+                            }
+                        }
                         //fix state of increment to apply after
                         let id_increment = format!("${increment}");
                         let mut acc = std::string::String::default();
@@ -1946,48 +1993,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
 //         };
 //         //
 
-//         // if self.update.is_empty() {
-//         //     return Err(
-//         //         DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty {
-//         //             code_occurence: error_occurence_lib::code_occurence!(),
-//         //         },
-//         //     );
-//         // }
-//         // {
-//         //     let mut acc = vec![];
-//         //     for element in &self.update {
-//         //         match element {
-//         //             DoggieOptionToUpdate::StdPrimitiveI16(_) => {
-//         //                 let value = DoggieFieldToUpdate::StdPrimitiveI16;
-//         //                 if acc.contains(&value) {
-//         //                     return
-//         //                     Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-//         //                     :: NotUniqueField
-//         //                     {
-//         //                         field : value, code_occurence : error_occurence_lib ::
-//         //                         code_occurence! (),
-//         //                     },);
-//         //                 } else {
-//         //                     acc.push(value);
-//         //                 }
-//         //             }
-//         //             DoggieOptionToUpdate::Generic(_) => {
-//         //                 let value = DoggieFieldToUpdate::Generic;
-//         //                 if acc.contains(&value) {
-//         //                     return
-//         //                     Err(DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-//         //                     :: NotUniqueField
-//         //                     {
-//         //                         field : value, code_occurence : error_occurence_lib ::
-//         //                         code_occurence! (),
-//         //                     },);
-//         //                 } else {
-//         //                     acc.push(value);
-//         //                 }
-//         //             }
-//         //         }
-//         //     }
-//         // }
+
 
 
         
