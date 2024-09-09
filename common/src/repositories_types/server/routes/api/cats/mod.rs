@@ -1645,6 +1645,13 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    //
+    NotUniqueId {
+        #[eo_to_std_string_string_serialize_deserialize]
+        id: postgresql_crud::JsonUuid,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
     Doggie {
         #[eo_error_occurence]
         doggie: DoggieOptionsToUpdateTryGenerateBindIncrementsErrorNamed,

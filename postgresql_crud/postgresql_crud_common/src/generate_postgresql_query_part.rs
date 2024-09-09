@@ -276,6 +276,11 @@ impl schemars::JsonSchema for JsonUuid {
         }
     }
 }
+impl error_occurence_lib::ToStdStringString for JsonUuid {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
 /////////////////////
 //todo rename it coz it applied to read_one and read_many
 pub trait GeneratePostgresqlQueryPartToRead<T1, T2> {
