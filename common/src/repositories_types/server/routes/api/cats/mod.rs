@@ -1475,7 +1475,6 @@ impl
                                     }
                                 },
                                 postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                                    ids.push(value);
                                     if ids.contains(&value) {
                                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueId {
                                             id: *value,
@@ -1555,7 +1554,10 @@ impl
                                 }
                             },
                             Err(error) => {
-                                todo!()
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::DoggieTryGenerateJsonArrayElementCreateBindIncrements {
+                                    doggie_try_generate_json_array_element_create_bind_increments: error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
                             }
                         }
                     }
@@ -1672,6 +1674,11 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     DoggieTryGenerateJsonArrayElementDeleteBindIncrements {
         #[eo_error_occurence]
         doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DoggieTryGenerateJsonArrayElementCreateBindIncrements {
+        #[eo_error_occurence]
+        doggie_try_generate_json_array_element_create_bind_increments: postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
