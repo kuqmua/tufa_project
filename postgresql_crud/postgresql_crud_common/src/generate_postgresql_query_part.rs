@@ -394,10 +394,18 @@ pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
     Delete(JsonUuid),
 }
 
-pub trait JsonArrayElementQueryPart<UpdateErrorGeneric> {
-    fn try_generate_create_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, crate::TryGenerateBindIncrementsErrorNamed>;
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryGenerateCreateBindIncrementsErrorNamed {
+    TryGenerateBindIncrements {
+        #[eo_error_occurence]
+        error: crate::TryGenerateBindIncrementsErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+pub trait JsonArrayElementBindQuery<UpdateErrorGeneric> {
+    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateCreateBindIncrementsErrorNamed>;
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    fn try_generate_update_query_part(
+    fn try_generate_update_bind_increments(
         &self,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,
@@ -406,7 +414,7 @@ pub trait JsonArrayElementQueryPart<UpdateErrorGeneric> {
         is_array_object_element: ArrayObjectElementOrSimple,
     ) -> Result<std::option::Option<std::string::String>, UpdateErrorGeneric>;
     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    fn try_generate_delete_query_part(
+    fn try_generate_delete_bind_increments(
         &self,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,

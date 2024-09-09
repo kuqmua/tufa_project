@@ -656,4 +656,5 @@ pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJ
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecStdOptionOptionGeneric;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementChange;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementQueryPart;
+pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateCreateBindIncrementsErrorNamed;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementBindQuery;
