@@ -1890,7 +1890,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+    ) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed> {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Delete(value) => {
                 match increment.checked_add(1) {
@@ -1898,8 +1898,7 @@ impl postgresql_crud::JsonArrayElementBindQuery<DoggieTryGenerateJsonArrayElemen
                         *increment = value;
                         Ok(Some(format!("elem->>'id' <> ${increment}")))
                     }
-                    //todo maybe change type of error
-                    None => Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    None => Err(postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd {
                         code_occurence: error_occurence_lib::code_occurence!(),
                     })
                 }
