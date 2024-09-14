@@ -297,10 +297,11 @@ pub struct Something {
 
     // pub generic: postgresql_crud::JsonGeneric<Doggie>,
     // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
-    pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
-    // pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGeneric<Doggie>,
-    // pub std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdVecVecStdOptionOptionGeneric<Doggie>,
-    // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric<Doggie>,
+
+    pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    // pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+    // pub std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdVecVecStdOptionOptionGenericWithId<Doggie>,
+    // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId<Doggie>,
 }
 
 //todo this need for old version of update_many. later need to refactor update many and remove this
@@ -334,7 +335,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
         let mut increments = std::string::String::default();//'id', to_jsonb(gen_random_uuid()),
         // // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
         // pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-        // pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGeneric<Doggie>,
+        // pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
