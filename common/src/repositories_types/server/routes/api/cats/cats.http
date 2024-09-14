@@ -488,34 +488,34 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
     # "std_primitive_i32_as_postgresql_int": 83,
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "std_primitive_i8": 8,
-        # "std_primitive_i16": 16,
-        # "std_primitive_i32": 0,
-        # "std_primitive_i64": 0,
-        # "std_primitive_i128": 0,
-        # "std_primitive_u8": 0,
-        # "std_primitive_u16": 0, 
-        # "std_primitive_u32": 0,
-        # "std_primitive_u64": 0,
-        # "std_primitive_u128": 0,
-        # "std_primitive_f32": 0.9,
-        # "std_primitive_f64": 0.9,
-        # "std_primitive_bool": true,
-        # "std_string_string": "",
+        "std_primitive_i16": 16,
+        "std_primitive_i32": 0,
+        "std_primitive_i64": 0,
+        "std_primitive_i128": 0,
+        "std_primitive_u8": 0,
+        "std_primitive_u16": 0, 
+        "std_primitive_u32": 0,
+        "std_primitive_u64": 0,
+        "std_primitive_u128": 0,
+        "std_primitive_f32": 0.9,
+        "std_primitive_f64": 0.9,
+        "std_primitive_bool": true,
+        "std_string_string": "",
 
-        # "std_option_option_std_primitive_i8": 0,
-        # "std_option_option_std_primitive_i16": 0,  
-        # "std_option_option_std_primitive_i32": 0,
-        # "std_option_option_std_primitive_i64": 0,
-        # "std_option_option_std_primitive_i128": 0,
-        # "std_option_option_std_primitive_u8": 0,
-        # "std_option_option_std_primitive_u16": 0, 
-        # "std_option_option_std_primitive_u32": 0,
-        # "std_option_option_std_primitive_u64": 0,
-        # "std_option_option_std_primitive_u128": 0,
-        # "std_option_option_std_primitive_f32": 0.9, 
-        # "std_option_option_std_primitive_f64": 0.9, 
-        # "std_option_option_std_primitive_bool": true,
-        # "std_option_option_std_string_string": "",
+        "std_option_option_std_primitive_i8": 0,
+        "std_option_option_std_primitive_i16": 0,  
+        "std_option_option_std_primitive_i32": 0,
+        "std_option_option_std_primitive_i64": 0,
+        "std_option_option_std_primitive_i128": 0,
+        "std_option_option_std_primitive_u8": 0,
+        "std_option_option_std_primitive_u16": 0, 
+        "std_option_option_std_primitive_u32": 0,
+        "std_option_option_std_primitive_u64": 0,
+        "std_option_option_std_primitive_u128": 0,
+        "std_option_option_std_primitive_f32": 0.9, 
+        "std_option_option_std_primitive_f64": 0.9, 
+        "std_option_option_std_primitive_bool": true,
+        "std_option_option_std_string_string": "",
 
         # "std_vec_vec_std_primitive_i8": [0, 1, 2],
         # "std_vec_vec_std_primitive_i16": [0, 1, 2], 
@@ -578,16 +578,17 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
         # "std_option_option_std_vec_vec_std_option_option_std_string_string": ["one", "two", "three", null]
         # ,
 
-        # "generic": {
-        #     "std_primitive_i16": 0,
-        #     "std_option_option_std_primitive_i32": 0,
-        #     "std_string_string": "",
-        #     "generic": {
-        #         "std_primitive_i16": 0,
-        #         "std_string_string": ""
-        #     }
-        # }
-        # ,
+        "generic": {
+            "std_primitive_i16": 0
+            # ,
+            # "std_option_option_std_primitive_i32": 0,
+            # "std_string_string": "",
+            # "generic": {
+            #     "std_primitive_i16": 0,
+            #     "std_string_string": ""
+            # }
+        }
+        ,
         # "std_option_option_generic": {
         #     "std_primitive_i16": 0,
         #     "std_option_option_std_primitive_i32": 0,
@@ -598,7 +599,7 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
         #     }
         # }
         # ,
-        "std_vec_vec_generic": [
+        "std_vec_vec_generic_with_id": [
             {
               "std_primitive_i16": 0,
               "generic": {
@@ -613,18 +614,18 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
             }
         ]
         # ,
-        # "std_option_option_std_vec_vec_generic": [
+        # "std_option_option_std_vec_vec_generic_with_id": [
         #     {
         #         "std_string_string": "sdss"
         #     }
         # ],
-        # "std_vec_vec_std_option_option_generic": [
+        # "std_vec_vec_std_option_option_generic_with_id": [
         #     {
         #       "std_string_string": "sdss"
         #     },
         #     null
         # ],
-        # "std_option_option_std_vec_vec_std_option_option_generic": [
+        # "std_option_option_std_vec_vec_std_option_option_generic_with_id": [
         #     {
         #         "std_string_string": "sdss"
         #     },

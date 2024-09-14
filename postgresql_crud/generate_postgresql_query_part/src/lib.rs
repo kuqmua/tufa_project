@@ -4074,49 +4074,44 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_type_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_type_stringified);
                     let element_type_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_type_stringified);
                     let std_vec_vec_generic_generic_generic_ident_not_unique_id_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::NotUniqueIdUpperCamelCase);
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::NotUniqueIdUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let element_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_ident.to_string());
                     let std_vec_vec_generic_generic_generic_ident_not_unique_id_snake_case_token_stream = {
-                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::NotUniqueIdSnakeCase);
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}", naming_conventions::NotUniqueIdSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let generic_ident_json_array_element_change_upper_camel_case_token_stream = generate_ident_json_array_element_change_upper_camel_case_token_stream(&element_type_upper_camel_case_stringified);
-                    // {
-                    //     let value = format!("{element_type_upper_camel_case_stringified}{}", naming_conventions::JsonArrayElementChangeUpperCamelCase);
-                    //     value.parse::<proc_macro2::TokenStream>()
-                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    // };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_snake_case_token_stream = {
-                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsSnakeCase);
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsUpperCamelCase);
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream = {
-                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsSnakeCase);
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}",  naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsUpperCamelCase);
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_snake_case_token_stream = {
-                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsSnakeCase);
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
@@ -6085,20 +6080,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #maybe_impl_postgresql_crud_json_array_element_bind_query_ident_try_generate_json_array_element_update_bind_increments_error_named_for_ident_json_array_element_change_token_stream
         #maybe_ident_json_array_element_change_token_stream
 
-
         #pub_struct_ident_to_create_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
         #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
         #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
         #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
     };
-    if ident == "Rat" {
-        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            "www",
-            &generated,
-            "www",
-        );
-    }
+    // if ident == "" {
+    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "www",
+    //         &generated,
+    //         "www",
+    //     );
+    // }
     generated.into()
 }    
 

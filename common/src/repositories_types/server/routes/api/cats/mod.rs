@@ -218,30 +218,30 @@ pub struct Something {
     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-    // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-    // pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-    // pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
-    // pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
-    // pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
-    // pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
-    // pub std_primitive_u64: postgresql_crud::JsonStdPrimitiveU64,
-    // pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
-    // pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
-    // pub std_primitive_bool: postgresql_crud::JsonStdPrimitiveBool,
-    // pub std_string_string: postgresql_crud::JsonStdStringString,
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+    pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
+    pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
+    pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
+    pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
+    pub std_primitive_u64: postgresql_crud::JsonStdPrimitiveU64,
+    pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
+    pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
+    pub std_primitive_bool: postgresql_crud::JsonStdPrimitiveBool,
+    pub std_string_string: postgresql_crud::JsonStdStringString,
 
-    // pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
-    // pub std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdPrimitiveI16,
-    // pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
-    // pub std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdPrimitiveI64,
-    // pub std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdPrimitiveU8,
-    // pub std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdPrimitiveU16,
-    // pub std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdPrimitiveU32,
-    // pub std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdPrimitiveU64,
-    // pub std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdPrimitiveF32,
-    // pub std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdPrimitiveF64,
-    // pub std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdPrimitiveBool,
-    // pub std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdStringString,
+    pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
+    pub std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdPrimitiveI16,
+    pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
+    pub std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdPrimitiveI64,
+    pub std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdPrimitiveU8,
+    pub std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdPrimitiveU16,
+    pub std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdPrimitiveU32,
+    pub std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdPrimitiveU64,
+    pub std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdPrimitiveF32,
+    pub std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdPrimitiveF64,
+    pub std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdPrimitiveBool,
+    pub std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdStringString,
 
     // pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
     // pub std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdVecVecStdPrimitiveI16,
@@ -298,10 +298,10 @@ pub struct Something {
     pub generic: postgresql_crud::JsonGeneric<Rat>,
     // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
 
-    pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
-    // pub std_option_option_std_vec_vec_generic: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
-    // pub std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdVecVecStdOptionOptionGenericWithId<Doggie>,
-    // pub std_option_option_std_vec_vec_std_option_option_generic: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId<Doggie>,
+    pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+    // pub std_vec_vec_std_option_option_generic_with_id: postgresql_crud::JsonStdVecVecStdOptionOptionGenericWithId<Doggie>,
+    // pub std_option_option_std_vec_vec_std_option_option_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId<Doggie>,
 }
 
 //todo this need for old version of update_many. later need to refactor update many and remove this
@@ -364,7 +364,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
     {
         query = query.bind(sqlx::types::Json(self.std_primitive_i8.0));
-        query = query.bind(sqlx::types::Json(self.std_vec_vec_generic.0));
+        query = query.bind(sqlx::types::Json(self.std_vec_vec_generic_with_id.0));
         query
     }
 }
@@ -1264,3 +1264,8 @@ fn test_dd() {
     // let deserialized: SomethingOptionsToUpdate = serde_json::from_str(&serialized).unwrap();
     // println!("{deserialized:#?}");
 }
+
+
+
+
+////////
