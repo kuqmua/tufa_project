@@ -3087,7 +3087,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let ident_reader_token_stream = {
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait //, serde::Deserialize//Eq, 
-            pub struct #ident_reader_upper_camel_case_token_stream(pub #ident_options_to_read_upper_camel_case_token_stream);//pub Result<SomethingOptions,std::string::String>
+            pub struct #ident_reader_upper_camel_case_token_stream(pub #ident_options_to_read_upper_camel_case_token_stream);
         }
     };
     let impl_serde_deserialize_for_ident_reader_token_stream = {
@@ -4057,52 +4057,64 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     //     }
                     // }
                     let element_ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.to_string());
+                    let element_type_stringified = quote::quote!{#type_path}.to_string();
+                    let element_type_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_type_stringified);
+                    let element_type_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_type_stringified);
                     let std_vec_vec_generic_generic_generic_ident_not_unique_id_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_ident_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::NotUniqueIdUpperCamelCase);
+                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::NotUniqueIdUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let element_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_ident.to_string());
                     let std_vec_vec_generic_generic_generic_ident_not_unique_id_snake_case_token_stream = {
-                        let value = format!("{}_{element_ident_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::NotUniqueIdSnakeCase);
+                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::NotUniqueIdSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
-                    let generic_ident_json_array_element_change_upper_camel_case_token_stream = {
-                        let value = format!("{element_ident_upper_camel_case_stringified}{}", naming_conventions::JsonArrayElementChangeUpperCamelCase);
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let generic_ident_json_array_element_change_upper_camel_case_token_stream = generate_ident_json_array_element_change_upper_camel_case_token_stream(&element_type_upper_camel_case_stringified);
+                    // {
+                    //     let value = format!("{element_type_upper_camel_case_stringified}{}", naming_conventions::JsonArrayElementChangeUpperCamelCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_ident_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
+                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_snake_case_token_stream = {
-                        let value = format!("{}_{element_ident_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsSnakeCase);
+                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_ident_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsUpperCamelCase);
+                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream = {
-                        let value = format!("{}_{element_ident_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsSnakeCase);
+                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream = {
-                        let value = format!("{}{element_ident_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsUpperCamelCase);
+                        let value = format!("{}{element_type_upper_camel_case_stringified}{}", naming_conventions::StdVecVecGenericUpperCamelCase, naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_snake_case_token_stream = {
-                        let value = format!("{}_{element_ident_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsSnakeCase);
+                        let value = format!("{}_{element_type_snake_case_stringified}_{}", naming_conventions::StdVecVecGenericSnakeCase, naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsSnakeCase);
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
+                    let current_jsonb_set_target_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{jsonb_set_target}}->'{element_ident}'"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("jsonb_set({{acc}},'{{{{{{previous_jsonb_set_path}}{element_ident}}}}}',(select jsonb_agg({{maybe_jsonb_agg_case}}) from jsonb_array_elements({{current_jsonb_set_target}}) as elem {{maybe_where}}){{maybe_jsonb_build_array}})"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
                     quote::quote!{
                         (value) => {
                             {
@@ -4135,7 +4147,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     }
                                 }
                             }
-                            let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
+                            let current_jsonb_set_target = format!(#current_jsonb_set_target_format_handle_token_stream);
                             let mut update_query_part_acc = std::string::String::default();
                             for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &#generic_ident_json_array_element_change_upper_camel_case_token_stream)>>() {
                                 match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
@@ -4145,6 +4157,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     &jsonb_set_path,
                                     increment,
                                     is_array_object_element.clone(),
+                                    //todo fix parameters propagation
                                     // &acc,
                                     // &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
                                     // &format!("{{std_vec_vec_generic,{index}}}"),
@@ -4224,7 +4237,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             else {
                                 format!(" || jsonb_build_array({create_query_part_acc})")
                             };
-                            acc = format!(r#"jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})"#);
+                            acc = format!(#acc_format_handle_token_stream);
                         }
                     }
                 },
@@ -4299,7 +4312,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString
                 
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
@@ -4359,32 +4372,44 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
                 // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                 // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                //     quote::quote!{
-                //         query = query.bind(sqlx::types::Json(value.value));
-                //     }
-                // }
+                // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
+                 => {
+                    quote::quote!{
+                        query = query.bind(sqlx::types::Json(value.value));
+                    }
+                }
 
                 SupportedPredefinedType::JsonGeneric(_) => {
-                    quote::quote!{
-                        query = value.value.bind_value_to_query(query);
-                    }
+                    // quote::quote!{
+                    //     query = value.value.bind_value_to_query(query);
+                    // }
+                    todo!()
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => {
-                    quote::quote!{
-                        match value.value {
-                            Some(value) => {
-                                query = value.bind_value_to_query(query);
-                            }
-                            None => {
-                                query = query.bind(sqlx::types::Json(None::<std::option::Option<#ident_options_to_update_upper_camel_case_token_stream>>));
-                            }
-                        }
-                    }
+                    // quote::quote!{
+                    //     match value.value {
+                    //         Some(value) => {
+                    //             query = value.bind_value_to_query(query);
+                    //         }
+                    //         None => {
+                    //             query = query.bind(sqlx::types::Json(None::<std::option::Option<#ident_options_to_update_upper_camel_case_token_stream>>));
+                    //         }
+                    //     }
+                    // }
+                    todo!()
                 },
                 SupportedPredefinedType::JsonStdVecVecGeneric(_) => {
                     quote::quote!{
-                        query = value.value.bind_value_to_query(query);
+                        // query = value.value.bind_value_to_query(query);
+                        for element in &value.value {
+                            query = postgresql_crud::JsonArrayElementBindQuery::bind_update_value_to_query(element.clone(), query);
+                        }
+                        for element in &value.value {
+                            query = postgresql_crud::JsonArrayElementBindQuery::bind_delete_value_to_query(element.clone(), query);
+                        }
+                        for element in &value.value {
+                            query = postgresql_crud::JsonArrayElementBindQuery::bind_create_value_to_query(element.clone(), query);
+                        }
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGeneric(_) => todo!(),
@@ -4392,9 +4417,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGeneric(_) => todo!(),
 
                 SupportedPredefinedType::JsonUuid => {
-                    quote::quote!{
-                        query = query.bind(sqlx::types::Json(value.value));
-                    }
+                    // quote::quote!{
+                    //     query = query.bind(sqlx::types::Json(value.value));
+                    // }
+                    todo!()
                 }
             };
             quote::quote!{
@@ -4438,13 +4464,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     //     Some(value) => format!("{value},"),
                     //     None => std::string::String::default()
                     // };
-                    // for element in &self.0 {
-                    //     match &element {
-                    //         #(#query_part_generation_token_stream),*
-                    //     }
-                    // }
-                    // Ok(acc)
-                    //
+
+
+
                     let mut acc = std::string::String::from(jsonb_set_accumulator);
                     let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
                         true => std::string::String::default(),
@@ -4452,159 +4474,195 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     };
                     for element in &self.0 {
                         match &element {
-                            SomethingOptionToUpdate::StdPrimitiveI8 (_) => match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i8}}',${increment})");
-                                }
-                                None => {
-                                    return
-                                        Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                        :: CheckedAdd
-                                        {
-                                            code_occurence : error_occurence_lib :: code_occurence! (),
-                                        },);
-                                }
-                            },
-                            SomethingOptionToUpdate::StdVecVecGeneric (value) => {
-                                {
-                                    let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
-                                    for element in &value.value {
-                                        match &element.0 {
-                                            postgresql_crud::JsonArrayElementChange::Update(value) => {
-                                                if ids.contains(&&value.id) {
-                                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieNotUniqueId {
-                                                        std_vec_vec_generic_doggie_not_unique_id: value.id,
-                                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                                    });
-                                                }
-                                                else {
-                                                    ids.push(&value.id);
-                                                }
-                                            },
-                                            postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                                                if ids.contains(&value) {
-                                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieNotUniqueId {
-                                                        std_vec_vec_generic_doggie_not_unique_id: *value,
-                                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                                    });
-                                                }
-                                                else {
-                                                    ids.push(&value);
-                                                }
-                                            },
-                                            _ => ()
-                                        }
-                                    }
-                                }
-                                let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
-                                let mut update_query_part_acc = std::string::String::default();
-                                for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
-                                    match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
-                                        *element,
-                                        &jsonb_set_accumulator,
-                                        &jsonb_set_target,
-                                        &jsonb_set_path,
-                                        increment,
-                                        is_array_object_element.clone(),
-                                        //
-                                //         &acc,
-                                //         &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
-                                //         &format!("{{std_vec_vec_generic,{index}}}"),
-                                //         increment,
-                                //         postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
-                                //             jsonb_set_path: format!("std_vec_vec_generic,{index}"),
-                                //             index: index.clone(),
-                                //         },//for arrays it must be true?
-                                        //
-                                    ) {
-                                        Ok(value) => {
-                                            if let Some(value) = value {
-                                                update_query_part_acc.push_str(&value);
-                                            }
-                                        },
-                                        Err(error) => {
-                                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
-                                                std_vec_vec_generic_doggie_try_generate_json_array_element_update_bind_increments: error,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                let mut delete_query_part_acc = std::string::String::default();
-                                for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
-                                    match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(*element, increment) {
-                                        Ok(value) => {
-                                            if let Some(value) = value {
-                                                let maybe_space_and_space = if delete_query_part_acc.is_empty() {
-                                                    ""
-                                                }
-                                                else {
-                                                    " and "
-                                                };
-                                                delete_query_part_acc.push_str(&format!("{value}{maybe_space_and_space}"));
-                                            }
-                                        },
-                                        Err(error) => {
-                                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementDeleteBindIncrements {
-                                                std_vec_vec_generic_doggie_try_generate_json_array_element_delete_bind_increments: error,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                let mut create_query_part_acc = std::string::String::default();
-                                for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
-                                    match postgresql_crud::JsonArrayElementBindQuery::try_generate_create_bind_increments(*element, increment) {
-                                        Ok(value) => {
-                                            if let Some(value) = value {
-                                                create_query_part_acc.push_str(&format!("{value},"));
-                                            }
-                                        },
-                                        Err(error) => {
-                                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementCreateBindIncrements {
-                                                std_vec_vec_generic_doggie_try_generate_json_array_element_create_bind_increments_snake_case_token_stream: error,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                let _ = create_query_part_acc.pop();
-                                let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
-                                    std::string::String::from("elem")
-                                }
-                                else {
-                                    format!("case {update_query_part_acc} else elem end")
-                                };
-                                let maybe_where = if delete_query_part_acc.is_empty() {
-                                    std::string::String::default()
-                                }
-                                else {
-                                    format!(" where {delete_query_part_acc}")
-                                };
-                                let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
-                                    std::string::String::default()
-                                }
-                                else {
-                                    format!(" || jsonb_build_array({create_query_part_acc})")
-                                };
-                                acc = format!(r#"jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})"#);
-                            }
+                            #(#query_part_generation_token_stream),*
                         }
                     }
                     Ok(acc)
+                    //
+                    // let mut acc = std::string::String::from(jsonb_set_accumulator);
+                    // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                    //     true => std::string::String::default(),
+                    //     false => format!("{jsonb_set_path},"),
+                    // };
+                    // for element in &self.0 {
+                    //     match &element {
+                    //         SomethingOptionToUpdate::StdPrimitiveI8 (_) => match increment.checked_add(1) {
+                    //             Some(value) => {
+                    //                 *increment = value;
+                    //                 acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i8}}',${increment})");
+                    //             }
+                    //             None => {
+                    //                 return
+                    //                     Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                    //                     :: CheckedAdd
+                    //                     {
+                    //                         code_occurence : error_occurence_lib :: code_occurence! (),
+                    //                     },);
+                    //             }
+                    //         },
+                    //         SomethingOptionToUpdate::StdVecVecGeneric (value) => {
+                    //             {
+                    //                 let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+                    //                 for element in &value.value {
+                    //                     match &element.0 {
+                    //                         postgresql_crud::JsonArrayElementChange::Update(value) => {
+                    //                             if ids.contains(&&value.id) {
+                    //                                 return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieNotUniqueId {
+                    //                                     std_vec_vec_generic_doggie_not_unique_id: value.id,
+                    //                                     code_occurence: error_occurence_lib::code_occurence!(),
+                    //                                 });
+                    //                             }
+                    //                             else {
+                    //                                 ids.push(&value.id);
+                    //                             }
+                    //                         },
+                    //                         postgresql_crud::JsonArrayElementChange::Delete(value) => {
+                    //                             if ids.contains(&value) {
+                    //                                 return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieNotUniqueId {
+                    //                                     std_vec_vec_generic_doggie_not_unique_id: *value,
+                    //                                     code_occurence: error_occurence_lib::code_occurence!(),
+                    //                                 });
+                    //                             }
+                    //                             else {
+                    //                                 ids.push(&value);
+                    //                             }
+                    //                         },
+                    //                         _ => ()
+                    //                     }
+                    //                 }
+                    //             }
+                    //             let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic'");
+                    //             let mut update_query_part_acc = std::string::String::default();
+                    //             for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
+                    //                 match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
+                    //                     *element,
+                    //                     &jsonb_set_accumulator,
+                    //                     &jsonb_set_target,
+                    //                     &jsonb_set_path,
+                    //                     increment,
+                    //                     is_array_object_element.clone(),
+                    //                     //
+                    //             //         &acc,
+                    //             //         &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
+                    //             //         &format!("{{std_vec_vec_generic,{index}}}"),
+                    //             //         increment,
+                    //             //         postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
+                    //             //             jsonb_set_path: format!("std_vec_vec_generic,{index}"),
+                    //             //             index: index.clone(),
+                    //             //         },//for arrays it must be true?
+                    //                     //
+                    //                 ) {
+                    //                     Ok(value) => {
+                    //                         if let Some(value) = value {
+                    //                             update_query_part_acc.push_str(&value);
+                    //                         }
+                    //                     },
+                    //                     Err(error) => {
+                    //                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
+                    //                             std_vec_vec_generic_doggie_try_generate_json_array_element_update_bind_increments: error,
+                    //                             code_occurence: error_occurence_lib::code_occurence!(),
+                    //                         });
+                    //                     }
+                    //                 }
+                    //             }
+                    //             let mut delete_query_part_acc = std::string::String::default();
+                    //             for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
+                    //                 match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(*element, increment) {
+                    //                     Ok(value) => {
+                    //                         if let Some(value) = value {
+                    //                             let maybe_space_and_space = if delete_query_part_acc.is_empty() {
+                    //                                 ""
+                    //                             }
+                    //                             else {
+                    //                                 " and "
+                    //                             };
+                    //                             delete_query_part_acc.push_str(&format!("{value}{maybe_space_and_space}"));
+                    //                         }
+                    //                     },
+                    //                     Err(error) => {
+                    //                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementDeleteBindIncrements {
+                    //                             std_vec_vec_generic_doggie_try_generate_json_array_element_delete_bind_increments: error,
+                    //                             code_occurence: error_occurence_lib::code_occurence!(),
+                    //                         });
+                    //                     }
+                    //                 }
+                    //             }
+                    //             let mut create_query_part_acc = std::string::String::default();
+                    //             for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
+                    //                 match postgresql_crud::JsonArrayElementBindQuery::try_generate_create_bind_increments(*element, increment) {
+                    //                     Ok(value) => {
+                    //                         if let Some(value) = value {
+                    //                             create_query_part_acc.push_str(&format!("{value},"));
+                    //                         }
+                    //                     },
+                    //                     Err(error) => {
+                    //                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericDoggieTryGenerateJsonArrayElementCreateBindIncrements {
+                    //                             std_vec_vec_generic_doggie_try_generate_json_array_element_create_bind_increments_snake_case_token_stream: error,
+                    //                             code_occurence: error_occurence_lib::code_occurence!(),
+                    //                         });
+                    //                     }
+                    //                 }
+                    //             }
+                    //             let _ = create_query_part_acc.pop();
+                    //             let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
+                    //                 std::string::String::from("elem")
+                    //             }
+                    //             else {
+                    //                 format!("case {update_query_part_acc} else elem end")
+                    //             };
+                    //             let maybe_where = if delete_query_part_acc.is_empty() {
+                    //                 std::string::String::default()
+                    //             }
+                    //             else {
+                    //                 format!(" where {delete_query_part_acc}")
+                    //             };
+                    //             let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
+                    //                 std::string::String::default()
+                    //             }
+                    //             else {
+                    //                 format!(" || jsonb_build_array({create_query_part_acc})")
+                    //             };
+                    //             acc = format!(r#"jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})"#);
+                    //         }
+                    //     }
+                    // }
+                    // Ok(acc)
                     //
                 }
                 fn bind_value_to_query<'a>(
                     self,
                     mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    // for element in self.0 {
+                    //     match element {
+                    //         #(#bind_query_token_stream),*
+                    //     }
+                    // }
+                    // query
+                    //
                     for element in self.0 {
                         match element {
                             #(#bind_query_token_stream),*
+
+                            // SomethingOptionToUpdate::StdPrimitiveI8(value) => {
+                            //     query = query.bind(sqlx::types::Json(value.value));
+                            // }
+                            // SomethingOptionToUpdate::StdVecVecGeneric(value) => {
+                            //     //first update then delete then create. order matters!
+                            //     for element in &value.value {
+                            //         query = postgresql_crud::JsonArrayElementBindQuery::bind_update_value_to_query(element.clone(), query);
+                            //     }
+                            //     for element in &value.value {
+                            //         query = postgresql_crud::JsonArrayElementBindQuery::bind_delete_value_to_query(element.clone(), query);
+                            //     }
+                            //     for element in &value.value {
+                            //         query = postgresql_crud::JsonArrayElementBindQuery::bind_create_value_to_query(element.clone(), query);
+                            //     }
+                            // }
                         }
                     }
                     query
+                    //
                 }
                 //
                 // fn try_generate_bind_increments(
@@ -5300,6 +5358,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     query
                 }
             }
+        }
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let maybe_ident_json_array_element_change_token_stream = if is_id_field_exists {
+        let ident_json_array_element_change_upper_camel_case_token_stream = generate_ident_json_array_element_change_upper_camel_case_token_stream(&ident.to_string());
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+            pub struct #ident_json_array_element_change_upper_camel_case_token_stream(postgresql_crud::JsonArrayElementChange<#ident_to_create_upper_camel_case_token_stream, #ident_options_to_update_upper_camel_case_token_stream>);
         }
     }
     else {
@@ -6002,6 +6070,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #maybe_impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
         #maybe_pub_enum_ident_try_generate_json_array_element_update_bind_increments_error_named_token_stream
         #maybe_impl_postgresql_crud_json_array_element_bind_query_ident_try_generate_json_array_element_update_bind_increments_error_named_for_ident_json_array_element_change_token_stream
+        #maybe_ident_json_array_element_change_token_stream
+
 
         #pub_struct_ident_to_create_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
@@ -6018,3 +6088,78 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // }
     generated.into()
 }    
+
+
+
+// i have a jsonb in postgresql
+
+// {
+//     "std_primitive_i8": 8,
+//     "std_vec_vec_generic": [
+//         {
+//             "id": "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4",
+//             "std_primitive_i16": 5
+//         },
+//         {
+//             "id": "951240e0-990e-4cb8-909d-5183ff7725a4",
+//             "std_primitive_i16": 6
+//         },
+//         {
+//             "id": "5d628632-13f0-409f-8288-42b356cc033c",
+//             "std_primitive_i16": 2
+//         },
+//         {
+//             "id": "63b83936-24c8-429b-ab67-ee2c76856f18",
+//             "std_primitive_i16": 3
+//         }
+//     ]
+// }
+
+// i want to set key "std_primitive_i8" to 7.
+
+// and i want to add element { "id": "1ff4db66-1395-4d58-bcf5-8bf69f1b90d3", "std_primitive_i16": 10 } to array in key "std_vec_vec_generic". 
+
+// and i want to add element { "id": "847e5f32-d1a5-4d6a-9c55-040cbf60f229", "std_primitive_i16": 20 } to array in key "std_vec_vec_generic". 
+
+// and i want to update key "std_primitive_i16" to value 44 where key "id" is "5d628632-13f0-409f-8288-42b356cc033c". 
+
+// and i want to update key "std_primitive_i16" to value 55 where key "id" is "63b83936-24c8-429b-ab67-ee2c76856f18". 
+
+// and i want to delete element in value of key "std_vec_vec_generic" where key "id" = "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4". 
+
+// and i want to delete element in value of key "std_vec_vec_generic" where key "id" = "951240e0-990e-4cb8-909d-5183ff7725a4". 
+
+// please write a query for it
+
+
+// UPDATE jsongeneric
+// SET sqlx_types_json_t_as_postgresql_json_b_not_null = 
+//     jsonb_set(
+//         jsonb_set(
+//             sqlx_types_json_t_as_postgresql_json_b_not_null,
+//             '{std_primitive_i8}',
+//             '27'::jsonb
+//         ),
+//         '{std_vec_vec_generic}',
+// 		(
+//                 SELECT jsonb_agg(
+//                     CASE
+//                         WHEN elem->>'id' = '5d628632-13f0-409f-8288-42b356cc033c'
+//                         THEN jsonb_set(elem, '{std_primitive_i16}', '44'::jsonb)
+					
+//                         WHEN elem->>'id' = '63b83936-24c8-429b-ab67-ee2c76856f18'
+//                         THEN jsonb_set(elem, '{std_primitive_i16}', '55'::jsonb)
+					
+//                         ELSE elem
+//                     END
+//                 )
+//                 FROM jsonb_array_elements(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic') AS elem
+//                 WHERE elem->>'id' <> '8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4' and elem->>'id' <> '951240e0-990e-4cb8-909d-5183ff7725a4'
+//          ) 
+// 		|| 
+// 		jsonb_build_array(
+//     		jsonb_build_object('id', '1ff4db66-1395-4d58-bcf5-8bf69f1b90d3', 'std_primitive_i16', 10),
+//     		jsonb_build_object('id', '847e5f32-d1a5-4d6a-9c55-040cbf60f229', 'std_primitive_i16', 20)
+// 		)
+//     )
+// where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 14 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
