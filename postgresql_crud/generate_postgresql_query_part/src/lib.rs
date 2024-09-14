@@ -3969,33 +3969,34 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
-                    // let element_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    //     &element_ident.to_string(),
-                    //     &proc_macro_name_upper_camel_case_ident_stringified
-                    // );
-                    // let element_ident_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    // quote::quote!{
-                    //     (value) => {
-                    //         match value.value.try_generate_bind_increments(
-                    //             &acc,
-                    //             Some(#element_ident_double_quotes_token_stream),
-                    //             increment,
-                    //         ) {
-                    //             Ok(value) => {
-                    //                 acc = value;
-                    //             }
-                    //             Err(error) => {
-                    //                 return Err(
-                    //                     #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#type_path {
-                    //                         #element_ident_snake_case_token_stream: error,
-                    //                         code_occurence: error_occurence_lib::code_occurence!(),
-                    //                     },
-                    //                 );
-                    //             }
-                    //         }
-                    //     }
-                    // }
-                    todo!()
+                    let element_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &element_ident.to_string(),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let element_ident_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{
+                        (value) => {
+                            match value.value.try_generate_bind_increments(
+                                &jsonb_set_accumulator,
+                                &jsonb_set_target,
+                                &jsonb_set_path,
+                                increment,
+                                is_array_object_element.clone(),
+                            ) {
+                                Ok(value) => {
+                                    acc = value;
+                                }
+                                Err(error) => {
+                                    return Err(
+                                        #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#type_path {
+                                            #element_ident_snake_case_token_stream: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        },
+                                    );
+                                }
+                            }
+                        }
+                    }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
                     // let element_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -4392,10 +4393,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
 
                 SupportedPredefinedType::JsonGeneric(_) => {
-                    // quote::quote!{
-                    //     query = value.value.bind_value_to_query(query);
-                    // }
-                    todo!()
+                    quote::quote!{
+                        query = value.value.bind_value_to_query(query);
+                    }
+                    // todo!()
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => {
                     // quote::quote!{
@@ -6091,13 +6092,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
         #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
     };
-    // if ident == "" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "www",
-    //         &generated,
-    //         "www",
-    //     );
-    // }
+    if ident == "Rat" {
+        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "www",
+            &generated,
+            "www",
+        );
+    }
     generated.into()
 }    
 

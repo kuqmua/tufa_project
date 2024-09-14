@@ -295,7 +295,7 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    // pub generic: postgresql_crud::JsonGeneric<Doggie>,
+    pub generic: postgresql_crud::JsonGeneric<Rat>,
     // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
 
     pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
@@ -377,6 +377,13 @@ pub struct Doggie {
 
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub generic: postgresql_crud::JsonGeneric<Cat>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+     postgresql_crud::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
+pub struct Rat {
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI64,
 }
 
 // #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
