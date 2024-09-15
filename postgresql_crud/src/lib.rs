@@ -576,7 +576,7 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdStringString;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI8;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI16;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI32;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI64;

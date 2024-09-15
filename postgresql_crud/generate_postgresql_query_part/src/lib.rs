@@ -30,7 +30,7 @@ enum SupportedPredefinedType {
     JsonStdOptionOptionStdPrimitiveBool, 
     JsonStdOptionOptionStdStringString, 
 
-    // JsonStdVecVecStdPrimitiveI8, 
+    JsonStdVecVecStdPrimitiveI8,
     // JsonStdVecVecStdPrimitiveI16, 
     // JsonStdVecVecStdPrimitiveI32, 
     // JsonStdVecVecStdPrimitiveI64, 
@@ -133,7 +133,7 @@ impl SupportedPredefinedType {
             Self::JsonStdOptionOptionStdPrimitiveBool => SupportedPredefinedOriginalType::Bool,
             Self::JsonStdOptionOptionStdStringString => SupportedPredefinedOriginalType::String,
 
-            // Self::JsonStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
+            Self::JsonStdVecVecStdPrimitiveI8 => SupportedPredefinedOriginalType::I8,
             // Self::JsonStdVecVecStdPrimitiveI16 => SupportedPredefinedOriginalType::I16,
             // Self::JsonStdVecVecStdPrimitiveI32 => SupportedPredefinedOriginalType::I32,
             // Self::JsonStdVecVecStdPrimitiveI64 => SupportedPredefinedOriginalType::I64,
@@ -401,7 +401,7 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         "JsonStdOptionOptionStdPrimitiveBool" => Self::JsonStdOptionOptionStdPrimitiveBool,
                         "JsonStdOptionOptionStdStringString" => Self::JsonStdOptionOptionStdStringString,
 
-                        // "JsonStdVecVecStdPrimitiveI8" => Self::JsonStdVecVecStdPrimitiveI8,
+                        "JsonStdVecVecStdPrimitiveI8" => Self::JsonStdVecVecStdPrimitiveI8,
                         // "JsonStdVecVecStdPrimitiveI16" => Self::JsonStdVecVecStdPrimitiveI16,
                         // "JsonStdVecVecStdPrimitiveI32" => Self::JsonStdVecVecStdPrimitiveI32,
                         // "JsonStdVecVecStdPrimitiveI64" => Self::JsonStdVecVecStdPrimitiveI64,
@@ -505,7 +505,7 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
                         SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                         SupportedPredefinedType::JsonStdOptionOptionStdStringString |
 
-                        // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                        SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
                         // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                         // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                         // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -707,7 +707,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&ident);
-    let ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = {
+    let ident_generate_postgresql_query_part_to_read_error_named_upper_camel_case_token_stream = {
         let value = format!("{ident}{}", naming_conventions::GeneratePostgresqlQueryPartToReadErrorNamedUpperCamelCase);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -810,10 +810,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
             SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
             SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-            SupportedPredefinedType::JsonStdOptionOptionStdStringString
-            => (),
+            SupportedPredefinedType::JsonStdOptionOptionStdStringString => (),
 
-            // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+            SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
             // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
             // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
             // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -872,9 +871,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
             // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
             // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
-            // => {
-            //     acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
-            // },
+            => {
+                acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
+            },
 
             SupportedPredefinedType::JsonGeneric(_) |
             SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => (),
@@ -923,10 +922,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString
-                => None,
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
     
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
+                => None,
+
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -1098,7 +1098,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedPredefinedType::JsonStdOptionOptionStdStringString
                     => proc_macro2::TokenStream::new(),
 
-                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                     // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                     // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                     // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -1157,12 +1157,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                     // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
                     // SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString
-                    // => quote::quote!{
-                    //     {
-                    //         limit: std::primitive::u64,
-                    //         offset: std::primitive::u64,
-                    //     }
-                    // },
+                    => quote::quote!{
+                        {
+                            limit: std::primitive::u64,
+                            offset: std::primitive::u64,
+                        }
+                    },
 
                     SupportedPredefinedType::JsonGeneric(type_path) => generate_std_vec_vec_generic_ident_field_token_stream(&type_path),
                     SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => generate_std_vec_vec_generic_ident_field_token_stream(&type_path),
@@ -1205,7 +1205,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 true => quote::quote!{
                     GeneratePostgresqlQueryPart {
                         #[eo_error_occurence]
-                        error: #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream,
+                        error: #ident_generate_postgresql_query_part_to_read_error_named_upper_camel_case_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                 },
@@ -1235,12 +1235,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
-        let ident_generate_postgresql_query_part_error_named_token_stream = {
+        let maybe_ident_generate_postgresql_query_part_error_named_token_stream = {
             match should_generate_ident_generate_postgresql_query_part_error_named_enum {
                 true => {
                     quote::quote!{
                         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                        pub enum #ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream {
+                        pub enum #ident_generate_postgresql_query_part_to_read_error_named_upper_camel_case_token_stream {
                             #(#offset_plus_limit_is_int_overflow_variants_token_stream)*
                             #(#field_ident_generate_postgresql_query_part_from_self_vec_variants_token_stream),*
                         }
@@ -1252,7 +1252,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         quote::quote!{
             #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
-            #ident_generate_postgresql_query_part_error_named_token_stream
+            #maybe_ident_generate_postgresql_query_part_error_named_token_stream
         }
     };
     let impl_generate_postgresql_query_part_to_read_for_ident_field_to_read_token_stream = {
@@ -1337,7 +1337,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let end = match offset.checked_add(*limit) {
                                 Some(value) => value,
                                 None => {
-                                    return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream {
+                                    return Err(#ident_generate_postgresql_query_part_to_read_error_named_upper_camel_case_token_stream::#ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream {
                                         limit: *limit,
                                         offset: *offset,
                                         code_occurence: error_occurence_lib::code_occurence!(),
@@ -1570,7 +1570,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ) {
                             Ok(value) => #simple_types_token_stream,
                             Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream  {
+                                return Err(#ident_generate_postgresql_query_part_to_read_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream  {
                                     field: error,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
@@ -1631,7 +1631,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ) {
                             Ok(value) => #vec_simple_types_token_stream,
                             Err(error) => {
-                                return Err(#ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
+                                return Err(#ident_generate_postgresql_query_part_to_read_error_named_upper_camel_case_token_stream::#ident_generate_postgresql_query_part_from_self_vec_upper_camel_case_token_stream {
                                     field: error,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
@@ -1689,7 +1689,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{ => #query_part_token_stream}
                     },
 
-                    // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                    SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => {
+                        let query_part_token_stream = generate_vec_simple_json_type(PrimitiveJsonType::Number);
+                        quote::quote!{
+                            {
+                                limit,
+                                offset
+                            } => #query_part_token_stream
+                        }
+                    },
+
                     // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                     // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                     // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -1920,7 +1929,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let second_generic_token_stream = match should_generate_ident_generate_postgresql_query_part_error_named_enum {
-            true => &ident_generate_postgresql_query_part_error_named_upper_camel_case_token_stream,
+            true => &ident_generate_postgresql_query_part_to_read_error_named_upper_camel_case_token_stream,
             false => &quote::quote!{()}
         };
         let postgresql_query_part_content_token_stream = generate_postgresql_query_part_content(&quote::quote!{self}, true);
@@ -2057,7 +2066,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -2228,7 +2237,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => quote::quote!{value.#element_ident.0.into_iter().map(|element|element.0).collect()},
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -2518,7 +2527,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
     
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -2653,7 +2662,23 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString
                 => quote::quote!{value},
 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => quote::quote!{
+                    {
+                        let mut acc = vec![];
+                        for element in value {
+                            match element {
+                                Ok(value) => {
+                                    acc.push(value);
+                                }
+                                Err(error) => {
+                                    return Err(serde::de::Error::custom(error));
+                                }
+                            }
+                        }
+                        acc
+                    }
+                },
+                
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -3261,7 +3286,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdOptionOptionStdStringString => supported_predefined_type.to_original_type().std_option_option_full_type_path_token_stream(),
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -3472,9 +3497,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString 
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -3613,9 +3638,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString 
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -3868,9 +3893,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -4320,9 +4345,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -4982,9 +5007,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString 
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -5129,9 +5154,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString 
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -5421,9 +5446,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -5597,9 +5622,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -5779,9 +5804,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
@@ -5950,9 +5975,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
                 
-                // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32 |
                 // SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64 |
