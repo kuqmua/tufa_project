@@ -304,6 +304,7 @@ impl error_occurence_lib::ToStdStringString for JsonUuid {
         self.0.to_string()
     }
 }
+
 /////////////////////
 //todo rename it coz it applied to read_one and read_many
 pub trait GeneratePostgresqlQueryPartToRead<T1, T2> {
