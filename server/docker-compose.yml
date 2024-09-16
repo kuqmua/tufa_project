@@ -1,3 +1,4 @@
+#actual docker-compose now on ubuntu with ryzen 7600 in pg_jsonschema folder
 version: '3.8'
 services:
   postgres_service:
