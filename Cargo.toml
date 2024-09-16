@@ -222,7 +222,6 @@ unknown_crate_types = { level = "deny", priority = 0 } #unknown crate type found
 useless_deprecated = { level = "deny", priority = 0 } #detects deprecation attributes with no effect
 redundant_lifetimes = { level = "deny", priority = 0 } #detects lifetime parameters that are redundant because they are equal to some other named lifetime
 unit_bindings = { level = "deny", priority = 0 } #binding is useless because it has the unit `()` type
-const_eval_mutable_ptr_in_final_value = { level = "deny", priority = 0 } #detects a mutable pointer that has leaked into final value of a const expression
 non_contiguous_range_endpoints = { level = "deny", priority = 0 } #detects off_by_one errors with exclusive range patterns
 non_local_definitions = { level = "deny", priority = 0 } #checks for non_local definitions
 refining_impl_trait_internal = { level = "deny", priority = 0 } #impl trait in impl method signature does not match trait method signature
