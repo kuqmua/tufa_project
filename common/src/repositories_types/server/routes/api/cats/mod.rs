@@ -1843,43 +1843,28 @@ impl
         };
         for element in &self.0 {
             match &element {
-                SomethingOptionToUpdate::StdOptionOptionGeneric(value) => match &value.value {
-                    Some(value) => {
-                        match value.try_generate_bind_increments(
-                            &acc,
-                            Some("std_option_option_generic"),
-                            increment,
-                        ) {
-                            Ok(value) => {
-                                acc = value;
-                            }
-                            Err(error) => {
-                                return
-                                    Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                    :: Doggie
-                                    {
-                                        doggie : error, code_occurence : error_occurence_lib ::
-                                        code_occurence! (),
-                                    });
-                            }
+                SomethingOptionToUpdate::StdOptionOptionGeneric(value) => {
+                    match value.value.try_generate_bind_increments(
+                        &jsonb_set_accumulator,
+                        &jsonb_set_target,
+                        &jsonb_set_path,
+                        increment,
+                        is_array_object_element.clone(),
+                    ) {
+                        Ok(value) => {
+                            acc = value;
+                        }
+                        Err(error) => {
+                            return
+                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                            :: Doggie
+                            {
+                                doggie : error, code_occurence : error_occurence_lib ::
+                                code_occurence! (),
+                            },);
                         }
                     }
-                    None => match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            acc = format!
-                                    ("jsonb_set({acc},'{{{previous_path}std_option_option_generic}}',${increment})");
-                        }
-                        None => {
-                            return
-                                    Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                    :: CheckedAdd
-                                    {
-                                        code_occurence : error_occurence_lib :: code_occurence! (),
-                                    });
-                        }
-                    },
-                },
+                }
             }
         }
         Ok(acc)
@@ -1974,6 +1959,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
 impl postgresql_crud::CheckIdExistsInJsonGenericFields for Something {
     fn check_id_exists_in_json_generic_fields(&self) {}
 }
+
 ////
 impl std::fmt::Display for Doggie {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

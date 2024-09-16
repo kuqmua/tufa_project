@@ -4009,43 +4009,70 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
+                    // let element_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    //     &element_ident.to_string(),
+                    //     &proc_macro_name_upper_camel_case_ident_stringified
+                    // );
+                    // let element_ident_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&quote::quote!{#type_path}.to_string());
                     let element_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &element_ident.to_string(),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     let element_ident_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
+                        // (value) => {
+                        //     match &value.value {
+                        //         Some(value) => {
+                        //             match value.try_generate_bind_increments(
+                        //                 &acc,
+                        //                 Some(#element_ident_double_quotes_token_stream),
+                        //                 increment,
+                        //             ) {
+                        //                 Ok(value) => {
+                        //                     acc = value;
+                        //                 }
+                        //                 Err(error) => {
+                        //                     return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#type_path {
+                        //                         #element_ident_snake_case_token_stream: error,
+                        //                         code_occurence: error_occurence_lib::code_occurence!(),
+                        //                     });
+                        //                 }
+                        //             }
+                        //         }
+                        //         None => {
+                        //             match increment.checked_add(1) {
+                        //                 Some(value) => {
+                        //                     *increment = value;
+                        //                     acc = format!("jsonb_set({acc},'{{{previous_path}std_option_option_generic}}',${increment})");
+                        //                 }
+                        //                 None => {
+                        //                     return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
+                        //                         code_occurence: error_occurence_lib::code_occurence!(),
+                        //                     });
+                        //                 }
+                        //             }
+                        //         }
+                        //     }
+                        // }
+
                         (value) => {
-                            match &value.value {
-                                Some(value) => {
-                                    match value.try_generate_bind_increments(
-                                        &acc,
-                                        Some(#element_ident_double_quotes_token_stream),
-                                        increment,
-                                    ) {
-                                        Ok(value) => {
-                                            acc = value;
-                                        }
-                                        Err(error) => {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#type_path {
-                                                #element_ident_snake_case_token_stream: error,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
+                            match value.value.try_generate_bind_increments(
+                                &jsonb_set_accumulator,
+                                &jsonb_set_target,
+                                &jsonb_set_path,
+                                increment,
+                                is_array_object_element.clone(),
+                            ) {
+                                Ok(value) => {
+                                    acc = value;
                                 }
-                                None => {
-                                    match increment.checked_add(1) {
-                                        Some(value) => {
-                                            *increment = value;
-                                            acc = format!("jsonb_set({acc},'{{{previous_path}std_option_option_generic}}',${increment})");
-                                        }
-                                        None => {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
+                                Err(error) => {
+                                    return Err(
+                                        #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#type_path {
+                                            #element_ident_snake_case_token_stream: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        },
+                                    );
                                 }
                             }
                         }
