@@ -484,156 +484,20 @@ content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 {
-    "std_primitive_bool_as_postgresql_bool_not_null": true,
-    # "std_primitive_i32_as_postgresql_int": 83,
-    "sqlx_types_json_t_as_postgresql_json_b_not_null": {
-        "std_primitive_i8": 8,
-        "std_primitive_i16": 16,
-        "std_primitive_i32": 0,
-        "std_primitive_i64": 0,
-        "std_primitive_i128": 0,
-        "std_primitive_u8": 0,
-        "std_primitive_u16": 0, 
-        "std_primitive_u32": 0,
-        "std_primitive_u64": 0,
-        "std_primitive_u128": 0,
-        "std_primitive_f32": 0.9,
-        "std_primitive_f64": 0.9,
-        "std_primitive_bool": true,
-        "std_string_string": "",
-
-        "std_option_option_std_primitive_i8": 0,
-        "std_option_option_std_primitive_i16": 0,  
-        "std_option_option_std_primitive_i32": 0,
-        "std_option_option_std_primitive_i64": 0,
-        "std_option_option_std_primitive_i128": 0,
-        "std_option_option_std_primitive_u8": 0,
-        "std_option_option_std_primitive_u16": 0, 
-        "std_option_option_std_primitive_u32": 0,
-        "std_option_option_std_primitive_u64": 0,
-        "std_option_option_std_primitive_u128": 0,
-        "std_option_option_std_primitive_f32": 0.9, 
-        "std_option_option_std_primitive_f64": 0.9, 
-        "std_option_option_std_primitive_bool": true,
-        "std_option_option_std_string_string": "",
-
-        # "std_vec_vec_std_primitive_i8": [0, 1, 2],
-        # "std_vec_vec_std_primitive_i16": [0, 1, 2], 
-        # "std_vec_vec_std_primitive_i32": [0, 1, 2],
-        # "std_vec_vec_std_primitive_i64": [0, 1, 2],
-        # "std_vec_vec_std_primitive_i128": [0, 1, 2],
-        # "std_vec_vec_std_primitive_u8": [0, 1, 2],
-        # "std_vec_vec_std_primitive_u16": [0, 1, 2],
-        # "std_vec_vec_std_primitive_u32": [0, 1, 2], 
-        # "std_vec_vec_std_primitive_u64": [0, 1, 2],  
-        # "std_vec_vec_std_primitive_u128": [0, 1, 2],
-        # "std_vec_vec_std_primitive_f32": [0.9, 1.3, 1.6],
-        # "std_vec_vec_std_primitive_f64": [0.9, 1.3, 1.6], 
-        # "std_vec_vec_std_primitive_bool": [true, false, true],
-        # "std_vec_vec_std_string_string": ["one", "two", "three"],
-
-        # "std_option_option_std_vec_vec_std_primitive_i8": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_i16": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_i32": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_i64": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_i128": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_u8": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_u16": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_u32": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_u64": [0, 1, 2],
-        # "std_option_option_std_vec_vec_std_primitive_u128": [0, 1, 2], 
-        # "std_option_option_std_vec_vec_std_primitive_f32": [0.9, 1.3, 1.6],
-        # "std_option_option_std_vec_vec_std_primitive_f64": [0.9, 1.3, 1.6],
-        # "std_option_option_std_vec_vec_std_primitive_bool": [true, false, true], 
-        # "std_option_option_std_vec_vec_std_string_string": ["one", "two", "three"],
-
-        # "std_vec_vec_std_option_option_std_primitive_i8": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_i16": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_i32": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_i64": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_i128": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_u8": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_u16": [0, 1, 2, null], 
-        # "std_vec_vec_std_option_option_std_primitive_u32": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_u64": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_u128": [0, 1, 2, null],
-        # "std_vec_vec_std_option_option_std_primitive_f32": [0.9, 1.3, 1.6, null],
-        # "std_vec_vec_std_option_option_std_primitive_f64": [0.9, 1.3, 1.6, null],
-        # "std_vec_vec_std_option_option_std_primitive_bool": [true, false, true, null],
-        # "std_vec_vec_std_option_option_std_string_string": ["one", "two", "three", null],
-
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": [0, 1, 2, null], 
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": [0, 1, 2, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": [0.9, 1.3, 1.6, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": [0.9, 1.3, 1.6, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": [true, false, true, null],
-        # "std_option_option_std_vec_vec_std_option_option_std_string_string": ["one", "two", "three", null]
-        # ,
-
-        "generic": {
-            "std_primitive_i16": 0
-            # ,
-            # "std_option_option_std_primitive_i32": 0,
-            # "std_string_string": "",
-            # "generic": {
-            #     "std_primitive_i16": 0,
-            #     "std_string_string": ""
-            # }
-        }
-        ,
-        # "std_option_option_generic": {
-        #     "std_primitive_i16": 0,
-        #     "std_option_option_std_primitive_i32": 0,
-        #     "std_string_string": "",
-        #     "generic": {
-        #         "std_primitive_i16": 0,
-        #         "std_string_string": ""
-        #     }
-        # }
-        # ,
-        "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_i16": 0,
-              "generic": {
-                "std_primitive_i32": 0
-              }
-            },
-            {
-              "std_primitive_i16": 0,
-              "generic": {
-                "std_primitive_i32": 0
-              }
-            }
-        ]
-        # ,
-        # "std_option_option_std_vec_vec_generic_with_id": [
-        #     {
-        #         "std_string_string": "sdss"
-        #     }
-        # ],
-        # "std_vec_vec_std_option_option_generic_with_id": [
-        #     {
-        #       "std_string_string": "sdss"
-        #     },
-        #     null
-        # ],
-        # "std_option_option_std_vec_vec_std_option_option_generic_with_id": [
-        #     {
-        #         "std_string_string": "sdss"
-        #     },
-        #     null
-        # ]
-    }
+  "std_primitive_bool_as_postgresql_bool_not_null": false,
+  "sqlx_types_json_t_as_postgresql_json_b_not_null": {
+    "std_vec_vec_generic_with_id": [
+      {
+        "std_primitive_i16": 0
+      }
+    ],
+    "std_option_option_std_vec_vec_generic_with_id": [
+      {
+        "std_primitive_i16": 0
+      }
+    ]
+  }
 }
-
 ###
  
 GET http://127.0.0.1:8080/jsongeneric/create_one_payload_example HTTP/1.1
@@ -1577,12 +1441,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     # },
     "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "value": [
-            {
-                "std_primitive_i8": {
-                    "value": 65
-                }
-            }
-            ,
+            # {
+            #     "std_primitive_i8": {
+            #         "value": 65
+            #     }
+            # }
+            # ,
             # {
             #     "std_primitive_i16": {
             #         "value": 27
@@ -2055,7 +1919,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             # }
             # ,
             {
-                "std_vec_vec_generic": {
+                "std_vec_vec_generic_with_id": {
                     "value": [
                         {
                             "create": {
@@ -2078,75 +1942,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                         {
                             "delete": "d6a4aa72-b154-4699-889f-33ef34a8c7f2"
                         }
-
-
-                        #
-                        # [
-                        #     {
-                        #         "id": "03ac2b59-6cf6-4b4b-9b80-f03c6ed1c22c",
-                        #     },
-                        #     {
-                        #         "std_primitive_i16": {
-                        #             "value": 22
-                        #         }
-                        #     },
-                        #     {
-                        #         "generic": {
-                        #             "value": [
-                        #                 {
-                        #                     "std_primitive_i32": {
-                        #                         "value": 888
-                        #                     }
-                        #                 }
-                        #             ]
-                        #         }
-                        #     }
-                        # ]
-                        # ,
-                        # [
-                        #     {
-                        #         "id": {
-                        #             "value": "03ac2b59-6cf6-4b4b-9b80-f03c6ed1c22c"
-                        #         },
-                        #     },
-                        #     {
-                        #         "std_primitive_i16": {
-                        #             "value": 43
-                        #         }
-                        #     },
-                        #     {
-                        #         "generic": {
-                        #             "value": [
-                        #                 {
-                        #                     "std_primitive_i32": {
-                        #                         "value": 229
-                        #                     }
-                        #                 }
-                        #             ]
-                        #         }
-                        #     }
-                        # ]
-                        # # ,
-                        # # [
-                        # #     {
-                        # #         "std_primitive_i16": {
-                        # #             "value": 11
-                        # #         }
-                        # #     },
-                        # #     {
-                        # #         "generic": {
-                        # #             "value": [
-                        # #                 {
-                        # #                     "std_primitive_i32": {
-                        # #                         "value": 44
-                        # #                     }
-                        # #                 }
-                        # #             ]
-                        # #         }
-                        # #     }
-                        # # ]
-                        #
                     ]
+                }
+            },
+            {
+                "std_option_option_std_vec_vec_generic_with_id": {
+                    "value": null
                 }
             }
         ]
