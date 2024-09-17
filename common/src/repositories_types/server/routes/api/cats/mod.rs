@@ -296,9 +296,9 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
     // pub generic: postgresql_crud::JsonGeneric<Rat>,
-    pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
+    // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
 
-    // pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
     // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
     // pub std_vec_vec_std_option_option_generic_with_id: postgresql_crud::JsonStdVecVecStdOptionOptionGenericWithId<Doggie>,
     // pub std_option_option_std_vec_vec_std_option_option_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId<Doggie>,
@@ -376,7 +376,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub generic: postgresql_crud::JsonGeneric<Cat>,

@@ -1,3 +1,4 @@
+pub use uuid::Uuid;
 pub use futures::TryStreamExt;
 pub use http_logic;
 pub use route_validators::check_body_size;

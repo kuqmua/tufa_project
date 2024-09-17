@@ -275,7 +275,7 @@ impl SupportedPredefinedOriginalType {
                 quote::quote!{std::string::#value}
             },
             Self::Generic(_) => self.to_read_token_stream(),
-            Self::Uuid => quote::quote!{uuid::Uuid},
+            Self::Uuid => quote::quote!{postgresql_crud::Uuid},
         }
     }
     fn std_option_option_full_type_path_token_stream(&self) -> proc_macro2::TokenStream {
@@ -765,7 +765,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let update_snake_case = naming_conventions::UpdateSnakeCase;
-    let uuid_uuid_token_stream = quote::quote!{uuid::Uuid};
+    let postgresql_crud_uuid_token_stream = quote::quote!{postgresql_crud::Uuid};
     let offset_plus_limit_is_int_overflow_variants_token_stream = vec_syn_field.iter().fold(vec![], |mut acc, element| {
         let ident_offset_plus_limit_is_int_overflow_token_stream = {
             let ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream = generate_ident_offset_plus_limit_is_int_overflow_upper_camel_case_token_stream(&element);
@@ -2009,7 +2009,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let pub_struct_ident_options_to_read_token_stream = {
         let maybe_id_token_stream = if is_id_field_exists {
             quote::quote!{
-                #id_snake_case: std::option::Option<uuid::Uuid>,
+                #id_snake_case: std::option::Option<#postgresql_crud_uuid_token_stream>,
             }
         }
         else {
@@ -4009,8 +4009,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let element_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &element_ident.to_string(),
+                    let jsonb_set_path_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{previous_jsonb_set_path}}{element_ident}"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     let type_path_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&quote::quote!{#type_path}.to_string());
@@ -4024,7 +4024,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 Some(value) => match value.try_generate_bind_increments(
                                     &jsonb_set_accumulator,
                                     &jsonb_set_target,
-                                    &jsonb_set_path,
+                                    &format!(#jsonb_set_path_format_handle_token_stream),
                                     increment,
                                     is_array_object_element.clone(),
                                 ) {
