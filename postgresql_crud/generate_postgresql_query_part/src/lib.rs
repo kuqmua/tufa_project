@@ -3339,9 +3339,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         std::vec::Vec<#type_path_json_array_element_change_upper_camel_case>
                     }
                 },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
+                    // supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream()
+                    let type_path_json_array_element_change_upper_camel_case = generate_ident_json_array_element_change_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    quote::quote!{
+                        std::vec::Vec<std::option::Option<#type_path_json_array_element_change_upper_camel_case>>
+                    }
+                },
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
 
                 SupportedPredefinedType::JsonUuid => supported_predefined_type.to_original_type().full_type_path_token_stream(),
             };
@@ -3782,7 +3788,77 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    todo!()
+                    let generic_ident_stringified = quote::quote!{#type_path}.to_string();
+                    let generic_ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&generic_ident_stringified);
+                    let generic_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&generic_ident_stringified);
+                    let element_ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.to_string());
+                    let element_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_ident.to_string());
+                    let element_ident_generic_ident_not_unique_id_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{generic_ident_upper_camel_case_stringified}{}", naming_conventions::NotUniqueIdUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let element_ident_generic_ident_not_unique_id_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{generic_ident_snake_case_stringified}_{}", naming_conventions::NotUniqueIdSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    
+                    let element_ident_generic_ident_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{generic_ident_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let element_ident_generic_ident_try_generate_json_array_element_update_bind_increments_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{generic_ident_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let generic_ident_try_generate_json_array_element_update_bind_increments_error_named_upper_camel_case_token_stream = generate_ident_try_generate_json_array_element_update_bind_increments_error_named_upper_camel_case_token_stream(&generic_ident_upper_camel_case_stringified);
+                    
+                    let element_ident_generic_ident_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{generic_ident_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let element_ident_generic_ident_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{generic_ident_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let try_generate_json_array_element_delete_bind_increments_error_named_upper_camel_case_token_stream = {
+                        let value = naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamedUpperCamelCase.to_string();
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    
+                    let element_ident_generic_ident_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{generic_ident_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let element_ident_generic_ident_try_generate_json_array_element_create_bind_increments_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{generic_ident_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let try_generate_json_array_element_create_bind_increments_error_named_upper_camel_case_token_stream = {
+                        let value = naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamedUpperCamelCase.to_string();
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    quote::quote!{
+                        #element_ident_generic_ident_not_unique_id_upper_camel_case_token_stream {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            #element_ident_generic_ident_not_unique_id_snake_case_token_stream: postgresql_crud::JsonUuid,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        #element_ident_generic_ident_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream {
+                            #[eo_error_occurence]
+                            #element_ident_generic_ident_try_generate_json_array_element_update_bind_increments_snake_case_token_stream: #generic_ident_try_generate_json_array_element_update_bind_increments_error_named_upper_camel_case_token_stream,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        #element_ident_generic_ident_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
+                            #[eo_error_occurence]
+                            #element_ident_generic_ident_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: postgresql_crud::#try_generate_json_array_element_delete_bind_increments_error_named_upper_camel_case_token_stream,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        #element_ident_generic_ident_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream {
+                            #[eo_error_occurence]
+                            #element_ident_generic_ident_try_generate_json_array_element_create_bind_increments_snake_case_token_stream: postgresql_crud::#try_generate_json_array_element_create_bind_increments_error_named_upper_camel_case_token_stream,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        }
+                    }
                 },
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
                     todo!()
@@ -4262,9 +4338,189 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => todo!(),
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => todo!(),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => todo!(),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
+                    let element_ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.to_string());
+                    let element_type_stringified = quote::quote!{#type_path}.to_string();
+                    let element_type_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_type_stringified);
+                    let element_type_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_type_stringified);
+                    let std_vec_vec_generic_generic_generic_ident_not_unique_id_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::NotUniqueIdUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let element_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_ident.to_string());
+                    let std_vec_vec_generic_generic_generic_ident_not_unique_id_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}", naming_conventions::NotUniqueIdSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let generic_ident_json_array_element_change_upper_camel_case_token_stream = generate_ident_json_array_element_change_upper_camel_case_token_stream(&element_type_upper_camel_case_stringified);
+                    let std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}",  naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream = {
+                        let value = format!("{element_ident_upper_camel_case_stringified}{element_type_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_snake_case_token_stream = {
+                        let value = format!("{element_ident_snake_case_stringified}_{element_type_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsSnakeCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let current_jsonb_set_target_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{jsonb_set_target}}->'{element_ident}'"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    let acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("jsonb_set({{acc}},'{{{{{{previous_jsonb_set_path}}{element_ident}}}}}',(select jsonb_agg({{maybe_jsonb_agg_case}}) from jsonb_array_elements({{current_jsonb_set_target}}) as elem {{maybe_where}}){{maybe_jsonb_build_array}})"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        (value) => {
+                            {
+                                let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+                                for element in &value.value {
+                                    match &element.0 {
+                                        postgresql_crud::JsonArrayElementChange::Update(value) => {
+                                            if ids.contains(&&value.id) {
+                                                return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#std_vec_vec_generic_generic_generic_ident_not_unique_id_upper_camel_case_token_stream {
+                                                    #std_vec_vec_generic_generic_generic_ident_not_unique_id_snake_case_token_stream: value.id,
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                });
+                                            }
+                                            else {
+                                                ids.push(&value.id);
+                                            }
+                                        },
+                                        postgresql_crud::JsonArrayElementChange::Delete(value) => {
+                                            if ids.contains(&value) {
+                                                return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#std_vec_vec_generic_generic_generic_ident_not_unique_id_upper_camel_case_token_stream {
+                                                    #std_vec_vec_generic_generic_generic_ident_not_unique_id_snake_case_token_stream: *value,
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                });
+                                            }
+                                            else {
+                                                ids.push(&value);
+                                            }
+                                        },
+                                        _ => ()
+                                    }
+                                }
+                            }
+                            let current_jsonb_set_target = format!(#current_jsonb_set_target_format_handle_token_stream);
+                            let mut update_query_part_acc = std::string::String::default();
+                            for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &#generic_ident_json_array_element_change_upper_camel_case_token_stream)>>() {
+                                match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
+                                    *element,
+                                    &jsonb_set_accumulator,
+                                    &jsonb_set_target,
+                                    &jsonb_set_path,
+                                    increment,
+                                    is_array_object_element.clone(),
+                                    //todo fix parameters propagation
+                                    // &acc,
+                                    // &format!("{jsonb_set_target}->'std_vec_vec_generic'"),
+                                    // &format!("{{std_vec_vec_generic,{index}}}"),
+                                    // increment,
+                                    // postgresql_crud::ArrayObjectElementOrSimple::ArrayObjectElement {
+                                    //     jsonb_set_path: format!("std_vec_vec_generic,{index}"),
+                                    //     index: index.clone(),
+                                    // },//for arrays it must be true?
+                                ) {
+                                    Ok(value) => {
+                                        if let Some(value) = value {
+                                            update_query_part_acc.push_str(&value);
+                                        }
+                                    },
+                                    Err(error) => {
+                                        return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream {
+                                            #std_vec_vec_generic_generic_ident_try_generate_json_array_element_update_bind_increments_snake_case_token_stream: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        });
+                                    }
+                                }
+                            }
+                            let mut delete_query_part_acc = std::string::String::default();
+                            for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &#generic_ident_json_array_element_change_upper_camel_case_token_stream)>>() {
+                                match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(*element, increment) {
+                                    Ok(value) => {
+                                        if let Some(value) = value {
+                                            let maybe_space_and_space = if delete_query_part_acc.is_empty() {
+                                                ""
+                                            }
+                                            else {
+                                                " and "
+                                            };
+                                            delete_query_part_acc.push_str(&format!("{value}{maybe_space_and_space}"));
+                                        }
+                                    },
+                                    Err(error) => {
+                                        return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
+                                            #std_vec_vec_generic_generic_ident_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        });
+                                    }
+                                }
+                            }
+                            let mut create_query_part_acc = std::string::String::default();
+                            for (index, element) in &value.value.iter().enumerate().collect::<std::vec::Vec<(usize, &#generic_ident_json_array_element_change_upper_camel_case_token_stream)>>() {
+                                match postgresql_crud::JsonArrayElementBindQuery::try_generate_create_bind_increments(*element, increment) {
+                                    Ok(value) => {
+                                        if let Some(value) = value {
+                                            create_query_part_acc.push_str(&format!("{value},"));
+                                        }
+                                    },
+                                    Err(error) => {
+                                        return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream {
+                                            #std_vec_vec_generic_generic_ident_try_generate_json_array_element_create_bind_increments_snake_case_token_stream: error,
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        });
+                                    }
+                                }
+                            }
+                            let _ = create_query_part_acc.pop();
+                            let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
+                                std::string::String::from("elem")
+                            }
+                            else {
+                                format!("case {update_query_part_acc} else elem end")
+                            };
+                            let maybe_where = if delete_query_part_acc.is_empty() {
+                                std::string::String::default()
+                            }
+                            else {
+                                format!(" where {delete_query_part_acc}")
+                            };
+                            let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
+                                std::string::String::default()
+                            }
+                            else {
+                                format!(" || jsonb_build_array({create_query_part_acc})")
+                            };
+                            acc = format!(#acc_format_handle_token_stream);
+                        }
+                    }
+                },
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => todo!(),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => todo!(),
 
                 SupportedPredefinedType::JsonUuid => {
                     // let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -4433,7 +4689,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => todo!(),
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => {
+                    quote::quote!{
+                        // query = value.value.bind_value_to_query(query);
+                        for element in &value.value {
+                            query = postgresql_crud::JsonArrayElementBindQuery::bind_update_value_to_query(element.clone(), query);
+                        }
+                        for element in &value.value {
+                            query = postgresql_crud::JsonArrayElementBindQuery::bind_delete_value_to_query(element.clone(), query);
+                        }
+                        for element in &value.value {
+                            query = postgresql_crud::JsonArrayElementBindQuery::bind_create_value_to_query(element.clone(), query);
+                        }
+                    }
+                },
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => todo!(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => todo!(),
 
@@ -5764,8 +6033,26 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
+                    let element_ident_double_quotes_jsonb_build_array_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("'{}',jsonb_build_array({{acc}}),", element_ident),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
                     quote::quote!{
-                        todo!()
+                        {
+                            let mut acc = std::string::String::default();
+                            for element in &self.#element_ident.0 {
+                                match element.try_generate_bind_increments(increment) {
+                                    Ok(value) => {
+                                        acc.push_str(&format!("{value},"));
+                                    }
+                                    Err(error) => {
+                                        return Err(error);
+                                    }
+                                }
+                            }
+                            let _ = acc.pop();
+                            increments.push_str(&format!(#element_ident_double_quotes_jsonb_build_array_token_stream));
+                        }
                     }
                 },
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
@@ -5912,7 +6199,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
                     quote::quote!{
-                        todo!()
+                        for element in self.#element_ident.0 {
+                            query = element.bind_value_to_query(query);
+                        }
                     }
                 },
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
