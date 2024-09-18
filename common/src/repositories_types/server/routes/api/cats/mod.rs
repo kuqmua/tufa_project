@@ -300,8 +300,6 @@ pub struct Something {
 
     pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
     pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
-    // pub std_vec_vec_std_option_option_generic_with_id: postgresql_crud::JsonStdVecVecStdOptionOptionGenericWithId<Doggie>,
-    // pub std_option_option_std_vec_vec_std_option_option_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId<Doggie>,
 }
 
 //todo this need for old version of update_many. later need to refactor update many and remove this

@@ -95,8 +95,8 @@ enum SupportedPredefinedType {
 
     JsonStdVecVecGenericWithId(syn::TypePath),
     JsonStdOptionOptionStdVecVecGenericWithId(syn::TypePath),
-    JsonStdVecVecStdOptionOptionGenericWithId(syn::TypePath),
-    JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(syn::TypePath),
+
+    //JsonStdVecVecStdOptionOptionGenericWithId and JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId not supported coz null does not have id, so its impossible to update and delete null-elements by id. only using index, but i dont like using index
 
     JsonUuid,
 }
@@ -198,8 +198,6 @@ impl SupportedPredefinedType {
 
             Self::JsonStdVecVecGenericWithId(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
             Self::JsonStdOptionOptionStdVecVecGenericWithId(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
-            Self::JsonStdVecVecStdOptionOptionGenericWithId(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
-            Self::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(value) => SupportedPredefinedOriginalType::Generic(value.clone()),
 
             Self::JsonUuid => SupportedPredefinedOriginalType::Uuid,
         }
@@ -466,8 +464,6 @@ impl std::convert::TryFrom<&syn::Field> for SupportedPredefinedType {
 
                         "JsonStdVecVecGenericWithId" => Self::JsonStdVecVecGenericWithId(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
                         "JsonStdOptionOptionStdVecVecGenericWithId" => Self::JsonStdOptionOptionStdVecVecGenericWithId(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
-                        "JsonStdVecVecStdOptionOptionGenericWithId" => Self::JsonStdVecVecStdOptionOptionGenericWithId(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
-                        "JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId" => Self::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(try_generate_generic_ident_upper_camel_case_token_stream(&path_segment)?),
 
                         "JsonUuid" => Self::JsonUuid,
                         _ => {
@@ -879,9 +875,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             SupportedPredefinedType::JsonStdOptionOptionGeneric(_) => (),
 
             SupportedPredefinedType::JsonStdVecVecGenericWithId(_) |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) |
-            SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) |
-            SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => {
+            SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_)
+             => {
                 acc.push(ident_offset_plus_limit_is_int_overflow_token_stream);
             },
 
@@ -990,8 +985,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 SupportedPredefinedType::JsonStdVecVecGenericWithId(type_path) => Some(type_path),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => Some(type_path),
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => Some(type_path),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => Some(type_path),
 
                 SupportedPredefinedType::JsonUuid => None,
             };
@@ -1167,8 +1160,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                     SupportedPredefinedType::JsonStdVecVecGenericWithId(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
                     SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => generate_field_vec_limit_offset_token_stream(&type_path),
 
                     SupportedPredefinedType::JsonUuid => proc_macro2::TokenStream::new(),
                 }
@@ -1856,16 +1847,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         false,
                         true,
                     ),
-                    SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => maybe_std_option_option_std_vec_vec_maybe_std_option_option_generic_logic_token_stream(
-                        &type_path, 
-                        true,
-                        false,
-                    ),
-                    SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => maybe_std_option_option_std_vec_vec_maybe_std_option_option_generic_logic_token_stream(
-                        &type_path, 
-                        true,
-                        true,
-                    ),
 
                     SupportedPredefinedType::JsonUuid => {
                         let query_part_token_stream = generate_simple_json_type(PrimitiveJsonType::String);
@@ -2120,8 +2101,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 SupportedPredefinedType::JsonStdVecVecGenericWithId(_) => supported_predefined_type.to_original_type().std_vec_vec_full_type_path_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream(),
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
 
                 SupportedPredefinedType::JsonUuid => supported_predefined_type.to_original_type().full_type_path_token_stream(),
             };
@@ -2334,27 +2313,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         match value.#element_ident.0 {
                             Some(value) => Some(value.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()),
-                            None => None
-                        }
-                    }
-                }
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        value.#element_ident.0.into_iter().map(|element|match element {
-                            Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
-                            None => None
-                        }).collect::<std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>>()
-                    }
-                }
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    quote::quote!{
-                        match value.#element_ident.0 {
-                            Some(value) => Some(value.into_iter().map(|element|match element {
-                                Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
-                                None => None
-                            }).collect::<std::vec::Vec<std::option::Option<#generic_ident_options_upper_camel_case_token_stream>>>()),
                             None => None
                         }
                     }
@@ -2581,8 +2539,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 SupportedPredefinedType::JsonStdVecVecGenericWithId(_) => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_full_path_type_std_string_string_token_stream(),
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => supported_predefined_type.to_original_type().std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_result_result_std_option_option_full_path_type_std_string_string_token_stream(),
 
                 SupportedPredefinedType::JsonUuid => supported_predefined_type.to_original_type().full_type_path_token_stream(),
             }
@@ -2801,41 +2757,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => quote::quote!{
-                    match value {
-                        Some(value) => {
-                            let mut acc = vec![];
-                            for element in value {
-                                match element {
-                                    Ok(value) => {
-                                        acc.push(value);
-                                    }
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(error));
-                                    }
-                                }
-                            }
-                            Some(acc)
-                        }
-                        None => None
-                    }
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => quote::quote!{
-                    {
-                        let mut acc = vec![];
-                        for element in value {
-                            match element {
-                                Ok(value) => {
-                                    acc.push(value);
-                                }
-                                Err(error) => {
-                                    return Err(serde::de::Error::custom(error));
-                                }
-                            }
-                        }
-                        acc
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => quote::quote!{
                     match value {
                         Some(value) => {
                             let mut acc = vec![];
@@ -3346,8 +3267,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         std::option::Option<std::vec::Vec<#type_path_json_array_element_change_upper_camel_case>>
                     }
                 },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => supported_predefined_type.to_original_type().std_vec_vec_std_option_option_full_type_path_token_stream(),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => supported_predefined_type.to_original_type().std_option_option_std_vec_vec_std_option_option_full_type_path_token_stream(),
 
                 SupportedPredefinedType::JsonUuid => supported_predefined_type.to_original_type().full_type_path_token_stream(),
             };
@@ -3558,18 +3477,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => {
-                    if !acc.contains(&element) {
-                        // acc.push(type_path.clone());
-                        acc.push(element);
-                    }
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => {
-                    if !acc.contains(&element) {
-                        // acc.push(type_path.clone());
-                        acc.push(element);
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => {
                     if !acc.contains(&element) {
                         // acc.push(type_path.clone());
                         acc.push(element);
@@ -3859,12 +3766,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         }
                     }
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    todo!()
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    todo!()
                 },
 
                 SupportedPredefinedType::JsonUuid => panic!("{proc_macro_name_upper_camel_case_ident_stringified} unreachable variant"),
@@ -4550,8 +4451,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => todo!(),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => todo!(),
 
                 SupportedPredefinedType::JsonUuid => {
                     // let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -4746,8 +4645,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => todo!(),
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => todo!(),
 
                 SupportedPredefinedType::JsonUuid => {
                     // quote::quote!{
@@ -5006,12 +4903,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
                     todo!()
                 },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    todo!()
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    todo!()
-                },
 
                 SupportedPredefinedType::JsonUuid => {
                     todo!()
@@ -5134,12 +5025,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     todo!()
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    todo!()
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    todo!()
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => {
                     todo!()
                 },
 
@@ -5399,18 +5284,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote!{
                         pub #element_ident: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<#element_type>
-                    }
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
-                    quote::quote!{
-                        pub #element_ident: postgresql_crud::JsonStdVecVecStdOptionOptionGenericWithId<#element_type>
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    let element_type = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
-                    quote::quote!{
-                        pub #element_ident: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId<#element_type>
                     }
                 },
 
@@ -5684,16 +5557,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    quote::quote!{
-                        todo!()
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    quote::quote!{
-                        todo!()
-                    }
-                },
 
                 SupportedPredefinedType::JsonUuid => panic!("{proc_macro_name_upper_camel_case_ident_stringified} cannot be JsonUuid"),
             }
@@ -5836,19 +5699,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 }
                             }
                             None => {
-                                query = query.bind(sqlx::types::Json(None::<std::option::Option<#type_path_upper_camel_case_token_stream>>));
+                                query = query.bind(sqlx::types::Json(None::<std::option::Option<std::vec::Vec<#type_path_upper_camel_case_token_stream>>>));
                             }
                         }
-                    }
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    quote::quote!{
-                        todo!()
-                    }
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(type_path) => {
-                    quote::quote!{
-                        todo!()
                     }
                 },
 
@@ -5995,16 +5848,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(_) => {
                     acc.push(quote::quote!{
                         let _: () = postgresql_crud::CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId::check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self.#element_ident);
-                    });
-                },
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionGenericWithId(_) => {
-                    acc.push(quote::quote!{
-                        let _: () = postgresql_crud::CheckIdExistsInJsonStdVecVecStdOptionOptionGenericWithId::check_id_exists_in_json_std_vec_vec_std_option_option_generic_with_id(&self.#element_ident);
-                    });
-                },
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId(_) => {
-                    acc.push(quote::quote!{
-                        let _: () = postgresql_crud::CheckIdExistsInJsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId::check_id_exists_in_json_std_option_option_std_vec_vec_std_option_option_generic_with_id(&self.#element_ident);
                     });
                 },
 

@@ -642,8 +642,6 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecGenericWithId;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecGenericWithId;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionGenericWithId;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuid;
 
@@ -655,8 +653,6 @@ pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJ
 
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecGenericWithId;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId;
-pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecStdOptionOptionGenericWithId;
-pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecStdOptionOptionGenericWithId;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementChange;
 pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed;
