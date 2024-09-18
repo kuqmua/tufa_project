@@ -2373,12 +2373,10 @@ impl
                             }
                         }
                     }
-                    let current_jsonb_set_target = format!(
-                        "{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'"
-                    );
-                    let mut update_query_part_acc = std::string::String::default();
                     match &value.value {
                         Some(value) => {
+                            let current_jsonb_set_target = format!("{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'");
+                            let mut update_query_part_acc = std::string::String::default();
                             for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
                                 match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
                                     *element,
@@ -2403,24 +2401,7 @@ impl
                                     }
                                 }
                             }
-                        },
-                        None => {
-                            match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    update_query_part_acc.push_str("@@@HERETODO@@@");
-                                }
-                                None => {
-                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    let mut delete_query_part_acc = std::string::String::default();
-                    match &value.value {
-                        Some(value) => {
+                            let mut delete_query_part_acc = std::string::String::default();
                             for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
                                 match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(*element, increment) {
                                     Ok(value) => {
@@ -2442,24 +2423,7 @@ impl
                                     }
                                 }
                             }
-                        },
-                        None => {
-                            match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    delete_query_part_acc.push_str("@@@HERETODO@@@");
-                                }
-                                None => {
-                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    let mut create_query_part_acc = std::string::String::default();
-                    match &value.value {
-                        Some(value) => {
+                            let mut create_query_part_acc = std::string::String::default();
                             for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {
                                 match postgresql_crud::JsonArrayElementBindQuery::try_generate_create_bind_increments(*element, increment) {
                                     Ok(value) => {
@@ -2478,12 +2442,29 @@ impl
                                     }
                                 }
                             }
+                            let _ = create_query_part_acc.pop();
+                            let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
+                                std::string::String::from("elem")
+                            } else {
+                                format!("case {update_query_part_acc} else elem end")
+                            };
+                            let maybe_where = if delete_query_part_acc.is_empty() {
+                                std::string::String::default()
+                            } else {
+                                format!(" where {delete_query_part_acc}")
+                            };
+                            let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
+                                std::string::String::default()
+                            } else {
+                                format!(" || jsonb_build_array({create_query_part_acc})")
+                            };
+                            acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
                         },
                         None => {
                             match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
-                                    create_query_part_acc.push_str("@@@HERETODO@@@");
+                                    acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',${increment})");
                                 }
                                 None => {
                                     return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd {
@@ -2493,24 +2474,6 @@ impl
                             }
                         }
                     }
-                    let _ = create_query_part_acc.pop();
-                    let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
-                        std::string::String::from("elem")
-                    } else {
-                        format!("case {update_query_part_acc} else elem end")
-                    };
-                    let maybe_where = if delete_query_part_acc.is_empty() {
-                        std::string::String::default()
-                    } else {
-                        format!(" where {delete_query_part_acc}")
-                    };
-                    let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
-                        std::string::String::default()
-                    } else {
-                        format!(" || jsonb_build_array({create_query_part_acc})")
-                    };
-                    acc = format!
-                    ("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
                 }
             }
         }
@@ -2551,23 +2514,9 @@ impl
                             for element in value {
                                 query = postgresql_crud::JsonArrayElementBindQuery::bind_update_value_to_query(element.clone(), query);
                             }
-                        },
-                        None => {
-                            query = query.bind(sqlx::types::Json(None::<std::option::Option<std::vec::Vec<DoggieJsonArrayElementChange>>>));
-                        }
-                    }
-                    match &value.value {
-                        Some(value) => {
                             for element in value {
                                 query = postgresql_crud::JsonArrayElementBindQuery::bind_delete_value_to_query(element.clone(), query);
                             }
-                        },
-                        None => {
-                            query = query.bind(sqlx::types::Json(None::<std::option::Option<std::vec::Vec<DoggieJsonArrayElementChange>>>));
-                        }
-                    }
-                    match &value.value {
-                        Some(value) => {
                             for element in value {
                                 query = postgresql_crud::JsonArrayElementBindQuery::bind_create_value_to_query(element.clone(), query);
                             }
