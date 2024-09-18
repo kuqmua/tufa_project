@@ -2458,7 +2458,12 @@ impl
                             } else {
                                 format!(" || jsonb_build_array({create_query_part_acc})")
                             };
-                            acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
+                            let maybe_jsonb_build_array_in_case_of_null = if create_query_part_acc.is_empty() {
+                                format!("{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'")
+                            } else {
+                                format!("jsonb_build_array({create_query_part_acc})")
+                            };
+                            acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',case when {jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id' = 'null' then {maybe_jsonb_build_array_in_case_of_null} else (select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}) {maybe_jsonb_build_array} end)");
                         },
                         None => {
                             match increment.checked_add(1) {

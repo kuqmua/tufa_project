@@ -1923,13 +1923,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     "value": [
                         {
                             "create": {
-                                "std_primitive_i16": 31
+                                "std_primitive_i16": 36
                             }
                         }
                         ,
                         {
                             "update": {
-                                "id": "8cc5da73-1a7e-4ff4-9cfa-4f84998c62a4",
+                                "id": "79d417b3-3a9d-494d-8bf0-5148c088745a",
                                 "fields": [
                                     {
                                         "std_primitive_i16": {
@@ -1940,14 +1940,38 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                             }
                         },
                         {
-                            "delete": "d6a4aa72-b154-4699-889f-33ef34a8c7f2"
+                            "delete": "ed7403b7-16cc-487a-8772-afced7935bef"
                         }
                     ]
                 }
             },
             {
                 "std_option_option_std_vec_vec_generic_with_id": {
-                    "value": null
+                    "value": 
+                    null
+                    # [
+                    #     {
+                    #         "create": {
+                    #             "std_primitive_i16": 234
+                    #         }
+                    #     }
+                    #     ,
+                    #     {
+                    #         "update": {
+                    #             "id": "4d5256c3-616a-4b40-a2df-72a22eb641eb",
+                    #             "fields": [
+                    #                 {
+                    #                     "std_primitive_i16": {
+                    #                         "value": 6678
+                    #                     }
+                    #                 }
+                    #             ]
+                    #         }
+                    #     },
+                    #     {
+                    #         "delete": "581572cd-c4b4-43f3-9b76-fc91dcf75eec"
+                    #     }
+                    # ]
                 }
             }
         ]
