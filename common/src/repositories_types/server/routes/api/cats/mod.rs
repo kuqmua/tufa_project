@@ -2335,46 +2335,44 @@ impl
                     ("jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
                 }
                 SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(value) => {
-                    {
-                        let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
-                        if let Some(value) = &value.value {
-                            for element in value {
-                                match &element.0 {
-                                    postgresql_crud::JsonArrayElementChange::Update(value) => {
-                                        if ids.contains(&&value.id) {
-                                            return
-                                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                            :: StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId
-                                            {
-                                                std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id
-                                                : value.id, code_occurence : error_occurence_lib ::
-                                                code_occurence! (),
-                                            });
-                                        } else {
-                                            ids.push(&value.id);
-                                        }
-                                    }
-                                    postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                                        if ids.contains(&value) {
-                                            return
-                                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                            :: StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId
-                                            {
-                                                std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id
-                                                : * value, code_occurence : error_occurence_lib ::
-                                                code_occurence! (),
-                                            });
-                                        } else {
-                                            ids.push(&value);
-                                        }
-                                    }
-                                    _ => (),
-                                }
-                            }
-                        }
-                    }
                     match &value.value {
                         Some(value) => {
+                            {
+                                let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+                                for element in value {
+                                    match &element.0 {
+                                        postgresql_crud::JsonArrayElementChange::Update(value) => {
+                                            if ids.contains(&&value.id) {
+                                                return
+                                                Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                                                :: StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId
+                                                {
+                                                    std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id
+                                                    : value.id, code_occurence : error_occurence_lib ::
+                                                    code_occurence! (),
+                                                });
+                                            } else {
+                                                ids.push(&value.id);
+                                            }
+                                        }
+                                        postgresql_crud::JsonArrayElementChange::Delete(value) => {
+                                            if ids.contains(&value) {
+                                                return
+                                                Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                                                :: StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId
+                                                {
+                                                    std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id
+                                                    : * value, code_occurence : error_occurence_lib ::
+                                                    code_occurence! (),
+                                                });
+                                            } else {
+                                                ids.push(&value);
+                                            }
+                                        }
+                                        _ => (),
+                                    }
+                                }
+                            }
                             let current_jsonb_set_target = format!("{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'");
                             let mut update_query_part_acc = std::string::String::default();
                             for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>() {

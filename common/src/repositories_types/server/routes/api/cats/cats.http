@@ -1948,30 +1948,30 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             {
                 "std_option_option_std_vec_vec_generic_with_id": {
                     "value": 
-                    null
-                    # [
-                    #     {
-                    #         "create": {
-                    #             "std_primitive_i16": 234
-                    #         }
-                    #     }
-                    #     ,
-                    #     {
-                    #         "update": {
-                    #             "id": "4d5256c3-616a-4b40-a2df-72a22eb641eb",
-                    #             "fields": [
-                    #                 {
-                    #                     "std_primitive_i16": {
-                    #                         "value": 6678
-                    #                     }
-                    #                 }
-                    #             ]
-                    #         }
-                    #     },
-                    #     {
-                    #         "delete": "581572cd-c4b4-43f3-9b76-fc91dcf75eec"
-                    #     }
-                    # ]
+                    # null
+                    [
+                        {
+                            "create": {
+                                "std_primitive_i16": 234
+                            }
+                        }
+                        ,
+                        {
+                            "update": {
+                                "id": "4d5256c3-616a-4b40-a2df-72a22eb641eb",
+                                "fields": [
+                                    {
+                                        "std_primitive_i16": {
+                                            "value": 6678
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "delete": "581572cd-c4b4-43f3-9b76-fc91dcf75eec"
+                        }
+                    ]
                 }
             }
         ]
