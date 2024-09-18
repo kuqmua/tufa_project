@@ -4892,7 +4892,28 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 },
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
-                    todo!()
+                    //here just copypaste
+                    let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("'{{{{{}}}}}',${{increment}}", element_ident),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        #ident_option_to_update_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream(_) => {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    acc.push_str(&format!(#format_handle_token_stream));
+                                }
+                                None => {
+                                    return Err(
+                                        #ident_try_generate_json_array_element_update_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        },
+                                    );
+                                }
+                            }
+                        }
+                    }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
                     todo!()
@@ -4994,7 +5015,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                SupportedPredefinedType::JsonStdOptionOptionpub_enum_ident_option_to_update_token_streamStdVecVecStdOptionOptionStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
@@ -5016,7 +5037,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 },
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
-                    todo!()
+                    //here just copypaste
+                    quote::quote!{
+                        #ident_option_to_update_upper_camel_case_token_stream::#element_ident_upper_camel_case_token_stream(value) => {
+                            query = query.bind(sqlx::types::Json(value.value));
+                        }
+                    }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
                     todo!()
@@ -5887,13 +5913,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         #pub_enum_ident_field_to_update_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
-        #pub_enum_ident_option_to_update_token_stream
+        #pub_enum_ident_option_to_update_token_stream //todo write manual serde::Deserialize and check if vec is empty
         #pub_struct_ident_options_to_update_token_stream
         #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
         #maybe_impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
         #maybe_pub_enum_ident_try_generate_json_array_element_update_bind_increments_error_named_token_stream
         #maybe_impl_postgresql_crud_json_array_element_bind_query_ident_try_generate_json_array_element_update_bind_increments_error_named_for_ident_json_array_element_change_token_stream
-        #maybe_ident_json_array_element_change_token_stream
+        #maybe_ident_json_array_element_change_token_stream //todo rewrite it like create_array update array and delete array 
 
         #pub_struct_ident_to_create_token_stream
         #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
