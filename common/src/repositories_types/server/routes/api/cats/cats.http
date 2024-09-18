@@ -1920,60 +1920,60 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             # ,
             {
                 "std_vec_vec_generic_with_id": {
-                    "value": [
-                        {
-                            "create": {
+                    "value": {
+                        "create": [
+                            {
                                 "std_primitive_i16": 36
                             }
-                        }
-                        ,
-                        {
-                            "update": {
-                                "id": "79d417b3-3a9d-494d-8bf0-5148c088745a",
+                        ],
+                        "update": [
+                            {
+                                "id": "aa0cd700-35a8-4a3f-a8a1-447204afe966",
                                 "fields": [
                                     {
                                         "std_primitive_i16": {
-                                            "value": 67
+                                            "value": 675
                                         }
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "delete": "ed7403b7-16cc-487a-8772-afced7935bef"
-                        }
-                    ]
-                }
-            },
-            {
-                "std_option_option_std_vec_vec_generic_with_id": {
-                    "value": 
-                    # null
-                    [
-                        {
-                            "create": {
-                                "std_primitive_i16": 234
-                            }
-                        }
-                        ,
-                        {
-                            "update": {
-                                "id": "4d5256c3-616a-4b40-a2df-72a22eb641eb",
-                                "fields": [
-                                    {
-                                        "std_primitive_i16": {
-                                            "value": 6678
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "delete": "581572cd-c4b4-43f3-9b76-fc91dcf75eec"
-                        }
-                    ]
+                        ],
+                        "delete": [
+                            "48839fc6-7869-4e6f-b58e-de4d2524c9a7"
+                        ]
+                    }
                 }
             }
+            # ,
+            # {
+            #     "std_option_option_std_vec_vec_generic_with_id": {
+            #         "value": 
+            #         # null
+            #         [
+            #             {
+            #                 "create": {
+            #                     "std_primitive_i16": 234
+            #                 }
+            #             }
+            #             ,
+            #             {
+            #                 "update": {
+            #                     "id": "4d5256c3-616a-4b40-a2df-72a22eb641eb",
+            #                     "fields": [
+            #                         {
+            #                             "std_primitive_i16": {
+            #                                 "value": 6678
+            #                             }
+            #                         }
+            #                     ]
+            #                 }
+            #             },
+            #             {
+            #                 "delete": "581572cd-c4b4-43f3-9b76-fc91dcf75eec"
+            #             }
+            #         ]
+            #     }
+            # }
         ]
     }
 }
