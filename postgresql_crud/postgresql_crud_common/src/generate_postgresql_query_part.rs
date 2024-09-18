@@ -364,22 +364,22 @@ impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId for 
     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self) {}
 }
 
-// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-// pub struct JsonArrayChange<CreateGeneric, UpdateGeneric> {
-//     create: std::vec::Vec<CreateGeneric>,
-//     update: std::vec::Vec<UpdateGeneric>,
-//     delete: std::vec::Vec<JsonUuid>
-// }
-
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
-    #[serde(rename(serialize = "create", deserialize = "create"))]
-    Create(CreateGeneric),
-    #[serde(rename(serialize = "update", deserialize = "update"))]
-    Update(UpdateGeneric),
-    #[serde(rename(serialize = "delete", deserialize = "delete"))]
-    Delete(JsonUuid),
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonArrayChange<CreateGeneric, UpdateGeneric> {
+    create: std::vec::Vec<CreateGeneric>,
+    update: std::vec::Vec<UpdateGeneric>,
+    delete: std::vec::Vec<JsonUuid>
 }
+
+// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+// pub enum JsonArrayElementChange<CreateGeneric, UpdateGeneric> {
+//     #[serde(rename(serialize = "create", deserialize = "create"))]
+//     Create(CreateGeneric),
+//     #[serde(rename(serialize = "update", deserialize = "update"))]
+//     Update(UpdateGeneric),
+//     #[serde(rename(serialize = "delete", deserialize = "delete"))]
+//     Delete(JsonUuid),
+// }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed {

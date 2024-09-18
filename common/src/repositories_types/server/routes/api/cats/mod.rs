@@ -299,7 +299,7 @@ pub struct Something {
     // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
 
     pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
-    pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+    // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
 
 //todo this need for old version of update_many. later need to refactor update many and remove this
@@ -1293,15 +1293,6 @@ pub enum SomethingFieldToRead {
         limit: std::primitive::u64,
         offset: std::primitive::u64,
     },
-    #[serde(rename(
-        serialize = "std_option_option_std_vec_vec_generic_with_id",
-        deserialize = "std_option_option_std_vec_vec_generic_with_id"
-    ))]
-    StdOptionOptionStdVecVecGenericWithId {
-        field_vec: std::vec::Vec<DoggieFieldToRead>,
-        limit: std::primitive::u64,
-        offset: std::primitive::u64,
-    },
 }
 impl error_occurence_lib::ToStdStringString for SomethingFieldToRead {
     fn to_std_string_string(&self) -> std::string::String {
@@ -1346,13 +1337,6 @@ impl error_occurence_lib::ToStdStringString
 )]
 pub enum SomethingGeneratePostgresqlQueryPartToReadErrorNamed {
     StdVecVecGenericWithIdOffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdOptionOptionStdVecVecGenericWithIdOffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: std::primitive::u64,
         #[eo_to_std_string_string_serialize_deserialize]
@@ -1475,42 +1459,6 @@ impl
                         code_occurence! (),
                     });
                 }
-            }, Self :: StdOptionOptionStdVecVecGenericWithId
-            { field_vec, limit, offset } => match postgresql_crud ::
-            GeneratePostgresqlQueryPartToRead ::
-            generate_postgresql_query_part_to_read_from_self_vec(field_vec, &
-            format! ("value"), & format!
-            ("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_generic_with_id[array element]"),
-            false)
-            {
-                Ok(value) =>
-                {
-                    let start = offset; let end = match
-                    offset.checked_add(* limit)
-                    {
-                        Some(value) => value, None =>
-                        {
-                            return
-                            Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                            StdOptionOptionStdVecVecGenericWithIdOffsetPlusLimitIsIntOverflow
-                            {
-                                limit : * limit, offset : * offset, code_occurence :
-                                error_occurence_lib :: code_occurence! (),
-                            });
-                        }
-                    };
-                    Ok(format!
-                    ("jsonb_build_object('std_option_option_std_vec_vec_generic_with_id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({value}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id')) with ordinality where ordinality between {start} and {end}))when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}} is not array and not null')) end)"))
-                }, Err(error) =>
-                {
-                    return
-                    Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                    DoggieGeneratePostgresqlQueryPartToReadFromSelfVec
-                    {
-                        field : error, code_occurence : error_occurence_lib ::
-                        code_occurence! (),
-                    });
-                }
             }
         }
     }
@@ -1520,10 +1468,6 @@ pub struct SomethingOptionsToRead {
     #[serde(skip_serializing_if = "Option::is_none")]
     std_vec_vec_generic_with_id:
         std::option::Option<postgresql_crud::Value<std::vec::Vec<DoggieOptionsToRead>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    std_option_option_std_vec_vec_generic_with_id: std::option::Option<
-        postgresql_crud::Value<std::option::Option<std::vec::Vec<DoggieOptionsToRead>>>,
-    >,
 }
 impl std::convert::From<Something> for SomethingOptionsToRead {
     fn from(value: Something) -> Self {
@@ -1535,17 +1479,6 @@ impl std::convert::From<Something> for SomethingOptionsToRead {
                     .into_iter()
                     .map(|element| DoggieOptionsToRead::from(element))
                     .collect::<std::vec::Vec<DoggieOptionsToRead>>(),
-            }),
-            std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value {
-                value: match value.std_option_option_std_vec_vec_generic_with_id.0 {
-                    Some(value) => Some(
-                        value
-                            .into_iter()
-                            .map(|element| DoggieOptionsToRead::from(element))
-                            .collect::<std::vec::Vec<DoggieOptionsToRead>>(),
-                    ),
-                    None => None,
-                },
             }),
         }
     }
@@ -1559,7 +1492,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
         #[doc(hidden)]
         enum __Field {
             __field0,
-            __field1,
             __ignore,
         }
         #[doc(hidden)]
@@ -1578,7 +1510,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
             {
                 match __value {
                     0u64 => serde::__private::Ok(__Field::__field0),
-                    1u64 => serde::__private::Ok(__Field::__field1),
                     _ => serde::__private::Ok(__Field::__ignore),
                 }
             }
@@ -1588,9 +1519,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
             {
                 match __value {
                     "std_vec_vec_generic_with_id" => serde::__private::Ok(__Field::__field0),
-                    "std_option_option_std_vec_vec_generic_with_id" => {
-                        serde::__private::Ok(__Field::__field1)
-                    }
                     _ => serde::__private::Ok(__Field::__ignore),
                 }
             }
@@ -1600,9 +1528,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
             {
                 match __value {
                     b"std_vec_vec_generic_with_id" => serde::__private::Ok(__Field::__field0),
-                    b"std_option_option_std_vec_vec_generic_with_id" => {
-                        serde::__private::Ok(__Field::__field1)
-                    }
                     _ => serde::__private::Ok(__Field::__ignore),
                 }
             }
@@ -1652,28 +1577,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     serde::__private::None => {
                         return serde::__private::Err(serde::de::Error::invalid_length(
                             0usize,
-                            &"struct SomethingOptionsToRead with 2 elements",
-                        ));
-                    }
-                };
-                let __field1 = match serde::de::SeqAccess::next_element::<
-                    std::option::Option<
-                        std::result::Result<
-                            std::option::Option<
-                                std::vec::Vec<
-                                    std::result::Result<DoggieOptionsToRead, std::string::String>,
-                                >,
-                            >,
-                            std::string::String,
-                        >,
-                    >,
-                >(&mut __seq)?
-                {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(
-                            1usize,
-                            &"struct SomethingOptionsToRead with 2 elements",
+                            &"struct SomethingOptionsToRead with 1 elements",
                         ));
                     }
                 };
@@ -1702,33 +1606,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                         },
                         None => None,
                     },
-                    std_option_option_std_vec_vec_generic_with_id: match __field1 {
-                        Some(value) => match value {
-                            Ok(value) => Some(postgresql_crud::Value {
-                                value: match value {
-                                    Some(value) => {
-                                        let mut acc = vec![];
-                                        for element in value {
-                                            match element {
-                                                Ok(value) => {
-                                                    acc.push(value);
-                                                }
-                                                Err(error) => {
-                                                    return Err(serde::de::Error::custom(error));
-                                                }
-                                            }
-                                        }
-                                        Some(acc)
-                                    }
-                                    None => None,
-                                },
-                            }),
-                            Err(error) => {
-                                return Err(serde::de::Error::custom(error));
-                            }
-                        },
-                        None => None,
-                    },
                 })
             }
             #[inline]
@@ -1744,18 +1621,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                         std::result::Result<
                             std::vec::Vec<
                                 std::result::Result<DoggieOptionsToRead, std::string::String>,
-                            >,
-                            std::string::String,
-                        >,
-                    >,
-                > = serde::__private::None;
-                let mut __field1: serde::__private::Option<
-                    std::option::Option<
-                        std::result::Result<
-                            std::option::Option<
-                                std::vec::Vec<
-                                    std::result::Result<DoggieOptionsToRead, std::string::String>,
-                                >,
                             >,
                             std::string::String,
                         >,
@@ -1789,32 +1654,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                 &mut __map
                             )?);
                         }
-                        __Field::__field1 => {
-                            if serde::__private::Option::is_some(&__field1) {
-                                return serde::__private::Err(
-                                    <__A::Error as serde::de::Error>::duplicate_field(
-                                        "std_option_option_std_vec_vec_generic_with_id",
-                                    ),
-                                );
-                            }
-                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<
-                                std::option::Option<
-                                    std::result::Result<
-                                        std::option::Option<
-                                            std::vec::Vec<
-                                                std::result::Result<
-                                                    DoggieOptionsToRead,
-                                                    std::string::String,
-                                                >,
-                                            >,
-                                        >,
-                                        std::string::String,
-                                    >,
-                                >,
-                            >(
-                                &mut __map
-                            )?);
-                        }
                         _ => {
                             let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(
                                 &mut __map,
@@ -1827,12 +1666,6 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     serde::__private::None => {
                         serde::__private::de::missing_field("std_vec_vec_generic_with_id")?
                     }
-                };
-                let __field1 = match __field1 {
-                    serde::__private::Some(__field1) => __field1,
-                    serde::__private::None => serde::__private::de::missing_field(
-                        "std_option_option_std_vec_vec_generic_with_id",
-                    )?,
                 };
                 serde::__private::Ok(SomethingOptionsToRead {
                     std_vec_vec_generic_with_id: match __field0 {
@@ -1859,41 +1692,11 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                         },
                         None => None,
                     },
-                    std_option_option_std_vec_vec_generic_with_id: match __field1 {
-                        Some(value) => match value {
-                            Ok(value) => Some(postgresql_crud::Value {
-                                value: match value {
-                                    Some(value) => {
-                                        let mut acc = vec![];
-                                        for element in value {
-                                            match element {
-                                                Ok(value) => {
-                                                    acc.push(value);
-                                                }
-                                                Err(error) => {
-                                                    return Err(serde::de::Error::custom(error));
-                                                }
-                                            }
-                                        }
-                                        Some(acc)
-                                    }
-                                    None => None,
-                                },
-                            }),
-                            Err(error) => {
-                                return Err(serde::de::Error::custom(error));
-                            }
-                        },
-                        None => None,
-                    },
                 })
             }
         }
         #[doc(hidden)]
-        const FIELDS: &'static [&'static str] = &[
-            "std_vec_vec_generic_with_id",
-            "std_option_option_std_vec_vec_generic_with_id",
-        ];
+        const FIELDS: &'static [&'static str] = &["std_vec_vec_generic_with_id"];
         serde::Deserializer::deserialize_struct(
             __deserializer,
             "SomethingOptionsToRead",
@@ -1997,10 +1800,6 @@ for Something
             std_vec_vec_generic_with_id : postgresql_crud ::
             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
             ::
-            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_generic_with_id : postgresql_crud ::
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            ::
             default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         }
     }
@@ -2020,19 +1819,11 @@ pub enum SomethingFieldToUpdate {
         deserialize = "std_vec_vec_generic_with_id"
     ))]
     StdVecVecGenericWithId,
-    #[serde(rename(
-        serialize = "std_option_option_std_vec_vec_generic_with_id",
-        deserialize = "std_option_option_std_vec_vec_generic_with_id"
-    ))]
-    StdOptionOptionStdVecVecGenericWithId,
 }
 impl error_occurence_lib::ToStdStringString for SomethingFieldToUpdate {
     fn to_std_string_string(&self) -> std::string::String {
         match &self {
             Self::StdVecVecGenericWithId => "std_vec_vec_generic_with_id".to_owned(),
-            Self::StdOptionOptionStdVecVecGenericWithId => {
-                "std_option_option_std_vec_vec_generic_with_id".to_owned()
-            }
         }
     }
 }
@@ -2042,14 +1833,7 @@ pub enum SomethingOptionToUpdate {
         serialize = "std_vec_vec_generic_with_id",
         deserialize = "std_vec_vec_generic_with_id"
     ))]
-    StdVecVecGenericWithId(postgresql_crud::Value<std::vec::Vec<DoggieJsonArrayElementChange>>),
-    #[serde(rename(
-        serialize = "std_option_option_std_vec_vec_generic_with_id",
-        deserialize = "std_option_option_std_vec_vec_generic_with_id"
-    ))]
-    StdOptionOptionStdVecVecGenericWithId(
-        postgresql_crud::Value<std::option::Option<std::vec::Vec<DoggieJsonArrayElementChange>>>,
-    ),
+    StdVecVecGenericWithId(postgresql_crud::Value<postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>),//here //std::vec::Vec<DoggieJsonArrayElementChange>
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToUpdate(pub std::vec::Vec<SomethingOptionToUpdate>);
@@ -2086,30 +1870,6 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements {
         #[eo_error_occurence]
         std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments:
-            postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId {
-        #[eo_to_std_string_string_serialize_deserialize]
-        std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id:
-            postgresql_crud::JsonUuid,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
-        #[eo_error_occurence]
-        std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments:
-            DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements {
-        #[eo_error_occurence]
-        std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments:
-            postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements {
-        #[eo_error_occurence]
-        std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments:
             postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -2153,20 +1913,6 @@ impl
                             acc.push(value);
                         }
                     }
-                    SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(_) => {
-                        let value = SomethingFieldToUpdate::StdOptionOptionStdVecVecGenericWithId;
-                        if acc.contains(&value) {
-                            return
-                            Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                            :: NotUniqueField
-                            {
-                                field : value, code_occurence : error_occurence_lib ::
-                                code_occurence! (),
-                            },);
-                        } else {
-                            acc.push(value);
-                        }
-                    }
                 }
             }
         }
@@ -2176,41 +1922,73 @@ impl
             false => format!("{jsonb_set_path},"),
         };
         for element in &self.0 {
+            //
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub enum SomethingOptionToUpdate {
+//     #[serde(rename(
+//         serialize = "std_vec_vec_generic_with_id",
+//         deserialize = "std_vec_vec_generic_with_id"
+//     ))]
+//     StdVecVecGenericWithId(postgresql_crud::Value<postgresql_crud::JsonArrayChange>),//here //std::vec::Vec<DoggieJsonArrayElementChange>
+// }
+            //
             match &element {
                 SomethingOptionToUpdate::StdVecVecGenericWithId(value) => {
                     {
                         let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
-                        for element in &value.value {
-                            match &element.0 {
-                                postgresql_crud::JsonArrayElementChange::Update(value) => {
-                                    if ids.contains(&&value.id) {
-                                        return
-                                        Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                        :: StdVecVecGenericWithIdDoggieNotUniqueId
-                                        {
-                                            std_vec_vec_generic_with_id_doggie_not_unique_id : value.id,
-                                            code_occurence : error_occurence_lib :: code_occurence! (),
-                                        });
-                                    } else {
-                                        ids.push(&value.id);
-                                    }
-                                }
-                                postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                                    if ids.contains(&value) {
-                                        return
-                                        Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                        :: StdVecVecGenericWithIdDoggieNotUniqueId
-                                        {
-                                            std_vec_vec_generic_with_id_doggie_not_unique_id : * value,
-                                            code_occurence : error_occurence_lib :: code_occurence! (),
-                                        });
-                                    } else {
-                                        ids.push(&value);
-                                    }
-                                }
-                                _ => (),
+                        for element in &value.value.update {
+                            if ids.contains(&&element.id) {
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieNotUniqueId {
+                                    std_vec_vec_generic_with_id_doggie_not_unique_id: element.id,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            } else {
+                                ids.push(&element.id);
                             }
                         }
+                        for element in &value.value.delete {
+                            if ids.contains(&element) {
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieNotUniqueId {
+                                    std_vec_vec_generic_with_id_doggie_not_unique_id: *element,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            } else {
+                                ids.push(&element);
+                            }
+                        }
+
+                        //here
+                        // for element in &value.value {
+                        //     match &element.0 {
+                        //         postgresql_crud::JsonArrayElementChange::Update(value) => {
+                        //             if ids.contains(&&value.id) {
+                        //                 return
+                        //                 Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                        //                 :: StdVecVecGenericWithIdDoggieNotUniqueId
+                        //                 {
+                        //                     std_vec_vec_generic_with_id_doggie_not_unique_id : value.id,
+                        //                     code_occurence : error_occurence_lib :: code_occurence! (),
+                        //                 });
+                        //             } else {
+                        //                 ids.push(&value.id);
+                        //             }
+                        //         }
+                        //         postgresql_crud::JsonArrayElementChange::Delete(value) => {
+                        //             if ids.contains(&value) {
+                        //                 return
+                        //                 Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+                        //                 :: StdVecVecGenericWithIdDoggieNotUniqueId
+                        //                 {
+                        //                     std_vec_vec_generic_with_id_doggie_not_unique_id : * value,
+                        //                     code_occurence : error_occurence_lib :: code_occurence! (),
+                        //                 });
+                        //             } else {
+                        //                 ids.push(&value);
+                        //             }
+                        //         }
+                        //         _ => (),
+                        //     }
+                        // }
                     }
                     let current_jsonb_set_target =
                         format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");
@@ -2324,177 +2102,6 @@ impl
                     acc = format!
                     ("jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
                 }
-                SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(value) => {
-                    match &value.value {
-                        Some(value) => {
-                            {
-                                let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
-                                for element in value {
-                                    match &element.0 {
-                                        postgresql_crud::JsonArrayElementChange::Update(value) => {
-                                            if ids.contains(&&value.id) {
-                                                return
-                                                Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                                :: StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId
-                                                {
-                                                    std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id
-                                                    : value.id, code_occurence : error_occurence_lib ::
-                                                    code_occurence! (),
-                                                });
-                                            } else {
-                                                ids.push(&value.id);
-                                            }
-                                        }
-                                        postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                                            if ids.contains(&value) {
-                                                return
-                                                Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                                :: StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId
-                                                {
-                                                    std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id
-                                                    : * value, code_occurence : error_occurence_lib ::
-                                                    code_occurence! (),
-                                                });
-                                            } else {
-                                                ids.push(&value);
-                                            }
-                                        }
-                                        _ => (),
-                                    }
-                                }
-                            }
-                            let current_jsonb_set_target = format!
-                            ("{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'");
-                            let mut update_query_part_acc = std::string::String::default();
-                            for (index, element) in &value
-                                .iter()
-                                .enumerate()
-                                .collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>()
-                            {
-                                match postgresql_crud :: JsonArrayElementBindQuery ::
-                                try_generate_update_bind_increments(* element, &
-                                jsonb_set_accumulator, & jsonb_set_target, & jsonb_set_path,
-                                increment, is_array_object_element.clone())
-                                {
-                                    Ok(value) =>
-                                    {
-                                        if let Some(value) = value
-                                        { update_query_part_acc.push_str(& value); }
-                                    }, Err(error) =>
-                                    {
-                                        return
-                                        Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                        ::
-                                        StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements
-                                        {
-                                            std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments
-                                            : error, code_occurence : error_occurence_lib ::
-                                            code_occurence! (),
-                                        });
-                                    }
-                                }
-                            }
-                            let mut delete_query_part_acc = std::string::String::default();
-                            for (index, element) in &value
-                                .iter()
-                                .enumerate()
-                                .collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>()
-                            {
-                                match postgresql_crud :: JsonArrayElementBindQuery ::
-                                try_generate_delete_bind_increments(* element, increment)
-                                {
-                                    Ok(value) =>
-                                    {
-                                        if let Some(value) = value
-                                        {
-                                            let maybe_space_and_space = if
-                                            delete_query_part_acc.is_empty() { "" } else { " and " };
-                                            delete_query_part_acc.push_str(& format!
-                                            ("{value}{maybe_space_and_space}"));
-                                        }
-                                    }, Err(error) =>
-                                    {
-                                        return
-                                        Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                        ::
-                                        StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements
-                                        {
-                                            std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments
-                                            : error, code_occurence : error_occurence_lib ::
-                                            code_occurence! (),
-                                        });
-                                    }
-                                }
-                            }
-                            let mut create_query_part_acc = std::string::String::default();
-                            for (index, element) in &value
-                                .iter()
-                                .enumerate()
-                                .collect::<std::vec::Vec<(usize, &DoggieJsonArrayElementChange)>>()
-                            {
-                                match postgresql_crud :: JsonArrayElementBindQuery ::
-                                try_generate_create_bind_increments(* element, increment)
-                                {
-                                    Ok(value) =>
-                                    {
-                                        if let Some(value) = value
-                                        { create_query_part_acc.push_str(& format! ("{value},")); }
-                                    }, Err(error) =>
-                                    {
-                                        return
-                                        Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                        ::
-                                        StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements
-                                        {
-                                            std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments
-                                            : error, code_occurence : error_occurence_lib ::
-                                            code_occurence! (),
-                                        });
-                                    }
-                                }
-                            }
-                            let _ = create_query_part_acc.pop();
-                            let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
-                                std::string::String::from("elem")
-                            } else {
-                                format!("case {update_query_part_acc} else elem end")
-                            };
-                            let maybe_where = if delete_query_part_acc.is_empty() {
-                                std::string::String::default()
-                            } else {
-                                format!(" where {delete_query_part_acc}")
-                            };
-                            let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
-                                std::string::String::default()
-                            } else {
-                                format!(" || jsonb_build_array({create_query_part_acc})")
-                            };
-                            let maybe_jsonb_build_array_in_case_of_null =
-                                if create_query_part_acc.is_empty() {
-                                    current_jsonb_set_target.clone()
-                                } else {
-                                    format!("jsonb_build_array({create_query_part_acc})")
-                                };
-                            acc = format!
-                            ("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',case when {jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id' = 'null' then {maybe_jsonb_build_array_in_case_of_null} else (select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}) {maybe_jsonb_build_array} end)");
-                        }
-                        None => match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                acc = format!
-                                    ("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',${increment})");
-                            }
-                            None => {
-                                return
-                                    Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
-                                    :: CheckedAdd
-                                    {
-                                        code_occurence : error_occurence_lib :: code_occurence! (),
-                                    });
-                            }
-                        },
-                    }
-                }
             }
         }
         Ok(acc)
@@ -2528,33 +2135,6 @@ impl
                             );
                     }
                 }
-                SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(value) => {
-                    match &value.value {
-                        Some(value) => {
-                            for element in value {
-                                query = postgresql_crud :: JsonArrayElementBindQuery ::
-                                bind_update_value_to_query(element.clone(), query);
-                            }
-                            for element in value {
-                                query = postgresql_crud :: JsonArrayElementBindQuery ::
-                                bind_delete_value_to_query(element.clone(), query);
-                            }
-                            for element in value {
-                                query = postgresql_crud :: JsonArrayElementBindQuery ::
-                                bind_create_value_to_query(element.clone(), query);
-                            }
-                        }
-                        None => {
-                            query = query.bind(sqlx::types::Json(
-                                None::<
-                                    std::option::Option<
-                                        std::vec::Vec<DoggieJsonArrayElementChange>,
-                                    >,
-                                >,
-                            ));
-                        }
-                    }
-                }
             }
         }
         query
@@ -2573,8 +2153,6 @@ Deserialize,
 )]
 pub struct SomethingToCreate {
     pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<DoggieToCreate>,
-    pub std_option_option_std_vec_vec_generic_with_id:
-        postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<DoggieToCreate>,
 }
 impl postgresql_crud ::
 StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
@@ -2587,10 +2165,6 @@ for SomethingToCreate
         Self
         {
             std_vec_vec_generic_with_id : postgresql_crud ::
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            ::
-            default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_generic_with_id : postgresql_crud ::
             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
             ::
             default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
@@ -2626,41 +2200,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
                 "'std_vec_vec_generic_with_id',jsonb_build_array({acc}),"
             ));
         }
-        {
-            let maybe_jsonb_build_array_stringified: std::string::String;
-            match &self.std_option_option_std_vec_vec_generic_with_id.0 {
-                Some(value) => {
-                    let mut acc = std::string::String::default();
-                    for element in value {
-                        match element.try_generate_bind_increments(increment) {
-                            Ok(value) => {
-                                acc.push_str(&format!("{value},"));
-                            }
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        }
-                    }
-                    let _ = acc.pop();
-                    maybe_jsonb_build_array_stringified = format!("jsonb_build_array({acc})");
-                }
-                None => match increment.checked_add(1) {
-                    Some(value) => {
-                        *increment = value;
-                        maybe_jsonb_build_array_stringified = format!("${increment}");
-                    }
-                    None => {
-                        return Err(
-                            postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            },
-                        );
-                    }
-                },
-            }
-            increments.push_str(& format!
-            ("'std_option_option_std_vec_vec_generic_with_id',{maybe_jsonb_build_array_stringified},"));
-        }
         let _ = increments.pop();
         Ok(format!("jsonb_build_object({increments})"))
     }
@@ -2671,18 +2210,6 @@ impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
         for element in self.std_vec_vec_generic_with_id.0 {
             query = element.bind_value_to_query(query);
         }
-        match self.std_option_option_std_vec_vec_generic_with_id.0 {
-            Some(value) => {
-                for element in value {
-                    query = element.bind_value_to_query(query);
-                }
-            }
-            None => {
-                query = query.bind(sqlx::types::Json(
-                    None::<std::option::Option<std::vec::Vec<DoggieToCreate>>>,
-                ));
-            }
-        }
         query
     }
 }
@@ -2692,10 +2219,6 @@ impl postgresql_crud::CheckIdExistsInJsonGenericFields for Something {
         CheckIdExistsInJsonStdVecVecGenericWithId ::
         check_id_exists_in_json_std_vec_vec_generic_with_id(&
         self.std_vec_vec_generic_with_id);
-        let _ : () = postgresql_crud ::
-        CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId ::
-        check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&
-        self.std_option_option_std_vec_vec_generic_with_id);
     }
 }
 //////
@@ -3237,7 +2760,7 @@ pub enum DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed {
 impl
     postgresql_crud::JsonArrayElementBindQuery<
         DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed,
-    > for DoggieJsonArrayElementChange
+    > for postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionsToUpdate>
 {
     fn try_generate_update_bind_increments(
         &self,
@@ -3252,23 +2775,17 @@ impl
     > {
         match &self.0 {
             postgresql_crud::JsonArrayElementChange::Update(value) => {
-                match increment.checked_add(1)
-                {
-                    Some(new_increment_value) =>
-                    {
-                        * increment = new_increment_value; if
-                        value.fields.is_empty()
-                        {
-                            return
-                            Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed
-                            :: FieldsIsEmpty
-                            {
-                                code_occurence : error_occurence_lib :: code_occurence! (),
-                            },);
+                match increment.checked_add(1) {
+                    Some(new_increment_value) => {
+                        *increment = new_increment_value;
+                        if value.fields.is_empty() {
+                            return Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::FieldsIsEmpty {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
                         }
                         {
-                            let mut acc = vec! []; for element in & value.fields
-                            {
+                            let mut acc = vec![]; 
+                            for element in & value.fields {
                                 match element
                                 {
                                     DoggieOptionToUpdate :: StdPrimitiveI16(_) =>
@@ -3287,41 +2804,32 @@ impl
                                     }
                                 }
                             }
-                        } let id_increment = format! ("${increment}"); let mut acc =
-                        std :: string :: String :: default(); for element in &
-                        value.fields
-                        {
-                            match & element
-                            {
-                                DoggieOptionToUpdate :: StdPrimitiveI16(_) =>
-                                {
-                                    match increment.checked_add(1)
-                                    {
-                                        Some(value) =>
-                                        {
-                                            * increment = value;
-                                            acc.push_str(& format!
-                                            ("'{{std_primitive_i16}}',${increment}"));
-                                        } None =>
-                                        {
-                                            return
-                                            Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed
-                                            :: CheckedAdd
-                                            {
-                                                code_occurence : error_occurence_lib :: code_occurence! (),
-                                            },);
+                        } 
+                        let id_increment = format!("${increment}");
+                        let mut acc = std::string::String::default();
+                        for element in &value.fields {
+                            match & element {
+                                DoggieOptionToUpdate::StdPrimitiveI16(_) => {
+                                    match increment.checked_add(1) {
+                                        Some(value) => {
+                                            *increment = value;
+                                            acc.push_str(&format!("'{{std_primitive_i16}}',${increment}"));
+                                        }
+                                        None => {
+                                            return Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::CheckedAdd {
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
                                         }
                                     }
                                 }
-                            } acc.push_str(",");
-                        } let _ = acc.pop();
-                        Ok(Some(format!
-                        ("when elem->>'id' = {id_increment} then jsonb_set(elem,{acc})")))
-                    } None =>
-                    Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed
-                    :: CheckedAdd
-                    {
-                        code_occurence : error_occurence_lib :: code_occurence! (),
+                            }
+                            acc.push_str(",");
+                        }
+                        let _ = acc.pop();
+                        Ok(Some(format!("when elem->>'id' = {id_increment} then jsonb_set(elem,{acc})")))
+                    }
+                    None => Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::CheckedAdd {
+                        code_occurence: error_occurence_lib::code_occurence!(),
                     })
                 }
             }
@@ -3416,10 +2924,11 @@ impl
         query
     }
 }
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct DoggieJsonArrayElementChange(
-    postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionsToUpdate>,
-);
+//here
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct DoggieJsonArrayElementChange(
+//     postgresql_crud::JsonArrayElementChange<DoggieToCreate, DoggieOptionsToUpdate>,
+// );
 #[derive(
     Debug,
     Clone,
