@@ -3919,6 +3919,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
+            let current_jsonb_set_target_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{{jsonb_set_target}}->'{element_ident}'"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
             let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
             let content_token_stream = match &supported_predefined_type {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
@@ -4118,10 +4122,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_create_bind_increments_snake_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_create_bind_increments_snake_case_token_stream(&type_path);
-                    let current_jsonb_set_target_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{{jsonb_set_target}}->'{element_ident}'"),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
                     let acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("jsonb_set({{acc}},'{{{{{{previous_jsonb_set_path}}{element_ident}}}}}',(select jsonb_agg({{maybe_jsonb_agg_case}}) from jsonb_array_elements({{current_jsonb_set_target}}) as elem {{maybe_where}}){{maybe_jsonb_build_array}})"),
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -4276,10 +4276,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_create_bind_increments_snake_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_create_bind_increments_snake_case_token_stream(&type_path);
-                    let current_jsonb_set_target_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{{jsonb_set_target}}->'{element_ident}'"),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
                     let acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("jsonb_set({{acc}},'{{{{{{previous_jsonb_set_path}}{element_ident}}}}}',case when {{jsonb_set_target}}->'{element_ident}' = 'null' then {{maybe_jsonb_build_array_in_case_of_null}} else (select jsonb_agg({{maybe_jsonb_agg_case}}) from jsonb_array_elements({{current_jsonb_set_target}}) as elem {{maybe_where}}) {{maybe_jsonb_build_array}} end)"),
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -4455,7 +4451,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     }
                                 },
                             }
-                            //
                         }
                     }
                 },
