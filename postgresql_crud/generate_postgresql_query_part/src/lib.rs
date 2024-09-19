@@ -4211,7 +4211,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                 else {
                                                     " and "
                                                 };
-                                                delete_query_part_acc.push_str(&format!("{maybe_space_and_space}${increment}"));
+                                                delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                                             }
                                             None => {
                                                 return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
@@ -4223,7 +4223,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             }
                                         }
                                     }
-                                    format!("elem->>'id' <> {delete_query_part_acc}")
+                                    delete_query_part_acc
                                 }
                             };
                             let mut create_query_part_acc = std::string::String::default();
@@ -4758,7 +4758,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                         } else {
                                                             " and "
                                                         };
-                                                        delete_query_part_acc.push_str(&format!("{maybe_space_and_space}${increment}"));
+                                                        delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                                                     }
                                                     None => {
                                                         return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
@@ -4770,7 +4770,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                     }
                                                 }
                                             }
-                                            format!("elem->>'id' <> {delete_query_part_acc}")
+                                            delete_query_part_acc
                                         }
                                     };
                                     let mut create_query_part_acc = std::string::String::default();
