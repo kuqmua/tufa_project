@@ -4189,35 +4189,43 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     }
                                 }
                             }
-                            let mut delete_query_part_acc = std::string::String::default();
-                            for (index, element) in &value
-                                .value
-                                .delete
-                                .iter()
-                                .enumerate()
-                                .collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>()
-                            {
-                                match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        let maybe_space_and_space = if delete_query_part_acc.is_empty() {
-                                            ""
-                                        }
-                                        else {
-                                            " and "
-                                        };
-                                        delete_query_part_acc.push_str(&format!("elem->>'id' <> ${increment}{maybe_space_and_space}"));
-                                    }
-                                    None => {
-                                        return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
-                                            #element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd {
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            },
-                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                        });
-                                    }
+                            let delete_query_part_acc = {
+                                if value.value.delete.is_empty() {
+                                    std::string::String::default()
                                 }
-                            }
+                                else {
+                                    let mut delete_query_part_acc = std::string::String::default();
+                                    for (index, element) in &value
+                                        .value
+                                        .delete
+                                        .iter()
+                                        .enumerate()
+                                        .collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>()
+                                    {
+                                        match increment.checked_add(1) {
+                                            Some(value) => {
+                                                *increment = value;
+                                                let maybe_space_and_space = if delete_query_part_acc.is_empty() {
+                                                    ""
+                                                }
+                                                else {
+                                                    " and "
+                                                };
+                                                delete_query_part_acc.push_str(&format!("{maybe_space_and_space}${increment}"));
+                                            }
+                                            None => {
+                                                return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
+                                                    #element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd {
+                                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                                    },
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                });
+                                            }
+                                        }
+                                    }
+                                    format!("elem->>'id' <> {delete_query_part_acc}")
+                                }
+                            };
                             let mut create_query_part_acc = std::string::String::default();
                             for (index, element) in &value
                                 .value
@@ -4735,7 +4743,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             std::string::String::default()
                                         }
                                         else {
-                                            let mut delete_query_part_acc = std::string::String::from("elem->>'id' <> ");
+                                            let mut delete_query_part_acc = std::string::String::default();
                                             for (index, element) in &value
                                                 .delete
                                                 .iter()
@@ -4745,13 +4753,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                 match increment.checked_add(1) {
                                                     Some(value) => {
                                                         *increment = value;
-                                                        //here
                                                         let maybe_space_and_space = if delete_query_part_acc.is_empty() {
                                                             ""
                                                         } else {
                                                             " and "
                                                         };
-                                                        delete_query_part_acc.push_str(&format!("${increment}{maybe_space_and_space}"));
+                                                        delete_query_part_acc.push_str(&format!("{maybe_space_and_space}${increment}"));
                                                     }
                                                     None => {
                                                         return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
@@ -4763,7 +4770,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                     }
                                                 }
                                             }
-                                            delete_query_part_acc
+                                            format!("elem->>'id' <> {delete_query_part_acc}")
                                         }
                                     };
                                     let mut create_query_part_acc = std::string::String::default();
