@@ -3272,10 +3272,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    // supported_predefined_type.to_original_type().std_option_option_std_vec_vec_full_type_path_token_stream()
-                    let type_path_json_array_element_change_upper_camel_case = generate_ident_json_array_element_change_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_options_to_update_upper_camel_case_token_stream = {
+                        let value = format!(
+                            "{}{}",
+                            quote::quote!{#type_path}.to_string(),
+                            naming_conventions::OptionsToUpdateUpperCamelCase,
+                        );
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
                     quote::quote!{
-                        std::option::Option<std::vec::Vec<#type_path_json_array_element_change_upper_camel_case>>
+                        std::option::Option<postgresql_crud::JsonArrayChange<#type_path_to_create_upper_camel_case_token_stream, #type_path_options_to_update_upper_camel_case_token_stream>>
                     }
                 },
 
@@ -4270,6 +4278,199 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     // };
 
                     
+                    // let element_ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.to_string());
+                    // let type_path_stringified = quote::quote!{#type_path}.to_string();
+                    // let type_path_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&type_path_stringified);
+                    // let type_path_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&type_path_stringified);
+                    // let element_ident_type_path_not_unique_id_upper_camel_case_token_stream = {
+                    //     let value = format!("{element_ident_upper_camel_case_stringified}{type_path_upper_camel_case_stringified}{}", naming_conventions::NotUniqueIdUpperCamelCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let element_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_ident.to_string());
+                    // let element_ident_type_path_not_unique_id_snake_case_token_stream = {
+                    //     let value = format!("{element_ident_snake_case_stringified}_{type_path_snake_case_stringified}_{}", naming_conventions::NotUniqueIdSnakeCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let type_path_json_array_element_change_upper_camel_case_token_stream = generate_ident_json_array_element_change_upper_camel_case_token_stream(&type_path_upper_camel_case_stringified);
+                    // let element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = {
+                    //     let value = format!("{element_ident_upper_camel_case_stringified}{type_path_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let element_ident_type_path_try_generate_json_array_element_update_bind_increments_snake_case_token_stream = {
+                    //     let value = format!("{element_ident_snake_case_stringified}_{type_path_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsSnakeCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream = {
+                    //     let value = format!("{element_ident_upper_camel_case_stringified}{type_path_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsUpperCamelCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream = {
+                    //     let value = format!("{element_ident_snake_case_stringified}_{type_path_snake_case_stringified}_{}",  naming_conventions::TryGenerateJsonArrayElementDeleteBindIncrementsSnakeCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let element_ident_type_path_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream = {
+                    //     let value = format!("{element_ident_upper_camel_case_stringified}{type_path_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsUpperCamelCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let element_ident_type_path_try_generate_json_array_element_create_bind_increments_snake_case_token_stream = {
+                    //     let value = format!("{element_ident_snake_case_stringified}_{type_path_snake_case_stringified}_{}", naming_conventions::TryGenerateJsonArrayElementCreateBindIncrementsSnakeCase);
+                    //     value.parse::<proc_macro2::TokenStream>()
+                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    // };
+                    // let current_jsonb_set_target_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    //     &format!("{{jsonb_set_target}}->'{element_ident}'"),
+                    //     &proc_macro_name_upper_camel_case_ident_stringified
+                    // );
+                    // let acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    //     &format!("jsonb_set({{acc}},'{{{{{{previous_jsonb_set_path}}{element_ident}}}}}',case when {{jsonb_set_target}}->'{element_ident}' = 'null' then {{maybe_jsonb_build_array_in_case_of_null}} else (select jsonb_agg({{maybe_jsonb_agg_case}}) from jsonb_array_elements({{current_jsonb_set_target}}) as elem {{maybe_where}}) {{maybe_jsonb_build_array}} end)"),
+                    //     &proc_macro_name_upper_camel_case_ident_stringified
+                    // );
+                    // let value_is_none_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    //     &format!("jsonb_set({{acc}},'{{{{{{previous_jsonb_set_path}}{element_ident}}}}}',${{increment}})"),
+                    //     &proc_macro_name_upper_camel_case_ident_stringified
+                    // );
+                    // quote::quote!{
+                    //     (value) => {
+                    //         match &value.value {
+                    //             Some(value) => {
+                    //                 {
+                    //                     let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+                    //                     for element in value {
+                    //                         match &element.0 {
+                    //                             postgresql_crud::JsonArrayElementChange::Update(value) => {
+                    //                                 if ids.contains(&&value.id) {
+                    //                                     return
+                    //                                     Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
+                    //                                         #element_ident_type_path_not_unique_id_snake_case_token_stream: value.id,
+                    //                                         code_occurence: error_occurence_lib::code_occurence!(),
+                    //                                     });
+                    //                                 } else {
+                    //                                     ids.push(&value.id);
+                    //                                 }
+                    //                             }
+                    //                             postgresql_crud::JsonArrayElementChange::Delete(value) => {
+                    //                                 if ids.contains(&value) {
+                    //                                     return
+                    //                                     Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
+                    //                                         #element_ident_type_path_not_unique_id_snake_case_token_stream: *value,
+                    //                                         code_occurence: error_occurence_lib::code_occurence!(),
+                    //                                     });
+                    //                                 } else {
+                    //                                     ids.push(&value);
+                    //                                 }
+                    //                             }
+                    //                             _ => (),
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 let current_jsonb_set_target = format!(#current_jsonb_set_target_format_handle_token_stream);
+                    //                 let mut update_query_part_acc = std::string::String::default();
+                    //                 for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &#type_path_json_array_element_change_upper_camel_case_token_stream)>>() {
+                    //                     match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
+                    //                         *element,
+                    //                         &jsonb_set_accumulator,
+                    //                         &jsonb_set_target,
+                    //                         &jsonb_set_path,
+                    //                         increment,
+                    //                         is_array_object_element.clone()
+                    //                     ) {
+                    //                         Ok(value) => {
+                    //                             if let Some(value) = value {
+                    //                                 update_query_part_acc.push_str(& value);
+                    //                             }
+                    //                         },
+                    //                         Err(error) => {
+                    //                             return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream {
+                    //                                 #element_ident_type_path_try_generate_json_array_element_update_bind_increments_snake_case_token_stream: error,
+                    //                                 code_occurence: error_occurence_lib::code_occurence!(),
+                    //                             });
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 let mut delete_query_part_acc = std::string::String::default();
+                    //                 for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &#type_path_json_array_element_change_upper_camel_case_token_stream)>>() {
+                    //                     match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(*element, increment) {
+                    //                         Ok(value) => {
+                    //                             if let Some(value) = value {
+                    //                                 let maybe_space_and_space = if delete_query_part_acc.is_empty() { 
+                    //                                     ""
+                    //                                 }
+                    //                                 else {
+                    //                                     " and "
+                    //                                 };
+                    //                                 delete_query_part_acc.push_str(&format!("{value}{maybe_space_and_space}"));
+                    //                             }
+                    //                         },
+                    //                         Err(error) => {
+                    //                             return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
+                    //                                 #element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: error,
+                    //                                 code_occurence: error_occurence_lib::code_occurence!(),
+                    //                             });
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 let mut create_query_part_acc = std::string::String::default();
+                    //                 for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &#type_path_json_array_element_change_upper_camel_case_token_stream)>>() {
+                    //                     match postgresql_crud::JsonArrayElementBindQuery::try_generate_create_bind_increments(*element, increment) {
+                    //                         Ok(value) => {
+                    //                             if let Some(value) = value {
+                    //                                 create_query_part_acc.push_str(&format!("{value},"));
+                    //                             }
+                    //                         },
+                    //                         Err(error) => {
+                    //                             return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream {
+                    //                                 #element_ident_type_path_try_generate_json_array_element_create_bind_increments_snake_case_token_stream: error,
+                    //                                 code_occurence: error_occurence_lib::code_occurence!(),
+                    //                             });
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 let _ = create_query_part_acc.pop();
+                    //                 let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
+                    //                     std::string::String::from("elem")
+                    //                 } else {
+                    //                     format!("case {update_query_part_acc} else elem end")
+                    //                 };
+                    //                 let maybe_where = if delete_query_part_acc.is_empty() {
+                    //                     std::string::String::default()
+                    //                 } else {
+                    //                     format!(" where {delete_query_part_acc}")
+                    //                 };
+                    //                 let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
+                    //                     std::string::String::default()
+                    //                 } else {
+                    //                     format!(" || jsonb_build_array({create_query_part_acc})")
+                    //                 };
+                    //                 let maybe_jsonb_build_array_in_case_of_null = if create_query_part_acc.is_empty() {
+                    //                     current_jsonb_set_target.clone()
+                    //                 } else {
+                    //                     format!("jsonb_build_array({create_query_part_acc})")
+                    //                 };
+                    //                 acc = format!(#acc_format_handle_token_stream);
+                    //             },
+                    //             None => {
+                    //                 match increment.checked_add(1) {
+                    //                     Some(value) => {
+                    //                         *increment = value;
+                    //                         acc = format!(#value_is_none_format_handle_token_stream);
+                    //                     }
+                    //                     None => {
+                    //                         return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
+                    //                             code_occurence: error_occurence_lib::code_occurence!(),
+                    //                         });
+                    //                     }
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // }
                     let element_ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.to_string());
                     let type_path_stringified = quote::quote!{#type_path}.to_string();
                     let type_path_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&type_path_stringified);
@@ -4285,7 +4486,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         value.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
-                    let type_path_json_array_element_change_upper_camel_case_token_stream = generate_ident_json_array_element_change_upper_camel_case_token_stream(&type_path_upper_camel_case_stringified);
+                    let type_path_options_to_update_upper_camel_case_token_stream = generate_value_options_to_update_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = {
                         let value = format!("{element_ident_upper_camel_case_stringified}{type_path_upper_camel_case_stringified}{}", naming_conventions::TryGenerateJsonArrayElementUpdateBindIncrementsUpperCamelCase);
                         value.parse::<proc_macro2::TokenStream>()
@@ -4330,42 +4532,184 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     quote::quote!{
                         (value) => {
-                            match &value.value {
-                                Some(value) => {
-                                    {
-                                        let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
-                                        for element in value {
-                                            match &element.0 {
-                                                postgresql_crud::JsonArrayElementChange::Update(value) => {
-                                                    if ids.contains(&&value.id) {
-                                                        return
-                                                        Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
-                                                            #element_ident_type_path_not_unique_id_snake_case_token_stream: value.id,
-                                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                                        });
-                                                    } else {
-                                                        ids.push(&value.id);
-                                                    }
-                                                }
-                                                postgresql_crud::JsonArrayElementChange::Delete(value) => {
-                                                    if ids.contains(&value) {
-                                                        return
-                                                        Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
-                                                            #element_ident_type_path_not_unique_id_snake_case_token_stream: *value,
-                                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                                        });
-                                                    } else {
-                                                        ids.push(&value);
-                                                    }
-                                                }
-                                                _ => (),
-                                            }
+                            // {
+                            //     let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+                            //     if let Some(value) = &value.value {
+                            //         for element in &value.update {
+                            //             if ids.contains(&&element.id) {
+                            //                 return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
+                            //                     #element_ident_type_path_not_unique_id_snake_case_token_stream: element.id,
+                            //                     code_occurence: error_occurence_lib::code_occurence!(),
+                            //                 });
+                            //             } else {
+                            //                 ids.push(&element.id);
+                            //             }
+                            //         }
+                            //         for element in &value.delete {
+                            //             if ids.contains(&element) {
+                            //                 return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
+                            //                     #element_ident_type_path_not_unique_id_snake_case_token_stream: *element,
+                            //                     code_occurence: error_occurence_lib::code_occurence!(),
+                            //                 });
+                            //             } else {
+                            //                 ids.push(&element);
+                            //             }
+                            //         }
+                            //     }
+                            // }
+                            // let current_jsonb_set_target = format!(
+                            //     "{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'"
+                            // );
+                            // let mut update_query_part_acc = std::string::String::default();
+                            // let mut delete_query_part_acc = std::string::String::default();
+                            // let mut create_query_part_acc = std::string::String::default();
+                            // match &value.value {
+                            //     Some(value) => {
+                            //         for (index, element) in &value
+                            //             .update
+                            //             .iter()
+                            //             .enumerate()
+                            //             .collect::<std::vec::Vec<(usize, &#type_path_options_to_update_upper_camel_case_token_stream)>>()
+                            //         {
+                            //             match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(
+                            //                 *element,
+                            //                 &jsonb_set_accumulator,
+                            //                 &jsonb_set_target,
+                            //                 &jsonb_set_path,
+                            //                 increment,
+                            //                 is_array_object_element.clone()
+                            //             )
+                            //             {
+                            //                 Ok(value) => {
+                            //                     if let Some(value) = value {
+                            //                         update_query_part_acc.push_str(&value);
+                            //                     }
+                            //                 },
+                            //                 Err(error) => {
+                            //                     return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream {
+                            //                         #element_ident_type_path_try_generate_json_array_element_update_bind_increments_snake_case_token_stream: error,
+                            //                         code_occurence: error_occurence_lib::code_occurence!(),
+                            //                     });
+                            //                 }
+                            //             }
+                            //         }
+                            //         for (index, element) in &value
+                            //             .delete
+                            //             .iter()
+                            //             .enumerate()
+                            //             .collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>()
+                            //         {
+                            //             match increment.checked_add(1) {
+                            //                 Some(value) => {
+                            //                     *increment = value;
+                            //                     let maybe_space_and_space = if delete_query_part_acc.is_empty() {
+                            //                         ""
+                            //                     } else {
+                            //                         " and "
+                            //                     };
+                            //                     delete_query_part_acc.push_str(&format!(
+                            //                         "elem->>'id' <> ${increment}{maybe_space_and_space}"
+                            //                     ));
+                            //                 }
+                            //                 None => {
+                            //                     return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
+                            //                         #element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd {
+                            //                             code_occurence: error_occurence_lib::code_occurence!(),
+                            //                         },
+                            //                         code_occurence: error_occurence_lib::code_occurence!(),
+                            //                     });
+                            //                 }
+                            //             }
+                            //         }
+                            //         for (index, element) in &value
+                            //             .create
+                            //             .iter()
+                            //             .enumerate()
+                            //             .collect::<std::vec::Vec<(usize, &#type_path_to_create_upper_camel_case_token_stream)>>()
+                            //         {
+                            //             match postgresql_crud::JsonArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
+                            //                 Ok(value) => {
+                            //                     if let Some(value) = value {
+                            //                         create_query_part_acc.push_str(&format!("{value},"));
+                            //                     }
+                            //                 },
+                            //                 Err(error) => {
+                            //                     return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_create_bind_increments_upper_camel_case_token_stream {
+                            //                         #element_ident_type_path_try_generate_json_array_element_create_bind_increments_snake_case_token_stream: error,
+                            //                         code_occurence: error_occurence_lib::code_occurence!(),
+                            //                     });
+                            //                 }
+                            //             }
+                            //         }
+                            //     },
+                            //     None => {
+                            //         match increment.checked_add(1) {
+                            //             Some(value) => {
+                            //                 *increment = value;
+                            //                 // update_query_part_acc.push_str(&format!("@@@TODOUPDATE@@@"));//format!("${increment}")
+                            //             }
+                            //             None => {
+                            //                 return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
+                            //                     code_occurence: error_occurence_lib::code_occurence!(),
+                            //                 });
+                            //             }
+                            //         }
+                            //     }
+                            // }
+                            // let _ = create_query_part_acc.pop();
+                            // let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
+                            //     std::string::String::from("elem")
+                            // } else {
+                            //     format!("case {update_query_part_acc} else elem end")
+                            // };
+                            // let maybe_where = if delete_query_part_acc.is_empty() {
+                            //     std::string::String::default()
+                            // } else {
+                            //     format!(" where {delete_query_part_acc}")
+                            // };
+                            // let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
+                            //     std::string::String::default()
+                            // } else {
+                            //     format!(" || jsonb_build_array({create_query_part_acc})")
+                            // };
+                            // acc = format!(#acc_format_handle_token_stream);
+                            //
+                            {
+                                let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+                                if let Some(value) = &value.value {
+                                    for element in &value.update {
+                                        if ids.contains(&&element.id) {
+                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
+                                                #element_ident_type_path_not_unique_id_snake_case_token_stream: element.id,
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        } else {
+                                            ids.push(&element.id);
                                         }
                                     }
-                                    let current_jsonb_set_target = format!(#current_jsonb_set_target_format_handle_token_stream);
+                                    for element in &value.delete {
+                                        if ids.contains(&element) {
+                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_not_unique_id_upper_camel_case_token_stream {
+                                                #element_ident_type_path_not_unique_id_snake_case_token_stream: *element,
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        } else {
+                                            ids.push(&element);
+                                        }
+                                    }
+                                }
+                            }
+                            let current_jsonb_set_target = format!(#current_jsonb_set_target_format_handle_token_stream);
+                            match &value.value {
+                                Some(value) => {
                                     let mut update_query_part_acc = std::string::String::default();
-                                    for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &#type_path_json_array_element_change_upper_camel_case_token_stream)>>() {
-                                        match postgresql_crud::JsonArrayElementBindQuery::try_generate_update_bind_increments(
+                                    for (index, element) in &value
+                                        .update
+                                        .iter()
+                                        .enumerate()
+                                        .collect::<std::vec::Vec<(usize, &#type_path_options_to_update_upper_camel_case_token_stream)>>()
+                                    {
+                                        match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(
                                             *element,
                                             &jsonb_set_accumulator,
                                             &jsonb_set_target,
@@ -4374,7 +4718,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             is_array_object_element.clone()
                                         ) {
                                             Ok(value) => {
-                                                if let Some(value) = value {
+                                                if let Some(value) = value { 
                                                     update_query_part_acc.push_str(& value);
                                                 }
                                             },
@@ -4386,31 +4730,50 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             }
                                         }
                                     }
-                                    let mut delete_query_part_acc = std::string::String::default();
-                                    for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &#type_path_json_array_element_change_upper_camel_case_token_stream)>>() {
-                                        match postgresql_crud::JsonArrayElementBindQuery::try_generate_delete_bind_increments(*element, increment) {
-                                            Ok(value) => {
-                                                if let Some(value) = value {
-                                                    let maybe_space_and_space = if delete_query_part_acc.is_empty() { 
-                                                        ""
-                                                    }
-                                                    else {
-                                                        " and "
-                                                    };
-                                                    delete_query_part_acc.push_str(&format!("{value}{maybe_space_and_space}"));
-                                                }
-                                            },
-                                            Err(error) => {
-                                                return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
-                                                    #element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: error,
-                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                });
-                                            }
+                                    let delete_query_part_acc = {
+                                        if value.delete.is_empty() {
+                                            std::string::String::default()
                                         }
-                                    }
+                                        else {
+                                            let mut delete_query_part_acc = std::string::String::from("elem->>'id' <> ");
+                                            for (index, element) in &value
+                                                .delete
+                                                .iter()
+                                                .enumerate()
+                                                .collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>()
+                                            {
+                                                match increment.checked_add(1) {
+                                                    Some(value) => {
+                                                        *increment = value;
+                                                        //here
+                                                        let maybe_space_and_space = if delete_query_part_acc.is_empty() {
+                                                            ""
+                                                        } else {
+                                                            " and "
+                                                        };
+                                                        delete_query_part_acc.push_str(&format!("${increment}{maybe_space_and_space}"));
+                                                    }
+                                                    None => {
+                                                        return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream {
+                                                            #element_ident_type_path_try_generate_json_array_element_delete_bind_increments_snake_case_token_stream: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd {
+                                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                                            },
+                                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                            delete_query_part_acc
+                                        }
+                                    };
                                     let mut create_query_part_acc = std::string::String::default();
-                                    for (index, element) in &value.iter().enumerate().collect::<std::vec::Vec<(usize, &#type_path_json_array_element_change_upper_camel_case_token_stream)>>() {
-                                        match postgresql_crud::JsonArrayElementBindQuery::try_generate_create_bind_increments(*element, increment) {
+                                    for (index, element) in &value
+                                        .create
+                                        .iter()
+                                        .enumerate()
+                                        .collect::<std::vec::Vec<(usize, &#type_path_to_create_upper_camel_case_token_stream)>>()
+                                    {
+                                        match postgresql_crud::JsonArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
                                             Ok(value) => {
                                                 if let Some(value) = value {
                                                     create_query_part_acc.push_str(&format!("{value},"));
@@ -4424,6 +4787,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             }
                                         }
                                     }
+                                    //
+                                    // let _ = create_query_part_acc.pop();
+                                    // let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
+                                    //     std::string::String::from("elem")
+                                    // } else {
+                                    //     format!("case {update_query_part_acc} else elem end")
+                                    // };
+                                    // let maybe_where = if delete_query_part_acc.is_empty() {
+                                    //     std::string::String::default()
+                                    // } else {
+                                    //     format!(" where {delete_query_part_acc}")
+                                    // };
+                                    // let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
+                                    //     std::string::String::default()
+                                    // } else {
+                                    //     format!(" || jsonb_build_array({create_query_part_acc})")
+                                    // };
+                                    // acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
                                     let _ = create_query_part_acc.pop();
                                     let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
                                         std::string::String::from("elem")
@@ -4446,21 +4827,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         format!("jsonb_build_array({create_query_part_acc})")
                                     };
                                     acc = format!(#acc_format_handle_token_stream);
-                                },
-                                None => {
-                                    match increment.checked_add(1) {
-                                        Some(value) => {
-                                            *increment = value;
-                                            acc = format!(#value_is_none_format_handle_token_stream);
-                                        }
-                                        None => {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
                                 }
+                                None => match increment.checked_add(1) {
+                                    Some(value) => {
+                                        *increment = value;
+                                        acc = format!(#value_is_none_format_handle_token_stream);
+                                    }
+                                    None => {
+                                        return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
+                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                        });
+                                    }
+                                },
                             }
+                            //
                         }
                     }
                 },
@@ -4621,39 +5001,47 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdVecVecGenericWithId(_) => {
                     quote::quote!{
                         // query = value.value.bind_value_to_query(query);
-                        for element in &value.value {
-                            query = postgresql_crud::JsonArrayElementBindQuery::bind_update_value_to_query(element.clone(), query);
+                        for element in &value.value.update {
+                            query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(
+                                element.clone(),
+                                query,
+                            );
                         }
-                        for element in &value.value {
-                            query = postgresql_crud::JsonArrayElementBindQuery::bind_delete_value_to_query(element.clone(), query);
+                        for element in &value.value.delete {
+                            query = query.bind(element.0.to_string());
                         }
-                        for element in &value.value {
-                            query = postgresql_crud::JsonArrayElementBindQuery::bind_create_value_to_query(element.clone(), query);
+                        for element in &value.value.create {
+                            query = postgresql_crud::JsonArrayElementCreateBindQuery::bind_create_value_to_query(
+                                element.clone(),
+                                query,
+                            );
                         }
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    let type_path_stringified = quote::quote!{#type_path}.to_string();
-                    let type_path_json_array_element_change_upper_camel_case_token_stream = {
-                        let value = format!("{type_path_stringified}{}", naming_conventions::JsonArrayElementChangeUpperCamelCase);
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_options_to_update_upper_camel_case_token_stream = generate_value_options_to_update_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
                     quote::quote!{
                         match &value.value {
                             Some(value) => {
-                                for element in value {
-                                    query = postgresql_crud::JsonArrayElementBindQuery::bind_update_value_to_query(element.clone(), query);
+                                for element in &value.update {
+                                    query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(
+                                        element.clone(),
+                                        query,
+                                    );
                                 }
-                                for element in value {
-                                    query = postgresql_crud::JsonArrayElementBindQuery::bind_delete_value_to_query(element.clone(), query);
+                                for element in &value.delete {
+                                    query = query.bind(element.0.to_string());
                                 }
-                                for element in value {
-                                    query = postgresql_crud::JsonArrayElementBindQuery::bind_create_value_to_query(element.clone(), query);
+                                for element in &value.create {
+                                    query = postgresql_crud::JsonArrayElementCreateBindQuery::bind_create_value_to_query(
+                                        element.clone(),
+                                        query,
+                                    );
                                 }
                             },
                             None => {
-                                query = query.bind(sqlx::types::Json(None::<std::option::Option<std::vec::Vec<#type_path_json_array_element_change_upper_camel_case_token_stream>>>));
+                                query = query.bind(sqlx::types::Json(None::<std::option::Option<postgresql_crud::JsonArrayChange<#type_path_to_create_upper_camel_case_token_stream, #type_path_options_to_update_upper_camel_case_token_stream>>>));
                             }
                         }
                     }
@@ -4705,131 +5093,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     };
                     for element in &self.0 {
                         match &element {
-                            SomethingOptionToUpdate::StdVecVecGenericWithId (value) => {
-                                {
-                                    let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
-                                    for element in &value.value.update {
-                                        if ids.contains(&&element.id) {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::StdVecVecGenericWithIdDoggieNotUniqueId {
-                                                std_vec_vec_generic_with_id_doggie_not_unique_id: element.id,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        } else {
-                                            ids.push(&element.id);
-                                        }
-                                    }
-                                    for element in &value.value.delete {
-                                        if ids.contains(&element) {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::StdVecVecGenericWithIdDoggieNotUniqueId {
-                                                std_vec_vec_generic_with_id_doggie_not_unique_id: *element,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        } else {
-                                            ids.push(&element);
-                                        }
-                                    }
-                                }
-                                let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");
-                                let mut update_query_part_acc = std::string::String::default();
-                                for (index, element) in &value
-                                    .value
-                                    .update
-                                    .iter()
-                                    .enumerate()
-                                    .collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>()
-                                {
-                                    match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(
-                                        *element,
-                                        &jsonb_set_accumulator,
-                                        &jsonb_set_target,
-                                        &jsonb_set_path,
-                                        increment,
-                                        is_array_object_element.clone()
-                                    )
-                                    {
-                                        Ok(value) => {
-                                            if let Some(value) = value {
-                                                update_query_part_acc.push_str(&value);
-                                            }
-                                        },
-                                        Err(error) => {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
-                                                std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments: error,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                let mut delete_query_part_acc = std::string::String::default();
-                                for (index, element) in &value
-                                    .value
-                                    .delete
-                                    .iter()
-                                    .enumerate()
-                                    .collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>()
-                                {
-                                    match increment.checked_add(1) {
-                                        Some(value) => {
-                                            *increment = value;
-                                            let maybe_space_and_space = if delete_query_part_acc.is_empty() {
-                                                ""
-                                            }
-                                            else {
-                                                " and "
-                                            };
-                                            delete_query_part_acc.push_str(&format!("elem->>'id' <> ${increment}{maybe_space_and_space}"));
-                                        }
-                                        None => {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements {
-                                                std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd {
-                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                },
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                let mut create_query_part_acc = std::string::String::default();
-                                for (index, element) in &value
-                                    .value
-                                    .create
-                                    .iter()
-                                    .enumerate()
-                                    .collect::<std::vec::Vec<(usize, &DoggieToCreate)>>()
-                                {
-                                    match postgresql_crud::JsonArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
-                                        Ok(value) => {
-                                            if let Some(value) = value {
-                                                create_query_part_acc.push_str(&format!("{value},"));
-                                            }
-                                        },
-                                        Err(error) => {
-                                            return Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements {
-                                                std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments: error,
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                let _ = create_query_part_acc.pop();
-                                let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() {
-                                    std::string::String::from("elem")
-                                } else {
-                                    format!("case {update_query_part_acc} else elem end")
-                                };
-                                let maybe_where = if delete_query_part_acc.is_empty() {
-                                    std::string::String::default()
-                                } else {
-                                    format!(" where {delete_query_part_acc}")
-                                };
-                                let maybe_jsonb_build_array = if create_query_part_acc.is_empty() {
-                                    std::string::String::default()
-                                } else {
-                                    format!(" || jsonb_build_array({create_query_part_acc})")
-                                };
-                                acc = format!
-                                ("jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
-                            }
+                            #(#query_part_generation_token_stream),*
                         }
                     }
                     Ok(acc)
@@ -4840,23 +5104,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     for element in self.0 {
                         match element {
-                            SomethingOptionToUpdate::StdVecVecGenericWithId(value) => {
-                                for element in &value.value.update {
-                                    query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(
-                                        element.clone(),
-                                        query,
-                                    );
-                                }
-                                for element in &value.value.delete {
-                                    query = query.bind(element.0.to_string());
-                                }
-                                for element in &value.value.create {
-                                    query = postgresql_crud::JsonArrayElementCreateBindQuery::bind_create_value_to_query(
-                                        element.clone(),
-                                        query,
-                                    );
-                                }
-                            }
+                            #(#bind_query_token_stream),*
                         }
                     }
                     query

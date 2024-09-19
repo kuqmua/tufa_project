@@ -1918,62 +1918,64 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             #     }
             # }
             # ,
-            {
-                "std_vec_vec_generic_with_id": {
-                    "value": {
-                        "create": [
-                            {
-                                "std_primitive_i16": 36
-                            }
-                        ],
-                        "update": [
-                            {
-                                "id": "aa0cd700-35a8-4a3f-a8a1-447204afe966",
-                                "fields": [
-                                    {
-                                        "std_primitive_i16": {
-                                            "value": 675
-                                        }
-                                    }
-                                ]
-                            }
-                        ],
-                        "delete": [
-                            "48839fc6-7869-4e6f-b58e-de4d2524c9a7"
-                        ]
-                    }
-                }
-            }
-            # ,
             # {
-            #     "std_option_option_std_vec_vec_generic_with_id": {
-            #         "value": 
-            #         # null
-            #         [
-            #             {
-            #                 "create": {
-            #                     "std_primitive_i16": 234
+            #     "std_vec_vec_generic_with_id": {
+            #         "value": {
+            #             "create": [
+            #                 {
+            #                     "std_primitive_i16": 36
             #                 }
-            #             }
-            #             ,
-            #             {
-            #                 "update": {
-            #                     "id": "4d5256c3-616a-4b40-a2df-72a22eb641eb",
+            #             ],
+            #             "update": [
+            #                 {
+            #                     "id": "27f6c324-5f5a-40e6-ab40-958919cea2f5",
             #                     "fields": [
             #                         {
             #                             "std_primitive_i16": {
-            #                                 "value": 6678
+            #                                 "value": 6753
             #                             }
             #                         }
             #                     ]
             #                 }
-            #             },
-            #             {
-            #                 "delete": "581572cd-c4b4-43f3-9b76-fc91dcf75eec"
-            #             }
-            #         ]
+            #             ],
+            #             "delete": [
+            #                 "0e6eb840-aeba-42a1-851d-5f720c58d4f6"
+            #             ]
+            #         }
             #     }
             # }
+            # ,
+            {
+                "std_option_option_std_vec_vec_generic_with_id": {
+                    "value": 
+                    # null
+                    {
+                        "create": [
+                            {
+                                "std_primitive_i16": 46
+                            }
+                        ]
+                        ,
+                        "update": [
+                            {
+                                "id": "b7e6a329-1884-4f33-99d5-db2fb948a593",
+                                "fields": [
+                                    {
+                                        "std_primitive_i16": {
+                                            "value": 888
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                        ,
+                        "delete": [
+                            "6ba4e448-4572-4cbe-993b-67e65701672b",
+                            "68202739-8b59-42f9-9d73-1dfb5fc1561f"
+                        ]
+                    }
+                }
+            }
         ]
     }
 }
