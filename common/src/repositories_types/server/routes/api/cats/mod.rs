@@ -295,11 +295,11 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    // pub generic: postgresql_crud::JsonGeneric<Rat>,
-    // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Doggie>,
+    // pub generic: postgresql_crud::JsonGeneric<Cat>,
+    // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
     pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
-    pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+    // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
 
 //todo this need for old version of update_many. later need to refactor update many and remove this
@@ -370,7 +370,9 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+#[derive(Debug, Clone, PartialEq, 
+    // Eq, 
+    Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
      postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
@@ -378,15 +380,16 @@ pub struct Doggie {
 
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub generic: postgresql_crud::JsonGeneric<Cat>,
+    pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 }
 
-// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
-//     postgresql_crud::GeneratePostgresqlQueryPart
-// )] //user type must implement utoipa::ToSchema trait
-// pub struct Cat {
-//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-//     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-// }
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,
+    postgresql_crud::GeneratePostgresqlQueryPart
+)] //user type must implement utoipa::ToSchema trait
+pub struct Cat {
+    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+}
 
 #[test]
 fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() {
