@@ -1345,7 +1345,15 @@ fn test_dd() {
 // }
 
 //
-
+impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionToUpdate {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<DoggieOptionToUpdate> {
+        vec![
+            DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{
+                value: Default::default()
+            })
+        ]
+    }
+}
 //
 
 
