@@ -342,20 +342,21 @@ impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId for 
     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self) {}
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, 
-    // serde::Deserialize, 
-    utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct JsonArrayChange<CreateGeneric, UpdateGeneric> {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub create: std::vec::Vec<CreateGeneric>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub update: std::vec::Vec<UpdateGeneric>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub delete: std::vec::Vec<JsonUuid>
 }
-//
 
-impl<'de, CreateGeneric, UpdateGeneric> serde::Deserialize<'de> for JsonArrayChange<CreateGeneric, UpdateGeneric>
+impl<'de, CreateGeneric, UpdateGeneric> serde::Deserialize<'de>
+for JsonArrayChange<CreateGeneric, UpdateGeneric>
 where
     CreateGeneric: serde::Deserialize<'de>,
-    UpdateGeneric: serde::Deserialize<'de> + GetJsonId,
+    UpdateGeneric: serde::Deserialize<'de>,
 {
     fn deserialize<__D>(
         __deserializer: __D,
@@ -452,6 +453,7 @@ where
             >,
             lifetime: serde::__private::PhantomData<&'de ()>,
         }
+        const FIELDS_ARE_EMPTY_ERROR_MESSAGE: &str = "create, update, delete fields are empty";
         impl<'de, CreateGeneric, UpdateGeneric> serde::de::Visitor<'de>
         for __Visitor<'de, CreateGeneric, UpdateGeneric>
         where
@@ -481,12 +483,7 @@ where
                 >(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(
-                            serde::de::Error::invalid_length(
-                                0usize,
-                                &"struct JsonArrayChange with 3 elements",
-                            ),
-                        );
+                        vec![]
                     }
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<
@@ -494,12 +491,7 @@ where
                 >(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(
-                            serde::de::Error::invalid_length(
-                                1usize,
-                                &"struct JsonArrayChange with 3 elements",
-                            ),
-                        );
+                        vec![]
                     }
                 };
                 let __field2 = match serde::de::SeqAccess::next_element::<
@@ -507,14 +499,12 @@ where
                 >(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(
-                            serde::de::Error::invalid_length(
-                                2usize,
-                                &"struct JsonArrayChange with 3 elements",
-                            ),
-                        );
+                        vec![]
                     }
                 };
+                if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
+                    return Err(serde::de::Error::custom(&FIELDS_ARE_EMPTY_ERROR_MESSAGE));
+                }
                 serde::__private::Ok(JsonArrayChange {
                     create: __field0,
                     update: __field1,
@@ -588,21 +578,24 @@ where
                 let __field0 = match __field0 {
                     serde::__private::Some(__field0) => __field0,
                     serde::__private::None => {
-                        serde::__private::de::missing_field("create")?
+                        vec![]
                     }
                 };
                 let __field1 = match __field1 {
                     serde::__private::Some(__field1) => __field1,
                     serde::__private::None => {
-                        serde::__private::de::missing_field("update")?
+                        vec![]
                     }
                 };
                 let __field2 = match __field2 {
                     serde::__private::Some(__field2) => __field2,
                     serde::__private::None => {
-                        serde::__private::de::missing_field("delete")?
+                        vec![]
                     }
                 };
+                if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
+                    return Err(serde::de::Error::custom(&FIELDS_ARE_EMPTY_ERROR_MESSAGE));
+                }
                 serde::__private::Ok(JsonArrayChange {
                     create: __field0,
                     update: __field1,
@@ -625,7 +618,6 @@ where
         )
     }
 }
-//
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed {
