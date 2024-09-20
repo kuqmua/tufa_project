@@ -3321,6 +3321,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             pub struct #ident_options_to_update_upper_camel_case_token_stream #content_token_stream
         }
     };
+    let maybe_impl_postgresql_crud_get_json_id_for_ident_options_to_update_token_stream = if is_id_field_exists {
+        quote::quote!{
+            impl postgresql_crud::GetJsonId for #ident_options_to_update_upper_camel_case_token_stream {
+                fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
+                    &self.id
+                }
+            }
+        }
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
     let pub_enum_ident_field_to_update_token_stream = {
         let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element|{
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -5871,6 +5883,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
         #pub_enum_ident_option_to_update_token_stream //todo write manual serde::Deserialize and check if vec is empty
         #pub_struct_ident_options_to_update_token_stream
+        #maybe_impl_postgresql_crud_get_json_id_for_ident_options_to_update_token_stream
         #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
         #maybe_impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
         #maybe_pub_enum_ident_try_generate_json_array_element_update_bind_increments_error_named_token_stream
