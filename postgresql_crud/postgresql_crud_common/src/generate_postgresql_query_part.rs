@@ -356,7 +356,7 @@ impl<'de, CreateGeneric, UpdateGeneric> serde::Deserialize<'de>
 for JsonArrayChange<CreateGeneric, UpdateGeneric>
 where
     CreateGeneric: serde::Deserialize<'de>,
-    UpdateGeneric: serde::Deserialize<'de>,
+    UpdateGeneric: serde::Deserialize<'de> + GetJsonId,
 {
     fn deserialize<__D>(
         __deserializer: __D,
@@ -446,7 +446,7 @@ where
         struct __Visitor<'de, CreateGeneric, UpdateGeneric>
         where
             CreateGeneric: serde::Deserialize<'de>,
-            UpdateGeneric: serde::Deserialize<'de>,
+            UpdateGeneric: serde::Deserialize<'de> + GetJsonId,
         {
             marker: serde::__private::PhantomData<
                 JsonArrayChange<CreateGeneric, UpdateGeneric>,
@@ -454,11 +454,14 @@ where
             lifetime: serde::__private::PhantomData<&'de ()>,
         }
         const FIELDS_ARE_EMPTY_ERROR_MESSAGE: &str = "create, update, delete fields are empty";
+        const NOT_UNIQUE_ID_IN_JSON_UPDATE_ARRAY: &str = "not unique id in json update array: ";
+        const NOT_UNIQUE_ID_IN_JSON_DELETE_ARRAY: &str = "not unique id in json delete array: ";
+        const NOT_UNIQUE_ID_IN_JSON_UPDATE_AND_DELETE_ARRAYS: &str = "not unique id in json update and delete arrays: ";
         impl<'de, CreateGeneric, UpdateGeneric> serde::de::Visitor<'de>
         for __Visitor<'de, CreateGeneric, UpdateGeneric>
         where
             CreateGeneric: serde::Deserialize<'de>,
-            UpdateGeneric: serde::Deserialize<'de>,
+            UpdateGeneric: serde::Deserialize<'de> + GetJsonId,
         {
             type Value = JsonArrayChange<CreateGeneric, UpdateGeneric>;
             fn expecting(
@@ -504,6 +507,32 @@ where
                 };
                 if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
                     return Err(serde::de::Error::custom(&FIELDS_ARE_EMPTY_ERROR_MESSAGE));
+                }
+                {
+                    let mut update_acc = vec![];
+                    for element in &__field1 {
+                        let id = element.get_json_id();
+                        if update_acc.contains(id) {
+                            return Err(serde::de::Error::custom(&format!("{NOT_UNIQUE_ID_IN_JSON_UPDATE_ARRAY}{}", id.0)));
+                        }
+                        else {
+                            update_acc.push(*id);
+                        }
+                    }
+                    let mut delete_acc = vec![];
+                    for element in &__field2 {
+                        if delete_acc.contains(&element) {
+                            return Err(serde::de::Error::custom(&format!("{NOT_UNIQUE_ID_IN_JSON_DELETE_ARRAY}{}", element.0)));
+                        }
+                        else {
+                            delete_acc.push(element);
+                        }
+                    }
+                    for element in update_acc {
+                        if delete_acc.contains(&&element) {
+                            return Err(serde::de::Error::custom(&format!("{NOT_UNIQUE_ID_IN_JSON_UPDATE_AND_DELETE_ARRAYS}{}", element.0)));
+                        }
+                    }
                 }
                 serde::__private::Ok(JsonArrayChange {
                     create: __field0,
@@ -595,6 +624,32 @@ where
                 };
                 if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
                     return Err(serde::de::Error::custom(&FIELDS_ARE_EMPTY_ERROR_MESSAGE));
+                }
+                {
+                    let mut update_acc = vec![];
+                    for element in &__field1 {
+                        let id = element.get_json_id();
+                        if update_acc.contains(id) {
+                            return Err(serde::de::Error::custom(&format!("{NOT_UNIQUE_ID_IN_JSON_UPDATE_ARRAY}{}", id.0)));
+                        }
+                        else {
+                            update_acc.push(*id);
+                        }
+                    }
+                    let mut delete_acc = vec![];
+                    for element in &__field2 {
+                        if delete_acc.contains(&element) {
+                            return Err(serde::de::Error::custom(&format!("{NOT_UNIQUE_ID_IN_JSON_DELETE_ARRAY}{}", element.0)));
+                        }
+                        else {
+                            delete_acc.push(element);
+                        }
+                    }
+                    for element in update_acc {
+                        if delete_acc.contains(&&element) {
+                            return Err(serde::de::Error::custom(&format!("{NOT_UNIQUE_ID_IN_JSON_UPDATE_AND_DELETE_ARRAYS}{}", element.0)));
+                        }
+                    }
                 }
                 serde::__private::Ok(JsonArrayChange {
                     create: __field0,
