@@ -3411,17 +3411,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
             });
             let element_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
-            let generate_simple_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = |supported_predefined_type: &SupportedPredefinedType|{
-                let supported_predefined_type_variant_name_token_stream = {
-                    let value = supported_predefined_type.to_variant_name_stringified();
-                    value.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                quote::quote!{
-                    <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
-                }
-            };
             let supported_predefined_type = SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}"));
+            let supported_predefined_type_variant_name_token_stream = {
+                let value = supported_predefined_type.to_variant_name_stringified();
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
             let value_content_token_stream = match &supported_predefined_type
             {
                 SupportedPredefinedType::JsonStdPrimitiveI8 |
@@ -3437,7 +3432,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdStringString |
+                SupportedPredefinedType::JsonStdStringString => quote::quote!{
+                    <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
+                },
 
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16 |
@@ -3452,7 +3449,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdStringString |
+                SupportedPredefinedType::JsonStdOptionOptionStdStringString => quote::quote!{
+                    match <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
+                        Some(value) => Some(value.0),
+                        None => None
+                    }
+                },
                 
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16 |
@@ -3467,7 +3469,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdStringString |
+                SupportedPredefinedType::JsonStdVecVecStdStringString => quote::quote!{
+                    <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
+                    .into_iter()
+                    .map(|element|element.0).collect()
+                },
 
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16 |
@@ -3482,7 +3488,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString |
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => quote::quote!{
+                    match <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
+                        Some(value) => Some(value.into_iter().map(|element|element.0).collect()),
+                        None => None
+                    }
+                },
 
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16 |
@@ -3497,7 +3508,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString |
+                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => quote::quote!{
+                    <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
+                    .into_iter().map(|element|match element {
+                        Some(value) => Some(value.0),
+                        None => None
+                    }).collect()
+                },
 
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
@@ -3512,8 +3529,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                    generate_simple_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&supported_predefined_type)
+                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{
+                    match <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
+                       Some(value) => Some(
+                           value.into_iter().map(|element|match element {
+                               Some(value) => Some(value.0),
+                               None => None
+                           }).collect()
+                       ),
+                       None => None
+                    }
                 },
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
@@ -3558,8 +3583,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
 
-                SupportedPredefinedType::JsonUuid => {
-                    generate_simple_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&supported_predefined_type)
+                SupportedPredefinedType::JsonUuid => quote::quote!{
+                    <postgresql_crud::#supported_predefined_type_variant_name_token_stream as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
                 },
             };
             quote::quote!{
