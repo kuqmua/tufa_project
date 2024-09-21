@@ -3522,7 +3522,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    todo!()
+                    quote::quote!{
+                        Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+                    }
                 },
 
                 SupportedPredefinedType::JsonStdVecVecGenericWithId(type_path) => {
