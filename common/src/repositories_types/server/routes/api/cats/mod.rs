@@ -1297,41 +1297,10 @@ fn test_dd() {
     // println!("{deserialized:#?}");
 }
 /////////
-impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdate {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<SomethingOptionToUpdate> {
-        vec![
-            SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value{
-                value: postgresql_crud::JsonArrayChange {
-                    create: vec![
-                        postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    ],
-                    update: vec![
-                        postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    ],
-                    delete: vec![
-                        postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    ]
-                }
-            })
-        ]
-    }
-}
-
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToUpdate {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
-
-impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionToUpdate {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<DoggieOptionToUpdate> {
-        vec![
-            DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{
-                value: 
-                <postgresql_crud::JsonStdPrimitiveI16 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
-            })
-        ]
     }
 }
 
