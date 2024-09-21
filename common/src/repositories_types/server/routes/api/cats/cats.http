@@ -488,16 +488,15 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
     "std_vec_vec_generic_with_id": [
       {
-        "std_primitive_i16": 0
-      }
-    ],
-    "std_option_option_std_vec_vec_generic_with_id": [
-      {
-        "std_primitive_i16": 0
+        "std_primitive_i16": 0,
+        "generic": {
+          "std_primitive_i32": 0
+        }
       }
     ]
   }
 }
+
 ###
  
 GET http://127.0.0.1:8080/jsongeneric/create_one_payload_example HTTP/1.1
@@ -1980,6 +1979,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         ]
     }
 }
+
+###
+ 
+GET http://127.0.0.1:8080/jsongeneric/update_one_payload_example HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ####"^first_test_name_create$"  
 

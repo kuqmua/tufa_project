@@ -71,6 +71,12 @@ fn crud(
             axum::routing::patch(common::repositories_types::server::routes::api::cats::try_update_one_route_logic),
         )
         .route(
+            "/update_one_payload_example",
+            axum::routing::get(
+                common::repositories_types::server::routes::api::cats::update_one_payload_example_route_logic,
+            ),
+        )
+        .route(
             "/delete_many",
             axum::routing::delete(
                 common::repositories_types::server::routes::api::cats::try_delete_many_route_logic,

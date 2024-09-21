@@ -472,7 +472,7 @@ pub struct UpdateOnePayload {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64,
     pub sqlx_types_json_t_as_postgresql_json_b_not_null:
-        std::option::Option<Field<postgresql_crud::SqlxTypesJson<SomethingOptionsToUpdate>>>,//here 
+        std::option::Option<postgresql_crud::Value<postgresql_crud::SqlxTypesJson<SomethingOptionsToUpdate>>>,
 }
 #[derive(Debug)]
 pub struct UpdateOneParameters {
@@ -1266,6 +1266,22 @@ pub async fn try_update_one(
         },
     )
 }
+impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UpdateOnePayload {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        }
+    }
+}
+pub async fn update_one_payload_example_route_logic() -> axum::response::Response {
+    let mut response = axum::response::IntoResponse::into_response(axum::Json(
+        <UpdateOnePayload as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+    ));
+    *response.status_mut() = axum::http::StatusCode::OK;
+    return response;
+}
 /////
 
 #[test]
@@ -1280,107 +1296,51 @@ fn test_dd() {
     // let deserialized: SomethingOptionsToUpdate = serde_json::from_str(&serialized).unwrap();
     // println!("{deserialized:#?}");
 }
-
 /////////
-// impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Something
-// {
-//     #[inline] fn
-//     default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-//     -> Self
-//     {
-//         Self
-//         {
-//             std_vec_vec_generic_with_id : postgresql_crud ::
-//             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-//             ::
-//             default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-//         }
-//     }
-// }
-
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-// pub enum SomethingOptionToUpdate {
-//     #[serde(rename(
-//         serialize = "std_vec_vec_generic_with_id",
-//         deserialize = "std_vec_vec_generic_with_id"
-//     ))]
-//     StdVecVecGenericWithId(
-//         postgresql_crud::Value<
-//             postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionsToUpdate>,
-//         >,
-//     ),
-// }
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-// pub struct SomethingOptionsToUpdate(pub std::vec::Vec<SomethingOptionToUpdate>);
-
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Default,
-//     serde :: Serialize,
-//     serde ::
-// Deserialize,
-//     utoipa :: ToSchema,
-//     schemars :: JsonSchema,
-// )]
-// pub struct SomethingToCreate {
-//     pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<DoggieToCreate>,
-// }
-///////////
-// impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Doggie {
-//     #[inline]
-//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self {
-//             id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//             std_primitive_i16: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-//         }
-//     }
-// }
-
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-// pub enum DoggieOptionToUpdate {
-//     #[serde(rename(serialize = "std_primitive_i16", deserialize = "std_primitive_i16"))]
-//     StdPrimitiveI16(postgresql_crud::Value<std::primitive::i16>),
-// }
-
-//
-impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionToUpdate {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<DoggieOptionToUpdate> {
+impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdate {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<SomethingOptionToUpdate> {
         vec![
-            DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{
-                value: Default::default()
+            SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value{
+                value: postgresql_crud::JsonArrayChange {
+                    create: vec![
+                        postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    ],
+                    update: vec![
+                        postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    ],
+                    delete: vec![
+                        postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    ]
+                }
             })
         ]
     }
 }
-//
 
+impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToUpdate {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+    }
+}
 
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-// pub struct DoggieOptionsToUpdate {
-//     pub id: postgresql_crud::JsonUuid,
-//     pub fields: std::vec::Vec<DoggieOptionToUpdate>,
-// }
+impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionToUpdate {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<DoggieOptionToUpdate> {
+        vec![
+            DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value{
+                value: 
+                <postgresql_crud::JsonStdPrimitiveI16 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
+            })
+        ]
+    }
+}
 
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-// )]
-// pub struct DoggieToCreate {
-//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-// }
-// impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieToCreate {
-//     #[inline] 
-//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self {
-//             std_primitive_i16: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-//         }
-//     }
-// }
+impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionsToUpdate {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            fields: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+        }
+    }
+}
