@@ -3543,11 +3543,23 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    todo!()
+                    quote::quote!{
+                        Some(postgresql_crud::JsonArrayChange {
+                            create: vec![
+                                postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                            ],
+                            update: vec![
+                                postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                            ],
+                            delete: vec![
+                                postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                            ]
+                        })
+                    }
                 },
 
                 SupportedPredefinedType::JsonUuid => {
-                    todo!()
+                    generate_simple_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&supported_predefined_type)
                 },
             };
             quote::quote!{
