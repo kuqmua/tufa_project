@@ -25,11 +25,7 @@ fn struct_normal() -> TestResult {
 
 #[allow(dead_code)]
 #[derive(JsonSchema)]
-pub struct Tuple(
-    #[schemars(schema_with = "schema_fn")] DoesntImplementJsonSchema,
-    i32,
-    #[schemars(schema_with = "schema_fn")] DoesntImplementJsonSchema,
-);
+pub struct Tuple(#[schemars(schema_with = "schema_fn")] DoesntImplementJsonSchema, i32, #[schemars(schema_with = "schema_fn")] DoesntImplementJsonSchema);
 
 #[test]
 fn struct_tuple() -> TestResult {

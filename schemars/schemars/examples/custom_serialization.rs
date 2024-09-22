@@ -21,9 +21,7 @@ pub struct MyStruct {
 
 fn make_custom_schema(generator: &mut SchemaGenerator) -> Schema {
     let mut schema = String::json_schema(generator);
-    schema
-        .ensure_object()
-        .insert("format".into(), "boolean".into());
+    schema.ensure_object().insert("format".into(), "boolean".into());
     schema
 }
 
@@ -49,9 +47,7 @@ mod as_string {
         D: Deserializer<'de>,
     {
         let string = String::deserialize(deserializer)?;
-        string
-            .parse()
-            .map_err(|_| D::Error::custom("Input was not valid"))
+        string.parse().map_err(|_| D::Error::custom("Input was not valid"))
     }
 }
 

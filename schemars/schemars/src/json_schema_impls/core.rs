@@ -33,10 +33,7 @@ impl<T: JsonSchema> JsonSchema for Option<T> {
                         }
                         Some(Value::String(string)) => {
                             if string != "null" {
-                                *instance_type.unwrap() = Value::Array(vec![
-                                    core::mem::take(string).into(),
-                                    "null".into(),
-                                ]);
+                                *instance_type.unwrap() = Value::Array(vec![core::mem::take(string).into(), "null".into()]);
                             }
                             obj.into()
                         }
@@ -54,9 +51,7 @@ impl<T: JsonSchema> JsonSchema for Option<T> {
         }
 
         if generator.settings().option_nullable {
-            schema
-                .ensure_object()
-                .insert("nullable".into(), true.into());
+            schema.ensure_object().insert("nullable".into(), true.into());
         };
 
         schema

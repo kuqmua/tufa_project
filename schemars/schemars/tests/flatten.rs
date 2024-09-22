@@ -109,7 +109,5 @@ pub struct InnerAllowUnknownFields {
 
 #[test]
 fn test_flattened_struct_deny_unknown_fields() -> TestResult {
-    test_default_generated_schema::<(OuterAllowUnknownFields, MiddleDenyUnknownFields)>(
-        "test_flattened_struct_deny_unknown_fields",
-    )
+    test_default_generated_schema::<(OuterAllowUnknownFields, MiddleDenyUnknownFields)>("test_flattened_struct_deny_unknown_fields")
 }

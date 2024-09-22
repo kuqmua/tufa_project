@@ -1,8 +1,4 @@
-pub fn get_macro_attribute<'a>(
-    attrs: &'a [syn::Attribute],
-    attribute_path: &std::string::String,
-    proc_macro_name_ident_stringified: &std::string::String,
-) -> &'a syn::Attribute {
+pub fn get_macro_attribute<'a>(attrs: &'a [syn::Attribute], attribute_path: &std::string::String, proc_macro_name_ident_stringified: &std::string::String) -> &'a syn::Attribute {
     let option_attribute = attrs.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
@@ -10,16 +6,15 @@ pub fn get_macro_attribute<'a>(
             stringified_path
         }
     });
-    option_attribute.map_or_else(|| {
-        panic!("{proc_macro_name_ident_stringified} no {attribute_path}");
-    }, |attribute| attribute)
+    option_attribute.map_or_else(
+        || {
+            panic!("{proc_macro_name_ident_stringified} no {attribute_path}");
+        },
+        |attribute| attribute,
+    )
 }
 
-pub fn get_macro_attribute_meta_list_token_stream<'a>(
-    attrs: &'a [syn::Attribute],
-    attribute_path: &std::string::String,
-    proc_macro_name_ident_stringified: &std::primitive::str,
-) -> &'a proc_macro2::TokenStream {
+pub fn get_macro_attribute_meta_list_token_stream<'a>(attrs: &'a [syn::Attribute], attribute_path: &std::string::String, proc_macro_name_ident_stringified: &std::primitive::str) -> &'a proc_macro2::TokenStream {
     let option_attribute = attrs.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
@@ -27,13 +22,15 @@ pub fn get_macro_attribute_meta_list_token_stream<'a>(
             stringified_path
         }
     });
-    let attribute = option_attribute.map_or_else(|| {
-        panic!("{proc_macro_name_ident_stringified} no {attribute_path}");
-    }, |attribute| attribute);
+    let attribute = option_attribute.map_or_else(
+        || {
+            panic!("{proc_macro_name_ident_stringified} no {attribute_path}");
+        },
+        |attribute| attribute,
+    );
     let value = if let syn::Meta::List(value) = &attribute.meta {
         &value.tokens
-    }
-    else {
+    } else {
         panic!("{proc_macro_name_ident_stringified} &attribute.meta is not syn::Meta::List(value)")
     };
     value

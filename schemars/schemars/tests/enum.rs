@@ -150,9 +150,7 @@ fn enum_no_variants() -> TestResult {
 #[derive(JsonSchema)]
 #[serde(rename_all_fields = "PascalCase")]
 pub enum RenameAllFields {
-    First {
-        nested_attribute: std::string::String,
-    },
+    First { nested_attribute: std::string::String },
 }
 
 #[derive(JsonSchema)]

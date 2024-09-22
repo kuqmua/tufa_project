@@ -22,11 +22,11 @@ pub enum NoItemsErrorNamed {
 impl NoItemsErrorNamed {
     pub const fn get_stringified_kind(error: &Self) -> &'static str {
         match error {
-            Self::ThereIsTag {..} => stringify!(Self::ThereIsTag),
-            Self::ConversionFromStrError {..} => {
+            Self::ThereIsTag { .. } => stringify!(Self::ThereIsTag),
+            Self::ConversionFromStrError { .. } => {
                 stringify!(Self::ConversionFromStrError)
             }
-            Self::NoTag {..} => stringify!(Self::NoTag),
+            Self::NoTag { .. } => stringify!(Self::NoTag),
         }
     }
     // pub fn into_json_with_link_and_provider_kind(

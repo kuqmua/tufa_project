@@ -22,10 +22,10 @@ where
     T: ToUpperCamelCaseStringified,
 {
     fn to_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_upper_camel_case_stringified =
-            ToUpperCamelCaseStringified::to_upper_camel_case_stringified(self);
-        value_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_upper_camel_case_stringified} {}", crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value_upper_camel_case_stringified = ToUpperCamelCaseStringified::to_upper_camel_case_stringified(self);
+        value_upper_camel_case_stringified
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value_upper_camel_case_stringified} {}", crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -54,8 +54,9 @@ where
 {
     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
         let value_snake_case_stringified = ToSnakeCaseStringified::to_snake_case_stringified(self);
-        value_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value_snake_case_stringified
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -82,9 +83,9 @@ where
     T: ToScreamingSnakeCaseStringified,
 {
     fn to_screaming_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_screaming_snake_case_stringified =
-            ToScreamingSnakeCaseStringified::to_screaming_snake_case_stringified(self);
-        value_screaming_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_screaming_snake_case_stringified} {}", crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value_screaming_snake_case_stringified = ToScreamingSnakeCaseStringified::to_screaming_snake_case_stringified(self);
+        value_screaming_snake_case_stringified
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value_screaming_snake_case_stringified} {}", crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }

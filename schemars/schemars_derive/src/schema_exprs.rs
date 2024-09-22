@@ -17,21 +17,13 @@ pub struct SchemaExpr {
 
 impl From<TokenStream> for SchemaExpr {
     fn from(creator: TokenStream) -> Self {
-        Self {
-            definitions: Vec::new(),
-            creator,
-            mutators: Vec::new(),
-        }
+        Self { definitions: Vec::new(), creator, mutators: Vec::new() }
     }
 }
 
 impl ToTokens for SchemaExpr {
     fn to_tokens(&self, tokens: &mut TokenStream) {
-        let Self {
-            definitions,
-            creator,
-            mutators,
-        } = self;
+        let Self { definitions, creator, mutators } = self;
 
         tokens.extend(if mutators.is_empty() {
             quote!({
@@ -54,11 +46,7 @@ pub fn expr_for_container(cont: &Container) -> SchemaExpr {
         Data::Struct(Style::Unit, _) => expr_for_unit_struct(),
         Data::Struct(Style::Newtype, fields) => expr_for_newtype_struct(&fields[0]),
         Data::Struct(Style::Tuple, fields) => expr_for_tuple_struct(fields),
-        Data::Struct(Style::Struct, fields) => expr_for_struct(
-            fields,
-            cont.serde_attrs.default(),
-            cont.serde_attrs.deny_unknown_fields(),
-        ),
+        Data::Struct(Style::Struct, fields) => expr_for_struct(fields, cont.serde_attrs.default(), cont.serde_attrs.deny_unknown_fields()),
         Data::Enum(variants) => expr_for_enum(variants, &cont.serde_attrs),
     };
 
@@ -67,12 +55,7 @@ pub fn expr_for_container(cont: &Container) -> SchemaExpr {
 }
 
 pub fn expr_for_repr(cont: &Container) -> Result<SchemaExpr, syn::Error> {
-    let repr_type = cont.attrs.repr.as_ref().ok_or_else(|| {
-        syn::Error::new(
-            Span::call_site(),
-            "JsonSchema_repr: missing #[repr(...)] attribute",
-        )
-    })?;
+    let repr_type = cont.attrs.repr.as_ref().ok_or_else(|| syn::Error::new(Span::call_site(), "JsonSchema_repr: missing #[repr(...)] attribute"))?;
 
     let variants = match &cont.data {
         Data::Enum(variants) => variants,
@@ -81,10 +64,7 @@ pub fn expr_for_repr(cont: &Container) -> Result<SchemaExpr, syn::Error> {
 
     if let Some(non_unit_error) = variants.iter().find_map(|v| match v.style {
         Style::Unit => None,
-        _ => Some(syn::Error::new_spanned(
-            v.original,
-            "JsonSchema_repr: must be a unit variant",
-        )),
+        _ => Some(syn::Error::new_spanned(v.original, "JsonSchema_repr: must be a unit variant")),
     }) {
         return Err(non_unit_error);
     };
@@ -183,26 +163,17 @@ fn type_for_schema(with_attr: &WithAttr) -> (syn::Type, Option<TokenStream>) {
 
 fn expr_for_enum(variants: &[Variant], cattrs: &serde_attr::Container) -> SchemaExpr {
     let deny_unknown_fields = cattrs.deny_unknown_fields();
-    let variants = variants
-        .iter()
-        .filter(|v| !v.serde_attrs.skip_deserializing());
+    let variants = variants.iter().filter(|v| !v.serde_attrs.skip_deserializing());
 
     match cattrs.tag() {
         TagType::External => expr_for_external_tagged_enum(variants, deny_unknown_fields),
         TagType::None => expr_for_untagged_enum(variants, deny_unknown_fields),
-        TagType::Internal { tag } => {
-            expr_for_internal_tagged_enum(variants, tag, deny_unknown_fields)
-        }
-        TagType::Adjacent { tag, content } => {
-            expr_for_adjacent_tagged_enum(variants, tag, content, deny_unknown_fields)
-        }
+        TagType::Internal { tag } => expr_for_internal_tagged_enum(variants, tag, deny_unknown_fields),
+        TagType::Adjacent { tag, content } => expr_for_adjacent_tagged_enum(variants, tag, content, deny_unknown_fields),
     }
 }
 
-fn expr_for_external_tagged_enum<'a>(
-    variants: impl Iterator<Item = &'a Variant<'a>>,
-    deny_unknown_fields: bool,
-) -> SchemaExpr {
+fn expr_for_external_tagged_enum<'a>(variants: impl Iterator<Item = &'a Variant<'a>>, deny_unknown_fields: bool) -> SchemaExpr {
     let mut unique_names = HashSet::<&str>::new();
     let mut count = 0;
     let (unit_variants, complex_variants): (Vec<_>, Vec<_>) = variants
@@ -238,17 +209,16 @@ fn expr_for_external_tagged_enum<'a>(
     schemas.extend(complex_variants.into_iter().map(|variant| {
         let name = variant.name();
 
-        let mut schema_expr =
-            SchemaExpr::from(if variant.is_unit() && variant.attrs.with.is_none() {
-                quote! {
-                    schemars::_private::new_unit_enum_variant(#name)
-                }
-            } else {
-                let sub_schema = expr_for_untagged_enum_variant(variant, deny_unknown_fields);
-                quote! {
-                    schemars::_private::new_externally_tagged_enum_variant(#name, #sub_schema)
-                }
-            });
+        let mut schema_expr = SchemaExpr::from(if variant.is_unit() && variant.attrs.with.is_none() {
+            quote! {
+                schemars::_private::new_unit_enum_variant(#name)
+            }
+        } else {
+            let sub_schema = expr_for_untagged_enum_variant(variant, deny_unknown_fields);
+            quote! {
+                schemars::_private::new_externally_tagged_enum_variant(#name, #sub_schema)
+            }
+        });
 
         variant.add_mutators(&mut schema_expr.mutators);
 
@@ -258,11 +228,7 @@ fn expr_for_external_tagged_enum<'a>(
     variant_subschemas(unique_names.len() == count, schemas)
 }
 
-fn expr_for_internal_tagged_enum<'a>(
-    variants: impl Iterator<Item = &'a Variant<'a>>,
-    tag_name: &str,
-    deny_unknown_fields: bool,
-) -> SchemaExpr {
+fn expr_for_internal_tagged_enum<'a>(variants: impl Iterator<Item = &'a Variant<'a>>, tag_name: &str, deny_unknown_fields: bool) -> SchemaExpr {
     let mut unique_names = HashSet::new();
     let mut count = 0;
     let variant_schemas = variants
@@ -286,10 +252,7 @@ fn expr_for_internal_tagged_enum<'a>(
     variant_subschemas(unique_names.len() == count, variant_schemas)
 }
 
-fn expr_for_untagged_enum<'a>(
-    variants: impl Iterator<Item = &'a Variant<'a>>,
-    deny_unknown_fields: bool,
-) -> SchemaExpr {
+fn expr_for_untagged_enum<'a>(variants: impl Iterator<Item = &'a Variant<'a>>, deny_unknown_fields: bool) -> SchemaExpr {
     let schemas = variants
         .map(|variant| {
             let mut schema_expr = expr_for_untagged_enum_variant(variant, deny_unknown_fields);
@@ -305,12 +268,7 @@ fn expr_for_untagged_enum<'a>(
     variant_subschemas(false, schemas)
 }
 
-fn expr_for_adjacent_tagged_enum<'a>(
-    variants: impl Iterator<Item = &'a Variant<'a>>,
-    tag_name: &str,
-    content_name: &str,
-    deny_unknown_fields: bool,
-) -> SchemaExpr {
+fn expr_for_adjacent_tagged_enum<'a>(variants: impl Iterator<Item = &'a Variant<'a>>, tag_name: &str, content_name: &str, deny_unknown_fields: bool) -> SchemaExpr {
     let mut unique_names = HashSet::new();
     let mut count = 0;
     let schemas = variants
@@ -318,20 +276,9 @@ fn expr_for_adjacent_tagged_enum<'a>(
             unique_names.insert(variant.name());
             count += 1;
 
-            let content_schema = if variant.is_unit() && variant.attrs.with.is_none() {
-                None
-            } else {
-                Some(expr_for_untagged_enum_variant(variant, deny_unknown_fields))
-            };
+            let content_schema = if variant.is_unit() && variant.attrs.with.is_none() { None } else { Some(expr_for_untagged_enum_variant(variant, deny_unknown_fields)) };
 
-            let (add_content_to_props, add_content_to_required) = content_schema
-                .map(|content_schema| {
-                    (
-                        quote!(#content_name: (#content_schema),),
-                        quote!(#content_name,),
-                    )
-                })
-                .unwrap_or_default();
+            let (add_content_to_props, add_content_to_required) = content_schema.map(|content_schema| (quote!(#content_name: (#content_schema),), quote!(#content_name,))).unwrap_or_default();
 
             let name = variant.name();
             let tag_schema = quote! {
@@ -412,10 +359,7 @@ fn expr_for_untagged_enum_variant(variant: &Variant, deny_unknown_fields: bool) 
     }
 }
 
-fn expr_for_internal_tagged_enum_variant(
-    variant: &Variant,
-    deny_unknown_fields: bool,
-) -> SchemaExpr {
+fn expr_for_internal_tagged_enum_variant(variant: &Variant, deny_unknown_fields: bool) -> SchemaExpr {
     if let Some(with_attr) = &variant.attrs.with {
         let (ty, type_def) = type_for_schema(with_attr);
         let mut schema_expr = SchemaExpr::from(quote_spanned! {variant.original.span()=>
@@ -447,11 +391,7 @@ fn expr_for_newtype_struct(field: &Field) -> SchemaExpr {
 }
 
 fn expr_for_tuple_struct(fields: &[Field]) -> SchemaExpr {
-    let fields: Vec<_> = fields
-        .iter()
-        .filter(|f| !f.serde_attrs.skip_deserializing())
-        .map(|f| expr_for_field(f, true))
-        .collect();
+    let fields: Vec<_> = fields.iter().filter(|f| !f.serde_attrs.skip_deserializing()).map(|f| expr_for_field(f, true)).collect();
     let len = fields.len() as u32;
 
     quote! {
@@ -465,11 +405,7 @@ fn expr_for_tuple_struct(fields: &[Field]) -> SchemaExpr {
     .into()
 }
 
-fn expr_for_struct(
-    fields: &[Field],
-    default: &SerdeDefault,
-    deny_unknown_fields: bool,
-) -> SchemaExpr {
+fn expr_for_struct(fields: &[Field], default: &SerdeDefault, deny_unknown_fields: bool) -> SchemaExpr {
     let set_container_default = match default {
         SerdeDefault::None => None,
         SerdeDefault::Default => Some(quote!(let #STRUCT_DEFAULT = Self::default();)),
@@ -526,7 +462,7 @@ fn expr_for_struct(
                     schemars::_private::insert_object_property::<#ty>(&mut #SCHEMA, #name, #has_default, #required, #schema_expr);
                 })
             }
-            })
+        })
         .collect();
 
     let set_additional_properties = if deny_unknown_fields {

@@ -82,8 +82,5 @@ fn test_flat_schema_duf() -> TestResult {
 
 #[test]
 fn test_flat_schema_duf_draft07() -> TestResult {
-    test_generated_schema::<FlatDenyUnknownFields>(
-        "enum_flatten_duf_draft07",
-        SchemaSettings::draft07(),
-    )
+    test_generated_schema::<FlatDenyUnknownFields>("enum_flatten_duf_draft07", SchemaSettings::draft07())
 }

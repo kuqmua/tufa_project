@@ -23,13 +23,7 @@ fn skip_struct_fields() -> TestResult {
 
 #[allow(dead_code)]
 #[derive(JsonSchema)]
-struct TupleStruct(
-    #[schemars(skip)] i32,
-    #[serde(skip)] bool,
-    #[serde(skip_deserializing)] String,
-    #[serde(skip_serializing)] f32,
-    (),
-);
+struct TupleStruct(#[schemars(skip)] i32, #[serde(skip)] bool, #[serde(skip_deserializing)] String, #[serde(skip_serializing)] f32, ());
 
 #[test]
 fn skip_tuple_fields() -> TestResult {

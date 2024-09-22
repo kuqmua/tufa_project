@@ -1,9 +1,10 @@
-pub use uuid::Uuid;
 pub use futures::TryStreamExt;
 pub use http_logic;
 pub use route_validators::check_body_size;
 pub use route_validators::check_commit;
+pub use uuid::Uuid;
 
+pub use generate_postgresql_crud::common_additional_error_variants;
 pub use generate_postgresql_crud::create_many_additional_error_variants;
 pub use generate_postgresql_crud::create_one_additional_error_variants;
 pub use generate_postgresql_crud::delete_many_additional_error_variants;
@@ -12,17 +13,16 @@ pub use generate_postgresql_crud::read_many_additional_error_variants;
 pub use generate_postgresql_crud::read_one_additional_error_variants;
 pub use generate_postgresql_crud::update_many_additional_error_variants;
 pub use generate_postgresql_crud::update_one_additional_error_variants;
-pub use generate_postgresql_crud::common_additional_error_variants;
 
+pub use generate_postgresql_crud::common_additional_route_logic;
 pub use generate_postgresql_crud::create_many_additional_route_logic;
 pub use generate_postgresql_crud::create_one_additional_route_logic;
+pub use generate_postgresql_crud::delete_many_additional_route_logic;
+pub use generate_postgresql_crud::delete_one_additional_route_logic;
 pub use generate_postgresql_crud::read_many_additional_route_logic;
 pub use generate_postgresql_crud::read_one_additional_route_logic;
 pub use generate_postgresql_crud::update_many_additional_route_logic;
 pub use generate_postgresql_crud::update_one_additional_route_logic;
-pub use generate_postgresql_crud::delete_many_additional_route_logic;
-pub use generate_postgresql_crud::delete_one_additional_route_logic;
-pub use generate_postgresql_crud::common_additional_route_logic;
 
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
@@ -516,144 +516,137 @@ pub use postgresql_crud_common::WhereStdOptionOptionSqlxTypesBitVec;
 
 pub use postgresql_crud_common::WhereStdOptionOptionSerdeJsonValue;
 //////////////////////////////
-pub use postgresql_crud_common::BindQuery;
-pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamed;
-pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize;
 pub use postgresql_crud_common::value::Value;
+pub use postgresql_crud_common::BindQuery;
 pub use postgresql_crud_common::Order;
 pub use postgresql_crud_common::OrderBy;
+pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamed;
+pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize;
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 //
 pub use http_logic::GetAxumHttpStatusCode;
 pub use strum_macros::EnumIter;
 
 //todo move and reexport traits
-pub trait CombinationOfTraitsForPostgresqlCrudLogic:
-    app_state::GetSourcePlaceType
-    + app_state::GetTimezone
-    + app_state::GetPostgresPool
-    + Send
-    + Sync
-{
-}
+pub trait CombinationOfTraitsForPostgresqlCrudLogic: app_state::GetSourcePlaceType + app_state::GetTimezone + app_state::GetPostgresPool + Send + Sync {}
 
-pub use naming_conventions::CommitUpperCamelCase;
 pub use naming_conventions::CommitSnakeCase;
+pub use naming_conventions::CommitUpperCamelCase;
 
 pub use generate_postgresql_query_part::GeneratePostgresqlQueryPart;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 pub use postgresql_crud_common::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToUpdate;
 pub use postgresql_crud_common::generate_postgresql_query_part::ArrayObjectElementOrSimple;
+pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToRead;
+pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToUpdate;
+pub use postgresql_crud_common::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI128;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU128;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF64;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdStringString;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveI8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveI16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveI32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveI64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveI8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveI128;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveU8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveU16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveU32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveU64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveU8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveU128;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveF32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveF64;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdStringString;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveI128;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveU8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveU16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveU32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveU64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveU8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveU128;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveF32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveF64;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdStringString;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveI8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveI16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveI32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveI64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveI8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveI128;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveU8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveU16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveU32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveU64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveU8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveU128;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveF32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveF64;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdStringString;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveI8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveI16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveI32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveI64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveI8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveI128;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveU8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveU16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveU32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveU64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveU8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveU128;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveF32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveF64;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecStdOptionOptionStdStringString;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonGeneric;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionGeneric;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecGenericWithId;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecGenericWithId;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecGenericWithId;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuid;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonId;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGenericFields;
+pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonId;
 
 // pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGeneric;
 // pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionGeneric;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecGenericWithId;
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId;
+pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecGenericWithId;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayChange;
 pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed;

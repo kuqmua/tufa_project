@@ -1,15 +1,4 @@
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    strum_macros::EnumIter,
-    enum_extension_lib::EnumExtension,
-    serde::Serialize,
-    serde::Deserialize,
-    PartialEq,
-    Eq,
-    from_str::FromStr,
-)]
+#[derive(Debug, Clone, Copy, strum_macros::EnumIter, enum_extension_lib::EnumExtension, serde::Serialize, serde::Deserialize, PartialEq, Eq, from_str::FromStr)]
 pub enum TracingLevel {
     Trace,
     Debug,
@@ -28,17 +17,7 @@ impl std::fmt::Display for TracingLevel {
     }
 }
 
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    strum_macros::Display,
-    serde::Serialize,
-    serde::Deserialize,
-    from_str::FromStr,
-)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, strum_macros::Display, serde::Serialize, serde::Deserialize, from_str::FromStr)]
 pub enum SourcePlaceType {
     Source,
     Github,

@@ -79,10 +79,7 @@ fn garde_schemars_attrs() -> TestResult {
 
 #[allow(dead_code)]
 #[derive(JsonSchema)]
-pub struct Tuple(
-    #[garde(range(max = 10))] u8,
-    #[garde(required)] Option<bool>,
-);
+pub struct Tuple(#[garde(range(max = 10))] u8, #[garde(required)] Option<bool>);
 
 #[test]
 fn garde_tuple() -> TestResult {

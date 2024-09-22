@@ -147,9 +147,7 @@ impl Schema {
             self.0 = Value::Object(map);
         }
 
-        self.0
-            .as_object_mut()
-            .expect("Schema value should be of type Object.")
+        self.0.as_object_mut().expect("Schema value should be of type Object.")
     }
 
     /// Inserts a property into the schema, replacing any previous value.
@@ -338,15 +336,7 @@ mod ser {
     // The order of properties in a JSON Schema object is insignificant, but we explicitly order
     // some of them here to make them easier for a human to read. All other properties are ordered
     // either lexicographically (by default) or by insertion order (if `preserve_order` is enabled)
-    const ORDERED_KEYWORDS_START: [&str; 7] = [
-        "$id",
-        "$schema",
-        "title",
-        "description",
-        "type",
-        "format",
-        "properties",
-    ];
+    const ORDERED_KEYWORDS_START: [&str; 7] = ["$id", "$schema", "title", "description", "type", "format", "properties"];
     const ORDERED_KEYWORDS_END: [&str; 2] = ["$defs", "definitions"];
 
     pub(super) struct OrderedKeywordWrapper<'a>(pub &'a Value);
@@ -374,9 +364,7 @@ mod ser {
                     }
 
                     for (key, value) in object {
-                        if !ORDERED_KEYWORDS_START.contains(&key.as_str())
-                            && !ORDERED_KEYWORDS_END.contains(&key.as_str())
-                        {
+                        if !ORDERED_KEYWORDS_START.contains(&key.as_str()) && !ORDERED_KEYWORDS_END.contains(&key.as_str()) {
                             map.serialize_entry(key, &OrderedKeywordWrapper(value))?;
                         }
                     }

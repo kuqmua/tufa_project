@@ -4,10 +4,7 @@ use syn::{Expr, Meta};
 use crate::idents::SCHEMA;
 
 use super::{
-    parse_meta::{
-        parse_contains, parse_length_or_range, parse_nested_meta, parse_pattern,
-        parse_schemars_regex, parse_validate_regex, require_path_only, LengthOrRange,
-    },
+    parse_meta::{parse_contains, parse_length_or_range, parse_nested_meta, parse_pattern, parse_schemars_regex, parse_validate_regex, require_path_only, LengthOrRange},
     AttrCtxt,
 };
 
@@ -111,34 +108,23 @@ impl ValidationAttrs {
         }
     }
 
-    fn add_length_or_range(
-        value: &LengthOrRange,
-        mutators: &mut Vec<TokenStream>,
-        required_format: &str,
-        key_suffix: &str,
-        mut_ref_schema: &TokenStream,
-    ) {
+    fn add_length_or_range(value: &LengthOrRange, mutators: &mut Vec<TokenStream>, required_format: &str, key_suffix: &str, mut_ref_schema: &TokenStream) {
         if let Some(min) = value.min.as_ref().or(value.equal.as_ref()) {
             let key = format!("min{key_suffix}");
-            mutators.push(quote!{
+            mutators.push(quote! {
                 schemars::_private::insert_validation_property(#mut_ref_schema, #required_format, #key, #min);
             });
         }
 
         if let Some(max) = value.max.as_ref().or(value.equal.as_ref()) {
             let key = format!("max{key_suffix}");
-            mutators.push(quote!{
+            mutators.push(quote! {
                 schemars::_private::insert_validation_property(#mut_ref_schema, #required_format, #key, #max);
             });
         }
     }
 
-    pub(super) fn populate(
-        &mut self,
-        schemars_cx: &mut AttrCtxt,
-        validate_cx: &mut AttrCtxt,
-        garde_cx: &mut AttrCtxt,
-    ) {
+    pub(super) fn populate(&mut self, schemars_cx: &mut AttrCtxt, validate_cx: &mut AttrCtxt, garde_cx: &mut AttrCtxt) {
         self.process_attr(schemars_cx);
         self.process_attr(validate_cx);
         self.process_attr(garde_cx);
@@ -172,28 +158,24 @@ impl ValidationAttrs {
                 }
             }
 
-            "pattern" if cx.attr_type != "validate" => {
-                match (&self.pattern, &self.regex, &self.contains) {
-                    (Some(_p), _, _) => cx.duplicate_error(&meta),
-                    (_, Some(_r), _) => cx.mutual_exclusive_error(&meta, "regex"),
-                    (_, _, Some(_c)) => cx.mutual_exclusive_error(&meta, "contains"),
-                    (None, None, None) => self.pattern = parse_pattern(meta, cx).ok(),
-                }
-            }
-            "regex" if cx.attr_type != "garde" => {
-                match (&self.pattern, &self.regex, &self.contains) {
-                    (Some(_p), _, _) => cx.mutual_exclusive_error(&meta, "pattern"),
-                    (_, Some(_r), _) => cx.duplicate_error(&meta),
-                    (_, _, Some(_c)) => cx.mutual_exclusive_error(&meta, "contains"),
-                    (None, None, None) => {
-                        if cx.attr_type == "validate" {
-                            self.regex = parse_validate_regex(meta, cx).ok()
-                        } else {
-                            self.regex = parse_schemars_regex(meta, cx).ok()
-                        }
+            "pattern" if cx.attr_type != "validate" => match (&self.pattern, &self.regex, &self.contains) {
+                (Some(_p), _, _) => cx.duplicate_error(&meta),
+                (_, Some(_r), _) => cx.mutual_exclusive_error(&meta, "regex"),
+                (_, _, Some(_c)) => cx.mutual_exclusive_error(&meta, "contains"),
+                (None, None, None) => self.pattern = parse_pattern(meta, cx).ok(),
+            },
+            "regex" if cx.attr_type != "garde" => match (&self.pattern, &self.regex, &self.contains) {
+                (Some(_p), _, _) => cx.mutual_exclusive_error(&meta, "pattern"),
+                (_, Some(_r), _) => cx.duplicate_error(&meta),
+                (_, _, Some(_c)) => cx.mutual_exclusive_error(&meta, "contains"),
+                (None, None, None) => {
+                    if cx.attr_type == "validate" {
+                        self.regex = parse_validate_regex(meta, cx).ok()
+                    } else {
+                        self.regex = parse_schemars_regex(meta, cx).ok()
                     }
                 }
-            }
+            },
             "contains" => match (&self.pattern, &self.regex, &self.contains) {
                 (Some(_p), _, _) => cx.mutual_exclusive_error(&meta, "pattern"),
                 (_, Some(_r), _) => cx.mutual_exclusive_error(&meta, "regex"),
@@ -203,9 +185,7 @@ impl ValidationAttrs {
 
             "inner" if cx.attr_type != "validate" => {
                 if let Ok(nested_meta) = parse_nested_meta(meta, cx) {
-                    let inner = self
-                        .inner
-                        .get_or_insert_with(|| Box::new(ValidationAttrs::default()));
+                    let inner = self.inner.get_or_insert_with(|| Box::new(ValidationAttrs::default()));
                     let mut inner_cx = cx.new_nested_meta(nested_meta.into_iter().collect());
                     inner.process_attr(&mut inner_cx);
                 }

@@ -45,9 +45,7 @@ struct MySimpleRenamedStruct {
 
 #[test]
 fn overriden_with_rename_multiple_type_params() -> TestResult {
-    test_default_generated_schema::<MyRenamedStruct<i32, (), bool, Vec<String>>>(
-        "schema-name-custom",
-    )
+    test_default_generated_schema::<MyRenamedStruct<i32, (), bool, Vec<String>>>("schema-name-custom")
 }
 
 #[allow(dead_code)]
@@ -71,7 +69,5 @@ struct MixedGenericStruct<T, const FOO: usize, const BAR: char> {
 
 #[test]
 fn default_name_mixed_generics() -> TestResult {
-    test_default_generated_schema::<MixedGenericStruct<MyStruct<i32, (), bool, Vec<String>>, 42, 'z'>>(
-        "schema-name-mixed-generics",
-    )
+    test_default_generated_schema::<MixedGenericStruct<MyStruct<i32, (), bool, Vec<String>>, 42, 'z'>>("schema-name-mixed-generics")
 }

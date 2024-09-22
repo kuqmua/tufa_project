@@ -40,12 +40,9 @@ pub struct Field<'a> {
 impl<'a> Container<'a> {
     pub fn from_ast(item: &'a syn::DeriveInput) -> syn::Result<Container<'a>> {
         let ctxt = Ctxt::new();
-        let result = serde_ast::Container::from_ast(&ctxt, item, Derive::Deserialize)
-            .ok_or(())
-            .and_then(|serde| Self::from_serde(&ctxt, serde));
+        let result = serde_ast::Container::from_ast(&ctxt, item, Derive::Deserialize).ok_or(()).and_then(|serde| Self::from_serde(&ctxt, serde));
 
-        ctxt.check()
-            .map(|_| result.expect("from_ast set no errors on Ctxt, so should have returned Ok"))
+        ctxt.check().map(|_| result.expect("from_ast set no errors on Ctxt, so should have returned Ok"))
     }
 
     pub fn name(&self) -> &str {

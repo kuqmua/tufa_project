@@ -61,7 +61,7 @@
 //             }
 //             else {
 //                 panic!(
-//                     "{proc_macro_name_ident_stringified} {} {} {}{}", 
+//                     "{proc_macro_name_ident_stringified} {} {} {}{}",
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
 //                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
@@ -89,9 +89,9 @@
 //                     );
 //                     quote::quote!{#std_string_string_token_stream}
 //                 },
-//                 crate::error_occurence::supported_container::SupportedContainer::Vec{ .. } | 
+//                 crate::error_occurence::supported_container::SupportedContainer::Vec{ .. } |
 //                 crate::error_occurence::supported_container::SupportedContainer::HashMap{ .. } => panic!(
-//                     "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
+//                     "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}",
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
 //                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
@@ -111,7 +111,7 @@
 //             }
 //             else {
 //                 panic!(
-//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
@@ -130,7 +130,7 @@
 //                 }
 //                 else {
 //                     panic!(
-//                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
+//                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}",
 //                         proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
@@ -138,7 +138,7 @@
 //             }
 //             else {
 //                 panic!(
-//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
@@ -175,7 +175,7 @@
 //             }
 //             else {
 //                 panic!(
-//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
@@ -196,7 +196,7 @@
 //                 }
 //                 else {
 //                     panic!(
-//                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
+//                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}",
 //                         proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
@@ -204,7 +204,7 @@
 //             }
 //             else {
 //                 panic!(
-//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+//                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
@@ -291,18 +291,18 @@
 //                                         )).ident
 //                                     }
 //                                 },
-//                                 syn::Type::Array(_) | 
-//                                 syn::Type::BareFn(_) | 
-//                                 syn::Type::Group(_) | 
-//                                 syn::Type::ImplTrait(_) | 
-//                                 syn::Type::Infer(_) | 
-//                                 syn::Type::Macro(_) | 
-//                                 syn::Type::Never(_) | 
-//                                 syn::Type::Paren(_) | 
-//                                 syn::Type::Ptr(_) | 
-//                                 syn::Type::Slice(_) | 
-//                                 syn::Type::TraitObject(_) | 
-//                                 syn::Type::Tuple(_) | 
+//                                 syn::Type::Array(_) |
+//                                 syn::Type::BareFn(_) |
+//                                 syn::Type::Group(_) |
+//                                 syn::Type::ImplTrait(_) |
+//                                 syn::Type::Infer(_) |
+//                                 syn::Type::Macro(_) |
+//                                 syn::Type::Never(_) |
+//                                 syn::Type::Paren(_) |
+//                                 syn::Type::Ptr(_) |
+//                                 syn::Type::Slice(_) |
+//                                 syn::Type::TraitObject(_) |
+//                                 syn::Type::Tuple(_) |
 //                                 syn::Type::Verbatim(_) => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference}",
 //                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
@@ -419,18 +419,18 @@
 //                                         )).ident
 //                                     }
 //                                 },
-//                                 syn::Type::Array(_) | 
-//                                 syn::Type::BareFn(_) | 
-//                                 syn::Type::Group(_) | 
-//                                 syn::Type::ImplTrait(_) | 
-//                                 syn::Type::Infer(_) | 
-//                                 syn::Type::Macro(_) | 
-//                                 syn::Type::Never(_) | 
-//                                 syn::Type::Paren(_) | 
-//                                 syn::Type::Ptr(_) | 
-//                                 syn::Type::Slice(_) | 
-//                                 syn::Type::TraitObject(_) | 
-//                                 syn::Type::Tuple(_) | 
+//                                 syn::Type::Array(_) |
+//                                 syn::Type::BareFn(_) |
+//                                 syn::Type::Group(_) |
+//                                 syn::Type::ImplTrait(_) |
+//                                 syn::Type::Infer(_) |
+//                                 syn::Type::Macro(_) |
+//                                 syn::Type::Never(_) |
+//                                 syn::Type::Paren(_) |
+//                                 syn::Type::Ptr(_) |
+//                                 syn::Type::Slice(_) |
+//                                 syn::Type::TraitObject(_) |
+//                                 syn::Type::Tuple(_) |
 //                                 syn::Type::Verbatim(_) => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and {syn_type_reference}",
 //                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
@@ -491,18 +491,18 @@
 //                                         )).ident
 //                                     }
 //                                 },
-//                                 syn::Type::Array(_) | 
-//                                 syn::Type::BareFn(_) | 
-//                                 syn::Type::Group(_) | 
-//                                 syn::Type::ImplTrait(_) | 
-//                                 syn::Type::Infer(_) | 
-//                                 syn::Type::Macro(_) | 
-//                                 syn::Type::Never(_) | 
-//                                 syn::Type::Paren(_) | 
-//                                 syn::Type::Ptr(_) | 
-//                                 syn::Type::Slice(_) | 
-//                                 syn::Type::TraitObject(_) | 
-//                                 syn::Type::Tuple(_) | 
+//                                 syn::Type::Array(_) |
+//                                 syn::Type::BareFn(_) |
+//                                 syn::Type::Group(_) |
+//                                 syn::Type::ImplTrait(_) |
+//                                 syn::Type::Infer(_) |
+//                                 syn::Type::Macro(_) |
+//                                 syn::Type::Never(_) |
+//                                 syn::Type::Paren(_) |
+//                                 syn::Type::Ptr(_) |
+//                                 syn::Type::Slice(_) |
+//                                 syn::Type::TraitObject(_) |
+//                                 syn::Type::Tuple(_) |
 //                                 syn::Type::Verbatim(_) => panic!(
 //                                     "{proc_macro_name_ident_stringified} type_handle {} {} and syn::Type::Reference",
 //                                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
@@ -580,18 +580,18 @@
 //                 )).ident,
 //             }
 //         },
-//         syn::Type::Array(_) | 
-//         syn::Type::BareFn(_) | 
-//         syn::Type::Group(_) | 
-//         syn::Type::ImplTrait(_) | 
-//         syn::Type::Infer(_) | 
-//         syn::Type::Macro(_) | 
-//         syn::Type::Never(_) | 
-//         syn::Type::Paren(_) | 
-//         syn::Type::Ptr(_) | 
-//         syn::Type::Slice(_) | 
-//         syn::Type::TraitObject(_) | 
-//         syn::Type::Tuple(_) | 
+//         syn::Type::Array(_) |
+//         syn::Type::BareFn(_) |
+//         syn::Type::Group(_) |
+//         syn::Type::ImplTrait(_) |
+//         syn::Type::Infer(_) |
+//         syn::Type::Macro(_) |
+//         syn::Type::Never(_) |
+//         syn::Type::Paren(_) |
+//         syn::Type::Ptr(_) |
+//         syn::Type::Slice(_) |
+//         syn::Type::TraitObject(_) |
+//         syn::Type::Tuple(_) |
 //         syn::Type::Verbatim(_) => panic!("{proc_macro_name_ident_stringified} field.ty is not syn::Type::Path or syn::Type::Reference {error_message}"),
 //         _ => panic!("{proc_macro_name_ident_stringified} field.ty is not syn::Type::Path or syn::Type::Reference {error_message} (exhaustive)"),
 //     }
@@ -602,6 +602,3 @@
 //     supported_container: crate::error_occurence::supported_container::SupportedContainer,
 //     proc_macro_name_ident_stringified: &str,
 // ) -> proc_macro2::TokenStream {
-
-
-

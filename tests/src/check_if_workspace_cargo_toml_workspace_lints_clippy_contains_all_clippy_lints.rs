@@ -10,22 +10,20 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
     let clippy = &lints["clippy"];
     let toml_value_table = match clippy {
         toml::Value::Table(value) => value,
-        _ => panic!("not ok")
+        _ => panic!("not ok"),
     };
-    let lints_vec_from_file = toml_value_table.keys().map(|element|element).collect::<Vec<&String>>();
-    let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/lints.json")
-    .unwrap()
-    .text()
-    .unwrap();
+    let lints_vec_from_file = toml_value_table.keys().map(|element| element).collect::<Vec<&String>>();
+    let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/lints.json").unwrap().text().unwrap();
     #[derive(Debug, serde::Deserialize)]
     struct Lint {
         id: std::string::String,
         group: std::string::String,
     }
-    let clippy_lints_from_docs = serde_json::from_str::<std::vec::Vec<Lint>>(&body).unwrap()
+    let clippy_lints_from_docs = serde_json::from_str::<std::vec::Vec<Lint>>(&body)
+        .unwrap()
         .into_iter()
-        .filter(|element|element.group != "deprecated")
-        .map(|element|element.id)
+        .filter(|element| element.group != "deprecated")
+        .map(|element| element.id)
         .collect::<std::vec::Vec<std::string::String>>();
     let mut lints_not_in_file = vec![];
     for element in &clippy_lints_from_docs {

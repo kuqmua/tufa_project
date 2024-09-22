@@ -43,14 +43,6 @@ impl git_info::GetGitCommitLink for AppState<'_> {
     }
 }
 
-pub type DynArcCombinationOfAppStateLogicTraits =
-    std::sync::Arc<dyn CombinationOfAppStateLogicTraits>;
+pub type DynArcCombinationOfAppStateLogicTraits = std::sync::Arc<dyn CombinationOfAppStateLogicTraits>;
 
-pub trait CombinationOfAppStateLogicTraits:
-    app_state::GetEnableApiGitCommitCheck
-    + app_state::GetMaximumSizeOfHttpBodyInBytes 
-    + postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic
-    + Send 
-    + Sync 
-{
-}
+pub trait CombinationOfAppStateLogicTraits: app_state::GetEnableApiGitCommitCheck + app_state::GetMaximumSizeOfHttpBodyInBytes + postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic + Send + Sync {}

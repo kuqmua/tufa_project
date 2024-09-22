@@ -74,11 +74,7 @@ impl SchemaSettings {
             option_add_null_type: true,
             definitions_path: "/definitions".to_owned(),
             meta_schema: Some("http://json-schema.org/draft-07/schema#".to_owned()),
-            transforms: vec![
-                Box::new(ReplaceUnevaluatedProperties),
-                Box::new(RemoveRefSiblings),
-                Box::new(ReplacePrefixItems),
-            ],
+            transforms: vec![Box::new(ReplaceUnevaluatedProperties), Box::new(RemoveRefSiblings), Box::new(ReplacePrefixItems)],
             inline_subschemas: false,
         }
     }
@@ -113,16 +109,11 @@ impl SchemaSettings {
             option_nullable: true,
             option_add_null_type: false,
             definitions_path: "/components/schemas".to_owned(),
-            meta_schema: Some(
-                "https://spec.openapis.org/oas/3.0/schema/2021-09-28#/definitions/Schema"
-                    .to_owned(),
-            ),
+            meta_schema: Some("https://spec.openapis.org/oas/3.0/schema/2021-09-28#/definitions/Schema".to_owned()),
             transforms: vec![
                 Box::new(ReplaceUnevaluatedProperties),
                 Box::new(RemoveRefSiblings),
-                Box::new(ReplaceBoolSchemas {
-                    skip_additional_properties: true,
-                }),
+                Box::new(ReplaceBoolSchemas { skip_additional_properties: true }),
                 Box::new(SetSingleExample),
                 Box::new(ReplaceConstValue),
                 Box::new(ReplacePrefixItems),
@@ -205,10 +196,7 @@ impl From<SchemaSettings> for SchemaGenerator {
 impl SchemaGenerator {
     /// Creates a new `SchemaGenerator` using the given settings.
     pub fn new(settings: SchemaSettings) -> SchemaGenerator {
-        SchemaGenerator {
-            settings,
-            ..Default::default()
-        }
+        SchemaGenerator { settings, ..Default::default() }
     }
 
     /// Borrows the [`SchemaSettings`] being used by this `SchemaGenerator`.
@@ -237,8 +225,7 @@ impl SchemaGenerator {
     /// this method will add them to the `SchemaGenerator`'s schema definitions.
     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
         let id = T::schema_id();
-        let return_ref = !T::always_inline_schema()
-            && (!self.settings.inline_subschemas || self.pending_schema_ids.contains(&id));
+        let return_ref = !T::always_inline_schema() && (!self.settings.inline_subschemas || self.pending_schema_ids.contains(&id));
 
         if return_ref {
             let name = match self.schema_id_to_name.get(&id).cloned() {
@@ -327,9 +314,7 @@ impl SchemaGenerator {
 
         let object = schema.ensure_object();
 
-        object
-            .entry("title")
-            .or_insert_with(|| T::schema_name().into());
+        object.entry("title").or_insert_with(|| T::schema_name().into());
 
         if let Some(meta_schema) = self.settings.meta_schema.as_deref() {
             object.insert("$schema".into(), meta_schema.into());
@@ -351,9 +336,7 @@ impl SchemaGenerator {
 
         let object = schema.ensure_object();
 
-        object
-            .entry("title")
-            .or_insert_with(|| T::schema_name().into());
+        object.entry("title").or_insert_with(|| T::schema_name().into());
 
         if let Some(meta_schema) = core::mem::take(&mut self.settings.meta_schema) {
             object.insert("$schema".into(), meta_schema.into());
@@ -373,14 +356,8 @@ impl SchemaGenerator {
     /// more precise schema, particularly when the value contains any enums.
     ///
     /// If the `Serialize` implementation of the value decides to fail, this will return an [`Err`].
-    pub fn root_schema_for_value<T: ?Sized + Serialize>(
-        &mut self,
-        value: &T,
-    ) -> Result<Schema, serde_json::Error> {
-        let mut schema = value.serialize(crate::ser::Serializer {
-            generator: self,
-            include_title: true,
-        })?;
+    pub fn root_schema_for_value<T: ?Sized + Serialize>(&mut self, value: &T) -> Result<Schema, serde_json::Error> {
+        let mut schema = value.serialize(crate::ser::Serializer { generator: self, include_title: true })?;
 
         let object = schema.ensure_object();
 
@@ -405,14 +382,8 @@ impl SchemaGenerator {
     /// produce a more precise schema, particularly when the value contains any enums.
     ///
     /// If the `Serialize` implementation of the value decides to fail, this will return an [`Err`].
-    pub fn into_root_schema_for_value<T: ?Sized + Serialize>(
-        mut self,
-        value: &T,
-    ) -> Result<Schema, serde_json::Error> {
-        let mut schema = value.serialize(crate::ser::Serializer {
-            generator: &mut self,
-            include_title: true,
-        })?;
+    pub fn into_root_schema_for_value<T: ?Sized + Serialize>(mut self, value: &T) -> Result<Schema, serde_json::Error> {
+        let mut schema = value.serialize(crate::ser::Serializer { generator: &mut self, include_title: true })?;
 
         let object = schema.ensure_object();
 
@@ -441,11 +412,7 @@ impl SchemaGenerator {
         impl<'a> PendingSchemaState<'a> {
             fn new(generator: &'a mut SchemaGenerator, id: CowStr) -> Self {
                 let did_add = generator.pending_schema_ids.insert(id.clone());
-                Self {
-                    generator,
-                    id,
-                    did_add,
-                }
+                Self { generator, id, did_add }
             }
         }
 
@@ -461,11 +428,7 @@ impl SchemaGenerator {
         T::json_schema(pss.generator)
     }
 
-    fn add_definitions(
-        &mut self,
-        schema_object: &mut JsonMap<String, Value>,
-        mut definitions: JsonMap<String, Value>,
-    ) {
+    fn add_definitions(&mut self, schema_object: &mut JsonMap<String, Value>, mut definitions: JsonMap<String, Value>) {
         if definitions.is_empty() {
             return;
         }
@@ -493,11 +456,7 @@ impl SchemaGenerator {
     }
 }
 
-fn json_pointer_mut<'a>(
-    mut object: &'a mut JsonMap<String, Value>,
-    pointer: &str,
-    create_if_missing: bool,
-) -> Option<&'a mut JsonMap<String, Value>> {
+fn json_pointer_mut<'a>(mut object: &'a mut JsonMap<String, Value>, pointer: &str, create_if_missing: bool) -> Option<&'a mut JsonMap<String, Value>> {
     use serde_json::map::Entry;
 
     let pointer = pointer.strip_prefix('/')?;

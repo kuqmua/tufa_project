@@ -148,14 +148,7 @@ pub fn transform_subschemas<T: Transform + ?Sized>(t: &mut T, schema: &mut Schem
         // This is why this match statement contains both `additionalProperties` (which was
         // dropped in draft 2020-12) and `prefixItems` (which was added in draft 2020-12).
         match key.as_str() {
-            "not"
-            | "if"
-            | "then"
-            | "else"
-            | "contains"
-            | "additionalProperties"
-            | "propertyNames"
-            | "additionalItems" => {
+            "not" | "if" | "then" | "else" | "contains" | "additionalProperties" | "propertyNames" | "additionalItems" => {
                 if let Ok(subschema) = value.try_into() {
                     t.transform(subschema);
                 }
@@ -198,10 +191,7 @@ pub fn transform_subschemas<T: Transform + ?Sized>(t: &mut T, schema: &mut Schem
 
 // Similar to `transform_subschemas`, but only transforms subschemas that apply to the top-level
 // object, e.g. "oneOf" but not "properties".
-pub(crate) fn transform_immediate_subschemas<T: Transform + ?Sized>(
-    t: &mut T,
-    schema: &mut Schema,
-) {
+pub(crate) fn transform_immediate_subschemas<T: Transform + ?Sized>(t: &mut T, schema: &mut Schema) {
     for (key, value) in schema.as_object_mut().into_iter().flatten() {
         match key.as_str() {
             "if" | "then" | "else" => {
@@ -315,8 +305,7 @@ impl Transform for RemoveRefSiblings {
 
         if let Some(obj) = schema.as_object_mut().filter(|o| o.len() > 1) {
             if let Some(ref_value) = obj.remove("$ref") {
-                if let Value::Array(all_of) = obj.entry("allOf").or_insert(Value::Array(Vec::new()))
-                {
+                if let Value::Array(all_of) = obj.entry("allOf").or_insert(Value::Array(Vec::new())) {
                     all_of.push(json!({
                         "$ref": ref_value
                     }));
@@ -410,12 +399,7 @@ impl Transform for ReplaceUnevaluatedProperties {
             return;
         }
 
-        if let Some(properties) = schema
-            .ensure_object()
-            .entry("properties")
-            .or_insert(Map::new().into())
-            .as_object_mut()
-        {
+        if let Some(properties) = schema.ensure_object().entry("properties").or_insert(Map::new().into()).as_object_mut() {
             for name in property_names {
                 properties.entry(name).or_insert(true.into());
             }
@@ -429,15 +413,7 @@ struct GatherPropertyNames(BTreeSet<String>);
 
 impl Transform for GatherPropertyNames {
     fn transform(&mut self, schema: &mut Schema) {
-        self.0.extend(
-            schema
-                .as_object()
-                .iter()
-                .filter_map(|o| o.get("properties"))
-                .filter_map(Value::as_object)
-                .flat_map(Map::keys)
-                .cloned(),
-        );
+        self.0.extend(schema.as_object().iter().filter_map(|o| o.get("properties")).filter_map(Value::as_object).flat_map(Map::keys).cloned());
 
         transform_immediate_subschemas(self, schema);
     }

@@ -10,32 +10,14 @@ use super::{path_str, AttrCtxt};
 pub fn require_path_only(meta: Meta, cx: &AttrCtxt) -> Result<(), ()> {
     match meta {
         Meta::Path(_) => Ok(()),
-        Meta::List(MetaList {
-            path, delimiter, ..
-        }) => {
+        Meta::List(MetaList { path, delimiter, .. }) => {
             let name = path_str(&path);
-            cx.syn_error(syn::Error::new(
-                delimiter.span().join(),
-                format_args!(
-                    "unexpected value of {} {} attribute item",
-                    cx.attr_type, name
-                ),
-            ));
+            cx.syn_error(syn::Error::new(delimiter.span().join(), format_args!("unexpected value of {} {} attribute item", cx.attr_type, name)));
             Err(())
         }
-        Meta::NameValue(MetaNameValue {
-            path,
-            eq_token,
-            value,
-        }) => {
+        Meta::NameValue(MetaNameValue { path, eq_token, value }) => {
             let name = path_str(&path);
-            cx.error_spanned_by(
-                quote!(#eq_token #value),
-                format_args!(
-                    "unexpected value of {} {} attribute item",
-                    cx.attr_type, name
-                ),
-            );
+            cx.error_spanned_by(quote!(#eq_token #value), format_args!("unexpected value of {} {} attribute item", cx.attr_type, name));
             Err(())
         }
     }
@@ -46,13 +28,7 @@ pub fn parse_name_value_expr(meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
         Meta::NameValue(m) => Ok(m.value),
         _ => {
             let name = path_str(meta.path());
-            cx.error_spanned_by(
-                meta,
-                format_args!(
-                    "expected {} {} attribute item to have a value: `{} = ...`",
-                    cx.attr_type, name, name
-                ),
-            );
+            cx.error_spanned_by(meta, format_args!("expected {} {} attribute item to have a value: `{} = ...`", cx.attr_type, name, name));
             Err(())
         }
     }
@@ -60,21 +36,12 @@ pub fn parse_name_value_expr(meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
 
 pub fn parse_name_value_lit_str<T: Parse>(meta: Meta, cx: &AttrCtxt) -> Result<T, ()> {
     let Meta::NameValue(MetaNameValue {
-        value: Expr::Lit(ExprLit {
-            lit: Lit::Str(lit_str),
-            ..
-        }),
+        value: Expr::Lit(ExprLit { lit: Lit::Str(lit_str), .. }),
         ..
     }) = meta
     else {
         let name = path_str(meta.path());
-        cx.error_spanned_by(
-            meta,
-            format_args!(
-                "expected {} {} attribute item to have a string value: `{} = \"...\"`",
-                cx.attr_type, name, name
-            ),
-        );
+        cx.error_spanned_by(meta, format_args!("expected {} {} attribute item to have a string value: `{} = \"...\"`", cx.attr_type, name, name));
         return Err(());
     };
 
@@ -83,25 +50,11 @@ pub fn parse_name_value_lit_str<T: Parse>(meta: Meta, cx: &AttrCtxt) -> Result<T
 
 fn parse_lit_str<T: Parse>(lit_str: LitStr, cx: &AttrCtxt) -> Result<T, ()> {
     lit_str.parse().map_err(|_| {
-        cx.error_spanned_by(
-            &lit_str,
-            format_args!(
-                "failed to parse \"{}\" as a {}",
-                lit_str.value(),
-                std::any::type_name::<T>()
-                    .rsplit("::")
-                    .next()
-                    .unwrap_or_default()
-                    .to_ascii_lowercase(),
-            ),
-        );
+        cx.error_spanned_by(&lit_str, format_args!("failed to parse \"{}\" as a {}", lit_str.value(), std::any::type_name::<T>().rsplit("::").next().unwrap_or_default().to_ascii_lowercase(),));
     })
 }
 
-pub fn parse_extensions(
-    meta: Meta,
-    cx: &AttrCtxt,
-) -> Result<impl IntoIterator<Item = Extension>, ()> {
+pub fn parse_extensions(meta: Meta, cx: &AttrCtxt) -> Result<impl IntoIterator<Item = Extension>, ()> {
     let parser = Punctuated::<Extension, Token![,]>::parse_terminated;
     parse_meta_list_with(&meta, cx, parser)
 }
@@ -130,12 +83,7 @@ pub fn parse_length_or_range(outer_meta: Meta, cx: &AttrCtxt) -> Result<LengthOr
             },
             unknown => {
                 if cx.attr_type == "schemars" {
-                    cx.error_spanned_by(
-                        nested_meta,
-                        format_args!(
-                            "unknown item in schemars {outer_name} attribute: `{unknown}`",
-                        ),
-                    );
+                    cx.error_spanned_by(nested_meta, format_args!("unknown item in schemars {outer_name} attribute: `{unknown}`",));
                 }
             }
         }
@@ -157,24 +105,14 @@ pub fn parse_schemars_regex(outer_meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()>
                 Some(_) => cx.duplicate_error(&nested_meta),
                 None => pattern = parse_name_value_expr(nested_meta, cx).ok(),
             },
-            "path" => {
-                cx.error_spanned_by(nested_meta, "`path` is not supported in `schemars(regex(...))` attribute - use `schemars(regex(pattern = ...))` instead")
-            },
+            "path" => cx.error_spanned_by(nested_meta, "`path` is not supported in `schemars(regex(...))` attribute - use `schemars(regex(pattern = ...))` instead"),
             unknown => {
-                cx.error_spanned_by(
-                    nested_meta,
-                    format_args!("unknown item in schemars `regex` attribute: `{unknown}`"),
-                );
+                cx.error_spanned_by(nested_meta, format_args!("unknown item in schemars `regex` attribute: `{unknown}`"));
             }
         }
     }
 
-    pattern.ok_or_else(|| {
-        cx.error_spanned_by(
-            outer_meta,
-            "`schemars(regex(...))` attribute requires `pattern = ...`",
-        )
-    })
+    pattern.ok_or_else(|| cx.error_spanned_by(outer_meta, "`schemars(regex(...))` attribute requires `pattern = ...`"))
 }
 
 pub fn parse_validate_regex(outer_meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
@@ -182,25 +120,18 @@ pub fn parse_validate_regex(outer_meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()>
 
     for nested_meta in parse_nested_meta(outer_meta.clone(), cx)? {
         match path_str(nested_meta.path()).as_str() {
-            "path" => match &path{
+            "path" => match &path {
                 Some(_) => cx.duplicate_error(&nested_meta),
                 None => path = parse_name_value_expr_handle_lit_str(nested_meta, cx).ok(),
             },
-            "pattern" => {
-                cx.error_spanned_by(nested_meta, "`pattern` is not supported in `validate(regex(...))` attribute - use either `validate(regex(path = ...))` or `schemars(regex(pattern = ...))` instead")
-            },
+            "pattern" => cx.error_spanned_by(nested_meta, "`pattern` is not supported in `validate(regex(...))` attribute - use either `validate(regex(path = ...))` or `schemars(regex(pattern = ...))` instead"),
             _ => {
                 // ignore unknown properties in `validate` attribute
             }
         }
     }
 
-    path.ok_or_else(|| {
-        cx.error_spanned_by(
-            outer_meta,
-            "`validate(regex(...))` attribute requires `path = ...`",
-        )
-    })
+    path.ok_or_else(|| cx.error_spanned_by(outer_meta, "`validate(regex(...))` attribute requires `path = ...`"))
 }
 
 pub fn parse_contains(outer_meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
@@ -228,8 +159,7 @@ pub fn parse_contains(outer_meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
     }
 
     let nested_meta_or_expr = match cx.attr_type {
-        "validate" => parse_meta_list_with(&outer_meta, cx, Punctuated::parse_terminated)
-            .map(ContainsFormat::Metas),
+        "validate" => parse_meta_list_with(&outer_meta, cx, Punctuated::parse_terminated).map(ContainsFormat::Metas),
         "garde" => parse_meta_list_with(&outer_meta, cx, Expr::parse).map(ContainsFormat::Expr),
         "schemars" => parse_meta_list_with(&outer_meta, cx, ContainsFormat::parse),
         wat => {
@@ -252,21 +182,13 @@ pub fn parse_contains(outer_meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
             },
             unknown => {
                 if cx.attr_type == "schemars" {
-                    cx.error_spanned_by(
-                        nested_meta,
-                        format_args!("unknown item in schemars `contains` attribute: `{unknown}`"),
-                    );
+                    cx.error_spanned_by(nested_meta, format_args!("unknown item in schemars `contains` attribute: `{unknown}`"));
                 }
             }
         }
     }
 
-    pattern.ok_or_else(|| {
-        cx.error_spanned_by(
-            outer_meta,
-            "`contains` attribute item requires `pattern = ...`",
-        )
-    })
+    pattern.ok_or_else(|| cx.error_spanned_by(outer_meta, "`contains` attribute item requires `pattern = ...`"))
 }
 
 pub fn parse_nested_meta(meta: Meta, cx: &AttrCtxt) -> Result<impl IntoIterator<Item = Meta>, ()> {
@@ -277,13 +199,7 @@ pub fn parse_nested_meta(meta: Meta, cx: &AttrCtxt) -> Result<impl IntoIterator<
 fn parse_meta_list_with<F: Parser>(meta: &Meta, cx: &AttrCtxt, parser: F) -> Result<F::Output, ()> {
     let Meta::List(meta_list) = meta else {
         let name = path_str(meta.path());
-        cx.error_spanned_by(
-            meta,
-            format_args!(
-                "expected {} {} attribute item to be of the form `{}(...)`",
-                cx.attr_type, name, name
-            ),
-        );
+        cx.error_spanned_by(meta, format_args!("expected {} {} attribute item to be of the form `{}(...)`", cx.attr_type, name, name));
         return Err(());
     };
 
@@ -296,11 +212,7 @@ fn parse_meta_list_with<F: Parser>(meta: &Meta, cx: &AttrCtxt, parser: F) -> Res
 pub fn parse_name_value_expr_handle_lit_str(meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
     let expr = parse_name_value_expr(meta, cx)?;
 
-    if let Expr::Lit(ExprLit {
-        lit: Lit::Str(lit_str),
-        ..
-    }) = expr
-    {
+    if let Expr::Lit(ExprLit { lit: Lit::Str(lit_str), .. }) = expr {
         parse_lit_str(lit_str, cx)
     } else {
         Ok(expr)
@@ -335,10 +247,6 @@ impl Parse for Extension {
             return Err(syn::Error::new(input.span(), "Expected extension value"));
         }
 
-        Ok(Extension {
-            key_str: key.value(),
-            key_lit: key,
-            value,
-        })
+        Ok(Extension { key_str: key.value(), key_lit: key, value })
     }
 }

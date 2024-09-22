@@ -55,7 +55,7 @@ impl<'de> serde::Deserialize<'de> for ServerPort {
         };
         match Self::try_from(value) {
             Ok(value) => Ok(value),
-            Err(error) => Err(serde::de::Error::custom(error))
+            Err(error) => Err(serde::de::Error::custom(error)),
         }
     }
 }

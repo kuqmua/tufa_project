@@ -10,10 +10,7 @@ fn capitalize_type(schema: &mut Schema) {
 }
 
 fn insert_property_count(schema: &mut Schema) {
-    let count = schema
-        .get("properties")
-        .and_then(Value::as_object)
-        .map_or(0, Map::len);
+    let count = schema.get("properties").and_then(Value::as_object).map_or(0, Map::len);
     schema.insert("propertyCount".to_owned(), count.into());
 }
 

@@ -1,14 +1,4 @@
-#[derive(
-    Debug,
-    strum_macros::Display,
-    PartialEq,
-    Eq,
-    Clone,
-    Copy,
-    Hash,
-    proc_macro_assistants::ToUpperCamelCaseStringified,
-    proc_macro_assistants::ToSnakeCaseStringified,
-)]
+#[derive(Debug, strum_macros::Display, PartialEq, Eq, Clone, Copy, Hash, proc_macro_assistants::ToUpperCamelCaseStringified, proc_macro_assistants::ToSnakeCaseStringified)]
 pub enum StatusCode {
     Continue100,
     SwitchingProtocols101,
@@ -157,7 +147,7 @@ impl StatusCode {
                 quote::quote! {axum::http::StatusCode::EXPECTATION_FAILED}
             }
             Self::ImATeapot418 => quote::quote! {axum::http::StatusCode::IM_A_TEAPOT},
-            Self::MisdirectedRequest421=> {
+            Self::MisdirectedRequest421 => {
                 quote::quote! {axum::http::StatusCode::MISDIRECTED_REQUEST}
             }
             Self::UnprocessableEntity422 => {
@@ -487,8 +477,7 @@ impl StatusCode {
     }
     pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{self}]");
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -685,10 +674,7 @@ impl TryFrom<&std::string::String> for StatusCode {
     }
 }
 
-pub fn get_only_one(
-    variant: &syn::Variant,
-    proc_macro_name_ident_stringified: &std::string::String,
-) -> StatusCode {
+pub fn get_only_one(variant: &syn::Variant, proc_macro_name_ident_stringified: &std::string::String) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1 {
@@ -702,7 +688,10 @@ pub fn get_only_one(
             }
         }
     });
-    option_self.map_or_else(|| {
-        panic!("{proc_macro_name_ident_stringified} not supported status_code attribute");
-    }, |attr| attr)
+    option_self.map_or_else(
+        || {
+            panic!("{proc_macro_name_ident_stringified} not supported status_code attribute");
+        },
+        |attr| attr,
+    )
 }

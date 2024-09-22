@@ -21,17 +21,13 @@ use syn::spanned::Spanned;
 #[proc_macro_derive(JsonSchema, attributes(schemars, serde, validate, garde))]
 pub fn derive_json_schema_wrapper(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
-    derive_json_schema(input, false)
-        .unwrap_or_else(syn::Error::into_compile_error)
-        .into()
+    derive_json_schema(input, false).unwrap_or_else(syn::Error::into_compile_error).into()
 }
 
 #[proc_macro_derive(JsonSchema_repr, attributes(schemars, serde))]
 pub fn derive_json_schema_repr_wrapper(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
-    derive_json_schema(input, true)
-        .unwrap_or_else(syn::Error::into_compile_error)
-        .into()
+    derive_json_schema(input, true).unwrap_or_else(syn::Error::into_compile_error).into()
 }
 
 fn derive_json_schema(mut input: syn::DeriveInput, repr: bool) -> syn::Result<TokenStream> {
@@ -101,9 +97,7 @@ fn derive_json_schema(mut input: syn::DeriveInput, repr: bool) -> syn::Result<To
     let const_params: Vec<_> = cont.generics.const_params().map(|c| &c.ident).collect();
     let params: Vec<_> = type_params.iter().chain(const_params.iter()).collect();
 
-    let (schema_name, schema_id) = if params.is_empty()
-        || (cont.attrs.is_renamed && !schema_base_name.contains('{'))
-    {
+    let (schema_name, schema_id) = if params.is_empty() || (cont.attrs.is_renamed && !schema_base_name.contains('{')) {
         (
             quote! {
                 schemars::_private::alloc::borrow::Cow::Borrowed(#schema_base_name)
@@ -167,11 +161,7 @@ fn derive_json_schema(mut input: syn::DeriveInput, repr: bool) -> syn::Result<To
         )
     };
 
-    let schema_expr = if repr {
-        schema_exprs::expr_for_repr(&cont)?
-    } else {
-        schema_exprs::expr_for_container(&cont)
-    };
+    let schema_expr = if repr { schema_exprs::expr_for_repr(&cont)? } else { schema_exprs::expr_for_container(&cont) };
 
     Ok(quote! {
         const _: () = {

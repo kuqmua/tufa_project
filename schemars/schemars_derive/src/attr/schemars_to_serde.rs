@@ -66,23 +66,21 @@ fn process_serde_field_attrs<'a>(ctxt: &Ctxt, fields: impl Iterator<Item = &'a m
 
 fn process_attrs(ctxt: &Ctxt, attrs: &mut Vec<Attribute>) {
     // Remove #[serde(...)] attributes (some may be re-added later)
-    let (serde_attrs, other_attrs): (Vec<_>, Vec<_>) =
-        attrs.drain(..).partition(|at| at.path().is_ident("serde"));
+    let (serde_attrs, other_attrs): (Vec<_>, Vec<_>) = attrs.drain(..).partition(|at| at.path().is_ident("serde"));
     *attrs = other_attrs;
 
     // Copy appropriate #[schemars(...)] attributes to #[serde(...)] attributes
-    let (mut serde_meta, mut schemars_meta_names): (Vec<_>, HashSet<_>) =
-        get_meta_items(attrs, "schemars", ctxt)
-            .into_iter()
-            .filter_map(|meta| {
-                let keyword = get_meta_ident(&meta)?;
-                if SERDE_KEYWORDS.contains(&keyword.as_ref()) && !keyword.ends_with("with") {
-                    Some((meta, keyword))
-                } else {
-                    None
-                }
-            })
-            .unzip();
+    let (mut serde_meta, mut schemars_meta_names): (Vec<_>, HashSet<_>) = get_meta_items(attrs, "schemars", ctxt)
+        .into_iter()
+        .filter_map(|meta| {
+            let keyword = get_meta_ident(&meta)?;
+            if SERDE_KEYWORDS.contains(&keyword.as_ref()) && !keyword.ends_with("with") {
+                Some((meta, keyword))
+            } else {
+                None
+            }
+        })
+        .unzip();
 
     if schemars_meta_names.contains("skip") {
         schemars_meta_names.insert("skip_serializing".to_string());
@@ -92,10 +90,7 @@ fn process_attrs(ctxt: &Ctxt, attrs: &mut Vec<Attribute>) {
     // Re-add #[serde(...)] attributes that weren't overridden by #[schemars(...)] attributes
     for meta in get_meta_items(&serde_attrs, "serde", ctxt) {
         if let Some(i) = get_meta_ident(&meta) {
-            if !schemars_meta_names.contains(&i)
-                && SERDE_KEYWORDS.contains(&i.as_ref())
-                && i != "bound"
-            {
+            if !schemars_meta_names.contains(&i) && SERDE_KEYWORDS.contains(&i.as_ref()) && i != "bound" {
                 serde_meta.push(meta);
             }
         }

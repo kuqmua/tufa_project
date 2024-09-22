@@ -35,12 +35,8 @@ impl<'a> FromSerde for Data<'a> {
 
     fn from_serde(errors: &Ctxt, serde: Self::SerdeType) -> Result<Self, ()> {
         Ok(match serde {
-            serde_ast::Data::Enum(variants) => {
-                Data::Enum(Variant::vec_from_serde(errors, variants)?)
-            }
-            serde_ast::Data::Struct(style, fields) => {
-                Data::Struct(style, Field::vec_from_serde(errors, fields)?)
-            }
+            serde_ast::Data::Enum(variants) => Data::Enum(Variant::vec_from_serde(errors, variants)?),
+            serde_ast::Data::Struct(style, fields) => Data::Struct(style, Field::vec_from_serde(errors, fields)?),
         })
     }
 }

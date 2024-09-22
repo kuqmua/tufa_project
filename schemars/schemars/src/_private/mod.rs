@@ -13,10 +13,7 @@ pub extern crate serde_json;
 pub use rustdoc::get_title_and_description;
 
 // Helper for generating schemas for flattened `Option` fields.
-pub fn json_schema_for_flatten<T: ?Sized + JsonSchema>(
-    generator: &mut SchemaGenerator,
-    required: bool,
-) -> Schema {
+pub fn json_schema_for_flatten<T: ?Sized + JsonSchema>(generator: &mut SchemaGenerator, required: bool) -> Schema {
     let mut schema = T::_schemars_private_non_optional_json_schema(generator);
 
     if T::_schemars_private_is_option() && !required {
@@ -96,22 +93,13 @@ pub fn new_externally_tagged_enum_variant(variant: &str, sub_schema: Schema) -> 
 }
 
 /// Update a schema for an internally tagged enum variant
-pub fn apply_internal_enum_variant_tag(
-    schema: &mut Schema,
-    tag_name: &str,
-    variant: &str,
-    deny_unknown_fields: bool,
-) {
+pub fn apply_internal_enum_variant_tag(schema: &mut Schema, tag_name: &str, variant: &str, deny_unknown_fields: bool) {
     let obj = schema.ensure_object();
     let is_unit = obj.get("type").and_then(|t| t.as_str()) == Some("null");
 
     obj.insert("type".to_owned(), "object".into());
 
-    if let Some(properties) = obj
-        .entry("properties")
-        .or_insert(Value::Object(Map::new()))
-        .as_object_mut()
-    {
+    if let Some(properties) = obj.entry("properties").or_insert(Value::Object(Map::new())).as_object_mut() {
         properties.insert(
             tag_name.to_string(),
             json!({
@@ -121,11 +109,7 @@ pub fn apply_internal_enum_variant_tag(
         );
     }
 
-    if let Some(required) = obj
-        .entry("required")
-        .or_insert(Value::Array(Vec::new()))
-        .as_array_mut()
-    {
+    if let Some(required) = obj.entry("required").or_insert(Value::Array(Vec::new())).as_array_mut() {
         required.insert(0, tag_name.into());
     }
 
@@ -134,35 +118,15 @@ pub fn apply_internal_enum_variant_tag(
     }
 }
 
-pub fn insert_object_property<T: ?Sized + JsonSchema>(
-    schema: &mut Schema,
-    key: &str,
-    has_default: bool,
-    required: bool,
-    sub_schema: Schema,
-) {
-    fn insert_object_property_impl(
-        schema: &mut Schema,
-        key: &str,
-        has_default: bool,
-        required: bool,
-        sub_schema: Schema,
-    ) {
+pub fn insert_object_property<T: ?Sized + JsonSchema>(schema: &mut Schema, key: &str, has_default: bool, required: bool, sub_schema: Schema) {
+    fn insert_object_property_impl(schema: &mut Schema, key: &str, has_default: bool, required: bool, sub_schema: Schema) {
         let obj = schema.ensure_object();
-        if let Some(properties) = obj
-            .entry("properties")
-            .or_insert(Value::Object(Map::new()))
-            .as_object_mut()
-        {
+        if let Some(properties) = obj.entry("properties").or_insert(Value::Object(Map::new())).as_object_mut() {
             properties.insert(key.to_owned(), sub_schema.into());
         }
 
         if !has_default && (required) {
-            if let Some(req) = obj
-                .entry("required")
-                .or_insert(Value::Array(Vec::new()))
-                .as_array_mut()
-            {
+            if let Some(req) = obj.entry("required").or_insert(Value::Array(Vec::new())).as_array_mut() {
                 req.push(key.into());
             }
         }
@@ -176,23 +140,14 @@ pub fn insert_metadata_property(schema: &mut Schema, key: &str, value: impl Into
     schema.ensure_object().insert(key.to_owned(), value.into());
 }
 
-pub fn insert_metadata_property_if_nonempty(
-    schema: &mut Schema,
-    key: &str,
-    value: impl Into<String>,
-) {
+pub fn insert_metadata_property_if_nonempty(schema: &mut Schema, key: &str, value: impl Into<String>) {
     let value: String = value.into();
     if !value.is_empty() {
         insert_metadata_property(schema, key, value);
     }
 }
 
-pub fn insert_validation_property(
-    schema: &mut Schema,
-    required_type: &str,
-    key: &str,
-    value: impl Into<Value>,
-) {
+pub fn insert_validation_property(schema: &mut Schema, required_type: &str, key: &str, value: impl Into<Value>) {
     if schema.has_type(required_type) || (required_type == "number" && schema.has_type("integer")) {
         schema.ensure_object().insert(key.to_owned(), value.into());
     }
@@ -204,11 +159,7 @@ pub fn must_contain(schema: &mut Schema, substring: &str) {
 }
 
 pub fn apply_inner_validation(schema: &mut Schema, f: fn(&mut Schema) -> ()) {
-    if let Some(inner_schema) = schema
-        .as_object_mut()
-        .and_then(|o| o.get_mut("items"))
-        .and_then(|i| i.try_into().ok())
-    {
+    if let Some(inner_schema) = schema.as_object_mut().and_then(|o| o.get_mut("items")).and_then(|i| i.try_into().ok()) {
         f(inner_schema);
     }
 }
@@ -258,14 +209,8 @@ pub fn flatten(schema: &mut Schema, other: Schema) {
         Err(false) => {}
         Err(true) => {
             if let Some(obj) = schema.as_object_mut() {
-                if !obj.contains_key("additionalProperties")
-                    && !obj.contains_key("unevaluatedProperties")
-                {
-                    let key = if contains_immediate_subschema(obj) {
-                        "unevaluatedProperties"
-                    } else {
-                        "additionalProperties"
-                    };
+                if !obj.contains_key("additionalProperties") && !obj.contains_key("unevaluatedProperties") {
+                    let key = if contains_immediate_subschema(obj) { "unevaluatedProperties" } else { "additionalProperties" };
                     obj.insert(key.to_owned(), true.into());
                 }
             }
@@ -285,21 +230,13 @@ pub fn flatten(schema: &mut Schema, other: Schema) {
     }
 }
 
-fn normalise_additional_unevaluated_properties(
-    schema_obj1: &mut Map<String, Value>,
-    schema_obj2: &Map<String, Value>,
-) {
-    if schema_obj1.contains_key("additionalProperties")
-        && (schema_obj2.contains_key("unevaluatedProperties")
-            || contains_immediate_subschema(schema_obj2))
-    {
+fn normalise_additional_unevaluated_properties(schema_obj1: &mut Map<String, Value>, schema_obj2: &Map<String, Value>) {
+    if schema_obj1.contains_key("additionalProperties") && (schema_obj2.contains_key("unevaluatedProperties") || contains_immediate_subschema(schema_obj2)) {
         let ap = schema_obj1.remove("additionalProperties");
         schema_obj1.insert("unevaluatedProperties".to_owned(), ap.into());
     }
 }
 
 fn contains_immediate_subschema(schema_obj: &Map<String, Value>) -> bool {
-    ["if", "then", "else", "allOf", "anyOf", "oneOf", "$ref"]
-        .into_iter()
-        .any(|k| schema_obj.contains_key(k))
+    ["if", "then", "else", "allOf", "anyOf", "oneOf", "$ref"].into_iter().any(|k| schema_obj.contains_key(k))
 }
