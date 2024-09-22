@@ -453,22 +453,20 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         //here
         SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value {
             value: vec![
-                DoggieOptionsToUpdate {
-                    id: postgresql_crud::JsonUuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")),
-                    fields: vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value { value: std::primitive::i16::default() })],
-                }, // DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Create(DoggieToCreate {
-                   //     std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16::default(),
-                   // })),
-                   // DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Delete(postgresql_crud::JsonUuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")))),
+                DoggieOptionsToUpdate { id: postgresql_crud::JsonUuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")), fields: vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value { value: std::primitive::i16::default() })] },
+                // DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Create(DoggieToCreate {
+                //     std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16::default(),
+                // })),
+                // DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Delete(postgresql_crud::JsonUuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")))),
 
-                   // StdVecVecGenericWithId(postgresql_crud::Value<std::vec::Vec<DoggieJsonArrayElementChange>>),
-                   // #[serde(rename(
-                   //     serialize = "std_option_option_std_vec_vec_generic_with_id",
-                   //     deserialize = "std_option_option_std_vec_vec_generic_with_id"
-                   // ))]
-                   // StdOptionOptionStdVecVecGenericWithId(
-                   //     postgresql_crud::Value<std::vec::Vec<std::option::Option<DoggieJsonArrayElementChange>>>,
-                   // ),
+                // StdVecVecGenericWithId(postgresql_crud::Value<std::vec::Vec<DoggieJsonArrayElementChange>>),
+                // #[serde(rename(
+                //     serialize = "std_option_option_std_vec_vec_generic_with_id",
+                //     deserialize = "std_option_option_std_vec_vec_generic_with_id"
+                // ))]
+                // StdOptionOptionStdVecVecGenericWithId(
+                //     postgresql_crud::Value<std::vec::Vec<std::option::Option<DoggieJsonArrayElementChange>>>,
+                // ),
             ],
         }),
     ]);
@@ -490,35 +488,13 @@ pub struct UpdateOneParameters {
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryUpdateOneRouteLogicResponseVariants {
     Desirable(postgresql_crud::StdPrimitiveI64),
-    CheckBodySize {
-        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Postgresql {
-        postgresql: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    SerdeJson {
-        serde_json: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckCommit {
-        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NoPayloadFieldsPrimaryKey {
-        no_payload_fields_primary_key: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    RowAndRollback {
-        row: std::string::String,
-        rollback: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    BindQuery { bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    RowAndRollback { row: std::string::String, rollback: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 impl std::convert::From<TryUpdateOneRouteLogicErrorNamed> for TryUpdateOneRouteLogicResponseVariants {
     fn from(value: TryUpdateOneRouteLogicErrorNamed) -> Self {
@@ -579,19 +555,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
     let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
         Err(error_0) => {
-            let error = TryUpdateOneRouteLogicErrorNamed::CheckBodySize {
-                check_body_size: error_0,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2577,
-                        column: 17,
-                    }),
-                ),
-            };
+            let error = TryUpdateOneRouteLogicErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2577, column: 17 })) };
             eprintln!("{error}");
             let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
@@ -604,19 +568,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                 let value = UpdateOnePayload::from(value);
                 if let None = &value.sqlx_types_json_t_as_postgresql_json_b_not_null {
                     let error_0 = value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
-                    let error = TryUpdateOneRouteLogicErrorNamed::NoPayloadFieldsPrimaryKey {
-                        no_payload_fields_primary_key: error_0,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_owned(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 2059,
-                                column: 13,
-                            }),
-                        ),
-                    };
+                    let error = TryUpdateOneRouteLogicErrorNamed::NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2059, column: 13 })) };
                     eprintln!("{error}");
                     let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -625,19 +577,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                 value
             }
             Err(error_0) => {
-                let error = TryUpdateOneRouteLogicErrorNamed::SerdeJson {
-                    serde_json: error_0,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2668,
-                            column: 13,
-                        }),
-                    ),
-                };
+                let error = TryUpdateOneRouteLogicErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2668, column: 13 })) };
                 eprintln!("{error}");
                 let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
@@ -726,19 +666,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                 query.push_str(&format!(" where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = ${increment}"));
             }
             Err(error_0) => {
-                let error = TryUpdateOneRouteLogicErrorNamed::BindQuery {
-                    bind_query: error_0,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 4822,
-                            column: 25,
-                        }),
-                    ),
-                };
+                let error = TryUpdateOneRouteLogicErrorNamed::BindQuery { bind_query: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 4822, column: 25 })) };
                 eprintln!("{error}");
                 let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -781,19 +709,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
     let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
         Ok(value) => value,
         Err(error_0) => {
-            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql {
-                postgresql: error_0,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2609,
-                        column: 17,
-                    }),
-                ),
-            };
+            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2609, column: 17 })) };
             eprintln!("{error}");
             let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -803,19 +719,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
     let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
         Ok(value) => value,
         Err(error_0) => {
-            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql {
-                postgresql: error_0,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2609,
-                        column: 17,
-                    }),
-                ),
-            };
+            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2609, column: 17 })) };
             eprintln!("{error}");
             let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -826,19 +730,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
         let mut executor = match sqlx::Acquire::begin(executor).await {
             Ok(value) => value,
             Err(error_0) => {
-                let error = TryUpdateOneRouteLogicErrorNamed::Postgresql {
-                    postgresql: error_0,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2289,
-                            column: 17,
-                        }),
-                    ),
-                };
+                let error = TryUpdateOneRouteLogicErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2289, column: 17 })) };
                 eprintln!("{error}");
                 let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -851,39 +743,14 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                     Ok(value) => postgresql_crud::StdPrimitiveI64(value),
                     Err(error_0) => match executor.rollback().await {
                         Ok(_) => {
-                            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql {
-                                postgresql: error_0,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 3058,
-                                        column: 17,
-                                    }),
-                                ),
-                            };
+                            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 3058, column: 17 })) };
                             eprintln!("{error}");
                             let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
                         Err(error_1) => {
-                            let error = TryUpdateOneRouteLogicErrorNamed::RowAndRollback {
-                                row: error_0,
-                                rollback: error_1,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 3061,
-                                        column: 17,
-                                    }),
-                                ),
-                            };
+                            let error = TryUpdateOneRouteLogicErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 3061, column: 17 })) };
                             eprintln!("{error}");
                             let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -893,39 +760,14 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                 },
                 Err(error_0) => match executor.rollback().await {
                     Ok(_) => {
-                        let error = TryUpdateOneRouteLogicErrorNamed::Postgresql {
-                            postgresql: error_0,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                file!().to_owned(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 3068,
-                                    column: 13,
-                                }),
-                            ),
-                        };
+                        let error = TryUpdateOneRouteLogicErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 3068, column: 13 })) };
                         eprintln!("{error}");
                         let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
                     Err(error_1) => {
-                        let error = TryUpdateOneRouteLogicErrorNamed::RowAndRollback {
-                            row: error_0,
-                            rollback: error_1,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                file!().to_owned(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 3071,
-                                    column: 13,
-                                }),
-                            ),
-                        };
+                        let error = TryUpdateOneRouteLogicErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 3071, column: 13 })) };
                         eprintln!("{error}");
                         let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -935,19 +777,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
             }
         };
         if let Err(error_0) = executor.commit().await {
-            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql {
-                postgresql: error_0,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2307,
-                        column: 17,
-                    }),
-                ),
-            };
+            let error = TryUpdateOneRouteLogicErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2307, column: 17 })) };
             eprintln!("{error}");
             let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateOneRouteLogicResponseVariants::from(error)));
             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
@@ -1003,45 +833,16 @@ pub async fn try_update_one(server_location: &std::primitive::str, parameters: U
         match serde_json::to_string(&value) {
             Ok(value) => value,
             Err(error_0) => {
-                return Err(TryUpdateOneErrorNamed::SerdeJsonToString {
-                    serde_json_to_string: error_0,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2711,
-                            column: 17,
-                        }),
-                    ),
-                });
+                return Err(TryUpdateOneErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2711, column: 17 })) });
             }
         }
     };
     let url = format!("{}/jsongeneric/update_one", server_location,);
-    let future = reqwest::Client::new()
-        .patch(&url)
-        .header(&postgresql_crud::CommitSnakeCase.to_string(), git_info::PROJECT_GIT_INFO.commit)
-        .header(reqwest::header::CONTENT_TYPE, "application/json")
-        .body(payload)
-        .send();
+    let future = reqwest::Client::new().patch(&url).header(&postgresql_crud::CommitSnakeCase.to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
     let response = match future.await {
         Ok(value) => value,
         Err(error_0) => {
-            return Err(TryUpdateOneErrorNamed::Reqwest {
-                reqwest: error_0,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2774,
-                        column: 17,
-                    }),
-                ),
-            });
+            return Err(TryUpdateOneErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2774, column: 17 })) });
         }
     };
     let error_0 = response.status();
@@ -1049,42 +850,13 @@ pub async fn try_update_one(server_location: &std::primitive::str, parameters: U
     let error_2 = match response.text().await {
         Ok(value) => value,
         Err(error_2) => {
-            return Err(TryUpdateOneErrorNamed::FailedToGetResponseText {
-                status_code: error_0,
-                headers: error_1,
-                reqwest: error_2,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2796,
-                        column: 17,
-                    }),
-                ),
-            });
+            return Err(TryUpdateOneErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2796, column: 17 })) });
         }
     };
     let expected_response = match serde_json::from_str::<TryUpdateOneRouteLogicResponseVariants>(&error_2) {
         Ok(value) => value,
         Err(error_3) => {
-            return Err(TryUpdateOneErrorNamed::DeserializeResponse {
-                status_code: error_0,
-                headers: error_1,
-                response_text: error_2,
-                serde: error_3,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2814,
-                        column: 17,
-                    }),
-                ),
-            });
+            return Err(TryUpdateOneErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2814, column: 17 })) });
         }
     };
     let try_update_one_route_logic_error_named_with_serialize_deserialize = match expected_response {
@@ -1100,33 +872,16 @@ pub async fn try_update_one(server_location: &std::primitive::str, parameters: U
         TryUpdateOneRouteLogicResponseVariants::NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key, code_occurence } => TryUpdateOneRouteLogicErrorNamedWithSerializeDeserialize::NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key, code_occurence },
         TryUpdateOneRouteLogicResponseVariants::RowAndRollback { row, rollback, code_occurence } => TryUpdateOneRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
     };
-    Err(TryUpdateOneErrorNamed::TryUpdateOneRouteLogicErrorNamedWithSerializeDeserialize {
-        try_update_one_route_logic_error_named_with_serialize_deserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-            file!().to_owned(),
-            line!(),
-            column!(),
-            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                line: 2857,
-                column: 17,
-            }),
-        ),
-    })
+    Err(TryUpdateOneErrorNamed::TryUpdateOneRouteLogicErrorNamedWithSerializeDeserialize { try_update_one_route_logic_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"), line: 2857, column: 17 })) })
 }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UpdateOnePayload {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), sqlx_types_json_t_as_postgresql_json_b_not_null: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 pub async fn update_one_payload_example_route_logic() -> axum::response::Response {
-    let mut response = axum::response::IntoResponse::into_response(axum::Json(
-        <UpdateOnePayload as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-    ));
+    let mut response = axum::response::IntoResponse::into_response(axum::Json(<UpdateOnePayload as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()));
     *response.status_mut() = axum::http::StatusCode::OK;
     return response;
 }
@@ -1260,22 +1015,14 @@ pub enum SomethingGeneratePostgresqlQueryPartToReadErrorNamed {
     },
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToRead<SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, SomethingGeneratePostgresqlQueryPartToReadErrorNamed> for SomethingFieldToRead {
-    fn generate_postgresql_query_part_to_read_from_self_vec(
-        value: &std::vec::Vec<Self>,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_optional: std::primitive::bool,
-    ) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+    fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
         if value.is_empty() {
             return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
         let mut unique = vec![];
         for element in value {
             if unique.contains(&element) {
-                return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter {
-                    field: element.clone(),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
+                return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter { field: element.clone(), code_occurence: error_occurence_lib::code_occurence!() });
             } else {
                 unique.push(&element);
             }
@@ -1287,10 +1034,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<SomethingGeneratePostgre
                     acc.push_str(&format!("{value}||"));
                 }
                 Err(error) => {
-                    return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::GeneratePostgresqlQueryPart {
-                        error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
+                    return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::GeneratePostgresqlQueryPart { error, code_occurence: error_occurence_lib::code_occurence!() });
                 }
             }
         }
@@ -1302,208 +1046,95 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<SomethingGeneratePostgre
         };
         Ok({
             let space_and_not_null = if is_optional { " and not null" } else { "" };
-            format!
-            ("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
+            format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
         })
     }
     fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartToReadErrorNamed> {
-        match self
-        {
-            Self :: StdPrimitiveI8 =>
-            Ok(format!
-            ("jsonb_build_object('std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i8') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number')) end )")),
-            Self :: StdOptionOptionStdPrimitiveI8 =>
-            Ok(format!
-            ("jsonb_build_object('std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_primitive_i8 is not number and not null')) end )")),
-            Self :: StdVecVecStdPrimitiveI8 { limit, offset } =>
-            {
-                let start = offset; let end = match
-                offset.checked_add(* limit)
-                {
-                    Some(value) => value, None =>
-                    {
-                        return
-                        Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                        StdVecVecStdPrimitiveI8OffsetPlusLimitIsIntOverflow
-                        {
-                            limit : * limit, offset : * offset, code_occurence :
-                            error_occurence_lib :: code_occurence! (),
-                        });
+        match self {
+            Self::StdPrimitiveI8 => Ok(format!("jsonb_build_object('std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i8') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number')) end )")),
+            Self::StdOptionOptionStdPrimitiveI8 => Ok(format!("jsonb_build_object('std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_primitive_i8 is not number and not null')) end )")),
+            Self::StdVecVecStdPrimitiveI8 { limit, offset } => {
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::StdVecVecStdPrimitiveI8OffsetPlusLimitIsIntOverflow { limit: *limit, offset: *offset, code_occurence: error_occurence_lib::code_occurence!() });
                     }
                 };
-                Ok(format!
-                ("jsonb_build_object('std_vec_vec_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_primitive_i8[array element] is not number')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_i8')) with ordinality where ordinality between {start} and {end})) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_primitive_i8 is not array')) end)"))
-            }, Self :: StdOptionOptionStdVecVecStdPrimitiveI8
-            { limit, offset } =>
-            {
-                let start = offset; let end = match
-                offset.checked_add(* limit)
-                {
-                    Some(value) => value, None =>
-                    {
-                        return
-                        Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                        StdOptionOptionStdVecVecStdPrimitiveI8OffsetPlusLimitIsIntOverflow
-                        {
-                            limit : * limit, offset : * offset, code_occurence :
-                            error_occurence_lib :: code_occurence! (),
-                        });
-                    }
-                };
-                Ok(format!
-                ("jsonb_build_object('std_option_option_std_vec_vec_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_primitive_i8[array element] is not number')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8')) with ordinality where ordinality between {start} and {end})) when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_primitive_i8 is not array and not null')) end)"))
-            }, Self :: StdVecVecStdOptionOptionStdPrimitiveI8
-            { limit, offset } =>
-            {
-                let start = offset; let end = match
-                offset.checked_add(* limit)
-                {
-                    Some(value) => value, None =>
-                    {
-                        return
-                        Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                        StdVecVecStdOptionOptionStdPrimitiveI8OffsetPlusLimitIsIntOverflow
-                        {
-                            limit : * limit, offset : * offset, code_occurence :
-                            error_occurence_lib :: code_occurence! (),
-                        });
-                    }
-                };
-                Ok(format!
-                ("jsonb_build_object('std_vec_vec_std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_option_option_std_primitive_i8[array element] is not number and not null')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_std_primitive_i8')) with ordinality where ordinality between {start} and {end})) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_option_option_std_primitive_i8 is not array')) end)"))
-            }, Self :: StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8
-            { limit, offset } =>
-            {
-                let start = offset; let end = match
-                offset.checked_add(* limit)
-                {
-                    Some(value) => value, None =>
-                    {
-                        return
-                        Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OffsetPlusLimitIsIntOverflow
-                        {
-                            limit : * limit, offset : * offset, code_occurence :
-                            error_occurence_lib :: code_occurence! (),
-                        });
-                    }
-                };
-                Ok(format!
-                ("jsonb_build_object('std_option_option_std_vec_vec_std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_option_option_std_primitive_i8[array element] is not number and not null')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8')) with ordinality where ordinality between {start} and {end}))when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_option_option_std_primitive_i8 is not array and not null')) end)"))
-            }, Self :: Generic(fields_vec) => match postgresql_crud ::
-            GeneratePostgresqlQueryPartToRead ::
-            generate_postgresql_query_part_to_read_from_self_vec(fields_vec, &
-            format! ("{column_name_and_maybe_field_getter}->'generic'"), &
-            format!
-            ("{column_name_and_maybe_field_getter_for_error_message}.generic"),
-            false)
-            {
-                Ok(value) =>
-                Ok(format! ("jsonb_build_object('generic',{value})")),
-                Err(error) =>
-                {
-                    return
-                    Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                    CatGeneratePostgresqlQueryPartToReadFromSelfVec
-                    {
-                        field : error, code_occurence : error_occurence_lib ::
-                        code_occurence! (),
-                    });
-                }
-            }, Self :: StdOptionOptionGeneric(fields_vec) => match
-            postgresql_crud :: GeneratePostgresqlQueryPartToRead ::
-            generate_postgresql_query_part_to_read_from_self_vec(fields_vec, &
-            format!
-            ("{column_name_and_maybe_field_getter}->'std_option_option_generic'"),
-            & format!
-            ("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_generic"),
-            true)
-            {
-                Ok(value) =>
-                Ok(format!
-                ("jsonb_build_object('std_option_option_generic',{value})")),
-                Err(error) =>
-                {
-                    return
-                    Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                    MouseGeneratePostgresqlQueryPartToReadFromSelfVec
-                    {
-                        field : error, code_occurence : error_occurence_lib ::
-                        code_occurence! (),
-                    });
-                }
-            }, Self :: StdVecVecGenericWithId { field_vec, limit, offset } =>
-            match postgresql_crud :: GeneratePostgresqlQueryPartToRead ::
-            generate_postgresql_query_part_to_read_from_self_vec(field_vec, &
-            format! ("value"), & format!
-            ("{column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_generic_with_id[array element]"),
-            false)
-            {
-                Ok(value) =>
-                {
-                    let start = offset; let end = match
-                    offset.checked_add(* limit)
-                    {
-                        Some(value) => value, None =>
-                        {
-                            return
-                            Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                            StdVecVecGenericWithIdOffsetPlusLimitIsIntOverflow
-                            {
-                                limit : * limit, offset : * offset, code_occurence :
-                                error_occurence_lib :: code_occurence! (),
-                            });
-                        }
-                    };
-                    Ok(format!
-                    ("jsonb_build_object('std_vec_vec_generic_with_id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_generic_with_id') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({value}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_generic_with_id')) with ordinality where ordinality between {start} and {end})) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}} is not array')) end)"))
-                }, Err(error) =>
-                {
-                    return
-                    Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                    DoggieGeneratePostgresqlQueryPartToReadFromSelfVec
-                    {
-                        field : error, code_occurence : error_occurence_lib ::
-                        code_occurence! (),
-                    });
-                }
-            }, Self :: StdOptionOptionStdVecVecGenericWithId
-            { field_vec, limit, offset } => match postgresql_crud ::
-            GeneratePostgresqlQueryPartToRead ::
-            generate_postgresql_query_part_to_read_from_self_vec(field_vec, &
-            format! ("value"), & format!
-            ("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_generic_with_id[array element]"),
-            false)
-            {
-                Ok(value) =>
-                {
-                    let start = offset; let end = match
-                    offset.checked_add(* limit)
-                    {
-                        Some(value) => value, None =>
-                        {
-                            return
-                            Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                            StdOptionOptionStdVecVecGenericWithIdOffsetPlusLimitIsIntOverflow
-                            {
-                                limit : * limit, offset : * offset, code_occurence :
-                                error_occurence_lib :: code_occurence! (),
-                            });
-                        }
-                    };
-                    Ok(format!
-                    ("jsonb_build_object('std_option_option_std_vec_vec_generic_with_id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({value}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id')) with ordinality where ordinality between {start} and {end}))when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}} is not array and not null')) end)"))
-                }, Err(error) =>
-                {
-                    return
-                    Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed ::
-                    DoggieGeneratePostgresqlQueryPartToReadFromSelfVec
-                    {
-                        field : error, code_occurence : error_occurence_lib ::
-                        code_occurence! (),
-                    });
-                }
+                Ok(format!("jsonb_build_object('std_vec_vec_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_primitive_i8[array element] is not number')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_i8')) with ordinality where ordinality between {start} and {end})) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_primitive_i8 is not array')) end)"))
             }
+            Self::StdOptionOptionStdVecVecStdPrimitiveI8 { limit, offset } => {
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::StdOptionOptionStdVecVecStdPrimitiveI8OffsetPlusLimitIsIntOverflow { limit: *limit, offset: *offset, code_occurence: error_occurence_lib::code_occurence!() });
+                    }
+                };
+                Ok(format!("jsonb_build_object('std_option_option_std_vec_vec_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_primitive_i8[array element] is not number')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8')) with ordinality where ordinality between {start} and {end})) when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_primitive_i8 is not array and not null')) end)"))
+            }
+            Self::StdVecVecStdOptionOptionStdPrimitiveI8 { limit, offset } => {
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::StdVecVecStdOptionOptionStdPrimitiveI8OffsetPlusLimitIsIntOverflow { limit: *limit, offset: *offset, code_occurence: error_occurence_lib::code_occurence!() });
+                    }
+                };
+                Ok(format!("jsonb_build_object('std_vec_vec_std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_option_option_std_primitive_i8[array element] is not number and not null')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_std_primitive_i8')) with ordinality where ordinality between {start} and {end})) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_std_option_option_std_primitive_i8 is not array')) end)"))
+            }
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 { limit, offset } => {
+                let start = offset;
+                let end = match offset.checked_add(*limit) {
+                    Some(value) => value,
+                    None => {
+                        return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OffsetPlusLimitIsIntOverflow { limit: *limit, offset: *offset, code_occurence: error_occurence_lib::code_occurence!() });
+                    }
+                };
+                Ok(format!("jsonb_build_object('std_option_option_std_vec_vec_std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_option_option_std_primitive_i8[array element] is not number and not null')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8')) with ordinality where ordinality between {start} and {end}))when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_option_option_std_primitive_i8 is not array and not null')) end)"))
+            }
+            Self::Generic(fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(fields_vec, &format!("{column_name_and_maybe_field_getter}->'generic'"), &format!("{column_name_and_maybe_field_getter_for_error_message}.generic"), false) {
+                Ok(value) => Ok(format!("jsonb_build_object('generic',{value})")),
+                Err(error) => {
+                    return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::CatGeneratePostgresqlQueryPartToReadFromSelfVec { field: error, code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
+            Self::StdOptionOptionGeneric(fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(fields_vec, &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_generic"), true) {
+                Ok(value) => Ok(format!("jsonb_build_object('std_option_option_generic',{value})")),
+                Err(error) => {
+                    return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::MouseGeneratePostgresqlQueryPartToReadFromSelfVec { field: error, code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
+            Self::StdVecVecGenericWithId { field_vec, limit, offset } => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(field_vec, &format!("value"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_generic_with_id[array element]"), false) {
+                Ok(value) => {
+                    let start = offset;
+                    let end = match offset.checked_add(*limit) {
+                        Some(value) => value,
+                        None => {
+                            return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::StdVecVecGenericWithIdOffsetPlusLimitIsIntOverflow { limit: *limit, offset: *offset, code_occurence: error_occurence_lib::code_occurence!() });
+                        }
+                    };
+                    Ok(format!("jsonb_build_object('std_vec_vec_generic_with_id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_vec_vec_generic_with_id') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({value}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_vec_vec_generic_with_id')) with ordinality where ordinality between {start} and {end})) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}} is not array')) end)"))
+                }
+                Err(error) => {
+                    return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::DoggieGeneratePostgresqlQueryPartToReadFromSelfVec { field: error, code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
+            Self::StdOptionOptionStdVecVecGenericWithId { field_vec, limit, offset } => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(field_vec, &format!("value"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_generic_with_id[array element]"), false) {
+                Ok(value) => {
+                    let start = offset;
+                    let end = match offset.checked_add(*limit) {
+                        Some(value) => value,
+                        None => {
+                            return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::StdOptionOptionStdVecVecGenericWithIdOffsetPlusLimitIsIntOverflow { limit: *limit, offset: *offset, code_occurence: error_occurence_lib::code_occurence!() });
+                        }
+                    };
+                    Ok(format!("jsonb_build_object('std_option_option_std_vec_vec_generic_with_id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id') = 'array' then jsonb_build_object('Ok',(select jsonb_agg({value}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id')) with ordinality where ordinality between {start} and {end}))when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}} is not array and not null')) end)"))
+                }
+                Err(error) => {
+                    return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::DoggieGeneratePostgresqlQueryPartToReadFromSelfVec { field: error, code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
         }
     }
 }
@@ -1540,9 +1171,7 @@ impl std::convert::From<Something> for SomethingOptionsToRead {
                     None => None,
                 },
             }),
-            std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
-                value: value.std_vec_vec_std_primitive_i8.0.into_iter().map(|element| element.0).collect(),
-            }),
+            std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: value.std_vec_vec_std_primitive_i8.0.into_iter().map(|element| element.0).collect() }),
             std_option_option_std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
                 value: match value.std_option_option_std_vec_vec_std_primitive_i8.0 {
                     Some(value) => Some(value.into_iter().map(|element| element.0).collect()),
@@ -1581,9 +1210,7 @@ impl std::convert::From<Something> for SomethingOptionsToRead {
                     None => None,
                 },
             }),
-            std_vec_vec_generic_with_id: Some(postgresql_crud::Value {
-                value: value.std_vec_vec_generic_with_id.0.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>(),
-            }),
+            std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: value.std_vec_vec_generic_with_id.0.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>() }),
             std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value {
                 value: match value.std_option_option_std_vec_vec_generic_with_id.0 {
                     Some(value) => Some(value.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>()),
@@ -1984,33 +1611,25 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                             if serde::__private::Option::is_some(&__field2) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_vec_vec_std_primitive_i8"));
                             }
-                            __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::primitive::i8, std::string::String>>, std::string::String>>>(
-                                &mut __map,
-                            )?);
+                            __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::primitive::i8, std::string::String>>, std::string::String>>>(&mut __map)?);
                         }
                         __Field::__field3 => {
                             if serde::__private::Option::is_some(&__field3) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_option_option_std_vec_vec_std_primitive_i8"));
                             }
-                            __field3 = serde::__private::Some(serde::de::MapAccess::next_value::<
-                                std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i8, std::string::String>>>, std::string::String>>,
-                            >(&mut __map)?);
+                            __field3 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i8, std::string::String>>>, std::string::String>>>(&mut __map)?);
                         }
                         __Field::__field4 => {
                             if serde::__private::Option::is_some(&__field4) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_vec_vec_std_option_option_std_primitive_i8"));
                             }
-                            __field4 = serde::__private::Some(serde::de::MapAccess::next_value::<
-                                std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>, std::string::String>>,
-                            >(&mut __map)?);
+                            __field4 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>, std::string::String>>>(&mut __map)?);
                         }
                         __Field::__field5 => {
                             if serde::__private::Option::is_some(&__field5) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_option_option_std_vec_vec_std_option_option_std_primitive_i8"));
                             }
-                            __field5 = serde::__private::Some(serde::de::MapAccess::next_value::<
-                                std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>>, std::string::String>>,
-                            >(&mut __map)?);
+                            __field5 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>>, std::string::String>>>(&mut __map)?);
                         }
                         __Field::__field6 => {
                             if serde::__private::Option::is_some(&__field6) {
@@ -2028,17 +1647,13 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                             if serde::__private::Option::is_some(&__field8) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_vec_vec_generic_with_id"));
                             }
-                            __field8 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>, std::string::String>>>(
-                                &mut __map,
-                            )?);
+                            __field8 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>, std::string::String>>>(&mut __map)?);
                         }
                         __Field::__field9 => {
                             if serde::__private::Option::is_some(&__field9) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_option_option_std_vec_vec_generic_with_id"));
                             }
-                            __field9 = serde::__private::Some(serde::de::MapAccess::next_value::<
-                                std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>>, std::string::String>>,
-                            >(&mut __map)?);
+                            __field9 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>>, std::string::String>>>(&mut __map)?);
                         }
                         _ => {
                             let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
@@ -2279,27 +1894,8 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
             }
         }
         #[doc(hidden)]
-        const FIELDS: &'static [&'static str] = &[
-            "std_primitive_i8",
-            "std_option_option_std_primitive_i8",
-            "std_vec_vec_std_primitive_i8",
-            "std_option_option_std_vec_vec_std_primitive_i8",
-            "std_vec_vec_std_option_option_std_primitive_i8",
-            "std_option_option_std_vec_vec_std_option_option_std_primitive_i8",
-            "generic",
-            "std_option_option_generic",
-            "std_vec_vec_generic_with_id",
-            "std_option_option_std_vec_vec_generic_with_id",
-        ];
-        serde::Deserializer::deserialize_struct(
-            __deserializer,
-            "SomethingOptionsToRead",
-            FIELDS,
-            __Visitor {
-                marker: serde::__private::PhantomData::<SomethingOptionsToRead>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        const FIELDS: &'static [&'static str] = &["std_primitive_i8", "std_option_option_std_primitive_i8", "std_vec_vec_std_primitive_i8", "std_option_option_std_vec_vec_std_primitive_i8", "std_vec_vec_std_option_option_std_primitive_i8", "std_option_option_std_vec_vec_std_option_option_std_primitive_i8", "generic", "std_option_option_generic", "std_vec_vec_generic_with_id", "std_option_option_std_vec_vec_generic_with_id"];
+        serde::Deserializer::deserialize_struct(__deserializer, "SomethingOptionsToRead", FIELDS, __Visitor { marker: serde::__private::PhantomData::<SomethingOptionsToRead>, lifetime: serde::__private::PhantomData })
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
@@ -2351,31 +1947,13 @@ impl<'de> serde::Deserialize<'de> for SomethingReader {
                 }))
             }
         }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "SomethingReader",
-            __Visitor {
-                marker: serde::__private::PhantomData::<SomethingReader>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        serde::Deserializer::deserialize_newtype_struct(__deserializer, "SomethingReader", __Visitor { marker: serde::__private::PhantomData::<SomethingReader>, lifetime: serde::__private::PhantomData })
     }
 }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Something {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
@@ -2443,22 +2021,14 @@ pub enum SomethingOptionToUpdate {
 impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdate {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<SomethingOptionToUpdate> {
         vec![
-            SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value {
-                value: <postgresql_crud::JsonStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0,
-            }),
+            SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value { value: <postgresql_crud::JsonStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 }),
             SomethingOptionToUpdate::StdOptionOptionStdPrimitiveI8(postgresql_crud::Value {
                 value: match <postgresql_crud::JsonStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
                     Some(value) => Some(value.0),
                     None => None,
                 },
             }),
-            SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(postgresql_crud::Value {
-                value: <postgresql_crud::JsonStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    .0
-                    .into_iter()
-                    .map(|element| element.0)
-                    .collect(),
-            }),
+            SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(postgresql_crud::Value { value: <postgresql_crud::JsonStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0.into_iter().map(|element| element.0).collect() }),
             SomethingOptionToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8(postgresql_crud::Value {
                 value: match <postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
                     Some(value) => Some(value.into_iter().map(|element| element.0).collect()),
@@ -2476,10 +2046,7 @@ impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsA
                     .collect(),
             }),
             SomethingOptionToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::Value {
-                value: match <postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(
-                )
-                .0
-                {
+                value: match <postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
                     Some(value) => Some(
                         value
                             .into_iter()
@@ -2492,26 +2059,10 @@ impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsA
                     None => None,
                 },
             }),
-            SomethingOptionToUpdate::Generic(postgresql_crud::Value {
-                value: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            }),
-            SomethingOptionToUpdate::StdOptionOptionGeneric(postgresql_crud::Value {
-                value: Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-            }),
-            SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value {
-                value: postgresql_crud::JsonArrayChange {
-                    create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
-                    update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
-                    delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
-                },
-            }),
-            SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(postgresql_crud::Value {
-                value: Some(postgresql_crud::JsonArrayChange {
-                    create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
-                    update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
-                    delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
-                }),
-            }),
+            SomethingOptionToUpdate::Generic(postgresql_crud::Value { value: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }),
+            SomethingOptionToUpdate::StdOptionOptionGeneric(postgresql_crud::Value { value: Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()) }),
+            SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value { value: postgresql_crud::JsonArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] } }),
+            SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(postgresql_crud::Value { value: Some(postgresql_crud::JsonArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] }) }),
         ]
     }
 }
@@ -2588,14 +2139,7 @@ pub enum SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     },
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionsToUpdate {
-    fn try_generate_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
         if self.0.is_empty() {
             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -2606,10 +2150,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
                         let value = SomethingFieldToUpdate::StdPrimitiveI8;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2617,10 +2158,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdOptionOptionStdPrimitiveI8(_) => {
                         let value = SomethingFieldToUpdate::StdOptionOptionStdPrimitiveI8;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2628,10 +2166,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(_) => {
                         let value = SomethingFieldToUpdate::StdVecVecStdPrimitiveI8;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2639,10 +2174,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8(_) => {
                         let value = SomethingFieldToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2650,10 +2182,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8(_) => {
                         let value = SomethingFieldToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2661,10 +2190,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(_) => {
                         let value = SomethingFieldToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2672,10 +2198,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::Generic(_) => {
                         let value = SomethingFieldToUpdate::Generic;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2683,10 +2206,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdOptionOptionGeneric(_) => {
                         let value = SomethingFieldToUpdate::StdOptionOptionGeneric;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2694,10 +2214,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdVecVecGenericWithId(_) => {
                         let value = SomethingFieldToUpdate::StdVecVecGenericWithId;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2705,10 +2222,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                     SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(_) => {
                         let value = SomethingFieldToUpdate::StdOptionOptionStdVecVecGenericWithId;
                         if acc.contains(&value) {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -2782,10 +2296,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                         acc = value;
                     }
                     Err(error) => {
-                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Cat {
-                            cat: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
+                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Cat { cat: error, code_occurence: error_occurence_lib::code_occurence!() });
                     }
                 },
                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => match &value.value {
@@ -2794,10 +2305,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                             acc = value;
                         }
                         Err(error) => {
-                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Mouse {
-                                mouse: error,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Mouse { mouse: error, code_occurence: error_occurence_lib::code_occurence!() });
                         }
                     },
                     None => match increment.checked_add(1) {
@@ -2815,20 +2323,14 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                         let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
                         for element in &value.value.update {
                             if ids.contains(&&element.id) {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieNotUniqueId {
-                                    std_vec_vec_generic_with_id_doggie_not_unique_id: element.id,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieNotUniqueId { std_vec_vec_generic_with_id_doggie_not_unique_id: element.id, code_occurence: error_occurence_lib::code_occurence!() });
                             } else {
                                 ids.push(&element.id);
                             }
                         }
                         for element in &value.value.delete {
                             if ids.contains(&element) {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieNotUniqueId {
-                                    std_vec_vec_generic_with_id_doggie_not_unique_id: *element,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieNotUniqueId { std_vec_vec_generic_with_id_doggie_not_unique_id: *element, code_occurence: error_occurence_lib::code_occurence!() });
                             } else {
                                 ids.push(&element);
                             }
@@ -2844,10 +2346,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                                 }
                             }
                             Err(error) => {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
-                                    std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements { std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments: error, code_occurence: error_occurence_lib::code_occurence!() });
                             }
                         }
                     }
@@ -2864,10 +2363,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                                         delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                                     }
                                     None => {
-                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements {
-                                            std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() },
-                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                        });
+                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements { std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }, code_occurence: error_occurence_lib::code_occurence!() });
                                     }
                                 }
                             }
@@ -2883,10 +2379,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                                 }
                             }
                             Err(error) => {
-                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements {
-                                    std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
+                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements { std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments: error, code_occurence: error_occurence_lib::code_occurence!() });
                             }
                         }
                     }
@@ -2902,20 +2395,14 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                         if let Some(value) = &value.value {
                             for element in &value.update {
                                 if ids.contains(&&element.id) {
-                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId {
-                                        std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: element.id,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
+                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId { std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: element.id, code_occurence: error_occurence_lib::code_occurence!() });
                                 } else {
                                     ids.push(&element.id);
                                 }
                             }
                             for element in &value.delete {
                                 if ids.contains(&element) {
-                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId {
-                                        std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: *element,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
+                                    return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId { std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: *element, code_occurence: error_occurence_lib::code_occurence!() });
                                 } else {
                                     ids.push(&element);
                                 }
@@ -2934,10 +2421,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                                         }
                                     }
                                     Err(error) => {
-                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
-                                            std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments: error,
-                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                        });
+                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements { std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments: error, code_occurence: error_occurence_lib::code_occurence!() });
                                     }
                                 }
                             }
@@ -2954,12 +2438,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                                                 delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                                             }
                                             None => {
-                                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements {
-                                                    std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd {
-                                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                                    },
-                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                });
+                                                return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements { std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }, code_occurence: error_occurence_lib::code_occurence!() });
                                             }
                                         }
                                     }
@@ -2975,10 +2454,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                                         }
                                     }
                                     Err(error) => {
-                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements {
-                                            std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments: error,
-                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                        });
+                                        return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements { std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments: error, code_occurence: error_occurence_lib::code_occurence!() });
                                     }
                                 }
                             }
@@ -2987,8 +2463,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpda
                             let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
                             let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
                             let maybe_jsonb_build_array_in_case_of_null = if create_query_part_acc.is_empty() { current_jsonb_set_target.clone() } else { format!("jsonb_build_array({create_query_part_acc})") };
-                            acc = format!
-                            ("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',case when {jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id' = 'null' then {maybe_jsonb_build_array_in_case_of_null} else (select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}) {maybe_jsonb_build_array} end)");
+                            acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',case when {jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id' = 'null' then {maybe_jsonb_build_array_in_case_of_null} else (select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}) {maybe_jsonb_build_array} end)");
                         }
                         None => match increment.checked_add(1) {
                             Some(value) => {
@@ -3095,18 +2570,7 @@ pub struct SomethingToCreate {
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingToCreate {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_option_option_std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_generic: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_option_option_std_vec_vec_generic_with_id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
@@ -3317,36 +2781,27 @@ impl error_occurence_lib::ToStdStringString for DoggieGeneratePostgresqlQueryPar
     }
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToRead<DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, ()> for DoggieFieldToRead {
-    fn generate_postgresql_query_part_to_read_from_self_vec(
-        value: &std::vec::Vec<Self>,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_optional: std::primitive::bool,
-    ) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+    fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
         if value.is_empty() {
             return Err(DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
         let mut unique = vec![];
         for element in value {
             if unique.contains(&element) {
-                return Err(DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter {
-                    field: element.clone(),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
+                return Err(DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter { field: element.clone(), code_occurence: error_occurence_lib::code_occurence!() });
             } else {
                 unique.push(&element);
             }
         }
         let mut acc = std::string::String::default();
         for element in value {
-            acc.push_str(& format!
-            ("{}||", match element
-            {
-                Self :: Id => format!
-                ("jsonb_build_object('id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'id') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'id') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.id is not string')) end )"),
-                Self :: StdPrimitiveI16 => format!
-                ("jsonb_build_object('std_primitive_i16',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i16') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i16') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16 is not number')) end )")
-            }));
+            acc.push_str(&format!(
+                "{}||",
+                match element {
+                    Self::Id => format!("jsonb_build_object('id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'id') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'id') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.id is not string')) end )"),
+                    Self::StdPrimitiveI16 => format!("jsonb_build_object('std_primitive_i16',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i16') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i16') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16 is not number')) end )"),
+                }
+            ));
         }
         let _ = acc.pop();
         let _ = acc.pop();
@@ -3356,19 +2811,13 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<DoggieGeneratePostgresql
         };
         Ok({
             let space_and_not_null = if is_optional { " and not null" } else { "" };
-            format!
-            ("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
+            format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
         })
     }
     fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, ()> {
-        match self
-        {
-            Self :: Id =>
-            Ok(format!
-            ("jsonb_build_object('id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'id') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'id') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.id is not string')) end )")),
-            Self :: StdPrimitiveI16 =>
-            Ok(format!
-            ("jsonb_build_object('std_primitive_i16',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i16') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i16') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16 is not number')) end )"))
+        match self {
+            Self::Id => Ok(format!("jsonb_build_object('id',case when jsonb_typeof({column_name_and_maybe_field_getter}->'id') = 'string' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'id') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.id is not string')) end )")),
+            Self::StdPrimitiveI16 => Ok(format!("jsonb_build_object('std_primitive_i16',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i16') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i16') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16 is not number')) end )")),
         }
     }
 }
@@ -3380,10 +2829,7 @@ pub struct DoggieOptionsToRead {
 }
 impl std::convert::From<Doggie> for DoggieOptionsToRead {
     fn from(value: Doggie) -> Self {
-        Self {
-            id: Some(value.id.0),
-            std_primitive_i16: Some(postgresql_crud::Value { value: value.std_primitive_i16.0 }),
-        }
+        Self { id: Some(value.id.0), std_primitive_i16: Some(postgresql_crud::Value { value: value.std_primitive_i16.0 }) }
     }
 }
 impl<'de> serde::Deserialize<'de> for DoggieOptionsToRead {
@@ -3551,15 +2997,7 @@ impl<'de> serde::Deserialize<'de> for DoggieOptionsToRead {
         }
         #[doc(hidden)]
         const FIELDS: &'static [&'static str] = &["id", "std_primitive_i16"];
-        serde::Deserializer::deserialize_struct(
-            __deserializer,
-            "DoggieOptionsToRead",
-            FIELDS,
-            __Visitor {
-                marker: serde::__private::PhantomData::<DoggieOptionsToRead>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        serde::Deserializer::deserialize_struct(__deserializer, "DoggieOptionsToRead", FIELDS, __Visitor { marker: serde::__private::PhantomData::<DoggieOptionsToRead>, lifetime: serde::__private::PhantomData })
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
@@ -3611,23 +3049,13 @@ impl<'de> serde::Deserialize<'de> for DoggieReader {
                 }))
             }
         }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "DoggieReader",
-            __Visitor {
-                marker: serde::__private::PhantomData::<DoggieReader>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        serde::Deserializer::deserialize_newtype_struct(__deserializer, "DoggieReader", __Visitor { marker: serde::__private::PhantomData::<DoggieReader>, lifetime: serde::__private::PhantomData })
     }
 }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Doggie {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            std_primitive_i16: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), std_primitive_i16: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
@@ -3649,9 +3077,7 @@ pub enum DoggieOptionToUpdate {
 }
 impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionToUpdate {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<DoggieOptionToUpdate> {
-        vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value {
-            value: <postgresql_crud::JsonStdPrimitiveI16 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0,
-        })]
+        vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value { value: <postgresql_crud::JsonStdPrimitiveI16 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 })]
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
@@ -3667,10 +3093,7 @@ impl postgresql_crud::GetJsonId for DoggieOptionsToUpdate {
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionsToUpdate {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            fields: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { id: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(), fields: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
@@ -3702,14 +3125,7 @@ pub enum DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed {
     },
 }
 impl postgresql_crud::JsonArrayElementUpdateBindQuery<DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> for DoggieOptionsToUpdate {
-    fn try_generate_update_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::option::Option<std::string::String>, DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> {
+    fn try_generate_update_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::option::Option<std::string::String>, DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> {
         match increment.checked_add(1) {
             Some(new_increment_value) => {
                 *increment = new_increment_value;
@@ -3723,10 +3139,7 @@ impl postgresql_crud::JsonArrayElementUpdateBindQuery<DoggieTryGenerateJsonArray
                             DoggieOptionToUpdate::StdPrimitiveI16(_) => {
                                 let value = DoggieFieldToUpdate::StdPrimitiveI16;
                                 if acc.contains(&value) {
-                                    return Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::NotUniqueField {
-                                        field: value,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
+                                    return Err(DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                                 } else {
                                     acc.push(value);
                                 }
@@ -3772,10 +3185,7 @@ impl postgresql_crud::JsonArrayElementCreateBindQuery for DoggieToCreate {
     fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed> {
         match postgresql_crud::BindQuery::try_generate_bind_increments(self, increment) {
             Ok(value) => Ok(Some(value)),
-            Err(error) => Err(postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed::TryGenerateBindIncrements {
-                error: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
+            Err(error) => Err(postgresql_crud::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed::TryGenerateBindIncrements { error: error, code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
     fn bind_create_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -3800,9 +3210,7 @@ pub struct DoggieToCreate {
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieToCreate {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i16: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i16: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 impl<'a> postgresql_crud::BindQuery<'a> for DoggieToCreate {
@@ -3869,34 +3277,26 @@ impl error_occurence_lib::ToStdStringString for CatGeneratePostgresqlQueryPartTo
     }
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToRead<CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, ()> for CatFieldToRead {
-    fn generate_postgresql_query_part_to_read_from_self_vec(
-        value: &std::vec::Vec<Self>,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_optional: std::primitive::bool,
-    ) -> Result<std::string::String, CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+    fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
         if value.is_empty() {
             return Err(CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
         let mut unique = vec![];
         for element in value {
             if unique.contains(&element) {
-                return Err(CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter {
-                    field: element.clone(),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
+                return Err(CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter { field: element.clone(), code_occurence: error_occurence_lib::code_occurence!() });
             } else {
                 unique.push(&element);
             }
         }
         let mut acc = std::string::String::default();
         for element in value {
-            acc.push_str(& format!
-            ("{}||", match element
-            {
-                Self :: StdPrimitiveI32 => format!
-                ("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )")
-            }));
+            acc.push_str(&format!(
+                "{}||",
+                match element {
+                    Self::StdPrimitiveI32 => format!("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )"),
+                }
+            ));
         }
         let _ = acc.pop();
         let _ = acc.pop();
@@ -3906,16 +3306,12 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<CatGeneratePostgresqlQue
         };
         Ok({
             let space_and_not_null = if is_optional { " and not null" } else { "" };
-            format!
-            ("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
+            format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
         })
     }
     fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, ()> {
-        match self
-        {
-            Self :: StdPrimitiveI32 =>
-            Ok(format!
-            ("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )"))
+        match self {
+            Self::StdPrimitiveI32 => Ok(format!("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )")),
         }
     }
 }
@@ -3926,9 +3322,7 @@ pub struct CatOptionsToRead {
 }
 impl std::convert::From<Cat> for CatOptionsToRead {
     fn from(value: Cat) -> Self {
-        Self {
-            std_primitive_i32: Some(postgresql_crud::Value { value: value.std_primitive_i32.0 }),
-        }
+        Self { std_primitive_i32: Some(postgresql_crud::Value { value: value.std_primitive_i32.0 }) }
     }
 }
 impl<'de> serde::Deserialize<'de> for CatOptionsToRead {
@@ -4057,15 +3451,7 @@ impl<'de> serde::Deserialize<'de> for CatOptionsToRead {
         }
         #[doc(hidden)]
         const FIELDS: &'static [&'static str] = &["std_primitive_i32"];
-        serde::Deserializer::deserialize_struct(
-            __deserializer,
-            "CatOptionsToRead",
-            FIELDS,
-            __Visitor {
-                marker: serde::__private::PhantomData::<CatOptionsToRead>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        serde::Deserializer::deserialize_struct(__deserializer, "CatOptionsToRead", FIELDS, __Visitor { marker: serde::__private::PhantomData::<CatOptionsToRead>, lifetime: serde::__private::PhantomData })
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
@@ -4117,22 +3503,13 @@ impl<'de> serde::Deserialize<'de> for CatReader {
                 }))
             }
         }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "CatReader",
-            __Visitor {
-                marker: serde::__private::PhantomData::<CatReader>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        serde::Deserializer::deserialize_newtype_struct(__deserializer, "CatReader", __Visitor { marker: serde::__private::PhantomData::<CatReader>, lifetime: serde::__private::PhantomData })
     }
 }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Cat {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
@@ -4154,9 +3531,7 @@ pub enum CatOptionToUpdate {
 }
 impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for CatOptionToUpdate {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<CatOptionToUpdate> {
-        vec![CatOptionToUpdate::StdPrimitiveI32(postgresql_crud::Value {
-            value: <postgresql_crud::JsonStdPrimitiveI32 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0,
-        })]
+        vec![CatOptionToUpdate::StdPrimitiveI32(postgresql_crud::Value { value: <postgresql_crud::JsonStdPrimitiveI32 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 })]
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
@@ -4182,14 +3557,7 @@ pub enum CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     },
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for CatOptionsToUpdate {
-    fn try_generate_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
         if self.0.is_empty() {
             return Err(CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -4200,10 +3568,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<CatOptionsToUpdateTryG
                     CatOptionToUpdate::StdPrimitiveI32(_) => {
                         let value = CatFieldToUpdate::StdPrimitiveI32;
                         if acc.contains(&value) {
-                            return Err(CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -4259,9 +3624,7 @@ pub struct CatToCreate {
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for CatToCreate {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 impl<'a> postgresql_crud::BindQuery<'a> for CatToCreate {
@@ -4323,34 +3686,26 @@ impl error_occurence_lib::ToStdStringString for MouseGeneratePostgresqlQueryPart
     }
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToRead<MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, ()> for MouseFieldToRead {
-    fn generate_postgresql_query_part_to_read_from_self_vec(
-        value: &std::vec::Vec<Self>,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_optional: std::primitive::bool,
-    ) -> Result<std::string::String, MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+    fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
         if value.is_empty() {
             return Err(MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
         let mut unique = vec![];
         for element in value {
             if unique.contains(&element) {
-                return Err(MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter {
-                    field: element.clone(),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
+                return Err(MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter { field: element.clone(), code_occurence: error_occurence_lib::code_occurence!() });
             } else {
                 unique.push(&element);
             }
         }
         let mut acc = std::string::String::default();
         for element in value {
-            acc.push_str(& format!
-            ("{}||", match element
-            {
-                Self :: StdPrimitiveI32 => format!
-                ("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )")
-            }));
+            acc.push_str(&format!(
+                "{}||",
+                match element {
+                    Self::StdPrimitiveI32 => format!("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )"),
+                }
+            ));
         }
         let _ = acc.pop();
         let _ = acc.pop();
@@ -4360,16 +3715,12 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<MouseGeneratePostgresqlQ
         };
         Ok({
             let space_and_not_null = if is_optional { " and not null" } else { "" };
-            format!
-            ("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
+            format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}){is_optional_query_part} else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object{space_and_not_null}')) end")
         })
     }
     fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, ()> {
-        match self
-        {
-            Self :: StdPrimitiveI32 =>
-            Ok(format!
-            ("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )"))
+        match self {
+            Self::StdPrimitiveI32 => Ok(format!("jsonb_build_object('std_primitive_i32',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i32') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i32') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32 is not number')) end )")),
         }
     }
 }
@@ -4380,9 +3731,7 @@ pub struct MouseOptionsToRead {
 }
 impl std::convert::From<Mouse> for MouseOptionsToRead {
     fn from(value: Mouse) -> Self {
-        Self {
-            std_primitive_i32: Some(postgresql_crud::Value { value: value.std_primitive_i32.0 }),
-        }
+        Self { std_primitive_i32: Some(postgresql_crud::Value { value: value.std_primitive_i32.0 }) }
     }
 }
 impl<'de> serde::Deserialize<'de> for MouseOptionsToRead {
@@ -4511,15 +3860,7 @@ impl<'de> serde::Deserialize<'de> for MouseOptionsToRead {
         }
         #[doc(hidden)]
         const FIELDS: &'static [&'static str] = &["std_primitive_i32"];
-        serde::Deserializer::deserialize_struct(
-            __deserializer,
-            "MouseOptionsToRead",
-            FIELDS,
-            __Visitor {
-                marker: serde::__private::PhantomData::<MouseOptionsToRead>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        serde::Deserializer::deserialize_struct(__deserializer, "MouseOptionsToRead", FIELDS, __Visitor { marker: serde::__private::PhantomData::<MouseOptionsToRead>, lifetime: serde::__private::PhantomData })
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
@@ -4571,22 +3912,13 @@ impl<'de> serde::Deserialize<'de> for MouseReader {
                 }))
             }
         }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "MouseReader",
-            __Visitor {
-                marker: serde::__private::PhantomData::<MouseReader>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
+        serde::Deserializer::deserialize_newtype_struct(__deserializer, "MouseReader", __Visitor { marker: serde::__private::PhantomData::<MouseReader>, lifetime: serde::__private::PhantomData })
     }
 }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Mouse {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
@@ -4608,9 +3940,7 @@ pub enum MouseOptionToUpdate {
 }
 impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for MouseOptionToUpdate {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<MouseOptionToUpdate> {
-        vec![MouseOptionToUpdate::StdPrimitiveI32(postgresql_crud::Value {
-            value: <postgresql_crud::JsonStdPrimitiveI32 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0,
-        })]
+        vec![MouseOptionToUpdate::StdPrimitiveI32(postgresql_crud::Value { value: <postgresql_crud::JsonStdPrimitiveI32 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 })]
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
@@ -4636,14 +3966,7 @@ pub enum MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed {
     },
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for MouseOptionsToUpdate {
-    fn try_generate_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
-    ) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
         if self.0.is_empty() {
             return Err(MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -4654,10 +3977,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<MouseOptionsToUpdateTr
                     MouseOptionToUpdate::StdPrimitiveI32(_) => {
                         let value = MouseFieldToUpdate::StdPrimitiveI32;
                         if acc.contains(&value) {
-                            return Err(MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField {
-                                field: value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
+                            return Err(MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
                         } else {
                             acc.push(value);
                         }
@@ -4713,9 +4033,7 @@ pub struct MouseToCreate {
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for MouseToCreate {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        }
+        Self { std_primitive_i32: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }
     }
 }
 impl<'a> postgresql_crud::BindQuery<'a> for MouseToCreate {
