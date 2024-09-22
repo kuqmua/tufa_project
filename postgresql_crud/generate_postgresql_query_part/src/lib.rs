@@ -6304,9 +6304,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "www",
+    //         "GeneratePostgresqlQueryPart",
     //         &generated,
-    //         "www",
+    //         "GeneratePostgresqlQueryPart",
     //     );
     // }
     generated.into()
