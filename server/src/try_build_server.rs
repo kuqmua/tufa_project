@@ -76,14 +76,7 @@ struct SecurityAddon;
 impl utoipa::Modify for SecurityAddon {
     fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
         if let Some(components) = openapi.components.as_mut() {
-            components.add_security_scheme(
-                "api_key",
-                utoipa::openapi::security::SecurityScheme::ApiKey(
-                    utoipa::openapi::security::ApiKey::Header(
-                        utoipa::openapi::security::ApiKeyValue::new("todo_apikey"),
-                    ),
-                ),
-            );
+            components.add_security_scheme("api_key", utoipa::openapi::security::SecurityScheme::ApiKey(utoipa::openapi::security::ApiKey::Header(utoipa::openapi::security::ApiKeyValue::new("todo_apikey"))));
         }
     }
 }
@@ -119,9 +112,7 @@ struct SharedData {
 #[derive(Clone)] //or maybe add Clone to AppInfo too to solve possible problem?
 struct HeaderMessage(pub(crate) std::string::String);
 
-async fn read_middleware_custom_header(
-    axum::Extension(message): axum::Extension<HeaderMessage>,
-) -> std::string::String {
+async fn read_middleware_custom_header(axum::Extension(message): axum::Extension<HeaderMessage>) -> std::string::String {
     println!("read_middleware_custom_header {}", message.0);
     message.0
 }
@@ -144,30 +135,18 @@ async fn read_middleware_custom_header(
 // }
 
 //todo - make it async trait after async trait stabilization
-pub async fn try_build_server(
-    postgres_pool: sqlx::Pool<sqlx::Postgres>,
-    config: &'static common::repositories_types::server::config::Config,
-) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>> {
+pub async fn try_build_server(postgres_pool: sqlx::Pool<sqlx::Postgres>, config: &'static common::repositories_types::server::config::Config) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>> {
     println!("server running on {}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
-    let app_state = std::sync::Arc::new(
-        common::repositories_types::server::routes::app_state::AppState {
-            postgres_pool,
-            config,
-            project_git_info: &git_info::PROJECT_GIT_INFO,
-        },
-    );
-    let shared_data = SharedData {
-        message: std::string::String::from("shared_message"),
-    };
+    let app_state = std::sync::Arc::new(common::repositories_types::server::routes::app_state::AppState {
+        postgres_pool,
+        config,
+        project_git_info: &git_info::PROJECT_GIT_INFO,
+    });
+    let shared_data = SharedData { message: std::string::String::from("shared_message") };
     axum::serve(
-        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(config))
-        .await
-        .unwrap(),
+        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(config)).await.unwrap(),
         axum::Router::new()
-            .route(
-                "/read_middleware_custom_header",
-                axum::routing::get(read_middleware_custom_header),
-            )
+            .route("/read_middleware_custom_header", axum::routing::get(read_middleware_custom_header))
             // .route(
             //     "/header_extractor_example",
             //     axum::routing::get(header_extractor_example),
@@ -177,16 +156,11 @@ pub async fn try_build_server(
             //     axum::routing::get(extract_custom_header_example),
             // )
             // .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
-            .route(
-                "/middleware_message_example",
-                axum::routing::get(middleware_message_example),
-            )
+            .route("/middleware_message_example", axum::routing::get(middleware_message_example))
             .layer(axum::Extension(shared_data))
             .merge(common::server::routes::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
             .merge(crate::routes::api::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
-            .merge(common::server::routes::not_found::not_found_route(
-                std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state),
-            ))
+            .merge(common::server::routes::not_found::not_found_route(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
             // .fallback_service(routes_static())
             .layer(
                 tower_http::cors::CorsLayer::new()
@@ -198,15 +172,10 @@ pub async fn try_build_server(
                     // ])
                     .allow_origin(["http://127.0.0.1".parse().unwrap()]),
             )
-            .merge(
-                utoipa_swagger_ui::SwaggerUi::new(
-                    constants::SLASH_SWAGGER_UI,
-                )
-                .url("/api-docs/openapi.json", {
-                    use utoipa::OpenApi;
-                    ApiDoc::openapi()
-                }),
-            )
+            .merge(utoipa_swagger_ui::SwaggerUi::new(constants::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
+                use utoipa::OpenApi;
+                ApiDoc::openapi()
+            }))
             .into_make_service(),
     )
     .await
