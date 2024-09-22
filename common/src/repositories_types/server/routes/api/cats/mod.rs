@@ -1051,7 +1051,9 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<SomethingGeneratePostgre
     }
     fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartToReadErrorNamed> {
         match self {
-            Self::StdPrimitiveI8 => Ok(format!("jsonb_build_object('std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i8') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number')) end )")),
+            Self::StdPrimitiveI8 => Ok(format!(
+                "jsonb_build_object('std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_primitive_i8') else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number')) end )"
+            )),
             Self::StdOptionOptionStdPrimitiveI8 => Ok(format!("jsonb_build_object('std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') = 'number' then jsonb_build_object('Ok',{column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_primitive_i8 is not number and not null')) end )")),
             Self::StdVecVecStdPrimitiveI8 { limit, offset } => {
                 let start = offset;
@@ -1141,17 +1143,29 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<SomethingGeneratePostgre
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
 pub struct SomethingOptionsToRead {
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_primitive_i8: std::option::Option<postgresql_crud::Value<std::primitive::i8>>,
+    std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI8OptionsToRead>>,//here
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::option::Option<std::primitive::i8>>>,
+    std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead>>,
+    
+    
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::vec::Vec<std::primitive::i8>>>,
+    std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_option_option_std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::option::Option<std::vec::Vec<std::primitive::i8>>>>,
+    std_option_option_std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::vec::Vec<std::option::Option<std::primitive::i8>>>>,
+    std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_option_option_std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>>>,
+    std_option_option_std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead>>,
+
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::vec::Vec<std::primitive::i8>>>,
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // std_option_option_std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::option::Option<std::vec::Vec<std::primitive::i8>>>>,
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::vec::Vec<std::option::Option<std::primitive::i8>>>>,
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // std_option_option_std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>>>,
+
     #[serde(skip_serializing_if = "Option::is_none")]
     generic: std::option::Option<postgresql_crud::Value<CatOptionsToRead>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1164,22 +1178,22 @@ pub struct SomethingOptionsToRead {
 impl std::convert::From<Something> for SomethingOptionsToRead {
     fn from(value: Something) -> Self {
         Self {
-            std_primitive_i8: Some(postgresql_crud::Value { value: value.std_primitive_i8.0 }),
+            std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(value.std_primitive_i8.0) }),
             std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: match value.std_option_option_std_primitive_i8.0 {
+                value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(match value.std_option_option_std_primitive_i8.0 {
                     Some(value) => Some(value.0),
                     None => None,
-                },
+                }),
             }),
-            std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: value.std_vec_vec_std_primitive_i8.0.into_iter().map(|element| element.0).collect() }),
+            std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(value.std_vec_vec_std_primitive_i8.0.into_iter().map(|element| element.0).collect()) }),
             std_option_option_std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
-                value: match value.std_option_option_std_vec_vec_std_primitive_i8.0 {
+                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(match value.std_option_option_std_vec_vec_std_primitive_i8.0 {
                     Some(value) => Some(value.into_iter().map(|element| element.0).collect()),
                     None => None,
-                },
+                }),
             }),
             std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: value
+                value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(value
                     .std_vec_vec_std_option_option_std_primitive_i8
                     .0
                     .into_iter()
@@ -1187,10 +1201,10 @@ impl std::convert::From<Something> for SomethingOptionsToRead {
                         Some(value) => Some(value.0),
                         None => None,
                     })
-                    .collect(),
+                    .collect()),
             }),
             std_option_option_std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: match value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8.0 {
+                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(match value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8.0 {
                     Some(value) => Some(
                         value
                             .into_iter()
@@ -1201,7 +1215,7 @@ impl std::convert::From<Something> for SomethingOptionsToRead {
                             .collect(),
                     ),
                     None => None,
-                },
+                }),
             }),
             generic: Some(postgresql_crud::Value { value: CatOptionsToRead::from(value.generic.0) }),
             std_option_option_generic: Some(postgresql_crud::Value {
@@ -1389,7 +1403,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                 serde::__private::Ok(SomethingOptionsToRead {
                     std_primitive_i8: match __field0 {
                         Some(value) => match value {
-                            Ok(value) => Some(postgresql_crud::Value { value: value }),
+                            Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(value) }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
                             }
@@ -1398,7 +1412,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     },
                     std_option_option_std_primitive_i8: match __field1 {
                         Some(value) => match value {
-                            Ok(value) => Some(postgresql_crud::Value { value: value }),
+                            Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(value) }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
                             }
@@ -1420,7 +1434,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                             }
                                         }
                                     }
-                                    acc
+                                    postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(acc)
                                 },
                             }),
                             Err(error) => {
@@ -1432,7 +1446,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     std_option_option_std_vec_vec_std_primitive_i8: match __field3 {
                         Some(value) => match value {
                             Ok(value) => Some(postgresql_crud::Value {
-                                value: match value {
+                                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(match value {
                                     Some(value) => {
                                         let mut acc = vec![];
                                         for element in value {
@@ -1448,7 +1462,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                         Some(acc)
                                     }
                                     None => None,
-                                },
+                                }),
                             }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
@@ -1459,7 +1473,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     std_vec_vec_std_option_option_std_primitive_i8: match __field4 {
                         Some(value) => match value {
                             Ok(value) => Some(postgresql_crud::Value {
-                                value: {
+                                value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead({
                                     let mut acc = vec![];
                                     for element in value {
                                         match element {
@@ -1472,7 +1486,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                         }
                                     }
                                     acc
-                                },
+                                }),
                             }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
@@ -1483,7 +1497,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     std_option_option_std_vec_vec_std_option_option_std_primitive_i8: match __field5 {
                         Some(value) => match value {
                             Ok(value) => Some(postgresql_crud::Value {
-                                value: match value {
+                                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(match value {
                                     Some(value) => {
                                         let mut acc = vec![];
                                         for element in value {
@@ -1499,7 +1513,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                         Some(acc)
                                     }
                                     None => None,
-                                },
+                                }),
                             }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
@@ -1703,7 +1717,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                 serde::__private::Ok(SomethingOptionsToRead {
                     std_primitive_i8: match __field0 {
                         Some(value) => match value {
-                            Ok(value) => Some(postgresql_crud::Value { value: value }),
+                            Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(value) }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
                             }
@@ -1712,7 +1726,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     },
                     std_option_option_std_primitive_i8: match __field1 {
                         Some(value) => match value {
-                            Ok(value) => Some(postgresql_crud::Value { value: value }),
+                            Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(value) }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
                             }
@@ -1734,7 +1748,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                             }
                                         }
                                     }
-                                    acc
+                                    postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(acc)
                                 },
                             }),
                             Err(error) => {
@@ -1746,7 +1760,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     std_option_option_std_vec_vec_std_primitive_i8: match __field3 {
                         Some(value) => match value {
                             Ok(value) => Some(postgresql_crud::Value {
-                                value: match value {
+                                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(match value {
                                     Some(value) => {
                                         let mut acc = vec![];
                                         for element in value {
@@ -1762,7 +1776,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                         Some(acc)
                                     }
                                     None => None,
-                                },
+                                }),
                             }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
@@ -1773,7 +1787,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     std_vec_vec_std_option_option_std_primitive_i8: match __field4 {
                         Some(value) => match value {
                             Ok(value) => Some(postgresql_crud::Value {
-                                value: {
+                                value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead({
                                     let mut acc = vec![];
                                     for element in value {
                                         match element {
@@ -1786,7 +1800,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                         }
                                     }
                                     acc
-                                },
+                                }),
                             }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
@@ -1797,7 +1811,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                     std_option_option_std_vec_vec_std_option_option_std_primitive_i8: match __field5 {
                         Some(value) => match value {
                             Ok(value) => Some(postgresql_crud::Value {
-                                value: match value {
+                                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(match value {
                                     Some(value) => {
                                         let mut acc = vec![];
                                         for element in value {
@@ -1813,7 +1827,7 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                                         Some(acc)
                                     }
                                     None => None,
-                                },
+                                }),
                             }),
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));

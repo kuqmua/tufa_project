@@ -346,7 +346,160 @@ impl error_occurence_lib::ToStdStringString for JsonUuid {
         self.0.to_string()
     }
 }
+/////////////////////
+//
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveI8OptionsToRead(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveI16OptionsToRead(#[validate(range(min = -32_768i16, max = 32_767i16))] pub std::primitive::i16);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveI32OptionsToRead(#[validate(range(min = -2_147_483_648i32, max = 2_147_483_647i32))] pub std::primitive::i32);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveI64OptionsToRead(#[validate(range(min = -9_223_372_036_854_775_808i64, max = 9_223_372_036_854_775_807i64))] pub std::primitive::i64);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveU8OptionsToRead(#[validate(range(min = 0u8, max = 255u8))] pub std::primitive::u8);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveU16OptionsToRead(#[validate(range(min = 0u16, max = 65_535u16))] pub std::primitive::u16);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveU32OptionsToRead(#[validate(range(min = 0u32, max = 4_294_967_295u32))] pub std::primitive::u32);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveU64OptionsToRead(#[validate(range(min = 0u64, max = 18_446_744_073_709_551_615u64))] pub std::primitive::u64);
+//todo maybe its not correct. https://doc.rust-lang.org/std/primitive.f32.html
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveF32OptionsToRead(#[validate(range(min = -3.40282347E+38f32, max = 3.40282347E+38f32))] pub  std::primitive::f32);
+//todo maybe its not correct. https://doc.rust-lang.org/core/primitive.f64.html
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveF64OptionsToRead(#[validate(range(min = -1.7976931348623157E+308f64, max = 1.7976931348623157E+308f64))]  pub std::primitive::f64);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdPrimitiveBoolOptionsToRead(pub std::primitive::bool);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdStringStringOptionsToRead(pub std::string::String);
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveI8OptionsToRead(pub std::option::Option<std::primitive::i8>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveI16OptionsToRead(pub std::option::Option<std::primitive::i16>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveI32OptionsToRead(pub std::option::Option<std::primitive::i32>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveI64OptionsToRead(pub std::option::Option<std::primitive::i64>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveU8OptionsToRead(pub std::option::Option<std::primitive::u8>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveU16OptionsToRead(pub std::option::Option<std::primitive::u16>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveU32OptionsToRead(pub std::option::Option<std::primitive::u32>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveU64OptionsToRead(pub std::option::Option<std::primitive::u64>);
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveF32OptionsToRead(pub std::option::Option<std::primitive::f32>);
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveF64OptionsToRead(pub std::option::Option<std::primitive::f64>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdPrimitiveBoolOptionsToRead(pub std::option::Option<std::primitive::bool>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdStringStringOptionsToRead(pub std::option::Option<std::string::String>);
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveI8OptionsToRead(pub std::vec::Vec<std::primitive::i8>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveI16OptionsToRead(pub std::vec::Vec<std::primitive::i16>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveI32OptionsToRead(pub std::vec::Vec<std::primitive::i32>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveI64OptionsToRead(pub std::vec::Vec<std::primitive::i64>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveU8OptionsToRead(pub std::vec::Vec<std::primitive::u8>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveU16OptionsToRead(pub std::vec::Vec<std::primitive::u16>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveU32OptionsToRead(pub std::vec::Vec<std::primitive::u32>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveU64OptionsToRead(pub std::vec::Vec<std::primitive::u64>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveF32OptionsToRead(pub std::vec::Vec<std::primitive::f32>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveF64OptionsToRead(pub std::vec::Vec<std::primitive::f64>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdPrimitiveBoolOptionsToRead(pub std::vec::Vec<std::primitive::bool>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdStringStringOptionsToRead(pub std::vec::Vec<std::string::String>);
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::i8>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI16OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::i16>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI32OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::i32>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI64OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::i64>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU8OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::u8>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU16OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::u16>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU32OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::u32>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU64OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::u64>>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF32OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::f32>>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF64OptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::f64>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdPrimitiveBoolOptionsToRead(pub std::option::Option<std::vec::Vec<std::primitive::bool>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdStringStringOptionsToRead(pub std::option::Option<std::vec::Vec<std::string::String>>);
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::i8>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI16OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::i16>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI32OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::i32>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI64OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::i64>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU8OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::u8>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU16OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::u16>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU32OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::u32>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU64OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::u64>>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF32OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::f32>>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF64OptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::f64>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdPrimitiveBoolOptionsToRead(pub std::vec::Vec<std::option::Option<std::primitive::bool>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdVecVecStdOptionOptionStdStringStringOptionsToRead(pub std::vec::Vec<std::option::Option<std::string::String>>);
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>);
+#[derive(Debug,Clone,PartialEq,Eq,Default,serde::Serialize,serde::Deserialize,utoipa::ToSchema,schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>);
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64OptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBoolOptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>);
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringStringOptionsToRead(pub std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
+//
 /////////////////////
 //todo rename it coz it applied to read_one and read_many
 pub trait GeneratePostgresqlQueryPartToRead<T1, T2> {
@@ -688,93 +841,6 @@ pub trait JsonArrayElementCreateBindQuery {
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
-// pub trait JsonArrayElementBindQuery<UpdateErrorGeneric> {
-//     fn try_generate_update_bind_increments(
-//         &self,
-//         jsonb_set_accumulator: &std::primitive::str,
-//         jsonb_set_target: &std::primitive::str,
-//         jsonb_set_path: &std::primitive::str,
-//         increment: &mut std::primitive::u64,
-//         is_array_object_element: ArrayObjectElementOrSimple,
-//     ) -> Result<std::option::Option<std::string::String>, UpdateErrorGeneric>;
-//     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-//     fn try_generate_delete_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed>;
-//     fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-//     fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed>;
-//     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+// pub trait JsonField {
+//     fn options_to_read();
 // }
-
-//
-// pub enum JsonArrayUpdate<T> {
-//     AddElements,
-//     RemoveFromStart
-//     RemoveFromEnd
-//     //Where
-// }
-/////////////////
-
-//update by index (dont want to support)
-
-// UPDATE test
-// SET jsoncolumn = jsonb_set(
-//     jsonb_set(
-//         jsoncolumn,
-//         '{one,0}',
-//         '{"two": "twovalue1updated", "three": "threevalue1updated"}',
-//         true
-//     ),
-//     '{one,1,three}',
-//     '"threevalue2updated"',
-//     true
-// )
-// WHERE id = 1 returning id;
-
-//update adding one element
-
-// UPDATE test
-// SET jsoncolumn = jsonb_set(
-//         jsoncolumn,
-//         '{one}',
-// 		(jsoncolumn->'one') || '{"two": "20", "three": "20"}'
-//     )
-// WHERE id = 1 returning id;
-
-// remove first two elements
-
-// UPDATE test
-// SET jsoncolumn = jsonb_set(
-//     jsoncolumn,
-//     '{one}',
-//     COALESCE(
-//         (
-//             SELECT jsonb_agg(elem)
-//             FROM (
-//                 SELECT elem
-//                 FROM jsonb_array_elements(jsoncolumn->'one') WITH ORDINALITY arr(elem, ord)
-//                 WHERE ord > 2  -- Exclude the first element (ordinal 1)
-//             ) sub
-//         ),
-//         '[]'::jsonb  -- Default to an empty array if the result is NULL
-//     )
-// )
-// WHERE id = 1 returning id;
-
-// remove two last elements
-
-// UPDATE test
-// SET jsoncolumn = jsonb_set(
-//     jsoncolumn,
-//     '{one}',
-//     COALESCE(
-//         (
-//             SELECT jsonb_agg(elem)
-//             FROM (
-//                 SELECT elem
-//                 FROM jsonb_array_elements(jsoncolumn->'one') WITH ORDINALITY arr(elem, ord)
-//                 WHERE ord <= (SELECT count(*) FROM jsonb_array_elements(jsoncolumn->'one')) - 2
-//             ) sub
-//         ),
-//         '[]'::jsonb  -- Default to an empty array if no elements are left
-//     )
-// )
-// WHERE id = 1 returning id;
