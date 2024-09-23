@@ -553,3 +553,24 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_std_option_option_generic_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionGenericFullTypePath)
 }
+
+#[proc_macro_derive(GenerateCommonPrimitiveJsonPostgresqlLogic)]
+pub fn generate_common_primitive_json_postgresql_logic(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateCommonPrimitiveJsonPostgresqlLogic";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    // println!("{:#?}", syn_derive_input.data);
+    let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    let generated = quote::quote!{
+        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq does not implemented for float//Copy does not implemented for String
+        pub struct #ident_options_to_read_upper_camel_case_token_stream(pub #ident);
+        impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
+            fn from(value: #ident) -> Self {
+                Self(value)
+            }
+        }
+    };
+    generated.into()
+}
