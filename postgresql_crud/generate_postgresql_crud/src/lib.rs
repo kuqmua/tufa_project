@@ -4741,11 +4741,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // }
     };
     // if ident == "" {
-    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        &proc_macro_name_upper_camel_case,
-        &generated,
-        &proc_macro_name_upper_camel_case_ident_stringified
-    );
+    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     &proc_macro_name_upper_camel_case,
+    //     &generated,
+    //     &proc_macro_name_upper_camel_case_ident_stringified
+    // );
     // }
     generated.into()
 }
