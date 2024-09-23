@@ -323,11 +323,6 @@ enum SupportedPredefinedOriginalType {
     Uuid,
 }
 
-fn generate_ident_options_to_read_upper_camel_case_token_stream(value: &std::primitive::str) -> proc_macro2::TokenStream {
-    let value = format!("{value}{}", naming_conventions::OptionsToReadUpperCamelCase);
-    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-
 impl SupportedPredefinedOriginalType {
     fn to_read_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
@@ -345,7 +340,7 @@ impl SupportedPredefinedOriginalType {
             Self::F64 => quote::quote! {f64},
             Self::Bool => quote::quote! {bool},
             Self::String => quote::quote! {String},
-            Self::Generic(type_path) => generate_ident_options_to_read_upper_camel_case_token_stream(&quote::quote! {#type_path}.to_string()),
+            Self::Generic(type_path) => naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path),
             Self::Uuid => quote::quote! {Uuid},
         }
     }
