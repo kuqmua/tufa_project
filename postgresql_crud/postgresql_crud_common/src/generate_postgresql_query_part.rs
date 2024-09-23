@@ -296,16 +296,16 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool(pub std::
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::option::Option<std::vec::Vec<std::option::Option<JsonStdStringString>>>);
 
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementGenericFullTypePath)]
-pub struct JsonGeneric<T>(pub T);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionGenericFullTypePath)]
-pub struct JsonStdOptionOptionGeneric<T>(pub std::option::Option<T>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecGenericFullTypePath)]
-pub struct JsonStdVecVecGenericWithId<T>(pub std::vec::Vec<T>);
-#[derive(
-    Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecGenericFullTypePath,
-)]
-pub struct JsonStdOptionOptionStdVecVecGenericWithId<T>(pub std::option::Option<std::vec::Vec<T>>);
+// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementGenericFullTypePath)]
+// pub struct JsonGeneric<T>(pub T);
+// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionGenericFullTypePath)]
+// pub struct JsonStdOptionOptionGeneric<T>(pub std::option::Option<T>);
+// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecGenericFullTypePath)]
+// pub struct JsonStdVecVecGenericWithId<T>(pub std::vec::Vec<T>);
+// #[derive(
+//     Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecGenericFullTypePath,
+// )]
+// pub struct JsonStdOptionOptionStdVecVecGenericWithId<T>(pub std::option::Option<std::vec::Vec<T>>);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
 pub struct JsonUuid(pub uuid::Uuid);
@@ -389,19 +389,19 @@ pub trait CheckIdExistsInJsonGenericFields {
     fn check_id_exists_in_json_generic_fields(&self);
 }
 
-pub trait CheckIdExistsInJsonStdVecVecGenericWithId {
-    fn check_id_exists_in_json_std_vec_vec_generic_with_id(&self); // -> &std::vec::Vec<JsonUuid>;
-}
-impl<T: GetJsonId> CheckIdExistsInJsonStdVecVecGenericWithId for JsonStdVecVecGenericWithId<T> {
-    fn check_id_exists_in_json_std_vec_vec_generic_with_id(&self) {}
-}
+// pub trait CheckIdExistsInJsonStdVecVecGenericWithId {
+//     fn check_id_exists_in_json_std_vec_vec_generic_with_id(&self); // -> &std::vec::Vec<JsonUuid>;
+// }
+// impl<T: GetJsonId> CheckIdExistsInJsonStdVecVecGenericWithId for JsonStdVecVecGenericWithId<T> {
+//     fn check_id_exists_in_json_std_vec_vec_generic_with_id(&self) {}
+// }
 
-pub trait CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId {
-    fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self); // -> &std::option::Option<std::vec::Vec<JsonUuid>>;
-}
-impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId for JsonStdOptionOptionStdVecVecGenericWithId<T> {
-    fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self) {}
-}
+// pub trait CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId {
+//     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self); // -> &std::option::Option<std::vec::Vec<JsonUuid>>;
+// }
+// impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId for JsonStdOptionOptionStdVecVecGenericWithId<T> {
+//     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self) {}
+// }
 
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct JsonArrayChange<CreateGeneric, UpdateGeneric> {
