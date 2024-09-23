@@ -5990,37 +5990,37 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     // };
     //
     let generated = quote::quote! {
-        #impl_std_fmt_display_for_ident_token_stream
-        #pub_enum_ident_field_to_read_token_stream
-        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream
-        #pub_enum_field_generate_postgresql_query_part_to_read_error_named_token_stream
-        #impl_generate_postgresql_query_part_to_read_for_ident_field_to_read_token_stream
-        #pub_struct_ident_options_to_read_token_stream
-        // #impl_std_convert_from_ident_for_ident_options_to_read_token_stream
-        #impl_serde_deserialize_for_ident_options_to_read_token_stream
-        #ident_reader_token_stream
-        #impl_serde_deserialize_for_ident_reader_token_stream
-        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
+        // #impl_std_fmt_display_for_ident_token_stream
+        // #pub_enum_ident_field_to_read_token_stream
+        // #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream
+        // #pub_enum_field_generate_postgresql_query_part_to_read_error_named_token_stream
+        // #impl_generate_postgresql_query_part_to_read_for_ident_field_to_read_token_stream
+        // #pub_struct_ident_options_to_read_token_stream
+        // // #impl_std_convert_from_ident_for_ident_options_to_read_token_stream
+        // #impl_serde_deserialize_for_ident_options_to_read_token_stream
+        // #ident_reader_token_stream
+        // #impl_serde_deserialize_for_ident_reader_token_stream
+        // #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_token_stream
 
-        #pub_enum_ident_field_to_update_token_stream
-        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
-        #pub_enum_ident_option_to_update_token_stream //todo write manual serde::Deserialize and check if vec is empty
-        #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
-        #pub_struct_ident_options_to_update_token_stream
-        #maybe_impl_postgresql_crud_get_json_id_for_ident_options_to_update_token_stream
-        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_update_token_stream
-        #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
-        #maybe_impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
-        #maybe_pub_enum_ident_try_generate_json_array_element_update_bind_increments_error_named_token_stream
+        // #pub_enum_ident_field_to_update_token_stream
+        // #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
+        // #pub_enum_ident_option_to_update_token_stream //todo write manual serde::Deserialize and check if vec is empty
+        // #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
+        // #pub_struct_ident_options_to_update_token_stream
+        // #maybe_impl_postgresql_crud_get_json_id_for_ident_options_to_update_token_stream
+        // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_update_token_stream
+        // #pub_enum_ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+        // #maybe_impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
+        // #maybe_pub_enum_ident_try_generate_json_array_element_update_bind_increments_error_named_token_stream
 
-        #maybe_impl_postgresql_crud_json_array_element_update_bind_query_ident_try_generate_json_array_element_update_bind_increments_error_named_for_ident_options_to_update_token_stream
-        #maybe_impl_postgresql_crud_json_array_element_create_bind_query_for_ident_to_create_token_stream
+        // #maybe_impl_postgresql_crud_json_array_element_update_bind_query_ident_try_generate_json_array_element_update_bind_increments_error_named_for_ident_options_to_update_token_stream
+        // #maybe_impl_postgresql_crud_json_array_element_create_bind_query_for_ident_to_create_token_stream
 
-        #pub_struct_ident_to_create_token_stream
-        #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
-        #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
-        #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
-        #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
+        // #pub_struct_ident_to_create_token_stream
+        // #impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_ident_to_create_token_stream
+        // #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
+        // #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
+        // #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(

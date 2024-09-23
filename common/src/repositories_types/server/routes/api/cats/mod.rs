@@ -220,7 +220,7 @@ pub struct Jsongeneric {
     utoipa::ToSchema,
     schemars::JsonSchema,
     //
-    // postgresql_crud::GeneratePostgresqlQueryPart
+    postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -375,7 +375,7 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
     utoipa::ToSchema,
     schemars::JsonSchema,
     //
-    // postgresql_crud::GeneratePostgresqlQueryPart,
+    postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
     pub id: postgresql_crud::JsonUuid, //todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -398,7 +398,7 @@ pub struct Doggie {
     utoipa::ToSchema,
     schemars::JsonSchema,
     //
-    // postgresql_crud::GeneratePostgresqlQueryPart,
+    postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
