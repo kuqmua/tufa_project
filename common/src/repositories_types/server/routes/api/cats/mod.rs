@@ -1178,49 +1178,27 @@ pub struct SomethingOptionsToRead {
 impl std::convert::From<Something> for SomethingOptionsToRead {
     fn from(value: Something) -> Self {
         Self {
-            std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdPrimitiveI8(value.std_primitive_i8.0)) }),
-            std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdPrimitiveI8(match value.std_option_option_std_primitive_i8.0 {
-                    Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value.0)),
-                    None => None,
-                })),
+            std_primitive_i8: Some(postgresql_crud::Value {
+                value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead::from(value.std_primitive_i8)
             }),
-            std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdVecVecStdPrimitiveI8(value.std_vec_vec_std_primitive_i8.0.into_iter().map(|element| 
-                postgresql_crud::JsonStdPrimitiveI8(element.0)
-            ).collect())) }),
+            std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
+                value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_primitive_i8)
+            }),
+            std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
+                value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_primitive_i8)
+            }),
             std_option_option_std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8(match value.std_option_option_std_vec_vec_std_primitive_i8.0 {
-                    Some(value) => Some(value.into_iter().map(|element| postgresql_crud::JsonStdPrimitiveI8(element.0)).collect()),
-                    None => None,
-                })),
+                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_primitive_i8),
             }),
             std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8(value
-                    .std_vec_vec_std_option_option_std_primitive_i8
-                    .0
-                    .into_iter()
-                    .map(|element| match element {
-                        Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value.0)),
-                        None => None,
-                    })
-                    .collect()
-                )),
+                value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_option_option_std_primitive_i8),
             }),
             std_option_option_std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(match value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8.0 {
-                    Some(value) => Some(
-                        value
-                            .into_iter()
-                            .map(|element| match element {
-                                Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value.0)),
-                                None => None,
-                            })
-                            .collect(),
-                    ),
-                    None => None,
-                })),
+                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8),
             }),
-            generic: Some(postgresql_crud::Value { value: CatOptionsToRead::from(value.generic.0) }),
+            generic: Some(postgresql_crud::Value {
+                value: CatOptionsToRead::from(value.generic.0)
+            }),
             std_option_option_generic: Some(postgresql_crud::Value {
                 value: match value.std_option_option_generic.0 {
                     Some(value) => Some(MouseOptionsToRead::from(value)),
