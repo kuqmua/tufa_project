@@ -412,7 +412,8 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["try", "self", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
     ["try", "self", "generated", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
     ["self", "payload", "example", "route", "logic"],
-    ["self", "to", "create"]
+    ["self", "to", "create"],
+    ["self", "options", "to", "read"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
@@ -477,8 +478,3 @@ where
 //     url_handle_stringified.parse::<proc_macro2::TokenStream>()
 //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {url_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 // }
-
-pub fn tokens_to_create_upper_camel_case_token_stream(value: &impl quote::ToTokens) -> proc_macro2::TokenStream {
-    let value = format!("{}{}", quote::quote! {#value}.to_string(), ToCreateUpperCamelCase);
-    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
