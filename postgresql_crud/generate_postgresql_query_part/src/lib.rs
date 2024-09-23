@@ -3234,7 +3234,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
 
                 SupportedPredefinedType::JsonStdVecVecGenericWithId(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     let type_path_options_to_update_upper_camel_case_token_stream = {
                         let value = format!("{}{}", quote::quote! {#type_path}.to_string(), naming_conventions::OptionsToUpdateUpperCamelCase,);
                         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -3244,7 +3244,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     let type_path_options_to_update_upper_camel_case_token_stream = {
                         let value = format!("{}{}", quote::quote! {#type_path}.to_string(), naming_conventions::OptionsToUpdateUpperCamelCase,);
                         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -4280,7 +4280,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_ident.to_string());
                     let element_ident_type_path_not_unique_id_snake_case_token_stream = generate_element_ident_type_path_not_unique_id_snake_case_token_stream(&type_path);
                     let type_path_options_to_update_upper_camel_case_token_stream = generate_value_options_to_update_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_update_bind_increments_snake_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_update_bind_increments_snake_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream(&type_path);
@@ -4434,7 +4434,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&element_ident.to_string());
                     let element_ident_type_path_not_unique_id_snake_case_token_stream = generate_element_ident_type_path_not_unique_id_snake_case_token_stream(&type_path);
                     let type_path_options_to_update_upper_camel_case_token_stream = generate_value_options_to_update_upper_camel_case_token_stream(&quote::quote!{#type_path}.to_string());
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_update_bind_increments_upper_camel_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_update_bind_increments_snake_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_update_bind_increments_snake_case_token_stream(&type_path);
                     let element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream = generate_element_ident_type_path_try_generate_json_array_element_delete_bind_increments_upper_camel_case_token_stream(&type_path);
@@ -4751,7 +4751,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote! {
                         match value.value {
                             Some(value) => {
@@ -4786,7 +4786,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     let type_path_options_to_update_upper_camel_case_token_stream = generate_value_options_to_update_upper_camel_case_token_stream(&quote::quote! {#type_path}.to_string());
                     quote::quote! {
                         match &value.value {
@@ -5435,25 +5435,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
 
                 SupportedPredefinedType::JsonGeneric(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote! {
                         pub #element_ident: postgresql_crud::JsonGeneric<#type_path_to_create_upper_camel_case_token_stream>
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote! {
                         pub #element_ident: postgresql_crud::JsonStdOptionOptionGeneric<#type_path_to_create_upper_camel_case_token_stream>
                     }
                 }
                 SupportedPredefinedType::JsonStdVecVecGenericWithId(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote! {
                         pub #element_ident: postgresql_crud::JsonStdVecVecGenericWithId<#type_path_to_create_upper_camel_case_token_stream>
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote! {
                         pub #element_ident: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<#type_path_to_create_upper_camel_case_token_stream>
                     }
@@ -5807,7 +5807,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote! {
                         match self.#element_ident.0 {
                             Some(value) => {
@@ -5827,7 +5827,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
                 SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    let type_path_upper_camel_case_token_stream = naming_conventions::tokens_to_create_upper_camel_case_token_stream(&type_path);
+                    let type_path_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&type_path);
                     quote::quote! {
                         match self.#element_ident.0 {
                             Some(value) => {
