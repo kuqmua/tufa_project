@@ -1169,63 +1169,63 @@ pub struct SomethingOptionsToRead {
     #[serde(skip_serializing_if = "Option::is_none")]
     generic: std::option::Option<postgresql_crud::Value<CatOptionsToRead>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_option_option_generic: std::option::Option<postgresql_crud::Value<std::option::Option<MouseOptionsToRead>>>,
+    std_option_option_generic: std::option::Option<postgresql_crud::Value<MouseOptionsToRead>>,//std::option::Option<postgresql_crud::Value<std::option::Option<MouseOptionsToRead>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     std_vec_vec_generic_with_id: std::option::Option<postgresql_crud::Value<std::vec::Vec<DoggieOptionsToRead>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    std_option_option_std_vec_vec_generic_with_id: std::option::Option<postgresql_crud::Value<std::option::Option<std::vec::Vec<DoggieOptionsToRead>>>>,
+    std_option_option_std_vec_vec_generic_with_id: std::option::Option<postgresql_crud::Value<std::option::Option<std::vec::Vec<DoggieOptionsToRead>>>>,//maybe here remove option too
 }
-impl std::convert::From<Something> for SomethingOptionsToRead {
-    fn from(value: Something) -> Self {
-        Self {
-            std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead::from(value.std_primitive_i8)
-            }),
-            std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_primitive_i8)
-            }),
-            std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_primitive_i8)
-            }),
-            std_option_option_std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_primitive_i8),
-            }),
-            std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_option_option_std_primitive_i8),
-            }),
-            std_option_option_std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8),
-            }),
-            generic: Some(postgresql_crud::Value {
-                value: 
-                CatOptionsToRead::from(value.generic.0)
-                // postgresql_crud::JsonGenericOptionsToRead<CatOptionsToRead>::from(value.generic)
+// impl std::convert::From<Something> for SomethingOptionsToRead {
+//     fn from(value: Something) -> Self {
+//         Self {
+//             std_primitive_i8: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead::from(value.std_primitive_i8)
+//             }),
+//             std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_primitive_i8)
+//             }),
+//             std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_primitive_i8)
+//             }),
+//             std_option_option_std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_primitive_i8),
+//             }),
+//             std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_option_option_std_primitive_i8),
+//             }),
+//             std_option_option_std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
+//                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8),
+//             }),
+//             generic: Some(postgresql_crud::Value {
+//                 value: 
+//                 CatOptionsToRead::from(value.generic.0)
+//                 // postgresql_crud::JsonGenericOptionsToRead<CatOptionsToRead>::from(value.generic)
 
-                // CatOptionsToRead::from(value.generic)
-                // CatOptionsToRead::from(value.generic.0)
-            }),
-            std_option_option_generic: Some(postgresql_crud::Value {
-                value: match value.std_option_option_generic.0 {
-                    Some(value) => Some(MouseOptionsToRead::from(value)),
-                    None => None,
-                }
-                // std::option::Option::<MouseOptionsToRead>::from(value.std_option_option_generic),
+//                 // CatOptionsToRead::from(value.generic)
+//                 // CatOptionsToRead::from(value.generic.0)
+//             }),
+//             std_option_option_generic: Some(postgresql_crud::Value {
+//                 value: match value.std_option_option_generic.0 {
+//                     Some(value) => Some(MouseOptionsToRead::from(value)),
+//                     None => None,
+//                 }
+//                 // std::option::Option::<MouseOptionsToRead>::from(value.std_option_option_generic),
                 
 
-                // postgresql_crud::JsonStdOptionOptionGeneric<Mouse>
+//                 // postgresql_crud::JsonStdOptionOptionGeneric<Mouse>
 
-                // std::option::Option<MouseOptionsToRead>>
-            }),
-            std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: value.std_vec_vec_generic_with_id.0.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>() }),
-            std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value {
-                value: match value.std_option_option_std_vec_vec_generic_with_id.0 {
-                    Some(value) => Some(value.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>()),
-                    None => None,
-                },
-            }),
-        }
-    }
-}
+//                 // std::option::Option<MouseOptionsToRead>>
+//             }),
+//             std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: value.std_vec_vec_generic_with_id.0.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>() }),
+//             std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value {
+//                 value: match value.std_option_option_std_vec_vec_generic_with_id.0 {
+//                     Some(value) => Some(value.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>()),
+//                     None => None,
+//                 },
+//             }),
+//         }
+//     }
+// }
 impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
     where
@@ -1374,7 +1374,8 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                         return serde::__private::Err(serde::de::Error::invalid_length(6usize, &"struct SomethingOptionsToRead with 10 elements"));
                     }
                 };
-                let __field7 = match serde::de::SeqAccess::next_element::<std::option::Option<std::result::Result<std::option::Option<MouseOptionsToRead>, std::string::String>>>(&mut __seq)? {
+                //here remove option
+                let __field7 = match serde::de::SeqAccess::next_element::<std::option::Option<std::result::Result<MouseOptionsToRead, std::string::String>>>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
                         return serde::__private::Err(serde::de::Error::invalid_length(7usize, &"struct SomethingOptionsToRead with 10 elements"));
@@ -1605,7 +1606,8 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                 let mut __field4: serde::__private::Option<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>, std::string::String>>> = serde::__private::None;
                 let mut __field5: serde::__private::Option<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>>, std::string::String>>> = serde::__private::None;
                 let mut __field6: serde::__private::Option<std::option::Option<std::result::Result<CatOptionsToRead, std::string::String>>> = serde::__private::None;
-                let mut __field7: serde::__private::Option<std::option::Option<std::result::Result<std::option::Option<MouseOptionsToRead>, std::string::String>>> = serde::__private::None;
+                //here remove option
+                let mut __field7: serde::__private::Option<std::option::Option<std::result::Result<MouseOptionsToRead, std::string::String>>> = serde::__private::None;
                 let mut __field8: serde::__private::Option<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>, std::string::String>>> = serde::__private::None;
                 let mut __field9: serde::__private::Option<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>>, std::string::String>>> = serde::__private::None;
                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
@@ -1656,7 +1658,8 @@ impl<'de> serde::Deserialize<'de> for SomethingOptionsToRead {
                             if serde::__private::Option::is_some(&__field7) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_option_option_generic"));
                             }
-                            __field7 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<std::option::Option<MouseOptionsToRead>, std::string::String>>>(&mut __map)?);
+                            //here remove option
+                            __field7 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<std::result::Result<MouseOptionsToRead, std::string::String>>>(&mut __map)?);
                         }
                         __Field::__field8 => {
                             if serde::__private::Option::is_some(&__field8) {
@@ -4160,3 +4163,5 @@ impl<'a> postgresql_crud::BindQuery<'a> for MouseToCreate {
 impl postgresql_crud::CheckIdExistsInJsonGenericFields for Mouse {
     fn check_id_exists_in_json_generic_fields(&self) {}
 }
+
+/////////////////////////////////
