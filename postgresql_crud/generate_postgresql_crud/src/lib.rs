@@ -2215,7 +2215,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let field_ident = &element.field_ident;
         let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
         let field_type_token_stream = match &element.option_generic {
-            Some(value) => naming_conventions::tokens_to_create_upper_camel_case_token_stream(&{
+            Some(value) => naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&{
                 let value = &value.upper_camel_case_stringified;
                 value
                     .parse::<proc_macro2::TokenStream>()
@@ -2227,12 +2227,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             pub #field_ident: #field_type_token_stream
         }
     });
-    let generate_try_operation_token_stream = |operation: &Operation,
-                                               type_variants_from_request_response_syn_variants: &[syn::Variant],
-                                               result_ok_type_token_stream: &proc_macro2::TokenStream,
-                                               payload_check_token_stream: &proc_macro2::TokenStream,
-                                               desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream|
-     -> proc_macro2::TokenStream {
+    let generate_try_operation_token_stream = |
+        operation: &Operation,
+        type_variants_from_request_response_syn_variants: &[syn::Variant],
+        result_ok_type_token_stream: &proc_macro2::TokenStream,
+        payload_check_token_stream: &proc_macro2::TokenStream,
+        desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream
+    | -> proc_macro2::TokenStream {
         let try_operation_snake_case_token_stream = naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
         let try_operation_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
         let operation_parameters_upper_camel_case_token_stream = naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
