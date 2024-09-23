@@ -1194,16 +1194,27 @@ impl std::convert::From<Something> for SomethingOptionsToRead {
                 value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_option_option_std_primitive_i8),
             }),
             std_option_option_std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8),
+                value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8),
             }),
             generic: Some(postgresql_crud::Value {
-                value: CatOptionsToRead::from(value.generic.0)
+                value: 
+                CatOptionsToRead::from(value.generic.0)
+                // postgresql_crud::JsonGenericOptionsToRead<CatOptionsToRead>::from(value.generic)
+
+                // CatOptionsToRead::from(value.generic)
+                // CatOptionsToRead::from(value.generic.0)
             }),
             std_option_option_generic: Some(postgresql_crud::Value {
                 value: match value.std_option_option_generic.0 {
                     Some(value) => Some(MouseOptionsToRead::from(value)),
                     None => None,
-                },
+                }
+                // std::option::Option::<MouseOptionsToRead>::from(value.std_option_option_generic),
+                
+
+                // postgresql_crud::JsonStdOptionOptionGeneric<Mouse>
+
+                // std::option::Option<MouseOptionsToRead>>
             }),
             std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: value.std_vec_vec_generic_with_id.0.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>() }),
             std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value {
@@ -3338,6 +3349,80 @@ impl std::convert::From<Cat> for CatOptionsToRead {
         Self { std_primitive_i32: Some(postgresql_crud::Value { value: value.std_primitive_i32.0 }) }
     }
 }
+//here
+// impl std::convert::From<postgresql_crud::JsonGeneric<Cat>> for CatOptionsToRead {
+//     fn from(value: postgresql_crud::JsonGeneric<Cat>) -> Self {
+//         Self {
+//             std_primitive_i32: Some(postgresql_crud::Value { value: value.0.std_primitive_i32.0 })
+//         }
+//     }
+// }
+// impl std::convert::From<postgresql_crud::JsonStdOptionOptionGeneric<Cat>> for std::option::Option<CatOptionsToRead> {
+//     fn from(value: postgresql_crud::JsonStdOptionOptionGeneric<Cat>) -> Self {
+//         // match 
+//         todo!()
+//         // Self {
+//         //     std_primitive_i32: Some(postgresql_crud::Value { value: value.0.std_primitive_i32.0 })
+//         // }
+//     }
+// }
+
+            // generic: Some(postgresql_crud::Value {
+            //     value: CatOptionsToRead::from(value.generic)
+            // }),
+            // std_option_option_generic: Some(postgresql_crud::Value {
+            //     value:{
+            //         match value.std_option_option_generic.0 {
+            //             Some(value) => Some(MouseOptionsToRead::from(value)),
+            //             None => None,
+            //         }
+            //     }
+            // }),
+            // std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: value.std_vec_vec_generic_with_id.0.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>() }),
+            // std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value {
+            //     value: match value.std_option_option_std_vec_vec_generic_with_id.0 {
+            //         Some(value) => Some(value.into_iter().map(|element| DoggieOptionsToRead::from(element)).collect::<std::vec::Vec<DoggieOptionsToRead>>()),
+            //         None => None,
+            //     },
+            // }),
+
+    //Cat
+    // pub generic: postgresql_crud::JsonGeneric<Cat>,
+    // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Mouse>,
+    // pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+
+    //OptionsToRead
+    // generic: std::option::Option<postgresql_crud::Value<CatOptionsToRead>>,
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // std_option_option_generic: std::option::Option<postgresql_crud::Value<std::option::Option<MouseOptionsToRead>>>,
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // std_vec_vec_generic_with_id: std::option::Option<postgresql_crud::Value<std::vec::Vec<DoggieOptionsToRead>>>,
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // std_option_option_std_vec_vec_generic_with_id: std::option::Option<postgresql_crud::Value<std::option::Option<std::vec::Vec<DoggieOptionsToRead>>>>,
+    //
+
+//
+// From<JsonStdOptionOptionGeneric<Mouse>>` is not implemented for `std::option::Option<MouseOptionsToRead>`
+// impl std::convert::From<postgresql_crud::JsonStdOptionOptionGeneric<Cat>> for CatOptionsToRead {
+//     fn from(value: postgresql_crud::JsonStdOptionOptionGeneric<Cat>) -> Self {
+
+//         // std_primitive_i32: std::option::Option<postgresql_crud::Value<std::primitive::i32>>,
+
+// //
+
+// // pub struct Cat {
+// //     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+// //     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+// // }
+// //
+
+//         Self {
+//             std_primitive_i32: Some(postgresql_crud::Value { value:  })
+//         }
+//     }
+// }
+//
 impl<'de> serde::Deserialize<'de> for CatOptionsToRead {
     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
     where

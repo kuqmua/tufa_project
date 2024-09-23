@@ -333,6 +333,15 @@ impl error_occurence_lib::ToStdStringString for JsonUuid {
     }
 }
 /////////////////////
+// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+// pub struct JsonGenericOptionsToRead<T>(pub T);
+// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+// pub struct JsonStdOptionOptionGenericOptionsToRead<T>(pub std::option::Option<T>);
+// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+// pub struct JsonStdVecVecGenericWithIdOptionsToRead<T>(pub std::vec::Vec<T>);
+// #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+// pub struct JsonStdOptionOptionStdVecVecGenericWithIdOptionsToRead<T>(pub std::option::Option<std::vec::Vec<T>>);
+/////////////////////
 //todo rename it coz it applied to read_one and read_many
 pub trait GeneratePostgresqlQueryPartToRead<T1, T2> {
     fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, T1>
