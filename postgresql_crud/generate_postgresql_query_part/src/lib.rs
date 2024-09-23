@@ -2158,217 +2158,217 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
-        let maybe_id_token_stream = if is_id_field_exists {
-            quote::quote! {
-                #id_snake_case: Some(value.#id_snake_case.0),
-            }
-        } else {
-            proc_macro2::TokenStream::new()
-        };
-        let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-            });
-            let conversion_token_stream = match SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
-                SupportedPredefinedType::JsonStdPrimitiveI8
-                | SupportedPredefinedType::JsonStdPrimitiveI16
-                | SupportedPredefinedType::JsonStdPrimitiveI32
-                | SupportedPredefinedType::JsonStdPrimitiveI64
-                | SupportedPredefinedType::JsonStdPrimitiveI128
-                | SupportedPredefinedType::JsonStdPrimitiveU8
-                | SupportedPredefinedType::JsonStdPrimitiveU16
-                | SupportedPredefinedType::JsonStdPrimitiveU32
-                | SupportedPredefinedType::JsonStdPrimitiveU64
-                | SupportedPredefinedType::JsonStdPrimitiveU128
-                | SupportedPredefinedType::JsonStdPrimitiveF32
-                | SupportedPredefinedType::JsonStdPrimitiveF64
-                | SupportedPredefinedType::JsonStdPrimitiveBool
-                | SupportedPredefinedType::JsonStdStringString => quote::quote! {value.#element_ident.0},
+    // let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
+    //     let maybe_id_token_stream = if is_id_field_exists {
+    //         quote::quote! {
+    //             #id_snake_case: Some(value.#id_snake_case.0),
+    //         }
+    //     } else {
+    //         proc_macro2::TokenStream::new()
+    //     };
+    //     let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
+    //         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+    //             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+    //         });
+    //         let conversion_token_stream = match SupportedPredefinedType::try_from(**element).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} failed to convert into SupportedPredefinedType: {error:#?}")) {
+    //             SupportedPredefinedType::JsonStdPrimitiveI8
+    //             | SupportedPredefinedType::JsonStdPrimitiveI16
+    //             | SupportedPredefinedType::JsonStdPrimitiveI32
+    //             | SupportedPredefinedType::JsonStdPrimitiveI64
+    //             | SupportedPredefinedType::JsonStdPrimitiveI128
+    //             | SupportedPredefinedType::JsonStdPrimitiveU8
+    //             | SupportedPredefinedType::JsonStdPrimitiveU16
+    //             | SupportedPredefinedType::JsonStdPrimitiveU32
+    //             | SupportedPredefinedType::JsonStdPrimitiveU64
+    //             | SupportedPredefinedType::JsonStdPrimitiveU128
+    //             | SupportedPredefinedType::JsonStdPrimitiveF32
+    //             | SupportedPredefinedType::JsonStdPrimitiveF64
+    //             | SupportedPredefinedType::JsonStdPrimitiveBool
+    //             | SupportedPredefinedType::JsonStdStringString => quote::quote! {value.#element_ident.0},
 
-                SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI32
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI64
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI128
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU8
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU16
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU32
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU64
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU128
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64
-                | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool
-                | SupportedPredefinedType::JsonStdOptionOptionStdStringString => quote::quote! {
-                    match value.#element_ident.0 {
-                        Some(value) => Some(value.0),
-                        None => None,
-                    }
-                },
+    //             SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI8
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI16
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveI128
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU8
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU16
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveU128
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveF64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdPrimitiveBool
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdStringString => quote::quote! {
+    //                 match value.#element_ident.0 {
+    //                     Some(value) => Some(value.0),
+    //                     None => None,
+    //                 }
+    //             },
 
-                SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64
-                | SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool
-                | SupportedPredefinedType::JsonStdVecVecStdStringString => quote::quote! {value.#element_ident.0.into_iter().map(|element|element.0).collect()},
+    //             SupportedPredefinedType::JsonStdVecVecStdPrimitiveI8
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI16
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI32
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI64
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveI128
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU8
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU16
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU32
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU64
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveU128
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveF32
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveF64
+    //             | SupportedPredefinedType::JsonStdVecVecStdPrimitiveBool
+    //             | SupportedPredefinedType::JsonStdVecVecStdStringString => quote::quote! {value.#element_ident.0.into_iter().map(|element|element.0).collect()},
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => quote::quote! {
-                    match value.#element_ident.0 {
-                        Some(value) => Some(value.into_iter().map(|element|element.0).collect()),
-                        None => None
-                    }
-                },
+    //             SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI8
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI16
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveI128
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU8
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU16
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveU128
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveF64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdPrimitiveBool
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdStringString => quote::quote! {
+    //                 match value.#element_ident.0 {
+    //                     Some(value) => Some(value.into_iter().map(|element|element.0).collect()),
+    //                     None => None
+    //                 }
+    //             },
 
-                SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool
-                | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => quote::quote! {
-                    value.#element_ident.0.into_iter().map(|element|match element {
-                        Some(value) => Some(value.0),
-                        None => None
-                    }).collect()
-                },
+    //             SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI8
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI16
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI32
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI64
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveI128
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU8
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU16
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU32
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU64
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveU128
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF32
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveF64
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdPrimitiveBool
+    //             | SupportedPredefinedType::JsonStdVecVecStdOptionOptionStdStringString => quote::quote! {
+    //                 value.#element_ident.0.into_iter().map(|element|match element {
+    //                     Some(value) => Some(value.0),
+    //                     None => None
+    //                 }).collect()
+    //             },
 
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool
-                | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote! {
-                    match value.#element_ident.0 {
-                        Some(value) => Some(value.into_iter().map(|element|match element {
-                            Some(value) => Some(value.0),
-                            None => None
-                        }).collect()),
-                        None => None
-                    }
-                },
+    //             SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI128
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU128
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool
+    //             | SupportedPredefinedType::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote! {
+    //                 match value.#element_ident.0 {
+    //                     Some(value) => Some(value.into_iter().map(|element|match element {
+    //                         Some(value) => Some(value.0),
+    //                         None => None
+    //                     }).collect()),
+    //                     None => None
+    //                 }
+    //             },
 
-                SupportedPredefinedType::JsonGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
-                    quote::quote! {
-                        #generic_ident_options_upper_camel_case_token_stream::from(value.#element_ident.0)
-                    }
-                }
-                SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
-                    quote::quote! {
-                        match value.#element_ident.0 {
-                            Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
-                            None => None,
-                        }
-                    }
-                }
-                SupportedPredefinedType::JsonStdVecVecGenericWithId(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
-                    quote::quote! {
-                        value.#element_ident.0.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()
-                    }
-                }
-                SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
-                    let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
-                    quote::quote! {
-                        match value.#element_ident.0 {
-                            Some(value) => Some(value.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()),
-                            None => None
-                        }
-                    }
-                }
+    //             SupportedPredefinedType::JsonGeneric(type_path) => {
+    //                 let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
+    //                 quote::quote! {
+    //                     #generic_ident_options_upper_camel_case_token_stream::from(value.#element_ident.0)
+    //                 }
+    //             }
+    //             SupportedPredefinedType::JsonStdOptionOptionGeneric(type_path) => {
+    //                 let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
+    //                 quote::quote! {
+    //                     match value.#element_ident.0 {
+    //                         Some(value) => Some(#generic_ident_options_upper_camel_case_token_stream::from(value)),
+    //                         None => None,
+    //                     }
+    //                 }
+    //             }
+    //             SupportedPredefinedType::JsonStdVecVecGenericWithId(type_path) => {
+    //                 let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
+    //                 quote::quote! {
+    //                     value.#element_ident.0.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()
+    //                 }
+    //             }
+    //             SupportedPredefinedType::JsonStdOptionOptionStdVecVecGenericWithId(type_path) => {
+    //                 let generic_ident_options_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&type_path);
+    //                 quote::quote! {
+    //                     match value.#element_ident.0 {
+    //                         Some(value) => Some(value.into_iter().map(|element|#generic_ident_options_upper_camel_case_token_stream::from(element)).collect::<std::vec::Vec<#generic_ident_options_upper_camel_case_token_stream>>()),
+    //                         None => None
+    //                     }
+    //                 }
+    //             }
 
-                SupportedPredefinedType::JsonUuid => quote::quote! {value.#element_ident.0},
-            };
-            quote::quote! {
-                #element_ident: Some(postgresql_crud::Value{ value: #conversion_token_stream })
-            }
-        });
-        quote::quote! {
-            impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
-                fn from(value: #ident) -> Self {
-                    Self {
-                        #maybe_id_token_stream
-                        #(#fields_token_stream),*
+    //             SupportedPredefinedType::JsonUuid => quote::quote! {value.#element_ident.0},
+    //         };
+    //         quote::quote! {
+    //             #element_ident: Some(postgresql_crud::Value{ value: #conversion_token_stream })
+    //         }
+    //     });
+    //     quote::quote! {
+    //         impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
+    //             fn from(value: #ident) -> Self {
+    //                 Self {
+    //                     #maybe_id_token_stream
+    //                     #(#fields_token_stream),*
 
-                        //just for case if must return result impl
-                        // // std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
-                        // // std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(
-                        // //     value.std_vec_vec_std_primitive_bool.0.into_iter().map(|element|
-                        // //         std::result::Result::Ok(element)
-                        // //     ).collect::<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>>()
-                        // // )),
-                        // // generic: Some(std::result::Result::Ok(IdentOptions::from(value.generic.0))),
-                        // // std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
-                        // //     Some(value) => IdentOptions {
-                        // //         std_string_string: Some(postgresql_crud::Value{ value: value.std_string_string.0 }),
-                        // //     },
-                        // //     None => IdentOptions {
-                        // //         std_string_string: None,
-                        // //     },
-                        // // }))),
-                        // // std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(IdentOptions::from(element))).collect::<std::vec::Vec<std::result::Result<IdentOptions,std::string::String>>>())),
-                        // // std_option_option_std_vec_vec_generic: Some(std::result::Result::Ok(match value.std_option_option_std_vec_vec_generic.0 {
-                        // //         Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(IdentOptions::from(element))).collect::<std::vec::Vec<std::result::Result<IdentOptions,std::string::String>>>()),
-                        // //         None => None
-                        // // })),
-                        // // std_vec_vec_std_option_option_generic: Some(std::result::Result::Ok(value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|std::result::Result::Ok(match element {
-                        // //     Some(value) => Some(IdentOptions::from(value)),
-                        // //     None => None
-                        // // })).collect::<std::vec::Vec<std::result::Result<std::option::Option<IdentOptions>,std::string::String>>>())),
-                        // // std_option_option_std_vec_vec_std_option_option_generic: Some(
-                        // //     std::result::Result::Ok(
-                        // //         match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
-                        // //             Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(match element {
-                        // //                 Some(value) => Some(IdentOptions::from(value)),
-                        // //                 None => None
-                        // //             })).collect::<std::vec::Vec<std::result::Result<std::option::Option<IdentOptions>,std::string::String>>>()),
-                        // //             None => None
-                        // //         }
-                        // //     )
-                        // // ),
-                    }
-                }
-            }
-        }
-    };
+    //                     //just for case if must return result impl
+    //                     // // std_string_string: Some(std::result::Result::Ok(value.std_string_string.0)),
+    //                     // // std_vec_vec_std_primitive_bool: Some(std::result::Result::Ok(
+    //                     // //     value.std_vec_vec_std_primitive_bool.0.into_iter().map(|element|
+    //                     // //         std::result::Result::Ok(element)
+    //                     // //     ).collect::<std::vec::Vec<std::result::Result<std::primitive::bool,std::string::String>>>()
+    //                     // // )),
+    //                     // // generic: Some(std::result::Result::Ok(IdentOptions::from(value.generic.0))),
+    //                     // // std_option_option_generic: Some(std::result::Result::Ok(Some(match value.std_option_option_generic.0 {
+    //                     // //     Some(value) => IdentOptions {
+    //                     // //         std_string_string: Some(postgresql_crud::Value{ value: value.std_string_string.0 }),
+    //                     // //     },
+    //                     // //     None => IdentOptions {
+    //                     // //         std_string_string: None,
+    //                     // //     },
+    //                     // // }))),
+    //                     // // std_vec_vec_generic: Some(std::result::Result::Ok(value.std_vec_vec_generic.0.into_iter().map(|element|std::result::Result::Ok(IdentOptions::from(element))).collect::<std::vec::Vec<std::result::Result<IdentOptions,std::string::String>>>())),
+    //                     // // std_option_option_std_vec_vec_generic: Some(std::result::Result::Ok(match value.std_option_option_std_vec_vec_generic.0 {
+    //                     // //         Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(IdentOptions::from(element))).collect::<std::vec::Vec<std::result::Result<IdentOptions,std::string::String>>>()),
+    //                     // //         None => None
+    //                     // // })),
+    //                     // // std_vec_vec_std_option_option_generic: Some(std::result::Result::Ok(value.std_vec_vec_std_option_option_generic.0.into_iter().map(|element|std::result::Result::Ok(match element {
+    //                     // //     Some(value) => Some(IdentOptions::from(value)),
+    //                     // //     None => None
+    //                     // // })).collect::<std::vec::Vec<std::result::Result<std::option::Option<IdentOptions>,std::string::String>>>())),
+    //                     // // std_option_option_std_vec_vec_std_option_option_generic: Some(
+    //                     // //     std::result::Result::Ok(
+    //                     // //         match value.std_option_option_std_vec_vec_std_option_option_generic.0 {
+    //                     // //             Some(value) => Some(value.into_iter().map(|element|std::result::Result::Ok(match element {
+    //                     // //                 Some(value) => Some(IdentOptions::from(value)),
+    //                     // //                 None => None
+    //                     // //             })).collect::<std::vec::Vec<std::result::Result<std::option::Option<IdentOptions>,std::string::String>>>()),
+    //                     // //             None => None
+    //                     // //         }
+    //                     // //     )
+    //                     // // ),
+    //                 }
+    //             }
+    //         }
+    //     }
+    // };
     let impl_serde_deserialize_for_ident_options_to_read_token_stream = {
         let field_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, _)| {
             let value = format!("__{}{index}", naming_conventions::FieldSnakeCase,);
@@ -5996,7 +5996,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #pub_enum_field_generate_postgresql_query_part_to_read_error_named_token_stream
         #impl_generate_postgresql_query_part_to_read_for_ident_field_to_read_token_stream
         #pub_struct_ident_options_to_read_token_stream
-        #impl_std_convert_from_ident_for_ident_options_to_read_token_stream
+        // #impl_std_convert_from_ident_for_ident_options_to_read_token_stream
         #impl_serde_deserialize_for_ident_options_to_read_token_stream
         #ident_reader_token_stream
         #impl_serde_deserialize_for_ident_reader_token_stream
