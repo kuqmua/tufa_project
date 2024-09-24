@@ -671,7 +671,48 @@ pub fn generate_json_postgresql_option_vec_option_primitive_field_reader(input: 
     };
     generated.into()
 }
-
+///
+fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+    ident: &syn::Ident,
+    content_token_stream: &proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    quote::quote!{
+        impl GeneratePostgresqlQueryPartFieldToRead for #ident {
+            fn generate_postgresql_query_part_field_to_read(
+                &self,
+                field_ident: &std::primitive::str,
+                column_name_and_maybe_field_getter: &std::primitive::str,
+                column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+            ) -> std::string::String {
+                #content_token_stream
+            }
+        }
+    }
+}
+#[derive(Debug)]
+enum PrimitivePostgresqlPartFieldToReadType {
+    Number,
+    Boolean,
+    String
+}
+impl std::fmt::Display for PrimitivePostgresqlPartFieldToReadType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::Number => write!(f, "number"),
+            Self::Boolean => write!(f, "boolean"),
+            Self::String => write!(f, "string"),
+        }
+    }
+}
+fn generate_primitive_postgresql_part_field_to_read_query(
+    primitive_postgresql_part_field_to_read_type: PrimitivePostgresqlPartFieldToReadType,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> proc_macro2::TokenStream {
+    proc_macro_common::generate_quotes::double_quotes_token_stream(
+        &format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = '{primitive_postgresql_part_field_to_read_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{{field_ident}}') else jsonb_build_object('Err', 'type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not {primitive_postgresql_part_field_to_read_type}') end)"),
+        &proc_macro_name_upper_camel_case_ident_stringified
+    )
+}
 ///
 #[proc_macro_derive(GenerateGetJsonRepresentationNumber)]
 pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -679,12 +720,24 @@ pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &{
+            let format_handle_token_stream = generate_primitive_postgresql_part_field_to_read_query(
+                PrimitivePostgresqlPartFieldToReadType::Number,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{format!(#format_handle_token_stream)}
+        }
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::Number
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
@@ -694,12 +747,24 @@ pub fn generate_get_json_representation_boolean(input: proc_macro::TokenStream) 
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &{
+            let format_handle_token_stream = generate_primitive_postgresql_part_field_to_read_query(
+                PrimitivePostgresqlPartFieldToReadType::Boolean,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{format!(#format_handle_token_stream)}
+        }
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::Boolean
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
@@ -709,12 +774,24 @@ pub fn generate_get_json_representation_string(input: proc_macro::TokenStream) -
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &{
+            let format_handle_token_stream = generate_primitive_postgresql_part_field_to_read_query(
+                PrimitivePostgresqlPartFieldToReadType::String,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{format!(#format_handle_token_stream)}
+        }
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::String
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
@@ -724,6 +801,7 @@ pub fn generate_get_json_representation_nullable_number(input: proc_macro::Token
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -739,6 +817,7 @@ pub fn generate_get_json_representation_nullable_boolean(input: proc_macro::Toke
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -754,6 +833,7 @@ pub fn generate_get_json_representation_nullable_string(input: proc_macro::Token
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -769,6 +849,7 @@ pub fn generate_get_json_representation_array_number(input: proc_macro::TokenStr
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -784,6 +865,7 @@ pub fn generate_get_json_representation_array_boolean(input: proc_macro::TokenSt
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -799,6 +881,7 @@ pub fn generate_get_json_representation_array_string(input: proc_macro::TokenStr
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -814,6 +897,7 @@ pub fn generate_get_json_representation_nullable_array_number(input: proc_macro:
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -829,6 +913,7 @@ pub fn generate_get_json_representation_nullable_array_boolean(input: proc_macro
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -844,6 +929,7 @@ pub fn generate_get_json_representation_nullable_array_string(input: proc_macro:
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -859,6 +945,7 @@ pub fn generate_get_json_representation_array_nullable_number(input: proc_macro:
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -874,6 +961,7 @@ pub fn generate_get_json_representation_array_nullable_boolean(input: proc_macro
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -889,6 +977,7 @@ pub fn generate_get_json_representation_array_nullable_string(input: proc_macro:
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -904,6 +993,7 @@ pub fn generate_get_json_representation_nullable_array_nullable_number(input: pr
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -919,6 +1009,7 @@ pub fn generate_get_json_representation_nullable_array_nullable_boolean(input: p
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
@@ -934,6 +1025,7 @@ pub fn generate_get_json_representation_nullable_array_nullable_string(input: pr
     let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {

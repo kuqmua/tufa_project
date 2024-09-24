@@ -706,13 +706,13 @@ pub trait JsonArrayElementCreateBindQuery {
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
-pub trait GeneratePostgresqlQueryPartFieldToRead<ReadErrorGeneric> {
+pub trait GeneratePostgresqlQueryPartFieldToRead {
     fn generate_postgresql_query_part_field_to_read(
         &self,
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
-    ) -> Result<std::string::String, ReadErrorGeneric>;
+    ) -> std::string::String;
 }
 
 #[derive(Debug)]
@@ -741,22 +741,6 @@ pub enum JsonRepresentation {
     NullableArrayObject
     //ArrayNullableObject - not suported coz decided what every element must contain id
     //NullableArrayNullableObject - not suported coz decided what every element must contain id
-}
-
-pub fn generate_postgresql_query_part_number_field_to_read(
-    field_ident: &std::primitive::str,
-    column_name_and_maybe_field_getter: &std::primitive::str,
-    column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
-) -> std::string::String {
-    format!("
-        jsonb_build_object(
-            '{field_ident}', 
-            case when jsonb_typeof({column_name_and_maybe_field_getter} -> '{field_ident}') = 'number'
-            then jsonb_build_object('Ok', {column_name_and_maybe_field_getter} -> '{field_ident}')
-            else jsonb_build_object(jsonb_build_object('Err', 'type of {column_name_and_maybe_field_getter_for_error_message}.{field_ident} is not number'))
-            end
-        )
-    ")
 }
 // impl JsonRepresentation {
 
