@@ -807,7 +807,7 @@ fn generate_nullable_array_primitive_postgresql_part_field_to_read_query(
     proc_macro_common::generate_quotes::double_quotes_token_stream(
         &{
             let type_name_snake_case_stringified = variant.type_name_snake_case_stringified();
-            format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{type_name_snake_case_stringified}' then jsonb_build_object('Ok',value) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}}[array element] is not {type_name_snake_case_stringified}')) end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not array and not null') end)")
+            format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{type_name_snake_case_stringified}' then jsonb_build_object('Ok',value) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}}[array element] is not {type_name_snake_case_stringified}') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})) when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not array and not null') end)")
         },
         &proc_macro_name_upper_camel_case_ident_stringified
     )
@@ -835,7 +835,35 @@ fn generate_array_nullable_primitive_postgresql_part_field_to_read_query(
     proc_macro_common::generate_quotes::double_quotes_token_stream(
         &{
             let type_name_snake_case_stringified = variant.type_name_snake_case_stringified();
-            format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{type_name_snake_case_stringified}' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}}[array element] is not {type_name_snake_case_stringified} and not null')) end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not array')) end)")
+            format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{type_name_snake_case_stringified}' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}}[array element] is not {type_name_snake_case_stringified} and not null') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not array') end)")
+        },
+        &proc_macro_name_upper_camel_case_ident_stringified
+    )
+}
+//
+#[derive(Debug)]
+enum NullableArrayNullablePrimitivePostgresqlPartFieldToReadType {
+    Number,
+    Boolean,
+    String
+}
+impl NullableArrayNullablePrimitivePostgresqlPartFieldToReadType {
+    fn type_name_snake_case_stringified(&self) -> &std::primitive::str {
+        match self {
+            Self::Number => "number",
+            Self::Boolean => "boolean",
+            Self::String => "string",
+        }
+    }
+}
+fn generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
+    variant: NullableArrayNullablePrimitivePostgresqlPartFieldToReadType,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> proc_macro2::TokenStream {
+    proc_macro_common::generate_quotes::double_quotes_token_stream(
+        &{
+            let type_name_snake_case_stringified = variant.type_name_snake_case_stringified();
+            format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = '{type_name_snake_case_stringified}' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}}[array element] is not {type_name_snake_case_stringified} and not null') end) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}))when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not array and not null') end)")
         },
         &proc_macro_name_upper_camel_case_ident_stringified
     )
@@ -1244,12 +1272,22 @@ pub fn generate_get_json_representation_nullable_array_nullable_number(input: pr
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
+            &generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
+                NullableArrayNullablePrimitivePostgresqlPartFieldToReadType::Number,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            )
+        )
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::NullableArrayNullableNumber
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
@@ -1260,12 +1298,22 @@ pub fn generate_get_json_representation_nullable_array_nullable_boolean(input: p
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
+            &generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
+                NullableArrayNullablePrimitivePostgresqlPartFieldToReadType::Boolean,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            )
+        )
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::NullableArrayNullableBoolean
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
@@ -1276,12 +1324,22 @@ pub fn generate_get_json_representation_nullable_array_nullable_string(input: pr
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
+            &generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
+                NullableArrayNullablePrimitivePostgresqlPartFieldToReadType::String,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            )
+        )
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::NullableArrayNullableString
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
