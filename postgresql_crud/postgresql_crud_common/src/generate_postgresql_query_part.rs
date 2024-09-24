@@ -1,5 +1,15 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader)]
 pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
+
+
+// jsonb_build_object(
+//   'std_primitive_i8', 
+//   case when jsonb_typeof({column_name_and_maybe_field_getter} -> 'std_primitive_i8') = 'number'
+//   then jsonb_build_object('Ok', {column_name_and_maybe_field_getter} -> 'std_primitive_i8') 
+//   else jsonb_build_object('Err', 'type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number')
+//   end
+// )
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader)]
 pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i16))] pub std::primitive::i16);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader)]
@@ -697,3 +707,12 @@ pub trait JsonArrayElementCreateBindQuery {
 // pub trait JsonField {
 //     fn options_to_read();
 // }
+
+pub trait GeneratePostgresqlQueryPartFieldToRead<ReadErrorGeneric> {
+    fn generate_postgresql_query_part_field_to_read(
+        &self,
+        field_ident: &std::primitive::str,
+        column_name_and_maybe_field_getter: &std::primitive::str,
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+    ) -> Result<std::string::String, ReadErrorGeneric>;
+}
