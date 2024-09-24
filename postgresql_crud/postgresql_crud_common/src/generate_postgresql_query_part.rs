@@ -715,6 +715,7 @@ pub trait GeneratePostgresqlQueryPartFieldToRead {
     ) -> std::string::String;
 }
 
+//maybe remove it - now useless
 #[derive(Debug)]
 pub enum JsonRepresentation {
     Number,
@@ -742,28 +743,40 @@ pub enum JsonRepresentation {
     //ArrayNullableObject - not suported coz decided what every element must contain id
     //NullableArrayNullableObject - not suported coz decided what every element must contain id
 }
-// impl JsonRepresentation {
 
-//     // jsonb_build_object(
-//     //     'std_primitive_i8', 
-//     //     case when jsonb_typeof({column_name_and_maybe_field_getter} -> 'std_primitive_i8') = 'number'
-//     //     then jsonb_build_object('Ok', {column_name_and_maybe_field_getter} -> 'std_primitive_i8')
-//     //     else jsonb_build_object(jsonb_build_object('Err', 'type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number'))
-//     //     end
-//     // )
-
-
-//     // jsonb_build_object(
-//     //     'std_option_option_std_primitive_i8', 
-//     //     case when jsonb_typeof({column_name_and_maybe_field_getter} -> 'std_option_option_std_primitive_i8') = 'number' 
-//     //     then jsonb_build_object('Ok', {column_name_and_maybe_field_getter} -> 'std_option_option_std_primitive_i8') 
-//     //     when jsonb_typeof({column_name_and_maybe_field_getter} -> 'std_option_option_std_primitive_i8') = 'null'
-//     //     then jsonb_build_object('Ok', null)
-//     //     else jsonb_build_object('Err', 'type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_primitive_i8 is not number and not null')
-//     //     end
-//     // )
-
-// }
 pub trait GetJsonRepresentation {
     fn get_json_representation() -> JsonRepresentation;
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct Paginaton {
+    limit: std::primitive::u64,
+    offset: std::primitive::u64,
+}
+#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PaginatonTryNewErrorNamed {
+    OffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::u64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::u64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl Paginaton {
+    pub fn try_new(limit: std::primitive::u64, offset: std::primitive::u64) -> Result<Self, PaginatonTryNewErrorNamed> {
+        match offset.checked_add(limit) {
+            Some(value) => Ok(Self{ limit, offset }),
+            None => Err(PaginatonTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+                limit,
+                offset,
+                code_occurence: error_occurence_lib::code_occurence!()
+            })
+        }
+    }
+}
+
+//todo - check overflow in deserialize implemenntation for FieldToRead enums. overflow is only error in generate_postgresql_query_part_to_read
+//todo and not only in deserilize, in new function too. make fields private
+//todo maybe new struct Paginaton what contains  { limit, offset } and for it impl custom Deserialize and try_new
+
