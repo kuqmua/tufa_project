@@ -742,6 +742,44 @@ pub enum JsonRepresentation {
     //ArrayNullableObject - not suported coz decided what every element must contain id
     //NullableArrayNullableObject - not suported coz decided what every element must contain id
 }
+
+pub fn generate_postgresql_query_part_number_field_to_read(
+    field_ident: &std::primitive::str,
+    column_name_and_maybe_field_getter: &std::primitive::str,
+    column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+) -> std::string::String {
+    format!("
+        jsonb_build_object(
+            '{field_ident}', 
+            case when jsonb_typeof({column_name_and_maybe_field_getter} -> '{field_ident}') = 'number'
+            then jsonb_build_object('Ok', {column_name_and_maybe_field_getter} -> '{field_ident}')
+            else jsonb_build_object(jsonb_build_object('Err', 'type of {column_name_and_maybe_field_getter_for_error_message}.{field_ident} is not number'))
+            end
+        )
+    ")
+}
+// impl JsonRepresentation {
+
+//     // jsonb_build_object(
+//     //     'std_primitive_i8', 
+//     //     case when jsonb_typeof({column_name_and_maybe_field_getter} -> 'std_primitive_i8') = 'number'
+//     //     then jsonb_build_object('Ok', {column_name_and_maybe_field_getter} -> 'std_primitive_i8')
+//     //     else jsonb_build_object(jsonb_build_object('Err', 'type of {column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8 is not number'))
+//     //     end
+//     // )
+
+
+//     // jsonb_build_object(
+//     //     'std_option_option_std_primitive_i8', 
+//     //     case when jsonb_typeof({column_name_and_maybe_field_getter} -> 'std_option_option_std_primitive_i8') = 'number' 
+//     //     then jsonb_build_object('Ok', {column_name_and_maybe_field_getter} -> 'std_option_option_std_primitive_i8') 
+//     //     when jsonb_typeof({column_name_and_maybe_field_getter} -> 'std_option_option_std_primitive_i8') = 'null'
+//     //     then jsonb_build_object('Ok', null)
+//     //     else jsonb_build_object('Err', 'type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_primitive_i8 is not number and not null')
+//     //     end
+//     // )
+
+// }
 pub trait GetJsonRepresentation {
     fn get_json_representation() -> JsonRepresentation;
 }

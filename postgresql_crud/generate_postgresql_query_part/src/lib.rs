@@ -6145,6 +6145,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
         }
     };
+
+//todo - check overflow in deserialize implemenntation for FieldToRead enums. overflow is only error in generate_postgresql_query_part_to_read
+
+// let start = offset;
+// let end = match offset.checked_add(*limit) {
+//     Some(value) => value,
+//     None => {
+//         return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::StdVecVecStdOptionOptionStdPrimitiveI8OffsetPlusLimitIsIntOverflow { limit: *limit, offset: *offset, code_occurence: error_occurence_lib::code_occurence!() });
+//     }
+// };
+
     let generated = quote::quote! {
         // #impl_std_fmt_display_for_ident_token_stream
         // #pub_enum_ident_field_to_read_token_stream
