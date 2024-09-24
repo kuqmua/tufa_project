@@ -6147,6 +6147,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
 
 //todo - check overflow in deserialize implemenntation for FieldToRead enums. overflow is only error in generate_postgresql_query_part_to_read
+//todo and not only in deserilize, in new function too. make fields private
+//todo maybe new struct Paginaton what contains  { limit, offset } and for it impl custom Deserialize and try_new
 
 // let start = offset;
 // let end = match offset.checked_add(*limit) {
