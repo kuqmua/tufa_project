@@ -729,3 +729,9 @@ pub enum JsonRepresentation {
 pub trait GetJsonRepresentation {
     fn get_json_representation() -> JsonRepresentation;
 }
+
+impl GetJsonRepresentation for JsonStdPrimitiveI8 {
+    fn get_json_representation() -> JsonRepresentation {
+        JsonRepresentation::Number
+    }
+}
