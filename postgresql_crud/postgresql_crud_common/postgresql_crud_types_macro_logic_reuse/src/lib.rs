@@ -695,24 +695,57 @@ enum PrimitivePostgresqlPartFieldToReadType {
     Boolean,
     String
 }
-impl std::fmt::Display for PrimitivePostgresqlPartFieldToReadType {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+impl PrimitivePostgresqlPartFieldToReadType {
+    fn type_name_snake_case_stringified(&self) -> &std::primitive::str {
         match self {
-            Self::Number => write!(f, "number"),
-            Self::Boolean => write!(f, "boolean"),
-            Self::String => write!(f, "string"),
+            Self::Number => "number",
+            Self::Boolean => "boolean",
+            Self::String => "string",
         }
     }
 }
 fn generate_primitive_postgresql_part_field_to_read_query(
-    primitive_postgresql_part_field_to_read_type: PrimitivePostgresqlPartFieldToReadType,
+    variant: PrimitivePostgresqlPartFieldToReadType,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     proc_macro_common::generate_quotes::double_quotes_token_stream(
-        &format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = '{primitive_postgresql_part_field_to_read_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{{field_ident}}') else jsonb_build_object('Err', 'type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not {primitive_postgresql_part_field_to_read_type}') end)"),
+        &{
+            let type_name_snake_case_stringified = variant.type_name_snake_case_stringified();
+            format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = '{type_name_snake_case_stringified}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{{field_ident}}') else jsonb_build_object('Err', 'type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not {type_name_snake_case_stringified}') end)")
+        },
         &proc_macro_name_upper_camel_case_ident_stringified
     )
 }
+//
+#[derive(Debug)]
+enum NullablePrimitivePostgresqlPartFieldToReadType {
+    Number,
+    Boolean,
+    String
+}
+impl NullablePrimitivePostgresqlPartFieldToReadType {
+    fn type_name_snake_case_stringified(&self) -> &std::primitive::str {
+        match self {
+            Self::Number => "number",
+            Self::Boolean => "boolean",
+            Self::String => "string",
+        }
+    }
+}
+fn generate_nullable_primitive_postgresql_part_field_to_read_query(
+    variant: NullablePrimitivePostgresqlPartFieldToReadType,
+    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+) -> proc_macro2::TokenStream {
+    proc_macro_common::generate_quotes::double_quotes_token_stream(
+        &{
+            let type_name_snake_case_stringified = variant.type_name_snake_case_stringified();
+            format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = '{type_name_snake_case_stringified }' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{{field_ident}}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not {type_name_snake_case_stringified } and not null') end)")
+        },
+        &proc_macro_name_upper_camel_case_ident_stringified
+    )
+}
+//
+
 ///
 #[proc_macro_derive(GenerateGetJsonRepresentationNumber)]
 pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -802,12 +835,23 @@ pub fn generate_get_json_representation_nullable_number(input: proc_macro::Token
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &{
+            let format_handle_token_stream = generate_nullable_primitive_postgresql_part_field_to_read_query(
+                NullablePrimitivePostgresqlPartFieldToReadType::Number,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{format!(#format_handle_token_stream)}
+        }
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::NullableNumber
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
@@ -818,12 +862,23 @@ pub fn generate_get_json_representation_nullable_boolean(input: proc_macro::Toke
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &{
+            let format_handle_token_stream = generate_nullable_primitive_postgresql_part_field_to_read_query(
+                NullablePrimitivePostgresqlPartFieldToReadType::Boolean,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{format!(#format_handle_token_stream)}
+        }
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::NullableBoolean
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
@@ -834,12 +889,23 @@ pub fn generate_get_json_representation_nullable_string(input: proc_macro::Token
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
+        &ident,
+        &{
+            let format_handle_token_stream = generate_nullable_primitive_postgresql_part_field_to_read_query(
+                NullablePrimitivePostgresqlPartFieldToReadType::String,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{format!(#format_handle_token_stream)}
+        }
+    );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
             fn get_json_representation() -> JsonRepresentation {
                 JsonRepresentation::NullableString
             }
         }
+        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
 }
