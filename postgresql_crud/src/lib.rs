@@ -789,6 +789,8 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64FieldReader;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringStringFieldReader;
 
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidFieldReader;
+
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGenericFields;
 pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonId;
 

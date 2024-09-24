@@ -331,7 +331,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::o
 // )]
 // pub struct JsonStdOptionOptionStdVecVecGenericWithId<T>(pub std::option::Option<std::vec::Vec<T>>);
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationString)]
 pub struct JsonUuid(pub uuid::Uuid);
 impl schemars::JsonSchema for JsonUuid {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
