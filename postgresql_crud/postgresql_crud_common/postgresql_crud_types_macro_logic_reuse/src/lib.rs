@@ -671,3 +671,275 @@ pub fn generate_json_postgresql_option_vec_option_primitive_field_reader(input: 
     };
     generated.into()
 }
+
+///
+#[proc_macro_derive(GenerateGetJsonRepresentationNumber)]
+pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNumber";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::Number
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationBoolean)]
+pub fn generate_get_json_representation_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationBoolean";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::Boolean
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationString)]
+pub fn generate_get_json_representation_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationString";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::String
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableNumber)]
+pub fn generate_get_json_representation_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableNumber";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableNumber
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableBoolean)]
+pub fn generate_get_json_representation_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableBoolean";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableBoolean
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableString)]
+pub fn generate_get_json_representation_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableString";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableString
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationArrayNumber)]
+pub fn generate_get_json_representation_array_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNumber";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::ArrayNumber
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationArrayBoolean)]
+pub fn generate_get_json_representation_array_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayBoolean";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::ArrayBoolean
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationArrayString)]
+pub fn generate_get_json_representation_array_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayString";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::ArrayString
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNumber)]
+pub fn generate_get_json_representation_nullable_array_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNumber";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableArrayNumber
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayBoolean)]
+pub fn generate_get_json_representation_nullable_array_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayBoolean";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableArrayBoolean
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayString)]
+pub fn generate_get_json_representation_nullable_array_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayString";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableArrayString
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationArrayNullableNumber)]
+pub fn generate_get_json_representation_array_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableNumber";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::ArrayNullableNumber
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationArrayNullableBoolean)]
+pub fn generate_get_json_representation_array_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableBoolean";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::ArrayNullableBoolean
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationArrayNullableString)]
+pub fn generate_get_json_representation_array_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableString";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::ArrayNullableString
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNullableNumber)]
+pub fn generate_get_json_representation_nullable_array_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableNumber";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableArrayNullableNumber
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNullableBoolean)]
+pub fn generate_get_json_representation_nullable_array_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableBoolean";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableArrayNullableBoolean
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNullableString)]
+pub fn generate_get_json_representation_nullable_array_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableString";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+        impl GetJsonRepresentation for #ident {
+            fn get_json_representation() -> JsonRepresentation {
+                JsonRepresentation::NullableArrayNullableString
+            }
+        }
+    };
+    generated.into()
+}
