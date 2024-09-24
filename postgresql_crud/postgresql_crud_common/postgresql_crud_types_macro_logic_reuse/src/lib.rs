@@ -690,10 +690,11 @@ fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         }
     }
 }
+fn generate_primitive_postgresql_part_field_to_read_query_format(format_handle_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    quote::quote!{format!(#format_handle_token_stream)}
+}
 //todo refactor it to pagination struct with custom Deserialize and try_new check
-fn postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-    format_handle_token_stream: &proc_macro2::TokenStream
-) -> proc_macro2::TokenStream {
+fn postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(format_handle_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     quote::quote! {
         let start = self.offset;
         let end = self.offset + self.limit;
@@ -781,13 +782,10 @@ pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &{
-            let format_handle_token_stream = generate_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Number,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            quote::quote!{format!(#format_handle_token_stream)}
-        }
+        &generate_primitive_postgresql_part_field_to_read_query_format(&generate_primitive_postgresql_part_field_to_read_query(
+            PrimitiveJsonType::Number,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        ))
     );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
@@ -808,13 +806,10 @@ pub fn generate_get_json_representation_boolean(input: proc_macro::TokenStream) 
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &{
-            let format_handle_token_stream = generate_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Boolean,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            quote::quote!{format!(#format_handle_token_stream)}
-        }
+        &generate_primitive_postgresql_part_field_to_read_query_format(&generate_primitive_postgresql_part_field_to_read_query(
+            PrimitiveJsonType::Boolean,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        ))
     );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
@@ -835,13 +830,10 @@ pub fn generate_get_json_representation_string(input: proc_macro::TokenStream) -
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &{
-            let format_handle_token_stream = generate_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::String,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            quote::quote!{format!(#format_handle_token_stream)}
-        }
+        &generate_primitive_postgresql_part_field_to_read_query_format(&generate_primitive_postgresql_part_field_to_read_query(
+            PrimitiveJsonType::String,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        ))
     );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
@@ -862,13 +854,10 @@ pub fn generate_get_json_representation_nullable_number(input: proc_macro::Token
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &{
-            let format_handle_token_stream = generate_nullable_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Number,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            quote::quote!{format!(#format_handle_token_stream)}
-        }
+        &generate_primitive_postgresql_part_field_to_read_query_format(&generate_nullable_primitive_postgresql_part_field_to_read_query(
+            PrimitiveJsonType::Number,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        ))
     );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
@@ -889,13 +878,10 @@ pub fn generate_get_json_representation_nullable_boolean(input: proc_macro::Toke
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &{
-            let format_handle_token_stream = generate_nullable_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Boolean,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            quote::quote!{format!(#format_handle_token_stream)}
-        }
+        &generate_primitive_postgresql_part_field_to_read_query_format(&generate_nullable_primitive_postgresql_part_field_to_read_query(
+            PrimitiveJsonType::Boolean,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        ))
     );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
@@ -916,13 +902,10 @@ pub fn generate_get_json_representation_nullable_string(input: proc_macro::Token
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &{
-            let format_handle_token_stream = generate_nullable_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::String,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            quote::quote!{format!(#format_handle_token_stream)}
-        }
+        &generate_primitive_postgresql_part_field_to_read_query_format(&generate_nullable_primitive_postgresql_part_field_to_read_query(
+            PrimitiveJsonType::String,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        ))
     );
     let generated = quote::quote!{
         impl GetJsonRepresentation for #ident {
