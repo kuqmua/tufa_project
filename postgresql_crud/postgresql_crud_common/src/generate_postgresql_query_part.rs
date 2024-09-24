@@ -704,10 +704,6 @@ pub trait JsonArrayElementCreateBindQuery {
     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
-// pub trait JsonField {
-//     fn options_to_read();
-// }
-
 pub trait GeneratePostgresqlQueryPartFieldToRead<ReadErrorGeneric> {
     fn generate_postgresql_query_part_field_to_read(
         &self,
@@ -715,4 +711,21 @@ pub trait GeneratePostgresqlQueryPartFieldToRead<ReadErrorGeneric> {
         column_name_and_maybe_field_getter: &std::primitive::str,
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
     ) -> Result<std::string::String, ReadErrorGeneric>;
+}
+
+#[derive(Debug)]
+pub enum JsonRepresentation {
+    Number,
+    NullableNumber,
+    String,
+    NullableString,
+    Boolean,
+    NullableBoolean,
+    Object,
+    NullableObject,
+    Array,
+    NullableArray
+}
+pub trait GetJsonRepresentation {
+    fn get_json_representation() -> JsonRepresentation;
 }
