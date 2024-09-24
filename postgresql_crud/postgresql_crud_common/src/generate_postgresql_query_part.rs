@@ -986,4 +986,10 @@ impl Paginaton {
             })
         }
     }
+    pub fn start(&self) -> std::primitive::u64 {
+        self.offset
+    }
+    pub fn end(&self) -> std::primitive::u64 {
+        self.offset + self.limit
+    }
 }
