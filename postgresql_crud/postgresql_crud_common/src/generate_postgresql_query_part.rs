@@ -1,6 +1,10 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader)]
 pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
-
+impl GetJsonRepresentation for JsonStdPrimitiveI8 {
+    fn get_json_representation() -> JsonRepresentation {
+        JsonRepresentation::Number
+    }
+}
 
 // jsonb_build_object(
 //   'std_primitive_i8', 
@@ -716,22 +720,30 @@ pub trait GeneratePostgresqlQueryPartFieldToRead<ReadErrorGeneric> {
 #[derive(Debug)]
 pub enum JsonRepresentation {
     Number,
-    NullableNumber,
-    String,
-    NullableString,
     Boolean,
+    String,
+    NullableNumber,
     NullableBoolean,
+    NullableString,
+    ArrayNumber,
+    ArrayString,
+    ArrayBoolean,
+    NullableArrayNumber,
+    NullableArrayString,
+    NullableArrayBoolean,
+    ArrayNullableNumber,
+    ArrayNullableString,
+    ArrayNullableBoolean,
+    NullableArrayNullableNumber,
+    NullableArrayNullableString,
+    NullableArrayNullableBoolean,
     Object,
     NullableObject,
-    Array,
-    NullableArray
+    ArrayObject,
+    NullableArrayObject
+    //ArrayNullableObject - not suported coz decided what every element must contain id
+    //NullableArrayNullableObject - not suported coz decided what every element must contain id
 }
 pub trait GetJsonRepresentation {
     fn get_json_representation() -> JsonRepresentation;
-}
-
-impl GetJsonRepresentation for JsonStdPrimitiveI8 {
-    fn get_json_representation() -> JsonRepresentation {
-        JsonRepresentation::Number
-    }
 }
