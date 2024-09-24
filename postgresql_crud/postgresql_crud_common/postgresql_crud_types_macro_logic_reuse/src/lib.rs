@@ -574,6 +574,14 @@ pub fn generate_common_primitive_json_postgresql_logic(input: proc_macro::TokenS
     generated.into()
 }
 
+fn generate_pub_struct_ident_field_reader_token_stream(ident: &syn::Ident, content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    quote::quote!{
+        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+        pub struct #ident_field_reader_upper_camel_case_token_stream #content_token_stream
+    }
+}
+
 #[proc_macro_derive(GenerateJsonPostgresqlPrimitiveFieldReader)]
 pub fn generate_json_postgresql_primitive_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -581,10 +589,9 @@ pub fn generate_json_postgresql_primitive_field_reader(input: proc_macro::TokenS
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &quote::quote!{{}});
     let generated = quote::quote!{
-        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-        pub struct #ident_field_reader_upper_camel_case_token_stream{}
+        #pub_struct_ident_field_reader_token_stream
     };
     generated.into()
 }
@@ -596,10 +603,9 @@ pub fn generate_json_postgresql_option_primitive_field_reader(input: proc_macro:
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &quote::quote!{{}});
     let generated = quote::quote!{
-        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-        pub struct #ident_field_reader_upper_camel_case_token_stream{}
+        #pub_struct_ident_field_reader_token_stream
     };
     generated.into()
 }
@@ -611,10 +617,9 @@ pub fn generate_json_postgresql_vec_primitive_field_reader(input: proc_macro::To
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &quote::quote!{{}});
     let generated = quote::quote!{
-        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-        pub struct #ident_field_reader_upper_camel_case_token_stream{}
+        #pub_struct_ident_field_reader_token_stream
     };
     generated.into()
 }
@@ -626,10 +631,9 @@ pub fn generate_json_postgresql_option_vec_primitive_field_reader(input: proc_ma
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &quote::quote!{{}});
     let generated = quote::quote!{
-        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-        pub struct #ident_field_reader_upper_camel_case_token_stream{}
+        #pub_struct_ident_field_reader_token_stream
     };
     generated.into()
 }
@@ -641,10 +645,9 @@ pub fn generate_json_postgresql_vec_option_primitive_field_reader(input: proc_ma
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &quote::quote!{{}});
     let generated = quote::quote!{
-        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-        pub struct #ident_field_reader_upper_camel_case_token_stream{}
+        #pub_struct_ident_field_reader_token_stream
     };
     generated.into()
 }
@@ -656,10 +659,9 @@ pub fn generate_json_postgresql_option_vec_option_primitive_field_reader(input: 
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &quote::quote!{{}});
     let generated = quote::quote!{
-        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-        pub struct #ident_field_reader_upper_camel_case_token_stream{}
+        #pub_struct_ident_field_reader_token_stream
     };
     generated.into()
 }
