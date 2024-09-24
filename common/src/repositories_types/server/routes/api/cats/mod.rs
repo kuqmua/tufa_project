@@ -351,7 +351,7 @@ pub struct Doggie {
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum DoggieFieldToRead {
+pub enum GenericDoggieFieldToRead {
     #[serde(rename(serialize = "id", deserialize = "id"))]
     Id(postgresql_crud::JsonUuidFieldReader),
     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
@@ -377,11 +377,41 @@ pub struct Cat {
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum CatFieldToRead {
+pub enum GenericCatFieldToRead {
     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
 }
 
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub enum StdOptionOptionGenericCatFieldToRead {
+    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
+    StdPrimitiveI32(postgresql_crud::JsonStdOptionOptionStdPrimitiveI32FieldReader),//maybe remove Json prefix? or use postfix instead?
+}
+
+
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub enum SomethingFieldToRead {
+//     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+//     StdPrimitiveI8,
+//     #[serde(rename(serialize = "std_option_option_std_primitive_i8", deserialize = "std_option_option_std_primitive_i8"))]
+//     StdOptionOptionStdPrimitiveI8,
+//     #[serde(rename(serialize = "std_vec_vec_std_primitive_i8", deserialize = "std_vec_vec_std_primitive_i8"))]
+//     StdVecVecStdPrimitiveI8 { limit: std::primitive::u64, offset: std::primitive::u64 },
+//     #[serde(rename(serialize = "std_option_option_std_vec_vec_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_primitive_i8"))]
+//     StdOptionOptionStdVecVecStdPrimitiveI8 { limit: std::primitive::u64, offset: std::primitive::u64 },
+//     #[serde(rename(serialize = "std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_vec_vec_std_option_option_std_primitive_i8"))]
+//     StdVecVecStdOptionOptionStdPrimitiveI8 { limit: std::primitive::u64, offset: std::primitive::u64 },
+//     #[serde(rename(serialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8"))]
+//     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 { limit: std::primitive::u64, offset: std::primitive::u64 },
+//     #[serde(rename(serialize = "generic", deserialize = "generic"))]
+//     Generic(std::vec::Vec<CatFieldToRead>),
+//     #[serde(rename(serialize = "std_option_option_generic", deserialize = "std_option_option_generic"))]
+//     StdOptionOptionGeneric(std::vec::Vec<MouseFieldToRead>),
+//     #[serde(rename(serialize = "std_vec_vec_generic_with_id", deserialize = "std_vec_vec_generic_with_id"))]
+//     StdVecVecGenericWithId { field_vec: std::vec::Vec<DoggieFieldToRead>, limit: std::primitive::u64, offset: std::primitive::u64 },
+//     #[serde(rename(serialize = "std_option_option_std_vec_vec_generic_with_id", deserialize = "std_option_option_std_vec_vec_generic_with_id"))]
+//     StdOptionOptionStdVecVecGenericWithId { field_vec: std::vec::Vec<DoggieFieldToRead>, limit: std::primitive::u64, offset: std::primitive::u64 },
+// }
 
     // #[serde(rename(serialize = "generic", deserialize = "generic"))]
     // Generic(GenericCatFieldReader),
