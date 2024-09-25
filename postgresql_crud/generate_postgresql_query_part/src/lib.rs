@@ -6077,8 +6077,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+
     let generic_with_id_ident_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_token_stream(&ident);
-    
     let generic_with_id_ident_token_stream = {
         let generic_with_id_ident_token_stream = {
             let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
@@ -6120,6 +6120,29 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
+    enum FieldReaderContent {
+        GenericAndStdOptionOptionGeneric,
+        StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId
+    }
+    let generate_tokens_field_reader_token_stream = |
+        struct_ident_token_stream: &proc_macro2::TokenStream,
+        field_reader_content: &FieldReaderContent
+    |{
+        let content_token_stream = match field_reader_content {
+            FieldReaderContent::GenericAndStdOptionOptionGeneric => quote::quote!{(std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>);},
+            FieldReaderContent::StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId => quote::quote!{
+                {
+                    field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
+                    pagination: postgresql_crud::Pagination,
+                }
+            },
+        };
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+            pub struct #struct_ident_token_stream #content_token_stream
+        }
+    };
+
     let generic_ident_token_stream = {
         let generic_ident_token_stream = {
             let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
@@ -6147,12 +6170,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let impl_std_fmt_display_for_generic_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&generic_ident_upper_camel_case_token_stream);
         let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&ident);
-        let generic_ident_field_reader_token_stream = {
-            quote::quote!{
-                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                pub struct #generic_ident_field_reader_upper_camel_case_token_stream(std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>);
-            }
-        };
+        let generic_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+            &generic_ident_field_reader_upper_camel_case_token_stream,
+            &FieldReaderContent::GenericAndStdOptionOptionGeneric
+        );
         let impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream = {
             quote::quote!{
                 impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for #generic_ident_field_reader_upper_camel_case_token_stream {
@@ -6191,13 +6212,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_std_fmt_display_for_std_option_option_generic_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&std_option_option_generic_ident_upper_camel_case_token_stream);
-        let std_option_option_generic_ident_field_reader_token_stream = {
-            let std_option_option_generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionGenericSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_generic_self_field_reader_upper_camel_case_token_stream(&ident);
-            quote::quote!{
-                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                pub struct #std_option_option_generic_ident_field_reader_upper_camel_case_token_stream(std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>);
-            }
-        };
+        let std_option_option_generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionGenericSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_generic_self_field_reader_upper_camel_case_token_stream(&ident);
+        let std_option_option_generic_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+            &std_option_option_generic_ident_field_reader_upper_camel_case_token_stream,
+            &FieldReaderContent::GenericAndStdOptionOptionGeneric
+        );
         quote::quote!{
             #std_option_option_generic_ident_token_stream
             #impl_std_fmt_display_for_std_option_option_generic_ident_token_stream
@@ -6222,16 +6241,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream);
-        let std_vec_vec_generic_with_id_ident_field_reader_token_stream = {
-            let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
-            quote::quote!{
-                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                pub struct #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                    field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
-                    pagination: postgresql_crud::Pagination,
-                }
-            }
-        };
+        let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
+        let std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+            &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+            &FieldReaderContent::StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId
+        );
         quote::quote!{
             #std_vec_vec_generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
@@ -6256,16 +6270,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream);
-        let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = {
-            let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
-            quote::quote!{
-                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                pub struct #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                    field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
-                    pagination: postgresql_crud::Pagination,
-                }
-            }
-        };
+        let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
+        let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+            &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+            &FieldReaderContent::StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId
+        );
+        //
         quote::quote!{
             #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
