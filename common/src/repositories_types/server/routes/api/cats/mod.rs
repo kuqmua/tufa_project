@@ -351,7 +351,7 @@ pub struct Doggie {
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum GenericDoggieFieldToRead {
+pub enum DoggieFieldToRead {
     #[serde(rename(serialize = "id", deserialize = "id"))]
     Id(postgresql_crud::JsonUuidFieldReader),
     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
@@ -376,23 +376,23 @@ pub struct Cat {
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
 }
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct GenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct GenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct StdOptionOptionGenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct StdOptionOptionGenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct StdVecVecGenericWithIdCatFieldReader {
-    field_vec: std::vec::Vec<CatFieldToRead>,
-    pagination: postgresql_crud::Pagination,
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct StdVecVecGenericWithIdCatFieldReader {
+//     field_vec: std::vec::Vec<CatFieldToRead>,
+//     pagination: postgresql_crud::Pagination,
+// }
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct StdOptionOptionStdVecVecGenericWithIdCatFieldReader {
-    field_vec: std::vec::Vec<CatFieldToRead>,
-    pagination: postgresql_crud::Pagination,
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct StdOptionOptionStdVecVecGenericWithIdCatFieldReader {
+//     field_vec: std::vec::Vec<CatFieldToRead>,
+//     pagination: postgresql_crud::Pagination,
+// }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub enum CatFieldToRead {
