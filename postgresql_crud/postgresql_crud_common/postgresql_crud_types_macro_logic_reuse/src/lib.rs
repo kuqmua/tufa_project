@@ -695,9 +695,9 @@ fn generate_primitive_postgresql_part_field_to_read_query_format(format_handle_t
 }
 //todo refactor it to pagination struct with custom Deserialize and try_new check
 fn postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(format_handle_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    let pagination_start_end_initialization_token_stream = proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream();
     quote::quote! {
-        let start = self.pagination.start();
-        let end = self.pagination.end();
+        #pagination_start_end_initialization_token_stream
         format!(#format_handle_token_stream)
     }
 }
