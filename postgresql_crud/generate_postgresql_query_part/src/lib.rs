@@ -6204,7 +6204,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                 pub struct #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                    field_vec: std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>,
+                    field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
                     pagination: postgresql_crud::Pagination,
                 }
             }
@@ -6238,7 +6238,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                 pub struct #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                    field_vec: std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>,
+                    field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
                     pagination: postgresql_crud::Pagination,
                 }
             }
