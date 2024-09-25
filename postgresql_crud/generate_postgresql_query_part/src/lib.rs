@@ -6088,19 +6088,26 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
+    let fields_token_stream = {
+        let fields_token_stream = vec_syn_field.iter().map(|element| {
+            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+            });
+            let element_type = &element.ty;
+            quote::quote!{pub #element_ident: #element_type}
+        });
+        quote::quote!{#(#fields_token_stream),*}
+    };
+
     let generic_with_id_ident_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_token_stream(&ident);
     let generic_with_id_ident_token_stream = {
         let generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
             &generic_with_id_ident_upper_camel_case_token_stream,
             &{
-                let fields_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                    });
-                    let element_type = &element.ty;
-                    quote::quote!{pub #element_ident: #element_type}
-                });
-                quote::quote!{{#(#fields_token_stream),*}}
+                quote::quote!{{
+                    pub id: postgresql_crud::JsonUuid,
+                    #fields_token_stream
+                }}
             }
         );
         let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&generic_with_id_ident_upper_camel_case_token_stream);
@@ -6144,16 +6151,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generic_ident_token_stream = {
         let generic_ident_token_stream = generate_supported_generics_template_struct_token_stream(
             &generic_ident_upper_camel_case_token_stream,
-            &{
-                let fields_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                    });
-                    let element_type = &element.ty;
-                    quote::quote!{pub #element_ident: #element_type}
-                });
-                quote::quote!{{#(#fields_token_stream),*}}
-            }
+            &quote::quote!{{#fields_token_stream}}
         );
         let impl_std_fmt_display_for_generic_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&generic_ident_upper_camel_case_token_stream);
         let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&ident);
@@ -6162,6 +6160,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &FieldReaderContent::GenericAndStdOptionOptionGeneric
         );
         let impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream = {
+            // let variants_token_stream
             quote::quote!{
                 impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for #generic_ident_field_reader_upper_camel_case_token_stream {
                     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {

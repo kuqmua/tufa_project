@@ -356,6 +356,9 @@ impl error_occurence_lib::ToStdStringString for JsonUuid {
         self.0.to_string()
     }
 }
+//
+// todo here validate length is 36
+//
 /////////////////////
 // #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 // pub struct JsonGenericOptionsToRead<T>(pub T);
