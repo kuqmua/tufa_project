@@ -6214,7 +6214,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_option_option_generic_ident_field_reader_upper_camel_case_token_stream,
             &FieldReaderContent::GenericAndStdOptionOptionGeneric
         );
-        let impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream = {
+        let impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_upper_camel_case_token_stream_token_stream = {
             let variants_token_stream = vec_syn_field.iter().map(|element| {
                 let field_ident_stringified = element
                     .ident
@@ -6271,7 +6271,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #std_option_option_generic_ident_token_stream
             #impl_std_fmt_display_for_std_option_option_generic_ident_token_stream
             #std_option_option_generic_ident_field_reader_token_stream
-            // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
+            // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
         }
     };
     let std_vec_vec_generic_with_id_ident_token_stream = {
