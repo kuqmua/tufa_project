@@ -377,6 +377,38 @@ pub struct Cat {
 }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub enum CatFieldToRead {
+//     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
+//     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
+// }
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct GenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
+
+// impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
+//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//         let mut acc = std::string::String::default();
+//         for element in &self.0 {
+//             match element {
+//                 CatFieldToRead::StdPrimitiveI32(value) => {
+//                     acc.push_str(&format!(
+//                         "jsonb_build_object('generic',{})||",
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                             value,
+//                             "std_primitive_i32",
+//                             &format!("{column_name_and_maybe_field_getter}->'std_primitive_i32'"),
+//                             &format!("{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32"),
+//                         )
+//                     ));
+//                 }
+//             }
+//         }
+//         let _ = acc.pop();
+//         let _ = acc.pop();
+//         format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object')) end")
+//     }
+// }
+
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct GenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
