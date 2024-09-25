@@ -1,3 +1,5 @@
+mod f;
+
 #[derive(Debug
     // , postgresql_crud::GeneratePostgresqlCrud
 )]
@@ -302,6 +304,30 @@ pub struct Something {
     pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
     pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
+
+// impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
+//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//         let mut acc = std::string::String::default();
+//         for element in &self.0 {
+//             match element {
+//                 CatFieldToRead::StdPrimitiveI32(value) => {
+//                     acc.push_str(&format!(
+//                         "jsonb_build_object('generic',{})||",
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                             value,
+//                             "std_primitive_i32",
+//                             &format!("{column_name_and_maybe_field_getter}->'std_primitive_i32'"),
+//                             &format!("{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32"),
+//                         )
+//                     ));
+//                 }
+//             }
+//         }
+//         let _ = acc.pop();
+//         let _ = acc.pop();
+//         format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object')) end")
+//     }
+// }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum SomethingFieldToRead {
@@ -4289,3 +4315,8 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
     }
 }
 ////////////////////////////////
+
+
+
+
+
