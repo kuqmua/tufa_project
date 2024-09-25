@@ -6144,78 +6144,76 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         let f_token_stream =  {
             quote::quote!{
-                //
-    impl<'de> serde::Deserialize<'de> for GenericCatFieldReader {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> serde::__private::Result<Self, __D::Error>
-        where
-            __D: serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: serde::__private::PhantomData<GenericCatFieldReader>,
-                lifetime: serde::__private::PhantomData<&'de ()>,
-            }
-            impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = GenericCatFieldReader;
-                fn expecting(
-                    &self,
-                    __formatter: &mut serde::__private::Formatter,
-                ) -> serde::__private::fmt::Result {
-                    serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct GenericCatFieldReader",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> serde::__private::Result<Self::Value, __E::Error>
-                where
-                    __E: serde::Deserializer<'de>,
-                {
-                    let __field0: std::vec::Vec<CatFieldToRead> = <std::vec::Vec<
-                        CatFieldToRead,
-                    > as serde::Deserialize>::deserialize(__e)?;
-                    serde::__private::Ok(GenericCatFieldReader(__field0))
-                }
-                #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> serde::__private::Result<Self::Value, __A::Error>
-                where
-                    __A: serde::de::SeqAccess<'de>,
-                {
-                    let __field0 = match serde::de::SeqAccess::next_element::<
-                        std::vec::Vec<CatFieldToRead>,
-                    >(&mut __seq)? {
-                        serde::__private::Some(__value) => __value,
-                        serde::__private::None => {
-                            return serde::__private::Err(
-                                serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct GenericCatFieldReader with 1 element",
-                                ),
-                            );
+                impl<'de> serde::Deserialize<'de> for GenericCatFieldReader {
+                    fn deserialize<__D>(
+                        __deserializer: __D,
+                    ) -> serde::__private::Result<Self, __D::Error>
+                    where
+                        __D: serde::Deserializer<'de>,
+                    {
+                        #[doc(hidden)]
+                        struct __Visitor<'de> {
+                            marker: serde::__private::PhantomData<GenericCatFieldReader>,
+                            lifetime: serde::__private::PhantomData<&'de ()>,
                         }
-                    };
-                    serde::__private::Ok(GenericCatFieldReader(__field0))
+                        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                            type Value = GenericCatFieldReader;
+                            fn expecting(
+                                &self,
+                                __formatter: &mut serde::__private::Formatter,
+                            ) -> serde::__private::fmt::Result {
+                                serde::__private::Formatter::write_str(
+                                    __formatter,
+                                    "tuple struct GenericCatFieldReader",
+                                )
+                            }
+                            #[inline]
+                            fn visit_newtype_struct<__E>(
+                                self,
+                                __e: __E,
+                            ) -> serde::__private::Result<Self::Value, __E::Error>
+                            where
+                                __E: serde::Deserializer<'de>,
+                            {
+                                let __field0: std::vec::Vec<CatFieldToRead> = <std::vec::Vec<
+                                    CatFieldToRead,
+                                > as serde::Deserialize>::deserialize(__e)?;
+                                serde::__private::Ok(GenericCatFieldReader(__field0))
+                            }
+                            #[inline]
+                            fn visit_seq<__A>(
+                                self,
+                                mut __seq: __A,
+                            ) -> serde::__private::Result<Self::Value, __A::Error>
+                            where
+                                __A: serde::de::SeqAccess<'de>,
+                            {
+                                let __field0 = match serde::de::SeqAccess::next_element::<
+                                    std::vec::Vec<CatFieldToRead>,
+                                >(&mut __seq)? {
+                                    serde::__private::Some(__value) => __value,
+                                    serde::__private::None => {
+                                        return serde::__private::Err(
+                                            serde::de::Error::invalid_length(
+                                                0usize,
+                                                &"tuple struct GenericCatFieldReader with 1 element",
+                                            ),
+                                        );
+                                    }
+                                };
+                                serde::__private::Ok(GenericCatFieldReader(__field0))
+                            }
+                        }
+                        serde::Deserializer::deserialize_newtype_struct(
+                            __deserializer,
+                            "GenericCatFieldReader",
+                            __Visitor {
+                                marker: serde::__private::PhantomData::<GenericCatFieldReader>,
+                                lifetime: serde::__private::PhantomData,
+                            },
+                        )
+                    }
                 }
-            }
-            serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "GenericCatFieldReader",
-                __Visitor {
-                    marker: serde::__private::PhantomData::<GenericCatFieldReader>,
-                    lifetime: serde::__private::PhantomData,
-                },
-            )
-        }
-    }
-                //
             }
         };
         let impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream = {
