@@ -303,29 +303,29 @@ pub struct Something {
     pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum SomethingFieldToRead {
-    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-    StdPrimitiveI8(postgresql_crud::JsonStdPrimitiveI8FieldReader),
-    #[serde(rename(serialize = "std_option_option_std_primitive_i8", deserialize = "std_option_option_std_primitive_i8"))]
-    StdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdPrimitiveI8FieldReader),
-    #[serde(rename(serialize = "std_vec_vec_std_primitive_i8", deserialize = "std_vec_vec_std_primitive_i8"))]
-    StdVecVecStdPrimitiveI8(postgresql_crud::JsonStdVecVecStdPrimitiveI8FieldReader),
-    #[serde(rename(serialize = "std_option_option_std_vec_vec_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_primitive_i8"))]
-    StdOptionOptionStdVecVecStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8FieldReader),
-    #[serde(rename(serialize = "std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_vec_vec_std_option_option_std_primitive_i8"))]
-    StdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
-    #[serde(rename(serialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8"))]
-    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
-    // #[serde(rename(serialize = "generic", deserialize = "generic"))]
-    // Generic(GenericCatFieldReader),
-    // #[serde(rename(serialize = "std_option_option_generic", deserialize = "std_option_option_generic"))]
-    // StdOptionOptionGeneric(StdOptionOptionGenericCatFieldReader),
-    // #[serde(rename(serialize = "std_vec_vec_generic_with_id", deserialize = "std_vec_vec_generic_with_id"))]
-    // StdVecVecGenericWithId(StdVecVecGenericWithIdDoggieFieldReader),
-    // #[serde(rename(serialize = "std_option_option_std_vec_vec_generic_with_id", deserialize = "std_option_option_std_vec_vec_generic_with_id"))]
-    // StdOptionOptionStdVecVecGenericWithId(StdOptionOptionStdVecVecGenericWithIdDoggieFieldReader)
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub enum SomethingFieldToRead {
+//     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+//     StdPrimitiveI8(postgresql_crud::JsonStdPrimitiveI8FieldReader),
+//     #[serde(rename(serialize = "std_option_option_std_primitive_i8", deserialize = "std_option_option_std_primitive_i8"))]
+//     StdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdPrimitiveI8FieldReader),
+//     #[serde(rename(serialize = "std_vec_vec_std_primitive_i8", deserialize = "std_vec_vec_std_primitive_i8"))]
+//     StdVecVecStdPrimitiveI8(postgresql_crud::JsonStdVecVecStdPrimitiveI8FieldReader),
+//     #[serde(rename(serialize = "std_option_option_std_vec_vec_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_primitive_i8"))]
+//     StdOptionOptionStdVecVecStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8FieldReader),
+//     #[serde(rename(serialize = "std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_vec_vec_std_option_option_std_primitive_i8"))]
+//     StdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
+//     #[serde(rename(serialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8"))]
+//     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
+//     // #[serde(rename(serialize = "generic", deserialize = "generic"))]
+//     // Generic(GenericCatFieldReader),
+//     // #[serde(rename(serialize = "std_option_option_generic", deserialize = "std_option_option_generic"))]
+//     // StdOptionOptionGeneric(StdOptionOptionGenericCatFieldReader),
+//     // #[serde(rename(serialize = "std_vec_vec_generic_with_id", deserialize = "std_vec_vec_generic_with_id"))]
+//     // StdVecVecGenericWithId(StdVecVecGenericWithIdDoggieFieldReader),
+//     // #[serde(rename(serialize = "std_option_option_std_vec_vec_generic_with_id", deserialize = "std_option_option_std_vec_vec_generic_with_id"))]
+//     // StdOptionOptionStdVecVecGenericWithId(StdOptionOptionStdVecVecGenericWithIdDoggieFieldReader)
+// }
 
 #[derive(
     Debug,
@@ -341,7 +341,7 @@ pub enum SomethingFieldToRead {
     postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    pub id: postgresql_crud::JsonUuid, //todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    // pub id: postgresql_crud::JsonUuid, //todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub generic: postgresql_crud::JsonGeneric<Cat>,
@@ -350,13 +350,13 @@ pub struct Doggie {
     // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Cat>,
 }
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum DoggieFieldToRead {
-    #[serde(rename(serialize = "id", deserialize = "id"))]
-    Id(postgresql_crud::JsonUuidFieldReader),
-    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-    StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub enum DoggieFieldToRead {
+//     #[serde(rename(serialize = "id", deserialize = "id"))]
+//     Id(postgresql_crud::JsonUuidFieldReader),
+//     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
+//     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
+// }
 
 #[derive(
     Debug,
@@ -394,11 +394,11 @@ pub struct Cat {
 //     pagination: postgresql_crud::Pagination,
 // }
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum CatFieldToRead {
-    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-    StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub enum CatFieldToRead {
+//     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
+//     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
+// }
 
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]

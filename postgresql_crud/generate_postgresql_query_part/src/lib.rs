@@ -6004,8 +6004,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let ident_field_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_to_read_upper_camel_case_token_stream(&ident);
+    let ident_with_id_field_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfWithIdFieldToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_with_id_field_to_read_upper_camel_case_token_stream(&ident);
     let ident_field_to_read_token_stream = {
-        let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
+        let variants_token_stream = vec_syn_field.iter().map(|element| {
             let field_ident_stringified = element
                 .ident
                 .as_ref()
@@ -6016,8 +6017,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let serialize_deserialize_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
             let type_token_stream = {
-                //todo here prefix postfix
-                quote::quote!{postgresql_crud::JsonStdPrimitiveI32FieldReader}
+                let value = format!(
+                    "{}{}",
+                    {
+                        let type_path = &element.ty;
+                        quote::quote!{#type_path}.to_string()
+                    },
+                    naming_conventions::FieldReaderUpperCamelCase
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote!{
                 #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_token_stream, deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream))]
@@ -6032,8 +6041,40 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let ident_with_id_field_to_read_token_stream = {
+        let variants_token_stream = vec_syn_field.iter().map(|element| {
+            let field_ident_stringified = element
+                .ident
+                .as_ref()
+                .unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                })
+                .to_string();
+            let serialize_deserialize_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+            let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+            let type_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    {
+                        let type_path = &element.ty;
+                        quote::quote!{#type_path}.to_string()
+                    },
+                    naming_conventions::FieldReaderUpperCamelCase
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_token_stream, deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream))]
+                #variant_ident_upper_camel_case_token_stream(#type_token_stream)
+            }
+        });
         quote::quote!{
-
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+            pub enum #ident_with_id_field_to_read_upper_camel_case_token_stream {
+                #[serde(rename(serialize = "id", deserialize = "id"))]
+                Id(postgresql_crud::JsonUuidFieldReader),
+                #(#variants_token_stream),*
+            }
         }
     };
     let generic_ident_token_stream = {
@@ -6240,6 +6281,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         // #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
         // #maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream
         // #impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream
+
+        //todo same struct as ident but with id field
+        #ident_field_to_read_token_stream
+        #ident_with_id_field_to_read_token_stream
 
         #generic_ident_token_stream
         #std_option_option_generic_ident_token_stream

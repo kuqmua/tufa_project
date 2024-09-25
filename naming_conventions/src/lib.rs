@@ -356,7 +356,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["try", "generate", "json", "array", "element", "delete", "bind", "increments", "error", "named"],
     ["try", "generate", "json", "array", "element", "create", "bind", "increments"],
     ["try", "generate", "json", "array", "element", "create", "bind", "increments", "error", "named"],
-    ["std", "vec", "vec", "generic"]
+    ["std", "vec", "vec", "generic"],
+    ["field", "reader"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -421,6 +422,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self"],
     ["self", "field", "reader"],
     ["self", "field", "to", "read"],
+    ["self", "with", "id", "field", "to", "read"],
     ["generic", "self", "field", "reader"],
     ["std", "option", "option", "generic", "self", "field", "reader"],
     ["std", "vec", "vec", "generic", "with", "id", "self", "field", "reader"],
