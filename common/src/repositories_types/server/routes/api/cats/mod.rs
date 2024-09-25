@@ -377,15 +377,27 @@ pub struct Cat {
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum GenericCatFieldToRead {
-    #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-    StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
+pub struct GenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct StdOptionOptionGenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct StdVecVecGenericWithIdCatFieldReader {
+    field_vec: std::vec::Vec<CatFieldToRead>,
+    pagination: postgresql_crud::Pagination,
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum StdOptionOptionGenericCatFieldToRead {
+pub struct StdOptionOptionStdVecVecGenericWithIdCatFieldReader {
+    field_vec: std::vec::Vec<CatFieldToRead>,
+    pagination: postgresql_crud::Pagination,
+}
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub enum CatFieldToRead {
     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-    StdPrimitiveI32(postgresql_crud::JsonStdOptionOptionStdPrimitiveI32FieldReader),//maybe remove Json prefix? or use postfix instead?
+    StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
 }
 
 

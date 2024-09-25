@@ -811,3 +811,5 @@ pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonA
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementUpdateBindQuery;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementDeleteBindQuery;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementCreateBindQuery;
+
+pub use postgresql_crud_common::generate_postgresql_query_part::Pagination;

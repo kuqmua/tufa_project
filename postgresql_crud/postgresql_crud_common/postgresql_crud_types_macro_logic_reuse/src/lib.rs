@@ -585,7 +585,7 @@ fn empty_content_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{{}}
 }
 fn pagination_content_token_stream() -> proc_macro2::TokenStream {
-    quote::quote!{{ pagination: Paginaton }}
+    quote::quote!{{ pagination: Pagination }}
 }
 
 #[proc_macro_derive(GenerateJsonPostgresqlPrimitiveFieldReader)]

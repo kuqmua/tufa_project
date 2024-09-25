@@ -749,11 +749,11 @@ pub trait GetJsonRepresentation {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct Paginaton {
+pub struct Pagination {
     limit: std::primitive::u64,
     offset: std::primitive::u64,
 }
-impl<'de> serde::Deserialize<'de> for Paginaton {
+impl<'de> serde::Deserialize<'de> for Pagination {
     fn deserialize<__D>(
         __deserializer: __D,
     ) -> serde::__private::Result<Self, __D::Error>
@@ -836,18 +836,18 @@ impl<'de> serde::Deserialize<'de> for Paginaton {
         }
         #[doc(hidden)]
         struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<Paginaton>,
+            marker: serde::__private::PhantomData<Pagination>,
             lifetime: serde::__private::PhantomData<&'de ()>,
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = Paginaton;
+            type Value = Pagination;
             fn expecting(
                 &self,
                 __formatter: &mut serde::__private::Formatter<'_>,
             ) -> serde::__private::fmt::Result {
                 serde::__private::Formatter::write_str(
                     __formatter,
-                    "struct Paginaton",
+                    "struct Pagination",
                 )
             }
             #[inline]
@@ -866,7 +866,7 @@ impl<'de> serde::Deserialize<'de> for Paginaton {
                         return serde::__private::Err(
                             serde::de::Error::invalid_length(
                                 0usize,
-                                &"struct Paginaton with 2 elements",
+                                &"struct Pagination with 2 elements",
                             ),
                         );
                     }
@@ -879,12 +879,12 @@ impl<'de> serde::Deserialize<'de> for Paginaton {
                         return serde::__private::Err(
                             serde::de::Error::invalid_length(
                                 1usize,
-                                &"struct Paginaton with 2 elements",
+                                &"struct Pagination with 2 elements",
                             ),
                         );
                     }
                 };
-                match Paginaton::try_new(__field0, __field1) {
+                match Pagination::try_new(__field0, __field1) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                 }
@@ -946,7 +946,7 @@ impl<'de> serde::Deserialize<'de> for Paginaton {
                         serde::__private::de::missing_field("offset")?
                     }
                 };
-                match Paginaton::try_new(__field0, __field1) {
+                match Pagination::try_new(__field0, __field1) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                 }
@@ -956,17 +956,17 @@ impl<'de> serde::Deserialize<'de> for Paginaton {
         const FIELDS: &'static [&'static str] = &["limit", "offset"];
         serde::Deserializer::deserialize_struct(
             __deserializer,
-            "Paginaton",
+            "Pagination",
             FIELDS,
             __Visitor {
-                marker: serde::__private::PhantomData::<Paginaton>,
+                marker: serde::__private::PhantomData::<Pagination>,
                 lifetime: serde::__private::PhantomData,
             },
         )
     }
 }
 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PaginatonTryNewErrorNamed {
+pub enum PaginationTryNewErrorNamed {
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: std::primitive::u64,
@@ -975,11 +975,11 @@ pub enum PaginatonTryNewErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
-impl Paginaton {
-    pub fn try_new(limit: std::primitive::u64, offset: std::primitive::u64) -> Result<Self, PaginatonTryNewErrorNamed> {
+impl Pagination {
+    pub fn try_new(limit: std::primitive::u64, offset: std::primitive::u64) -> Result<Self, PaginationTryNewErrorNamed> {
         match offset.checked_add(limit) {
             Some(value) => Ok(Self{ limit, offset }),
-            None => Err(PaginatonTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+            None => Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
                 limit,
                 offset,
                 code_occurence: error_occurence_lib::code_occurence!()
