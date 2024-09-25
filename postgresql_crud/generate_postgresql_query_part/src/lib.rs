@@ -6146,17 +6146,31 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_std_fmt_display_for_generic_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&generic_ident_upper_camel_case_token_stream);
+        let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&ident);
         let generic_ident_field_reader_token_stream = {
-            let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&ident);
             quote::quote!{
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                 pub struct #generic_ident_field_reader_upper_camel_case_token_stream(std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>);
+            }
+        };
+        let impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream = {
+            quote::quote!{
+                impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for #generic_ident_field_reader_upper_camel_case_token_stream {
+                    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                        // let start = self.pagination.start();
+                        // let end = self.pagination.end();
+                        // format!
+                        // ("jsonb_build_object('{field_ident}',case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'string' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.{field_ident}[array element] is not string and not null') end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}))when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.{field_ident} is not array and not null') end)")
+                        todo!()
+                    }
+                }
             }
         };
         quote::quote!{
             #generic_ident_token_stream
             #impl_std_fmt_display_for_generic_ident_token_stream
             #generic_ident_field_reader_token_stream
+            #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
         }
     };
     let std_option_option_generic_ident_token_stream = {
