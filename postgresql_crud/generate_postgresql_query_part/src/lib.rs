@@ -6077,6 +6077,49 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    let generic_with_id_ident_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_token_stream(&ident);
+    
+    let generic_with_id_ident_token_stream = {
+        let generic_with_id_ident_token_stream = {
+            let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
+                let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                });
+                let element_type = &element.ty;
+                quote::quote!{pub #element_ident: #element_type}
+            });
+            quote::quote!{
+                #[derive(
+                    Debug,
+                    Clone,
+                    PartialEq,
+                    Default,
+                    serde::Serialize,
+                    serde::Deserialize,
+                    utoipa::ToSchema,
+                    schemars::JsonSchema,
+                )] //user type must implement utoipa::ToSchema trait
+                pub struct #generic_with_id_ident_upper_camel_case_token_stream {
+                    pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+                    #(#fields_token_stream),*
+                }
+            }
+        };
+        let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&generic_with_id_ident_upper_camel_case_token_stream);
+        let generic_with_id_ident_field_reader_token_stream = {
+            let generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
+            quote::quote!{
+                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                pub struct #generic_with_id_ident_field_reader_upper_camel_case_token_stream(std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>);
+            }
+        };
+        quote::quote!{
+            #generic_with_id_ident_token_stream
+            #impl_std_fmt_display_for_generic_with_id_ident_token_stream
+            #generic_with_id_ident_field_reader_token_stream
+        }
+    };
+
     let generic_ident_token_stream = {
         let generic_ident_token_stream = {
             let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
@@ -6145,40 +6188,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #std_option_option_generic_ident_token_stream
             #impl_std_fmt_display_for_std_option_option_generic_ident_token_stream
             #std_option_option_generic_ident_field_reader_token_stream
-        }
-    };
-    let generic_with_id_ident_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_token_stream(&ident);
-    let generic_with_id_ident_token_stream = {
-        let generic_with_id_ident_token_stream = {
-            let fields_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
-                let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                });
-                let element_type = &element.ty;
-                quote::quote!{pub #element_ident: #element_type}
-            });
-            quote::quote!{
-                #[derive(
-                    Debug,
-                    Clone,
-                    PartialEq,
-                    Default,
-                    serde::Serialize,
-                    serde::Deserialize,
-                    utoipa::ToSchema,
-                    schemars::JsonSchema,
-                )] //user type must implement utoipa::ToSchema trait
-                pub struct #generic_with_id_ident_upper_camel_case_token_stream {
-                    pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-                    #(#fields_token_stream),*
-                }
-            }
-        };
-        let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&generic_with_id_ident_upper_camel_case_token_stream);
-        quote::quote!{
-            #generic_with_id_ident_token_stream
-            #impl_std_fmt_display_for_generic_with_id_ident_token_stream
-            //maybe add here generic_with_id_ident_field_reader_token_stream ?
         }
     };
     let std_vec_vec_generic_with_id_ident_token_stream = {
@@ -6286,9 +6295,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #ident_field_to_read_token_stream
         #ident_with_id_field_to_read_token_stream
 
+        #generic_with_id_ident_token_stream
+
         #generic_ident_token_stream
         #std_option_option_generic_ident_token_stream
-        #generic_with_id_ident_token_stream
         #std_vec_vec_generic_with_id_ident_token_stream
         #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
     };

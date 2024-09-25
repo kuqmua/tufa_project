@@ -424,6 +424,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "field", "to", "read"],
     ["self", "with", "id", "field", "to", "read"],
     ["generic", "self", "field", "reader"],
+    ["generic", "with", "id", "self", "field", "reader"],
     ["std", "option", "option", "generic", "self", "field", "reader"],
     ["std", "vec", "vec", "generic", "with", "id", "self", "field", "reader"],
     ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self", "field", "reader"]
