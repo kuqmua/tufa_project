@@ -6003,80 +6003,60 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    
+    let generate_template_field_to_read_struct_token_stream = |
+        struct_ident_token_stream: &proc_macro2::TokenStream,
+        additional_content_token_stream: &proc_macro2::TokenStream,
+    |{
+        let variants_token_stream = vec_syn_field.iter().map(|element| {
+            let field_ident_stringified = element
+                .ident
+                .as_ref()
+                .unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                })
+                .to_string();
+            let serialize_deserialize_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+            let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+            let type_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    {
+                        let type_path = &element.ty;
+                        quote::quote!{#type_path}.to_string()
+                    },
+                    naming_conventions::FieldReaderUpperCamelCase
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_token_stream, deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream))]
+                #variant_ident_upper_camel_case_token_stream(#type_token_stream)
+            }
+        });
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+            pub enum #struct_ident_token_stream {
+                #additional_content_token_stream
+                #(#variants_token_stream),*
+            }
+        }
+    };
+
     let ident_field_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_to_read_upper_camel_case_token_stream(&ident);
     let ident_with_id_field_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfWithIdFieldToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_with_id_field_to_read_upper_camel_case_token_stream(&ident);
-    let ident_field_to_read_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().map(|element| {
-            let field_ident_stringified = element
-                .ident
-                .as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                })
-                .to_string();
-            let serialize_deserialize_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
-            let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-            let type_token_stream = {
-                let value = format!(
-                    "{}{}",
-                    {
-                        let type_path = &element.ty;
-                        quote::quote!{#type_path}.to_string()
-                    },
-                    naming_conventions::FieldReaderUpperCamelCase
-                );
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            quote::quote!{
-                #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_token_stream, deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream))]
-                #variant_ident_upper_camel_case_token_stream(#type_token_stream)
-            }
-        });
-        quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-            pub enum #ident_field_to_read_upper_camel_case_token_stream {
-                #(#variants_token_stream),*
-            }
-        }
-    };
-    let ident_with_id_field_to_read_token_stream = {
-        let variants_token_stream = vec_syn_field.iter().map(|element| {
-            let field_ident_stringified = element
-                .ident
-                .as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                })
-                .to_string();
-            let serialize_deserialize_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
-            let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-            let type_token_stream = {
-                let value = format!(
-                    "{}{}",
-                    {
-                        let type_path = &element.ty;
-                        quote::quote!{#type_path}.to_string()
-                    },
-                    naming_conventions::FieldReaderUpperCamelCase
-                );
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            quote::quote!{
-                #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_token_stream, deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream))]
-                #variant_ident_upper_camel_case_token_stream(#type_token_stream)
-            }
-        });
-        quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-            pub enum #ident_with_id_field_to_read_upper_camel_case_token_stream {
-                #[serde(rename(serialize = "id", deserialize = "id"))]
-                Id(postgresql_crud::JsonUuidFieldReader),
-                #(#variants_token_stream),*
-            }
-        }
-    };
+    let ident_field_to_read_token_stream = generate_template_field_to_read_struct_token_stream(
+        &ident_field_to_read_upper_camel_case_token_stream,
+        &proc_macro2::TokenStream::new(),
+    );
+    let ident_with_id_field_to_read_token_stream = generate_template_field_to_read_struct_token_stream(
+        &ident_with_id_field_to_read_upper_camel_case_token_stream,
+        &quote::quote!{
+            #[serde(rename(serialize = "id", deserialize = "id"))]
+             Id(postgresql_crud::JsonUuidFieldReader),
+        },
+    );
 
     let generate_supported_generics_template_struct_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
