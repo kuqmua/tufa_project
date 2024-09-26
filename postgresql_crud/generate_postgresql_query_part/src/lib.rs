@@ -6552,6 +6552,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
             #generic_ident_options_to_read_token_stream
             //todo impl_serde_deserialize_for_generic_ident_options_to_read_token_stream
+            //todo generic_ident_reader_token_stream
+            //todo impl_serde_deserialize_for_generic_ident_reader_token_stream
+            //todo impl postgresql_crud_StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement_for_generic_ident_token_stream //todo maybe rename trait
+            //todo generic_ident_field_to_update_token_stream
+            //todo impl_error_occurence_lib::ToStdStringString for SomethingFieldToUpdate
+            //todo generic_ident_option_to_update_token_stream
+            //todo impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdate
+            //todo SomethingOptionsToUpdate
+            //todo impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToUpdate
+            //todo SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed
+            //todo impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionsToUpdate
+            //todo SomethingToCreate
+            //todo impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingToCreate
+            //todo impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate
+            //todo impl postgresql_crud::CheckIdExistsInJsonGenericFields for Something
+            //todo 
         }
     };
     let std_option_option_generic_ident_token_stream = {
