@@ -6218,6 +6218,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_try_new_token_stream
         }
     };
+    let generate_match_try_new_in_deserialize_token_stream = |ident_token_stream: &proc_macro2::TokenStream, initialization_token_stream: &proc_macro2::TokenStream|{
+        quote::quote!{
+            match #ident_token_stream::try_new(#initialization_token_stream) {
+                Ok(value) => serde::__private::Ok(value),
+                Err(error) => {
+                    return Err(serde::de::Error::custom(format!("{error:?}")));
+                }
+            }
+        }
+    };
+
+    let field0_token_stream = quote::quote!{__field0};
+    let field0_field1_token_stream = quote::quote!{__field0, __field1};
 
     let generic_with_id_ident_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_token_stream(&ident);
     let generic_with_id_ident_token_stream = {
@@ -6249,6 +6262,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &generic_with_id_ident_field_reader_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                &generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+                &field0_token_stream,
             );
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #generic_with_id_ident_field_reader_upper_camel_case_token_stream {
@@ -6285,12 +6302,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let __field0: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
                                     #ident_with_id_field_to_read_upper_camel_case_token_stream,
                                 > as serde::Deserialize>::deserialize(__e)?;
-                                match #generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                             #[inline]
                             fn visit_seq<__A>(
@@ -6313,12 +6325,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                match #generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                         }
                         serde::Deserializer::deserialize_newtype_struct(
@@ -6372,6 +6379,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &generic_ident_field_reader_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
+            let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                &generic_ident_field_reader_upper_camel_case_token_stream,
+                &field0_token_stream,
+            );
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #generic_ident_field_reader_upper_camel_case_token_stream {
                     fn deserialize<__D>(
@@ -6407,12 +6418,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let __field0: std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
                                     #ident_field_to_read_upper_camel_case_token_stream,
                                 > as serde::Deserialize>::deserialize(__e)?;
-                                match #generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                             #[inline]
                             fn visit_seq<__A>(
@@ -6435,12 +6441,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                match #generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                         }
                         serde::Deserializer::deserialize_newtype_struct(
@@ -6542,6 +6543,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_option_option_generic_ident_field_reader_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
+            let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                &std_option_option_generic_ident_field_reader_upper_camel_case_token_stream,
+                &field0_token_stream,
+            );
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #std_option_option_generic_ident_field_reader_upper_camel_case_token_stream {
                     fn deserialize<__D>(
@@ -6579,12 +6584,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let __field0: std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
                                     #ident_field_to_read_upper_camel_case_token_stream,
                                 > as serde::Deserialize>::deserialize(__e)?;
-                                match #std_option_option_generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                             #[inline]
                             fn visit_seq<__A>(
@@ -6607,12 +6607,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                match #std_option_option_generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                         }
                         serde::Deserializer::deserialize_newtype_struct(
@@ -6715,6 +6710,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+                &field0_field1_token_stream,
             );
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
@@ -6850,12 +6849,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                match #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0, __field1) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                             #[inline]
                             fn visit_map<__A>(
@@ -6918,12 +6912,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         serde::__private::de::missing_field("pagination")?
                                     }
                                 };
-                                match #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0, __field1) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => {
-                                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                                    }
-                                }
+                                #match_try_new_in_deserialize_token_stream
                             }
                         }
                         #[doc(hidden)]
@@ -7035,6 +7024,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+                &field0_field1_token_stream,
             );
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
@@ -7170,10 +7163,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                serde::__private::Ok(#std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                                    field_vec: __field0,
-                                    pagination: __field1,
-                                })
+                                #match_try_new_in_deserialize_token_stream
                             }
                             #[inline]
                             fn visit_map<__A>(
@@ -7236,10 +7226,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         serde::__private::de::missing_field("pagination")?
                                     }
                                 };
-                                serde::__private::Ok(#std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                                    field_vec: __field0,
-                                    pagination: __field1,
-                                })
+                                #match_try_new_in_deserialize_token_stream
                             }
                         }
                         #[doc(hidden)]
