@@ -6285,23 +6285,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let __field0: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
                                     #ident_with_id_field_to_read_upper_camel_case_token_stream,
                                 > as serde::Deserialize>::deserialize(__e)?;
-                                //here
-                                // if value.is_empty() {
-                                //     return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                                // }
-                                // let mut unique = vec![];
-                                // for element in value {
-                                //     if unique.contains(&element) {
-                                //         return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::NotUniqueFieldFilter {
-                                //             field: element.clone(),
-                                //             code_occurence: error_occurence_lib::code_occurence!(),
-                                //         });
-                                //     } else {
-                                //         unique.push(&element);
-                                //     }
-                                // }
-                                //
-                                serde::__private::Ok(#generic_with_id_ident_field_reader_upper_camel_case_token_stream(__field0))
+                                match #generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                             #[inline]
                             fn visit_seq<__A>(
@@ -6324,7 +6313,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                serde::__private::Ok(#generic_with_id_ident_field_reader_upper_camel_case_token_stream(__field0))
+                                match #generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                         }
                         serde::Deserializer::deserialize_newtype_struct(
@@ -6413,7 +6407,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let __field0: std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
                                     #ident_field_to_read_upper_camel_case_token_stream,
                                 > as serde::Deserialize>::deserialize(__e)?;
-                                serde::__private::Ok(#generic_ident_field_reader_upper_camel_case_token_stream(__field0))
+                                match #generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                             #[inline]
                             fn visit_seq<__A>(
@@ -6436,7 +6435,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                serde::__private::Ok(#generic_ident_field_reader_upper_camel_case_token_stream(__field0))
+                                match #generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                         }
                         serde::Deserializer::deserialize_newtype_struct(
@@ -6575,7 +6579,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let __field0: std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
                                     #ident_field_to_read_upper_camel_case_token_stream,
                                 > as serde::Deserialize>::deserialize(__e)?;
-                                serde::__private::Ok(#std_option_option_generic_ident_field_reader_upper_camel_case_token_stream(__field0))
+                                match #std_option_option_generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                             #[inline]
                             fn visit_seq<__A>(
@@ -6598,7 +6607,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                serde::__private::Ok(#std_option_option_generic_ident_field_reader_upper_camel_case_token_stream(__field0))
+                                match #std_option_option_generic_ident_field_reader_upper_camel_case_token_stream::try_new(__field0) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                         }
                         serde::Deserializer::deserialize_newtype_struct(
@@ -6836,10 +6850,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                serde::__private::Ok(#std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                                    field_vec: __field0,
-                                    pagination: __field1,
-                                })
+                                match #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0, __field1) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                             #[inline]
                             fn visit_map<__A>(
@@ -6902,10 +6918,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         serde::__private::de::missing_field("pagination")?
                                     }
                                 };
-                                serde::__private::Ok(#std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                                    field_vec: __field0,
-                                    pagination: __field1,
-                                })
+                                match #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream::try_new(__field0, __field1) {
+                                    Ok(value) => serde::__private::Ok(value),
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                                    }
+                                }
                             }
                         }
                         #[doc(hidden)]
