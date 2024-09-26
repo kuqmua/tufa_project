@@ -6551,6 +6551,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_serde_deserialize_for_generic_ident_field_reader_token_stream
             // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
             #generic_ident_options_to_read_token_stream
+            //todo impl_serde_deserialize_for_generic_ident_options_to_read_token_stream
         }
     };
     let std_option_option_generic_ident_token_stream = {
