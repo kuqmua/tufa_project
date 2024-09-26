@@ -626,6 +626,7 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecGenericWithId;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuid;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidOptionsToRead;
 
 //
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveBoolOptionsToRead;
