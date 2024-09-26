@@ -6101,24 +6101,80 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         GenericAndStdOptionOptionGeneric,
         StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId
     }
-    let std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream = quote::quote!{std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>};
+    
     let generate_tokens_field_reader_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
+        // struct_prefix_stringified: &std::primitive::str, 
         field_reader_content: &FieldReaderContent
     |{
-        let content_token_stream = match field_reader_content {
+        // let struct_ident_token_stream = ;
+        let std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream = quote::quote!{std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>};
+        let std_vec_vec_ident_field_to_read_upper_camel_case_token_stream_token_stream = quote::quote!{std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>};
+        let field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream = quote::quote!{field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>, pagination: #postgersql_crud_pagination_token_stream};
+        let content_token_stream = match &field_reader_content {
             FieldReaderContent::GenericWithIdAndStdOptionOptionGenericWithId => quote::quote!{(#std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream);},
-            FieldReaderContent::GenericAndStdOptionOptionGeneric => quote::quote!{(std::vec::Vec<#ident_field_to_read_upper_camel_case_token_stream>);},
+            FieldReaderContent::GenericAndStdOptionOptionGeneric => quote::quote!{(#std_vec_vec_ident_field_to_read_upper_camel_case_token_stream_token_stream);},
             FieldReaderContent::StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId => quote::quote!{
                 {
-                    field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
-                    pagination: #postgersql_crud_pagination_token_stream,
+                    #field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream
                 }
             },
         };
+        // let generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfTryNewErrorNamedUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_try_new_error_named_upper_camel_case_token_stream(&ident);
+        // let fields_filter_is_empty_upper_camel_case = naming_conventions::FieldsFilterIsEmptyUpperCamelCase;
+        // let not_unique_field_filter_upper_camel_case = naming_conventions::NotUniqueFieldFilterUpperCamelCase;
+        // let impl_try_new_token_stream = match &field_reader_content {
+        //     FieldReaderContent::GenericWithIdAndStdOptionOptionGenericWithId => {
+        //         quote::quote!{
+        //             #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+        //             pub enum #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream {
+        //                 #fields_filter_is_empty_upper_camel_case {
+        //                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //                 },
+        //                 #not_unique_field_filter_upper_camel_case {
+        //                     #[eo_to_std_string_string_serialize_deserialize]
+        //                     field: #ident_with_id_field_to_read_upper_camel_case_token_stream,
+        //                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //                 }
+        //             }
+        //             impl #generic_with_id_ident_field_reader_upper_camel_case_token_stream {
+        //                 pub fn try_new(value: #std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream) -> Result<Self, #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream> {
+        //                     if value.is_empty() {
+        //                         return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
+        //                             code_occurence: error_occurence_lib::code_occurence!()
+        //                         });
+        //                     }
+        //                     let mut unique = vec![];
+        //                     for element in &value {
+        //                         if unique.contains(&element) {
+        //                             return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
+        //                                 field: element.clone(),
+        //                                 code_occurence: error_occurence_lib::code_occurence!(),
+        //                             });
+        //                         } else {
+        //                             unique.push(&element);
+        //                         }
+        //                     }
+        //                     Ok(Self(value))
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     FieldReaderContent::GenericAndStdOptionOptionGeneric => {
+        //         quote::quote!{
+
+        //         }
+        //     },
+        //     FieldReaderContent::StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId => {
+        //         quote::quote!{
+
+        //         }
+        //     },
+        // };
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
             pub struct #struct_ident_token_stream #content_token_stream
+            // #impl_try_new_token_stream
         }
     };
 
@@ -6135,49 +6191,54 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(&generic_with_id_ident_upper_camel_case_token_stream);
         let generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
+        // let generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+        //     // &generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+        //     &naming_conventions::GenericWithIdSelfUpperCamelCase::generic_with_id_self_upper_camel_case(&ident),
+        //     &FieldReaderContent::GenericWithIdAndStdOptionOptionGenericWithId
+        // );
         let generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
             &generic_with_id_ident_field_reader_upper_camel_case_token_stream,
             &FieldReaderContent::GenericWithIdAndStdOptionOptionGenericWithId
         );
-        let impl_try_new_token_stream = {
-            let generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfTryNewErrorNamedUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_try_new_error_named_upper_camel_case_token_stream(&ident);
-            let fields_filter_is_empty_upper_camel_case = naming_conventions::FieldsFilterIsEmptyUpperCamelCase;
-            let not_unique_field_filter_upper_camel_case = naming_conventions::NotUniqueFieldFilterUpperCamelCase;
-            quote::quote!{
-                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream {
-                    #fields_filter_is_empty_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                    #not_unique_field_filter_upper_camel_case {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        field: #ident_with_id_field_to_read_upper_camel_case_token_stream,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    }
-                }
-                impl #generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                    pub fn try_new(value: #std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream) -> Result<Self, #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream> {
-                        if value.is_empty() {
-                            return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!()
-                            });
-                        }
-                        let mut unique = vec![];
-                        for element in &value {
-                            if unique.contains(&element) {
-                                return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
-                                    field: element.clone(),
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            } else {
-                                unique.push(&element);
-                            }
-                        }
-                        Ok(Self(value))
-                    }
-                }
-            }
-        };
+        // let impl_try_new_token_stream = {
+        //     let generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfTryNewErrorNamedUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_try_new_error_named_upper_camel_case_token_stream(&ident);
+        //     let fields_filter_is_empty_upper_camel_case = naming_conventions::FieldsFilterIsEmptyUpperCamelCase;
+        //     let not_unique_field_filter_upper_camel_case = naming_conventions::NotUniqueFieldFilterUpperCamelCase;
+        //     quote::quote!{
+        //         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+        //         pub enum #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream {
+        //             #fields_filter_is_empty_upper_camel_case {
+        //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //             },
+        //             #not_unique_field_filter_upper_camel_case {
+        //                 #[eo_to_std_string_string_serialize_deserialize]
+        //                 field: #ident_with_id_field_to_read_upper_camel_case_token_stream,
+        //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //             }
+        //         }
+        //         impl #generic_with_id_ident_field_reader_upper_camel_case_token_stream {
+        //             pub fn try_new(value: #std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream) -> Result<Self, #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream> {
+        //                 if value.is_empty() {
+        //                     return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
+        //                         code_occurence: error_occurence_lib::code_occurence!()
+        //                     });
+        //                 }
+        //                 let mut unique = vec![];
+        //                 for element in &value {
+        //                     if unique.contains(&element) {
+        //                         return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
+        //                             field: element.clone(),
+        //                             code_occurence: error_occurence_lib::code_occurence!(),
+        //                         });
+        //                     } else {
+        //                         unique.push(&element);
+        //                     }
+        //                 }
+        //                 Ok(Self(value))
+        //             }
+        //         }
+        //     }
+        // };
         let impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream = {
             let generic_with_id_ident_field_reader_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_stringified(&ident);
             let tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -6287,7 +6348,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_generic_with_id_ident_token_stream
             #generic_with_id_ident_field_reader_token_stream
-            #impl_try_new_token_stream
+            // #impl_try_new_token_stream
             #impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream
         }
     };
