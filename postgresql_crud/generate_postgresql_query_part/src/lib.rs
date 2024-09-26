@@ -6046,10 +6046,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
     let ident_field_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_to_read_upper_camel_case_token_stream(&ident);
     let ident_with_id_field_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfWithIdFieldToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_with_id_field_to_read_upper_camel_case_token_stream(&ident);
+
+    let generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream = |value: &proc_macro2::TokenStream|{
+        quote::quote!{
+            impl error_occurence_lib::ToStdStringString for #value {
+                fn to_std_string_string(&self) -> std::string::String {
+                    format!("{self:?}")
+                }
+            }
+        }
+    };
+
     let ident_field_to_read_token_stream = generate_template_field_to_read_struct_token_stream(
         &ident_field_to_read_upper_camel_case_token_stream,
         &proc_macro2::TokenStream::new(),
     );
+    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_field_to_read_upper_camel_case_token_stream);
     let ident_with_id_field_to_read_token_stream = generate_template_field_to_read_struct_token_stream(
         &ident_with_id_field_to_read_upper_camel_case_token_stream,
         &quote::quote!{
@@ -6057,6 +6069,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
              Id(postgresql_crud::JsonUuidFieldReader),
         },
     );
+    let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_field_to_read_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_with_id_field_to_read_upper_camel_case_token_stream);
 
     let generate_supported_generics_template_struct_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
@@ -7212,7 +7225,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         //todo same struct as ident but with id field
         #ident_field_to_read_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream
         #ident_with_id_field_to_read_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_field_to_read_token_stream
 
         #generic_with_id_ident_token_stream
 
