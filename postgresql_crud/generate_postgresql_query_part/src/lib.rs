@@ -6122,115 +6122,95 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let struct_prefix_try_new_error_named_upper_camel_case_token_stream = naming_conventions::SelfTryNewErrorNamedUpperCamelCaseTokenStream::self_try_new_error_named_upper_camel_case_token_stream(&struct_prefix_stringified);
         let fields_filter_is_empty_upper_camel_case = naming_conventions::FieldsFilterIsEmptyUpperCamelCase;
         let not_unique_field_filter_upper_camel_case = naming_conventions::NotUniqueFieldFilterUpperCamelCase;
-        let impl_try_new_token_stream = match &field_reader_content {
-            FieldReaderContent::GenericWithIdAndStdOptionOptionGenericWithId => {
-                quote::quote!{
-                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                    pub enum #struct_prefix_try_new_error_named_upper_camel_case_token_stream {
-                        #fields_filter_is_empty_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        #not_unique_field_filter_upper_camel_case {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            field: #ident_with_id_field_to_read_upper_camel_case_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        }
-                    }
-                    impl #struct_ident_token_stream {
-                        pub fn try_new(value: #std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream) -> Result<Self, #struct_prefix_try_new_error_named_upper_camel_case_token_stream> {
-                            if value.is_empty() {
-                                return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence!()
-                                });
-                            }
-                            let mut unique = vec![];
-                            for element in &value {
-                                if unique.contains(&element) {
-                                    return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
-                                        field: element.clone(),
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                } else {
-                                    unique.push(&element);
-                                }
-                            }
-                            Ok(Self(value))
-                        }
-                    }
-                }
-            },
-            FieldReaderContent::GenericAndStdOptionOptionGeneric => {
-                quote::quote!{
-                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                    pub enum #struct_prefix_try_new_error_named_upper_camel_case_token_stream {
-                        #fields_filter_is_empty_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        #not_unique_field_filter_upper_camel_case {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            field: #ident_field_to_read_upper_camel_case_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        }
-                    }
-                    impl #struct_ident_token_stream {
-                        pub fn try_new(value: #std_vec_vec_ident_field_to_read_upper_camel_case_token_stream_token_stream) -> Result<Self, #struct_prefix_try_new_error_named_upper_camel_case_token_stream> {
-                            if value.is_empty() {
-                                return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence!()
-                                });
-                            }
-                            let mut unique = vec![];
-                            for element in &value {
-                                if unique.contains(&element) {
-                                    return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
-                                        field: element.clone(),
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                } else {
-                                    unique.push(&element);
-                                }
-                            }
-                            Ok(Self(value))
-                        }
+        let value_snake_case = naming_conventions::ValueSnakeCase;
+        let generate_impl_try_new_token_stream = |
+            contains_id: std::primitive::bool,
+            input_parameters_token_stream: &proc_macro2::TokenStream,
+            is_vec: std::primitive::bool,
+        |{
+            let field_type_token_stream = if contains_id {
+                &ident_with_id_field_to_read_upper_camel_case_token_stream
+            }
+            else {
+                &ident_field_to_read_upper_camel_case_token_stream
+            };
+            
+            let field_vec_snake_case = naming_conventions::FieldVecSnakeCase;
+            let pagination_snake_case = naming_conventions::PaginationSnakeCase;
+            let check_handle_token_stream = if is_vec {
+                quote::quote!{#field_vec_snake_case}
+            }
+            else {
+                quote::quote!{#value_snake_case}
+            };
+            let self_initialization_token_stream = if is_vec {
+                quote::quote!{{ #field_vec_snake_case, #pagination_snake_case }}
+            }
+            else {
+                quote::quote!{(#value_snake_case)}
+            };
+            quote::quote!{
+                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                pub enum #struct_prefix_try_new_error_named_upper_camel_case_token_stream {
+                    #fields_filter_is_empty_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    #not_unique_field_filter_upper_camel_case {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        field: #field_type_token_stream,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     }
                 }
-            },
-            FieldReaderContent::StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId => {
-                quote::quote!{
-                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                    pub enum #struct_prefix_try_new_error_named_upper_camel_case_token_stream {
-                        #fields_filter_is_empty_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        #not_unique_field_filter_upper_camel_case {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            field: #ident_with_id_field_to_read_upper_camel_case_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                impl #struct_ident_token_stream {
+                    pub fn try_new(#input_parameters_token_stream) -> Result<Self, #struct_prefix_try_new_error_named_upper_camel_case_token_stream> {
+                        if #check_handle_token_stream.is_empty() {
+                            return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!()
+                            });
                         }
-                    }
-                    impl #struct_ident_token_stream {
-                        pub fn try_new(#field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream) -> Result<Self, #struct_prefix_try_new_error_named_upper_camel_case_token_stream> {
-                            if field_vec.is_empty() {
-                                return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence!()
+                        let mut unique = vec![];
+                        for element in &#check_handle_token_stream {
+                            if unique.contains(&element) {
+                                return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
+                                    field: element.clone(),
+                                    code_occurence: error_occurence_lib::code_occurence!(),
                                 });
+                            } else {
+                                unique.push(&element);
                             }
-                            let mut unique = vec![];
-                            for element in &field_vec {
-                                if unique.contains(&element) {
-                                    return Err(#struct_prefix_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
-                                        field: element.clone(),
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                } else {
-                                    unique.push(&element);
-                                }
-                            }
-                            Ok(Self { field_vec, pagination })
                         }
+                        Ok(Self #self_initialization_token_stream)
                     }
                 }
-            },
+            }
+        };
+        let impl_try_new_token_stream = {
+            let generate_value_input_parameter_type_token_stream = |value_token_stream: &proc_macro2::TokenStream|{
+                quote::quote!{#value_snake_case: #value_token_stream}
+            };
+            match &field_reader_content {
+                FieldReaderContent::GenericWithIdAndStdOptionOptionGenericWithId => {
+                    generate_impl_try_new_token_stream(
+                        true,
+                        &generate_value_input_parameter_type_token_stream(&std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream),
+                        false,
+                    )
+                },
+                FieldReaderContent::GenericAndStdOptionOptionGeneric => {
+                    generate_impl_try_new_token_stream(
+                        false,
+                        &generate_value_input_parameter_type_token_stream(&std_vec_vec_ident_field_to_read_upper_camel_case_token_stream_token_stream),
+                        false,
+                    )
+                },
+                FieldReaderContent::StdVecVecGenericWithIdAndStdOptionOptionStdVecVecGenericWithId => {
+                    generate_impl_try_new_token_stream(
+                        true,
+                        &field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream,
+                        true,
+                    )
+                },
+            }
         };
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -6256,45 +6236,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_stringified(&ident),
             &FieldReaderContent::GenericWithIdAndStdOptionOptionGenericWithId
         );
-        // let impl_try_new_token_stream = {
-        //     let generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfTryNewErrorNamedUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_try_new_error_named_upper_camel_case_token_stream(&ident);
-        //     let fields_filter_is_empty_upper_camel_case = naming_conventions::FieldsFilterIsEmptyUpperCamelCase;
-        //     let not_unique_field_filter_upper_camel_case = naming_conventions::NotUniqueFieldFilterUpperCamelCase;
-        //     quote::quote!{
-        //         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-        //         pub enum #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream {
-        //             #fields_filter_is_empty_upper_camel_case {
-        //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        //             },
-        //             #not_unique_field_filter_upper_camel_case {
-        //                 #[eo_to_std_string_string_serialize_deserialize]
-        //                 field: #ident_with_id_field_to_read_upper_camel_case_token_stream,
-        //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        //             }
-        //         }
-        //         impl #generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-        //             pub fn try_new(value: #std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream) -> Result<Self, #generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream> {
-        //                 if value.is_empty() {
-        //                     return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
-        //                         code_occurence: error_occurence_lib::code_occurence!()
-        //                     });
-        //                 }
-        //                 let mut unique = vec![];
-        //                 for element in &value {
-        //                     if unique.contains(&element) {
-        //                         return Err(#generic_with_id_ident_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
-        //                             field: element.clone(),
-        //                             code_occurence: error_occurence_lib::code_occurence!(),
-        //                         });
-        //                     } else {
-        //                         unique.push(&element);
-        //                     }
-        //                 }
-        //                 Ok(Self(value))
-        //             }
-        //         }
-        //     }
-        // };
         let impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream = {
             let generic_with_id_ident_field_reader_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_stringified(&ident);
             let tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(

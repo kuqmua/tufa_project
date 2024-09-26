@@ -359,7 +359,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["std", "vec", "vec", "generic"],
     ["field", "reader"],
     ["fields", "filter", "is", "empty"],
-    ["not", "unique", "field", "filter"]
+    ["not", "unique", "field", "filter"],
+    ["pagination"],
+    ["field", "vec"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
