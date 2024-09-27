@@ -585,6 +585,19 @@ pub fn generate_common_primitive_json_postgresql_logic(input: proc_macro::TokenS
             pub struct #ident_options_to_read_upper_camel_case_token_stream(pub #ident);
         }
     };
+    //
+                // let mut __field0: serde::__private::Option<std::option::Option<std::result::Result<std::primitive::i8, std::string::String>>> = serde::__private::None;
+                // let mut __field1: serde::__private::Option<std::option::Option<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>> = serde::__private::None;
+                // let mut __field2: serde::__private::Option<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::primitive::i8, std::string::String>>, std::string::String>>> = serde::__private::None;
+                // let mut __field3: serde::__private::Option<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<std::primitive::i8, std::string::String>>>, std::string::String>>> = serde::__private::None;
+                // let mut __field4: serde::__private::Option<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>, std::string::String>>> = serde::__private::None;
+                // let mut __field5: serde::__private::Option<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<std::option::Option<std::primitive::i8>, std::string::String>>>, std::string::String>>> = serde::__private::None;
+                // let mut __field6: serde::__private::Option<std::option::Option<std::result::Result<CatOptionsToRead, std::string::String>>> = serde::__private::None;
+                // //here remove option
+                // let mut __field7: serde::__private::Option<std::option::Option<std::result::Result<MouseOptionsToRead, std::string::String>>> = serde::__private::None;
+                // let mut __field8: serde::__private::Option<std::option::Option<std::result::Result<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>, std::string::String>>> = serde::__private::None;
+                // let mut __field9: serde::__private::Option<std::option::Option<std::result::Result<std::option::Option<std::vec::Vec<std::result::Result<DoggieOptionsToRead, std::string::String>>>, std::string::String>>> = serde::__private::None;
+    //
     let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
          quote::quote!{
             impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
