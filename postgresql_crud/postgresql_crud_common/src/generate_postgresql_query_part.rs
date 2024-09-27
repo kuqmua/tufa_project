@@ -435,8 +435,8 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::o
     utoipa::ToSchema,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
-    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationString
+    // postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, //todo mannually implement ToSchema for JsonUuidOptionsToRead
+    // postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationString
 )]
 pub struct JsonUuid(pub uuid::Uuid);
 impl schemars::JsonSchema for JsonUuid {

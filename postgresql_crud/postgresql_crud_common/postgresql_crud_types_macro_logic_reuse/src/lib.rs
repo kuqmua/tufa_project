@@ -644,7 +644,7 @@ pub fn generate_json_postgresql_primitive_field_reader(input: proc_macro::TokenS
     let ident_options_to_read_token_stream = {
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq does not implemented for float//Copy does not implemented for String
-            pub struct #ident_options_to_read_upper_camel_case_token_stream(pub #ident);
+            pub struct #ident_options_to_read_upper_camel_case_token_stream(pub #first_field_unnamed_type);
         }
     };
     // let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
@@ -711,7 +711,7 @@ pub fn generate_json_postgresql_primitive_field_reader(input: proc_macro::TokenS
                                 std::string::String,
                             > as serde::Deserialize>::deserialize(__e)?;
                             serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream(match __field0 {
-                                Ok(value) => #ident(value),
+                                Ok(value) => value,
                                 Err(error) => {
                                     return Err(serde::de::Error::custom(error));
                                 }
@@ -739,7 +739,7 @@ pub fn generate_json_postgresql_primitive_field_reader(input: proc_macro::TokenS
                                 }
                             };
                             serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream(match __field0 {
-                                Ok(value) => #ident(value),
+                                Ok(value) => value,
                                 Err(error) => {
                                     return Err(serde::de::Error::custom(error));
                                 }

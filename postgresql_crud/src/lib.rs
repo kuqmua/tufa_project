@@ -794,7 +794,7 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdStringStr
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecGenericWithIdOptionsToRead;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecGenericWithIdOptionsToRead;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidOptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidOptionsToRead;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI16FieldReader;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI32FieldReader;
@@ -874,7 +874,7 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64FieldReader;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringStringFieldReader;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidFieldReader;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidFieldReader;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGenericFields;
 pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonId;
