@@ -31,6 +31,98 @@ pub struct JsonStdStringString(pub std::string::String);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
 pub struct JsonStdOptionOptionStdPrimitiveI8(pub std::option::Option<JsonStdPrimitiveI8>);
+//
+// impl<'de> serde::Deserialize<'de> for JsonStdOptionOptionStdPrimitiveI8OptionsToRead {
+//     fn deserialize<__D>(
+//         __deserializer: __D,
+//     ) -> serde::__private::Result<Self, __D::Error>
+//     where
+//         __D: serde::Deserializer<'de>,
+//     {
+//         #[doc(hidden)]
+//         struct __Visitor<'de> {
+//             marker: serde::__private::PhantomData<
+//                 JsonStdOptionOptionStdPrimitiveI8OptionsToRead,
+//             >,
+//             lifetime: serde::__private::PhantomData<&'de ()>,
+//         }
+//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+//             type Value = JsonStdOptionOptionStdPrimitiveI8OptionsToRead;
+//             fn expecting(
+//                 &self,
+//                 __formatter: &mut serde::__private::Formatter<'_>,
+//             ) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(
+//                     __formatter,
+//                     "tuple struct JsonStdOptionOptionStdPrimitiveI8OptionsToRead",
+//                 )
+//             }
+//             #[inline]
+//             fn visit_newtype_struct<__E>(
+//                 self,
+//                 __e: __E,
+//             ) -> serde::__private::Result<Self::Value, __E::Error>
+//             where
+//                 __E: serde::Deserializer<'de>,
+//             {
+//                 let __field0: std::result::Result<
+//                     std::option::Option<JsonStdPrimitiveI8OptionsToRead>,
+//                     std::string::String,
+//                 > = <std::result::Result<
+//                     std::option::Option<JsonStdPrimitiveI8OptionsToRead>,
+//                     std::string::String,
+//                 > as serde::Deserialize>::deserialize(__e)?;
+//                 serde::__private::Ok(
+//                     JsonStdOptionOptionStdPrimitiveI8OptionsToRead(match __field0 {
+//                         Ok(value) => value,
+//                         Err(error) => {
+//                             return Err(serde::de::Error::custom(error));
+//                         }
+//                     }),
+//                 )
+//             }
+//             #[inline]
+//             fn visit_seq<__A>(
+//                 self,
+//                 mut __seq: __A,
+//             ) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::SeqAccess<'de>,
+//             {
+//                 let __field0 = match serde::de::SeqAccess::next_element::<
+//                     std::result::Result<
+//                         std::option::Option<JsonStdPrimitiveI8OptionsToRead>,
+//                         std::string::String,
+//                     >,
+//                 >(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(
+//                             serde::de::Error::invalid_length(
+//                                 0usize,
+//                                 &"tuple struct JsonStdOptionOptionStdPrimitiveI8OptionsToRead with 1 element",
+//                             ),
+//                         );
+//                     }
+//                 };
+//                 serde::__private::Ok(
+//                     JsonStdOptionOptionStdPrimitiveI8OptionsToRead(__field0),
+//                 )
+//             }
+//         }
+//         serde::Deserializer::deserialize_newtype_struct(
+//             __deserializer,
+//             "JsonStdOptionOptionStdPrimitiveI8OptionsToRead",
+//             __Visitor {
+//                 marker: serde::__private::PhantomData::<
+//                     JsonStdOptionOptionStdPrimitiveI8OptionsToRead,
+//                 >,
+//                 lifetime: serde::__private::PhantomData,
+//             },
+//         )
+//     }
+// }
+//
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
 pub struct JsonStdOptionOptionStdPrimitiveI16(pub std::option::Option<JsonStdPrimitiveI16>);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
