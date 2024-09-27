@@ -6279,10 +6279,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 .unwrap_or_else(|| {
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                 });
-            let field_element_type = &element.ty;
-            //todo add ToCreate to every type
+            let type_path_to_create_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    {
+                        let type_path = &element.ty;
+                        quote::quote!{#type_path}.to_string()
+                    },
+                    naming_conventions::ToCreateUpperCamelCase
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
             quote::quote!{
-                #field_ident: #field_element_type
+                #field_ident: #type_path_to_create_token_stream
             }
         });
         quote::quote!{
