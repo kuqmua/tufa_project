@@ -1,35 +1,227 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i16))] pub std::primitive::i16);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveI32(#[validate(range(min = -2_147_483_648i32, max = 2_147_483_647i32))] pub std::primitive::i32);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveI64(#[validate(range(min = -9_223_372_036_854_775_808i64, max = 9_223_372_036_854_775_807i64))] pub std::primitive::i64);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveU8(#[validate(range(min = 0u8, max = 255u8))] pub std::primitive::u8);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveU16(#[validate(range(min = 0u16, max = 65_535u16))] pub std::primitive::u16);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveU32(#[validate(range(min = 0u32, max = 4_294_967_295u32))] pub std::primitive::u32);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveU64(#[validate(range(min = 0u64, max = 18_446_744_073_709_551_615u64))] pub std::primitive::u64);
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveF32(
     #[validate(range(min = -3.40282347E+38f32, max = 3.40282347E+38f32))] //todo maybe its not correct. https://doc.rust-lang.org/std/primitive.f32.html
     pub std::primitive::f32,
 );
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNumber,
+)]
 pub struct JsonStdPrimitiveF64(
     #[validate(range(min = -1.7976931348623157E+308f64, max = 1.7976931348623157E+308f64))] //todo maybe its not correct. https://doc.rust-lang.org/core/primitive.f64.html
     pub std::primitive::f64,
 );
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationBoolean)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationBoolean,
+)]
 pub struct JsonStdPrimitiveBool(pub std::primitive::bool);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationString)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationString,
+)]
 pub struct JsonStdStringString(pub std::string::String);
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveI8(pub std::option::Option<JsonStdPrimitiveI8>);
 //
 // impl<'de> serde::Deserialize<'de> for JsonStdOptionOptionStdPrimitiveI8OptionsToRead {
@@ -123,102 +315,762 @@ pub struct JsonStdOptionOptionStdPrimitiveI8(pub std::option::Option<JsonStdPrim
 //     }
 // }
 //
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveI16(pub std::option::Option<std::primitive::i16>);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveI32(pub std::option::Option<std::primitive::i32>);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveI64(pub std::option::Option<std::primitive::i64>);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveU8(pub std::option::Option<std::primitive::u8>);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveU16(pub std::option::Option<std::primitive::u16>);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveU32(pub std::option::Option<std::primitive::u32>);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveU64(pub std::option::Option<std::primitive::u64>);
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveF32(pub std::option::Option<std::primitive::f32>);
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableNumber,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveF64(pub std::option::Option<std::primitive::f64>);
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableBoolean)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableBoolean,
+)]
 pub struct JsonStdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableString)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableString,
+)]
 pub struct JsonStdOptionOptionStdStringString(pub std::option::Option<std::string::String>);
 
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveI8(pub std::vec::Vec<std::primitive::i8>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveI16(pub std::vec::Vec<std::primitive::i16>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveI32(pub std::vec::Vec<std::primitive::i32>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveI64(pub std::vec::Vec<std::primitive::i64>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveU16(pub std::vec::Vec<std::primitive::u16>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveU32(pub std::vec::Vec<std::primitive::u32>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveU64(pub std::vec::Vec<std::primitive::u64>);
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveF32(pub std::vec::Vec<std::primitive::f32>);
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNumber,
+)]
 pub struct JsonStdVecVecStdPrimitiveF64(pub std::vec::Vec<std::primitive::f64>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayBoolean)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayBoolean,
+)]
 pub struct JsonStdVecVecStdPrimitiveBool(pub std::vec::Vec<std::primitive::bool>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayString)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayString,
+)]
 pub struct JsonStdVecVecStdStringString(pub std::vec::Vec<std::string::String>);
 
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI8(pub std::option::Option<std::vec::Vec<std::primitive::i8>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI16(pub std::option::Option<std::vec::Vec<std::primitive::i16>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI32(pub std::option::Option<std::vec::Vec<std::primitive::i32>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI64(pub std::option::Option<std::vec::Vec<std::primitive::i64>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU8(pub std::option::Option<std::vec::Vec<std::primitive::u8>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU16(pub std::option::Option<std::vec::Vec<std::primitive::u16>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU32(pub std::option::Option<std::vec::Vec<std::primitive::u32>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU64(pub std::option::Option<std::vec::Vec<std::primitive::u64>>);
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF32(pub std::option::Option<std::vec::Vec<std::primitive::f32>>);
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNumber,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF64(pub std::option::Option<std::vec::Vec<std::primitive::f64>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayBoolean)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayBoolean,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveBool(pub std::option::Option<std::vec::Vec<std::primitive::bool>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayString)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayString,
+)]
 pub struct JsonStdOptionOptionStdVecVecStdStringString(pub std::option::Option<std::vec::Vec<std::string::String>>);
 
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI8(pub std::vec::Vec<std::option::Option<std::primitive::i8>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI16(pub std::vec::Vec<std::option::Option<std::primitive::i16>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI32(pub std::vec::Vec<std::option::Option<std::primitive::i32>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI64(pub std::vec::Vec<std::option::Option<std::primitive::i64>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU8(pub std::vec::Vec<std::option::Option<std::primitive::u8>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU16(pub std::vec::Vec<std::option::Option<std::primitive::u16>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU32(pub std::vec::Vec<std::option::Option<std::primitive::u32>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU64(pub std::vec::Vec<std::option::Option<std::primitive::u64>>);
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF32(pub std::vec::Vec<std::option::Option<std::primitive::f32>>);
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableNumber,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF64(pub std::vec::Vec<std::option::Option<std::primitive::f64>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableBoolean)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableBoolean,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveBool(pub std::vec::Vec<std::option::Option<std::primitive::bool>>);
-#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath, postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic, postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader, postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableString)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
+    postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlVecOptionPrimitiveFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationArrayNullableString,
+)]
 pub struct JsonStdVecVecStdOptionOptionStdStringString(pub std::vec::Vec<std::option::Option<std::string::String>>);
 
 #[derive(
@@ -234,7 +1086,7 @@ pub struct JsonStdVecVecStdOptionOptionStdStringString(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>);
 #[derive(
@@ -250,7 +1102,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(pub std::op
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>);
 #[derive(
@@ -266,7 +1118,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>);
 #[derive(
@@ -282,7 +1134,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>);
 #[derive(
@@ -298,7 +1150,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>);
 #[derive(
@@ -314,7 +1166,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8(pub std::op
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>);
 #[derive(
@@ -330,7 +1182,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>);
 #[derive(
@@ -346,7 +1198,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>);
 #[derive(
@@ -361,7 +1213,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>);
 #[derive(
@@ -376,7 +1228,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableNumber,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>);
 #[derive(
@@ -392,7 +1244,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableBoolean
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableBoolean,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>);
 #[derive(
@@ -408,7 +1260,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool(pub std::
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlOptionVecOptionPrimitiveFieldReader,
-    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableString
+    postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationNullableArrayNullableString,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
 
@@ -436,7 +1288,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateCommonPrimitiveJsonPostgresqlLogic,
     // postgresql_crud_types_macro_logic_reuse::GenerateJsonPostgresqlPrimitiveFieldReader, //todo mannually implement ToSchema for JsonUuidOptionsToRead
-    // postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationString
+    // postgresql_crud_types_macro_logic_reuse::GenerateGetJsonRepresentationString,
 )]
 pub struct JsonUuid(pub uuid::Uuid);
 impl schemars::JsonSchema for JsonUuid {
