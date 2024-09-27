@@ -4315,23 +4315,3 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
     }
 }
 ////////////////////////////////
-impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for GenericCatToCreate {
-    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("");
-        match self.std_primitive_i32.json_create_try_generate_bind_increments(increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'std_primitive_i32',{value},"));
-            }
-            Err(error) => {
-                return Err(error);//todo maybe wrap into own generic error type
-            }
-        }
-        let _ = increments.pop();
-        Ok(format!("jsonb_build_object({increments})"))
-    }
-    fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = self.std_primitive_i32.json_create_bind_value_to_query(query);
-        query
-    }
-}
-
