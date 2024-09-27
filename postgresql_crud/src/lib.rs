@@ -539,6 +539,8 @@ pub use postgresql_crud_common::generate_postgresql_query_part::AllEnumVariantsA
 pub use postgresql_crud_common::generate_postgresql_query_part::ArrayObjectElementOrSimple;
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToRead;
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToUpdate;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonCreateBindQuery;
 pub use postgresql_crud_common::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI16;

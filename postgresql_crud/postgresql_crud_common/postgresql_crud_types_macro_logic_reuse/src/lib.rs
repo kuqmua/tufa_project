@@ -445,6 +445,7 @@ fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec
         | StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionGenericFullTypePath
         | StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionGenericFullTypePath => true,
     };
+    //todo remove generic later
     let impl_maybe_generic_token_stream = if is_generic {
         quote::quote! {<T>}
     } else {
@@ -593,11 +594,33 @@ pub fn generate_common_primitive_json_postgresql_logic(input: proc_macro::TokenS
             }
          }
     };
+    let impl_json_create_bind_query_for_ident_to_create_token_stream = {
+        let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
+        //maybe its not correct to bind array of json. maybe should use bing each element of array instead
+        quote::quote! {
+            impl<'a> JsonCreateBindQuery<'a> for #ident_to_create_upper_camel_case_token_stream {
+                fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                    match increment.checked_add(1) {
+                        Some(incr) => {
+                            *increment = incr;
+                            Ok(format!("${increment}"))
+                        }
+                        None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
+                    }
+                }
+                fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    query = query.bind(sqlx::types::Json(self.0.0));
+                    query
+                }
+            }
+        }
+    };
     let generated = quote::quote!{
         #ident_to_create_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
         #ident_options_to_read_token_stream
         #impl_std_convert_from_ident_for_ident_options_to_read_token_stream
+        #impl_json_create_bind_query_for_ident_to_create_token_stream
     };
     generated.into()
 }
