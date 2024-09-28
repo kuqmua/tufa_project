@@ -621,13 +621,8 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonGeneric;
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionGeneric;
-
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecGenericWithId;
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecGenericWithId;
-
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuid;
+
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveBoolToCreate;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF32ToCreate;
@@ -709,18 +704,18 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidToCreate;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveBoolOptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF32OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF64OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI16OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI32OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI64OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI8OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU16OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU32OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU64OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU8OptionsToRead;
-pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdStringStringOptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveBoolOptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF32OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF64OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI16OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI32OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI64OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveI8OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU16OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU32OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU64OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveU8OptionsToRead;
+// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdStringStringOptionsToRead;
 
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveBoolOptionsToRead;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdPrimitiveF32OptionsToRead;
@@ -786,13 +781,8 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdStringStr
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64OptionsToRead;
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8OptionsToRead;
 
-//
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonGenericOptionsToRead;
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionGenericOptionsToRead;
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdVecVecGenericWithIdOptionsToRead;
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecGenericWithIdOptionsToRead;
-
 // pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidOptionsToRead;
+
 
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveBoolFieldReader;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdPrimitiveF32FieldReader;
@@ -872,7 +862,7 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOpt
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8FieldReader;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringStringFieldReader;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidFieldReader;
+pub use postgresql_crud_common::generate_postgresql_query_part::JsonUuidFieldReader;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGenericFields;
 pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonId;
