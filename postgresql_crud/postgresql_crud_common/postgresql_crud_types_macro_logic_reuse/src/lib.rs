@@ -1085,10 +1085,10 @@ fn generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_quer
     )
 }
 ///
-#[proc_macro_derive(GenerateGetJsonRepresentationNumber)]
-pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNumber";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1104,10 +1104,10 @@ pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationBoolean)]
-pub fn generate_get_json_representation_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderBoolean)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationBoolean";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1123,10 +1123,10 @@ pub fn generate_get_json_representation_boolean(input: proc_macro::TokenStream) 
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationString)]
-pub fn generate_get_json_representation_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderString)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationString";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1142,10 +1142,10 @@ pub fn generate_get_json_representation_string(input: proc_macro::TokenStream) -
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableNumber)]
-pub fn generate_get_json_representation_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableNumber";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1161,10 +1161,10 @@ pub fn generate_get_json_representation_nullable_number(input: proc_macro::Token
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableBoolean)]
-pub fn generate_get_json_representation_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableBoolean)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableBoolean";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1180,10 +1180,10 @@ pub fn generate_get_json_representation_nullable_boolean(input: proc_macro::Toke
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableString)]
-pub fn generate_get_json_representation_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableString)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableString";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1199,10 +1199,10 @@ pub fn generate_get_json_representation_nullable_string(input: proc_macro::Token
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationArrayNumber)]
-pub fn generate_get_json_representation_array_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNumber";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1220,10 +1220,10 @@ pub fn generate_get_json_representation_array_number(input: proc_macro::TokenStr
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationArrayBoolean)]
-pub fn generate_get_json_representation_array_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayBoolean)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayBoolean";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1241,10 +1241,10 @@ pub fn generate_get_json_representation_array_boolean(input: proc_macro::TokenSt
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationArrayString)]
-pub fn generate_get_json_representation_array_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayString)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayString";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1262,10 +1262,10 @@ pub fn generate_get_json_representation_array_string(input: proc_macro::TokenStr
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNumber)]
-pub fn generate_get_json_representation_nullable_array_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_array_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNumber";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1283,10 +1283,10 @@ pub fn generate_get_json_representation_nullable_array_number(input: proc_macro:
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayBoolean)]
-pub fn generate_get_json_representation_nullable_array_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayBoolean)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_array_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayBoolean";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1304,10 +1304,10 @@ pub fn generate_get_json_representation_nullable_array_boolean(input: proc_macro
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayString)]
-pub fn generate_get_json_representation_nullable_array_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayString)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_array_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayString";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1325,10 +1325,10 @@ pub fn generate_get_json_representation_nullable_array_string(input: proc_macro:
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationArrayNullableNumber)]
-pub fn generate_get_json_representation_array_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableNumber";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1346,10 +1346,10 @@ pub fn generate_get_json_representation_array_nullable_number(input: proc_macro:
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationArrayNullableBoolean)]
-pub fn generate_get_json_representation_array_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableBoolean)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableBoolean";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1367,10 +1367,10 @@ pub fn generate_get_json_representation_array_nullable_boolean(input: proc_macro
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationArrayNullableString)]
-pub fn generate_get_json_representation_array_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableString)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationArrayNullableString";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1388,10 +1388,10 @@ pub fn generate_get_json_representation_array_nullable_string(input: proc_macro:
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNullableNumber)]
-pub fn generate_get_json_representation_nullable_array_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_array_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableNumber";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1409,10 +1409,10 @@ pub fn generate_get_json_representation_nullable_array_nullable_number(input: pr
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNullableBoolean)]
-pub fn generate_get_json_representation_nullable_array_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableBoolean)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_array_nullable_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableBoolean";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableBoolean";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1430,10 +1430,10 @@ pub fn generate_get_json_representation_nullable_array_nullable_boolean(input: p
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateGetJsonRepresentationNullableArrayNullableString)]
-pub fn generate_get_json_representation_nullable_array_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableString)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_array_nullable_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateGetJsonRepresentationNullableArrayNullableString";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableString";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
