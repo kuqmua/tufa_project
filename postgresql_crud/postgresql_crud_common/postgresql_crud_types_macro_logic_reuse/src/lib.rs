@@ -625,9 +625,119 @@ fn pagination_content_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{{ pagination: Pagination }}
 }
 
-//
-
-//
+    // let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
+    //      quote::quote!{
+    //         impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
+    //             fn from(value: #ident) -> Self {
+    //                 Self(value.0)
+    //             }
+    //         }
+    //      }
+    // };
+    // let impl_serde_deserialize_for_ident_options_to_read_token_stream = {
+    //     let ident_options_to_read_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseStringified::impl_quote_to_tokens_self_options_to_read_upper_camel_case_stringified(&ident);
+    //     let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    //     let tuple_struct_ident_options_to_read_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+    //         &format!("tuple struct {ident_options_to_read_upper_camel_case_stringified}"),
+    //         &proc_macro_name_upper_camel_case_ident_stringified
+    //     );
+    //     let tuple_struct_ident_options_to_read_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+    //         &format!("tuple struct {ident_options_to_read_upper_camel_case_stringified} with 1 element"),
+    //         &proc_macro_name_upper_camel_case_ident_stringified
+    //     );
+    //     let ident_options_to_read_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+    //         &ident_options_to_read_upper_camel_case_stringified,
+    //         &proc_macro_name_upper_camel_case_ident_stringified
+    //     );
+    //     quote::quote!{
+    //         impl<'de> serde::Deserialize<'de> for #ident_options_to_read_upper_camel_case_token_stream {
+    //             fn deserialize<__D>(
+    //                 __deserializer: __D,
+    //             ) -> serde::__private::Result<Self, __D::Error>
+    //             where
+    //                 __D: serde::Deserializer<'de>,
+    //             {
+    //                 #[doc(hidden)]
+    //                 struct __Visitor<'de> {
+    //                     marker: serde::__private::PhantomData<#ident_options_to_read_upper_camel_case_token_stream>,
+    //                     lifetime: serde::__private::PhantomData<&'de ()>,
+    //                 }
+    //                 impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+    //                     type Value = #ident_options_to_read_upper_camel_case_token_stream;
+    //                     fn expecting(
+    //                         &self,
+    //                         __formatter: &mut serde::__private::Formatter<'_>,
+    //                     ) -> serde::__private::fmt::Result {
+    //                         serde::__private::Formatter::write_str(
+    //                             __formatter,
+    //                             #tuple_struct_ident_options_to_read_double_quotes_token_stream,
+    //                         )
+    //                     }
+    //                     #[inline]
+    //                     fn visit_newtype_struct<__E>(
+    //                         self,
+    //                         __e: __E,
+    //                     ) -> serde::__private::Result<Self::Value, __E::Error>
+    //                     where
+    //                         __E: serde::Deserializer<'de>,
+    //                     {
+    //                         let __field0: std::result::Result<
+    //                             #first_field_unnamed_type,
+    //                             std::string::String,
+    //                         > = <std::result::Result<
+    //                             #first_field_unnamed_type,
+    //                             std::string::String,
+    //                         > as serde::Deserialize>::deserialize(__e)?;
+    //                         serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream(match __field0 {
+    //                             Ok(value) => value,
+    //                             Err(error) => {
+    //                                 return Err(serde::de::Error::custom(error));
+    //                             }
+    //                         }))
+    //                     }
+    //                     #[inline]
+    //                     fn visit_seq<__A>(
+    //                         self,
+    //                         mut __seq: __A,
+    //                     ) -> serde::__private::Result<Self::Value, __A::Error>
+    //                     where
+    //                         __A: serde::de::SeqAccess<'de>,
+    //                     {
+    //                         let __field0 = match serde::de::SeqAccess::next_element::<
+    //                             std::result::Result<#first_field_unnamed_type, std::string::String>,
+    //                         >(&mut __seq)? {
+    //                             serde::__private::Some(__value) => __value,
+    //                             serde::__private::None => {
+    //                                 return serde::__private::Err(
+    //                                     serde::de::Error::invalid_length(
+    //                                         0usize,
+    //                                         &#tuple_struct_ident_options_to_read_with_1_element_double_quotes_token_stream,
+    //                                     ),
+    //                                 );
+    //                             }
+    //                         };
+    //                         serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream(match __field0 {
+    //                             Ok(value) => value,
+    //                             Err(error) => {
+    //                                 return Err(serde::de::Error::custom(error));
+    //                             }
+    //                         }))
+    //                     }
+    //                 }
+    //                 serde::Deserializer::deserialize_newtype_struct(
+    //                     __deserializer,
+    //                     #ident_options_to_read_upper_camel_case_double_quotes_token_stream,
+    //                     __Visitor {
+    //                         marker: serde::__private::PhantomData::<
+    //                             #ident_options_to_read_upper_camel_case_token_stream,
+    //                         >,
+    //                         lifetime: serde::__private::PhantomData,
+    //                     },
+    //                 )
+    //             }
+    //         }
+    //     }
+    // };
 
 #[proc_macro_derive(GenerateJsonPostgresqlFullTypePathFieldReader)]
 pub fn generate_json_postgresql_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -635,147 +745,7 @@ pub fn generate_json_postgresql_full_type_path_field_reader(input: proc_macro::T
     let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let data_struct = match syn_derive_input.data {
-        syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works on Struct"),
-    };
-    let fields_unnamed = match data_struct.fields {
-        syn::Fields::Unnamed(value) => value.unnamed,
-        syn::Fields::Named(_) | syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works with syn::Fields::Unnamed"),
-    };
-    assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed !== 1");
-    let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
-    let first_field_unnamed_type = &first_field_unnamed.ty;
-    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &empty_content_token_stream());
-
-    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
-    let ident_options_to_read_token_stream = {
-        quote::quote!{
-            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq does not implemented for float//Copy does not implemented for String
-            pub struct #ident_options_to_read_upper_camel_case_token_stream(pub #first_field_unnamed_type);
-        }
-    };
-    let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
-         quote::quote!{
-            impl std::convert::From<#ident> for #ident_options_to_read_upper_camel_case_token_stream {
-                fn from(value: #ident) -> Self {
-                    Self(value.0)
-                }
-            }
-         }
-    };
-    let impl_serde_deserialize_for_ident_options_to_read_token_stream = {
-        let ident_options_to_read_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseStringified::impl_quote_to_tokens_self_options_to_read_upper_camel_case_stringified(&ident);
-        let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
-        let tuple_struct_ident_options_to_read_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("tuple struct {ident_options_to_read_upper_camel_case_stringified}"),
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let tuple_struct_ident_options_to_read_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("tuple struct {ident_options_to_read_upper_camel_case_stringified} with 1 element"),
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let ident_options_to_read_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &ident_options_to_read_upper_camel_case_stringified,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        quote::quote!{
-            impl<'de> serde::Deserialize<'de> for #ident_options_to_read_upper_camel_case_token_stream {
-                fn deserialize<__D>(
-                    __deserializer: __D,
-                ) -> serde::__private::Result<Self, __D::Error>
-                where
-                    __D: serde::Deserializer<'de>,
-                {
-                    #[doc(hidden)]
-                    struct __Visitor<'de> {
-                        marker: serde::__private::PhantomData<#ident_options_to_read_upper_camel_case_token_stream>,
-                        lifetime: serde::__private::PhantomData<&'de ()>,
-                    }
-                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #ident_options_to_read_upper_camel_case_token_stream;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut serde::__private::Formatter<'_>,
-                        ) -> serde::__private::fmt::Result {
-                            serde::__private::Formatter::write_str(
-                                __formatter,
-                                #tuple_struct_ident_options_to_read_double_quotes_token_stream,
-                            )
-                        }
-                        #[inline]
-                        fn visit_newtype_struct<__E>(
-                            self,
-                            __e: __E,
-                        ) -> serde::__private::Result<Self::Value, __E::Error>
-                        where
-                            __E: serde::Deserializer<'de>,
-                        {
-                            let __field0: std::result::Result<
-                                #first_field_unnamed_type,
-                                std::string::String,
-                            > = <std::result::Result<
-                                #first_field_unnamed_type,
-                                std::string::String,
-                            > as serde::Deserialize>::deserialize(__e)?;
-                            serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream(match __field0 {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(serde::de::Error::custom(error));
-                                }
-                            }))
-                        }
-                        #[inline]
-                        fn visit_seq<__A>(
-                            self,
-                            mut __seq: __A,
-                        ) -> serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: serde::de::SeqAccess<'de>,
-                        {
-                            let __field0 = match serde::de::SeqAccess::next_element::<
-                                std::result::Result<#first_field_unnamed_type, std::string::String>,
-                            >(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(
-                                        serde::de::Error::invalid_length(
-                                            0usize,
-                                            &#tuple_struct_ident_options_to_read_with_1_element_double_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            serde::__private::Ok(#ident_options_to_read_upper_camel_case_token_stream(match __field0 {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(serde::de::Error::custom(error));
-                                }
-                            }))
-                        }
-                    }
-                    serde::Deserializer::deserialize_newtype_struct(
-                        __deserializer,
-                        #ident_options_to_read_upper_camel_case_double_quotes_token_stream,
-                        __Visitor {
-                            marker: serde::__private::PhantomData::<
-                                #ident_options_to_read_upper_camel_case_token_stream,
-                            >,
-                            lifetime: serde::__private::PhantomData,
-                        },
-                    )
-                }
-            }
-        }
-    };
-    let generated = quote::quote!{
-        #pub_struct_ident_field_reader_token_stream
-
-        #ident_options_to_read_token_stream
-        #impl_std_convert_from_ident_for_ident_options_to_read_token_stream
-        #impl_serde_deserialize_for_ident_options_to_read_token_stream
-    };
+    let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &empty_content_token_stream());
     generated.into()
 }
 
@@ -785,6 +755,57 @@ pub fn generate_json_postgresql_std_option_option_full_type_path_field_reader(in
     let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &empty_content_token_stream());
+    generated.into()
+}
+
+#[proc_macro_derive(GenerateJsonPostgresqlStdVecVecFullTypePathFieldReader)]
+pub fn generate_json_postgresql_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdVecVecFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
+    generated.into()
+}
+
+#[proc_macro_derive(GenerateJsonPostgresqlStdOptionOptionStdVecVecFullTypePathFieldReader)]
+pub fn generate_json_postgresql_std_option_option_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionStdVecVecFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
+    generated.into()
+}
+
+#[proc_macro_derive(GenerateJsonPostgresqlStdVecVecStdOptionOptionFullTypePathFieldReader)]
+pub fn generate_json_postgresql_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdVecVecStdOptionOptionFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
+    generated.into()
+}
+
+#[proc_macro_derive(GenerateJsonPostgresqlStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader)]
+pub fn generate_json_postgresql_std_option_option_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
+    generated.into()
+}
+
+
+#[proc_macro_derive(GenerateIdentOptionsToRead)]
+pub fn generate_ident_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateIdentOptionsToRead";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
@@ -797,98 +818,15 @@ pub fn generate_json_postgresql_std_option_option_full_type_path_field_reader(in
     assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed !== 1");
     let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
-    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &empty_content_token_stream());
     let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
-    let ident_options_to_read_token_stream = {
-        quote::quote!{
-            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq does not implemented for float//Copy does not implemented for String
-            pub struct #ident_options_to_read_upper_camel_case_token_stream(pub #first_field_unnamed_type);
-        }
-    };
-    let impl_serde_deserialize_for_ident_options_to_read_token_stream = {
-        // let ident_options_to_read_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseStringified::impl_quote_to_tokens_self_options_to_read_upper_camel_case_stringified(&ident);
-        // let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
-        // let tuple_struct_ident_options_to_read_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-        //     &format!("tuple struct {ident_options_to_read_upper_camel_case_stringified}"),
-        //     &proc_macro_name_upper_camel_case_ident_stringified
-        // );
-        // let tuple_struct_ident_options_to_read_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-        //     &format!("tuple struct {ident_options_to_read_upper_camel_case_stringified} with 1 element"),
-        //     &proc_macro_name_upper_camel_case_ident_stringified
-        // );
-        // let ident_options_to_read_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-        //     &ident_options_to_read_upper_camel_case_stringified,
-        //     &proc_macro_name_upper_camel_case_ident_stringified
-        // );
-        quote::quote!{
-  
-        }
-    };
     let generated = quote::quote!{
-        #pub_struct_ident_field_reader_token_stream
-
-        #ident_options_to_read_token_stream
-        // #impl_serde_deserialize_for_ident_options_to_read_token_stream
+        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq does not implemented for float//Copy does not implemented for String
+        pub struct #ident_options_to_read_upper_camel_case_token_stream(pub #first_field_unnamed_type);
     };
     generated.into()
 }
 
-#[proc_macro_derive(GenerateJsonPostgresqlStdVecVecFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdVecVecFullTypePathFieldReader";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
-    let generated = quote::quote!{
-        #pub_struct_ident_field_reader_token_stream
-    };
-    generated.into()
-}
 
-#[proc_macro_derive(GenerateJsonPostgresqlStdOptionOptionStdVecVecFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_option_option_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionStdVecVecFullTypePathFieldReader";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
-    let generated = quote::quote!{
-        #pub_struct_ident_field_reader_token_stream
-    };
-    generated.into()
-}
-
-#[proc_macro_derive(GenerateJsonPostgresqlStdVecVecStdOptionOptionFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdVecVecStdOptionOptionFullTypePathFieldReader";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
-    let generated = quote::quote!{
-        #pub_struct_ident_field_reader_token_stream
-    };
-    generated.into()
-}
-
-#[proc_macro_derive(GenerateJsonPostgresqlStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_option_option_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    // let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let pub_struct_ident_field_reader_token_stream = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
-    let generated = quote::quote!{
-        #pub_struct_ident_field_reader_token_stream
-    };
-    generated.into()
-}
-///
 fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
     ident: &syn::Ident,
     content_token_stream: &proc_macro2::TokenStream,
