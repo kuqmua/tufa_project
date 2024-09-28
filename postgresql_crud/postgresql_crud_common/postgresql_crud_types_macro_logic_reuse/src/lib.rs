@@ -528,30 +528,30 @@ pub fn generate_generate_ident_to_create(input: proc_macro::TokenStream) -> proc
             pub struct #ident_to_create_upper_camel_case_token_stream(pub #first_field_unnamed_type);
         }
     };
-
-    // let impl_json_create_bind_query_for_ident_to_create_token_stream = {
-    //     let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
-    //     //maybe its not correct to bind array of json. maybe should use bing each element of array instead
-    //     quote::quote! {
-    //         impl<'a> JsonCreateBindQuery<'a> for #ident_to_create_upper_camel_case_token_stream {
-    //             fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
-    //                 match increment.checked_add(1) {
-    //                     Some(incr) => {
-    //                         *increment = incr;
-    //                         Ok(format!("${increment}"))
-    //                     }
-    //                     None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
-    //                 }
-    //             }
-    //             fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-    //                 query = query.bind(sqlx::types::Json(self.0.0));
-    //                 query
-    //             }
-    //         }
-    //     }
-    // };
+    let impl_json_create_bind_query_for_ident_to_create_token_stream = {
+        let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
+        //maybe its not correct to bind array of json. maybe should use bing each element of array instead
+        quote::quote! {
+            impl<'a> JsonCreateBindQuery<'a> for #ident_to_create_upper_camel_case_token_stream {
+                fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                    match increment.checked_add(1) {
+                        Some(incr) => {
+                            *increment = incr;
+                            Ok(format!("${increment}"))
+                        }
+                        None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
+                    }
+                }
+                fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    query = query.bind(sqlx::types::Json(self.0));
+                    query
+                }
+            }
+        }
+    };
     let generated = quote::quote!{
         #ident_to_create_token_stream
+        #impl_json_create_bind_query_for_ident_to_create_token_stream
     };
     generated.into()
 }
