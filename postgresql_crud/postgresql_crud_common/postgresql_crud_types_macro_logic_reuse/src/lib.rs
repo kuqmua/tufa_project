@@ -1100,11 +1100,6 @@ pub fn generate_get_json_representation_number(input: proc_macro::TokenStream) -
         ))
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::Number
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1124,11 +1119,6 @@ pub fn generate_get_json_representation_boolean(input: proc_macro::TokenStream) 
         ))
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::Boolean
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1148,11 +1138,6 @@ pub fn generate_get_json_representation_string(input: proc_macro::TokenStream) -
         ))
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::String
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1172,11 +1157,6 @@ pub fn generate_get_json_representation_nullable_number(input: proc_macro::Token
         ))
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableNumber
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1196,11 +1176,6 @@ pub fn generate_get_json_representation_nullable_boolean(input: proc_macro::Toke
         ))
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableBoolean
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1220,11 +1195,6 @@ pub fn generate_get_json_representation_nullable_string(input: proc_macro::Token
         ))
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableString
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1246,11 +1216,6 @@ pub fn generate_get_json_representation_array_number(input: proc_macro::TokenStr
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::ArrayNumber
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1272,11 +1237,6 @@ pub fn generate_get_json_representation_array_boolean(input: proc_macro::TokenSt
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::ArrayBoolean
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1298,11 +1258,6 @@ pub fn generate_get_json_representation_array_string(input: proc_macro::TokenStr
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::ArrayString
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1324,11 +1279,6 @@ pub fn generate_get_json_representation_nullable_array_number(input: proc_macro:
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableArrayNumber
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1350,11 +1300,6 @@ pub fn generate_get_json_representation_nullable_array_boolean(input: proc_macro
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableArrayBoolean
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1376,11 +1321,6 @@ pub fn generate_get_json_representation_nullable_array_string(input: proc_macro:
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableArrayString
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1402,11 +1342,6 @@ pub fn generate_get_json_representation_array_nullable_number(input: proc_macro:
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::ArrayNullableNumber
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1428,11 +1363,6 @@ pub fn generate_get_json_representation_array_nullable_boolean(input: proc_macro
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::ArrayNullableBoolean
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1454,11 +1384,6 @@ pub fn generate_get_json_representation_array_nullable_string(input: proc_macro:
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::ArrayNullableString
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1480,11 +1405,6 @@ pub fn generate_get_json_representation_nullable_array_nullable_number(input: pr
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableArrayNullableNumber
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1506,11 +1426,6 @@ pub fn generate_get_json_representation_nullable_array_nullable_boolean(input: p
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableArrayNullableBoolean
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()
@@ -1532,11 +1447,6 @@ pub fn generate_get_json_representation_nullable_array_nullable_string(input: pr
         )
     );
     let generated = quote::quote!{
-        impl GetJsonRepresentation for #ident {
-            fn get_json_representation() -> JsonRepresentation {
-                JsonRepresentation::NullableArrayNullableString
-            }
-        }
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
     };
     generated.into()

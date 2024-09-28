@@ -1756,39 +1756,6 @@ pub trait GeneratePostgresqlQueryPartFieldToRead {
     ) -> std::string::String;
 }
 
-//maybe remove it - now useless
-#[derive(Debug)]
-pub enum JsonRepresentation {
-    Number,
-    Boolean,
-    String,
-    NullableNumber,
-    NullableBoolean,
-    NullableString,
-    ArrayNumber,
-    ArrayString,
-    ArrayBoolean,
-    NullableArrayNumber,
-    NullableArrayString,
-    NullableArrayBoolean,
-    ArrayNullableNumber,
-    ArrayNullableString,
-    ArrayNullableBoolean,
-    NullableArrayNullableNumber,
-    NullableArrayNullableString,
-    NullableArrayNullableBoolean,
-    Object,
-    NullableObject,
-    ArrayObject,
-    NullableArrayObject
-    //ArrayNullableObject - not suported coz decided what every element must contain id
-    //NullableArrayNullableObject - not suported coz decided what every element must contain id
-}
-
-pub trait GetJsonRepresentation {
-    fn get_json_representation() -> JsonRepresentation;
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct Pagination {
     limit: std::primitive::u64,
