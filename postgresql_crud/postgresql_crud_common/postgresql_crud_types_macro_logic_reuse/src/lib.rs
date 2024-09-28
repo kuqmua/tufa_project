@@ -738,61 +738,61 @@ fn pagination_content_token_stream() -> proc_macro2::TokenStream {
     //         }
     //     }
     // };
-
-#[proc_macro_derive(GenerateJsonPostgresqlFullTypePathFieldReader)]
-pub fn generate_json_postgresql_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//here
+#[proc_macro_derive(GenerateFullTypePathFieldReader)]
+pub fn generate_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlFullTypePathFieldReader";
+    let proc_macro_name_upper_camel_case = "GenerateFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &empty_content_token_stream());
     generated.into()
 }
 
-#[proc_macro_derive(GenerateJsonPostgresqlStdOptionOptionFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateStdOptionOptionFullTypePathFieldReader)]
+pub fn generate_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionFullTypePathFieldReader";
+    let proc_macro_name_upper_camel_case = "GenerateStdOptionOptionFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &empty_content_token_stream());
     generated.into()
 }
 
-#[proc_macro_derive(GenerateJsonPostgresqlStdVecVecFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateStdVecVecFullTypePathFieldReader)]
+pub fn generate_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdVecVecFullTypePathFieldReader";
+    let proc_macro_name_upper_camel_case = "GenerateStdVecVecFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
     generated.into()
 }
 
-#[proc_macro_derive(GenerateJsonPostgresqlStdOptionOptionStdVecVecFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_option_option_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateStdOptionOptionStdVecVecFullTypePathFieldReader)]
+pub fn generate_std_option_option_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionStdVecVecFullTypePathFieldReader";
+    let proc_macro_name_upper_camel_case = "GenerateStdOptionOptionStdVecVecFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
     generated.into()
 }
 
-#[proc_macro_derive(GenerateJsonPostgresqlStdVecVecStdOptionOptionFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateStdVecVecStdOptionOptionFullTypePathFieldReader)]
+pub fn generate_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdVecVecStdOptionOptionFullTypePathFieldReader";
+    let proc_macro_name_upper_camel_case = "GenerateStdVecVecStdOptionOptionFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
     generated.into()
 }
 
-#[proc_macro_derive(GenerateJsonPostgresqlStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader)]
-pub fn generate_json_postgresql_std_option_option_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader)]
+pub fn generate_std_option_option_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateJsonPostgresqlStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader";
+    let proc_macro_name_upper_camel_case = "GenerateStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = generate_pub_struct_ident_field_reader_token_stream(&ident, &pagination_content_token_stream());
@@ -825,6 +825,10 @@ pub fn generate_ident_options_to_read(input: proc_macro::TokenStream) -> proc_ma
     };
     generated.into()
 }
+// impl_std_convert_from_ident_for_ident_options_to_read_token_stream
+
+//
+
 
 
 fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
