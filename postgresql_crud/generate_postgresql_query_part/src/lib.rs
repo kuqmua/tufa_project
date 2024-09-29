@@ -6499,10 +6499,52 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let ident_to_create_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream);
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(&ident_to_create_upper_camel_case_token_stream);
         let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, false);
-        //
-        // println!("{impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream}");
-        // let impl_postgresql_crud_bind_query_for_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, false);
-        //
+        let impl_postgresql_crud_bind_query_for_ident_to_create_token_stream = {
+            let try_generate_bind_increments_token_stream = vec_syn_field.iter().map(|element| {
+                let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                });
+                let element_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("'{element_ident}',{{value}},"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                quote::quote!{
+                    match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.#element_ident, increment) {
+                        Ok(value) => {
+                            increments.push_str(&format!(#element_ident_value_comma_double_quotes_token_stream));
+                        }
+                        Err(error) => {
+                            return Err(error.into());
+                        }
+                    }
+                }
+            });
+            let bind_value_to_query_token_stream = vec_syn_field.iter().map(|element| {
+                let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                });
+                quote::quote!{
+                    query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.#element_ident, query);
+                }
+            });
+            quote::quote!{
+                impl<'a> postgresql_crud::BindQuery<'a> for #ident_to_create_upper_camel_case_token_stream {
+                    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                        todo!()
+                    }
+                    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                        let mut increments = std::string::String::from("");
+                        #(#try_generate_bind_increments_token_stream)*
+                        let _ = increments.pop();
+                        Ok(format!("jsonb_build_object({increments})"))
+                    }
+                    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        #(#bind_value_to_query_token_stream)*
+                        query
+                    }
+                }
+            }
+        };
         quote::quote!{
             #impl_std_fmt_display_for_ident_token_stream
             #ident_field_reader_token_stream
@@ -6525,7 +6567,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
             #impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream
             // //todo impl postgresql_crud::CheckIdExistsInJsonGenericFields for Something
-            // // //todo 
+            #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
         }
     };
 

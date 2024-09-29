@@ -300,11 +300,11 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    // pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
-    // pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
+    pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
+    pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
-    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
-    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
@@ -4257,130 +4257,3 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
-impl<'a> postgresql_crud::BindQuery<'a> for Something {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        //implementation not necessary
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
-        }
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
-        }
-        // Ok(())
-        todo!()
-    }
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::default(); //'id', to_jsonb(gen_random_uuid()),
-                                                             // // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-                                                             // pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-                                                             // pub std_vec_vec_generic: postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("'std_primitive_i8',${increment},"));
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
-        }
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("'std_vec_vec_generic',${increment},"));
-            }
-            None => {
-                return Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
-        }
-        let _ = increments.pop();
-        Ok(format!("jsonb_build_object({increments})"))
-    }
-    fn bind_value_to_query(
-        self,
-        // mut
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        // query = query.bind(sqlx::types::Json(self.std_primitive_i8.0));
-        // query = query.bind(sqlx::types::Json(self.std_vec_vec_generic_with_id.0));
-        // query
-        todo!()
-    }
-}
-////////////////////////////////
-impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
-    }
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::from("");
-        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_primitive_i8, increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'std_primitive_i8',{value},"));
-            }
-            Err(error) => {
-                return Err(error.into());
-            }
-        }
-        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_option_option_std_primitive_i8, increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'std_option_option_std_primitive_i8',{value},"));
-            }
-            Err(error) => {
-                return Err(error.into());
-            }
-        }
-        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_vec_vec_std_primitive_i8, increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'std_vec_vec_std_primitive_i8',{value},"));
-            }
-            Err(error) => {
-                return Err(error.into());
-            }
-        }
-        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_option_option_std_vec_vec_std_primitive_i8, increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'std_option_option_std_vec_vec_std_primitive_i8',{value},"));
-            }
-            Err(error) => {
-                return Err(error.into());
-            }
-        }
-        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_vec_vec_std_option_option_std_primitive_i8, increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'std_vec_vec_std_option_option_std_primitive_i8',{value},"));
-            }
-            Err(error) => {
-                return Err(error.into());
-            }
-        }
-        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_option_option_std_vec_vec_std_option_option_std_primitive_i8, increment) {
-            Ok(value) => {
-                increments.push_str(&format!("'std_option_option_std_vec_vec_std_option_option_std_primitive_i8',{value},"));
-            }
-            Err(error) => {
-                return Err(error.into());
-            }
-        }
-        let _ = increments.pop();
-        Ok(format!("jsonb_build_object({increments})"))
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_primitive_i8, query);
-        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_option_option_std_primitive_i8, query);
-        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_vec_vec_std_primitive_i8, query);
-        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_option_option_std_vec_vec_std_primitive_i8, query);
-        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_vec_vec_std_option_option_std_primitive_i8, query);
-        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_option_option_std_vec_vec_std_option_option_std_primitive_i8, query);
-        query
-    }
-}
