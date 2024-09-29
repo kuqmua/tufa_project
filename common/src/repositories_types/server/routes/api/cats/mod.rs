@@ -1,54 +1,55 @@
 mod f;
 
-#[derive(Debug
-    // , postgresql_crud::GeneratePostgresqlCrud
+#[derive(
+    Debug,
+    postgresql_crud::GeneratePostgresqlCrud
 )]
-// #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
-// #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
-// #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
-// #[postgresql_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
-// #[postgresql_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
-// #[postgresql_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
-// #[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
-// #[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
-// #[postgresql_crud::common_additional_error_variants{
-//     enum CommonAdditionalErrorVariants {
-//         CheckCommit {
-//             #[eo_error_occurence]
-//             check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
-//             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//         },
-//     }
-// }]
-// #[postgresql_crud::create_many_additional_route_logic{
-//     println!("kekw");
-// }]
-// #[postgresql_crud::create_one_additional_route_logic{}]
-// #[postgresql_crud::read_many_additional_route_logic{}]
-// #[postgresql_crud::read_one_additional_route_logic{}]
-// #[postgresql_crud::update_many_additional_route_logic{}]
-// #[postgresql_crud::update_one_additional_route_logic{}]
-// #[postgresql_crud::delete_many_additional_route_logic{}]
-// #[postgresql_crud::delete_one_additional_route_logic{}]
-// #[postgresql_crud::common_additional_route_logic{
-//     // if let Err(error) = postgresql_crud::check_commit::check_commit(
-//     //     *app_state.get_enable_api_git_commit_check(),
-//     //     &headers,
-//     // ) {
-//     //     let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-//     //     //todo use reserved work instead of TryCreateManyRouteLogicErrorNamed
-//     //     let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
-//     //         check_commit: error,
-//     //         code_occurence: error_occurence_lib::code_occurence!(),
-//     //     };
-//     //     eprintln!("{error}");
-//     //     let mut response = axum::response::IntoResponse::into_response(axum::Json(
-//     //         TryCreateManyRouteLogicResponseVariants::from(error),
-//     //     ));
-//     //     *response.status_mut() = status_code;
-//     //     return response;
-//     // }
-// }]
+#[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
+#[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
+#[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
+#[postgresql_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
+#[postgresql_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
+#[postgresql_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
+#[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
+#[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
+#[postgresql_crud::common_additional_error_variants{
+    enum CommonAdditionalErrorVariants {
+        CheckCommit {
+            #[eo_error_occurence]
+            check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        },
+    }
+}]
+#[postgresql_crud::create_many_additional_route_logic{
+    println!("kekw");
+}]
+#[postgresql_crud::create_one_additional_route_logic{}]
+#[postgresql_crud::read_many_additional_route_logic{}]
+#[postgresql_crud::read_one_additional_route_logic{}]
+#[postgresql_crud::update_many_additional_route_logic{}]
+#[postgresql_crud::update_one_additional_route_logic{}]
+#[postgresql_crud::delete_many_additional_route_logic{}]
+#[postgresql_crud::delete_one_additional_route_logic{}]
+#[postgresql_crud::common_additional_route_logic{
+    // if let Err(error) = postgresql_crud::check_commit::check_commit(
+    //     *app_state.get_enable_api_git_commit_check(),
+    //     &headers,
+    // ) {
+    //     let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+    //     //todo use reserved work instead of TryCreateManyRouteLogicErrorNamed
+    //     let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+    //         check_commit: error,
+    //         code_occurence: error_occurence_lib::code_occurence!(),
+    //     };
+    //     eprintln!("{error}");
+    //     let mut response = axum::response::IntoResponse::into_response(axum::Json(
+    //         TryCreateManyRouteLogicResponseVariants::from(error),
+    //     ));
+    //     *response.status_mut() = status_code;
+    //     return response;
+    // }
+}]
 pub struct Jsongeneric {
     // pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
     pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull,
