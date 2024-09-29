@@ -4317,3 +4317,70 @@ impl<'a> postgresql_crud::BindQuery<'a> for Something {
     }
 }
 ////////////////////////////////
+impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreate {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        todo!()
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+        let mut increments = std::string::String::from("");
+        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&format!("'std_primitive_i8',{value},"));
+            }
+            Err(error) => {
+                return Err(error.into());
+            }
+        }
+        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_option_option_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&format!("'std_option_option_std_primitive_i8',{value},"));
+            }
+            Err(error) => {
+                return Err(error.into());
+            }
+        }
+        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_vec_vec_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&format!("'std_vec_vec_std_primitive_i8',{value},"));
+            }
+            Err(error) => {
+                return Err(error.into());
+            }
+        }
+        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_option_option_std_vec_vec_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&format!("'std_option_option_std_vec_vec_std_primitive_i8',{value},"));
+            }
+            Err(error) => {
+                return Err(error.into());
+            }
+        }
+        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_vec_vec_std_option_option_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&format!("'std_vec_vec_std_option_option_std_primitive_i8',{value},"));
+            }
+            Err(error) => {
+                return Err(error.into());
+            }
+        }
+        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.std_option_option_std_vec_vec_std_option_option_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&format!("'std_option_option_std_vec_vec_std_option_option_std_primitive_i8',{value},"));
+            }
+            Err(error) => {
+                return Err(error.into());
+            }
+        }
+        let _ = increments.pop();
+        Ok(format!("jsonb_build_object({increments})"))
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_primitive_i8, query);
+        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_option_option_std_primitive_i8, query);
+        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_vec_vec_std_primitive_i8, query);
+        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_option_option_std_vec_vec_std_primitive_i8, query);
+        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_vec_vec_std_option_option_std_primitive_i8, query);
+        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self.std_option_option_std_vec_vec_std_option_option_std_primitive_i8, query);
+        query
+    }
+}

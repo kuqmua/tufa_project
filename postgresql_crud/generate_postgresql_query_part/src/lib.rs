@@ -6499,6 +6499,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let ident_to_create_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream);
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(&ident_to_create_upper_camel_case_token_stream);
         let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, false);
+        //
+        // println!("{impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream}");
+        // let impl_postgresql_crud_bind_query_for_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, false);
+        //
         quote::quote!{
             #impl_std_fmt_display_for_ident_token_stream
             #ident_field_reader_token_stream

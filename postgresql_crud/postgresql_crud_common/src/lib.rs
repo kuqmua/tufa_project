@@ -8102,6 +8102,14 @@ pub trait AsPostgresqlJsonB {}
 pub enum TryGenerateBindIncrementsErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
+//todo add another error variant instead for JsonCreateTryGenerateBindIncrementsErrorNamed
+impl std::convert::From<crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> for TryGenerateBindIncrementsErrorNamed {
+    fn from(value: crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed) -> Self {
+        match value {
+            crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence }
+        }
+    }
+}
 pub trait BindQuery<'a> {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed>;
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
