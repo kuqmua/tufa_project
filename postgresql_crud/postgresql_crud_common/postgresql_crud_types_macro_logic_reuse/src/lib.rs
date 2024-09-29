@@ -1359,7 +1359,105 @@ pub fn generate_impl_serde_deserialize_for_std_option_option_std_vec_vec_std_opt
         &proc_macro_name_upper_camel_case_ident_stringified
     );
     let generated = quote::quote!{
-
+        impl<'de> serde::Deserialize<'de> for #ident_options_to_read_upper_camel_case_token_stream {
+            fn deserialize<__D>(
+                __deserializer: __D,
+            ) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                #[doc(hidden)]
+                struct __Visitor<'de> {
+                    marker: serde::__private::PhantomData<
+                        #ident_options_to_read_upper_camel_case_token_stream,
+                    >,
+                    lifetime: serde::__private::PhantomData<&'de ()>,
+                }
+                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                    type Value = #ident_options_to_read_upper_camel_case_token_stream;
+                    fn expecting(
+                        &self,
+                        __formatter: &mut serde::__private::Formatter<'_>,
+                    ) -> serde::__private::fmt::Result {
+                        serde::__private::Formatter::write_str(
+                            __formatter,
+                            #tuple_struct_ident_options_to_read_double_quotes_token_stream,
+                        )
+                    }
+                    #[inline]
+                    fn visit_newtype_struct<__E>(
+                        self,
+                        __e: __E,
+                    ) -> serde::__private::Result<Self::Value, __E::Error>
+                    where
+                        __E: serde::Deserializer<'de>,
+                    {
+                        let __field0: std::result::Result<
+                            #first_field_unnamed_type,
+                            std::string::String,
+                        > = <std::result::Result<
+                            #first_field_unnamed_type,
+                            std::string::String,
+                        > as serde::Deserialize>::deserialize(__e)?;
+                        serde::__private::Ok(
+                            #ident_options_to_read_upper_camel_case_token_stream(
+                                match __field0 {
+                                    Ok(value) => value,
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(error));
+                                    }
+                                }
+                            ),
+                        )
+                    }
+                    #[inline]
+                    fn visit_seq<__A>(
+                        self,
+                        mut __seq: __A,
+                    ) -> serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: serde::de::SeqAccess<'de>,
+                    {
+                        let __field0 = match serde::de::SeqAccess::next_element::<
+                            std::result::Result<
+                                #first_field_unnamed_type,
+                                std::string::String,
+                            >,
+                        >(&mut __seq)? {
+                            serde::__private::Some(__value) => __value,
+                            serde::__private::None => {
+                                return serde::__private::Err(
+                                    serde::de::Error::invalid_length(
+                                        0usize,
+                                        &#tuple_struct_ident_options_to_read_with_1_element_double_quotes_token_stream,
+                                    ),
+                                );
+                            }
+                        };
+                        serde::__private::Ok(
+                            #ident_options_to_read_upper_camel_case_token_stream(
+                                match __field0 {
+                                    Ok(value) => value,
+                                    Err(error) => {
+                                        return Err(serde::de::Error::custom(error));
+                                    }
+                                }
+                            ),
+                        )
+                    }
+                }
+                serde::Deserializer::deserialize_newtype_struct(
+                    __deserializer,
+                    #ident_options_to_read_upper_camel_case_double_quotes_token_stream,
+                    __Visitor {
+                        marker: serde::__private::PhantomData::<
+                            #ident_options_to_read_upper_camel_case_token_stream,
+                        >,
+                        lifetime: serde::__private::PhantomData,
+                    },
+                )
+            }
+        }
     };
     generated.into()
 }
