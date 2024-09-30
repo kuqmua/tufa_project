@@ -486,14 +486,8 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 {
   "std_primitive_bool_as_postgresql_bool_not_null": false,
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
-    "std_vec_vec_generic_with_id": [
-      {
-        "std_primitive_i16": 0,
-        "generic": {
-          "std_primitive_i32": 0
-        }
-      }
-    ]
+    "std_primitive_i8": 0,
+    "std_option_option_std_primitive_i8": 0
   }
 }
 
@@ -967,441 +961,461 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 14,
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
     "select": [
         "std_primitive_bool_as_postgresql_bool_not_null",
+        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
         {
-            "sqlx_types_json_t_as_postgresql_json_b_not_null":{
+            "sqlx_types_json_t_as_postgresql_json_b_not_null": {
                 "filter": [
-                    "std_primitive_i8",
-                    # "std_primitive_i16",
-                    # "std_primitive_i32",
-                    # "std_primitive_i64",
-                    # "std_primitive_i128",
-                    # "std_primitive_u8",
-                    # "std_primitive_u16", 
-                    # "std_primitive_u32",
-                    # "std_primitive_u64",
-                    # "std_primitive_u128",
-                    # "std_primitive_f32",
-                    # "std_primitive_f64",
-                    # "std_primitive_bool",
-                    # "std_string_string",
-
-                    # "std_option_option_std_primitive_i8",
-                    # "std_option_option_std_primitive_i16",  
-                    # "std_option_option_std_primitive_i32",
-                    # "std_option_option_std_primitive_i64",
-                    # "std_option_option_std_primitive_i128",
-                    # "std_option_option_std_primitive_u8",
-                    # "std_option_option_std_primitive_u16", 
-                    # "std_option_option_std_primitive_u32",
-                    # "std_option_option_std_primitive_u64",
-                    # "std_option_option_std_primitive_u128",
-                    # "std_option_option_std_primitive_f32", 
-                    # "std_option_option_std_primitive_f64", 
-                    # "std_option_option_std_primitive_bool",
-                    # "std_option_option_std_string_string",
-
-                    # {
-                    #     "std_vec_vec_std_primitive_i8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_i16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }, 
-                    # {
-                    #     "std_vec_vec_std_primitive_i32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_i64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_i128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_u8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_u16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_u32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }, 
-                    # {
-                    #     "std_vec_vec_std_primitive_u64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },  
-                    # {
-                    #     "std_vec_vec_std_primitive_u128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_f32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_primitive_f64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }, 
-                    # {
-                    #     "std_vec_vec_std_primitive_bool": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_string_string": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_i8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_i16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_i32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_i64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_i128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_u8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_u16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_u32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_u64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_u128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }, 
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_f32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_f64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_primitive_bool": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }, 
-                    # {
-                    #     "std_option_option_std_vec_vec_std_string_string": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_i8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_i16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_i32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_i64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_i128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_u8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_u16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }, 
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_u32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_u64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_u128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_f32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_f64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_primitive_bool": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_vec_vec_std_option_option_std_string_string": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }
-                    # ,
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }
-                    # , 
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # },
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_string_string": {
-                    #         "offset": 0,
-                    #         "limit": 8
-                    #     }
-                    # }
-                    # ,
-
-                    # {
-                    #     "generic": ["std_string_string"]
-                    # }
-                    # ,
-                    # {
-                    #     "std_option_option_generic": ["std_string_string"]
-                    # }
-                    # ,
                     {
-                        "std_vec_vec_generic": {
-                            "field_vec": [
-                                "id",
-                                "std_primitive_i16"
-                            ],
-                            "offset": 0,
-                            "limit": 3
-                        }
+                        "std_primitive_i8": {}
+                    },
+                    {
+                        "std_option_option_std_primitive_i8": {}
                     }
-                    # ,
-                    # {
-                    #     "std_option_option_std_vec_vec_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
-                    # ,
-                    # {
-                    #     "std_vec_vec_std_option_option_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
-                    # ,
-                    # {
-                    #     "std_option_option_std_vec_vec_std_option_option_generic": {
-                    #         "field_vec": [
-                    #             "std_string_string"
-                    #         ],
-                    #         "offset": 0,
-                    #         "limit": 3
-                    #     }
-                    # }
                 ]
             }
         }
-        # ,
-        # "std_primitive_i32_as_postgresql_int"
-        # "std_primitive_i16_as_postgresql_small_int"
     ]
 }
+
+# {
+#     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 14,
+#     "select": [
+#         "std_primitive_bool_as_postgresql_bool_not_null",
+#         {
+#             "sqlx_types_json_t_as_postgresql_json_b_not_null":{
+#                 "filter": [
+#                     "std_primitive_i8",
+#                     # "std_primitive_i16",
+#                     # "std_primitive_i32",
+#                     # "std_primitive_i64",
+#                     # "std_primitive_i128",
+#                     # "std_primitive_u8",
+#                     # "std_primitive_u16", 
+#                     # "std_primitive_u32",
+#                     # "std_primitive_u64",
+#                     # "std_primitive_u128",
+#                     # "std_primitive_f32",
+#                     # "std_primitive_f64",
+#                     # "std_primitive_bool",
+#                     # "std_string_string",
+
+#                     # "std_option_option_std_primitive_i8",
+#                     # "std_option_option_std_primitive_i16",  
+#                     # "std_option_option_std_primitive_i32",
+#                     # "std_option_option_std_primitive_i64",
+#                     # "std_option_option_std_primitive_i128",
+#                     # "std_option_option_std_primitive_u8",
+#                     # "std_option_option_std_primitive_u16", 
+#                     # "std_option_option_std_primitive_u32",
+#                     # "std_option_option_std_primitive_u64",
+#                     # "std_option_option_std_primitive_u128",
+#                     # "std_option_option_std_primitive_f32", 
+#                     # "std_option_option_std_primitive_f64", 
+#                     # "std_option_option_std_primitive_bool",
+#                     # "std_option_option_std_string_string",
+
+#                     # {
+#                     #     "std_vec_vec_std_primitive_i8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_i16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }, 
+#                     # {
+#                     #     "std_vec_vec_std_primitive_i32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_i64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_i128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_u8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_u16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_u32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }, 
+#                     # {
+#                     #     "std_vec_vec_std_primitive_u64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },  
+#                     # {
+#                     #     "std_vec_vec_std_primitive_u128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_f32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_primitive_f64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }, 
+#                     # {
+#                     #     "std_vec_vec_std_primitive_bool": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_string_string": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_i8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_i16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_i32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_i64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_i128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_u8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_u16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_u32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_u64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_u128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }, 
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_f32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_f64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_primitive_bool": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }, 
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_string_string": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_i8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_i16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_i32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_i64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_i128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_u8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_u16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }, 
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_u32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_u64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_u128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_f32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_f64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_primitive_bool": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_vec_vec_std_option_option_std_string_string": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }
+#                     # ,
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }
+#                     # , 
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_u128": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # },
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_std_string_string": {
+#                     #         "offset": 0,
+#                     #         "limit": 8
+#                     #     }
+#                     # }
+#                     # ,
+
+#                     # {
+#                     #     "generic": ["std_string_string"]
+#                     # }
+#                     # ,
+#                     # {
+#                     #     "std_option_option_generic": ["std_string_string"]
+#                     # }
+#                     # ,
+#                     {
+#                         "std_vec_vec_generic": {
+#                             "field_vec": [
+#                                 "id",
+#                                 "std_primitive_i16"
+#                             ],
+#                             "offset": 0,
+#                             "limit": 3
+#                         }
+#                     }
+#                     # ,
+#                     # {
+#                     #     "std_option_option_std_vec_vec_generic": {
+#                     #         "field_vec": [
+#                     #             "std_string_string"
+#                     #         ],
+#                     #         "offset": 0,
+#                     #         "limit": 3
+#                     #     }
+#                     # }
+#                     # ,
+#                     # {
+#                     #     "std_vec_vec_std_option_option_generic": {
+#                     #         "field_vec": [
+#                     #             "std_string_string"
+#                     #         ],
+#                     #         "offset": 0,
+#                     #         "limit": 3
+#                     #     }
+#                     # }
+#                     # ,
+#                     # {
+#                     #     "std_option_option_std_vec_vec_std_option_option_generic": {
+#                     #         "field_vec": [
+#                     #             "std_string_string"
+#                     #         ],
+#                     #         "offset": 0,
+#                     #         "limit": 3
+#                     #     }
+#                     # }
+#                 ]
+#             }
+#         }
+#         # ,
+#         # "std_primitive_i32_as_postgresql_int"
+#         # "std_primitive_i16_as_postgresql_small_int"
+#     ]
+# }
 
 ### fix this  
  
