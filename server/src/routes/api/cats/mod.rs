@@ -8,6 +8,7 @@ pub(crate) fn routes(app_state: common::repositories_types::server::routes::app_
     axum::Router::new().nest(
         &format!(
             "/{}",
+            // "todo", 
             common::repositories_types::server::routes::api::cats::TABLE_NAME
         ),
         axum::Router::new().merge(crud(app_state)),
