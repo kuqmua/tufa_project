@@ -4288,17 +4288,6 @@ fn test_dd() {
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed {
-    Todo {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl error_occurence_lib::ToStdStringString for SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:?}")
-    }
-}
 impl postgresql_crud::GeneratePostgresqlQueryPartToRead<SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, ()> for SomethingFieldToRead {
     fn generate_postgresql_query_part_to_read_from_self_vec(
         value: &std::vec::Vec<Self>,

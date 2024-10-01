@@ -6551,6 +6551,37 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
+
+        //this is temporary, todo remove and refactor later
+        let impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream = {
+            let ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream = {
+                let value = format!("{ident}{}", naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecErrorNamedUpperCamelCase);
+                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let pub_enum_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream = {
+                quote::quote!{
+                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                    pub enum #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream {
+                        Todo {
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                }
+            };
+            let impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream = {
+                quote::quote!{
+                    impl error_occurence_lib::ToStdStringString for #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream {
+                        fn to_std_string_string(&self) -> std::string::String {
+                            format!("{self:?}")
+                        }
+                    }
+                }
+            };
+            quote::quote!{
+                #pub_enum_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
+                #impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
+            }
+        };
         quote::quote!{
             #impl_std_fmt_display_for_ident_token_stream
             #ident_field_reader_token_stream
@@ -6574,6 +6605,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream
             // //todo impl postgresql_crud::CheckIdExistsInJsonGenericFields for Something
             #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
+
+            #impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream
+
         }
     };
 
