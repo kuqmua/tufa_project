@@ -6577,9 +6577,59 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             };
+            let impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream = {
+                let variants_token_stream = vec_syn_field.iter().map(|element| {
+                    let field_ident_stringified = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string();
+                    let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                    let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+                    quote::quote!{
+                        #ident_field_to_read_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
+                            acc.push_str(&format!(
+                                "{}||",
+                                postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                    value,
+                                    #field_ident_double_quotes_token_stream,
+                                    column_name_and_maybe_field_getter,
+                                    column_name_and_maybe_field_getter_for_error_message
+                                )
+                            ));
+                        }
+                    }
+                });
+                quote::quote!{
+                    impl postgresql_crud::GeneratePostgresqlQueryPartToRead<#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream, ()> for #ident_field_to_read_upper_camel_case_token_stream {
+                        fn generate_postgresql_query_part_to_read_from_self_vec(
+                            value: &std::vec::Vec<Self>,
+                            column_name_and_maybe_field_getter: &std::primitive::str,
+                            column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+                            is_optional: std::primitive::bool
+                        ) -> Result<std::string::String, #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream> {
+                            let mut acc = std::string::String::default();
+                            for element in value {
+                                match element {
+                                    #(#variants_token_stream),*
+                                }
+                            }
+                            let _ = acc.pop();
+                            let _ = acc.pop();
+                            Ok(format!("{acc}"))
+                        }
+                        fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, ()> {
+                            todo!()
+                        }
+                    }
+                }
+            };
             quote::quote!{
                 #pub_enum_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
                 #impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
+                #impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream
             }
         };
         quote::quote!{
