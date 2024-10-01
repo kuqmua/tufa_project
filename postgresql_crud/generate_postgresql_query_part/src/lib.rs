@@ -7067,6 +7067,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             });
             let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                // &format!("{{acc}}"),
                 &format!("case when jsonb_typeof({{column_name_and_maybe_field_getter}}) = 'object' then jsonb_build_object('Ok',{{acc}}) {when_jsonb_typeof_column_name_and_maybe_field_getter_null_then_jsonb_build_object_ok_null_stringified} else jsonb_build_object(jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}} is not object{space_and_not_null_stringified}')) end"),
                 &proc_macro_name_upper_camel_case_ident_stringified
             );

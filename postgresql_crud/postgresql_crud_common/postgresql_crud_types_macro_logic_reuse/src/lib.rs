@@ -767,7 +767,7 @@ fn generate_primitive_postgresql_part_field_to_read_query(
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     proc_macro_common::generate_quotes::double_quotes_token_stream(
-        &format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = '{primitive_json_type}' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{{field_ident}}') else jsonb_build_object('Err', 'type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not {primitive_json_type}') end)"),
+        &format!("jsonb_build_object('{{field_ident}}', json_build_object('value', {{column_name_and_maybe_field_getter}}->'{{field_ident}}'))"),
         &proc_macro_name_upper_camel_case_ident_stringified
     )
 }
@@ -776,7 +776,7 @@ fn generate_nullable_primitive_postgresql_part_field_to_read_query(
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
 ) -> proc_macro2::TokenStream {
     proc_macro_common::generate_quotes::double_quotes_token_stream(
-        &format!("jsonb_build_object('{{field_ident}}',case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = '{primitive_json_type }' then jsonb_build_object('Ok',{{column_name_and_maybe_field_getter}}->'{{field_ident}}') when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object('Err','type of {{column_name_and_maybe_field_getter_for_error_message}}.{{field_ident}} is not {primitive_json_type } and not null') end)"),
+        &format!("jsonb_build_object('{{field_ident}}', json_build_object('value', {{column_name_and_maybe_field_getter}}->'{{field_ident}}'))"),
         &proc_macro_name_upper_camel_case_ident_stringified
     )
 }

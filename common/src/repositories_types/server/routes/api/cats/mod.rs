@@ -580,9 +580,20 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     //         ],
     //     }),
     // ]);
-    println!("{f:#?}");
-    let serialized = serde_json::to_string(&f).unwrap();
+    // println!("{f:#?}");
+    // let serialized = serde_json::to_string(&f).unwrap();
+    // println!("{serialized:#?}");
+    println!("---------------");
+    let g = SomethingReader(SomethingOptionsToRead {
+        // std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI8OptionsToRead>>,
+        std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(1) }),
+        // std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead>>,
+        std_option_option_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(Some(1)) }),
+    });
+    println!("{g:#?}");
+    let serialized = serde_json::to_string(&g).unwrap();
     println!("{serialized:#?}");
+
 }
 
 /////////start block code for trying implement partial
@@ -4366,37 +4377,38 @@ fn test_dd() {
 // GeneratePostgresqlQueryPartToRead
 impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for SomethingFieldReader {
     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
-        let mut acc = std::string::String::default();
-        for element in &self.0 {
-            match element {
-                // #(#variants_token_stream),*
-                SomethingFieldToRead::StdPrimitiveI8(value) => {
-                    acc.push_str(&format!(
-                        "jsonb_build_object('std_primitive_i8',{})||",
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            value,
-                            field_ident,
-                            column_name_and_maybe_field_getter,
-                            column_name_and_maybe_field_getter_for_error_message
-                        )
-                    ));
-                },
-                SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(value) => {
-                    acc.push_str(&format!(
-                        "jsonb_build_object('std_option_option_std_primitive_i8',{})||",
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            value,
-                            field_ident,
-                            column_name_and_maybe_field_getter,
-                            column_name_and_maybe_field_getter_for_error_message
-                        )
-                    ));
-                },
-            }
-        }
-        let _ = acc.pop();
-        let _ = acc.pop();
-        format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object')) end")
+        // let mut acc = std::string::String::default();
+        // for element in &self.0 {
+        //     match element {
+        //         // #(#variants_token_stream),*
+        //         SomethingFieldToRead::StdPrimitiveI8(value) => {
+        //             acc.push_str(&format!(
+        //                 "json_build_object('value', {})||",
+        //                 postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+        //                     value,
+        //                     "std_primitive_i8",
+        //                     column_name_and_maybe_field_getter,
+        //                     column_name_and_maybe_field_getter_for_error_message
+        //                 )
+        //             ));
+        //         },
+        //         SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(value) => {
+        //             acc.push_str(&format!(
+        //                 "json_build_object('value', {})||",
+        //                 postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+        //                     value,
+        //                     "std_option_option_std_primitive_i8",
+        //                     column_name_and_maybe_field_getter,
+        //                     column_name_and_maybe_field_getter_for_error_message
+        //                 )
+        //             ));
+        //         },
+        //     }
+        // }
+        // let _ = acc.pop();
+        // let _ = acc.pop();
+        // format!("{acc}")
+        todo!()
     }
 }
 
@@ -4422,10 +4434,10 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<One, Two> for SomethingF
                 // #(#variants_token_stream),*
                 SomethingFieldToRead::StdPrimitiveI8(value) => {
                     acc.push_str(&format!(
-                        "jsonb_build_object('std_primitive_i8',{})||",
+                        "{}||",
                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
                             value,
-                            "",
+                            "std_primitive_i8",
                             column_name_and_maybe_field_getter,
                             column_name_and_maybe_field_getter_for_error_message
                         )
@@ -4433,10 +4445,10 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<One, Two> for SomethingF
                 },
                 SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(value) => {
                     acc.push_str(&format!(
-                        "jsonb_build_object('std_option_option_std_primitive_i8',{})||",
+                        "{}||",
                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
                             value,
-                            "",
+                            "std_option_option_std_primitive_i8",
                             column_name_and_maybe_field_getter,
                             column_name_and_maybe_field_getter_for_error_message
                         )
@@ -4446,8 +4458,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToRead<One, Two> for SomethingF
         }
         let _ = acc.pop();
         let _ = acc.pop();
-        Ok(
-format!("case when jsonb_typeof({column_name_and_maybe_field_getter}) = 'object' then jsonb_build_object('Ok',{acc}) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message} is not object')) end")
+        Ok(format!("{acc}")
         )
     }
     fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, Two> {
