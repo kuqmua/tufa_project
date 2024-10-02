@@ -227,7 +227,7 @@ pub struct Jsongeneric {
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+    // pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
     // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
     // pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
@@ -239,7 +239,7 @@ pub struct Something {
     // pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
     // pub std_primitive_bool: postgresql_crud::JsonStdPrimitiveBool,
     // pub std_string_string: postgresql_crud::JsonStdStringString,
-    pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
+    // pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
     // pub std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdPrimitiveI16,
     // pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
     // pub std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdPrimitiveI64,
@@ -251,7 +251,7 @@ pub struct Something {
     // pub std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdPrimitiveF64,
     // pub std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdStringString,
-    // pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
+    pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
     // pub std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdVecVecStdPrimitiveI16,
     // pub std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdVecVecStdPrimitiveI32,
     // pub std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdVecVecStdPrimitiveI64,
@@ -537,24 +537,24 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     // let schema = schemars::schema_for!(Thing);
     // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
 
-    let f = ReadOnePayload {
-        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdPrimitiveI64(42),
-        // select: std::vec::Vec<JsongenericColumn>,
-        select: vec![
-            JsongenericColumn::StdPrimitiveBoolAsPostgresqlBoolNotNull,
-            JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
-            JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull {
-                filter: vec![
-                    SomethingFieldToRead::StdPrimitiveI8(
-                        postgresql_crud::JsonStdPrimitiveI8FieldReader{}
-                    ),
-                    SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(
-                        postgresql_crud::JsonStdOptionOptionStdPrimitiveI8FieldReader{}
-                    )
-                ]
-            }
-        ]
-    };
+    // let f = ReadOnePayload {
+    //     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdPrimitiveI64(42),
+    //     // select: std::vec::Vec<JsongenericColumn>,
+    //     select: vec![
+    //         JsongenericColumn::StdPrimitiveBoolAsPostgresqlBoolNotNull,
+    //         JsongenericColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    //         JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull {
+    //             filter: vec![
+    //                 SomethingFieldToRead::StdPrimitiveI8(
+    //                     postgresql_crud::JsonStdPrimitiveI8FieldReader{}
+    //                 ),
+    //                 SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(
+    //                     postgresql_crud::JsonStdOptionOptionStdPrimitiveI8FieldReader{}
+    //                 )
+    //             ]
+    //         }
+    //     ]
+    // };
     
     // SomethingOptionsToUpdate(vec![
     //     // SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value {
@@ -586,9 +586,16 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     println!("---------------");
     let g = SomethingReader(SomethingOptionsToRead {
         // std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI8OptionsToRead>>,
-        std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(1) }),
+        // std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(1) }),
         // std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead>>,
-        std_option_option_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(Some(1)) }),
+        // std_option_option_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(Some(1)) }),
+
+        //here
+
+        std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(vec![1]) }),
+        
+        
+        // postgresql_crud::JsonStdVecVecStdPrimitiveI8
     });
     println!("{g:#?}");
     let serialized = serde_json::to_string(&g).unwrap();
