@@ -486,7 +486,7 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 {
   "std_primitive_bool_as_postgresql_bool_not_null": false,
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
-    "std_vec_vec_std_option_option_std_primitive_i8": [
+    "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
       0
     ]
   }
@@ -981,7 +981,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     #             "offset": 0,
                     #             "limit": 3
                     #         }
-
                     #     }
                     # }
                     # ,
@@ -993,26 +992,23 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     #         }
                     #     }
                     # }
-                    {
-                        "std_vec_vec_std_option_option_std_primitive_i8": {
-                            "pagination": {
-                                "offset": 0,
-                                "limit": 3
-                            }
-                        }
-                    }
-
-
-
-                    # ,
                     # {
-                    #     "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+                    #     "std_vec_vec_std_option_option_std_primitive_i8": {
                     #         "pagination": {
                     #             "offset": 0,
                     #             "limit": 3
                     #         }
                     #     }
                     # }
+                    # ,
+                    {
+                        "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+                            "pagination": {
+                                "offset": 0,
+                                "limit": 5
+                            }
+                        }
+                    }
                 ]
             }
         }
