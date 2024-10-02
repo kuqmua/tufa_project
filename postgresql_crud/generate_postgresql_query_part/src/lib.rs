@@ -7263,6 +7263,53 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
+
+        let impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_token_stream = {
+            let variants_token_stream = vec_syn_field.iter().map(|element| {
+                let field_ident = element
+                    .ident
+                    .as_ref()
+                    .unwrap_or_else(|| {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    });
+                let field_ident_stringified = field_ident.to_string();
+                let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+                quote::quote!{
+                    #ident_field_to_read_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
+                        acc.push_str(&format!(
+                            "{}||",
+                            postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                value,
+                                #field_ident_double_quotes_token_stream,
+                                &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                                &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+                            )
+                        ));
+                    }
+                }
+            });
+            quote::quote!{
+                impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for #std_option_option_generic_ident_field_reader_upper_camel_case_token_stream {
+                    fn generate_postgresql_query_part_field_to_read(
+                        &self,
+                        field_ident: &std::primitive::str,
+                        column_name_and_maybe_field_getter: &std::primitive::str,
+                        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+                    ) -> std::string::String {
+                        let mut acc = std::string::String::default();
+                        for element in &self.0 {
+                            match element {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                        let _ = acc.pop();
+                        let _ = acc.pop();
+                        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))")
+                    }
+                }
+            }
+        };
         quote::quote!{
             #std_option_option_generic_ident_token_stream
             #impl_std_fmt_display_for_std_option_option_generic_ident_token_stream
@@ -7281,6 +7328,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #std_option_option_generic_ident_to_create_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_to_create_token_stream
             #impl_postgresql_crud_json_create_bind_query_for_std_option_option_generic_ident_to_create_token_stream
+
+            #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_token_stream
         }
     };
     //its for GeneratePostgresqlQueryPart (json logic)

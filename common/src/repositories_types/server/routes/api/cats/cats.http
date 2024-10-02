@@ -486,7 +486,7 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 {
   "std_primitive_bool_as_postgresql_bool_not_null": false,
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
-    "generic": {
+    "std_option_option_generic": {
       "std_primitive_i32": 0
     }
   }
@@ -1009,8 +1009,16 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     #         }
                     #     }
                     # }
+                    # {
+                    #     "generic": [
+                    #         {
+                    #             "std_primitive_i32": {}
+                    #         }
+                    #     ]
+                    # }
+                    # ,
                     {
-                        "generic": [
+                        "std_option_option_generic": [
                             {
                                 "std_primitive_i32": {}
                             }
