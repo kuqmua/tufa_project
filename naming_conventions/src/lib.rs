@@ -451,7 +451,8 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "reader"],
     ["std", "option", "option", "generic", "self", "to", "create", "origin"],
     ["std", "vec", "vec", "generic", "with", "id", "self", "to", "create", "original"],
-    ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self", "to", "create", "original"]
+    ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self", "to", "create", "original"],
+    ["std", "option", "option", "generic", "self", "options", "to", "read", "origin"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {

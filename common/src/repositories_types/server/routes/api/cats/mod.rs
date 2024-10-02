@@ -593,11 +593,19 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         //here
 
         // std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(vec![1]) }),
-        generic: Some(postgresql_crud::Value { value: GenericCatOptionsToRead {
-            std_primitive_i32: Some(postgresql_crud::Value {
-                value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
-            })
-        }}),
+        // generic: Some(postgresql_crud::Value { value: GenericCatOptionsToRead {
+        //     std_primitive_i32: Some(postgresql_crud::Value {
+        //         value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
+        //     })
+        // }}),
+        std_option_option_generic: Some(postgresql_crud::Value { value: StdOptionOptionGenericCatOptionsToRead(None)
+            
+            // {
+            // std_primitive_i32: Some(postgresql_crud::Value {
+            //     value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
+            // })
+            // }
+        }),
         
         // postgresql_crud::JsonStdVecVecStdPrimitiveI8
     });
@@ -4298,3 +4306,33 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
+
+
+
+// impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericCatFieldReader {
+//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//         let mut acc = std::string::String::default();
+//         for element in &self.0 {
+//             match element {
+//                 CatFieldToRead::StdPrimitiveI32(value) => {
+//                     acc.push_str(&format!(
+//                         "{}||",
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                             value,
+//                             "std_primitive_i32",
+//                             &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+//                             &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+//                         )
+//                     ));
+//                 }
+//             }
+//         }
+//         let _ = acc.pop();
+//         let _ = acc.pop();
+//         let f = format!("jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)");
+
+        
+//         println!("{f}");
+//         f
+//     }
+// }
