@@ -4298,31 +4298,3 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
-
-impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
-    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
-        let mut acc = std::string::String::default();
-        for element in &self.0 {
-            match element {
-                // #(#variants_token_stream),*
-                // Generic
-                CatFieldToRead::StdPrimitiveI32(value) => {
-                    let f = postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                        value,
-                        "std_primitive_i32",
-                        &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                        &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
-                    );
-                    println!("{f}");
-                    acc.push_str(&format!(
-                        "{}||",
-                        f
-                    ));
-                }
-            }
-        }
-        let _ = acc.pop();
-        let _ = acc.pop();
-        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))")
-    }
-}
