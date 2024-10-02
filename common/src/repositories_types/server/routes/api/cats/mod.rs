@@ -287,7 +287,7 @@ pub struct Something {
     // pub std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveF64,
     // pub std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdVecVecStdOptionOptionStdStringString,
-    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
@@ -300,7 +300,7 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    // pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
+    pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
     // pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
     // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
@@ -386,23 +386,23 @@ pub struct Something {
 //     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
 // }
 
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     //
-//     postgresql_crud::GeneratePostgresqlQueryPart,
-// )] //user type must implement utoipa::ToSchema trait
-// pub struct Cat {
-//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-//     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    //
+    postgresql_crud::GeneratePostgresqlQueryPart,
+)] //user type must implement utoipa::ToSchema trait
+pub struct Cat {
+    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+}
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum CatFieldToRead {
@@ -592,8 +592,12 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
 
         //here
 
-        std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(vec![1]) }),
-        
+        // std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(vec![1]) }),
+        generic: Some(postgresql_crud::Value { value: GenericCatOptionsToRead {
+            std_primitive_i32: Some(postgresql_crud::Value {
+                value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
+            })
+        }}),
         
         // postgresql_crud::JsonStdVecVecStdPrimitiveI8
     });
@@ -4294,3 +4298,33 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
+
+
+
+
+
+impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
+    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+        let mut acc = std::string::String::default();
+        for element in &self.0 {
+            match element {
+                // #(#variants_token_stream),*
+                // Generic
+                CatFieldToRead::StdPrimitiveI32(value) => {
+                    acc.push_str(&format!(
+                        "{}||",
+                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                            value,
+                            field_ident,
+                            column_name_and_maybe_field_getter,
+                            column_name_and_maybe_field_getter_for_error_message
+                        )
+                    ));
+                }
+            }
+        }
+        let _ = acc.pop();
+        let _ = acc.pop();
+        format!("jsonb_build_object('value',{acc})")
+    }
+}
