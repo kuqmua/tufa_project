@@ -6451,9 +6451,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{0}
         };
         let maybe_id_variant_token_stream = if contains_id {
+            let id_upper_camel_case = naming_conventions::IdUpperCamelCase;
+            let id_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&naming_conventions::IdSnakeCase.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
             generate_acc_push_str_variant_logic_token_stream(
-                &quote::quote!{Id},
-                &quote::quote!{"id"},
+                &quote::quote!{#id_upper_camel_case},
+                &id_snake_case_double_quotes_token_stream,
                 &value_snake_case_double_quotes_token_stream,
             )
         }
