@@ -589,14 +589,22 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         //         value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
         //     })
         // }}),
-        std_option_option_generic: Some(postgresql_crud::Value { value: StdOptionOptionGenericCatOptionsToRead(None)
+        // std_option_option_generic: Some(postgresql_crud::Value { value: StdOptionOptionGenericCatOptionsToRead(None)
+
+        std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: StdVecVecGenericWithIdDoggieOptionsToRead(vec![
+            StdVecVecGenericWithIdDoggieOptionsToReadOrigin {
+                std_primitive_i16: Some(postgresql_crud::Value {
+                    value: postgresql_crud::JsonStdPrimitiveI16OptionsToRead(1)
+                })
+            }
+        ])}),
             
             // {
             // std_primitive_i32: Some(postgresql_crud::Value {
             //     value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
             // })
             // }
-        }),
+        // }),
         
         // postgresql_crud::JsonStdVecVecStdPrimitiveI8
     });
@@ -4327,3 +4335,41 @@ fn test_dd() {
 //         f
 //     }
 // }
+
+
+
+impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdVecVecGenericWithIdDoggieFieldReader {
+    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+        let mut acc = std::string::String::default();
+        for element in &self.field_vec {
+            match element {
+                DoggieWithIdFieldToRead::Id(_) => todo!(),
+                //DoggieFieldToRead
+                DoggieWithIdFieldToRead::StdPrimitiveI16(value) => {
+                    acc.push_str(&format!(
+                        "{}||",
+                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                            value,
+                            "std_primitive_i16",
+                            &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                            &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+                        )
+                    ));
+                }
+            }
+        }
+        let _ = acc.pop();
+        let _ = acc.pop();
+
+
+        let start = self.pagination.start();
+        let end = self.pagination.end();
+
+        println!("{acc}");
+
+        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))")
+
+
+        // jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})))
+    }
+}
