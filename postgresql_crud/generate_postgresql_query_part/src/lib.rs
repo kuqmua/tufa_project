@@ -6422,6 +6422,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
+        let value_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&naming_conventions::ValueSnakeCase.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
         let variants_token_stream = vec_syn_field.iter().map(|element| {
             let field_ident = element
                 .ident
@@ -6432,10 +6433,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let field_ident_stringified = field_ident.to_string();
             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
             let field_ident_double_quotes_token_stream = if contains_id {
-                quote::quote!{"value"}
+                &value_snake_case_double_quotes_token_stream
             }
             else {
-                proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified)
+                &proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified)
             };
             generate_acc_push_str_variant_logic_token_stream(
                 &variant_ident_upper_camel_case_token_stream,
@@ -6453,7 +6454,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             generate_acc_push_str_variant_logic_token_stream(
                 &quote::quote!{Id},
                 &quote::quote!{"id"},
-                &quote::quote!{"value"},
+                &value_snake_case_double_quotes_token_stream,
             )
         }
         else {
