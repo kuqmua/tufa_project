@@ -303,8 +303,8 @@ pub struct Something {
     // pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
     // pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
-    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
@@ -591,8 +591,18 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         // }}),
         // std_option_option_generic: Some(postgresql_crud::Value { value: StdOptionOptionGenericCatOptionsToRead(None)
 
-        std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: StdVecVecGenericWithIdDoggieOptionsToRead(vec![
-            StdVecVecGenericWithIdDoggieOptionsToReadOrigin {
+        // std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: StdVecVecGenericWithIdDoggieOptionsToRead(vec![
+        //     StdVecVecGenericWithIdDoggieOptionsToReadOrigin {
+        //         id: Some(postgresql_crud::Value {
+        //             value: postgresql_crud::JsonUuidOptionsToRead::default()
+        //         }),
+        //         std_primitive_i16: Some(postgresql_crud::Value {
+        //             value: postgresql_crud::JsonStdPrimitiveI16OptionsToRead(1)
+        //         })
+        //     }
+        // ])}),
+        std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: StdOptionOptionStdVecVecGenericWithIdDoggieOptionsToRead(Some(vec![
+            StdOptionOptionStdVecVecGenericWithIdDoggieOptionsToReadOrigin {
                 id: Some(postgresql_crud::Value {
                     value: postgresql_crud::JsonUuidOptionsToRead::default()
                 }),
@@ -600,7 +610,7 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
                     value: postgresql_crud::JsonStdPrimitiveI16OptionsToRead(1)
                 })
             }
-        ])}),
+        ]))}),
             
             // {
             // std_primitive_i32: Some(postgresql_crud::Value {
@@ -4308,3 +4318,35 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
+
+
+
+
+
+
+impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionStdVecVecGenericWithIdDoggieFieldReader {
+    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+        let mut acc = std::string::String::default();
+        for element in &self.field_vec {
+            match element {
+                DoggieWithIdFieldToRead::Id(value) => {
+                    acc.push_str(&format!(
+                        "{}||",
+                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "id", "value", &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}[array element]"))
+                    ));
+                }
+                DoggieWithIdFieldToRead::StdPrimitiveI16(value) => {
+                    acc.push_str(&format!(
+                        "{}||",
+                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "std_primitive_i16", "value", &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}[array element]"))
+                    ));
+                }
+            }
+        }
+        let _ = acc.pop();
+        let _ = acc.pop();
+        let start = self.pagination.start();
+        let end = self.pagination.end();
+        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))")
+    }
+}
