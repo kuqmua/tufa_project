@@ -7588,8 +7588,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
+
+        let std_vec_vec_generic_with_id_ident_options_to_read_original_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionsToReadOriginalUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_options_to_read_original_upper_camel_case_token_stream(&ident);
+        let std_vec_vec_generic_with_id_ident_options_to_read_original_token_stream = generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_original_upper_camel_case_token_stream, false);
         let std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_options_to_read_upper_camel_case_token_stream(&ident);
-        let std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_token_stream, false);
+        let std_vec_vec_generic_with_id_ident_options_to_read_token_stream = quote::quote!{
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+            pub struct #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_token_stream(pub std::vec::Vec<#std_vec_vec_generic_with_id_ident_options_to_read_original_upper_camel_case_token_stream>);
+        };
         //
         let std_vec_vec_generic_with_id_ident_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_reader_upper_camel_case_token_stream(&ident);
         let std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(&std_vec_vec_generic_with_id_ident_reader_upper_camel_case_token_stream, &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_token_stream);
@@ -7641,6 +7647,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #std_vec_vec_generic_with_id_ident_field_reader_token_stream
             #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
             // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
+            
+            #std_vec_vec_generic_with_id_ident_options_to_read_original_token_stream
             #std_vec_vec_generic_with_id_ident_options_to_read_token_stream
             //
             #std_vec_vec_generic_with_id_ident_reader_token_stream

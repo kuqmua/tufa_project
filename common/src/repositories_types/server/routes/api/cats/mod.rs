@@ -301,9 +301,9 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
     // pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
-    pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
+    // pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
-    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
     // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
 
@@ -355,42 +355,11 @@ pub struct Something {
 //     // StdOptionOptionStdVecVecGenericWithId(StdOptionOptionStdVecVecGenericWithIdDoggieFieldReader)
 // }
 
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     // Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     //
-//     postgresql_crud::GeneratePostgresqlQueryPart,
-// )] //user type must implement utoipa::ToSchema trait
-// pub struct Doggie {
-//     // pub id: postgresql_crud::JsonUuid, //todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-
-//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-//     // pub generic: postgresql_crud::JsonGeneric<Cat>,
-//     // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
-//     // pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Cat>,
-//     // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Cat>,
-// }
-
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub enum DoggieFieldToRead {
-//     #[serde(rename(serialize = "id", deserialize = "id"))]
-//     Id(postgresql_crud::JsonUuidFieldReader),
-//     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-//     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
-// }
-
 #[derive(
     Debug,
     Clone,
     PartialEq,
-    Eq,
+    // Eq,
     Default,
     serde::Serialize,
     serde::Deserialize,
@@ -399,10 +368,32 @@ pub struct Something {
     //
     postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
-pub struct Cat {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+pub struct Doggie {
+    // pub id: postgresql_crud::JsonUuid, //todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    // pub generic: postgresql_crud::JsonGeneric<Cat>,
+    // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
+    // pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Cat>,
+    // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Cat>,
 }
+
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Cat {
+//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+// }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum CatFieldToRead {
