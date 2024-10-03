@@ -1753,7 +1753,7 @@ pub trait GeneratePostgresqlQueryPartFieldToRead {
         &self,
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str //todo remove this coz does not have 
     ) -> std::string::String;
 }
 

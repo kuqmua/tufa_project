@@ -7657,14 +7657,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                 let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
                 quote::quote!{
-                    #ident_field_to_read_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
+                    #ident_with_id_field_to_read_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
                         acc.push_str(&format!(
                             "{}||",
                             postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
                                 value,
                                 #field_ident_double_quotes_token_stream,
-                                &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                                &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+                                "value",
+                                &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}[array element]")
                             )
                         ));
                     }
@@ -7672,21 +7672,30 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             });
             quote::quote!{
                 impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                    fn generate_postgresql_query_part_field_to_read(
-                        &self,
-                        field_ident: &std::primitive::str,
-                        column_name_and_maybe_field_getter: &std::primitive::str,
-                        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
-                    ) -> std::string::String {
+                    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         let mut acc = std::string::String::default();
-                        for element in &self.0 {
+                        for element in &self.field_vec {
                             match element {
+                                //todo maybe reuse 
+                                #ident_with_id_field_to_read_upper_camel_case_token_stream::Id(value) => {
+                                    acc.push_str(&format!(
+                                        "{}||",
+                                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                            value,
+                                            "id",
+                                            "value",
+                                            &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}[array element]")
+                                        )
+                                    ));
+                                },
                                 #(#variants_token_stream),*
                             }
                         }
                         let _ = acc.pop();
                         let _ = acc.pop();
-                        format!("jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)")
+                        let start = self.pagination.start();
+                        let end = self.pagination.end();
+                        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))")
                     }
                 }
             }
@@ -7712,7 +7721,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
             #impl_postgresql_crud_json_create_bind_query_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
 
-            // #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+            #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
         }
     };
     //its for GeneratePostgresqlQueryPart (json logic)
