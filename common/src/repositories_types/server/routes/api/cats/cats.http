@@ -486,6 +486,17 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 {
   "std_primitive_bool_as_postgresql_bool_not_null": false,
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
+    "generic": {
+      "std_primitive_i32": 0
+    },
+    "std_option_option_generic": {
+      "std_primitive_i32": 0
+    },
+    "std_vec_vec_generic_with_id": [
+      {
+        "std_primitive_i16": 0
+      }
+    ],
     "std_option_option_std_vec_vec_generic_with_id": [
       {
         "std_primitive_i16": 0
@@ -1011,40 +1022,41 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                     #         }
                     #     }
                     # }
-                    # {
-                    #     "generic": [
-                    #         {
-                    #             "std_primitive_i32": {}
-                    #         }
-                    #     ]
-                    # }
                     # ,
-                    # {
-                    #     "std_option_option_generic": [
-                    #         {
-                    #             "std_primitive_i32": {}
-                    #         }
-                    #     ]
-                    # }
-                    # ,
-                    # {
-                    #     "std_vec_vec_generic_with_id": {
-                    #         "field_vec": [
-                    #             {
-                    #                 "id": {}
-                    #             }
-                    #             ,
-                    #             {
-                    #                 "std_primitive_i16": {}
-                    #             }
-                    #         ],
-                    #         "pagination": {
-                    #             "offset": 0,
-                    #             "limit": 5
-                    #         }
-                    #     }
-                    # }
-                    # ,
+                    {
+                        "generic": [
+                            {
+                                "std_primitive_i32": {}
+                            }
+                        ]
+                    }
+                    ,
+                    {
+                        "std_option_option_generic": [
+                            {
+                                "std_primitive_i32": {}
+                            }
+                        ]
+                    }
+                    ,
+                    {
+                        "std_vec_vec_generic_with_id": {
+                            "field_vec": [
+                                {
+                                    "id": {}
+                                }
+                                ,
+                                {
+                                    "std_primitive_i16": {}
+                                }
+                            ],
+                            "pagination": {
+                                "offset": 0,
+                                "limit": 5
+                            }
+                        }
+                    }
+                    ,
                     {
                         "std_option_option_std_vec_vec_generic_with_id": {
                             "field_vec": [
