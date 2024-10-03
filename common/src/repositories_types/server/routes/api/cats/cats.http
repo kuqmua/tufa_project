@@ -1032,6 +1032,10 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                         "std_vec_vec_generic_with_id": {
                             "field_vec": [
                                 {
+                                    "id": {}
+                                }
+                                ,
+                                {
                                     "std_primitive_i16": {}
                                 }
                             ],
