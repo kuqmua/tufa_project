@@ -7728,59 +7728,86 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let visit_map_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
                     let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified}  vec_syn_field_len + 1 is None(int overflow)"));
-                    let type_token_stream = generate_type_token_stream(element);
+                    let type_options_to_read_token_stream = {
+                        let type_path = &element.ty;
+                        let value = format!("{}{}", quote::quote!{#type_path}, naming_conventions::OptionsToReadUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
                     generate_mut_field_index_serde_private_option_token_stream(
                         index,
-                        &type_token_stream,
+                        &type_options_to_read_token_stream,
                     )
                 });
                 let id_mut_field_index_serde_private_option_token_stream = generate_mut_field_index_serde_private_option_token_stream(
                     0,
-                    &quote::quote!{#postgresql_crud::JsonUuidOptionsToRead},
+                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
                 );
                 quote::quote! {
                     #id_mut_field_index_serde_private_option_token_stream
                     #(#visit_map_fields_initialization_token_stream)*
                 }
             };
-            // let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
-            //     proc_macro_common::generate_quotes::double_quotes_token_stream(
-            //         &value
-            //             .ident
-            //             .as_ref()
-            //             .unwrap_or_else(|| {
-            //                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-            //             })
-            //             .to_string(),
-            //         &proc_macro_name_upper_camel_case_ident_stringified,
-            //     )
-            // };
-            // let visit_map_match_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-            //     let field_index_token_stream = generate_field_index_token_stream(index);
-            //     let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
-            //     let type_token_stream = generate_type_token_stream(element);
-            //     quote::quote! {
-            //         __Field::#field_index_token_stream => {
-            //             if serde::__private::Option::is_some(&#field_index_token_stream) {
-            //                 return serde::__private::Err(
-            //                     <__A::Error as serde::de::Error>::duplicate_field(
-            //                         #field_ident_double_quotes_token_stream,
-            //                     ),
-            //                 );
-            //             }
-            //             #field_index_token_stream = serde::__private::Some(
-            //                 serde::de::MapAccess::next_value::<
-            //                     std::option::Option<
-            //                         std::result::Result<
-            //                             #type_token_stream,
-            //                             std::string::String,
-            //                         >,
-            //                     >,
-            //                 >(&mut __map)?,
-            //             );
-            //         }
-            //     }
-            // });
+            let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
+                proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &value
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                )
+            };
+            let visit_map_match_variants_token_stream = {
+                let generate_field_initialization_token_stream = |
+                    index: std::primitive::usize,
+                    field_ident_double_quotes_token_stream: &proc_macro2::TokenStream,
+                    type_token_stream: &proc_macro2::TokenStream,
+                |{
+                    let field_index_token_stream = generate_field_index_token_stream(index);
+                    quote::quote! {
+                        __Field::#field_index_token_stream => {
+                            if serde::__private::Option::is_some(&#field_index_token_stream) {
+                                return serde::__private::Err(
+                                    <__A::Error as serde::de::Error>::duplicate_field(
+                                        #field_ident_double_quotes_token_stream,
+                                    ),
+                                );
+                            }
+                            #field_index_token_stream = serde::__private::Some(
+                                serde::de::MapAccess::next_value::<
+                                    std::option::Option<postgresql_crud::Value<#type_token_stream>>,
+                                >(&mut __map)?,
+                            );
+                        }
+                    }
+                };
+                let visit_map_match_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
+                    let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
+                    let type_options_to_read_token_stream = {
+                        let type_path = &element.ty;
+                        let value = format!("{}{}", quote::quote!{#type_path}, naming_conventions::OptionsToReadUpperCamelCase);
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    generate_field_initialization_token_stream(
+                        index,
+                        &field_ident_double_quotes_token_stream,
+                        &type_options_to_read_token_stream,
+                    )
+                });
+                let id_field_initialization_token_stream = generate_field_initialization_token_stream(
+                    0,
+                    &quote::quote!{"id"},
+                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
+                );
+                quote::quote! {
+                    #id_field_initialization_token_stream
+                    #(#visit_map_match_variants_token_stream)*
+                }
+            };
             // let visit_map_missing_fields_check_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
             //     let field_index_token_stream = generate_field_index_token_stream(index);
             //     let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
@@ -7924,43 +7951,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             where
                                 __A: serde::de::MapAccess<'de>,
                             {
-                                // let mut __field0: serde::__private::Option<
-                                //     std::option::Option<postgresql_crud::Value<postgresql_crud::JsonUuidOptionsToRead>>,
-                                // > = serde::__private::None;
-                                // let mut __field1: serde::__private::Option<
-                                //     std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI16OptionsToRead>>,
-                                // > = serde::__private::None;
                                 #visit_map_fields_initialization_token_stream
                                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
                                     __Field,
                                 >(&mut __map)? {
                                     match __key {
-                                        __Field::__field0 => {
-                                            if serde::__private::Option::is_some(&__field0) {
-                                                return serde::__private::Err(
-                                                    <__A::Error as serde::de::Error>::duplicate_field("id"),
-                                                );
-                                            }
-                                            __field0 = serde::__private::Some(
-                                                serde::de::MapAccess::next_value::<
-                                                    std::option::Option<postgresql_crud::Value<postgresql_crud::JsonUuidOptionsToRead>>,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        __Field::__field1 => {
-                                            if serde::__private::Option::is_some(&__field1) {
-                                                return serde::__private::Err(
-                                                    <__A::Error as serde::de::Error>::duplicate_field(
-                                                        "std_primitive_i16",
-                                                    ),
-                                                );
-                                            }
-                                            __field1 = serde::__private::Some(
-                                                serde::de::MapAccess::next_value::<
-                                                    std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI16OptionsToRead>>,
-                                                >(&mut __map)?,
-                                            );
-                                        }
+                                        #visit_map_match_variants_token_stream
                                         _ => {
                                             let _ = serde::de::MapAccess::next_value::<
                                                 serde::de::IgnoredAny,
