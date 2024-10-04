@@ -7733,11 +7733,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         index,
                         &type_token_stream,
                     )
-                    // quote::quote! {
-                    //     let mut #field_index_token_stream: serde::__private::Option<
-                    //         std::option::Option<postgresql_crud::Value<#type_token_stream>>,
-                    //     > = serde::__private::None;
-                    // }
                 });
                 let id_mut_field_index_serde_private_option_token_stream = generate_mut_field_index_serde_private_option_token_stream(
                     0,
