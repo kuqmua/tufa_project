@@ -7249,7 +7249,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let fields_array_elements_token_stream = vec_syn_field.iter().map(|element| generate_field_ident_double_quotes_token_stream(&element));
             quote::quote! {
                 "id",
-                #(#fields_array_elements_token_stream)*
+                #(#fields_array_elements_token_stream),*
             }
         };
         let std_vec_vec_generic_with_id_ident_options_to_read_origin_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -8004,16 +8004,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         let std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCaseStringified::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_options_to_read_origin_upper_camel_case_stringified(&ident);
         let std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_options_to_read_origin_upper_camel_case_token_stream(&ident);
-        let std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = if ident == "Doggie" {
-            generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream, true, true)
-        }
-        else {
-            generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream, true, false)
-        };
+        let std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream, true, true);
+        
+        // if ident == "Doggie" {
+        //     generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream, true, true)
+        // }
+        // else {
+        //     generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream, true, false)
+        // };
         let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
             &std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_stringified,
             &std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream,
         );
+        println!(" {impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream}");
         
         //todo impl custom deserialization - check if id are unique
         let std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_options_to_read_upper_camel_case_token_stream(&ident);
@@ -8073,12 +8076,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             true,
             &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))"}
         );
-        let f = if ident == "Doggie" {
-            impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
-        }
-        else {
-            proc_macro2::TokenStream::new()
-        };
+        // let f = if ident == "Doggie" {
+        //     impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
+        // }
+        // else {
+        //     proc_macro2::TokenStream::new()
+        // };
         quote::quote!{
             #std_vec_vec_generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
@@ -8087,8 +8090,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
             
             #std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
-            // #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
-            #f
+            #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
+            // #f
             #std_vec_vec_generic_with_id_ident_options_to_read_token_stream
             //
             #std_vec_vec_generic_with_id_ident_reader_token_stream
