@@ -6905,14 +6905,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_impl_serde_deserialize_for_options_to_read_origin_token_stream = |
         struct_ident_stringified: &std::primitive::str,
         struct_ident_token_stream: &proc_macro2::TokenStream,
+        contains_id: std::primitive::bool,
     |{
-        let vec_syn_field_len_plus_one_for_id = {
+        let range_end = {
             let vec_syn_field_len = vec_syn_field.len();
-            vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"))
+            if contains_id {
+                vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"))
+            }
+            else {
+                vec_syn_field_len
+            }
         };
         let field_enum_variants_token_stream = {
             let mut vec = vec![];
-            for element in 0..vec_syn_field_len_plus_one_for_id {
+            for element in 0..range_end {
                 let value = format!("__{}{element}", naming_conventions::FieldSnakeCase);
                 vec.push(
                     value.parse::<proc_macro2::TokenStream>()
@@ -6929,7 +6935,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let visit_u64_value_enum_variants_token_stream = {
             let mut acc = vec![];
-            for index in 0..vec_syn_field_len_plus_one_for_id {
+            for index in 0..range_end {
                 let index_u64_token_stream = {
                     let value = format!("{index}u64");
                     value
@@ -6950,9 +6956,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let field_index_token_stream = generate_field_index_token_stream(index);
             quote::quote!{#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
         };
+        let generate_index = |index: std::primitive::usize|{
+            if contains_id {
+                index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"))
+            }
+            else {
+                index
+            }
+        };
         let visit_str_value_enum_variants_token_stream = {
             let visit_str_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"));
+                let index = generate_index(index);
                 let field_name_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &{
                         element
@@ -6971,18 +6985,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     index,
                 )
             });
-            let id_field_ident_double_quotes_serde_private_ok_field_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
-                &quote::quote!{"id"},
-                0,
-            );
+            let maybe_id_field_ident_double_quotes_serde_private_ok_field_token_stream = if contains_id {
+                let value_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
+                    &quote::quote!{"id"},
+                    0,
+                );
+                quote::quote!{#value_token_stream,}
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             quote::quote! {
-                #id_field_ident_double_quotes_serde_private_ok_field_token_stream,
+                #maybe_id_field_ident_double_quotes_serde_private_ok_field_token_stream
                 #(#visit_str_value_enum_variants_token_stream),*,
             }
         };
         let visit_bytes_value_enum_variants_token_stream = {
             let visit_bytes_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"));
+                let index = generate_index(index);
                 let b_field_name_double_quotes_token_stream = {
                     let element_ident_double_quotes_stringified = proc_macro_common::generate_quotes::double_quotes_stringified(
                         &element
@@ -7003,18 +7023,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     index,
                 )
             });
-            let b_field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
-                &quote::quote!{b"id"},
-                0,
-            );
+            let maybe_b_field_ident_double_quotes_token_stream = if contains_id {
+                let value_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
+                    &quote::quote!{b"id"},
+                    0,
+                );
+                quote::quote!{#value_token_stream,}
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             quote::quote! {
-                #b_field_ident_double_quotes_token_stream,
+                #maybe_b_field_ident_double_quotes_token_stream
                 #(#visit_bytes_value_enum_variants_token_stream),*,
             }
         };
         let struct_ident_options_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&format!("struct {ident_options_to_read_upper_camel_case_stringified}"), &proc_macro_name_upper_camel_case_ident_stringified);
         let struct_ident_options_with_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("struct {ident_options_to_read_upper_camel_case_stringified} with {vec_syn_field_len_plus_one_for_id} elements"),
+            &format!("struct {ident_options_to_read_upper_camel_case_stringified} with {range_end} elements"),
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         let visit_seq_fields_initialization_token_stream = {
@@ -7040,7 +7066,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             let visit_seq_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"));
+                let index = generate_index(index);
                 let type_options_to_read_token_stream = {
                     let type_path = &element.ty;
                     let value = format!("{}{}", quote::quote!{#type_path}, naming_conventions::OptionsToReadUpperCamelCase);
@@ -7052,26 +7078,31 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &type_options_to_read_token_stream,
                 )
             });
-            let id_serde_de_seq_access_next_element_token_stream = generate_serde_de_seq_access_next_element_token_stream(
-                0,
-                &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
-            );
+            let maybe_id_serde_de_seq_access_next_element_token_stream = if contains_id {
+                generate_serde_de_seq_access_next_element_token_stream(
+                    0,
+                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
+                )
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             quote::quote! {
-                #id_serde_de_seq_access_next_element_token_stream
+                #maybe_id_serde_de_seq_access_next_element_token_stream
                 #(#visit_seq_fields_initialization_token_stream)*
             }
         };
         let if_let_nones_fields_serde_custom_error_token_stream = {
             let nones_token_stream = {
                 let mut acc = vec![];
-                for element in 0..vec_syn_field_len_plus_one_for_id {
+                for element in 0..range_end {
                     acc.push(quote::quote!{None});
                 }
                 acc
             };
             let fields_token_stream = {
                 let mut acc = vec![];
-                for element in 0..vec_syn_field_len_plus_one_for_id {
+                for element in 0..range_end {
                     let field_index_token_stream = generate_field_index_token_stream(element);
                     acc.push(quote::quote!{&#field_index_token_stream});
                 }
@@ -7098,7 +7129,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             let visit_seq_fields_assignment_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified}  vec_syn_field_len + 1 is None(int overflow)"));
+                let index = generate_index(index);
                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                 });
@@ -7108,12 +7139,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     index,
                 )
             });
-            let id_field_ident_field_index_token_stream = generate_field_ident_field_index_token_stream(
-                &quote::quote!{id},
-                0,
-            );
+            let maybe_id_field_ident_field_index_token_stream = if contains_id {
+                let value_token_stream = generate_field_ident_field_index_token_stream(
+                    &quote::quote!{id},
+                    0,
+                );
+                quote::quote!{#value_token_stream,}
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             quote::quote! {
-                #id_field_ident_field_index_token_stream,
+                #maybe_id_field_ident_field_index_token_stream
                 #(#visit_seq_fields_assignment_token_stream),*
             }
         };
@@ -7130,7 +7167,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             let visit_map_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified}  vec_syn_field_len + 1 is None(int overflow)"));
+                let index = generate_index(index);
                 let type_options_to_read_token_stream = {
                     let type_path = &element.ty;
                     let value = format!("{}{}", quote::quote!{#type_path}, naming_conventions::OptionsToReadUpperCamelCase);
@@ -7142,12 +7179,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &type_options_to_read_token_stream,
                 )
             });
-            let id_mut_field_index_serde_private_option_token_stream = generate_mut_field_index_serde_private_option_token_stream(
-                0,
-                &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
-            );
+            let maybe_id_mut_field_index_serde_private_option_token_stream = if contains_id {
+                generate_mut_field_index_serde_private_option_token_stream(
+                    0,
+                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
+                )
+            }
+            else {
+                quote::quote!{}
+            };
             quote::quote! {
-                #id_mut_field_index_serde_private_option_token_stream
+                #maybe_id_mut_field_index_serde_private_option_token_stream
                 #(#visit_map_fields_initialization_token_stream)*
             }
         };
@@ -7188,7 +7230,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             let visit_map_match_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified}  vec_syn_field_len + 1 is None(int overflow)"));
+                let index = generate_index(index);
                 let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                 let type_options_to_read_token_stream = {
                     let type_path = &element.ty;
@@ -7202,11 +7244,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &type_options_to_read_token_stream,
                 )
             });
-            let id_field_initialization_token_stream = generate_field_initialization_token_stream(
-                0,
-                &quote::quote!{"id"},
-                &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
-            );
+            let id_field_initialization_token_stream = if contains_id {
+                generate_field_initialization_token_stream(
+                    0,
+                    &quote::quote!{"id"},
+                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
+                )
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             quote::quote! {
                 #id_field_initialization_token_stream
                 #(#visit_map_match_variants_token_stream)*
@@ -7228,7 +7275,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             let visit_map_missing_fields_check_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified}  vec_syn_field_len + 1 is None(int overflow)"));
+                let index = generate_index(index);
                 let field_index_token_stream = generate_field_index_token_stream(index);
                 let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                 generate_missing_field_token_stream(
@@ -7236,19 +7283,30 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &field_ident_double_quotes_token_stream
                 )
             });
-            let id_missing_field_token_stream = generate_missing_field_token_stream(
-                0,
-                &quote::quote!{"id"}
-            );
+            let maybe_id_missing_field_token_stream = if contains_id {
+                generate_missing_field_token_stream(
+                    0,
+                    &quote::quote!{"id"}
+                )
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             quote::quote! {
-                #id_missing_field_token_stream
+                #maybe_id_missing_field_token_stream
                 #(#visit_map_missing_fields_check_token_stream)*
             }
         };
         let fields_array_elements_token_stream = {
             let fields_array_elements_token_stream = vec_syn_field.iter().map(|element| generate_field_ident_double_quotes_token_stream(&element));
+            let maybe_id_double_quotes_comma_token_stream = if contains_id {
+                quote::quote! {"id",}
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             quote::quote! {
-                "id",
+                #maybe_id_double_quotes_comma_token_stream
                 #(#fields_array_elements_token_stream),*
             }
         };
@@ -7677,8 +7735,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
 
+        let std_option_option_generic_ident_options_to_read_origin_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensStdOptionOptionGenericSelfOptionsToReadOriginUpperCamelCaseStringified::impl_quote_to_tokens_std_option_option_generic_self_options_to_read_origin_upper_camel_case_stringified(&ident);
         let std_option_option_generic_ident_options_to_read_origin_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionGenericSelfOptionsToReadOriginUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_generic_self_options_to_read_origin_upper_camel_case_token_stream(&ident);
-        let std_option_option_generic_ident_options_to_read_origin_token_stream = generate_tokens_options_to_read_token_stream(&std_option_option_generic_ident_options_to_read_origin_upper_camel_case_token_stream, false, false);
+        let std_option_option_generic_ident_options_to_read_origin_token_stream = generate_tokens_options_to_read_token_stream(&std_option_option_generic_ident_options_to_read_origin_upper_camel_case_token_stream, false, true);
+        let impl_serde_deserialize_for_std_option_option_generic_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
+            &std_option_option_generic_ident_options_to_read_origin_upper_camel_case_stringified,
+            &std_option_option_generic_ident_options_to_read_origin_upper_camel_case_token_stream,
+            false,
+        );
+        //
+        //
+
+        //
+        //
         let std_option_option_generic_ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionGenericSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_generic_self_options_to_read_upper_camel_case_token_stream(&ident);
         let std_option_option_generic_ident_options_to_read_token_stream = quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -7737,6 +7806,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_serde_deserialize_for_std_option_option_generic_ident_field_reader_token_stream
             // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
             #std_option_option_generic_ident_options_to_read_origin_token_stream
+            #impl_serde_deserialize_for_std_option_option_generic_ident_options_to_read_origin_token_stream
             #std_option_option_generic_ident_options_to_read_token_stream
             //
             #std_option_option_generic_ident_reader_token_stream
@@ -8008,6 +8078,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
             &std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_stringified,
             &std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream,
+            true,
         );
         
         //todo impl custom deserialization - check if id are unique
@@ -8345,9 +8416,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCaseStringified::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_options_to_read_origin_upper_camel_case_stringified(&ident);
         let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_options_to_read_origin_upper_camel_case_token_stream(&ident);
         let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_tokens_options_to_read_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream, true, true);
-        let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
+        let impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
             &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_stringified,
             &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream,
+            true,
         );
         let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_options_to_read_upper_camel_case_token_stream(&ident);
         let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = quote::quote!{
@@ -8421,7 +8493,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
 
             #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
-            #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
+            #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
             #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
             //
             #std_option_option_std_vec_vec_generic_with_id_ident_reader_token_stream 
