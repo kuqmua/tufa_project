@@ -7493,6 +7493,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
 
+        let std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCaseStringified::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_options_to_read_origin_upper_camel_case_stringified(&ident);
         let std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_options_to_read_origin_upper_camel_case_token_stream(&ident);
         let std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = if ident == "Doggie" {
             generate_tokens_options_to_read_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream, true, true)
@@ -7538,7 +7539,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
                 acc
             };
-            //
             let generate_field_ident_double_quotes_serde_private_ok_field_token_stream = |
                 field_name_double_quotes_token_stream: &proc_macro2::TokenStream,
                 index: std::primitive::usize,
@@ -7546,7 +7546,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let field_index_token_stream = generate_field_index_token_stream(index);
                 quote::quote!{#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
             };
-            //
             let visit_str_value_enum_variants_token_stream = {
                 let visit_str_value_enum_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
                     let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"));
@@ -7574,7 +7573,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
                 quote::quote! {
                     #id_field_ident_double_quotes_serde_private_ok_field_token_stream,
-                    #(#visit_str_value_enum_variants_token_stream),*
+                    #(#visit_str_value_enum_variants_token_stream),*,
                 }
             };
             let visit_bytes_value_enum_variants_token_stream = {
@@ -7606,7 +7605,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
                 quote::quote! {
                     #b_field_ident_double_quotes_token_stream,
-                    #(#visit_bytes_value_enum_variants_token_stream),*
+                    #(#visit_bytes_value_enum_variants_token_stream),*,
                 }
             };
             let struct_ident_options_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&format!("struct {ident_options_to_read_upper_camel_case_stringified}"), &proc_macro_name_upper_camel_case_ident_stringified);
@@ -7785,6 +7784,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 };
                 let visit_map_match_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
+                    let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified}  vec_syn_field_len + 1 is None(int overflow)"));
                     let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                     let type_options_to_read_token_stream = {
                         let type_path = &element.ty;
@@ -7808,20 +7808,50 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #(#visit_map_match_variants_token_stream)*
                 }
             };
-            // let visit_map_missing_fields_check_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-            //     let field_index_token_stream = generate_field_index_token_stream(index);
-            //     let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
-            //     quote::quote! {
-            //         let #field_index_token_stream = match #field_index_token_stream {
-            //             serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
-            //             serde::__private::None => {
-            //                 serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
-            //             }
-            //         };
-            //     }
-            // });
-            // let fields_array_elements_token_stream = vec_syn_field.iter().map(|element| generate_field_ident_double_quotes_token_stream(&element));
-            //
+            let visit_map_missing_fields_check_token_stream = {
+                let generate_missing_field_token_stream = |
+                    index: std::primitive::usize,
+                    field_ident_double_quotes_token_stream: &proc_macro2::TokenStream
+                |{
+                    let field_index_token_stream = generate_field_index_token_stream(index);
+                    quote::quote! {
+                        let #field_index_token_stream = match #field_index_token_stream {
+                            serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
+                            serde::__private::None => {
+                                serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
+                            }
+                        };
+                    }
+                };
+                let visit_map_missing_fields_check_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
+                    let index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified}  vec_syn_field_len + 1 is None(int overflow)"));
+                    let field_index_token_stream = generate_field_index_token_stream(index);
+                    let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
+                    generate_missing_field_token_stream(
+                        index,
+                        &field_ident_double_quotes_token_stream
+                    )
+                });
+                let id_missing_field_token_stream = generate_missing_field_token_stream(
+                    0,
+                    &quote::quote!{"id"}
+                );
+                quote::quote! {
+                    #id_missing_field_token_stream
+                    #(#visit_map_missing_fields_check_token_stream)*
+                }
+            };
+            let fields_array_elements_token_stream = {
+                let fields_array_elements_token_stream = vec_syn_field.iter().map(|element| generate_field_ident_double_quotes_token_stream(&element));
+                quote::quote! {
+                    "id",
+                    #(#fields_array_elements_token_stream)*
+                }
+            };
+            let std_vec_vec_generic_with_id_ident_options_to_read_origin_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_stringified,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream {
                     fn deserialize<__D>(
@@ -7833,7 +7863,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #[allow(non_camel_case_types)]
                         #[doc(hidden)]
                         enum __Field {
-                            #(#field_enum_variants_token_stream),*
+                            #(#field_enum_variants_token_stream),*,
                             __ignore,
                         }
                         #[doc(hidden)]
@@ -7857,9 +7887,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 __E: serde::de::Error,
                             {
                                 match __value {
-                                    #(#visit_u64_value_enum_variants_token_stream),*
-                                    // 0u64 => serde::__private::Ok(__Field::__field0),
-                                    // 1u64 => serde::__private::Ok(__Field::__field1),
+                                    #(#visit_u64_value_enum_variants_token_stream),*,
                                     _ => serde::__private::Ok(__Field::__ignore),
                                 }
                             }
@@ -7872,8 +7900,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             {
                                 match __value {
                                     #visit_str_value_enum_variants_token_stream
-                                    // "id" => serde::__private::Ok(__Field::__field0),
-                                    // "std_primitive_i16" => serde::__private::Ok(__Field::__field1),
                                     _ => serde::__private::Ok(__Field::__ignore),
                                 }
                             }
@@ -7886,8 +7912,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             {
                                 match __value {
                                     #visit_bytes_value_enum_variants_token_stream
-                                    // b"id" => serde::__private::Ok(__Field::__field0),
-                                    // b"std_primitive_i16" => serde::__private::Ok(__Field::__field1),
                                     _ => serde::__private::Ok(__Field::__ignore),
                                 }
                             }
@@ -7933,14 +7957,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 __A: serde::de::SeqAccess<'de>,
                             {
                                 #visit_seq_fields_initialization_token_stream
-                                // if let (None, None) = (&__field0, &__field1) {
-                                //     return Err(serde::de::Error::custom(format!("custom serde error deserializing StdVecVecGenericWithIdDoggieOptionsToReadOrigin: all fields are None")));
-                                // }
                                 #if_let_nones_fields_serde_custom_error_token_stream
                                 serde::__private::Ok(#std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream {
                                     #visit_seq_fields_assignment_token_stream
-                                    // id: __field0,
-                                    // std_primitive_i16: __field1,
                                 })
                             }
                             #[inline]
@@ -7964,34 +7983,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         }
                                     }
                                 }
-                                let __field0 = match __field0 {
-                                    serde::__private::Some(__field0) => __field0,
-                                    serde::__private::None => {
-                                        serde::__private::de::missing_field("id")?
-                                    }
-                                };
-                                let __field1 = match __field1 {
-                                    serde::__private::Some(__field1) => __field1,
-                                    serde::__private::None => {
-                                        serde::__private::de::missing_field("std_primitive_i16")?
-                                    }
-                                };
+                                #visit_map_missing_fields_check_token_stream
                                 #if_let_nones_fields_serde_custom_error_token_stream
-                                // if let (None, None) = (&__field0, &__field1) {
-                                //     return Err(serde::de::Error::custom(format!("custom serde error deserializing StdVecVecGenericWithIdDoggieOptionsToReadOrigin: all fields are None")));
-                                // }
                                 serde::__private::Ok(#std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case_token_stream {
                                     #visit_seq_fields_assignment_token_stream
-                                    // id: __field0,
-                                    // std_primitive_i16: __field1,
                                 })
                             }
                         }
                         #[doc(hidden)]
-                        const FIELDS: &'static [&'static str] = &["id", "std_primitive_i16"];
+                        const FIELDS: &'static [&'static str] = &[#fields_array_elements_token_stream];
                         serde::Deserializer::deserialize_struct(
                             __deserializer,
-                            "StdVecVecGenericWithIdDoggieOptionsToReadOrigin",
+                            #std_vec_vec_generic_with_id_ident_options_to_read_origin_double_quotes_token_stream,
                             FIELDS,
                             __Visitor {
                                 marker: serde::__private::PhantomData::<
@@ -8064,6 +8067,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             true,
             &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))"}
         );
+        let f = if ident == "Doggie" {
+            impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
         quote::quote!{
             #std_vec_vec_generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
@@ -8072,6 +8081,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             // #impl_postgersql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_ident_field_reader_upper_camel_case_token_stream_token_stream
             
             #std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
+            // #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
+            #f
             #std_vec_vec_generic_with_id_ident_options_to_read_token_stream
             //
             #std_vec_vec_generic_with_id_ident_reader_token_stream
