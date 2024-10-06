@@ -419,7 +419,7 @@ enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOn
     StdVecVecStdOptionOptionFullTypePath,
     StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
 }
-fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(
+fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_handle_token_stream(
     struct_ident_token_stream: &impl quote::ToTokens,
     variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant
 ) -> proc_macro::TokenStream {
@@ -453,6 +453,60 @@ fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec
     };
     generated.into()
 }
+fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(
+    struct_ident_token_stream: &impl quote::ToTokens,
+    variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant
+) -> proc_macro::TokenStream {
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_handle_token_stream(
+        &struct_ident_token_stream,
+        variant
+    )
+}
+fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_token_stream(
+    struct_ident_token_stream: &impl quote::ToTokens,
+    variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant
+) -> proc_macro::TokenStream {
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_handle_token_stream(
+        &struct_ident_token_stream,
+        variant
+    )
+}
+//
+fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_options_to_read_token_stream(
+    struct_ident_token_stream: &impl quote::ToTokens,
+    variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant
+) -> proc_macro::TokenStream {
+    let inner_content = match variant {
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
+            ::core::default::Default::default()
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
+            Some(::core::default::Default::default())
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
+            vec![::core::default::Default::default()]
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
+            Some(vec![::core::default::Default::default()])
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
+            vec![Some(::core::default::Default::default())]
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
+            Some(vec![Some(::core::default::Default::default())])
+        },
+    };
+    let generated = quote::quote! {
+        impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #struct_ident_token_stream {
+            #[inline]
+            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                Self(#inner_content)
+            }
+        }
+    };
+    generated.into()
+}
+//
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -562,7 +616,7 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
-    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath)
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath)
 }
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathToCreate)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_full_type_path_to_create(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -571,7 +625,7 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
-    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath)
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath)
 }
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathToCreate)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_vec_vec_full_type_path_to_create(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -580,7 +634,7 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
-    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath)
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath)
 }
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathToCreate)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_full_type_path_to_create(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -589,7 +643,7 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
-    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath)
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath)
 }
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathToCreate)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_vec_vec_std_option_option_full_type_path_to_create(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -598,16 +652,16 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
-    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath)
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath)
 }
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathToCreate)]
-pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_std_option_option_full_type_path_to_create(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_std_option_option_std_vec_vec_std_option_option_full_type_path_to_create(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = format!("GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathToCreate");
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_upper_camel_case_token_stream(&ident);
-    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_to_create_token_stream(&ident_to_create_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
 }
 
 fn generate_pub_struct_ident_field_reader_token_stream(ident: &syn::Ident, content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
@@ -715,6 +769,62 @@ pub fn generate_ident_options_to_read(input: proc_macro::TokenStream) -> proc_ma
     };
     generated.into()
 }
+
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = format!("GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_options_to_read_token_stream(&ident_options_to_read_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath)
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_full_type_path_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = format!("GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_options_to_read_token_stream(&ident_options_to_read_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath)
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_vec_vec_full_type_path_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = format!("GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_options_to_read_token_stream(&ident_options_to_read_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath)
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_full_type_path_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = format!("GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_options_to_read_token_stream(&ident_options_to_read_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath)
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_vec_vec_std_option_option_full_type_path_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = format!("GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_options_to_read_token_stream(&ident_options_to_read_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath)
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_std_option_option_full_type_path_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = format!("GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_read_upper_camel_case_token_stream(&ident);
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_options_to_read_token_stream(&ident_options_to_read_upper_camel_case_token_stream, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
+}
+
 
 fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
     ident: &syn::Ident,
