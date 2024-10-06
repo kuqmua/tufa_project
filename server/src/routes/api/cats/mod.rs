@@ -29,7 +29,7 @@ fn crud(app_state: common::repositories_types::server::routes::app_state::DynArc
         .route("/create_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::cats::create_many_payload_example_route_logic))
         .route("/create_one", axum::routing::post(common::repositories_types::server::routes::api::cats::try_create_one_route_logic))
         .route("/create_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::cats::create_one_payload_example_route_logic))
-        // .route("/read_many", axum::routing::post(common::repositories_types::server::routes::api::cats::try_read_many_route_logic))
+        .route("/read_many", axum::routing::post(common::repositories_types::server::routes::api::cats::try_read_many_route_logic))
         .route("/read_one", axum::routing::post(common::repositories_types::server::routes::api::cats::try_read_one_route_logic))
         // .route("/update_many", axum::routing::patch(common::repositories_types::server::routes::api::cats::try_update_many_route_logic))
         // .route("/update_one", axum::routing::patch(common::repositories_types::server::routes::api::cats::try_update_one_route_logic))
