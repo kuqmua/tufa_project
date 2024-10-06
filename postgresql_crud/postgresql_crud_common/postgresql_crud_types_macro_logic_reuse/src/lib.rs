@@ -743,7 +743,7 @@ pub fn generate_std_option_option_std_vec_vec_std_option_option_full_type_path_f
     generated.into()
 }
 
-/////////////////////
+
 fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
     ident: &syn::Ident,
     variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant
@@ -762,13 +762,19 @@ fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec
             }
         },
         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
-            // Some(vec![::core::default::Default::default()])
+            Self {
+                pagination: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            }
         },
         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
-            // vec![Some(::core::default::Default::default())]
+            Self {
+                pagination: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            }
         },
         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
-            // Some(vec![Some(::core::default::Default::default())])
+            Self {
+                pagination: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            }
         },
     };
     let generated = quote::quote! {
@@ -786,9 +792,8 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
-        &ident,
+        &&syn_derive_input.ident,
         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath
     )
 }
@@ -797,9 +802,8 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
-        &ident,
+        &syn_derive_input.ident,
         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath
     )
 }
@@ -808,61 +812,41 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathFieldReader";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
-        &ident,
+        &syn_derive_input.ident,
         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath
     )
 }
-// #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader)]
-// pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     proc_macro_common::panic_location::panic_location();
-//     let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader";
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-//     let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
-//     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
-//         &ident_field_reader_upper_camel_case_token_stream,
-//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath
-//     )
-// }
-// #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader)]
-// pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     proc_macro_common::panic_location::panic_location();
-//     let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader";
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-//     let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
-//     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
-//         &ident_field_reader_upper_camel_case_token_stream,
-//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath
-//     )
-// }
-// #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader)]
-// pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     proc_macro_common::panic_location::panic_location();
-//     let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader";
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-//     let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
-//     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
-//         &ident_field_reader_upper_camel_case_token_stream,
-//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath
-//     )
-// }
-// #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader)]
-// pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     proc_macro_common::panic_location::panic_location();
-//     let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader";
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-//     let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
-//     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
-//         &ident_field_reader_upper_camel_case_token_stream,
-//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath
-//     )
-// }
-/////////////////////
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathFieldReader)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
+        &&syn_derive_input.ident,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath
+    )
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathFieldReader)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
+        &&syn_derive_input.ident,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath
+    )
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_option_option_std_vec_vec_std_option_option_full_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
+        &&syn_derive_input.ident,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath
+    )
+}
 
 
 #[proc_macro_derive(GenerateIdentOptionsToRead)]
