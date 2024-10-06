@@ -743,6 +743,66 @@ pub fn generate_std_option_option_std_vec_vec_std_option_option_full_type_path_f
     generated.into()
 }
 
+/////////////////////
+fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
+    struct_ident_token_stream: &impl quote::ToTokens,
+    variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant
+) -> proc_macro::TokenStream {
+    let inner_content = match variant {
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
+            ::core::default::Default::default()
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
+            // Some(::core::default::Default::default())
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
+            // vec![::core::default::Default::default()]
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
+            // Some(vec![::core::default::Default::default()])
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
+            // vec![Some(::core::default::Default::default())]
+        },
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
+            // Some(vec![Some(::core::default::Default::default())])
+        },
+    };
+    let generated = quote::quote! {
+        impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #struct_ident_token_stream {
+            #[inline]
+            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                #inner_content
+            }
+        }
+    };
+    generated.into()
+}
+#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader)]
+pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_elementfull_type_path_field_reader(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    //here
+    let ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_self_field_reader_upper_camel_case_token_stream(&ident);
+    let generated = generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_field_reader_token_stream(
+        struct_ident_token_stream: &impl quote::ToTokens,
+        variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant
+    );
+    
+    // quote::quote!{
+    //     impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_field_reader_upper_camel_case_token_stream {
+    //         #[inline]
+    //         fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+    //             ::core::default::Default::default()
+    //         }
+    //     }
+    // };
+    generated.into()
+}
+/////////////////////
+
 
 #[proc_macro_derive(GenerateIdentOptionsToRead)]
 pub fn generate_ident_options_to_read(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
