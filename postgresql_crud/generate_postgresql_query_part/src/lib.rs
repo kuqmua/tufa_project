@@ -6298,48 +6298,56 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         )
     };
     let postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()};
-    //
-    let fields_some_value_self_options_to_read_initialization_content_token_stream = {
-        let fields_token_stream = vec_syn_field.iter().map(|element| {
-            let field_ident = element
-                .ident
-                .as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                });
+
+    let (
+        fields_some_value_self_options_to_read_initialization_content_token_stream,
+        fields_with_id_some_value_self_options_to_read_initialization_content_token_stream,
+    ) = {
+        let generate_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = |
+            field_ident: &syn::Ident,
+        |{
             quote::quote!{
                 #field_ident: Some(postgresql_crud::Value { 
                     value: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                 })
             }
-        });
-        quote::quote!{{#(#fields_token_stream),*}}
-    };
-    let fields_with_id_some_value_self_options_to_read_initialization_content_token_stream = {
-        let fields_token_stream = {
-            let fields_token_stream = vec_syn_field.iter().map(|element| {
-                let field_ident = element
+        };
+        let fields_some_value_self_options_to_read_initialization_content_token_stream = {
+            let fields_token_stream = vec_syn_field.iter().map(|element| generate_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(
+                &element
+                .ident
+                .as_ref()
+                .unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                })
+            ));
+            quote::quote!{{#(#fields_token_stream),*}}
+        };
+        let fields_with_id_some_value_self_options_to_read_initialization_content_token_stream = {
+            let fields_token_stream = {
+                let fields_token_stream = vec_syn_field.iter().map(|element| generate_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(
+                    &element
                     .ident
                     .as_ref()
                     .unwrap_or_else(|| {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                    });
-                quote::quote!{
-                    #field_ident: Some(postgresql_crud::Value { 
-                        value: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                     })
+                ));
+                let id_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = generate_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(
+                    &syn::Ident::new(&naming_conventions::IdSnakeCase.to_string(), ident.span()),
+                );
+                quote::quote!{
+                    #id_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                    #(#fields_token_stream),*
                 }
-            });
-            quote::quote!{
-                id: Some(postgresql_crud::Value { 
-                    value: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }),
-                #(#fields_token_stream),*
-            }
+            };
+            quote::quote!{{ #fields_token_stream }}
         };
-        quote::quote!{{ #fields_token_stream }}
+        (
+            fields_some_value_self_options_to_read_initialization_content_token_stream,
+            fields_with_id_some_value_self_options_to_read_initialization_content_token_stream,
+        )
     };
-    //
     let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
         self_initialization_content_token_stream: &proc_macro2::TokenStream,
