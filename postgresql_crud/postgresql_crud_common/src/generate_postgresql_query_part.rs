@@ -2128,12 +2128,20 @@ pub enum PaginationTryNewErrorNamed {
         #[eo_to_std_string_string_serialize_deserialize]
         offset: std::primitive::u64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    LimitIsZero {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
 impl Pagination {
     pub fn try_new(limit: std::primitive::u64, offset: std::primitive::u64) -> Result<Self, PaginationTryNewErrorNamed> {
         match offset.checked_add(limit) {
-            Some(value) => Ok(Self{ limit, offset }),
+            Some(value) => match limit == 0 {
+                true => Err(PaginationTryNewErrorNamed::LimitIsZero {
+                    code_occurence: error_occurence_lib::code_occurence!()
+                }),
+                false => Ok(Self{ limit, offset })
+            },
             None => Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
                 limit,
                 offset,
@@ -2152,7 +2160,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            limit: std::default::Default::default(),
+            limit: 1,
             offset: std::default::Default::default(),
         }
     }
