@@ -1399,10 +1399,10 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     generated.into()
 }
 
-#[proc_macro_derive(GenerateIdentOptionsToUpdate)]
-pub fn generate_ident_options_to_update(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateIdentOptionToUpdate)]
+pub fn generate_ident_option_to_update(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateIdentOptionsToUpdate";
+    let proc_macro_name_upper_camel_case = "GenerateIdentOptionToUpdate";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1417,10 +1417,10 @@ pub fn generate_ident_options_to_update(input: proc_macro::TokenStream) -> proc_
     assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed !== 1");
     let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
-    let ident_options_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_update_upper_camel_case_token_stream(&ident);
+    let ident_option_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_option_to_update_upper_camel_case_token_stream(&ident);
     let generated = quote::quote!{
         #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]//Eq does not implemented for float//Copy does not implemented for String
-        pub struct #ident_options_to_update_upper_camel_case_token_stream(pub #first_field_unnamed_type);
+        pub struct #ident_option_to_update_upper_camel_case_token_stream(pub #first_field_unnamed_type);
     };
     generated.into()
 }

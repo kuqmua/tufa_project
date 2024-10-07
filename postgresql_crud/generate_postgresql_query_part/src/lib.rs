@@ -7810,6 +7810,45 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             false,
             &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))"}
         );
+
+        let generic_ident_option_to_update_token_stream = {
+            let generic_ident_option_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfOptionToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_option_to_update_upper_camel_case_token_stream(&ident);
+            let variants_token_stream = vec_syn_field.iter().map(|element| {
+                let field_ident = element
+                    .ident
+                    .as_ref()
+                    .unwrap_or_else(|| {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    });
+                let type_path_option_to_update_token_stream = {
+                    let value = format!(
+                        "{}{}",
+                        {
+                            let type_path = &element.ty;
+                            quote::quote!{#type_path}.to_string()
+                        },
+                        naming_conventions::OptionToUpdateUpperCamelCase
+                    );
+                    value.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
+                let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &field_ident.to_string(),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                quote::quote!{
+                    #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
+                    #variant_ident_upper_camel_case_token_stream(postgresql_crud::Value<#type_path_option_to_update_token_stream>)
+                }
+            });
+            quote::quote!{
+                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+                pub enum #generic_ident_option_to_update_upper_camel_case_token_stream {
+                    #(#variants_token_stream),*
+                }
+            }
+        };
         quote::quote!{
             #generic_ident_token_stream
             #impl_std_fmt_display_for_generic_ident_token_stream
@@ -7846,6 +7885,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //todo 
 
             #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_token_stream
+
+            #generic_ident_option_to_update_token_stream
         }
     };
     //its for GeneratePostgresqlQueryPart (json logic)

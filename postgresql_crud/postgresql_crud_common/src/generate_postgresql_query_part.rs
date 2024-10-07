@@ -17,6 +17,7 @@
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
 #[derive(
@@ -38,6 +39,7 @@ pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub 
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i16))] pub std::primitive::i16);
 #[derive(
@@ -59,6 +61,7 @@ pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i1
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveI32(#[validate(range(min = -2_147_483_648i32, max = 2_147_483_647i32))] pub std::primitive::i32);
 #[derive(
@@ -80,6 +83,7 @@ pub struct JsonStdPrimitiveI32(#[validate(range(min = -2_147_483_648i32, max = 2
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveI64(#[validate(range(min = -9_223_372_036_854_775_808i64, max = 9_223_372_036_854_775_807i64))] pub std::primitive::i64);
 #[derive(
@@ -101,6 +105,7 @@ pub struct JsonStdPrimitiveI64(#[validate(range(min = -9_223_372_036_854_775_808
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveU8(#[validate(range(min = 0u8, max = 255u8))] pub std::primitive::u8);
 #[derive(
@@ -122,6 +127,7 @@ pub struct JsonStdPrimitiveU8(#[validate(range(min = 0u8, max = 255u8))] pub std
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveU16(#[validate(range(min = 0u16, max = 65_535u16))] pub std::primitive::u16);
 #[derive(
@@ -143,6 +149,7 @@ pub struct JsonStdPrimitiveU16(#[validate(range(min = 0u16, max = 65_535u16))] p
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveU32(#[validate(range(min = 0u32, max = 4_294_967_295u32))] pub std::primitive::u32);
 #[derive(
@@ -164,7 +171,7 @@ pub struct JsonStdPrimitiveU32(#[validate(range(min = 0u32, max = 4_294_967_295u
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveU64(#[validate(range(min = 0u64, max = 18_446_744_073_709_551_615u64))] pub std::primitive::u64);
 #[derive(
@@ -185,7 +192,7 @@ pub struct JsonStdPrimitiveU64(#[validate(range(min = 0u64, max = 18_446_744_073
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveF32(
     #[validate(range(min = -3.40282347E+38f32, max = 3.40282347E+38f32))] //todo maybe its not correct. https://doc.rust-lang.org/std/primitive.f32.html
@@ -209,7 +216,7 @@ pub struct JsonStdPrimitiveF32(
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveF64(
     #[validate(range(min = -1.7976931348623157E+308f64, max = 1.7976931348623157E+308f64))] //todo maybe its not correct. https://doc.rust-lang.org/core/primitive.f64.html
@@ -234,7 +241,7 @@ pub struct JsonStdPrimitiveF64(
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderBoolean,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdPrimitiveBool(pub std::primitive::bool);
 #[derive(
@@ -255,7 +262,7 @@ pub struct JsonStdPrimitiveBool(pub std::primitive::bool);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderString,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdStringString(pub std::string::String);
 
@@ -278,7 +285,7 @@ pub struct JsonStdStringString(pub std::string::String);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveI8(pub std::option::Option<std::primitive::i8>);
 #[derive(
@@ -300,7 +307,7 @@ pub struct JsonStdOptionOptionStdPrimitiveI8(pub std::option::Option<std::primit
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveI16(pub std::option::Option<std::primitive::i16>);
 #[derive(
@@ -322,7 +329,7 @@ pub struct JsonStdOptionOptionStdPrimitiveI16(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveI32(pub std::option::Option<std::primitive::i32>);
 #[derive(
@@ -344,7 +351,7 @@ pub struct JsonStdOptionOptionStdPrimitiveI32(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveI64(pub std::option::Option<std::primitive::i64>);
 #[derive(
@@ -366,7 +373,7 @@ pub struct JsonStdOptionOptionStdPrimitiveI64(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveU8(pub std::option::Option<std::primitive::u8>);
 #[derive(
@@ -388,7 +395,7 @@ pub struct JsonStdOptionOptionStdPrimitiveU8(pub std::option::Option<std::primit
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveU16(pub std::option::Option<std::primitive::u16>);
 #[derive(
@@ -410,7 +417,7 @@ pub struct JsonStdOptionOptionStdPrimitiveU16(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveU32(pub std::option::Option<std::primitive::u32>);
 #[derive(
@@ -432,7 +439,7 @@ pub struct JsonStdOptionOptionStdPrimitiveU32(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveU64(pub std::option::Option<std::primitive::u64>);
 #[derive(
@@ -453,7 +460,7 @@ pub struct JsonStdOptionOptionStdPrimitiveU64(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveF32(pub std::option::Option<std::primitive::f32>);
 #[derive(
@@ -474,7 +481,7 @@ pub struct JsonStdOptionOptionStdPrimitiveF32(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveF64(pub std::option::Option<std::primitive::f64>);
 #[derive(
@@ -496,7 +503,7 @@ pub struct JsonStdOptionOptionStdPrimitiveF64(pub std::option::Option<std::primi
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableBoolean,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
 #[derive(
@@ -517,7 +524,7 @@ pub struct JsonStdOptionOptionStdPrimitiveBool(pub std::option::Option<std::prim
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableString,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdStringString(pub std::option::Option<std::string::String>);
 
@@ -539,7 +546,7 @@ pub struct JsonStdOptionOptionStdStringString(pub std::option::Option<std::strin
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveI8(pub std::vec::Vec<std::primitive::i8>);
 #[derive(
@@ -560,7 +567,7 @@ pub struct JsonStdVecVecStdPrimitiveI8(pub std::vec::Vec<std::primitive::i8>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveI16(pub std::vec::Vec<std::primitive::i16>);
 #[derive(
@@ -581,7 +588,7 @@ pub struct JsonStdVecVecStdPrimitiveI16(pub std::vec::Vec<std::primitive::i16>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveI32(pub std::vec::Vec<std::primitive::i32>);
 #[derive(
@@ -602,7 +609,7 @@ pub struct JsonStdVecVecStdPrimitiveI32(pub std::vec::Vec<std::primitive::i32>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveI64(pub std::vec::Vec<std::primitive::i64>);
 #[derive(
@@ -623,7 +630,7 @@ pub struct JsonStdVecVecStdPrimitiveI64(pub std::vec::Vec<std::primitive::i64>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 #[derive(
@@ -644,7 +651,7 @@ pub struct JsonStdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveU16(pub std::vec::Vec<std::primitive::u16>);
 #[derive(
@@ -665,7 +672,7 @@ pub struct JsonStdVecVecStdPrimitiveU16(pub std::vec::Vec<std::primitive::u16>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveU32(pub std::vec::Vec<std::primitive::u32>);
 #[derive(
@@ -686,7 +693,7 @@ pub struct JsonStdVecVecStdPrimitiveU32(pub std::vec::Vec<std::primitive::u32>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveU64(pub std::vec::Vec<std::primitive::u64>);
 #[derive(
@@ -706,7 +713,7 @@ pub struct JsonStdVecVecStdPrimitiveU64(pub std::vec::Vec<std::primitive::u64>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveF32(pub std::vec::Vec<std::primitive::f32>);
 #[derive(
@@ -726,7 +733,7 @@ pub struct JsonStdVecVecStdPrimitiveF32(pub std::vec::Vec<std::primitive::f32>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveF64(pub std::vec::Vec<std::primitive::f64>);
 #[derive(
@@ -747,7 +754,7 @@ pub struct JsonStdVecVecStdPrimitiveF64(pub std::vec::Vec<std::primitive::f64>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayBoolean,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdPrimitiveBool(pub std::vec::Vec<std::primitive::bool>);
 #[derive(
@@ -768,7 +775,7 @@ pub struct JsonStdVecVecStdPrimitiveBool(pub std::vec::Vec<std::primitive::bool>
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayString,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdStringString(pub std::vec::Vec<std::string::String>);
 
@@ -790,7 +797,7 @@ pub struct JsonStdVecVecStdStringString(pub std::vec::Vec<std::string::String>);
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI8(pub std::option::Option<std::vec::Vec<std::primitive::i8>>);
 #[derive(
@@ -811,7 +818,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI8(pub std::option::Option<st
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI16(pub std::option::Option<std::vec::Vec<std::primitive::i16>>);
 #[derive(
@@ -832,7 +839,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI16(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI32(pub std::option::Option<std::vec::Vec<std::primitive::i32>>);
 #[derive(
@@ -853,7 +860,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI32(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI64(pub std::option::Option<std::vec::Vec<std::primitive::i64>>);
 #[derive(
@@ -874,7 +881,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveI64(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU8(pub std::option::Option<std::vec::Vec<std::primitive::u8>>);
 #[derive(
@@ -895,7 +902,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU8(pub std::option::Option<st
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU16(pub std::option::Option<std::vec::Vec<std::primitive::u16>>);
 #[derive(
@@ -916,7 +923,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU16(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU32(pub std::option::Option<std::vec::Vec<std::primitive::u32>>);
 #[derive(
@@ -937,7 +944,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU32(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU64(pub std::option::Option<std::vec::Vec<std::primitive::u64>>);
 #[derive(
@@ -957,7 +964,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveU64(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF32(pub std::option::Option<std::vec::Vec<std::primitive::f32>>);
 #[derive(
@@ -977,7 +984,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF32(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF64(pub std::option::Option<std::vec::Vec<std::primitive::f64>>);
 #[derive(
@@ -998,7 +1005,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveF64(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayBoolean,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdPrimitiveBool(pub std::option::Option<std::vec::Vec<std::primitive::bool>>);
 #[derive(
@@ -1019,7 +1026,7 @@ pub struct JsonStdOptionOptionStdVecVecStdPrimitiveBool(pub std::option::Option<
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayString,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdStringString(pub std::option::Option<std::vec::Vec<std::string::String>>);
 
@@ -1041,7 +1048,7 @@ pub struct JsonStdOptionOptionStdVecVecStdStringString(pub std::option::Option<s
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI8(pub std::vec::Vec<std::option::Option<std::primitive::i8>>);
 #[derive(
@@ -1062,7 +1069,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI8(pub std::vec::Vec<std::opt
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI16(pub std::vec::Vec<std::option::Option<std::primitive::i16>>);
 #[derive(
@@ -1083,7 +1090,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI16(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI32(pub std::vec::Vec<std::option::Option<std::primitive::i32>>);
 #[derive(
@@ -1104,7 +1111,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI32(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI64(pub std::vec::Vec<std::option::Option<std::primitive::i64>>);
 #[derive(
@@ -1125,7 +1132,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveI64(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU8(pub std::vec::Vec<std::option::Option<std::primitive::u8>>);
 #[derive(
@@ -1146,7 +1153,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU8(pub std::vec::Vec<std::opt
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU16(pub std::vec::Vec<std::option::Option<std::primitive::u16>>);
 #[derive(
@@ -1167,7 +1174,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU16(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU32(pub std::vec::Vec<std::option::Option<std::primitive::u32>>);
 #[derive(
@@ -1188,7 +1195,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU32(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU64(pub std::vec::Vec<std::option::Option<std::primitive::u64>>);
 #[derive(
@@ -1208,7 +1215,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveU64(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF32(pub std::vec::Vec<std::option::Option<std::primitive::f32>>);
 #[derive(
@@ -1228,7 +1235,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF32(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF64(pub std::vec::Vec<std::option::Option<std::primitive::f64>>);
 #[derive(
@@ -1249,7 +1256,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveF64(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableBoolean,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdPrimitiveBool(pub std::vec::Vec<std::option::Option<std::primitive::bool>>);
 #[derive(
@@ -1270,7 +1277,7 @@ pub struct JsonStdVecVecStdOptionOptionStdPrimitiveBool(pub std::vec::Vec<std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullableString,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdVecVecStdOptionOptionStdStringString(pub std::vec::Vec<std::option::Option<std::string::String>>);
 
@@ -1292,7 +1299,7 @@ pub struct JsonStdVecVecStdOptionOptionStdStringString(pub std::vec::Vec<std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>);
 #[derive(
@@ -1313,7 +1320,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(pub std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>);
 #[derive(
@@ -1334,7 +1341,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>);
 #[derive(
@@ -1355,7 +1362,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>);
 #[derive(
@@ -1376,7 +1383,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>);
 #[derive(
@@ -1397,7 +1404,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8(pub std::op
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>);
 #[derive(
@@ -1418,7 +1425,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>);
 #[derive(
@@ -1439,7 +1446,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>);
 #[derive(
@@ -1459,7 +1466,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>);
 #[derive(
@@ -1479,7 +1486,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>);
 #[derive(
@@ -1500,7 +1507,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableBoolean,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool(pub std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>);
 #[derive(
@@ -1521,7 +1528,7 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool(pub std::
     postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableString,
-    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionsToUpdate,
+    postgresql_crud_types_macro_logic_reuse::GenerateIdentOptionToUpdate,
 )]
 pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
 
@@ -1607,13 +1614,13 @@ impl schemars::JsonSchema for JsonUuidOptionsToRead {
     }
 }
 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct JsonUuidOptionsToUpdate(pub uuid::Uuid);
-impl schemars::JsonSchema for JsonUuidOptionsToUpdate {
+pub struct JsonUuidOptionToUpdate(pub uuid::Uuid);
+impl schemars::JsonSchema for JsonUuidOptionToUpdate {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("JsonUuidOptionsToUpdate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("JsonUuidOptionToUpdate")
     }
     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::JsonUuidOptionsToUpdate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::JsonUuidOptionToUpdate")
     }
     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
         {
