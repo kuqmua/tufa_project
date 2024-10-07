@@ -713,10 +713,47 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
+        let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream = {
+            let elements_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element| {
+                let field_ident_stringified = element.field_ident.to_string();
+                let field_ident_upper_camel_case_token_stream = {
+                    let value = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
+                    value
+                        .parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let maybe_generic_filter_initialization_token_stream = match &element.option_generic {
+                    Some(value) => {
+                        let ident_field_upper_camel_case_token_stream = value.field_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
+                            panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} {} {}",
+                                &value.field_to_read_upper_camel_case_stringified,
+                                proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                            )
+                        });
+                        quote::quote! {{ 
+                            #filter_snake_case: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                        }}
+                    }
+                    None => proc_macro2::TokenStream::new(),
+                };
+                quote::quote! {
+                    #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_initialization_token_stream
+                }
+            });
+            quote::quote! {
+                impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_column_upper_camel_case_token_stream {
+                    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+                        vec![#(#elements_token_stream),*]
+                    }
+                }
+            }
+        };
         quote::quote! {
             #ident_column_token_stream
             #impl_std_fmt_display_for_ident_column_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_column_token_stream
+            #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream
         }
     };
     // println!("{column_token_stream}");
@@ -738,10 +775,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self.status_code
         }
     }
-    let new_syn_variant_wrapper = |variant_name: &dyn std::fmt::Display,
-                                   status_code: std::option::Option<proc_macro_helpers::status_code::StatusCode>,
-                                   fields: std::vec::Vec<(proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute, &dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>|
-     -> SynVariantWrapper {
+    let new_syn_variant_wrapper = |
+        variant_name: &dyn std::fmt::Display,
+        status_code: std::option::Option<proc_macro_helpers::status_code::StatusCode>,
+        fields: std::vec::Vec<(proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute,&dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>
+    | -> SynVariantWrapper {
         SynVariantWrapper {
             variant: syn::Variant {
                 attrs: match &status_code {
@@ -3516,7 +3554,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             ),
         );
-        // println!("{parameters_token_stream}");
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
@@ -3705,11 +3742,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //         http_request_test_expect_fail_token_stream,
         //     )
         // println!("{try_operation_token_stream}");
+        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream = wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
+                &naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation),
+                &quote::quote! {
+                    {
+                        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                        select: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    }
+                },
+            );
+        let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         (
             quote::quote! {
                 #parameters_token_stream
                 #try_operation_route_logic_token_stream
                 #try_operation_token_stream
+                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
+                #operation_payload_example_route_logic_token_stream
             },
             quote::quote! {},
             // http_request_test_expect_success_token_stream,
