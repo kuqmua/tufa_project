@@ -7874,10 +7874,23 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let generic_ident_option_to_update_token_stream = generate_tokens_option_to_update_origin_token_stream(&generic_ident_option_to_update_upper_camel_case_token_stream);
         
         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_option_to_update_token_stream = {
+            let elements_token_stream = vec_syn_field.iter().map(|element| {
+                let field_ident = element.ident.as_ref()
+                    .unwrap_or_else(|| {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    });
+                let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
+                quote::quote!{
+                    #generic_ident_option_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(postgresql_crud::Value {
+                        value: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    })
+                }
+            });
             quote::quote!{
-                impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdate {
-                    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<SomethingOptionToUpdate> {
+                impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #generic_ident_option_to_update_upper_camel_case_token_stream {
+                    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<#generic_ident_option_to_update_upper_camel_case_token_stream> {
                         vec![
+                            #(#elements_token_stream),*
                             // SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value {
                             //     value: <postgresql_crud::JsonStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0
                             // }),
@@ -7887,45 +7900,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             //         None => None,
                             //     },
                             // }),
-                            // SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(postgresql_crud::Value {
-                            //     value: <postgresql_crud::JsonStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0.into_iter().map(|element| element.0).collect()
-                            // }),
-                            // SomethingOptionToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8(postgresql_crud::Value {
-                            //     value: match <postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
-                            //         Some(value) => Some(value.into_iter().map(|element| element.0).collect()),
-                            //         None => None,
-                            //     },
-                            // }),
-                            // SomethingOptionToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::Value {
-                            //     value: <postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                            //         .0
-                            //         .into_iter()
-                            //         .map(|element| match element {
-                            //             Some(value) => Some(value.0),
-                            //             None => None,
-                            //         })
-                            //         .collect(),
-                            // }),
-                            // SomethingOptionToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::Value {
-                            //     value: match <postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
-                            //         Some(value) => Some(
-                            //             value
-                            //                 .into_iter()
-                            //                 .map(|element| match element {
-                            //                     Some(value) => Some(value.0),
-                            //                     None => None,
-                            //                 })
-                            //                 .collect(),
-                            //         ),
-                            //         None => None,
-                            //     },
-                            // }),
-                            // SomethingOptionToUpdate::Generic(postgresql_crud::Value { value: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }),
-                            // SomethingOptionToUpdate::StdOptionOptionGeneric(postgresql_crud::Value { 
-                            //     value: Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()) 
-                            // }),
-                            // SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value { value: postgresql_crud::JsonArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] } }),
-                            // SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(postgresql_crud::Value { value: Some(postgresql_crud::JsonArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] }) }),
                         ]
                     }
                 }
@@ -7969,6 +7943,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_token_stream
 
             #generic_ident_option_to_update_token_stream
+            #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_option_to_update_token_stream
         }
     };
     //its for GeneratePostgresqlQueryPart (json logic)
