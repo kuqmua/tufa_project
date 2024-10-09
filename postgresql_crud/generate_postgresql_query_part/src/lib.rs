@@ -8982,9 +8982,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 fields: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
             }}
         );
+        let std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_json_array_change_upper_camel_case_token_stream(&ident);
         let std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
             &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
-            &quote::quote!{postgresql_crud::JsonArrayChange<#std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream, #std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream>},
+            &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream,
             true,
         );
         //todo maybe should impl trait for convetion  tokens_option_to_update into field to update. t
@@ -9066,12 +9067,27 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         //
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
-            &quote::quote!{(postgresql_crud::JsonArrayChange {
+            &quote::quote!{(#std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream {
                 create: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
                 update: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
                 delete: vec![::core::default::Default::default()],
             })}
         );
+        let std_vec_vec_generic_with_id_ident_json_array_change_token_stream = {
+            quote::quote!{
+                #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, 
+                    serde::Deserialize,
+                utoipa::ToSchema)]
+                pub struct #std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream {
+                    #[serde(skip_serializing_if = "Vec::is_empty")]
+                    pub create: std::vec::Vec<#std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream>,
+                    #[serde(skip_serializing_if = "Vec::is_empty")]
+                    pub update: std::vec::Vec<#std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream>,
+                    #[serde(skip_serializing_if = "Vec::is_empty")]
+                    pub delete: std::vec::Vec<postgresql_crud::JsonUuid>,
+                }
+            }
+        };
         quote::quote!{
             #std_vec_vec_generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
@@ -9111,6 +9127,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
             #std_vec_vec_generic_with_id_ident_option_to_update_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+
+            #std_vec_vec_generic_with_id_ident_json_array_change_token_stream
         }
     };
     //its for GeneratePostgresqlQueryPart (json logic)
@@ -9608,19 +9626,36 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 fields: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
             }}
         );
+
+        let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_json_array_change_upper_camel_case_token_stream(&ident);
         let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
             &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
-            &quote::quote!{std::option::Option<postgresql_crud::JsonArrayChange<#std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream, #std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream>>},
+            &quote::quote!{std::option::Option<#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream>},
             true,
         );
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
-            &quote::quote!{(Some(postgresql_crud::JsonArrayChange {
+            &quote::quote!{(Some(#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream {
                 create: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
                 update: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
                 delete: vec![::core::default::Default::default()],
             }))}
         );
+        let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream = {
+            quote::quote!{
+                #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, 
+                    serde::Deserialize,
+                utoipa::ToSchema)]
+                pub struct #std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream {
+                    #[serde(skip_serializing_if = "Vec::is_empty")]
+                    pub create: std::vec::Vec<#std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream>,
+                    #[serde(skip_serializing_if = "Vec::is_empty")]
+                    pub update: std::vec::Vec<#std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream>,
+                    #[serde(skip_serializing_if = "Vec::is_empty")]
+                    pub delete: std::vec::Vec<postgresql_crud::JsonUuid>,
+                }
+            }
+        };
         quote::quote!{
             #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
@@ -9660,6 +9695,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
             #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+
+            #std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream
         }
     };
     let generated = quote::quote! {
