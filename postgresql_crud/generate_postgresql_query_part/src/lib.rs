@@ -7292,9 +7292,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_tokens_option_to_update_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
         self_type_content_token_stream: &proc_macro2::TokenStream,
+        impl_deserialize: bool
     |{
+        let maybe_impl_deserialize_token_stream = if impl_deserialize {
+            quote::quote!{serde::Deserialize,}
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_deserialize_token_stream utoipa::ToSchema)]
             pub struct #struct_ident_token_stream(pub #self_type_content_token_stream);
         }
     };
@@ -7906,12 +7913,102 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let generic_ident_option_to_update_origin_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfOptionToUpdateOriginUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_option_to_update_origin_upper_camel_case_token_stream(&ident);
         let generic_ident_option_to_update_origin_token_stream = generate_tokens_option_to_update_origin_token_stream(&generic_ident_option_to_update_origin_upper_camel_case_token_stream);
         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_option_to_update_origin_token_stream = generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_option_to_update_token_stream(&generic_ident_option_to_update_origin_upper_camel_case_token_stream);
+        let generic_ident_option_to_update_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensGenericSelfOptionToUpdateUpperCamelCaseStringified::impl_quote_to_tokens_generic_self_option_to_update_upper_camel_case_stringified(&ident);
         let generic_ident_option_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfOptionToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_option_to_update_upper_camel_case_token_stream(&ident);
         //todo custom deserialize to check unique fields
         let generic_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
             &generic_ident_option_to_update_upper_camel_case_token_stream,
             &quote::quote!{std::vec::Vec<#generic_ident_option_to_update_origin_upper_camel_case_token_stream>},
+            false,
         );
+        let impl_serde_deserialize_for_generic_ident_option_to_update_token_stream = {
+            let tuple_struct_generic_ident_option_to_update_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{tuple_struct_space_stringified}{generic_ident_option_to_update_upper_camel_case_stringified}"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            let tuple_struct_generic_ident_option_to_update_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{tuple_struct_space_stringified}{generic_ident_option_to_update_upper_camel_case_stringified} with 1 element"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            let generic_ident_option_to_update_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &generic_ident_option_to_update_upper_camel_case_stringified,
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{
+                impl<'de> serde::Deserialize<'de> for #generic_ident_option_to_update_upper_camel_case_token_stream {
+                    fn deserialize<__D>(
+                        __deserializer: __D,
+                    ) -> serde::__private::Result<Self, __D::Error>
+                    where
+                        __D: serde::Deserializer<'de>,
+                    {
+                        #[doc(hidden)]
+                        struct __Visitor<'de> {
+                            marker: serde::__private::PhantomData<#generic_ident_option_to_update_upper_camel_case_token_stream>,
+                            lifetime: serde::__private::PhantomData<&'de ()>,
+                        }
+                        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                            type Value = #generic_ident_option_to_update_upper_camel_case_token_stream;
+                            fn expecting(
+                                &self,
+                                __formatter: &mut serde::__private::Formatter,
+                            ) -> serde::__private::fmt::Result {
+                                serde::__private::Formatter::write_str(
+                                    __formatter,
+                                    #tuple_struct_generic_ident_option_to_update_double_quotes_token_stream,
+                                )
+                            }
+                            #[inline]
+                            fn visit_newtype_struct<__E>(
+                                self,
+                                __e: __E,
+                            ) -> serde::__private::Result<Self::Value, __E::Error>
+                            where
+                                __E: serde::Deserializer<'de>,
+                            {
+                                let __field0: std::vec::Vec<#generic_ident_option_to_update_origin_upper_camel_case_token_stream> = <std::vec::Vec<
+                                    #generic_ident_option_to_update_origin_upper_camel_case_token_stream,
+                                > as serde::Deserialize>::deserialize(__e)?;
+                                serde::__private::Ok(#generic_ident_option_to_update_upper_camel_case_token_stream(__field0))
+                            }
+                            #[inline]
+                            fn visit_seq<__A>(
+                                self,
+                                mut __seq: __A,
+                            ) -> serde::__private::Result<Self::Value, __A::Error>
+                            where
+                                __A: serde::de::SeqAccess<'de>,
+                            {
+                                let __field0 = match serde::de::SeqAccess::next_element::<
+                                    std::vec::Vec<#generic_ident_option_to_update_origin_upper_camel_case_token_stream>,
+                                >(&mut __seq)? {
+                                    serde::__private::Some(__value) => __value,
+                                    serde::__private::None => {
+                                        return serde::__private::Err(
+                                            serde::de::Error::invalid_length(
+                                                0usize,
+                                                &#tuple_struct_generic_ident_option_to_update_with_1_element_double_quotes_token_stream,
+                                            ),
+                                        );
+                                    }
+                                };
+                                serde::__private::Ok(#generic_ident_option_to_update_upper_camel_case_token_stream(__field0))
+                            }
+                        }
+                        serde::Deserializer::deserialize_newtype_struct(
+                            __deserializer,
+                            #generic_ident_option_to_update_upper_camel_case_double_quotes_token_stream,
+                            __Visitor {
+                                marker: serde::__private::PhantomData::<
+                                    #generic_ident_option_to_update_upper_camel_case_token_stream,
+                                >,
+                                lifetime: serde::__private::PhantomData,
+                            },
+                        )
+                    }
+                }
+            }
+        };
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &generic_ident_option_to_update_upper_camel_case_token_stream,
             &quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
@@ -7958,6 +8055,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #generic_ident_option_to_update_origin_token_stream
             #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_option_to_update_origin_token_stream
             #generic_ident_option_to_update_token_stream
+            #impl_serde_deserialize_for_generic_ident_option_to_update_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_option_to_update_token_stream
         }
     };
@@ -8153,6 +8251,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_option_option_generic_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
             &std_option_option_generic_ident_option_to_update_upper_camel_case_token_stream,
             &quote::quote!{std::option::Option<std::vec::Vec<#std_option_option_generic_ident_option_to_update_origin_upper_camel_case_token_stream>>},
+            true,
         );
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &std_option_option_generic_ident_option_to_update_upper_camel_case_token_stream,
@@ -8671,6 +8770,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
             &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
             &quote::quote!{postgresql_crud::JsonArrayChange<#std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream, #std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream>},
+            true,
         );
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
@@ -9218,6 +9318,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
             &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
             &quote::quote!{std::option::Option<postgresql_crud::JsonArrayChange<#std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream, #std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream>>},
+            true,
         );
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case_token_stream,
