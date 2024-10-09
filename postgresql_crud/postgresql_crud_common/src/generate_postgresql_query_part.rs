@@ -1778,6 +1778,10 @@ pub trait CheckIdExistsInJsonGenericFields {
 //     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self) {}
 // }
 
+pub trait OptionToUpdateIntoFieldToUpdate<FieldToUpdateGeneric> {
+    fn option_to_update_into_field_to_update(&self) -> FieldToUpdateGeneric;
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct JsonArrayChange<CreateGeneric, UpdateGeneric> {
     #[serde(skip_serializing_if = "Vec::is_empty")]
