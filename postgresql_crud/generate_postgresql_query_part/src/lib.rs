@@ -7987,7 +7987,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         quote::quote!{
                             #generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
-                                let value = #ident_field_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream;
+                                let value = postgresql_crud::OptionToUpdateIntoFieldToUpdate::option_to_update_into_field_to_update(element);
                                 if acc.contains(&value) {
                                     return Err(serde::de::Error::custom(format!(#format_handle_double_quotes_token_stream)));
                                 }
@@ -8379,7 +8379,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         quote::quote!{
                             #std_option_option_generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
-                                let value = #ident_field_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream;
+                                let value = postgresql_crud::OptionToUpdateIntoFieldToUpdate::option_to_update_into_field_to_update(element);
                                 if acc.contains(&value) {
                                     return Err(serde::de::Error::custom(format!(#format_handle_double_quotes_token_stream)));
                                 }
