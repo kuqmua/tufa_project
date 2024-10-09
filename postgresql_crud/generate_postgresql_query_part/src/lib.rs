@@ -7934,42 +7934,58 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &generic_ident_option_to_update_upper_camel_case_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
-            //todo check is empty
-            let check_unique_fields_token_stream = {
-                let variants_token_stream = vec_syn_field.iter().map(|element| {
-                    let field_ident_stringified = element
-                        .ident
-                        .as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                        })
-                        .to_string();
-                    let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+            let custom_checks_token_stream = {
+                let check_fields_is_empty_token_stream = {
                     let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("custom serde error deserializing {generic_ident_option_to_update_upper_camel_case_token_stream}: field {{value:?}} are not unique"),
+                        &format!("custom serde error deserializing {generic_ident_option_to_update_upper_camel_case_token_stream}: fields are empty"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     quote::quote!{
-                        #generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
-                            let value = #ident_field_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream;
-                            if acc.contains(&value) {
-                                return Err(serde::de::Error::custom(format!(#format_handle_double_quotes_token_stream)));
+                        if __field0.is_empty() {
+                            return Err(serde::de::Error::custom(format!(#format_handle_double_quotes_token_stream)));
+                        }
+                    }
+                };
+                let check_unique_fields_token_stream = {
+                    let variants_token_stream = vec_syn_field.iter().map(|element| {
+                        let field_ident_stringified = element
+                            .ident
+                            .as_ref()
+                            .unwrap_or_else(|| {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            })
+                            .to_string();
+                        let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                        let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("custom serde error deserializing {generic_ident_option_to_update_upper_camel_case_token_stream}: field {{value:?}} are not unique"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        quote::quote!{
+                            #generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
+                                let value = #ident_field_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream;
+                                if acc.contains(&value) {
+                                    return Err(serde::de::Error::custom(format!(#format_handle_double_quotes_token_stream)));
+                                }
+                                else {
+                                    acc.push(value);
+                                }
                             }
-                            else {
-                                acc.push(value);
+                        }
+                    });
+                    quote::quote!{
+                        {
+                            let mut acc = vec![];
+                            for element in &__field0 {
+                                match &element {
+                                    #(#variants_token_stream),*
+                                }
                             }
                         }
                     }
-                });
+                };
                 quote::quote!{
-                    {
-                        let mut acc = vec![];
-                        for element in &__field0 {
-                            match &element {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    }
+                    #check_fields_is_empty_token_stream
+                    #check_unique_fields_token_stream
                 }
             };
             quote::quote!{
@@ -8007,7 +8023,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let __field0: std::vec::Vec<#generic_ident_option_to_update_origin_upper_camel_case_token_stream> = <std::vec::Vec<
                                     #generic_ident_option_to_update_origin_upper_camel_case_token_stream,
                                 > as serde::Deserialize>::deserialize(__e)?;
-                                #check_unique_fields_token_stream
+                                #custom_checks_token_stream
                                 serde::__private::Ok(#generic_ident_option_to_update_upper_camel_case_token_stream(__field0))
                             }
                             #[inline]
@@ -8031,7 +8047,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         );
                                     }
                                 };
-                                #check_unique_fields_token_stream
+                                #custom_checks_token_stream
                                 serde::__private::Ok(#generic_ident_option_to_update_upper_camel_case_token_stream(__field0))
                             }
                         }
