@@ -1778,10 +1778,6 @@ pub trait CheckIdExistsInJsonGenericFields {
 //     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self) {}
 // }
 
-pub trait OptionToUpdateIntoFieldToUpdate<FieldToUpdateGeneric> {
-    fn option_to_update_into_field_to_update(&self) -> FieldToUpdateGeneric;
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct JsonArrayChange<CreateGeneric, UpdateGeneric> {
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -1904,6 +1900,7 @@ where
                         vec![]
                     }
                 };
+                //let value = postgresql_crud::OptionToUpdateIntoFieldToUpdate::option_to_update_into_field_to_update(element);
                 if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
                     return Err(serde::de::Error::custom(&FIELDS_ARE_EMPTY_ERROR_MESSAGE));
                 }

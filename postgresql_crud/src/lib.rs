@@ -954,8 +954,6 @@ pub use postgresql_crud_common::generate_postgresql_query_part::GetJsonId;
 // pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId;
 // pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecGenericWithId;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::OptionToUpdateIntoFieldToUpdate;
-
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayChange;
 pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed;
 pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamedWithSerializeDeserialize;
