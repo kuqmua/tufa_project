@@ -7306,6 +7306,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
+    let generate_custom_serde_error_deserializing_option_to_update_field_is_not_unique_to_update_token_stream = |
+        //todo maybe make them str?
+        tokens_option_to_update_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+        variant_ident_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+    |{
+        proc_macro_common::generate_quotes::double_quotes_token_stream(
+            &format!("custom serde error deserializing {tokens_option_to_update_upper_camel_case_token_stream}: {ident_field_to_update_upper_camel_case_token_stream} variant {variant_ident_upper_camel_case_token_stream} is not unique to update"),
+            &proc_macro_name_upper_camel_case_ident_stringified
+        )
+    };
+
     let genarate_impl_serde_deserialize_for_tokens_json_array_change_token_stream = |
         tokens_option_to_update_upper_camel_case_stringified: &std::primitive::str,
         tokens_json_array_change_upper_camel_case_token_stream: &proc_macro2::TokenStream,
@@ -7320,22 +7331,122 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &tokens_option_to_update_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let create_update_delete_fields_are_empty_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            "create, update, delete fields are empty",
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let not_unique_id_in_json_update_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            "not unique id in json update array: {}",
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let not_unique_id_in_json_delete_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            "not unique id in json delete array: {}",
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
-        let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            "not unique id in json update and delete arrays: {}",
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let custom_checks_token_stream = {
+            let check_create_update_delete_check_fields_are_empty_token_stream = {
+                let create_update_delete_fields_are_empty_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    "create, update, delete fields are empty",
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                quote::quote!{
+                    if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
+                        return Err(serde::de::Error::custom(#create_update_delete_fields_are_empty_double_quotes_token_stream));
+                    }
+                }
+            };
+            let check_not_unique_id_token_stream = {
+                let check_not_unique_id_in_update_array_token_stream = {
+                    let not_unique_id_in_json_update_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        "not unique id in json update array: {}",
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        let update_acc = {
+                            let mut update_acc = vec![];
+                            for element in &__field1 {
+                                let id = postgresql_crud::GetJsonId::get_json_id(element);
+                                if update_acc.contains(id) {
+                                    return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0)));
+                                } else {
+                                    update_acc.push(*id);
+                                }
+                            }
+                            update_acc
+                        };
+                    }
+                };
+                let check_not_unique_id_in_delete_aray_token_stream = {
+                    let not_unique_id_in_json_delete_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        "not unique id in json delete array: {}",
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        let delete_acc = {
+                            let mut delete_acc = vec![];
+                            for element in &__field2 {
+                                if delete_acc.contains(&element) {
+                                    return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.0)));
+                                } else {
+                                    delete_acc.push(element);
+                                }
+                            }
+                            delete_acc
+                        };
+                    }
+                };
+                let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
+                    let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        "not unique id in json update and delete arrays: {}",
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
+                    quote::quote!{
+                        for element in update_acc {
+                            if delete_acc.contains(&&element) {
+                                return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.0)));
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    {
+                        #check_not_unique_id_in_update_array_token_stream
+                        #check_not_unique_id_in_delete_aray_token_stream
+                        #check_not_unique_id_in_update_and_delete_arrays_token_stream
+                    }
+                }
+            };
+            let check_unique_update_fields_token_stream = {
+                let variants_token_stream = vec_syn_field.iter().map(|element| {
+                    let field_ident_stringified = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string();
+                    let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                    let format_handle_double_quotes_token_stream = generate_custom_serde_error_deserializing_option_to_update_field_is_not_unique_to_update_token_stream(
+                        &tokens_json_array_change_upper_camel_case_token_stream,
+                        &variant_ident_upper_camel_case_token_stream,
+                    );
+                    quote::quote!{
+                        #tokens_options_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
+                            let value = #ident_field_to_update_token_stream::#variant_ident_upper_camel_case_token_stream;
+                            if acc.contains(&value) {
+                                return Err(serde::de::Error::custom(#format_handle_double_quotes_token_stream));
+                            }
+                            else {
+                                acc.push(value);
+                            }
+                        }
+                    }
+                });
+                quote::quote!{
+                    {
+                        let mut acc = vec![];
+                        for element in &__field1 {
+                            match element {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                    }
+                }
+            };
+            quote::quote!{
+                #check_create_update_delete_check_fields_are_empty_token_stream
+                #check_not_unique_id_token_stream
+                #check_unique_update_fields_token_stream
+            }
+        };
         quote::quote!{
             impl<'de> serde::Deserialize<'de> for #tokens_json_array_change_upper_camel_case_token_stream {
                 fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
@@ -7433,34 +7544,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     vec![]
                                 }
                             };
-                            //let value = postgresql_crud::OptionToUpdateIntoFieldToUpdate::option_to_update_into_field_to_update(element);
-                            if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
-                                return Err(serde::de::Error::custom(#create_update_delete_fields_are_empty_double_quotes_token_stream));
-                            }
-                            {
-                                let mut update_acc = vec![];
-                                for element in &__field1 {
-                                    let id = postgresql_crud::GetJsonId::get_json_id(element);
-                                    if update_acc.contains(id) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0)));
-                                    } else {
-                                        update_acc.push(*id);
-                                    }
-                                }
-                                let mut delete_acc = vec![];
-                                for element in &__field2 {
-                                    if delete_acc.contains(&element) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.0)));
-                                    } else {
-                                        delete_acc.push(element);
-                                    }
-                                }
-                                for element in update_acc {
-                                    if delete_acc.contains(&&element) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.0)));
-                                    }
-                                }
-                            }
+                            #custom_checks_token_stream
                             serde::__private::Ok(#tokens_json_array_change_upper_camel_case_token_stream { create: __field0, update: __field1, delete: __field2 })
                         }
                         #[inline]
@@ -7514,33 +7598,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     vec![]
                                 }
                             };
-                            if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
-                                return Err(serde::de::Error::custom(#create_update_delete_fields_are_empty_double_quotes_token_stream));
-                            }
-                            {
-                                let mut update_acc = vec![];
-                                for element in &__field1 {
-                                    let id = postgresql_crud::GetJsonId::get_json_id(element);
-                                    if update_acc.contains(id) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0)));
-                                    } else {
-                                        update_acc.push(*id);
-                                    }
-                                }
-                                let mut delete_acc = vec![];
-                                for element in &__field2 {
-                                    if delete_acc.contains(&element) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.0)));
-                                    } else {
-                                        delete_acc.push(element);
-                                    }
-                                }
-                                for element in update_acc {
-                                    if delete_acc.contains(&&element) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.0)));
-                                    }
-                                }
-                            }
+                            #custom_checks_token_stream
                             serde::__private::Ok(#tokens_json_array_change_upper_camel_case_token_stream { create: __field0, update: __field1, delete: __field2 })
                         }
                     }
@@ -8189,7 +8247,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
             let custom_checks_token_stream = {
-                let check_fields_is_empty_token_stream = {
+                let check_fields_are_empty_token_stream = {
                     let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("custom serde error deserializing {generic_ident_option_to_update_upper_camel_case_token_stream}: fields are empty"),
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -8210,9 +8268,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                        let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("custom serde error deserializing {generic_ident_option_to_update_upper_camel_case_token_stream}: field {{value:?}} are not unique"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
+                        let format_handle_double_quotes_token_stream = generate_custom_serde_error_deserializing_option_to_update_field_is_not_unique_to_update_token_stream(
+                            &generic_ident_option_to_update_upper_camel_case_token_stream,
+                            &variant_ident_upper_camel_case_token_stream,
                         );
                         quote::quote!{
                             #generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
@@ -8238,7 +8296,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 };
                 quote::quote!{
-                    #check_fields_is_empty_token_stream
+                    #check_fields_are_empty_token_stream
                     #check_unique_fields_token_stream
                 }
             };
@@ -8577,7 +8635,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
             let custom_checks_token_stream = {
-                let check_fields_is_empty_token_stream = {
+                let check_fields_are_empty_token_stream = {
                     let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("custom serde error deserializing {std_option_option_generic_ident_option_to_update_upper_camel_case_token_stream}: fields are empty"),
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -8600,9 +8658,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                        let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("custom serde error deserializing {std_option_option_generic_ident_option_to_update_upper_camel_case_token_stream}: field {{value:?}} are not unique"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
+                        let format_handle_double_quotes_token_stream = generate_custom_serde_error_deserializing_option_to_update_field_is_not_unique_to_update_token_stream(
+                            &std_option_option_generic_ident_option_to_update_upper_camel_case_token_stream,
+                            &variant_ident_upper_camel_case_token_stream,
                         );
                         quote::quote!{
                             #std_option_option_generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
@@ -8628,7 +8686,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 };
                 quote::quote!{
-                    #check_fields_is_empty_token_stream
+                    #check_fields_are_empty_token_stream
                     #check_unique_fields_token_stream
                 }
             };
@@ -9221,6 +9279,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
             &std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream,
         );
+        println!("{std_vec_vec_generic_with_id_ident_options_to_update_token_stream}");
         let impl_postgresql_crud_get_json_id_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream = {
             quote::quote!{
                 impl postgresql_crud::GetJsonId for #std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream {
@@ -9260,7 +9319,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //     &proc_macro_name_upper_camel_case_ident_stringified
             // );
             // let custom_checks_token_stream = {
-            //     let check_fields_is_empty_token_stream = {
+            //     let check_fields_are_empty_token_stream = {
             //         let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
             //             &format!("custom serde error deserializing {std_option_option_generic_ident_option_to_update_upper_camel_case_token_stream}: fields are empty"),
             //             &proc_macro_name_upper_camel_case_ident_stringified
@@ -9311,7 +9370,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //         }
             //     };
             //     quote::quote!{
-            //         #check_fields_is_empty_token_stream
+            //         #check_fields_are_empty_token_stream
             //         #check_unique_fields_token_stream
             //     }
             // };
