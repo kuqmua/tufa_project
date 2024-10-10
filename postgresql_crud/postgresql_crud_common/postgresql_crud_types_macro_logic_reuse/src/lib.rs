@@ -1488,13 +1488,48 @@ pub fn generate_impl_generate_postgresql_queryPartToUpdate(input: proc_macro::To
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = quote::quote!{
-
+        impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for MouseOptionsToUpdate {
+            fn try_generate_bind_increments(
+                &self,
+                jsonb_set_accumulator: &std::primitive::str,
+                jsonb_set_target: &std::primitive::str,
+                jsonb_set_path: &std::primitive::str,
+                increment: &mut std::primitive::u64,
+                is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple
+            ) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+                // let mut acc = std::string::String::from(jsonb_set_accumulator);
+                // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                //     true => std::string::String::default(),
+                //     false => format!("{jsonb_set_path},"),
+                // };
+                // for element in &self.0 {
+                //     match &element {
+                //         MouseOptionToUpdate::StdPrimitiveI32(_) => match increment.checked_add(1) {
+                //             Some(value) => {
+                //                 *increment = value;
+                //                 acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i32}}',${increment})");
+                //             }
+                //             None => {
+                //                 return Err(MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                //             }
+                //         },
+                //     }
+                // }
+                // Ok(acc)
+                todo!()
+            }
+            fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                // for element in self.0 {
+                //     match element {
+                //         MouseOptionToUpdate::StdPrimitiveI32(value) => {
+                //             query = query.bind(sqlx::types::Json(value.value));
+                //         }
+                //     }
+                // }
+                // query
+                todo!()
+            }
+        }
     };
     generated.into()
 }
-
-
-// pub trait <T1> {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: ArrayObjectElementOrSimple) -> Result<std::string::String, T1>;
-//     fn bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-// }
