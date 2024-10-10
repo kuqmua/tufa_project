@@ -7332,10 +7332,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &tokens_option_to_update_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
+        let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {tokens_json_array_change_upper_camel_case_token_stream}");
         let custom_checks_token_stream = {
             let check_create_update_delete_check_fields_are_empty_token_stream = {
                 let create_update_delete_fields_are_empty_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("custom serde error deserializing {tokens_json_array_change_upper_camel_case_token_stream}: create, update, delete fields are empty"),
+                    &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: create, update, delete fields are empty"),
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
                 quote::quote!{
@@ -7347,7 +7348,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let check_not_unique_id_token_stream = {
                 let check_not_unique_id_in_update_array_token_stream = {
                     let not_unique_id_in_json_update_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        "not unique id in json update array: {}",
+                        &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json update array: {{}}"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     quote::quote!{
@@ -7367,7 +7368,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let check_not_unique_id_in_delete_aray_token_stream = {
                     let not_unique_id_in_json_delete_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        "not unique id in json delete array: {}",
+                        &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json delete array: {{}}"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     quote::quote!{
@@ -7386,7 +7387,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
                     let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        "not unique id in json update and delete arrays: {}",
+                        &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: nnot unique id in json update and delete arrays: {{}}"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     quote::quote!{
