@@ -1481,14 +1481,17 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
 
 
 ////////
-// #[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartToUpdate)]
-// pub fn generate_impl_generate_postgresql_queryPartToUpdate(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     proc_macro_common::panic_location::panic_location();
-//     let proc_macro_name_upper_camel_case = "";
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-    
-// }
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartToUpdate)]
+pub fn generate_impl_generate_postgresql_queryPartToUpdate(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartToUpdate";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let generated = quote::quote!{
+
+    };
+    generated.into()
+}
 
 
 // pub trait <T1> {
