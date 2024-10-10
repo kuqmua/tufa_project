@@ -7322,6 +7322,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         tokens_json_array_change_upper_camel_case_token_stream: &proc_macro2::TokenStream,
         tokens_to_create_upper_camel_case_token_stream: &proc_macro2::TokenStream,
         tokens_options_to_update_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+        tokens_option_to_update_origin_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     |{
         let tuple_struct_std_vec_vec_generic_with_id_ident_option_to_update_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
             &format!("{tuple_struct_space_stringified}{tokens_option_to_update_upper_camel_case_stringified}"),
@@ -7334,7 +7335,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let custom_checks_token_stream = {
             let check_create_update_delete_check_fields_are_empty_token_stream = {
                 let create_update_delete_fields_are_empty_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    "create, update, delete fields are empty",
+                    &format!("custom serde error deserializing {tokens_json_array_change_upper_camel_case_token_stream}: create, update, delete fields are empty"),
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
                 quote::quote!{
@@ -7419,8 +7420,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &variant_ident_upper_camel_case_token_stream,
                     );
                     quote::quote!{
-                        #tokens_options_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
-                            let value = #ident_field_to_update_token_stream::#variant_ident_upper_camel_case_token_stream;
+                        #tokens_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
+                            let value = #ident_field_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream;
                             if acc.contains(&value) {
                                 return Err(serde::de::Error::custom(#format_handle_double_quotes_token_stream));
                             }
@@ -7433,9 +7434,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 quote::quote!{
                     {
                         let mut acc = vec![];
-                        for element in &__field1 {
-                            match element {
-                                #(#variants_token_stream),*
+                        for element_handle in &__field1 {
+                            for element in &element_handle.fields {
+                                match element {
+                                    #(#variants_token_stream),*
+                                }
                             }
                         }
                     }
@@ -9279,7 +9282,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
             &std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream,
         );
-        println!("{std_vec_vec_generic_with_id_ident_options_to_update_token_stream}");
         let impl_postgresql_crud_get_json_id_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream = {
             quote::quote!{
                 impl postgresql_crud::GetJsonId for #std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream {
@@ -9405,6 +9407,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream,
             &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream,
             &std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
+            &std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream,
         );
         quote::quote!{
             #std_vec_vec_generic_with_id_ident_token_stream
@@ -9979,6 +9982,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case_token_stream,
             &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream,
             &std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
+            &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream,
         );
         quote::quote!{
             #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
