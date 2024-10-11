@@ -1487,49 +1487,48 @@ pub fn generate_impl_generate_postgresql_queryPartToUpdate(input: proc_macro::To
     let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartToUpdate";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let generated = quote::quote!{
-        impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for MouseOptionsToUpdate {
-            fn try_generate_bind_increments(
-                &self,
-                jsonb_set_accumulator: &std::primitive::str,
-                jsonb_set_target: &std::primitive::str,
-                jsonb_set_path: &std::primitive::str,
-                increment: &mut std::primitive::u64,
-                is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple
-            ) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
-                // let mut acc = std::string::String::from(jsonb_set_accumulator);
-                // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-                //     true => std::string::String::default(),
-                //     false => format!("{jsonb_set_path},"),
-                // };
-                // for element in &self.0 {
-                //     match &element {
-                //         MouseOptionToUpdate::StdPrimitiveI32(_) => match increment.checked_add(1) {
-                //             Some(value) => {
-                //                 *increment = value;
-                //                 acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i32}}',${increment})");
-                //             }
-                //             None => {
-                //                 return Err(MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-                //             }
-                //         },
-                //     }
-                // }
-                // Ok(acc)
-                todo!()
-            }
-            fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                // for element in self.0 {
-                //     match element {
-                //         MouseOptionToUpdate::StdPrimitiveI32(value) => {
-                //             query = query.bind(sqlx::types::Json(value.value));
-                //         }
-                //     }
-                // }
-                // query
-                todo!()
+    let ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream(&ident);
+    let ident_options_to_update_try_generate_bind_increments_error_named_token_stream = {
+        quote::quote!{
+            #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+            pub enum #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream {
+                CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                },
             }
         }
+    };
+    let impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream = {
+        let ident_options_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_update_upper_camel_case_token_stream(&ident);
+        quote::quote!{
+            impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> for #ident_options_to_update_upper_camel_case_token_stream {
+                fn try_generate_bind_increments(
+                    &self,
+                    jsonb_set_accumulator: &std::primitive::str,
+                    jsonb_set_target: &std::primitive::str,
+                    jsonb_set_path: &std::primitive::str,
+                    increment: &mut std::primitive::u64,
+                    is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple
+                ) -> Result<std::string::String, #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{previous_jsonb_set_path}}}',${increment})"))
+                        },
+                        None => Err(#ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
+                    }
+                }
+                fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    query = query.bind(sqlx::types::Json(self.0));
+                    query
+                }
+            }
+        }
+    };
+
+    let generated = quote::quote!{
+        #ident_options_to_update_try_generate_bind_increments_error_named_token_stream
+        #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_options_to_update_try_generate_bind_increments_error_named_for_ident_options_to_update_token_stream
     };
     generated.into()
 }
