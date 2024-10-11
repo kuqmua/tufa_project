@@ -1477,10 +1477,6 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_option_to_update_token_stream(&ident, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
 }
 
-
-
-
-////////
 #[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartToUpdate)]
 pub fn generate_impl_generate_postgresql_queryPartToUpdate(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
