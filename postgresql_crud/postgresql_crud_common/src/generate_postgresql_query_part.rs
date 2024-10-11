@@ -1852,39 +1852,39 @@ pub trait CheckIdExistsInJsonGenericFields {
 // }
 
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed {
-    CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-}
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// pub enum TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed {
+//     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+// }
 
-pub trait JsonArrayElementUpdateBindQuery<UpdateErrorGeneric> {
-    fn try_generate_update_bind_increments(
-        &self,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-        is_array_object_element: ArrayObjectElementOrSimple,
-    ) -> Result<std::option::Option<std::string::String>, UpdateErrorGeneric>;
-    fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-}
+// pub trait JsonArrayElementUpdateBindQuery<UpdateErrorGeneric> {
+//     fn try_generate_update_bind_increments(
+//         &self,
+//         jsonb_set_accumulator: &std::primitive::str,
+//         jsonb_set_target: &std::primitive::str,
+//         jsonb_set_path: &std::primitive::str,
+//         increment: &mut std::primitive::u64,
+//         is_array_object_element: ArrayObjectElementOrSimple,
+//     ) -> Result<std::option::Option<std::string::String>, UpdateErrorGeneric>;
+//     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+// }
 // pub trait JsonArrayElementDeleteBindQuery {
 //     fn try_generate_delete_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed>;
 //     fn bind_delete_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 // }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed {
-    TryGenerateBindIncrements {
-        #[eo_error_occurence]
-        error: crate::TryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-pub trait JsonArrayElementCreateBindQuery {
-    fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed>;
-    fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-}
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// pub enum TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed {
+//     TryGenerateBindIncrements {
+//         #[eo_error_occurence]
+//         error: crate::TryGenerateBindIncrementsErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// pub trait JsonArrayElementCreateBindQuery {
+//     fn try_generate_create_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed>;
+//     fn bind_create_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+// }
 
 pub trait GeneratePostgresqlQueryPartFieldToRead {
     fn generate_postgresql_query_part_field_to_read(
