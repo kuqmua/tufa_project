@@ -361,7 +361,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["fields", "filter", "is", "empty"],
     ["not", "unique", "field", "filter"],
     ["pagination"],
-    ["field", "vec"]
+    ["field", "vec"],
+    ["option", "to", "update", "try", "generate", "bind", "increments", "error", "named"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -469,7 +470,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["generic", "self", "option", "to", "update", "origin"],
     ["std", "vec", "vec", "generic", "with", "id", "self", "json", "array", "change"],
     ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self", "json", "array", "change"],
-    ["generic", "self", "options", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
+    ["generic", "self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
     ["self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named"]
 ]);
 
