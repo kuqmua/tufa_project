@@ -4478,7 +4478,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionStdVecV
                 let update_query_part_acc = {
                     let mut update_query_part_acc = std::string::String::default();
                     for element_handle in &value.update {
-                        //todo id 
+                        //todo id when elem->>'id' = {id_increment} then 
                         for element in &element_handle.fields {
                             match element {
                                 StdOptionOptionStdVecVecGenericWithIdCatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
