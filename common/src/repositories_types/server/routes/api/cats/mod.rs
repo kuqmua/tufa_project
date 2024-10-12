@@ -2319,96 +2319,6 @@ fn test_dd() {
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionsToUpdate {
 //     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
-//         if self.0.is_empty() {
-//             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-//         }
-//         {
-//             let mut acc = vec![];
-//             for element in &self.0 {
-//                 match element {
-//                     SomethingOptionToUpdate::StdPrimitiveI8(_) => {
-//                         let value = SomethingFieldToUpdate::StdPrimitiveI8;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdOptionOptionStdPrimitiveI8(_) => {
-//                         let value = SomethingFieldToUpdate::StdOptionOptionStdPrimitiveI8;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(_) => {
-//                         let value = SomethingFieldToUpdate::StdVecVecStdPrimitiveI8;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8(_) => {
-//                         let value = SomethingFieldToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8(_) => {
-//                         let value = SomethingFieldToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(_) => {
-//                         let value = SomethingFieldToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::Generic(_) => {
-//                         let value = SomethingFieldToUpdate::Generic;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdOptionOptionGeneric(_) => {
-//                         let value = SomethingFieldToUpdate::StdOptionOptionGeneric;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdVecVecGenericWithId(_) => {
-//                         let value = SomethingFieldToUpdate::StdVecVecGenericWithId;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                     SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(_) => {
-//                         let value = SomethingFieldToUpdate::StdOptionOptionStdVecVecGenericWithId;
-//                         if acc.contains(&value) {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::NotUniqueField { field: value, code_occurence: error_occurence_lib::code_occurence!() });
-//                         } else {
-//                             acc.push(value);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
 //         let mut acc = std::string::String::from(jsonb_set_accumulator);
 //         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
 //             true => std::string::String::default(),
@@ -2416,87 +2326,6 @@ fn test_dd() {
 //         };
 //         for element in &self.0 {
 //             match &element {
-//                 SomethingOptionToUpdate::StdPrimitiveI8(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_primitive_i8}}',${increment})");
-//                     }
-//                     None => {
-//                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::StdOptionOptionStdPrimitiveI8(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_primitive_i8}}',${increment})");
-//                     }
-//                     None => {
-//                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_std_primitive_i8}}',${increment})");
-//                     }
-//                     None => {
-//                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_std_primitive_i8}}',${increment})");
-//                     }
-//                     None => {
-//                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_std_option_option_std_primitive_i8}}',${increment})");
-//                     }
-//                     None => {
-//                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(_) => match increment.checked_add(1) {
-//                     Some(value) => {
-//                         *increment = value;
-//                         acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_std_option_option_std_primitive_i8}}',${increment})");
-//                     }
-//                     None => {
-//                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::Generic(value) => match value.value.try_generate_bind_increments(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
-//                     Ok(value) => {
-//                         acc = value;
-//                     }
-//                     Err(error) => {
-//                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Cat { cat: error, code_occurence: error_occurence_lib::code_occurence!() });
-//                     }
-//                 },
-//                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => match &value.value {
-//                     Some(value) => match value.try_generate_bind_increments(&jsonb_set_accumulator, &jsonb_set_target, &format!("{previous_jsonb_set_path}std_option_option_generic"), increment, is_array_object_element.clone()) {
-//                         Ok(value) => {
-//                             acc = value;
-//                         }
-//                         Err(error) => {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::Mouse { mouse: error, code_occurence: error_occurence_lib::code_occurence!() });
-//                         }
-//                     },
-//                     None => match increment.checked_add(1) {
-//                         Some(value) => {
-//                             *increment = value;
-//                             acc = format!("jsonb_set({acc},'{previous_jsonb_set_path}std_option_option_generic',${increment})");
-//                         }
-//                         None => {
-//                             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                         }
-//                     },
-//                 },
 //                 SomethingOptionToUpdate::StdVecVecGenericWithId(value) => {
 //                     {
 //                         let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
@@ -2568,93 +2397,6 @@ fn test_dd() {
 //                     let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
 //                     acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
 //                 }
-//                 SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(value) => {
-//                     {
-//                         let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
-//                         if let Some(value) = &value.value {
-//                             for element in &value.update {
-//                                 if ids.contains(&&element.id) {
-//                                     return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId { std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: element.id, code_occurence: error_occurence_lib::code_occurence!() });
-//                                 } else {
-//                                     ids.push(&element.id);
-//                                 }
-//                             }
-//                             for element in &value.delete {
-//                                 if ids.contains(&element) {
-//                                     return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId { std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: *element, code_occurence: error_occurence_lib::code_occurence!() });
-//                                 } else {
-//                                     ids.push(&element);
-//                                 }
-//                             }
-//                         }
-//                     }
-//                     let current_jsonb_set_target = format!("{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'");
-//                     match &value.value {
-//                         Some(value) => {
-//                             let mut update_query_part_acc = std::string::String::default();
-//                             for (index, element) in &value.update.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-//                                 match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
-//                                     Ok(value) => {
-//                                         if let Some(value) = value {
-//                                             update_query_part_acc.push_str(&value);
-//                                         }
-//                                     }
-//                                     Err(error) => {
-//                                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements { std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments: error, code_occurence: error_occurence_lib::code_occurence!() });
-//                                     }
-//                                 }
-//                             }
-//                             let delete_query_part_acc = {
-//                                 if value.delete.is_empty() {
-//                                     std::string::String::default()
-//                                 } else {
-//                                     let mut delete_query_part_acc = std::string::String::default();
-//                                     for (index, element) in &value.delete.iter().enumerate().collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>() {
-//                                         match increment.checked_add(1) {
-//                                             Some(value) => {
-//                                                 *increment = value;
-//                                                 let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
-//                                                 delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
-//                                             }
-//                                             None => {
-//                                                 return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements { std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_increments: postgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }, code_occurence: error_occurence_lib::code_occurence!() });
-//                                             }
-//                                         }
-//                                     }
-//                                     delete_query_part_acc
-//                                 }
-//                             };
-//                             let mut create_query_part_acc = std::string::String::default();
-//                             for (index, element) in &value.create.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieToCreate)>>() {
-//                                 match postgresql_crud::JsonArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
-//                                     Ok(value) => {
-//                                         if let Some(value) = value {
-//                                             create_query_part_acc.push_str(&format!("{value},"));
-//                                         }
-//                                     }
-//                                     Err(error) => {
-//                                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements { std_option_option_std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments: error, code_occurence: error_occurence_lib::code_occurence!() });
-//                                     }
-//                                 }
-//                             }
-//                             let _ = create_query_part_acc.pop();
-//                             let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() { std::string::String::from("elem") } else { format!("case {update_query_part_acc} else elem end") };
-//                             let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
-//                             let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
-//                             let maybe_jsonb_build_array_in_case_of_null = if create_query_part_acc.is_empty() { current_jsonb_set_target.clone() } else { format!("jsonb_build_array({create_query_part_acc})") };
-//                             acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',case when {jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id' = 'null' then {maybe_jsonb_build_array_in_case_of_null} else (select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}) {maybe_jsonb_build_array} end)");
-//                         }
-//                         None => match increment.checked_add(1) {
-//                             Some(value) => {
-//                                 *increment = value;
-//                                 acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id}}',${increment})");
-//                             }
-//                             None => {
-//                                 return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                             }
-//                         },
-//                     }
-//                 }
 //             }
 //         }
 //         Ok(acc)
@@ -2662,35 +2404,6 @@ fn test_dd() {
 //     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         for element in self.0 {
 //             match element {
-//                 SomethingOptionToUpdate::StdPrimitiveI8(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 SomethingOptionToUpdate::StdOptionOptionStdPrimitiveI8(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 SomethingOptionToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 SomethingOptionToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 SomethingOptionToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(value) => {
-//                     query = query.bind(sqlx::types::Json(value.value));
-//                 }
-//                 SomethingOptionToUpdate::Generic(value) => {
-//                     query = value.value.bind_value_to_query(query);
-//                 }
-//                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => match value.value {
-//                     Some(value) => {
-//                         query = value.bind_value_to_query(query);
-//                     }
-//                     None => {
-//                         query = query.bind(sqlx::types::Json(None::<std::option::Option<MouseToCreate>>));
-//                     }
-//                 },
 //                 SomethingOptionToUpdate::StdVecVecGenericWithId(value) => {
 //                     for element in &value.value.update {
 //                         query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(element.clone(), query);
@@ -2702,22 +2415,6 @@ fn test_dd() {
 //                         query = postgresql_crud::JsonArrayElementCreateBindQuery::bind_create_value_to_query(element.clone(), query);
 //                     }
 //                 }
-//                 SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(value) => match &value.value {
-//                     Some(value) => {
-//                         for element in &value.update {
-//                             query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(element.clone(), query);
-//                         }
-//                         for element in &value.delete {
-//                             query = query.bind(element.0.to_string());
-//                         }
-//                         for element in &value.create {
-//                             query = postgresql_crud::JsonArrayElementCreateBindQuery::bind_create_value_to_query(element.clone(), query);
-//                         }
-//                     }
-//                     None => {
-//                         query = query.bind(sqlx::types::Json(None::<std::option::Option<postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>>));
-//                     }
-//                 },
 //             }
 //         }
 //         query
@@ -4324,11 +4021,16 @@ pub enum StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNa
     CheckedAdd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    StdPrimitiveI32 {
+    StdPrimitiveI32Update {
         #[eo_error_occurence]
         error: postgresql_crud::JsonStdPrimitiveI32OptionToUpdateTryGenerateBindIncrementsErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    Create {
+        #[eo_error_occurence]
+        error: postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
 }
 
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdVecVecGenericWithIdCatOptionToUpdate {
@@ -4340,7 +4042,11 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
-        let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");//todo
+        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+            true => std::string::String::default(),
+            false => format!("{jsonb_set_path},"),
+        };
+        let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");//here todo
         let update_query_part_acc = {
             let mut update_query_part_acc = std::string::String::default();
             for element_handle in &self.0.update {
@@ -4352,7 +4058,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
                                     update_query_part_acc.push_str(&value);
                                 }
                                 Err(error) => {
-                                    return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 { 
+                                    return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32Update { 
                                         error,
                                         code_occurence: error_occurence_lib::code_occurence!()
                                     });
@@ -4364,22 +4070,6 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
             }
             update_query_part_acc
         };
-        // for (index, element) in &self.0.update.iter().enumerate().collect::<std::vec::Vec<(usize, &StdVecVecGenericWithIdCatOptionsToUpdate)>>() {
-        //     match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
-        //         Ok(value) => {
-        //             if let Some(value) = value {
-        //                 update_query_part_acc.push_str(&value);
-        //             }
-        //         }
-        //         Err(error) => {
-        //             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements { 
-        //                 std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_update_bind_increments: error,
-        //                 code_occurence: error_occurence_lib::code_occurence!()
-        //             });
-        //         }
-        //     }
-        // }
-        //
         let delete_query_part_acc = {
             let mut delete_query_part_acc = std::string::String::default();
             for _ in &self.0.delete {
@@ -4398,82 +4088,64 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
             }
             delete_query_part_acc
         };
-        //
-        // let delete_query_part_acc = {
-        //     if value.value.delete.is_empty() {
-        //         std::string::String::default()
-        //     } else {
-        //         let mut delete_query_part_acc = std::string::String::default();
-        //         for (index, element) in &value.value.delete.iter().enumerate().collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>() {
-        //             match increment.checked_add(1) {
-        //                 Some(value) => {
-        //                     *increment = value;
-        //                     let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
-        //                     delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
-        //                 }
-        //                 None => {
-        //                     return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementDeleteBindIncrements { std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_delete_bind_incrementpostgresql_crud::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }, code_occurence: error_occurence_lib::code_occurence!() });
-        //                 }
-        //             }
-        //         }
-        //         delete_query_part_acc
-        //     }
-        // };
-        // let mut create_query_part_acc = std::string::String::default();
-        // for (index, element) in &value.value.create.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieToCreate)>>() {
-        //     match postgresql_crud::JsonArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
-        //         Ok(value) => {
-        //             if let Some(value) = value {
-        //                 create_query_part_acc.push_str(&format!("{value},"));
-        //             }
-        //         }
-        //         Err(error) => {
-        //             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementCreateBindIncrements { std_vec_vec_generic_with_id_doggie_try_generate_json_array_element_create_bind_increments: errocode_occurence: error_occurence_lib::code_occurence!() });
-        //         }
-        //     }
-        // }
-        // let _ = create_query_part_acc.pop();
-        // let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() { std::string::String::from("elem") } else { format!("case {update_query_part_acc} else elem end") };
-        // let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
-        // let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
-        // acc = format!("jsonb_set({acc},'{{{previous_jsonb_set_path}std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})");
-
-
-
-
-
-        //
-        // let mut acc = std::string::String::from(jsonb_set_accumulator);
-        // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-        //     true => std::string::String::default(),
-        //     false => format!("{jsonb_set_path},"),
-        // };
-        // for element in &self.0 {
-        //     match &element {
-        //         StdVecVecGenericWithIdCatOptionToUpdateOrigin::StdPrimitiveI32(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment, is_array_object_element.clone()) {
-        //             Ok(value) => {
-        //                 acc = value;
-        //             }
-        //             Err(error) => {
-        //                 return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
-        //                     error,
-        //                     code_occurence: error_occurence_lib::code_occurence!(),
-        //                 });
-        //             }
-        //         },
-        //     }
-        // }
-        // Ok(acc)
-        todo!()
+        let create_query_part_acc = {
+            let mut create_query_part_acc = std::string::String::default();
+            for element_handle in &self.0.create {
+                for element in &element_handle.0 {
+                    match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                        Ok(value) => {
+                            create_query_part_acc.push_str(&format!("{value},"));
+                        }
+                        Err(error) => {
+                            return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::Create {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!()
+                            });
+                        }
+                    }
+                }
+            }
+            let _ = create_query_part_acc.pop();
+            create_query_part_acc
+        };
+        let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() { std::string::String::from("elem") } else { format!("case {update_query_part_acc} else elem end") };
+        let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
+        let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
+        //here todo
+        Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{previous_jsonb_set_path}std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})"))
     }
     fn bind_value_to_query<'a>(
-        self, 
-        // mut 
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+        self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element_handle in &self.0.update {
+            for element in &element_handle.fields {
+                match element {
+                    StdVecVecGenericWithIdCatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                        query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.clone(), query);
+                    }
+                }
+            }
+        }
         // for element in &value.value.update {
         //     query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(element.clone(), query);
         // }
+        for element in &self.0.delete {
+            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(element.clone(), query);
+            // match increment.checked_add(1) {
+            //     Some(value) => {
+            //         *increment = value;
+            //         let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
+            //         delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+            //     }
+            //     None => {
+            //         return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { 
+            //             code_occurence: error_occurence_lib::code_occurence!()
+            //         });
+            //     }
+            // }
+        }
+
+
         // for element in &value.value.delete {
         //     query = query.bind(element.0.to_string());
         // }
@@ -4488,9 +4160,6 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
         //         }
         //     }
         // }
-
-
-        // query
-        todo!()
+        query
     }
 }

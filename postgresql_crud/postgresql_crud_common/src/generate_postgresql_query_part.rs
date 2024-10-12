@@ -1830,7 +1830,7 @@ pub trait JsonCreateBindQuery<'a> {
 }
 
 pub trait GetJsonId {
-    fn get_json_id(&self) -> &JsonUuid;
+    fn get_json_id(&self) -> &JsonUuidOptionToUpdate;
 }
 
 pub trait CheckIdExistsInJsonGenericFields {
