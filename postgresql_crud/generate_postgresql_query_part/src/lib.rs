@@ -7356,10 +7356,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let mut update_acc = vec![];
                             for element in &__field1 {
                                 let id = postgresql_crud::GetJsonId::get_json_id(element);
-                                if update_acc.contains(id) {
+                                if update_acc.contains(&id) {
                                     return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0)));
                                 } else {
-                                    update_acc.push(id.clone());//todo remove .clone()
+                                    update_acc.push(id);
                                 }
                             }
                             update_acc
@@ -9676,7 +9676,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
             &std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream,
         );
-        //
         let std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdVecVecGenericWithIdSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCaseTokenStream::impl_quote_to_tokens_std_vec_vec_generic_with_id_self_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream(&ident);
         let std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
             let variants_token_stream = vec_syn_field.iter().map(|element| {
