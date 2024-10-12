@@ -4341,26 +4341,29 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");//todo
-        let mut update_query_part_acc = std::string::String::default();
-        for element_handle in &self.0.update {
-            for element in &element_handle.fields {
-                match element {
-                    StdVecVecGenericWithIdCatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
-                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
-                            Ok(value) => {
-                                update_query_part_acc.push_str(&value);
-                            }
-                            Err(error) => {
-                                return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 { 
-                                    error,
-                                    code_occurence: error_occurence_lib::code_occurence!()
-                                });
+        let update_query_part_acc = {
+            let mut update_query_part_acc = std::string::String::default();
+            for element_handle in &self.0.update {
+                for element in &element_handle.fields {
+                    match element {
+                        StdVecVecGenericWithIdCatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
+                                Ok(value) => {
+                                    update_query_part_acc.push_str(&value);
+                                }
+                                Err(error) => {
+                                    return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 { 
+                                        error,
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    });
+                                }
                             }
                         }
                     }
                 }
             }
-        }
+            update_query_part_acc
+        };
         // for (index, element) in &self.0.update.iter().enumerate().collect::<std::vec::Vec<(usize, &StdVecVecGenericWithIdCatOptionsToUpdate)>>() {
         //     match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
         //         Ok(value) => {
@@ -4376,6 +4379,26 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
         //         }
         //     }
         // }
+        //
+        let delete_query_part_acc = {
+            let mut delete_query_part_acc = std::string::String::default();
+            for _ in &self.0.delete {
+                match increment.checked_add(1) {
+                    Some(value) => {
+                        *increment = value;
+                        let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
+                        delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+                    }
+                    None => {
+                        return Err(StdVecVecGenericWithIdCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { 
+                            code_occurence: error_occurence_lib::code_occurence!()
+                        });
+                    }
+                }
+            }
+            delete_query_part_acc
+        };
+        //
         // let delete_query_part_acc = {
         //     if value.value.delete.is_empty() {
         //         std::string::String::default()
