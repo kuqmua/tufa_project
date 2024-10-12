@@ -9713,6 +9713,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     CheckedAdd {
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
+                    Create {
+                        #[eo_error_occurence]
+                        error: postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
                     #(#variants_token_stream),*
                 }
             }
