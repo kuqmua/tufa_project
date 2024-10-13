@@ -8357,8 +8357,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let generic_with_id_ident_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_reader_upper_camel_case_token_stream(&ident);
         let generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(&generic_with_id_ident_reader_upper_camel_case_token_stream, &generic_with_id_ident_options_to_read_upper_camel_case_token_stream);
         //
-        let generic_with_id_ident_option_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfOptionToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_option_to_update_upper_camel_case_token_stream(&ident);
-        let generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_origin_token_stream(&generic_with_id_ident_option_to_update_upper_camel_case_token_stream);
+        // let generic_with_id_ident_option_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfOptionToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_option_to_update_upper_camel_case_token_stream(&ident);
+        // let generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_origin_token_stream(&generic_with_id_ident_option_to_update_upper_camel_case_token_stream);
         quote::quote!{
             #generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_generic_with_id_ident_token_stream
@@ -8380,7 +8380,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //
             #generic_with_id_ident_reader_token_stream
 
-            #generic_with_id_ident_option_to_update_token_stream
+            // #generic_with_id_ident_option_to_update_token_stream
         }
     };
 
@@ -8737,13 +8737,21 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     })
                     .to_string();
                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                let jsonb_set_target_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{jsonb_set_target}}->{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let previous_jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{previous_jsonb_set_path}}{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
                 quote::quote!{
                     #generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                         //todo fix parameters
                         &value.value,
-                        jsonb_set_accumulator,
-                        jsonb_set_target,
-                        jsonb_set_path,
+                        &acc,
+                        &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
+                        &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
                         increment,
                         is_array_object_element.clone()
                     ) {
@@ -9263,12 +9271,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     })
                     .to_string();
                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                let jsonb_set_target_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{jsonb_set_target}}->{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let previous_jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{previous_jsonb_set_path}}{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
                 quote::quote!{
                     #std_option_option_generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                         &value.value,
-                        jsonb_set_accumulator,
-                        jsonb_set_target,
-                        jsonb_set_path,
+                        &acc,
+                        &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
+                        &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
                         increment,
                         is_array_object_element.clone()
                     ) {
@@ -10032,10 +10048,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     })
                     .to_string();
                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                let jsonb_set_target_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{jsonb_set_target}}->{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let previous_jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{previous_jsonb_set_path}}{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
                 quote::quote!{
                     #std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
                         //todo fix parameters
-                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
+                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                            &value.value,
+                            jsonb_set_accumulator,
+                            &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
+                            &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
+                            increment,
+                            is_array_object_element.clone()
+                        ) {
                             Ok(value) => {
                                 update_query_part_acc.push_str(&value);
                             }
@@ -10791,9 +10822,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     })
                     .to_string();
                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                let jsonb_set_target_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{jsonb_set_target}}->{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let previous_jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{previous_jsonb_set_path}}{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
                 quote::quote!{
                     #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
-                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
+                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                            &value.value,
+                            jsonb_set_accumulator,
+                            &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
+                            &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
+                            increment,
+                            is_array_object_element.clone()
+                        ) {
                             Ok(value) => {
                                 update_query_part_acc.push_str(&value);
                             }
