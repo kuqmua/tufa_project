@@ -8095,13 +8095,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     })
                     .to_string();
                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                let jsonb_set_target_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{jsonb_set_target}}->{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let previous_jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{previous_jsonb_set_path}}{field_ident_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
                 quote::quote!{
                     #ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                        //todo fix parameters
                         &value.value,
-                        jsonb_set_accumulator,
-                        jsonb_set_target,
-                        jsonb_set_path,
+                        &acc,
+                        &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
+                        &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
                         increment,
                         is_array_object_element.clone()
                     ) {
@@ -8165,6 +8172,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
+        // println!("{impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_option_to_update_try_generate_bind_increments_error_named_for_ident_option_to_update_token_stream}");
         quote::quote!{
             #impl_std_fmt_display_for_ident_token_stream
 
