@@ -300,8 +300,8 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
-    // pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
+    // pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
+    pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
     // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
     // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
@@ -4319,3 +4319,318 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
+
+
+
+
+
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionToUpdate {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::from(jsonb_set_accumulator);
+        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+            true => std::string::String::default(),
+            false => format!("{jsonb_set_path},"),
+        };
+        for element in &self.0 {
+            match &element {
+                SomethingOptionToUpdateOrigin::StdPrimitiveI8(value) => {
+                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->std_primitive_i8"), &format!("{previous_jsonb_set_path}std_primitive_i8"), increment, is_array_object_element.clone()) {
+                        Ok(value) => {
+                            acc = value;
+                        }
+                        Err(error) => {
+                            return Err(SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI8 {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                }
+                SomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
+                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->std_primitive_i16"), &format!("{previous_jsonb_set_path}std_primitive_i16"), increment, is_array_object_element.clone()) {
+                        Ok(value) => {
+                            acc = value;
+                        }
+                        Err(error) => {
+                            return Err(SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI16 {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                }
+                SomethingOptionToUpdateOrigin::StdOptionOptionGeneric(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                    &value.value,
+                    &acc,
+                    &format!("{jsonb_set_target}->std_option_option_generic"),
+                    &format!("{previous_jsonb_set_path}std_option_option_generic"),
+                    increment,
+                    is_array_object_element.clone(),
+                ) {
+                    Ok(value) => {
+                        acc = value;
+                    }
+                    Err(error) => {
+                        return Err(SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionGeneric {
+                            error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                },
+            }
+        }
+        Ok(acc)
+    }
+    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            match element {
+                SomethingOptionToUpdateOrigin::StdPrimitiveI8(value) => {
+                    query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                }
+                SomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
+                    query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                }
+                SomethingOptionToUpdateOrigin::StdOptionOptionGeneric(value) => {
+                    query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                }
+            }
+        }
+        query
+    }
+}
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> for CatOptionToUpdate {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::from(jsonb_set_accumulator);
+        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+            true => std::string::String::default(),
+            false => format!("{jsonb_set_path},"),
+        };
+        for element in &self.0 {
+            match &element {
+                CatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->std_primitive_i32"), &format!("{previous_jsonb_set_path}std_primitive_i32"), increment, is_array_object_element.clone()) {
+                        Ok(value) => {
+                            acc = value;
+                        }
+                        Err(error) => {
+                            return Err(CatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        Ok(acc)
+    }
+    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            match element {
+                CatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                    query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                }
+            }
+        }
+        query
+    }
+}
+
+//////
+
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionGenericSomethingOptionToUpdate {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::from(jsonb_set_accumulator);
+        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+            true => std::string::String::default(),
+            false => format!("{jsonb_set_path},"),
+        };
+        match &self.0 {
+            Some(value) => {
+                for element in value {
+                    match element {
+                        StdOptionOptionGenericSomethingOptionToUpdateOrigin::StdPrimitiveI8(value) => {
+                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->std_primitive_i8"), &format!("{previous_jsonb_set_path}std_primitive_i8"), increment, is_array_object_element.clone()) {
+                                Ok(value) => {
+                                    acc = value;
+                                }
+                                Err(error) => {
+                                    return Err(StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI8 {
+                                        error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                        StdOptionOptionGenericSomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
+                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->std_primitive_i16"), &format!("{previous_jsonb_set_path}std_primitive_i16"), increment, is_array_object_element.clone()) {
+                                Ok(value) => {
+                                    acc = value;
+                                }
+                                Err(error) => {
+                                    return Err(StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI16 {
+                                        error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                        StdOptionOptionGenericSomethingOptionToUpdateOrigin::StdOptionOptionGeneric(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                            &value.value,
+                            &acc,
+                            &format!("{jsonb_set_target}->std_option_option_generic"),
+                            &format!("{previous_jsonb_set_path}std_option_option_generic"),
+                            increment,
+                            is_array_object_element.clone(),
+                        ) {
+                            Ok(value) => {
+                                acc = value;
+                            }
+                            Err(error) => {
+                                return Err(StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionGeneric {
+                                    error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        },
+                    }
+                }
+            }
+            None => match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})");
+                }
+                None => {
+                    return Err(StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
+        }
+        Ok(acc)
+    }
+    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self.0 {
+            Some(value) => {
+                for element in value {
+                    match element {
+                        StdOptionOptionGenericSomethingOptionToUpdateOrigin::StdPrimitiveI8(value) => {
+                            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                        }
+                        StdOptionOptionGenericSomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
+                            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                        }
+                        StdOptionOptionGenericSomethingOptionToUpdateOrigin::StdOptionOptionGeneric(value) => {
+                            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                        }
+                    }
+                }
+            }
+            None => {
+                query = query.bind(sqlx::types::Json(None::<std::option::Option<std::vec::Vec<StdOptionOptionGenericSomethingOptionToUpdateOrigin>>>));
+            }
+        }
+        query
+    }
+}
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGenericCatOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionGenericCatOptionToUpdate {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, StdOptionOptionGenericCatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::from(jsonb_set_accumulator);
+        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+            true => std::string::String::default(),
+            false => format!("{jsonb_set_path},"),
+        };
+        match &self.0 {
+            Some(value) => {
+                for element in value {
+                    match element {
+                        StdOptionOptionGenericCatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->std_primitive_i32"), &format!("{previous_jsonb_set_path}std_primitive_i32"), increment, is_array_object_element.clone()) {
+                                Ok(value) => {
+                                    acc = value;
+                                }
+                                Err(error) => {
+                                    return Err(StdOptionOptionGenericCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
+                                        error,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            None => match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})");
+                }
+                None => {
+                    return Err(StdOptionOptionGenericCatOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
+        }
+        println!("must be called {acc}");
+        // jsonb_set(jsonb_set(jsonb_set(sqlx_types_json_t_as_postgresql_json_b_not_null,'{std_primitive_i8}',$1),'{std_primitive_i16}',$2),'{std_option_option_generic,std_primitive_i32}',$3)
+
+
+        
+        Ok(acc)
+        r#"
+            case
+                when
+                    jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'object' 
+                then
+                    jsonb_set(jsonb_set(jsonb_set(sqlx_types_json_t_as_postgresql_json_b_not_null,'{std_primitive_i8}',$1),'{std_primitive_i16}',$2),'{std_option_option_generic,std_primitive_i32}',$3)
+                else
+                    jsonb_build_object(
+                        
+                    )
+            end
+        "#
+    }
+    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self.0 {
+            Some(value) => {
+                for element in value {
+                    match element {
+                        StdOptionOptionGenericCatOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
+                        }
+                    }
+                }
+            }
+            None => {
+                query = query.bind(sqlx::types::Json(None::<std::option::Option<std::vec::Vec<StdOptionOptionGenericCatOptionToUpdateOrigin>>>));
+            }
+        }
+        query
+    }
+}
