@@ -4322,16 +4322,10 @@ fn test_dd() {
 //todo this need for old version of update_many. later need to refactor update many and remove this
 
 
-
-
 // update 
 //   jsongeneric 
 // set 
 //   sqlx_types_json_t_as_postgresql_json_b_not_null = 
-  
-//   case 
-//   	when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null' 
-//   	then 
 //   		jsonb_set(
 //     		jsonb_set(
 //       			jsonb_set(
@@ -4341,32 +4335,22 @@ fn test_dd() {
 //       			'{std_primitive_i16}', 
 //       			'2'
 //     		), 
-//     		'{std_option_option_generic}', 
-//     		jsonb_build_object(
-// 				'std_primitive_i32',
-// 				6,
-// 				'std_primitive_i64',
-// 				88
-// 			)
-//   		)
-//   	else 
-  		
-//   		jsonb_set(
-//     		jsonb_set(
-//     		jsonb_set(
-//       			jsonb_set(
-//         			sqlx_types_json_t_as_postgresql_json_b_not_null, 
-//         			'{std_primitive_i8}', '1'
-//       			), 
-//       			'{std_primitive_i16}', 
-//       			'2'
-//     		), 
-//     		'{std_option_option_generic,std_primitive_i32}', 
-//     		'7'
-//   			), 
-//     		'{std_option_option_generic,std_primitive_i64}', 
-//     		'89'
-//   		)
-//   end
+//     		'{std_option_option_generic}',
+// 			jsonb_set(
+// 				jsonb_set(
+// 					case
+// 					when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'null'
+// 					then
+// 						'{}'::jsonb
+// 					else 
+// 						(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic')::jsonb
+// 					end,
+//           			'{std_primitive_i32}',
+// 					'15'
+//         		), 
+//         		'{std_primitive_i64}', 
+//         		'22'
+//       		)
+// 		)
 // where 
 //   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
