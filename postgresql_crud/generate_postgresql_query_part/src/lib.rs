@@ -8730,6 +8730,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_postgresql_crud_generate_postgresql_query_part_to_update_generic_ident_option_to_update_try_generate_bind_increments_error_named_for_generic_ident_option_to_update_token_stream = {
+            let generic_acc_snake_case = naming_conventions::GenericAccSnakeCase;
+            let generic_acc_jsonb_set_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("jsonb_set({{jsonb_set_accumulator}},'{{{{{{jsonb_set_path}}}}}}',{{{generic_acc_snake_case}}})"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
             let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
                 let field_ident_stringified = element
                     .ident
@@ -8743,22 +8748,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &format!("{{jsonb_set_target}}->'{field_ident_stringified}'"),
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
-                let previous_jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{{previous_jsonb_set_path}}{field_ident_stringified}"),
+                let jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &field_ident_stringified,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
                 quote::quote!{
                     #generic_ident_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                         //todo fix parameters
                         &value.value,
-                        &acc,
+                        &#generic_acc_snake_case,
                         &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
-                        &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
+                        #jsonb_set_path_field_ident_double_quotes_token_stream,
                         increment,
                         is_array_object_element.clone()
                     ) {
                         Ok(value) => {
-                            acc = value;
+                            #generic_acc_snake_case = value;
                         }
                         Err(error) => {
                             return Err(#generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream {
@@ -8795,16 +8800,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         let mut acc = std::string::String::from(jsonb_set_accumulator);
-                        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-                            true => std::string::String::default(),
-                            false => format!("{jsonb_set_path},"),
-                        };
+                        let mut #generic_acc_snake_case = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
                         for element in &self.0 {
                             match &element {
                                 #(#try_generate_bind_increments_variants_token_stream),*
                             }
                         }
-                        Ok(acc)
+                        Ok(format!(#generic_acc_jsonb_set_double_quotes_token_stream))
                     }
                     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         for element in self.0 {
@@ -9336,10 +9338,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         let mut acc = std::string::String::from(jsonb_set_accumulator);
-                        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-                            true => std::string::String::default(),
-                            false => format!("{jsonb_set_path},"),
-                        };
                         match &self.0 {
                             Some(value) => {
                                 let mut #std_option_option_generic_acc_snake_case = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
@@ -9382,7 +9380,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
-        // println!("{impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_generic_ident_option_to_update_token_stream}");
         quote::quote!{
             #std_option_option_generic_ident_token_stream
             #impl_std_fmt_display_for_std_option_option_generic_ident_token_stream

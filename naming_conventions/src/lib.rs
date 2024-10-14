@@ -363,6 +363,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["pagination"],
     ["field", "vec"],
     ["option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
+    ["generic", "acc"],
     ["std", "option", "option", "generic", "acc"]
 ]);
 
