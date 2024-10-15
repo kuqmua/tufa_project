@@ -303,8 +303,8 @@ pub struct Something {
     // pub generic: GenericCat,//postgresql_crud::JsonGeneric<Cat>,
     // pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
-    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
+    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
+    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
@@ -372,51 +372,51 @@ pub struct Doggie {
     // pub id: postgresql_crud::JsonUuid, //todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
     pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
-    pub generic: GenericCat,
+    // pub generic: GenericCat,
     // pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
     // pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<Cat>,
     // pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Cat>,
 }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Cat {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-    pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
-    pub generic: GenericBird,
-    pub std_option_option_generic: StdOptionOptionGenericBird,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Cat {
+//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+//     pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
+//     pub generic: GenericBird,
+//     pub std_option_option_generic: StdOptionOptionGenericBird,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
+// }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Bird {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
-    pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Bird {
+//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
+//     pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
+// }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum CatFieldToRead {
@@ -4342,3 +4342,339 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
+
+
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdate {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        match &self.0 {
+            Some(value) => {
+                let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                    true => std::string::String::default(),
+                    false => format!("{jsonb_set_path},"),
+                };
+                let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");
+                let update_query_part_acc = {
+                    let mut update_query_part_acc = std::string::String::default();
+                    for element_handle in &value.update {
+                        for element in &element_handle.fields {
+                            match element {
+                                StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateOrigin::StdPrimitiveI8(value) => {
+                                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                        &value.value,
+                                        jsonb_set_accumulator,
+                                        &format!("{jsonb_set_target}->'std_primitive_i8'"),
+                                        &format!("{previous_jsonb_set_path}std_primitive_i8"),
+                                        increment,
+                                        is_array_object_element.clone(),
+                                    ) {
+                                        Ok(value) => {
+                                            update_query_part_acc.push_str(&value);
+                                        }
+                                        Err(error) => {
+                                            return Err(StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI8 {
+                                                error,
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
+                                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                        &value.value,
+                                        jsonb_set_accumulator,
+                                        &format!("{jsonb_set_target}->'std_primitive_i16'"),
+                                        &format!("{previous_jsonb_set_path}std_primitive_i16"),
+                                        increment,
+                                        is_array_object_element.clone(),
+                                    ) {
+                                        Ok(value) => {
+                                            update_query_part_acc.push_str(&value);
+                                        }
+                                        Err(error) => {
+                                            return Err(StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI16 {
+                                                error,
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateOrigin::StdOptionOptionStdVecVecGenericWithId(value) => {
+                                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                        &value.value,
+                                        jsonb_set_accumulator,
+                                        &format!("{jsonb_set_target}->'std_option_option_std_vec_vec_generic_with_id'"),
+                                        &format!("{previous_jsonb_set_path}std_option_option_std_vec_vec_generic_with_id"),
+                                        increment,
+                                        is_array_object_element.clone(),
+                                    ) {
+                                        Ok(value) => {
+                                            update_query_part_acc.push_str(&value);
+                                        }
+                                        Err(error) => {
+                                            return Err(StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdOptionOptionStdVecVecGenericWithId {
+                                                error,
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    update_query_part_acc
+                };
+                let delete_query_part_acc = {
+                    let mut delete_query_part_acc = std::string::String::default();
+                    for _ in &value.delete {
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
+                                delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+                            }
+                            None => {
+                                return Err(StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                            }
+                        }
+                    }
+                    delete_query_part_acc
+                };
+                let create_query_part_acc = {
+                    let mut create_query_part_acc = std::string::String::default();
+                    for element in &value.create {
+                        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                            Ok(value) => {
+                                create_query_part_acc.push_str(&format!("{value},"));
+                            }
+                            Err(error) => {
+                                return Err(StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::Create {
+                                    error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        }
+                    }
+                    let _ = create_query_part_acc.pop();
+                    create_query_part_acc
+                };
+                let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() { std::string::String::from("elem") } else { format!("case {update_query_part_acc} else elem end") };
+                let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
+                let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
+                Ok(format!(
+                    "jsonb_set({jsonb_set_accumulator},'{{{previous_jsonb_set_path}std_vec_vec_generic_with_id}}',(select jsonb_agg({maybe_jsonb_agg_case}) from jsonb_array_elements({current_jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})"
+                ))
+            }
+            None => match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+                }
+                None => {
+                    return Err(StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
+        }
+    }
+    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self.0 {
+            Some(value) => {
+                for element_handle in &value.update {
+                    for element in &element_handle.fields {
+                        match element {
+                            StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateOrigin::StdPrimitiveI8(value) => {
+                                query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.clone(), query);
+                            }
+                            StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
+                                query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.clone(), query);
+                            }
+                            StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateOrigin::StdOptionOptionStdVecVecGenericWithId(value) => {
+                                query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.clone(), query);
+                            }
+                        }
+                    }
+                }
+                for element in &value.delete {
+                    query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(element.clone(), query);
+                }
+                for element in &value.create {
+                    query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element.clone(), query);
+                }
+            }
+            None => {
+                query = query.bind(sqlx::types::Json(None::<std::option::Option<StdOptionOptionStdVecVecGenericWithIdSomethingJsonArrayChange>>));
+            }
+        }
+        query
+    }
+}
+impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdate {
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
+    ) -> Result<std::string::String, StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        match &self.0 {
+            Some(value) => {
+                let update_query_part_acc = {
+                    let mut element_acc = std::string::String::from("elem");
+                    if value.update.is_empty() {
+                        element_acc
+                    } else {
+                        let mut update_query_part_acc = std::string::String::default();
+                        for element_handle in &value.update {
+                            let id_increment = match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    increment.to_string()
+                                }
+                                None => {
+                                    return Err(StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                            };
+                            for element in &element_handle.fields {
+                                match element {
+                                    StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &element_acc, &format!("{jsonb_set_target}->'std_primitive_i32'"), "std_primitive_i32", increment, is_array_object_element.clone()) {
+                                            Ok(value) => {
+                                                element_acc = value;
+                                            }
+                                            Err(error) => {
+                                                return Err(StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
+                                                    error,
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                });
+                                            }
+                                        }
+                                    }
+                                    StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateOrigin::StdPrimitiveI64(value) => {
+                                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &element_acc, &format!("{jsonb_set_target}->'std_primitive_i64'"), "std_primitive_i64", increment, is_array_object_element.clone()) {
+                                            Ok(value) => {
+                                                element_acc = value;
+                                            }
+                                            Err(error) => {
+                                                return Err(StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI64 {
+                                                    error,
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            update_query_part_acc.push_str(&format!("when elem ->> 'id' = ${id_increment} then {element_acc} "));
+                        }
+                        let _ = update_query_part_acc.pop();
+                        format!("case {update_query_part_acc} else elem end")
+                    }
+                };
+                let delete_query_part_acc = {
+                    let mut delete_query_part_acc = std::string::String::default();
+                    for _ in &value.delete {
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
+                                delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+                            }
+                            None => {
+                                return Err(StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                            }
+                        }
+                    }
+                    delete_query_part_acc
+                };
+                let create_query_part_acc = {
+                    let mut create_query_part_acc = std::string::String::default();
+                    for element_handle in &value.create {
+                        //todo standart std_option_option_std_vec_vec and std_vec_vec
+
+                        // for element in &element_handle.0 {
+                        //     match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                        //         Ok(value) => {
+                        //             create_query_part_acc.push_str(&format!("{value},"));
+                        //         }
+                        //         Err(error) => {
+                        //             return Err(StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::Create {
+                        //                 error,
+                        //                 code_occurence: error_occurence_lib::code_occurence!(),
+                        //             });
+                        //         }
+                        //     }
+                        // }
+                        //
+                        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element_handle, increment) {
+                            Ok(value) => {
+                                create_query_part_acc.push_str(&format!("{value},"));
+                            }
+                            Err(error) => {
+                                return Err(StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::Create {
+                                    error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        }
+                    }
+                    let _ = create_query_part_acc.pop();
+                    create_query_part_acc
+                };
+                let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
+                let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || {create_query_part_acc}") };
+                //todo write standart code for std_vec_vec and std_option_option_vec 
+                // let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") }; 
+                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}', case when jsonb_typeof({jsonb_set_target}) = 'array' then (select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}) else '[]'::jsonb end {maybe_jsonb_build_array})"))
+            }
+            None => match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+                }
+                None => {
+                    return Err(StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            },
+        }
+    }
+    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self.0 {
+            Some(value) => {
+                for element_handle in &value.update {
+                    query = query.bind(element_handle.id.0.to_string());
+                    for element in &element_handle.fields {
+                        match element {
+                            StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateOrigin::StdPrimitiveI32(value) => {
+                                query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.clone(), query);
+                            }
+                            StdOptionOptionStdVecVecGenericWithIdDoggieOptionToUpdateOrigin::StdPrimitiveI64(value) => {
+                                query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.clone(), query);
+                            }
+                        }
+                    }
+                }
+                for element in &value.delete {
+                    query = query.bind(element.0.to_string());
+                }
+                for element_handle in &value.create {
+                    //todo make standart std_vec_vec and std_option_option_vec 
+                    // for element in &element_handle.0 {
+                    //     query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element.clone(), query);
+                    // }
+                    query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element_handle.clone(), query);
+                }
+            }
+            None => {
+                query = query.bind(sqlx::types::Json(None::<std::option::Option<StdOptionOptionStdVecVecGenericWithIdDoggieJsonArrayChange>>));
+            }
+        }
+        query
+    }
+}
