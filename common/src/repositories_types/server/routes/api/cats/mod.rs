@@ -4620,13 +4620,8 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
         increment: &mut std::primitive::u64,
         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     ) -> Result<std::string::String, StdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
-        // let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-        //     true => std::string::String::default(),
-        //     false => format!("{jsonb_set_path},"),
-        // };
-        // let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");
         let update_query_part_acc = {
-            let mut update_query_part_acc = std::string::String::from("elem");
+            let mut update_query_part_acc = std::string::String::default();
             for element_handle in &self.0.update {
                 let id_increment = match increment.checked_add(1) {
                     Some(value) => {
@@ -4637,19 +4632,20 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
                         return Err(StdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
                     }
                 };
+                let mut element_acc = std::string::String::from("elem");
                 for element in &element_handle.fields {
                     match element {
                         StdVecVecGenericWithIdDoggieOptionToUpdateOrigin::StdPrimitiveI32(value) => {
                             match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                                 &value.value,
-                                &update_query_part_acc,
+                                &element_acc,
                                 &format!("{jsonb_set_target}->'std_primitive_i32'"),
                                 "std_primitive_i32",
                                 increment,
                                 is_array_object_element.clone(),
                             ) {
                                 Ok(value) => {
-                                    update_query_part_acc = value;
+                                    element_acc = value;
                                 }
                                 Err(error) => {
                                     return Err(StdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
@@ -4662,14 +4658,14 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
                         StdVecVecGenericWithIdDoggieOptionToUpdateOrigin::StdPrimitiveI64(value) => {
                             match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                                 &value.value,
-                                &update_query_part_acc,
+                                &element_acc,
                                 &format!("{jsonb_set_target}->'std_primitive_i64'"),
                                 "std_primitive_i64",
                                 increment,
                                 is_array_object_element.clone(),
                             ) {
                                 Ok(value) => {
-                                    update_query_part_acc = value;
+                                    element_acc = value;
                                 }
                                 Err(error) => {
                                     return Err(StdVecVecGenericWithIdDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI64 {
@@ -4681,9 +4677,10 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
                         }
                     }
                 }
-                update_query_part_acc = format!("case when elem ->> 'id' = ${id_increment} then {update_query_part_acc} else elem end") 
+                update_query_part_acc.push_str(&format!("when elem ->> 'id' = ${id_increment} then {element_acc} "));
             }
-            update_query_part_acc
+            let _ = update_query_part_acc.pop();
+            format!("case {update_query_part_acc} else elem end")
         };
         let delete_query_part_acc = {
             let mut delete_query_part_acc = std::string::String::default();
@@ -4721,9 +4718,6 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
             let _ = create_query_part_acc.pop();
             create_query_part_acc
         };
-        // let maybe_jsonb_agg_case = if update_query_part_acc.is_empty() { std::string::String::from("elem") } else { 
-        //     format!("case id = {update_query_part_acc} else elem end") 
-        // };
         let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
         let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
         Ok(format!(//here
@@ -4732,10 +4726,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
     }
     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element_handle in &self.0.update {
-            // query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(element_handle.id.0.to_string().clone(), query);
-            let f = element_handle.id.0.to_string();
-            println!("{f}");
-            query = query.bind(f);//postgresql: error returned from database: operator does not exist: text = jsonb
+            query = query.bind(element_handle.id.0.to_string());//postgresql: error returned from database: operator does not exist: text = jsonb
             for element in &element_handle.fields {
                 match element {
                     StdVecVecGenericWithIdDoggieOptionToUpdateOrigin::StdPrimitiveI32(value) => {
