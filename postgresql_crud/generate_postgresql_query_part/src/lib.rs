@@ -10116,7 +10116,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         increment: &mut std::primitive::u64,
                         is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
-                        let update_query_part_acc = {
+                        let mut element_acc = std::string::String::from("elem");
+                        let update_query_part_acc = if self.0.update.is_empty() {
+                            element_acc
+                        }
+                        else {
                             let mut update_query_part_acc = std::string::String::default();
                             for element_handle in &self.0.update {
                                 let id_increment = match increment.checked_add(1) {
@@ -10128,7 +10132,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         return Err(#std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
                                     }
                                 };
-                                let mut element_acc = std::string::String::from("elem");
                                 for element in &element_handle.fields {
                                     match element {
                                         #(#try_generate_bind_increments_variants_token_stream),*
