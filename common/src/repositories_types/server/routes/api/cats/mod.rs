@@ -4720,7 +4720,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
         };
         let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
         let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
-        Ok(format!(//here
+        Ok(format!(
             "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',(select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}){maybe_jsonb_build_array})"
         ))
     }
@@ -4739,7 +4739,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
             }
         }
         for element in &self.0.delete {
-            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(element.clone(), query);
+            query = query.bind(element.0.to_string());//postgresql: error returned from database: operator does not exist: text <> jsonb
         }
         for element_handle in &self.0.create {
             for element in &element_handle.0 {
@@ -4749,106 +4749,3 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithId
         query
     }
 }
-
-
-
-// update 
-//   jsongeneric 
-// set 
-//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
-//     jsonb_set(
-//       jsonb_set(
-//         sqlx_types_json_t_as_postgresql_json_b_not_null, 
-//         '{std_primitive_i8}',
-// 		'10'
-//       ), 
-//       '{std_primitive_i16}', 
-//       '20'
-//     ), 
-//     '{std_vec_vec_generic_with_id}', 
-//     (
-//       select 
-//         jsonb_agg(
-// 		  case 
-// 		  when elem ->> 'id' = 'a6a6ed57-3abe-476f-9045-99b3781e54fd'
-// 		  then
-		  
-// 		  jsonb_set(
-//             jsonb_set(
-//             	elem, 
-//             	'{std_primitive_i32}', 
-//             	'30'
-//           	), 
-//             '{std_primitive_i64}', 
-//             '40'
-//           )
-// 		  else 
-// 		  elem
-// 		  end
-		  
-//         ) 
-//       from 
-//         jsonb_array_elements(
-//           sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_vec_vec_generic_with_id'
-//         ) as elem
-//     ) 
-// 	|| 
-// 	jsonb_build_array(
-//       jsonb_build_object(
-//         'id', 
-//         to_jsonb(gen_random_uuid()), 
-//         'std_primitive_i32', 
-//         50, 
-//         'std_primitive_i64', 
-//         60
-//       )
-//     )
-//   ) 
-// where 
-//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
-
-
-
-// UPDATE 
-//   jsongeneric 
-// SET 
-//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
-//     sqlx_types_json_t_as_postgresql_json_b_not_null, 
-//     '{std_vec_vec_generic_with_id}', 
-//     (
-//       SELECT 
-//         jsonb_agg(
-//           CASE 
-//             WHEN elem ->> 'id' = '833c36ee-bda1-46db-b061-2099f81fa0e0' THEN 
-//               jsonb_set(
-//                 jsonb_set(
-//                   elem, 
-//                   '{std_primitive_i32}', 
-//                   '11'::jsonb
-//                 ), 
-//                 '{std_primitive_i64}', 
-//                 '12'::jsonb
-//               ) 
-//             WHEN elem ->> 'id' = '22d698e5-8f4c-4bde-bf1e-c0608f338a08' THEN 
-//               jsonb_set(
-//                 jsonb_set(
-//                   elem, 
-//                   '{std_primitive_i32}', 
-//                   '33'::jsonb
-//                 ), 
-//                 '{std_primitive_i64}', 
-//                 '44'::jsonb
-//               )
-//             ELSE 
-//               elem 
-//           END
-//         ) 
-//       FROM 
-//         jsonb_array_elements(
-//           sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_vec_vec_generic_with_id'
-//         ) AS elem
-//     )
-//   ) 
-// WHERE 
-//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 
-// RETURNING std_primitive_i64_as_postgresql_big_serial_not_null_primary_key;
