@@ -10968,7 +10968,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || {create_query_part_acc}") };
                                 //todo write standart code for std_vec_vec and std_option_option_vec 
                                 // let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") }; 
-                                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}', case when jsonb_typeof({jsonb_set_target}) = 'array' then (select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}) else '[]'::jsonb end {maybe_jsonb_build_array})"))
+                                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}', case when jsonb_typeof({jsonb_set_target}) = 'array' then case when jsonb_array_length({jsonb_set_target}) = 0 then '[]' :: jsonb else (select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}) end else '[]'::jsonb end {maybe_jsonb_build_array})"))
                             }
                             None => match increment.checked_add(1) {
                                 Some(value) => {
