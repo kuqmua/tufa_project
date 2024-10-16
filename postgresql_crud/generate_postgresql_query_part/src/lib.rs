@@ -7621,50 +7621,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             };
-            let check_unique_update_fields_token_stream = {
-                let variants_token_stream = vec_syn_field.iter().map(|element| {
-                    let field_ident_stringified = element
-                        .ident
-                        .as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                        })
-                        .to_string();
-                    let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                    let format_handle_double_quotes_token_stream = generate_custom_serde_error_deserializing_option_to_update_field_is_not_unique_to_update_token_stream(
-                        &tokens_json_array_change_upper_camel_case_token_stream,
-                        &variant_ident_upper_camel_case_token_stream,
-                    );
-                    quote::quote!{
-                        #tokens_option_to_update_origin_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream(_) => {
-                            let value = #ident_field_to_update_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream;
-                            if acc.contains(&value) {
-                                return Err(serde::de::Error::custom(#format_handle_double_quotes_token_stream));
-                            }
-                            else {
-                                acc.push(value);
-                            }
-                        }
-                    }
-                });
-                //todo maybe refactor deserialization coz - put check into inner type deserialization
-                quote::quote!{
-                    {
-                        for element_handle in &__field1 {
-                            let mut acc = vec![];
-                            for element in &element_handle.fields {
-                                match element {
-                                    #(#variants_token_stream),*
-                                }
-                            }
-                        }
-                    }
-                }
-            };
             quote::quote!{
                 #check_create_update_delete_check_fields_are_empty_token_stream
                 #check_not_unique_id_token_stream
-                #check_unique_update_fields_token_stream
             }
         };
         quote::quote!{
