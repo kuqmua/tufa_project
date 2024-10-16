@@ -1829,10 +1829,6 @@ pub trait JsonCreateBindQuery<'a> {
     fn json_create_bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
-pub trait GetJsonId {
-    fn get_json_id(&self) -> &JsonUuidOptionToUpdate;
-}
-
 pub trait CheckIdExistsInJsonGenericFields {
     fn check_id_exists_in_json_generic_fields(&self);
 }
@@ -1840,15 +1836,8 @@ pub trait CheckIdExistsInJsonGenericFields {
 // pub trait CheckIdExistsInJsonStdVecVecGenericWithId {
 //     fn check_id_exists_in_json_std_vec_vec_generic_with_id(&self); // -> &std::vec::Vec<JsonUuid>;
 // }
-// impl<T: GetJsonId> CheckIdExistsInJsonStdVecVecGenericWithId for JsonStdVecVecGenericWithId<T> {
-//     fn check_id_exists_in_json_std_vec_vec_generic_with_id(&self) {}
-// }
-
 // pub trait CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId {
 //     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self); // -> &std::option::Option<std::vec::Vec<JsonUuid>>;
-// }
-// impl<T: GetJsonId> CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId for JsonStdOptionOptionStdVecVecGenericWithId<T> {
-//     fn check_id_exists_in_json_std_option_option_std_vec_vec_generic_with_id(&self) {}
 // }
 
 

@@ -3288,11 +3288,6 @@ fn test_dd() {
 //     pub id: postgresql_crud::JsonUuid,
 //     pub fields: std::vec::Vec<DoggieOptionToUpdate>,
 // }
-// impl postgresql_crud::GetJsonId for DoggieOptionsToUpdate {
-//     fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-//         &self.id
-//     }
-// }
 // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionsToUpdate {
 //     #[inline]
 //     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
@@ -3437,11 +3432,6 @@ fn test_dd() {
 //     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         query = query.bind(sqlx::types::Json(self.std_primitive_i16.0));
 //         query
-//     }
-// }
-// impl postgresql_crud::GetJsonId for Doggie {
-//     fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-//         &self.id
 //     }
 // }
 // impl postgresql_crud::CheckIdExistsInJsonGenericFields for Doggie {

@@ -3478,17 +3478,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //         pub struct #ident_options_to_update_upper_camel_case_token_stream #content_token_stream
     //     }
     // };
-    // let maybe_impl_postgresql_crud_get_json_id_for_ident_options_to_update_token_stream = if is_id_field_exists {
-    //     quote::quote! {
-    //         impl postgresql_crud::GetJsonId for #ident_options_to_update_upper_camel_case_token_stream {
-    //             fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-    //                 &self.id
-    //             }
-    //         }
-    //     }
-    // } else {
-    //     proc_macro2::TokenStream::new()
-    // };
     // let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_update_token_stream = {
     //     let self_initialization_content_token_stream = if is_id_field_exists {
     //         quote::quote! {
@@ -5856,17 +5845,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //         }
     //     }
     // };
-    // let maybe_impl_postgresql_crud_get_json_id_for_ident_token_stream = if is_id_field_exists {
-    //     quote::quote! {
-    //         impl postgresql_crud::GetJsonId for #ident {
-    //             fn get_json_id(&self) -> &postgresql_crud::JsonUuid {
-    //                 &self.id
-    //             }
-    //         }
-    //     }
-    // } else {
-    //     proc_macro2::TokenStream::new()
-    // };
     // let impl_postgresql_crud_check_id_exists_in_json_generic_fields_for_ident_token_stream = {
     //     let check_id_exists_in_json_std_vec_vec_generic_token_stream = vec_syn_field_filtered_id_iter.iter().fold(vec![], |mut acc, element| {
     //         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -7307,7 +7285,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let update_acc = {
                             let mut update_acc = vec![];
                             for element in &__field1 {
-                                let id = postgresql_crud::GetJsonId::get_json_id(element);
+                                let id = &element.id;
                                 if update_acc.contains(&id) {
                                     return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0)));
                                 } else {
@@ -10183,15 +10161,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         };
-        let impl_postgresql_crud_get_json_id_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream = {
-            quote::quote!{
-                impl postgresql_crud::GetJsonId for #std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream {
-                    fn get_json_id(&self) -> &postgresql_crud::JsonUuidOptionToUpdate {
-                        &self.id
-                    }
-                }
-            }
-        };
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
             &quote::quote!{{
@@ -10535,7 +10504,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
             #std_vec_vec_generic_with_id_ident_options_to_update_token_stream
             #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
-            #impl_postgresql_crud_get_json_id_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
             #std_vec_vec_generic_with_id_ident_option_to_update_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
@@ -11022,15 +10990,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
             &ident_option_to_update_origin_upper_camel_case_token_stream,
         );
-        let impl_postgresql_crud_get_json_id_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_token_stream = {
-            quote::quote!{
-                impl postgresql_crud::GetJsonId for #std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream {
-                    fn get_json_id(&self) -> &postgresql_crud::JsonUuidOptionToUpdate {
-                        &self.id
-                    }
-                }
-            }
-        };
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
             &quote::quote!{{
@@ -11320,7 +11279,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
 
             #std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
-            #impl_postgresql_crud_get_json_id_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_update_token_stream
             #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
