@@ -7814,6 +7814,31 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    //
+    HERE
+    let ident_json_array_change_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfJsonArrayChangeUpperCamelCaseTokenStream::impl_quote_to_tokens_self_json_array_change_upper_camel_case_token_stream(&ident);
+    let ident_to_create_origin_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateOriginUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_origin_upper_camel_case_token_stream(&ident);
+    let ident_options_to_update_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfOptionsToUpdateUpperCamelCaseTokenStream::impl_quote_to_tokens_self_options_to_update_upper_camel_case_token_stream(&ident);
+    let ident_json_array_change_token_stream = 
+    // |
+    //     struct_ident_token_stream: &proc_macro2::TokenStream,
+    //     create_vec_element_ident_token_stream: &proc_macro2::TokenStream,
+    //     update_vec_element_ident_token_stream: &proc_macro2::TokenStream
+    // |
+    {
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
+            pub struct #ident_json_array_change_upper_camel_case_token_stream {
+                #[serde(skip_serializing_if = "Vec::is_empty")]
+                pub create: std::vec::Vec<#ident_to_create_origin_upper_camel_case_token_stream>,
+                #[serde(skip_serializing_if = "Vec::is_empty")]
+                pub update: std::vec::Vec<#ident_options_to_update_upper_camel_case_token_stream>,
+                #[serde(skip_serializing_if = "Vec::is_empty")]
+                pub delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
+            }
+        }
+    };
+    //
 
     let field0_token_stream = quote::quote!{__field0};
     let field0_field1_token_stream = quote::quote!{__field0, __field1};
