@@ -10940,9 +10940,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 };
                                 let create_query_part_acc = {
                                     let mut create_query_part_acc = std::string::String::default();
-                                    for element_handle in &value.create {
-                                        //todo standart std_option_option_std_vec_vec and std_vec_vec               
-                                        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element_handle, increment) {
+                                    for element in &value.create {
+                                        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
                                             Ok(value) => {
                                                 create_query_part_acc.push_str(&format!("{value},"));
                                             }
@@ -10975,6 +10974,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        //todo write some Into Destructor for structs or enums what implements bind_value_to_query. need this to remove .clone() calls
                         match self.0 {
                             Some(value) => {
                                 for element_handle in &value.update {
@@ -10988,12 +10988,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 for element in &value.delete {
                                     query = query.bind(element.0.to_string());
                                 }
-                                for element_handle in &value.create {
-                                    //todo make standart std_vec_vec and std_option_option_vec 
-                                    // for element in &element_handle.0 {
-                                    //     query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element.clone(), query);
-                                    // }
-                                    query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element_handle.clone(), query);
+                                for element in &value.create {
+                                    query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element.clone(), query);
                                 }
                             }
                             None => {
