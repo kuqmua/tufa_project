@@ -7266,6 +7266,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    let generate_tokens_options_to_update_token_stream_second = |
+        struct_ident_token_stream: &proc_macro2::TokenStream,
+        tokens_option_to_update_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+        impl_deserialize: bool,
+    |{
+        let impl_de = if impl_deserialize {
+            quote::quote!{serde::Deserialize,}
+        }
+        else {
+            quote::quote!{}
+        };
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, #impl_de utoipa::ToSchema)]
+            pub struct #struct_ident_token_stream {
+                pub id: postgresql_crud::JsonUuidOptionToUpdate,
+                pub fields: std::vec::Vec<#tokens_option_to_update_upper_camel_case_token_stream>,
+            }
+        }
+    };
 
     let generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_option_to_update_token_stream = |struct_ident_token_stream: &proc_macro2::TokenStream|{
         let elements_token_stream = vec_syn_field.iter().map(|element| {
@@ -9874,10 +9893,21 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         
         let std_vec_vec_generic_with_id_ident_option_to_update_origin_token_stream = generate_tokens_option_to_update_origin_token_stream(&std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream);
         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_ident_option_to_update_token_stream = generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_option_to_update_token_stream(&std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream);
-        let std_vec_vec_generic_with_id_ident_options_to_update_token_stream = generate_tokens_options_to_update_token_stream(
+        let std_vec_vec_generic_with_id_ident_options_to_update_token_stream = generate_tokens_options_to_update_token_stream_second(
             &std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream,
             &std_vec_vec_generic_with_id_ident_option_to_update_origin_upper_camel_case_token_stream,
+            {
+                if ident == "Doggie" {
+                    false
+                }
+                else {
+                    true
+                }
+            }
         );
+        // let impl_serde_deserialize_for_stdVecVecGenericWithIdDoggieOptionsToUpdate_token_stream = {
+
+        // };
         let impl_postgresql_crud_get_json_id_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream = {
             quote::quote!{
                 impl postgresql_crud::GetJsonId for #std_vec_vec_generic_with_id_ident_options_to_update_upper_camel_case_token_stream {
