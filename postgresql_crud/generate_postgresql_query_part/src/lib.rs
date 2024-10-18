@@ -7560,7 +7560,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_ident_json_array_change_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
         ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
-        is_null: std::primitive::bool,
+        is_nullable: std::primitive::bool,
     |{
         let ident_json_array_change_token_stream = quote::quote!{
             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
@@ -7586,7 +7586,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //todo maybe impl try_new instead and put checks into try_new impl? 
             let custom_checks_token_stream = {
                 //todo only if std_vec_vec is valid. but if its std_option_option_std_vec_vec its not correct. if value is null and want to change it to empty array then it fails
-                let check_create_update_delete_check_fields_are_empty_token_stream = {
+                let maybe_check_create_update_delete_check_fields_are_empty_token_stream = if is_nullable {
+                    proc_macro2::TokenStream::new()
+                }
+                else {
                     let create_update_delete_fields_are_empty_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: create, update, delete fields are empty"),
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -7659,7 +7662,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 };
                 quote::quote!{
-                    #check_create_update_delete_check_fields_are_empty_token_stream
+                    #maybe_check_create_update_delete_check_fields_are_empty_token_stream
                     #check_not_unique_id_token_stream
                 }
             };
@@ -7935,7 +7938,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             });
-            let ok_format_handle_token_stream = if is_null {
+            let ok_format_handle_token_stream = if is_nullable {
                 quote::quote!{
                     Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}', case when jsonb_typeof({jsonb_set_target}) = 'array' then case when jsonb_array_length({jsonb_set_target}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}), '[]'::jsonb)) end else '[]'::jsonb end {maybe_jsonb_build_array})"))
                 }
