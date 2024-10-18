@@ -536,7 +536,6 @@ pub use naming_conventions::CommitUpperCamelCase;
 pub use generate_postgresql_query_part::GeneratePostgresqlQueryPart;
 
 pub use postgresql_crud_common::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-pub use postgresql_crud_common::generate_postgresql_query_part::ArrayObjectElementOrSimple;
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToRead;
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartToUpdate;
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonCreateBindQuery;

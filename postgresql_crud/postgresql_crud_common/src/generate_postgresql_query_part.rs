@@ -1810,13 +1810,8 @@ pub trait AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAnd
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self>;
 }
 
-#[derive(Debug, Clone)]
-pub enum ArrayObjectElementOrSimple {
-    ArrayObjectElement { jsonb_set_path: std::string::String, index: usize },
-    Simple,
-}
 pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
-    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: ArrayObjectElementOrSimple) -> Result<std::string::String, T1>;
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, T1>;
     fn bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
@@ -1853,7 +1848,6 @@ pub trait CheckIdExistsInJsonGenericFields {
 //         jsonb_set_target: &std::primitive::str,
 //         jsonb_set_path: &std::primitive::str,
 //         increment: &mut std::primitive::u64,
-//         is_array_object_element: ArrayObjectElementOrSimple,
 //     ) -> Result<std::option::Option<std::string::String>, UpdateErrorGeneric>;
 //     fn bind_update_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 // }

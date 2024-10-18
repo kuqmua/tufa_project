@@ -804,7 +804,6 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                 "sqlx_types_json_t_as_postgresql_json_b_not_null", //sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic'->0->'generic'
                 "",                                                //{std_vec_vec_generic,0}
                 &mut increment,
-                postgresql_crud::ArrayObjectElementOrSimple::Simple,
             ) {
                 Ok(value) => {
                     query.push_str(&value);
@@ -2342,7 +2341,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionsToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         if self.0.is_empty() {
 //             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -2494,7 +2493,7 @@ fn test_dd() {
 //                         return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
 //                     }
 //                 },
-//                 SomethingOptionToUpdate::Generic(value) => match value.value.try_generate_bind_increments(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
+//                 SomethingOptionToUpdate::Generic(value) => match value.value.try_generate_bind_increments(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
 //                     Ok(value) => {
 //                         acc = value;
 //                     }
@@ -2503,7 +2502,7 @@ fn test_dd() {
 //                     }
 //                 },
 //                 SomethingOptionToUpdate::StdOptionOptionGeneric(value) => match &value.value {
-//                     Some(value) => match value.try_generate_bind_increments(&jsonb_set_accumulator, &jsonb_set_target, &format!("{previous_jsonb_set_path}std_option_option_generic"), increment, is_array_object_element.clone()) {
+//                     Some(value) => match value.try_generate_bind_increments(&jsonb_set_accumulator, &jsonb_set_target, &format!("{previous_jsonb_set_path}std_option_option_generic"), increment) {
 //                         Ok(value) => {
 //                             acc = value;
 //                         }
@@ -2542,7 +2541,7 @@ fn test_dd() {
 //                     let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");
 //                     let mut update_query_part_acc = std::string::String::default();
 //                     for (index, element) in &value.value.update.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-//                         match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
+//                         match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
 //                             Ok(value) => {
 //                                 if let Some(value) = value {
 //                                     update_query_part_acc.push_str(&value);
@@ -2617,7 +2616,7 @@ fn test_dd() {
 //                         Some(value) => {
 //                             let mut update_query_part_acc = std::string::String::default();
 //                             for (index, element) in &value.update.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-//                                 match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment, is_array_object_element.clone()) {
+//                                 match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
 //                                     Ok(value) => {
 //                                         if let Some(value) = value {
 //                                             update_query_part_acc.push_str(&value);
@@ -3323,7 +3322,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::JsonArrayElementUpdateBindQuery<DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> for DoggieOptionsToUpdate {
-//     fn try_generate_update_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::option::Option<std::string::String>, DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> {
+//     fn try_generate_update_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::option::Option<std::string::String>, DoggieTryGenerateJsonArrayElementUpdateBindIncrementsErrorNamed> {
 //         match increment.checked_add(1) {
 //             Some(new_increment_value) => {
 //                 *increment = new_increment_value;
@@ -3824,7 +3823,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for CatOptionsToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         if self.0.is_empty() {
 //             return Err(CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -4233,7 +4232,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for MouseOptionsToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         if self.0.is_empty() {
 //             return Err(MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }

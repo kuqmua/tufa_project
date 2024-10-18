@@ -4192,7 +4192,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //                             &jsonb_set_target,
     //                             &jsonb_set_path,
     //                             increment,
-    //                             is_array_object_element.clone(),
     //                         ) {
     //                             Ok(value) => {
     //                                 acc = value;
@@ -4227,7 +4226,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //                                 &jsonb_set_target,
     //                                 &format!(#jsonb_set_path_format_handle_token_stream),
     //                                 increment,
-    //                                 is_array_object_element.clone(),
     //                             ) {
     //                                 Ok(value) => {
     //                                     acc = value;
@@ -4312,7 +4310,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //                                 &jsonb_set_target,
     //                                 &jsonb_set_path,
     //                                 increment,
-    //                                 is_array_object_element.clone()
     //                             )
     //                             {
     //                                 Ok(value) => {
@@ -4473,7 +4470,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //                                         &jsonb_set_target,
     //                                         &jsonb_set_path,
     //                                         increment,
-    //                                         is_array_object_element.clone()
     //                                     ) {
     //                                         Ok(value) => {
     //                                             if let Some(value) = value {
@@ -4816,7 +4812,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //                 jsonb_set_target: &std::primitive::str,
     //                 jsonb_set_path: &std::primitive::str,
     //                 increment: &mut std::primitive::u64,
-    //                 is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     //             ) -> Result<std::string::String, #ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream>
     //             {
     //                 if self.0.is_empty() {
@@ -5248,7 +5243,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //                 jsonb_set_target: &std::primitive::str,
     //                 jsonb_set_path: &std::primitive::str,
     //                 increment: &mut std::primitive::u64,
-    //                 is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
     //             ) -> Result<std::option::Option<std::string::String>, #ident_try_generate_json_array_element_update_bind_increments_error_named_upper_camel_case_token_stream> {
     //                 match increment.checked_add(1) {
     //                     Some(new_increment_value) => {
@@ -7908,7 +7902,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                             #field_ident_double_quotes_token_stream,
                             increment,
-                            is_array_object_element.clone(),
                         ) {
                             Ok(value) => {
                                 element_acc = value;
@@ -7956,7 +7949,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
-                        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         let update_query_part_acc = {
                             let mut element_acc = std::string::String::from("elem");
@@ -8654,7 +8646,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                         &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
                         increment,
-                        is_array_object_element.clone()
                     ) {
                         Ok(value) => {
                             acc = value;
@@ -8691,7 +8682,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
-                        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         let mut acc = std::string::String::from(jsonb_set_accumulator);
                         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
@@ -9294,7 +9284,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                         #jsonb_set_path_field_ident_double_quotes_token_stream,
                         increment,
-                        is_array_object_element.clone()
                     ) {
                         Ok(value) => {
                             #generic_acc_snake_case = value;
@@ -9331,7 +9320,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
-                        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         let mut acc = std::string::String::from(jsonb_set_accumulator);
                         let mut #generic_acc_snake_case = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
@@ -9826,7 +9814,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                             #jsonb_set_path_field_ident_double_quotes_token_stream,
                             increment,
-                            is_array_object_element.clone()
                         ) {
                             Ok(value) => {
                                 #std_option_option_generic_acc_snake_case = value;
@@ -9864,7 +9851,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
-                        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         let mut acc = std::string::String::from(jsonb_set_accumulator);
                         match &self.0 {
@@ -10436,7 +10422,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
-                        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                             &self.0,
@@ -10444,7 +10429,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             jsonb_set_target,
                             jsonb_set_path,
                             increment,
-                            postgresql_crud::ArrayObjectElementOrSimple::Simple,
                         ) {
                             Ok(value) => Ok(value),
                             Err(error) => {
@@ -11009,7 +10993,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
-                        is_array_object_element: postgresql_crud::ArrayObjectElementOrSimple,
                     ) -> Result<std::string::String, #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                         match &self.0 {
                             Some(value) => {
@@ -11019,7 +11002,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     jsonb_set_target,
                                     jsonb_set_path,
                                     increment,
-                                    postgresql_crud::ArrayObjectElementOrSimple::Simple,
                                 ) {
                                     Ok(value) => Ok(value),
                                     Err(error) => {

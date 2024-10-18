@@ -1504,7 +1504,6 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
                     jsonb_set_target: &std::primitive::str,
                     jsonb_set_path: &std::primitive::str,
                     increment: &mut std::primitive::u64,
-                    is_array_object_element: ArrayObjectElementOrSimple
                 ) -> Result<std::string::String, #ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                     match increment.checked_add(1) {
                         Some(value) => {
