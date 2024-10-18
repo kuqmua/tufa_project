@@ -1738,6 +1738,30 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &proc_macro_name_upper_camel_case_ident_stringified
         )
     };
+
+    let generate_impl_postgresql_crud_generate_postgresql_query_part_to_update_token_stream = |
+        struct_token_stream: &proc_macro2::TokenStream,
+        tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+        try_generate_bind_increments_content_token_stream: &proc_macro2::TokenStream,
+        bind_value_to_query_content_token_stream: &proc_macro2::TokenStream,
+    |{
+        quote::quote!{
+            impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<#tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> for #struct_token_stream {
+                fn try_generate_bind_increments(
+                    &self,
+                    jsonb_set_accumulator: &std::primitive::str,
+                    jsonb_set_target: &std::primitive::str,
+                    jsonb_set_path: &std::primitive::str,
+                    increment: &mut std::primitive::u64,
+                ) -> Result<std::string::String, #tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
+                    #try_generate_bind_increments_content_token_stream
+                }
+                fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    #bind_value_to_query_content_token_stream
+                }
+            }
+        }
+    };
     
     let ident_to_create_origin_with_generated_id_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensSelfToCreateOriginWithGeneratedIdUpperCamelCaseTokenStream::impl_quote_to_tokens_self_to_create_origin_with_generated_id_upper_camel_case_token_stream(&ident);
     let ident_options_to_update_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensSelfOptionsToUpdateUpperCamelCaseStringified::impl_quote_to_tokens_self_options_to_update_upper_camel_case_stringified(&ident);
@@ -5343,10 +5367,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #ident_options_to_update_token_stream
         #impl_serde_deserialize_for_ident_options_to_update_token_stream
         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_update_token_stream
-        // #ident_json_array_change_token_stream
-        // #impl_serde_deserialize_for_ident_json_array_change_token_stream
-        // #ident_json_array_change_try_generate_bind_increments_error_named_token_stream
-        // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_json_array_change_try_generate_bind_increments_error_named_for_ident_json_array_change_token_stream
         //
 
         #ident_token_stream
