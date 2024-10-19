@@ -573,11 +573,14 @@ where
 #[derive(Debug)]
 pub struct GenericSelfFieldReaderUpperCamelCase(std::string::String);
 impl GenericSelfFieldReaderUpperCamelCase {
+    fn wrap(value: &dyn std::fmt::Display) -> Self {
+        Self(format!("Generic{value}FieldReader"))
+    }
     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
-        Self(format!("Generic{}FieldReader", proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())))
+        Self::wrap(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string()))
     }
     pub fn from_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
-        Self(format!("Generic{}FieldReader", proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote!{#value}.to_string())))
+        Self::wrap(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote!{#value}.to_string()))
     }
 }
 impl std::fmt::Display for GenericSelfFieldReaderUpperCamelCase {
@@ -594,6 +597,33 @@ impl quote::ToTokens for GenericSelfFieldReaderUpperCamelCase {
     }
 }
 
+
+#[derive(Debug)]
+pub struct GenericSelfFieldReaderSnakeCase(std::string::String);
+impl GenericSelfFieldReaderSnakeCase {
+    fn wrap(value: &dyn std::fmt::Display) -> Self {
+        Self(format!("generic_{value}_field_reader"))
+    }
+    pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
+        Self::wrap(&proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&value.to_string()))
+    }
+    pub fn from_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+        Self::wrap(&proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&quote::quote!{#value}.to_string()))
+    }
+}
+impl std::fmt::Display for GenericSelfFieldReaderSnakeCase {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
+    }
+}
+impl quote::ToTokens for GenericSelfFieldReaderSnakeCase {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let value_stringified = self.to_string();
+        let value_token_stream = value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("failed to parse stringified GenericSelfFieldReaderSnakeCase into proc_macro2::TokenStream: {value_stringified}"));
+        value_token_stream.to_tokens(tokens)
+    }
+}
 
 /////////
 // pub struct StdOptionOptionGenericAccUpperCamelCase;
