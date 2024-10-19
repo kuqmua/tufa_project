@@ -647,6 +647,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &quote::quote!{{#(#fields_token_stream),*}}
         )
     };
+    //todo fix problem cannot build more than 100 values in jsonb_build_object
+    let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream = |
+        struct_ident_token_stream: &proc_macro2::TokenStream,
+        json_create_try_generate_bind_increments_content_token_stream: &proc_macro2::TokenStream,
+        json_create_bind_value_to_query_content_token_stream: &proc_macro2::TokenStream,
+    |{
+        quote::quote!{
+            impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for #struct_ident_token_stream {
+                fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                    #json_create_try_generate_bind_increments_content_token_stream
+                }
+                fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    #json_create_bind_value_to_query_content_token_stream
+                }
+            }
+        }
+    };
+    //
     let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream = |struct_ident_token_stream: &proc_macro2::TokenStream, contains_id: std::primitive::bool|{
         let increment_initialization_string_content_token_stream = if contains_id {
             quote::quote!{"'id', to_jsonb(gen_random_uuid()),"}
