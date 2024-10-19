@@ -267,7 +267,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         )
     };
     let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream = |
-        struct_ident_token_stream: &proc_macro2::TokenStream,
+        struct_ident_token_stream: &dyn quote::ToTokens,
         self_initialization_content_token_stream: &proc_macro2::TokenStream,
     |{
         quote::quote!{
@@ -526,7 +526,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_try_new_token_stream
         }
     };
-    let generate_match_try_new_in_deserialize_token_stream = |ident_token_stream: &proc_macro2::TokenStream, initialization_token_stream: &proc_macro2::TokenStream|{
+    fn generate_match_try_new_in_deserialize_token_stream(ident_token_stream: &dyn quote::ToTokens, initialization_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
         quote::quote!{
             match #ident_token_stream::try_new(#initialization_token_stream) {
                 Ok(value) => serde::__private::Ok(value),
@@ -535,7 +535,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             }
         }
-    };
+    }
     //
     let generate_tokens_options_to_read_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
@@ -632,7 +632,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
-    let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_non_vec_field_reader_token_stream = |struct_ident_token_stream: &proc_macro2::TokenStream|{
+    let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_non_vec_field_reader_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
         generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
             &struct_ident_token_stream,
             &quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)},
@@ -753,7 +753,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
 
     let generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream = |
-        tokens_field_reader_token_stream: &proc_macro2::TokenStream,
+        tokens_field_reader_token_stream: &dyn quote::ToTokens,
         contains_id: std::primitive::bool,
         format_handle_double_quotes_token_stream: &proc_macro2::TokenStream,
     |{
@@ -3160,7 +3160,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &fields_some_value_self_options_to_read_initialization_content_token_stream,
             );
 
-            let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&ident);
+            let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::GenericSelfFieldReaderUpperCamelCase::from_dyn_std_fmt_display(&ident);
             let generic_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
                 &naming_conventions::ImplQuoteToTokensGenericSelfUpperCamelCaseStringified::impl_quote_to_tokens_generic_self_upper_camel_case_stringified(&ident),
                 &FieldReaderContent::GenericIdentAndStdOptionOptionGenericIdent

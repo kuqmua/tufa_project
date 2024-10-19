@@ -573,8 +573,11 @@ where
 #[derive(Debug)]
 pub struct GenericSelfFieldReaderUpperCamelCase(std::string::String);
 impl GenericSelfFieldReaderUpperCamelCase {
-    pub fn new(value: &dyn proc_macro_common::naming_conventions::ToUpperCamelCaseStringified) -> Self {
-        Self(format!("Generic{}FieldReader", value.to_upper_camel_case_stringified()))
+    pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
+        Self(format!("Generic{}FieldReader", proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())))
+    }
+    pub fn from_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+        Self(format!("Generic{}FieldReader", proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote!{#value}.to_string())))
     }
 }
 impl std::fmt::Display for GenericSelfFieldReaderUpperCamelCase {
