@@ -549,3 +549,256 @@ where
 //     url_handle_stringified.parse::<proc_macro2::TokenStream>()
 //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {url_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////
+#[derive(Debug)]
+pub struct GenericSelfFieldReaderUpperCamelCase(std::string::String);
+impl GenericSelfFieldReaderUpperCamelCase {
+    pub fn new(value: &dyn proc_macro_common::naming_conventions::ToUpperCamelCaseStringified) -> Self {
+        Self(format!("Generic{}FieldReader", value.to_upper_camel_case_stringified()))
+    }
+}
+impl std::fmt::Display for GenericSelfFieldReaderUpperCamelCase {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
+    }
+}
+impl quote::ToTokens for GenericSelfFieldReaderUpperCamelCase {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let value_stringified = self.to_string();
+        let value_token_stream = value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("failed to parse stringified GenericSelfFieldReaderUpperCamelCase into proc_macro2::TokenStream: {value_stringified}"));
+        value_token_stream.to_tokens(tokens)
+    }
+}
+
+
+/////////
+// pub struct StdOptionOptionGenericAccUpperCamelCase;
+// impl std::fmt::Display for StdOptionOptionGenericAccUpperCamelCase {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         write!(formatter, "StdOptionOptionGenericAcc")
+//     }
+// }
+// impl quote::ToTokens for StdOptionOptionGenericAccUpperCamelCase {
+//     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+//         quote::quote! { StdOptionOptionGenericAcc }.to_tokens(tokens)
+//     }
+// }
+// pub struct StdOptionOptionGenericAccSnakeCase;
+// impl std::fmt::Display for StdOptionOptionGenericAccSnakeCase {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         write!(formatter, "std_option_option_generic_acc")
+//     }
+// }
+// impl quote::ToTokens for StdOptionOptionGenericAccSnakeCase {
+//     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+//         quote::quote! { std_option_option_generic_acc }.to_tokens(tokens)
+//     }
+// }
+////////
+
+
+// pub trait GenericSelfFieldReaderUpperCamelCaseStringified {
+//     fn generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> GenericSelfFieldReaderUpperCamelCaseStringified for T
+// where
+//     T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+// {
+//     fn generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
+//         format!("Generic{}FieldReader", self.to_upper_camel_case_stringified(),)
+//     }
+// }
+// pub trait GenericSelfFieldReaderSnakeCaseStringified {
+//     fn generic_self_field_reader_snake_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> GenericSelfFieldReaderSnakeCaseStringified for T
+// where
+//     T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
+// {
+//     fn generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
+//         format!("generic_{}_field_reader", self.to_snake_case_stringified(),)
+//     }
+// }
+// pub trait GenericSelfFieldReaderUpperCamelCaseTokenStream {
+//     fn generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> GenericSelfFieldReaderUpperCamelCaseTokenStream for T
+// where
+//     T: GenericSelfFieldReaderUpperCamelCaseStringified,
+// {
+//     fn generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.generic_self_field_reader_upper_camel_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
+// pub trait GenericSelfFieldReaderSnakeCaseTokenStream {
+//     fn generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> GenericSelfFieldReaderSnakeCaseTokenStream for T
+// where
+//     T: GenericSelfFieldReaderSnakeCaseStringified,
+// {
+//     fn generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.generic_self_field_reader_snake_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified for T
+// where
+//     T: quote::ToTokens,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
+//         format!("Generic{}FieldReader", proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote! { #self }.to_string()),)
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified for T
+// where
+//     T: quote::ToTokens,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
+//         format!("generic_{}_field_reader", proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&quote::quote! { #self }.to_string()),)
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream for T
+// where
+//     T: ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseTokenStream {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseTokenStream for T
+// where
+//     T: ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
+// pub trait GenericSelfFieldReaderUpperCamelCaseStringified {
+//     fn generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> GenericSelfFieldReaderUpperCamelCaseStringified for T
+// where
+//     T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+// {
+//     fn generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
+//         format!("Generic{}FieldReader", self.to_upper_camel_case_stringified(),)
+//     }
+// }
+// pub trait GenericSelfFieldReaderSnakeCaseStringified {
+//     fn generic_self_field_reader_snake_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> GenericSelfFieldReaderSnakeCaseStringified for T
+// where
+//     T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
+// {
+//     fn generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
+//         format!("generic_{}_field_reader", self.to_snake_case_stringified(),)
+//     }
+// }
+// pub trait GenericSelfFieldReaderUpperCamelCaseTokenStream {
+//     fn generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> GenericSelfFieldReaderUpperCamelCaseTokenStream for T
+// where
+//     T: GenericSelfFieldReaderUpperCamelCaseStringified,
+// {
+//     fn generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.generic_self_field_reader_upper_camel_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
+// pub trait GenericSelfFieldReaderSnakeCaseTokenStream {
+//     fn generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> GenericSelfFieldReaderSnakeCaseTokenStream for T
+// where
+//     T: GenericSelfFieldReaderSnakeCaseStringified,
+// {
+//     fn generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.generic_self_field_reader_snake_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified for T
+// where
+//     T: quote::ToTokens,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
+//         format!("Generic{}FieldReader", proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote! { #self }.to_string()),)
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified for T
+// where
+//     T: quote::ToTokens,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
+//         format!("generic_{}_field_reader", proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&quote::quote! { #self }.to_string()),)
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream for T
+// where
+//     T: ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
+// pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseTokenStream {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+// impl<T> ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseTokenStream for T
+// where
+//     T: ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified,
+// {
+//     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }
