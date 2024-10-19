@@ -947,21 +947,6 @@ fn postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_tok
     }
 }
 
-#[derive(Debug)]
-enum PrimitiveJsonType {
-    Number,
-    Boolean,
-    String
-}
-impl std::fmt::Display for PrimitiveJsonType {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::Number => write!(f, "number"),
-            Self::Boolean => write!(f, "boolean"),
-            Self::String => write!(f, "string"),
-        }
-    }
-}
 
 fn generate_primitive_postgresql_part_field_to_read_query(proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str) -> proc_macro2::TokenStream {
     proc_macro_common::generate_quotes::double_quotes_token_stream(
