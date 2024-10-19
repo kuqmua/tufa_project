@@ -4752,7 +4752,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             )
         };
 
-
         let (
             std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream,
             impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream,
@@ -4923,9 +4922,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             };
-            //
-
-
 
             let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_stringified =     naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfFieldReaderUpperCamelCaseStringified::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_field_reader_upper_camel_case_stringified(&ident);
             let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_token_stream =    naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
