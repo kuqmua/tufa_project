@@ -393,7 +393,7 @@ impl quote::ToTokens for HashMapSnakeCase {
         quote::quote! {hashmap}.to_tokens(tokens)
     }
 }
-
+//todo maybe generate new type pattern and initialization token stream?
 naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_stream!([
     ["self", "parameters"],
     ["self", "payload"],
