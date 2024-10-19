@@ -1719,7 +1719,7 @@ impl error_occurence_lib::ToStdStringString for JsonUuid {
         self.0.to_string()
     }
 }
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct JsonUuidToCreate(pub uuid::Uuid);
 impl schemars::JsonSchema for JsonUuidToCreate {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
@@ -1739,7 +1739,7 @@ impl schemars::JsonSchema for JsonUuidToCreate {
         }
     }
 }
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct JsonUuidOptionsToRead(pub uuid::Uuid);
 impl schemars::JsonSchema for JsonUuidOptionsToRead {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
@@ -1759,7 +1759,7 @@ impl schemars::JsonSchema for JsonUuidOptionsToRead {
         }
     }
 }
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct JsonUuidOptionToUpdate(pub uuid::Uuid);
 impl schemars::JsonSchema for JsonUuidOptionToUpdate {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
@@ -2111,7 +2111,7 @@ pub enum PaginationTryNewErrorNamed {
 impl Pagination {
     pub fn try_new(limit: std::primitive::u64, offset: std::primitive::u64) -> Result<Self, PaginationTryNewErrorNamed> {
         match offset.checked_add(limit) {
-            Some(value) => match limit == 0 {
+            Some(_) => match limit == 0 {
                 true => Err(PaginationTryNewErrorNamed::LimitIsZero {
                     code_occurence: error_occurence_lib::code_occurence!()
                 }),

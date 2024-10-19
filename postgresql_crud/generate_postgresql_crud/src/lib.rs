@@ -723,14 +723,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let maybe_generic_filter_initialization_token_stream = match &element.option_generic {
-                    Some(value) => {
-                        let ident_field_upper_camel_case_token_stream = value.field_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
-                            panic!(
-                                "{proc_macro_name_upper_camel_case_ident_stringified} {} {}",
-                                &value.field_to_read_upper_camel_case_stringified,
-                                proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                            )
-                        });
+                    Some(_) => {
                         quote::quote! {{ 
                             #filter_snake_case: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                         }}
@@ -885,8 +878,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_operation_error_initialization_eprintln_response_creation_token_stream = |operation: &Operation, syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: std::primitive::u32, column: std::primitive::u32| {
         let try_operation_route_logic_error_named_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(operation);
         let try_operation_route_logic_response_variants_upper_camel_case_token_stream = naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(operation);
-        let response_snake_case = naming_conventions::ResponseSnakeCase;
-        let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
         let syn_variant_initialization_token_stream = generate_initialization_token_stream(syn_variant_wrapper, &file, line, column);
         let status_code_token_stream = syn_variant_wrapper
             .get_option_status_code()
@@ -1232,7 +1223,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     });
     let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let derive_debug = token_patterns::DeriveDebug;
-    let field_upper_camel_case = naming_conventions::FieldUpperCamelCase;
     //todo replace it with postgresql_crud::Value
     let create_table_if_not_exists_function_token_stream = {
         let pool_snake_case = naming_conventions::PoolSnakeCase;
@@ -1243,7 +1233,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     acc
                 });
                 syn_field_with_additional_info_fields_named.iter().for_each(|element| {
-                    if let Some(value) = &element.option_generic {
+                    if element.option_generic.is_some() {
                         acc.push_str(&format!(" check (jsonb_matches_schema('{{}}', {})),", &element.field_ident,));
                     }
                 });
@@ -1448,7 +1438,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&json_ident_column_upper_camel_case_stringified], &proc_macro_name_upper_camel_case_ident_stringified),
         )],
     );
-    let into_response_snake_case = naming_conventions::IntoResponseSnakeCase;
     let serde_json_to_string_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming_conventions::SerdeJsonToStringUpperCamelCase,
         None,
@@ -2902,7 +2891,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         });
                         acc
                     });
-                    let column_increments = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                    let column_increments = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
                         acc.push_str(&format!("{{}}"));
                         acc.push_str({
                             let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));

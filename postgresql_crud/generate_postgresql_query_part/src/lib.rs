@@ -46,12 +46,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             element_ident != &id_snake_case.to_string()
         })
         .collect::<std::vec::Vec<&&syn::Field>>();
-    let generate_ident_field_to_read_upper_camel_case_token_stream = |value: &std::primitive::str| {
-        let value = format!("{value}{}", naming_conventions::FieldToReadUpperCamelCase);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let ident_options_to_read_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::OptionsToReadUpperCamelCase);
     let ident_options_to_read_upper_camel_case_token_stream = {
         ident_options_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
@@ -60,26 +54,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
-    };
-    let ident_options_to_read_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&ident_options_to_read_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
-    let ident_reader_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::ReaderUpperCamelCase);
-    let ident_reader_upper_camel_case_token_stream = {
-        ident_reader_upper_camel_case_stringified
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_reader_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let generate_value_option_to_update_upper_camel_case_token_stream = |value: &std::primitive::str| {
-        let value = format!("{value}{}", naming_conventions::OptionToUpdateUpperCamelCase);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let ident_option_to_update_upper_camel_case_token_stream = generate_value_option_to_update_upper_camel_case_token_stream(&ident.to_string());
-    let generate_value_options_to_update_upper_camel_case_token_stream = |value: &std::primitive::str| {
-        let value = format!("{value}{}", naming_conventions::OptionsToUpdateUpperCamelCase);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let ident_field_to_update_upper_camel_case_token_stream = {
         let value = format!("{ident}{}", naming_conventions::FieldToUpdateUpperCamelCase);
