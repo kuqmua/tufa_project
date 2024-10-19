@@ -1801,6 +1801,29 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             fields: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
         }}
     );
+
+    let (
+        checked_add_variant_declaration_token_stream,
+        checked_add_variant_initialization_token_stream
+    ) = {
+        let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
+        let code_occurence_snake_case = naming_conventions::CodeOccurenceSnakeCase;
+        let checked_add_variant_declaration_token_stream = quote::quote!{
+            #checked_add_upper_camel_case {
+                #code_occurence_snake_case: error_occurence_lib::code_occurence::CodeOccurence,
+            }
+        };
+        let checked_add_variant_initialization_token_stream = quote::quote!{
+            #checked_add_upper_camel_case {
+                #code_occurence_snake_case: error_occurence_lib::code_occurence!()
+            }
+        };
+        (
+            checked_add_variant_declaration_token_stream,
+            checked_add_variant_initialization_token_stream
+        )
+    };
+
     let generate_ident_json_array_change_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
         ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
@@ -2114,9 +2137,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 });
                 quote::quote!{
-                    CheckedAdd {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+                    #checked_add_variant_declaration_token_stream,
                     Create {
                         #[eo_error_occurence]
                         error: postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed,
@@ -2194,7 +2215,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         increment.to_string()
                                     }
                                     None => {
-                                        return Err(#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                        return Err(#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#checked_add_variant_initialization_token_stream);
                                     }
                                 };
                                 for element in &element_handle.fields {
@@ -2218,7 +2239,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                                 }
                                 None => {
-                                    return Err(#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                    return Err(#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#checked_add_variant_initialization_token_stream);
                                 }
                             }
                         }
@@ -2812,9 +2833,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 });
                 quote::quote!{
-                    CheckedAdd {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+                    #checked_add_variant_declaration_token_stream,
                     #(#variants_token_stream),*
                 }
             }
@@ -3440,9 +3459,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 });
                 quote::quote!{
-                    CheckedAdd {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+                    #checked_add_variant_declaration_token_stream,
                     #(#variants_token_stream),*
                 }
             }
@@ -3964,9 +3981,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 });
                 quote::quote!{
-                    CheckedAdd {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+                    #checked_add_variant_declaration_token_stream,
                     #(#variants_token_stream),*
                 }
             }
@@ -4038,9 +4053,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})");
                             },
                             None => {
-                                return Err(#std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd {
-                                    code_occurence: error_occurence_lib::code_occurence!()
-                                });
+                                return Err(#std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#checked_add_variant_initialization_token_stream);
                             }
                         }
                     }
@@ -5150,9 +5163,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream,
             &{
                 quote::quote!{
-                    CheckedAdd {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+                    #checked_add_variant_declaration_token_stream,
                     JsonArrayChange {
                         #[eo_error_occurence]
                         error: #std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream,
@@ -5189,7 +5200,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
                         }
                         None => {
-                            return Err(#std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                            return Err(#std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream::#checked_add_variant_initialization_token_stream);
                         }
                     },
                 }
