@@ -52,7 +52,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let ident_field_to_read_upper_camel_case_token_stream = generate_ident_field_to_read_upper_camel_case_token_stream(&ident.to_string());
     let ident_options_to_read_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::OptionsToReadUpperCamelCase);
     let ident_options_to_read_upper_camel_case_token_stream = {
         ident_options_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
