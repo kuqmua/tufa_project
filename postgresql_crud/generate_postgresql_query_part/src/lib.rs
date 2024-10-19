@@ -4684,12 +4684,21 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     //its for GeneratePostgresqlQueryPart (json logic)
     let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = {
-        let std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_upper_camel_case_token_stream(&ident);
-        let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
-            &std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream,
-            &quote::quote!{(std::option::Option<std::vec::Vec<#generic_with_id_ident_upper_camel_case_token_stream>>);}
-        );
-        let impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream);
+        let (
+            std_option_option_std_vec_vec_generic_with_id_ident_token_stream,
+            impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
+        ) = {
+            let std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_upper_camel_case_token_stream(&ident);
+            let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+                &std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream,
+                &quote::quote!{(std::option::Option<std::vec::Vec<#generic_with_id_ident_upper_camel_case_token_stream>>);}
+            );
+            let impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case_token_stream);
+            (
+                std_option_option_std_vec_vec_generic_with_id_ident_token_stream,
+                impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
+            )
+        };
 
         let std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensStdOptionOptionStdVecVecGenericWithIdSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_std_option_option_std_vec_vec_generic_with_id_self_to_create_upper_camel_case_token_stream(&ident);
         let std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
