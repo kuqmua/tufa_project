@@ -975,19 +975,7 @@ fn generate_array_primitive_postgresql_part_field_to_read_query(proc_macro_name_
         &proc_macro_name_upper_camel_case_ident_stringified
     )
 }
-fn generate_nullable_array_primitive_postgresql_part_field_to_read_query(
-    primitive_json_type: PrimitiveJsonType,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
-    proc_macro_common::generate_quotes::double_quotes_token_stream(
-        &format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value', case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'array' then (select jsonb_agg(value) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) else null end))"),
-        &proc_macro_name_upper_camel_case_ident_stringified
-    )
-}
-fn generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
-    primitive_json_type: PrimitiveJsonType,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
-) -> proc_macro2::TokenStream {
+fn generate_nullable_array_primitive_postgresql_part_field_to_read_query(proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str) -> proc_macro2::TokenStream {
     proc_macro_common::generate_quotes::double_quotes_token_stream(
         &format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value', case when jsonb_typeof({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 'array' then (select jsonb_agg(value) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) else null end))"),
         &proc_macro_name_upper_camel_case_ident_stringified
@@ -1147,12 +1135,7 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-            &generate_nullable_array_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Number,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            )
-        )
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_nullable_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
     );
     let generated = quote::quote!{
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
@@ -1168,12 +1151,7 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-            &generate_nullable_array_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Boolean,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            )
-        )
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_nullable_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
     );
     let generated = quote::quote!{
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
@@ -1189,12 +1167,7 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-            &generate_nullable_array_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::String,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            )
-        )
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_nullable_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
     );
     let generated = quote::quote!{
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
@@ -1258,12 +1231,7 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-            &generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Number,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            )
-        )
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_nullable_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
     );
     let generated = quote::quote!{
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
@@ -1279,12 +1247,7 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-            &generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::Boolean,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            )
-        )
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_nullable_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
     );
     let generated = quote::quote!{
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
@@ -1300,12 +1263,7 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-            &generate_nullable_array_nullable_primitive_postgresql_part_field_to_read_query(
-                PrimitiveJsonType::String,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            )
-        )
+        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_nullable_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
     );
     let generated = quote::quote!{
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
