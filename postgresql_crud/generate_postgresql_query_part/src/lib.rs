@@ -2993,151 +2993,149 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&generic_with_id_ident_upper_camel_case_token_stream);
 
-        let generic_with_id_ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_to_create_upper_camel_case_token_stream(&ident);
-        let generic_with_id_ident_to_create_token_stream = generate_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case_token_stream);
-        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case_token_stream);
-        let impl_postgresql_crud_json_create_bind_query_for_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case_token_stream, true);
-
-
-        let generic_with_id_ident_options_to_read_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensGenericWithIdSelfOptionsToReadUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_options_to_read_upper_camel_case_stringified(&ident);
-        let generic_with_id_ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_options_to_read_upper_camel_case_token_stream(&ident);
-        let generic_with_id_ident_options_to_read_token_stream = generate_struct_tokens_options_to_read_token_stream(&generic_with_id_ident_options_to_read_upper_camel_case_token_stream, true);
-        let impl_serde_deserialize_for_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
-            &generic_with_id_ident_options_to_read_upper_camel_case_stringified,
-            &generic_with_id_ident_options_to_read_upper_camel_case_token_stream,
-            true,
-        );
-        //todo maybe no need to impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-            &generic_with_id_ident_options_to_read_upper_camel_case_token_stream,
-            &fields_with_id_some_value_self_options_to_read_initialization_content_token_stream,
-        );
-        //
-
-        let generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
-        let generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
-            &naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_stringified(&ident),
-            &FieldReaderContent::GenericWithIdIdentAndStdOptionOptionGenericWithIdIdent
-        );
-        let impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream = {
-            let generic_with_id_ident_field_reader_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_stringified(&ident);
-            let tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &format!("{tuple_struct_space_stringified}{generic_with_id_ident_field_reader_upper_camel_case_stringified}"),
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            let tuple_struct_generic_with_id_ident_field_reader_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &format!("{tuple_struct_space_stringified}{generic_with_id_ident_field_reader_upper_camel_case_stringified} with 1 element"),
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            let generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &generic_with_id_ident_field_reader_upper_camel_case_stringified,
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
-            let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
-                &generic_with_id_ident_field_reader_upper_camel_case_token_stream,
-                &field0_token_stream,
-            );
+        let create_token_stream = {
+            let generic_with_id_ident_to_create_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfToCreateUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_to_create_upper_camel_case_token_stream(&ident);
+            let generic_with_id_ident_to_create_token_stream = generate_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case_token_stream);
+            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case_token_stream);
+            let impl_postgresql_crud_json_create_bind_query_for_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case_token_stream, true);
             quote::quote!{
-                impl<'de> serde::Deserialize<'de> for #generic_with_id_ident_field_reader_upper_camel_case_token_stream {
-                    fn deserialize<__D>(
-                        __deserializer: __D,
-                    ) -> serde::__private::Result<Self, __D::Error>
-                    where
-                        __D: serde::Deserializer<'de>,
-                    {
-                        #[doc(hidden)]
-                        struct __Visitor<'de> {
-                            marker: serde::__private::PhantomData<#generic_with_id_ident_field_reader_upper_camel_case_token_stream>,
-                            lifetime: serde::__private::PhantomData<&'de ()>,
-                        }
-                        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #generic_with_id_ident_field_reader_upper_camel_case_token_stream;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut serde::__private::Formatter,
-                            ) -> serde::__private::fmt::Result {
-                                serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    #tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream,
-                                )
-                            }
-                            #[inline]
-                            fn visit_newtype_struct<__E>(
-                                self,
-                                __e: __E,
-                            ) -> serde::__private::Result<Self::Value, __E::Error>
-                            where
-                                __E: serde::Deserializer<'de>,
-                            {
-                                let __field0: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
-                                    #ident_with_id_field_to_read_upper_camel_case_token_stream,
-                                > as serde::Deserialize>::deserialize(__e)?;
-                                #match_try_new_in_deserialize_token_stream
-                            }
-                            #[inline]
-                            fn visit_seq<__A>(
-                                self,
-                                mut __seq: __A,
-                            ) -> serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: serde::de::SeqAccess<'de>,
-                            {
-                                let __field0 = match serde::de::SeqAccess::next_element::<
-                                    std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
-                                >(&mut __seq)? {
-                                    serde::__private::Some(__value) => __value,
-                                    serde::__private::None => {
-                                        return serde::__private::Err(
-                                            serde::de::Error::invalid_length(
-                                                0usize,
-                                                &#tuple_struct_generic_with_id_ident_field_reader_with_1_element_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                #match_try_new_in_deserialize_token_stream
-                            }
-                        }
-                        serde::Deserializer::deserialize_newtype_struct(
-                            __deserializer,
-                            #generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream,
-                            __Visitor {
-                                marker: serde::__private::PhantomData::<
-                                    #generic_with_id_ident_field_reader_upper_camel_case_token_stream,
-                                >,
-                                lifetime: serde::__private::PhantomData,
-                            },
-                        )
-                    }
-                }
+                #generic_with_id_ident_to_create_token_stream
+                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_to_create_token_stream
+                #impl_postgresql_crud_json_create_bind_query_for_generic_with_id_ident_to_create_token_stream
             }
         };
-        //
-        let generic_with_id_ident_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_reader_upper_camel_case_token_stream(&ident);
-        let generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(&generic_with_id_ident_reader_upper_camel_case_token_stream, &generic_with_id_ident_options_to_read_upper_camel_case_token_stream);
-        //
+        let read_token_stream = {
+            let generic_with_id_ident_options_to_read_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfOptionsToReadUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_options_to_read_upper_camel_case_token_stream(&ident);
+            let generic_with_id_ident_options_to_read_token_stream = generate_struct_tokens_options_to_read_token_stream(&generic_with_id_ident_options_to_read_upper_camel_case_token_stream, true);
+            let impl_serde_deserialize_for_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
+                &naming_conventions::ImplQuoteToTokensGenericWithIdSelfOptionsToReadUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_options_to_read_upper_camel_case_stringified(&ident),
+                &generic_with_id_ident_options_to_read_upper_camel_case_token_stream,
+                true,
+            );
+            //todo maybe no need to impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
+                &generic_with_id_ident_options_to_read_upper_camel_case_token_stream,
+                &fields_with_id_some_value_self_options_to_read_initialization_content_token_stream,
+            );
+
+            let generic_with_id_ident_field_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_token_stream(&ident);
+            let generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+                &naming_conventions::ImplQuoteToTokensGenericWithIdSelfUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_upper_camel_case_stringified(&ident),
+                &FieldReaderContent::GenericWithIdIdentAndStdOptionOptionGenericWithIdIdent
+            );
+            let impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream = {
+                let generic_with_id_ident_field_reader_upper_camel_case_stringified = naming_conventions::ImplQuoteToTokensGenericWithIdSelfFieldReaderUpperCamelCaseStringified::impl_quote_to_tokens_generic_with_id_self_field_reader_upper_camel_case_stringified(&ident);
+                let tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{tuple_struct_space_stringified}{generic_with_id_ident_field_reader_upper_camel_case_stringified}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let tuple_struct_generic_with_id_ident_field_reader_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{tuple_struct_space_stringified}{generic_with_id_ident_field_reader_upper_camel_case_stringified} with 1 element"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &generic_with_id_ident_field_reader_upper_camel_case_stringified,
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
+                let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                    &generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+                    &field0_token_stream,
+                );
+                quote::quote!{
+                    impl<'de> serde::Deserialize<'de> for #generic_with_id_ident_field_reader_upper_camel_case_token_stream {
+                        fn deserialize<__D>(
+                            __deserializer: __D,
+                        ) -> serde::__private::Result<Self, __D::Error>
+                        where
+                            __D: serde::Deserializer<'de>,
+                        {
+                            #[doc(hidden)]
+                            struct __Visitor<'de> {
+                                marker: serde::__private::PhantomData<#generic_with_id_ident_field_reader_upper_camel_case_token_stream>,
+                                lifetime: serde::__private::PhantomData<&'de ()>,
+                            }
+                            impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                type Value = #generic_with_id_ident_field_reader_upper_camel_case_token_stream;
+                                fn expecting(
+                                    &self,
+                                    __formatter: &mut serde::__private::Formatter,
+                                ) -> serde::__private::fmt::Result {
+                                    serde::__private::Formatter::write_str(
+                                        __formatter,
+                                        #tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream,
+                                    )
+                                }
+                                #[inline]
+                                fn visit_newtype_struct<__E>(
+                                    self,
+                                    __e: __E,
+                                ) -> serde::__private::Result<Self::Value, __E::Error>
+                                where
+                                    __E: serde::Deserializer<'de>,
+                                {
+                                    let __field0: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream> = <std::vec::Vec<
+                                        #ident_with_id_field_to_read_upper_camel_case_token_stream,
+                                    > as serde::Deserialize>::deserialize(__e)?;
+                                    #match_try_new_in_deserialize_token_stream
+                                }
+                                #[inline]
+                                fn visit_seq<__A>(
+                                    self,
+                                    mut __seq: __A,
+                                ) -> serde::__private::Result<Self::Value, __A::Error>
+                                where
+                                    __A: serde::de::SeqAccess<'de>,
+                                {
+                                    let __field0 = match serde::de::SeqAccess::next_element::<
+                                        std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case_token_stream>,
+                                    >(&mut __seq)? {
+                                        serde::__private::Some(__value) => __value,
+                                        serde::__private::None => {
+                                            return serde::__private::Err(
+                                                serde::de::Error::invalid_length(
+                                                    0usize,
+                                                    &#tuple_struct_generic_with_id_ident_field_reader_with_1_element_double_quotes_token_stream,
+                                                ),
+                                            );
+                                        }
+                                    };
+                                    #match_try_new_in_deserialize_token_stream
+                                }
+                            }
+                            serde::Deserializer::deserialize_newtype_struct(
+                                __deserializer,
+                                #generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream,
+                                __Visitor {
+                                    marker: serde::__private::PhantomData::<
+                                        #generic_with_id_ident_field_reader_upper_camel_case_token_stream,
+                                    >,
+                                    lifetime: serde::__private::PhantomData,
+                                },
+                            )
+                        }
+                    }
+                }
+            };
+            let generic_with_id_ident_reader_upper_camel_case_token_stream = naming_conventions::ImplQuoteToTokensGenericWithIdSelfReaderUpperCamelCaseTokenStream::impl_quote_to_tokens_generic_with_id_self_reader_upper_camel_case_token_stream(&ident);
+            let generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(&generic_with_id_ident_reader_upper_camel_case_token_stream, &generic_with_id_ident_options_to_read_upper_camel_case_token_stream);
+            quote::quote!{
+                #generic_with_id_ident_options_to_read_token_stream
+                #impl_serde_deserialize_for_generic_with_id_ident_options_to_read_origin_token_stream
+                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_options_to_read_token_stream
+
+                #generic_with_id_ident_field_reader_token_stream
+                // #impl_try_new_token_stream
+                #impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream
+
+                #generic_with_id_ident_reader_token_stream
+            }
+        };
         quote::quote!{
             #generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_generic_with_id_ident_token_stream
 
-
-            #generic_with_id_ident_to_create_token_stream
-            #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_to_create_token_stream
-            #impl_postgresql_crud_json_create_bind_query_for_generic_with_id_ident_to_create_token_stream
-
-
-            #generic_with_id_ident_options_to_read_token_stream
-            #impl_serde_deserialize_for_generic_with_id_ident_options_to_read_origin_token_stream
-            #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_options_to_read_token_stream
-
-            #generic_with_id_ident_field_reader_token_stream
-            // #impl_try_new_token_stream
-            #impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream
-
-            //
-            #generic_with_id_ident_reader_token_stream
-
-            // #generic_with_id_ident_option_to_update_token_stream
+            #create_token_stream
+            #read_token_stream
         }
     };
 
