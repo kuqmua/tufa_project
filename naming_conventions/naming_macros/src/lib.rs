@@ -651,11 +651,18 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
             let generate_struct_token_stream = |
                 struct_ident_token_stream: &proc_macro2::TokenStream,
                 elements_concat_value_case_double_quotes_token_stream: &proc_macro2::TokenStream,
+                is_upper_camel_case: std::primitive::bool,
             |{
                 let panic_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &format!("failed to parse stringified {struct_ident_token_stream} into proc_macro2::TokenStream: {{value_stringified}}"),
                     &proc_macro_name_snake_case_stringified
                 );
+                let casing_token_stream = if is_upper_camel_case {
+                    quote::quote!{proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified}
+                }
+                else {
+                    quote::quote!{proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified}
+                };
                 quote::quote!{
                     #[derive(Debug)]
                     pub struct #struct_ident_token_stream(std::string::String);
@@ -664,10 +671,10 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                             Self(format!(#elements_concat_value_case_double_quotes_token_stream))
                         }
                         pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
-                            Self::wrap(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string()))
+                            Self::wrap(&#casing_token_stream(&value.to_string()))
                         }
                         pub fn from_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
-                            Self::wrap(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&{
+                            Self::wrap(&#casing_token_stream(&{
                                 let mut tokens = proc_macro2::TokenStream::new();
                                 quote::ToTokens::to_tokens(&value, &mut tokens);
                                 tokens
@@ -692,35 +699,37 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
             let pub_struct_upper_camel_case_token_stream = generate_struct_token_stream(
                 &handle_upper_camel_case_upper_camel_case_token_stream,
                 &elements_concat_value_upper_camel_case_double_quotes_token_stream,
+                true,
             );
             let pub_struct_snake_case_token_stream = generate_struct_token_stream(
                 &handle_snake_case_token_upper_camel_case_stream,
                 &elements_concat_value_snake_case_double_quotes_token_stream,
+                false
             );
             quote::quote! {
-                #upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream
-                #upper_camel_case_stringified_impl_trait_upper_camel_case_token_stream
+                // #upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream
+                // #upper_camel_case_stringified_impl_trait_upper_camel_case_token_stream
 
-                #snake_case_stringified_trait_declaration_upper_camel_case_token_stream
-                #snake_case_stringified_impl_trait_upper_camel_case_token_stream
+                // #snake_case_stringified_trait_declaration_upper_camel_case_token_stream
+                // #snake_case_stringified_impl_trait_upper_camel_case_token_stream
 
-                #upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream
-                #upper_camel_case_token_stream_impl_trait_upper_camel_case_token_stream
+                // #upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream
+                // #upper_camel_case_token_stream_impl_trait_upper_camel_case_token_stream
 
-                #snake_case_token_stream_trait_declaration_upper_camel_case_token_stream
-                #snake_case_token_stream_impl_trait_upper_camel_case_token_stream
+                // #snake_case_token_stream_trait_declaration_upper_camel_case_token_stream
+                // #snake_case_token_stream_impl_trait_upper_camel_case_token_stream
 
-                #impl_quote_to_tokens_upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream
-                #impl_quote_to_tokens_upper_camel_case_stringified_impl_trait_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_upper_camel_case_stringified_trait_declaration_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_upper_camel_case_stringified_impl_trait_upper_camel_case_token_stream
 
-                #impl_quote_to_tokens_snake_case_stringified_trait_declaration_upper_camel_case_token_stream
-                #impl_quote_to_tokens_snake_case_stringified_impl_trait_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_snake_case_stringified_trait_declaration_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_snake_case_stringified_impl_trait_upper_camel_case_token_stream
 
-                #impl_quote_to_tokens_upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream
-                #impl_quote_to_tokens_upper_camel_case_token_stream_impl_trait_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_upper_camel_case_token_stream_trait_declaration_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_upper_camel_case_token_stream_impl_trait_upper_camel_case_token_stream
 
-                #impl_quote_to_tokens_snake_case_token_stream_trait_declaration_upper_camel_case_token_stream
-                #impl_quote_to_tokens_snake_case_token_stream_impl_trait_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_snake_case_token_stream_trait_declaration_upper_camel_case_token_stream
+                // #impl_quote_to_tokens_snake_case_token_stream_impl_trait_upper_camel_case_token_stream
                 
                 #pub_struct_upper_camel_case_token_stream
                 #pub_struct_snake_case_token_stream
