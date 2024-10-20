@@ -290,7 +290,29 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         quote::quote!{#(#fields_token_stream),*}
     };
 
-    let tuple_struct_space_stringified = "tuple struct ";
+    let (
+        generate_tuple_struct_tokens_double_quotes_token_stream,
+        generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream
+    ) = {
+        const TUPLE_STRUCT_SPACE_STRINGIFIED: &std::primitive::str = "tuple struct ";
+        let generate_tuple_struct_tokens_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
+            proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{TUPLE_STRUCT_SPACE_STRINGIFIED}{value}"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            )
+        };
+        let generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
+            proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{TUPLE_STRUCT_SPACE_STRINGIFIED}{value} with 1 element"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            )
+        };
+        (
+            generate_tuple_struct_tokens_double_quotes_token_stream,
+            generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream
+        )
+    };
+    //
     let postgersql_crud_pagination_token_stream = quote::quote!{postgresql_crud::Pagination};
 
     enum FieldReaderContent {
@@ -1761,10 +1783,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_serde_deserialize_for_ident_json_array_change_token_stream = {
-            let tuple_struct_struct_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &format!("{tuple_struct_space_stringified}{struct_ident_token_stream}"),
-                &proc_macro_name_upper_camel_case_ident_stringified
-            );
+            let tuple_struct_struct_ident_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&struct_ident_token_stream);
             let struct_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &struct_ident_token_stream.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified
@@ -2390,14 +2409,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &FieldReaderContent::GenericIdentAndStdOptionOptionGenericIdent
             );
             let impl_serde_deserialize_for_ident_field_reader_token_stream = {
-                let tuple_struct_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{ident_field_reader_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_ident_field_reader_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{ident_field_reader_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_ident_field_reader_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&ident_field_reader_upper_camel_case);
+                let tuple_struct_ident_field_reader_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&ident_field_reader_upper_camel_case);
                 let ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &ident_field_reader_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -2583,14 +2596,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
             let impl_serde_deserialize_for_ident_option_to_update_token_stream = {
                 let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_quote_to_tokens(&ident);
-                let tuple_struct_ident_option_to_update_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{ident_option_to_update_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_ident_option_to_update_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{ident_option_to_update_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_ident_option_to_update_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&ident_option_to_update_upper_camel_case);
+                let tuple_struct_ident_option_to_update_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&ident_option_to_update_upper_camel_case);
                 let ident_option_to_update_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &ident_option_to_update_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -2915,14 +2922,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
             let impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream = {
                 let generic_with_id_ident_field_reader_upper_camel_case = naming_conventions::GenericWithIdSelfFieldReaderUpperCamelCase::from_quote_to_tokens(&ident);
-                let tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{generic_with_id_ident_field_reader_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_generic_with_id_ident_field_reader_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{generic_with_id_ident_field_reader_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_generic_with_id_ident_field_reader_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&generic_with_id_ident_field_reader_upper_camel_case);
+                let tuple_struct_generic_with_id_ident_field_reader_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&generic_with_id_ident_field_reader_upper_camel_case);
                 let generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &generic_with_id_ident_field_reader_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -3072,14 +3073,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
             let impl_serde_deserialize_for_generic_ident_field_reader_token_stream = {
                 let generic_ident_field_reader_upper_camel_case = naming_conventions::GenericSelfFieldReaderUpperCamelCase::from_quote_to_tokens(&ident);
-                let tuple_struct_generic_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{generic_ident_field_reader_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_generic_ident_field_reader_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{generic_ident_field_reader_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_generic_ident_field_reader_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&generic_ident_field_reader_upper_camel_case);
+                let tuple_struct_generic_ident_field_reader_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&generic_ident_field_reader_upper_camel_case);
                 let generic_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &generic_ident_field_reader_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -3198,14 +3193,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
             let impl_serde_deserialize_for_generic_ident_option_to_update_token_stream = {
                 let generic_ident_option_to_update_upper_camel_case = naming_conventions::GenericSelfOptionToUpdateUpperCamelCase::from_quote_to_tokens(&ident);
-                let tuple_struct_generic_ident_option_to_update_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{generic_ident_option_to_update_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_generic_ident_option_to_update_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{generic_ident_option_to_update_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_generic_ident_option_to_update_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&generic_ident_option_to_update_upper_camel_case);
+                let tuple_struct_generic_ident_option_to_update_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&generic_ident_option_to_update_upper_camel_case);
                 let generic_ident_option_to_update_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &generic_ident_option_to_update_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -3587,14 +3576,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
             let impl_serde_deserialize_for_std_option_option_generic_ident_field_reader_token_stream = {
                 let std_option_option_generic_ident_field_reader_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfFieldReaderUpperCamelCase::from_quote_to_tokens(&ident);
-                let tuple_struct_std_option_option_generic_ident_field_reader_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_option_option_generic_ident_field_reader_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_std_option_option_generic_ident_field_reader_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_option_option_generic_ident_field_reader_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_std_option_option_generic_ident_field_reader_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_option_option_generic_ident_field_reader_upper_camel_case);
+                let tuple_struct_std_option_option_generic_ident_field_reader_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_option_option_generic_ident_field_reader_upper_camel_case);
                 let std_option_option_generic_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &std_option_option_generic_ident_field_reader_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -3718,14 +3701,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 false,
             );
             let impl_serde_deserialize_for_std_option_option_generic_ident_option_to_update_token_stream = {
-                let tuple_struct_std_option_option_generic_ident_option_to_update_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_option_option_generic_ident_option_to_update_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_std_option_option_generic_ident_option_to_update_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_option_option_generic_ident_option_to_update_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_std_option_option_generic_ident_option_to_update_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_option_option_generic_ident_option_to_update_upper_camel_case);
+                let tuple_struct_std_option_option_generic_ident_option_to_update_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_option_option_generic_ident_option_to_update_upper_camel_case);
                 let std_option_option_generic_ident_option_to_update_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &std_option_option_generic_ident_option_to_update_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -4130,14 +4107,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
             let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
                 let std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionsToReadUpperCamelCase::from_quote_to_tokens(&ident);
-                let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
+                let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
                 let std_option_option_generic_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -4690,14 +4661,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
 
             let impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
-                let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
-                let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{tuple_struct_space_stringified}{std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case} with 1 element"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                );
+                let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
+                let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
                 let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
