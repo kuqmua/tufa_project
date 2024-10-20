@@ -47,12 +47,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         })
         .collect::<std::vec::Vec<&&syn::Field>>();
     let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_quote_to_tokens(&ident);
-    let ident_field_to_update_upper_camel_case_token_stream = {
-        let value = format!("{ident}{}", naming_conventions::FieldToUpdateUpperCamelCase);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let ident_field_to_update_upper_camel_case_token_stream = naming_conventions::SelfFieldToUpdateUpperCamelCase::from_quote_to_tokens(&ident);
     let ident_options_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream = {
         let value = format!("{ident}{}", naming_conventions::OptionsToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase);
         value
