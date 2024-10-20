@@ -634,10 +634,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             },
         )
     };
-    let generate_tokens_reader_token_stream = |struct_reader_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
+    let generate_tokens_reader_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-            pub struct #struct_reader_token_stream(pub #struct_options_to_read_token_stream);
+            pub struct #struct_ident_token_stream(pub #struct_options_to_read_token_stream);
         }
     };
 
@@ -5111,7 +5111,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 );
-                let impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream =     generate_impl_postgresql_crud_generate_postgresql_query_part_to_update_token_stream(
+                let impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_to_update_token_stream(
                     &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
                     &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
                     &quote::quote!{
