@@ -591,21 +591,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    //todo remove this enum
-    enum S {
-        Origin,
+    enum CreateBindQueryVariant {
         Generic,
         StdOptionOptionGeneric,
+        GenericVecOrigin,
     }
-    let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool, en: S|{
+    let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool, create_bind_query_variant: CreateBindQueryVariant|{
         generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
             &struct_ident_token_stream,
             &{
                 let increment_initialization_string_content_token_stream = if contains_id {
-                    match &en {
-                        S::Origin => quote::quote!{"jsonb_build_object('id', to_jsonb(gen_random_uuid()))||"},
-                        S::Generic => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
-                        S::StdOptionOptionGeneric => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
+                    match &create_bind_query_variant {
+                        CreateBindQueryVariant::Generic => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
+                        CreateBindQueryVariant::StdOptionOptionGeneric => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
+                        CreateBindQueryVariant::GenericVecOrigin => quote::quote!{"jsonb_build_object('id', to_jsonb(gen_random_uuid()))||"},
                     }
                 }
                 else {
@@ -619,10 +618,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                         });
                     let element_field_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &match &en {
-                            S::Origin => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
-                            S::Generic => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
-                            S::StdOptionOptionGeneric => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
+                        &match &create_bind_query_variant {
+                            CreateBindQueryVariant::Generic => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
+                            CreateBindQueryVariant::StdOptionOptionGeneric => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
+                            CreateBindQueryVariant::GenericVecOrigin => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
                         },
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
@@ -638,30 +637,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 });
-                let additional_print_token_stream = match &en {
-                    S::Origin => quote::quote!{println!("Origin {f}");},
-                    S::Generic => quote::quote!{println!("Generic {f}");},
-                    S::StdOptionOptionGeneric => quote::quote!{println!("StdOptionOptionGeneric {f}");},
+                let maybe_additional_pop_token_stream = match &create_bind_query_variant {
+                    CreateBindQueryVariant::Generic => quote::quote!{let _ = increments.pop();},
+                    CreateBindQueryVariant::StdOptionOptionGeneric => quote::quote!{let _ = increments.pop();},
+                    CreateBindQueryVariant::GenericVecOrigin => quote::quote!{let _ = increments.pop();},
                 };
-                let maybe_additional_pop_token_stream = match &en {
-                    S::Origin => quote::quote!{let _ = increments.pop();},
-                    S::Generic => quote::quote!{let _ = increments.pop();},
-                    S::StdOptionOptionGeneric => quote::quote!{let _ = increments.pop();},
-                };
-                let format_handle_token_stream = match &en {
-                    S::Origin => quote::quote!{"{increments}"},
-                    S::Generic => quote::quote!{"{increments}"},
-                    S::StdOptionOptionGeneric => quote::quote!{"{increments}"},
+                let format_handle_token_stream = match &create_bind_query_variant {
+                    CreateBindQueryVariant::Generic => quote::quote!{"{increments}"},
+                    CreateBindQueryVariant::StdOptionOptionGeneric => quote::quote!{"{increments}"},
+                    CreateBindQueryVariant::GenericVecOrigin => quote::quote!{"{increments}"},
                 };
                 quote::quote!{
                     let mut increments = std::string::String::from(#increment_initialization_string_content_token_stream);
                     #(#json_create_try_generate_bind_increments_fields_token_stream)*
                     let _ = increments.pop();
                     #maybe_additional_pop_token_stream
-                    let f = format!(#format_handle_token_stream);
-                    #additional_print_token_stream
-                    println!("----------");
-                    Ok(f)
+                    Ok(format!(#format_handle_token_stream))
                 }
             },
             &{
@@ -1751,7 +1742,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_with_generated_id_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
         &ident_to_create_origin_with_generated_id_upper_camel_case,
         true,
-        S::Origin
+        CreateBindQueryVariant::GenericVecOrigin
     );
     // let ident_to_create_upper_camel_case_token_stream = naming_conventions::StdVecVecGenericWithIdSelfToCreateUpperCamelCaseTokenStream::std_vec_vec_generic_with_id_self_to_create_upper_camel_case_token_stream(&ident);
     // let std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
@@ -3071,7 +3062,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let impl_postgresql_crud_json_create_bind_query_for_generic_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
                 &generic_ident_to_create_upper_camel_case,
                 false,
-                S::Generic
+                CreateBindQueryVariant::Generic
             );
             quote::quote!{
                 #generic_ident_to_create_token_stream
@@ -3535,7 +3526,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let impl_postgresql_crud_json_create_bind_query_for_std_option_option_generic_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
                 &std_option_option_generic_ident_to_create_origin_upper_camel_case,
                 false,
-                S::StdOptionOptionGeneric
+                CreateBindQueryVariant::StdOptionOptionGeneric
             );
             let std_option_option_generic_ident_to_create_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_option_option_generic_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
