@@ -358,11 +358,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             else {
                 quote::quote!{#value_snake_case}
             };
+            let unique_snake_case = naming_conventions::UniqueSnakeCase;
             let self_initialization_token_stream = if is_vec {
-                quote::quote!{{ #field_vec_snake_case, #pagination_snake_case }}
+                quote::quote!{{ #field_vec_snake_case: #unique_snake_case, #pagination_snake_case }}
             }
             else {
-                quote::quote!{(#value_snake_case)}
+                quote::quote!{(#unique_snake_case)}
             };
             quote::quote!{
                 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -383,15 +384,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 code_occurence: error_occurence_lib::code_occurence!()
                             });
                         }
-                        let mut unique = vec![];
-                        for element in &#check_handle_token_stream {
-                            if unique.contains(&element) {
+                        let mut #unique_snake_case = vec![];
+                        for element in #check_handle_token_stream {
+                            if #unique_snake_case.contains(&element) {
                                 return Err(#struct_prefix_try_new_error_named_upper_camel_case::#not_unique_field_filter_upper_camel_case {
-                                    field: element.clone(),
+                                    field: element,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             } else {
-                                unique.push(&element);
+                                #unique_snake_case.push(element);
                             }
                         }
                         Ok(Self #self_initialization_token_stream)
