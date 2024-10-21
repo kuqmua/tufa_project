@@ -2233,24 +2233,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                     quote::quote!{
                         #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.clone(), query);
+                            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value, query);
                         }
                     }
                 });
                 quote::quote!{
-                    for element_handle in &self.update {
+                    for element_handle in self.update {
                         query = query.bind(element_handle.id.0.to_string());//postgresql: error returned from database: operator does not exist: text = jsonb
-                        for element in &element_handle.fields {
+                        for element in element_handle.fields {
                             match element {
                                 #(#bind_value_to_query_variants_token_stream),*
                             }
                         }
                     }
-                    for element in &self.delete {
+                    for element in self.delete {
                         query = query.bind(element.0.to_string());//postgresql: error returned from database: operator does not exist: text <> jsonb
                     }
-                    for element in &self.create {
-                        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element.clone(), query);
+                    for element in self.create {
+                        query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element, query);
                     }
                     query
                 }
