@@ -17,17 +17,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let id_snake_case = naming_conventions::IdSnakeCase;
-    //todo maybe not need vec_syn_field_filtered_id_iter ?
-    let vec_syn_field_filtered_id_iter = vec_syn_field
-        .iter()
-        .filter(|element| {
-            let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-            });
-            element_ident != &id_snake_case.to_string()
-        })
-        .collect::<std::vec::Vec<&&syn::Field>>();
     let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_field_to_update_upper_camel_case = naming_conventions::SelfFieldToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let add_postfix_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_stringified = |value: &std::primitive::str| format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecErrorNamedUpperCamelCase);
@@ -228,7 +217,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
 
     let ident_field_to_update_token_stream = {
-        let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
+        let variants_token_stream = vec_syn_field.iter().map(|element| {
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
             });
@@ -247,7 +236,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream = {
-        let variants_token_stream = vec_syn_field_filtered_id_iter.iter().map(|element| {
+        let variants_token_stream = vec_syn_field.iter().map(|element| {
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
             });
@@ -575,7 +564,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &quote::quote!{{#(#fields_token_stream),*}}
         )
     };
-    //todo fix problem cannot build more than 100 values in jsonb_build_object
     let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         json_create_try_generate_bind_increments_content_token_stream: &dyn quote::ToTokens,
