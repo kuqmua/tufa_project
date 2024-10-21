@@ -301,7 +301,7 @@ pub struct Something {
     pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
     pub generic: GenericDoggie,//postgresql_crud::JsonGeneric<Cat>,
-    // pub std_option_option_generic: StdOptionOptionGenericCat,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
+    pub std_option_option_generic: StdOptionOptionGenericDoggie,//postgresql_crud::JsonStdOptionOptionGeneric<Cat>,
 
     // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,//postgresql_crud::JsonStdVecVecGenericWithId<Doggie>,
     // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie//postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<Doggie>,
