@@ -1331,7 +1331,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
-    //todo rename it
     let ident_option_to_update_origin_upper_camel_case = naming_conventions::SelfOptionToUpdateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let generate_tokens_options_to_update_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
@@ -1677,7 +1676,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
 
     let generate_custom_serde_error_deserializing_option_to_update_field_is_not_unique_to_update_token_stream = |
-        //todo maybe make them str?
         tokens_option_to_update_upper_camel_case: &dyn std::fmt::Display,
         variant_ident_upper_camel_case: &dyn std::fmt::Display,
     |{
@@ -1771,12 +1769,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
     let generate_ident_json_array_change_token_stream = |
         struct_ident_token_stream: &proc_macro2::TokenStream,
+        struct_ident_try_new_error_named: &dyn quote::ToTokens,
         ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens,
         is_nullable: std::primitive::bool,
     |{
         let ident_json_array_change_token_stream = quote::quote!{
             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
             pub struct #struct_ident_token_stream {
+                //todo remove pub
                 #[serde(skip_serializing_if = "Vec::is_empty")]
                 pub create: std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>,
                 #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -1785,16 +1785,159 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 pub delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
             }
         };
+        let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {struct_ident_token_stream}");
+        let impl_try_new_for_ident_json_array_change_token_stream = {
+            let create_update_delete_check_fields_are_empty_upper_camel_case = naming_conventions::CreateUpdateDeleteCheckFieldsAreEmptyUpperCamelCase;
+            let not_unique_id_in_json_update_array_upper_camel_case = naming_conventions::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
+            let not_unique_id_in_json_delete_array_upper_camel_case = naming_conventions::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
+            let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming_conventions::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
+            let try_new_error_named_token_stream = {
+                let maybe_create_update_delete_check_fields_are_empty_variant_token_stream = if is_nullable {
+                    proc_macro2::TokenStream::new()
+                }
+                else {
+                    quote::quote!{
+                        #create_update_delete_check_fields_are_empty_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                };
+                quote::quote!{
+                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                    pub enum #struct_ident_try_new_error_named {
+                        #maybe_create_update_delete_check_fields_are_empty_variant_token_stream
+                        #not_unique_id_in_json_update_array_upper_camel_case {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            error: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        #not_unique_id_in_json_delete_array_upper_camel_case {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            error: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        #not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            error: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                }
+            };
+            let pub_fn_try_new_token_stream = {
+                let maybe_check_create_update_delete_check_fields_are_empty_token_stream = if is_nullable {
+                    proc_macro2::TokenStream::new()
+                }
+                else {
+                    quote::quote!{
+                        if create.is_empty() && update.is_empty() && delete.is_empty() {
+                            return Err(#struct_ident_try_new_error_named::#create_update_delete_check_fields_are_empty_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!()
+                            });
+                        }
+                    }
+                };
+                let check_not_unique_id_token_stream = {
+                    let check_not_unique_id_in_update_array_token_stream = {
+                        let not_unique_id_in_json_update_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json update array: {{}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        quote::quote!{
+                            let update_acc = {
+                                let mut update_acc = vec![];
+                                for element in &update {
+                                    let id = &element.id;
+                                    if update_acc.contains(&id) {
+                                        return Err(#struct_ident_try_new_error_named::#not_unique_id_in_json_update_array_upper_camel_case {
+                                            error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0),
+                                            code_occurence: error_occurence_lib::code_occurence!()
+                                        });
+                                    } else {
+                                        update_acc.push(id);
+                                    }
+                                }
+                                update_acc
+                            };
+                        }
+                    };
+                    let check_not_unique_id_in_delete_aray_token_stream = {
+                        let not_unique_id_in_json_delete_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json delete array: {{}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        quote::quote!{
+                            let delete_acc = {
+                                let mut delete_acc = vec![];
+                                for element in &delete {
+                                    if delete_acc.contains(&element) {
+                                        return Err(#struct_ident_try_new_error_named::#not_unique_id_in_json_delete_array_upper_camel_case {
+                                            error: format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.0),
+                                            code_occurence: error_occurence_lib::code_occurence!()
+                                        });
+                                    } else {
+                                        delete_acc.push(element);
+                                    }
+                                }
+                                delete_acc
+                            };
+                        }
+                    };
+                    let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
+                        let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json update and delete arrays: {{}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        quote::quote!{
+                            for element in update_acc {
+                                if delete_acc.contains(&&element) {
+                                    return Err(#struct_ident_try_new_error_named::#not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
+                                        error: format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.0),
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    });
+                                }
+                            }
+                        }
+                    };
+                    quote::quote!{
+                        {
+                            #check_not_unique_id_in_update_array_token_stream
+                            #check_not_unique_id_in_delete_aray_token_stream
+                            #check_not_unique_id_in_update_and_delete_arrays_token_stream
+                        }
+                    }
+                };
+                quote::quote!{
+                    impl #struct_ident_token_stream {
+                        pub fn try_new(
+                            create: std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>,
+                            update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
+                            delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
+                        ) -> Result<Self, #struct_ident_try_new_error_named> {
+                            #maybe_check_create_update_delete_check_fields_are_empty_token_stream
+                            #check_not_unique_id_token_stream
+                            Ok(Self {
+                                create,
+                                update,
+                                delete
+                            })
+                        }
+                    }
+                }
+            };
+            quote::quote!{
+                #try_new_error_named_token_stream
+                #pub_fn_try_new_token_stream
+            }
+        };
         let impl_serde_deserialize_for_ident_json_array_change_token_stream = {
             let tuple_struct_struct_ident_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&struct_ident_token_stream);
             let struct_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                 &struct_ident_token_stream.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
-            let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {struct_ident_token_stream}");
             //todo maybe impl try_new instead and put checks into try_new impl? 
             let custom_checks_token_stream = {
-                //todo only if std_vec_vec is valid. but if its std_option_option_std_vec_vec its not correct. if value is null and want to change it to empty array then it fails
                 let maybe_check_create_update_delete_check_fields_are_empty_token_stream = if is_nullable {
                     proc_macro2::TokenStream::new()
                 }
@@ -2255,6 +2398,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         quote::quote!{
             #ident_json_array_change_token_stream
+            #impl_try_new_for_ident_json_array_change_token_stream
             #impl_serde_deserialize_for_ident_json_array_change_token_stream
             #ident_json_array_change_try_generate_bind_increments_error_named_token_stream
             #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_json_array_change_try_generate_bind_increments_error_named_for_ident_json_array_change_token_stream
@@ -4489,6 +4633,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let std_vec_vec_generic_with_id_self_json_array_change_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
                 &quote::quote!{#std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case},
+                &naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &std_vec_vec_generic_with_id_self_json_array_change_try_generate_bind_increments_error_named_upper_camel_case,
                 false,
             );
@@ -5051,6 +5196,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
             let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
                 &quote::quote!{#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case},
+                &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case,
                 true,
             );

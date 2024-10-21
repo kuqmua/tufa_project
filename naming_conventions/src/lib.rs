@@ -364,7 +364,11 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["field", "vec"],
     ["option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
     ["generic", "acc"],
-    ["std", "option", "option", "generic", "acc"]
+    ["std", "option", "option", "generic", "acc"],
+    ["create", "update", "delete", "check", "fields", "are", "empty"],
+    ["not", "unique", "id", "in", "json", "update", "array"],
+    ["not", "unique", "id", "in", "json", "delete", "array"],
+    ["not", "unique", "id", "in", "json", "update", "and", "delete", "arrays"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -488,7 +492,9 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "field", "to", "update"],
     ["self", "options", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
     ["self", "generate", "postgresql", "query", "part", "to", "read", "error", "named"],
-    ["self", "try", "generate", "json", "array", "element", "update", "bind", "increments", "error", "named"]
+    ["self", "try", "generate", "json", "array", "element", "update", "bind", "increments", "error", "named"],
+    ["std", "vec", "vec", "generic", "with", "id", "self", "json", "array", "change", "try", "new", "error", "named"],
+    ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self", "json", "array", "change", "try", "new", "error", "named"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
