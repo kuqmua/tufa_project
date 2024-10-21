@@ -604,7 +604,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &struct_ident_token_stream,
             &{
                 let increment_initialization_string_content_token_stream = if contains_id {
-                    quote::quote!{"'id', to_jsonb(gen_random_uuid()),"}
+                    match &en {
+                        S::Origin => quote::quote!{"jsonb_build_object('id', to_jsonb(gen_random_uuid()))||"},
+                        S::Ident => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
+                        S::GenericWithId => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
+                        S::Generic => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
+                        S::StdOptionOptionGeneric => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
+                    }
                 }
                 else {
                     quote::quote!{""}
@@ -618,7 +624,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         });
                     let element_field_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &match &en {
-                            S::Origin => format!("'{element_field_ident}',{{value}},"),
+                            S::Origin => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
                             S::Ident => format!("'{element_field_ident}',{{value}},"),
                             S::GenericWithId => format!("'{element_field_ident}',{{value}},"),
                             S::Generic => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
@@ -646,14 +652,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     S::StdOptionOptionGeneric => quote::quote!{println!("StdOptionOptionGeneric {f}");},
                 };
                 let maybe_additional_pop_token_stream = match &en {
-                    S::Origin => quote::quote!{},
+                    S::Origin => quote::quote!{let _ = increments.pop();},
                     S::Ident => quote::quote!{},
                     S::GenericWithId => quote::quote!{},
                     S::Generic => quote::quote!{let _ = increments.pop();},
                     S::StdOptionOptionGeneric => quote::quote!{let _ = increments.pop();},
                 };
                 let format_handle_token_stream = match &en {
-                    S::Origin => quote::quote!{"jsonb_build_object({increments})"},
+                    S::Origin => quote::quote!{"{increments}"},
                     S::Ident => quote::quote!{"jsonb_build_object({increments})"},
                     S::GenericWithId => quote::quote!{"jsonb_build_object({increments})"},
                     S::Generic => quote::quote!{"{increments}"},
