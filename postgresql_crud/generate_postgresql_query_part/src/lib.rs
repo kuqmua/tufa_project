@@ -594,8 +594,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //todo remove this enum
     enum S {
         Origin,
-        Ident,
-        GenericWithId,
         Generic,
         StdOptionOptionGeneric,
     }
@@ -606,8 +604,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let increment_initialization_string_content_token_stream = if contains_id {
                     match &en {
                         S::Origin => quote::quote!{"jsonb_build_object('id', to_jsonb(gen_random_uuid()))||"},
-                        S::Ident => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
-                        S::GenericWithId => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
                         S::Generic => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
                         S::StdOptionOptionGeneric => quote::quote!{"'id', to_jsonb(gen_random_uuid()),"},
                     }
@@ -625,8 +621,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_field_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &match &en {
                             S::Origin => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
-                            S::Ident => format!("'{element_field_ident}',{{value}},"),
-                            S::GenericWithId => format!("'{element_field_ident}',{{value}},"),
                             S::Generic => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
                             S::StdOptionOptionGeneric => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
                         },
@@ -646,22 +640,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 });
                 let additional_print_token_stream = match &en {
                     S::Origin => quote::quote!{println!("Origin {f}");},
-                    S::Ident => quote::quote!{println!("Ident {f}");},
-                    S::GenericWithId => quote::quote!{println!("GenericWithId {f}");},
                     S::Generic => quote::quote!{println!("Generic {f}");},
                     S::StdOptionOptionGeneric => quote::quote!{println!("StdOptionOptionGeneric {f}");},
                 };
                 let maybe_additional_pop_token_stream = match &en {
                     S::Origin => quote::quote!{let _ = increments.pop();},
-                    S::Ident => quote::quote!{},
-                    S::GenericWithId => quote::quote!{},
                     S::Generic => quote::quote!{let _ = increments.pop();},
                     S::StdOptionOptionGeneric => quote::quote!{let _ = increments.pop();},
                 };
                 let format_handle_token_stream = match &en {
                     S::Origin => quote::quote!{"{increments}"},
-                    S::Ident => quote::quote!{"jsonb_build_object({increments})"},
-                    S::GenericWithId => quote::quote!{"jsonb_build_object({increments})"},
                     S::Generic => quote::quote!{"{increments}"},
                     S::StdOptionOptionGeneric => quote::quote!{"{increments}"},
                 };
@@ -2371,11 +2359,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_to_create_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_upper_camel_case);
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&ident_to_create_upper_camel_case);
-            let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
-                &ident_to_create_upper_camel_case,
-                false,
-                S::Ident
-            );
             let impl_postgresql_crud_bind_query_for_ident_to_create_token_stream = {
                 let try_generate_bind_increments_token_stream = vec_syn_field.iter().map(|element| {
                     let element_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -2426,7 +2409,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 #ident_to_create_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
-                #impl_postgresql_crud_json_create_bind_query_for_ident_to_create_token_stream
                 #impl_postgresql_crud_bind_query_for_ident_to_create_token_stream
             }
         };
@@ -2940,15 +2922,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let generic_with_id_ident_to_create_upper_camel_case = naming_conventions::GenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let generic_with_id_ident_to_create_token_stream = generate_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case);
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&generic_with_id_ident_to_create_upper_camel_case);
-            let impl_postgresql_crud_json_create_bind_query_for_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
-                &generic_with_id_ident_to_create_upper_camel_case,
-                true,
-                S::GenericWithId
-            );
             quote::quote!{
                 #generic_with_id_ident_to_create_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_to_create_token_stream
-                #impl_postgresql_crud_json_create_bind_query_for_generic_with_id_ident_to_create_token_stream
             }
         };
         let read_token_stream = {
