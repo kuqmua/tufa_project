@@ -2018,6 +2018,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #check_not_unique_id_token_stream
                 }
             };
+            let try_new_token_stream = quote::quote!{
+                match #struct_ident_token_stream::try_new(__field0, __field1, __field2) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+                }
+            };
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #struct_ident_token_stream {
                     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
@@ -2115,8 +2121,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         vec![]
                                     }
                                 };
-                                #custom_checks_token_stream
-                                serde::__private::Ok(#struct_ident_token_stream { create: __field0, update: __field1, delete: __field2 })
+                                #try_new_token_stream
                             }
                             #[inline]
                             fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -2169,8 +2174,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         vec![]
                                     }
                                 };
-                                #custom_checks_token_stream
-                                serde::__private::Ok(#struct_ident_token_stream { create: __field0, update: __field1, delete: __field2 })
+                                #try_new_token_stream
                             }
                         }
                         #[doc(hidden)]
