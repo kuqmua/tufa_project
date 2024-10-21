@@ -1980,88 +1980,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &struct_ident_token_stream.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
-            //todo maybe impl try_new instead and put checks into try_new impl? 
-            let custom_checks_token_stream = {
-                let maybe_check_create_update_delete_check_fields_are_empty_token_stream = if is_nullable {
-                    proc_macro2::TokenStream::new()
-                }
-                else {
-                    let create_update_delete_fields_are_empty_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: create, update, delete fields are empty"),
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    quote::quote!{
-                        if __field0.is_empty() && __field1.is_empty() && __field2.is_empty() {
-                            return Err(serde::de::Error::custom(#create_update_delete_fields_are_empty_double_quotes_token_stream));
-                        }
-                    }
-                };
-                let check_not_unique_id_token_stream = {
-                    let check_not_unique_id_in_update_array_token_stream = {
-                        let not_unique_id_in_json_update_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json update array: {{}}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        quote::quote!{
-                            let update_acc = {
-                                let mut update_acc = vec![];
-                                for element in &__field1 {
-                                    let id = &element.id;
-                                    if update_acc.contains(&id) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0)));
-                                    } else {
-                                        update_acc.push(id);
-                                    }
-                                }
-                                update_acc
-                            };
-                        }
-                    };
-                    let check_not_unique_id_in_delete_aray_token_stream = {
-                        let not_unique_id_in_json_delete_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json delete array: {{}}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        quote::quote!{
-                            let delete_acc = {
-                                let mut delete_acc = vec![];
-                                for element in &__field2 {
-                                    if delete_acc.contains(&element) {
-                                        return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.0)));
-                                    } else {
-                                        delete_acc.push(element);
-                                    }
-                                }
-                                delete_acc
-                            };
-                        }
-                    };
-                    let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
-                        let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json update and delete arrays: {{}}"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        quote::quote!{
-                            for element in update_acc {
-                                if delete_acc.contains(&&element) {
-                                    return Err(serde::de::Error::custom(&format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.0)));
-                                }
-                            }
-                        }
-                    };
-                    quote::quote!{
-                        {
-                            #check_not_unique_id_in_update_array_token_stream
-                            #check_not_unique_id_in_delete_aray_token_stream
-                            #check_not_unique_id_in_update_and_delete_arrays_token_stream
-                        }
-                    }
-                };
-                quote::quote!{
-                    #maybe_check_create_update_delete_check_fields_are_empty_token_stream
-                    #check_not_unique_id_token_stream
-                }
-            };
             let try_new_token_stream = quote::quote!{
                 match #struct_ident_token_stream::try_new(__field0, __field1, __field2) {
                     Ok(value) => serde::__private::Ok(value),
@@ -2585,7 +2503,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #ident_field_reader_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -2822,7 +2740,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #ident_option_to_update_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -3095,7 +3013,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #generic_with_id_ident_field_reader_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -3247,7 +3165,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #generic_ident_field_reader_upper_camel_case_token_stream;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -3417,7 +3335,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #generic_ident_option_to_update_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -3756,7 +3674,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #std_option_option_generic_ident_field_reader_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -3932,7 +3850,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #std_option_option_generic_ident_option_to_update_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -4406,7 +4324,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = __Field;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -4478,7 +4396,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -4968,7 +4886,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = __Field;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -5040,7 +4958,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 type Value = #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter,
+                                    __formatter: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __formatter,
@@ -5329,12 +5247,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #std_vec_vec_generic_with_id_ident_token_stream
         #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
     };
-    // if ident == "" {
+    // if ident == "Something" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "GeneratePostgresqlQueryPart",
     //         &generated,
     //         "GeneratePostgresqlQueryPart",
     //     );
+    //     quote::quote!{}.into()
+    // }
+    // else {
+    //     generated.into()
     // }
     generated.into()
 }
