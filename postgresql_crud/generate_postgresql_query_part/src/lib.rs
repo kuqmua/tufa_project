@@ -4320,7 +4320,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                             #[doc(hidden)]
                             struct __FieldVisitor;
-                            impl<'de> serde::de::Visitor<'de> for __FieldVisitor {
+                            impl serde::de::Visitor<'_> for __FieldVisitor {
                                 type Value = __Field;
                                 fn expecting(
                                     &self,
@@ -5248,11 +5248,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
     };
     // if ident == "Something" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "GeneratePostgresqlQueryPart",
-    //         &generated,
-    //         "GeneratePostgresqlQueryPart",
-    //     );
+    //     // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     //     "GeneratePostgresqlQueryPart",
+    //     //     &generated,
+    //     //     "GeneratePostgresqlQueryPart",
+    //     // );
     //     quote::quote!{}.into()
     // }
     // else {
