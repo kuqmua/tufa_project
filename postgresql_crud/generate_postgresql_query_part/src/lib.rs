@@ -4882,7 +4882,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                             #[doc(hidden)]
                             struct __FieldVisitor;
-                            impl<'de> serde::de::Visitor<'de> for __FieldVisitor {
+                            impl serde::de::Visitor<'_> for __FieldVisitor {
                                 type Value = __Field;
                                 fn expecting(
                                     &self,
