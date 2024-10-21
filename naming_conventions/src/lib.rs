@@ -582,7 +582,7 @@ where
 //     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
 //         Self::wrap(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string()))
 //     }
-//     pub fn from_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+//     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
 //         Self::wrap(&proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);
@@ -614,7 +614,7 @@ where
 //     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
 //         Self::wrap(&proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&value.to_string()))
 //     }
-//     pub fn from_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+//     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
 //         Self::wrap(&proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);

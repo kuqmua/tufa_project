@@ -2255,7 +2255,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
         let field_type_token_stream = match &element.option_generic {
             Some(value) => {
-                let value_token_stream = naming_conventions::SelfToCreateUpperCamelCase::from_quote_to_tokens(&{
+                let value_token_stream = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&{
                     let value = &value.upper_camel_case_stringified;
                     value
                         .parse::<proc_macro2::TokenStream>()

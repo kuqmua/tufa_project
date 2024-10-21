@@ -205,7 +205,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                         pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
                             Self::wrap(&#casing_token_stream(&value.to_string()))
                         }
-                        pub fn from_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+                        pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
                             Self::wrap(&#casing_token_stream(&{
                                 let mut tokens = proc_macro2::TokenStream::new();
                                 quote::ToTokens::to_tokens(&value, &mut tokens);
