@@ -1744,12 +1744,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         true,
         CreateBindQueryVariant::GenericVecOrigin
     );
-    // let ident_to_create_upper_camel_case_token_stream = naming_conventions::StdVecVecGenericWithIdSelfToCreateUpperCamelCaseTokenStream::std_vec_vec_generic_with_id_self_to_create_upper_camel_case_token_stream(&ident);
-    // let std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
-    //     &ident_to_create_upper_camel_case,
-    //     &quote::quote!{(pub std::vec::Vec<#std_vec_vec_generic_with_id_ident_to_create_origin_upper_camel_case_token_stream>);}
-    // );
-//
     
     let ident_options_to_update_token_stream = generate_tokens_options_to_update_token_stream(&ident_options_to_update_upper_camel_case);
     let impl_serde_deserialize_for_ident_options_to_update_token_stream = generate_impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_update_token_stream(
