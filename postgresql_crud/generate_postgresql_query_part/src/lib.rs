@@ -4013,8 +4013,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     quote::quote!{
-                        let mut acc = std::string::String::from(jsonb_set_accumulator);
-                        match &self.0 {
+                        Ok(match &self.0 {
                             Some(value) => {
                                 let mut #std_option_option_generic_acc_snake_case = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
                                 for element in value {
@@ -4022,19 +4021,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         #(#try_generate_bind_increments_variants_token_stream),*
                                     }
                                 }
-                                acc = format!(#std_option_option_generic_acc_jsonb_set_double_quotes_token_stream);
+                                format!(#std_option_option_generic_acc_jsonb_set_double_quotes_token_stream)
                             },
                             None => match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
-                                    acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})");
+                                    format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})")
                                 },
                                 None => {
                                     return Err(#std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::#checked_add_variant_initialization_token_stream);
                                 }
                             }
-                        }
-                        Ok(acc)
+                        })
                     }
                 },
                 &{
