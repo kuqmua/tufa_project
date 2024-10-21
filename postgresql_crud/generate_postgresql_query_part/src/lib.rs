@@ -617,7 +617,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                         });
                     let element_field_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("'{element_field_ident}',{{value}},"),
+                        &match &en {
+                            S::Origin => format!("'{element_field_ident}',{{value}},"),
+                            S::Ident => format!("'{element_field_ident}',{{value}},"),
+                            S::GenericWithId => format!("'{element_field_ident}',{{value}},"),
+                            S::Generic => format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
+                            S::StdOptionOptionGeneric => format!("'{element_field_ident}',{{value}},"),
+                        },
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     //todo maybe wrap into own generic error type
@@ -632,19 +638,35 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 });
-                let additional_print_token_stream = match en {
+                let additional_print_token_stream = match &en {
                     S::Origin => quote::quote!{println!("Origin {f}");},
                     S::Ident => quote::quote!{println!("Ident {f}");},
                     S::GenericWithId => quote::quote!{println!("GenericWithId {f}");},
                     S::Generic => quote::quote!{println!("Generic {f}");},
                     S::StdOptionOptionGeneric => quote::quote!{println!("StdOptionOptionGeneric {f}");},
                 };
+                let maybe_additional_pop_token_stream = match &en {
+                    S::Origin => quote::quote!{},
+                    S::Ident => quote::quote!{},
+                    S::GenericWithId => quote::quote!{},
+                    S::Generic => quote::quote!{let _ = increments.pop();},
+                    S::StdOptionOptionGeneric => quote::quote!{},
+                };
+                let format_handle_token_stream = match &en {
+                    S::Origin => quote::quote!{"jsonb_build_object({increments})"},
+                    S::Ident => quote::quote!{"jsonb_build_object({increments})"},
+                    S::GenericWithId => quote::quote!{"jsonb_build_object({increments})"},
+                    S::Generic => quote::quote!{"{increments}"},
+                    S::StdOptionOptionGeneric => quote::quote!{"jsonb_build_object({increments})"},
+                };
                 quote::quote!{
                     let mut increments = std::string::String::from(#increment_initialization_string_content_token_stream);
                     #(#json_create_try_generate_bind_increments_fields_token_stream)*
                     let _ = increments.pop();
-                    let f = format!("jsonb_build_object({increments})");
+                    #maybe_additional_pop_token_stream
+                    let f = format!(#format_handle_token_stream);
                     #additional_print_token_stream
+                    println!("----------");
                     Ok(f)
                 }
             },
