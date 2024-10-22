@@ -4775,24 +4775,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let read_token_stream = {
             let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         
-            let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-
-            let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_struct_tokens_options_to_read_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case, true);
-            let impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
-                &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                &quote::quote!{#std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case},
-                true,
-            );
-
-            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream =     generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case,
-                &fields_with_id_some_value_self_options_to_read_initialization_content_token_stream,
-            );
-
             let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(
                 &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
                 false,
-                &quote::quote!{(pub std::option::Option<std::vec::Vec<#std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case>>);},
+                &quote::quote!{(pub std::option::Option<std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>>);},
             );
 
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
@@ -4860,11 +4846,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 {
                                     let __field0: std::option::Option<
                                         std::vec::Vec<
-                                            #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case,
+                                            #ident_options_to_read_with_id_upper_camel_case,
                                         >,
                                     > = <std::option::Option<
                                         std::vec::Vec<
-                                            #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case,
+                                            #ident_options_to_read_with_id_upper_camel_case,
                                         >,
                                     > as serde::Deserialize>::deserialize(__e)?;
                                     #check_not_unique_id_token_stream
@@ -4885,7 +4871,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     let __field0 = match serde::de::SeqAccess::next_element::<
                                         std::option::Option<
                                             std::vec::Vec<
-                                                #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_upper_camel_case,
+                                                #ident_options_to_read_with_id_upper_camel_case,
                                             >,
                                         >,
                                     >(&mut __seq)? {
@@ -5168,11 +5154,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))"}
             );
             quote::quote!{
-                #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
-                #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
-                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_origin_token_stream
-
-
                 #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
                 #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
