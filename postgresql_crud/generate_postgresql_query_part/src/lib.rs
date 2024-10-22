@@ -1332,6 +1332,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
 
     let ident_option_to_update_origin_upper_camel_case = naming_conventions::SelfOptionToUpdateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    //todo remove pub and impl try_new, replacing custom_checks in deserialize impl
     let generate_tokens_options_to_update_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema)]
