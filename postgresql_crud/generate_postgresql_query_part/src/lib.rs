@@ -1342,7 +1342,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
+    let generate_try_new_for_struct_ident_token_stream = ||{
+        quote::quote!{
+            impl #struct_ident_token_stream {
+                pub fb try_new(
+                    id: postgresql_crud::JsonUuidOptionToUpdate,
+                    fields: std::vec::Vec<#ident_option_to_update_origin_upper_camel_case>,
+                ) -> Self {
 
+                    Self {
+                        id,
+                        
+                    }
+                }
+            }
+        }
+    };
     let (
         generate_struct_tokens_double_quotes_token_stream,
         generate_struct_tokens_with_2_elements_double_quotes_token_stream
