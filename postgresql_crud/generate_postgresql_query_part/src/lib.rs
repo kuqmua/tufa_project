@@ -38,7 +38,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     }
     
     let generate_template_field_to_read_struct_token_stream = |
-        struct_ident_token_stream: &dyn quote::ToTokens,
+        tokens_field_to_read_token_stream: &dyn quote::ToTokens,
         additional_content_token_stream: &dyn quote::ToTokens,
     |{
         let variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -70,7 +70,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         });
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-            pub enum #struct_ident_token_stream {
+            pub enum #tokens_field_to_read_token_stream {
                 #additional_content_token_stream
                 #(#variants_token_stream),*
             }
@@ -435,7 +435,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     }
     //
     let generate_tokens_options_to_read_token_stream = |
-        struct_ident_token_stream: &dyn quote::ToTokens,
+        token_options_to_read_token_stream: &dyn quote::ToTokens,
         impl_serde_deserialize: std::primitive::bool,
         content_token_stream: &dyn quote::ToTokens,
     |{
@@ -447,7 +447,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_serde_deserialize_token_stream utoipa::ToSchema)]
-            pub struct #struct_ident_token_stream #content_token_stream
+            pub struct #token_options_to_read_token_stream #content_token_stream
         }
     };
     //
@@ -529,15 +529,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
-    let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_non_vec_field_reader_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
+    let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_non_vec_field_reader_token_stream = |tokens_field_reader_token_stream: &dyn quote::ToTokens|{
         generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-            &struct_ident_token_stream,
+            &tokens_field_reader_token_stream,
             &quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)},
         )
     };
-    let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
+    let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream = |tokens_field_reader_upper_camel_case: &dyn quote::ToTokens|{
         generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-            &struct_ident_token_stream,
+            &tokens_field_reader_upper_camel_case,
             &quote::quote!{
                 {
                     field_vec: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
@@ -1428,6 +1428,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         true,
         CreateBindQueryVariant::GenericVecOrigin
     );
+    
     
     let ident_options_to_update_upper_camel_case = naming_conventions::SelfOptionsToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_options_to_update_token_stream = {
