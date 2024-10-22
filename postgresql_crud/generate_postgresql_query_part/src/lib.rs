@@ -1861,13 +1861,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let ident_json_array_change_token_stream = quote::quote!{
             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
             pub struct #struct_ident_token_stream {
-                //todo remove pub
                 #[serde(skip_serializing_if = "Vec::is_empty")]
-                pub create: std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>,
+                create: std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>,
                 #[serde(skip_serializing_if = "Vec::is_empty")]
-                pub update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
+                update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
                 #[serde(skip_serializing_if = "Vec::is_empty")]
-                pub delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
+                delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
             }
         };
         let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {struct_ident_token_stream}");
