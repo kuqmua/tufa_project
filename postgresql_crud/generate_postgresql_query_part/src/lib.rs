@@ -3696,6 +3696,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_option_option_generic_ident_options_to_read_origin_upper_camel_case,
                 &fields_some_value_self_options_to_read_initialization_content_token_stream,
             );
+
+
+
+
             let std_option_option_generic_ident_options_to_read_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_option_option_generic_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(
                 &std_option_option_generic_ident_options_to_read_upper_camel_case,
