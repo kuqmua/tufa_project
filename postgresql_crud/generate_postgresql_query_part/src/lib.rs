@@ -451,9 +451,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     //
-    let generate_struct_tokens_options_to_read_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
+    let generate_struct_tokens_options_to_read_token_stream = |tokens_options_to_read_origin_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
         generate_tokens_options_to_read_token_stream(
-            &struct_ident_token_stream,
+            &tokens_options_to_read_origin_token_stream,
             false,
             &{
                 let maybe_id_token_stream = if contains_id {
