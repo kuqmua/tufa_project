@@ -1346,92 +1346,98 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         tokens_options_to_update: &dyn quote::ToTokens,
         tokens_options_to_update_try_new_error_named: &dyn quote::ToTokens,
     |{
+        let fields_are_empty_upper_camel_case = naming_conventions::FieldsAreEmptyUpperCamelCase;
         let pub_enum_tokens_options_to_update_try_new_error_named_token_stream = {
+            let variants_token_stream = vec_syn_field.iter().map(|element| {
+                let field_ident = element
+                    .ident
+                    .as_ref()
+                    .unwrap_or_else(|| {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    });
+                let not_unique_field_self_upper_camel_case_token_stream = naming_conventions::NotUniqueFieldSelfUpperCamelCase::from_dyn_quote_to_tokens(&field_ident);
+                quote::quote!{
+                    #not_unique_field_self_upper_camel_case_token_stream {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        error: std::string::String,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                }
+            });
             quote::quote!{
                 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #tokens_options_to_update_try_new_error_named {
-                    // #maybe_create_update_delete_check_fields_are_empty_variant_token_stream
-                    // #not_unique_id_in_json_update_array_upper_camel_case {
-                    //     #[eo_to_std_string_string_serialize_deserialize]
-                    //     error: std::string::String,
-                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    // },
-                    // #not_unique_id_in_json_delete_array_upper_camel_case {
-                    //     #[eo_to_std_string_string_serialize_deserialize]
-                    //     error: std::string::String,
-                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    // },
-                    // #not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
-                    //     #[eo_to_std_string_string_serialize_deserialize]
-                    //     error: std::string::String,
-                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    // },
+                    #fields_are_empty_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    #(#variants_token_stream),*
                 }
             }
         };
         let impl_pub_fn_try_new_token_stream = {
-            // let custom_checks_token_stream = {
-            //     let custom_serde_error_deserializing_tokens_options_to_update_stringified = format!("custom serde error deserializing {tokens_options_to_update_upper_camel_case_stringified}:");
-            //     let check_fields_are_empty_token_stream = {
-            //         let fields_are_empty_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            //             &format!("{custom_serde_error_deserializing_tokens_options_to_update_stringified} create, update, delete fields are empty"),
-            //             &proc_macro_name_upper_camel_case_ident_stringified
-            //         );
-            //         quote::quote!{
-            //             if fields.is_empty() {
-            //                 return Err(serde::de::Error::custom(#fields_are_empty_double_quotes_token_stream));
-            //             }
-            //         }
-            //     };
-            //     let check_unique_fields_token_stream = {
-            //         let variants_token_stream = vec_syn_field.iter().map(|element| {
-            //             let field_ident_stringified = element
-            //                 .ident
-            //                 .as_ref()
-            //                 .unwrap_or_else(|| {
-            //                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-            //                 })
-            //                 .to_string();
-            //             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-            //             let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            //                 &format!("{custom_serde_error_deserializing_tokens_options_to_update_stringified} not unique {field_ident_stringified} field"),
-            //                 &proc_macro_name_upper_camel_case_ident_stringified
-            //             );
-            //             quote::quote!{
-            //                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(_) => {
-            //                     let value = #ident_field_to_update_upper_camel_case::#variant_ident_upper_camel_case_token_stream;
-            //                     if acc.contains(&value) {
-            //                         return Err(serde::de::Error::custom(#format_handle_double_quotes_token_stream));
-            //                     }
-            //                     else {
-            //                         acc.push(value);
-            //                     }
-            //                 }
-            //             }
-            //         });
-            //         quote::quote!{
-            //             {
-            //                 let mut acc = vec![];
-            //                 for element in &__field1 {
-            //                     match element {
-            //                         #(#variants_token_stream),*
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     };
-            //     quote::quote!{
-            //         #check_fields_are_empty_token_stream
-            //         #check_unique_fields_token_stream
-            //     }
-            // };
+            let custom_checks_token_stream = {
+                let check_fields_are_empty_token_stream = {
+                    quote::quote!{
+                        if fields.is_empty() {
+                            return Err(#tokens_options_to_update_try_new_error_named::#fields_are_empty_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                };
+                let check_unique_fields_token_stream = {
+                    let variants_token_stream = vec_syn_field.iter().map(|element| {
+                        let field_ident = element
+                            .ident
+                            .as_ref()
+                            .unwrap_or_else(|| {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            });
+                        let field_ident_stringified = field_ident.to_string();
+                        let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                        let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("not unique {field_ident_stringified} field"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let not_unique_field_self_upper_camel_case_token_stream = naming_conventions::NotUniqueFieldSelfUpperCamelCase::from_dyn_quote_to_tokens(&field_ident);
+                        quote::quote!{
+                            #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(_) => {
+                                let value = #ident_field_to_update_upper_camel_case::#variant_ident_upper_camel_case_token_stream;
+                                if acc.contains(&value) {
+                                    return Err(#tokens_options_to_update_try_new_error_named::#not_unique_field_self_upper_camel_case_token_stream {
+                                        error: format!(#format_handle_double_quotes_token_stream),
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                                else {
+                                    acc.push(value);
+                                }
+                            }
+                        }
+                    });
+                    quote::quote!{
+                        {
+                            let mut acc = vec![];
+                            for element in &fields {
+                                match element {
+                                    #(#variants_token_stream),*
+                                }
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    #check_fields_are_empty_token_stream
+                    #check_unique_fields_token_stream
+                }
+            };
             quote::quote!{
                 impl #tokens_options_to_update {
                     pub fn try_new(
                         id: postgresql_crud::JsonUuidOptionToUpdate,
                         fields: std::vec::Vec<#ident_option_to_update_origin_upper_camel_case>,
                     ) -> Result<Self, #tokens_options_to_update_try_new_error_named> {
-
+                        #custom_checks_token_stream
                         Self {
                             id,
                             fields
