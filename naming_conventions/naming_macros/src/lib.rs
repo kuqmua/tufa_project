@@ -123,10 +123,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 }
             }
             let (
-                handle_upper_camel_case_upper_camel_case_token_stream,
-                handle_snake_case_token_upper_camel_case_stream,
                 elements_concat_value_upper_camel_case_double_quotes_token_stream,
                 elements_concat_value_snake_case_double_quotes_token_stream,
+                struct_upper_camel_case_upper_camel_case_token_stream,
+                struct_snake_case_token_upper_camel_case_stream,
+                trait_upper_camel_case_upper_camel_case_token_stream,
+                trait_snake_case_token_upper_camel_case_stream
             ) = {
                 let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
                 let snake_case_upper_camel_case_stringified = "SnakeCase";
@@ -163,27 +165,50 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     },
                     &proc_macro_name_snake_case_stringified
                 );
-                let handle_upper_camel_case_upper_camel_case_token_stream = {
+                let struct_upper_camel_case_upper_camel_case_token_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}");
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
-                let handle_snake_case_token_upper_camel_case_stream = {
+                let struct_snake_case_token_upper_camel_case_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}");
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
+                let (
+                    trait_upper_camel_case_upper_camel_case_token_stream,
+                    trait_snake_case_token_upper_camel_case_stream
+                ) = {
+                    let trait_upper_camel_case_stringified = "Trait";
+                    let trait_upper_camel_case_upper_camel_case_token_stream = {
+                        let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    let trait_snake_case_token_upper_camel_case_stream = {
+                        let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
+                        value.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
+                    (
+                        trait_upper_camel_case_upper_camel_case_token_stream,
+                        trait_snake_case_token_upper_camel_case_stream
+                    )
+                };
                 (
-                    handle_upper_camel_case_upper_camel_case_token_stream,
-                    handle_snake_case_token_upper_camel_case_stream,
                     elements_concat_value_upper_camel_case_double_quotes_token_stream,
                     elements_concat_value_snake_case_double_quotes_token_stream,
+                    struct_upper_camel_case_upper_camel_case_token_stream,
+                    struct_snake_case_token_upper_camel_case_stream,
+                    trait_upper_camel_case_upper_camel_case_token_stream,
+                    trait_snake_case_token_upper_camel_case_stream
                 )
             };
             let generate_struct_token_stream = |
                 struct_ident_token_stream: &proc_macro2::TokenStream,
                 elements_concat_value_case_double_quotes_token_stream: &proc_macro2::TokenStream,
                 is_upper_camel_case: std::primitive::bool,
+                trait_ident_token_stream: &proc_macro2::TokenStream,
             |{
                 let panic_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &format!("failed to parse stringified {struct_ident_token_stream} into proc_macro2::TokenStream: {{value_stringified}}"),
@@ -226,17 +251,21 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                             value_token_stream.to_tokens(tokens)
                         }
                     }
+                    pub trait #trait_ident_token_stream: std::fmt::Display + quote::ToTokens {}
+                    impl #trait_ident_token_stream for #struct_ident_token_stream {}
                 }
             };
             let pub_struct_upper_camel_case_token_stream = generate_struct_token_stream(
-                &handle_upper_camel_case_upper_camel_case_token_stream,
+                &struct_upper_camel_case_upper_camel_case_token_stream,
                 &elements_concat_value_upper_camel_case_double_quotes_token_stream,
                 true,
+                &trait_upper_camel_case_upper_camel_case_token_stream,
             );
             let pub_struct_snake_case_token_stream = generate_struct_token_stream(
-                &handle_snake_case_token_upper_camel_case_stream,
+                &struct_snake_case_token_upper_camel_case_stream,
                 &elements_concat_value_snake_case_double_quotes_token_stream,
-                false
+                false,
+                &trait_snake_case_token_upper_camel_case_stream,
             );
             quote::quote! {
                 #pub_struct_upper_camel_case_token_stream
