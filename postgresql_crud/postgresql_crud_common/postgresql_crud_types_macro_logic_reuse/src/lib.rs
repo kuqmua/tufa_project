@@ -950,7 +950,7 @@ fn postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_tok
 
 fn generate_primitive_postgresql_part_field_to_read_query(proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str) -> proc_macro2::TokenStream {
     proc_macro_common::generate_quotes::double_quotes_token_stream(
-        &format!("jsonb_build_object('{{field_ident}}', json_build_object('value', {{column_name_and_maybe_field_getter}}->'{{field_ident}}'))"),
+        &format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value', {{column_name_and_maybe_field_getter}}->'{{field_ident}}'))"),
         &proc_macro_name_upper_camel_case_ident_stringified
     )
 }
