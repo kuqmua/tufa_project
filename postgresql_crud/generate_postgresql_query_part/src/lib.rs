@@ -1236,13 +1236,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             },
         )
     };
-    let generate_tokens_reader_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
-        quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-            pub struct #struct_ident_token_stream(pub #struct_options_to_read_token_stream);
-        }
+    let generate_tokens_reader_alias_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
+        quote::quote!{pub type #struct_ident_token_stream = #struct_options_to_read_token_stream;}
     };
-
 
     let generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream = |
         tokens_field_reader_token_stream: &dyn quote::ToTokens,
@@ -2683,7 +2679,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
 
-            let ident_reader_token_stream = generate_tokens_reader_token_stream(
+            let ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::SelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &ident_options_to_read_upper_camel_case
             );
@@ -3107,7 +3103,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
 
-            let generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(
+            let generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::GenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &generic_with_id_ident_options_to_read_upper_camel_case
             );
@@ -3246,7 +3242,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
 
             //todo
-            let generic_ident_reader_token_stream = generate_tokens_reader_token_stream(
+            let generic_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::GenericSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &generic_ident_options_to_read_upper_camel_case
             );
@@ -3725,7 +3721,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{"jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)"}
             );
 
-            let std_option_option_generic_ident_reader_token_stream = generate_tokens_reader_token_stream(
+            let std_option_option_generic_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::StdOptionOptionGenericSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &ident_options_to_read_without_id_upper_camel_case
             );
@@ -4490,7 +4486,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))"}
             );
 
-            let std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(
+            let std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::StdVecVecGenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case
             );
@@ -5034,7 +5030,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))"}
             );
 
-            let std_option_option_std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(
+            let std_option_option_std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case
             );
