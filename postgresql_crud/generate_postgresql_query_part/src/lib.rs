@@ -3138,16 +3138,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         let create_token_stream = {
             let generic_ident_to_create_upper_camel_case = naming_conventions::GenericSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_ident_to_create_token_stream = generate_tokens_to_create_token_stream(&generic_ident_to_create_upper_camel_case);
-            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&generic_ident_to_create_upper_camel_case);
-            let impl_postgresql_crud_json_create_bind_query_for_generic_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
-                &generic_ident_to_create_upper_camel_case,
-                false
-            );
+            let generic_ident_to_create_alias_token_stream = quote::quote!{pub type #generic_ident_to_create_upper_camel_case = #ident_to_create_origin_without_generated_id_upper_camel_case;};
             quote::quote!{
-                #generic_ident_to_create_token_stream
-                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_to_create_token_stream
-                #impl_postgresql_crud_json_create_bind_query_for_generic_ident_to_create_token_stream
+                #generic_ident_to_create_alias_token_stream
             }
         };
         let read_token_stream = {
@@ -3587,14 +3580,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
 
         let create_token_stream = {
-            //todo maybe later reuse it as generic_ident_to_create
             let std_option_option_generic_ident_to_create_origin_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfToCreateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let std_option_option_generic_ident_to_create_origin_token_stream = generate_tokens_to_create_token_stream(&std_option_option_generic_ident_to_create_origin_upper_camel_case);
-            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&std_option_option_generic_ident_to_create_origin_upper_camel_case);
-            let impl_postgresql_crud_json_create_bind_query_for_std_option_option_generic_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
-                &std_option_option_generic_ident_to_create_origin_upper_camel_case,
-                false
-            );
+            let std_option_option_generic_ident_to_create_alias_token_stream = quote::quote!{pub type #std_option_option_generic_ident_to_create_origin_upper_camel_case = #ident_to_create_origin_without_generated_id_upper_camel_case;};
 
             let std_option_option_generic_ident_to_create_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_option_option_generic_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
@@ -3626,9 +3613,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 },
             );
             quote::quote!{
-                #std_option_option_generic_ident_to_create_origin_token_stream
-                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_to_create_origin_token_stream
-                #impl_postgresql_crud_json_create_bind_query_for_std_option_option_generic_ident_to_create_origin_token_stream
+                #std_option_option_generic_ident_to_create_alias_token_stream
 
                 #std_option_option_generic_ident_to_create_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_to_create_token_stream
