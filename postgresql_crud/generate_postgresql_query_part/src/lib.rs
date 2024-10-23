@@ -257,7 +257,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
-    fn generate_supported_generics_template_struct_token_stream(struct_ident_token_stream: &(impl quote::ToTokens + ?Sized), content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    fn generate_supported_generics_template_struct_token_stream(struct_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
             pub struct #struct_ident_token_stream #content_token_stream
@@ -305,7 +305,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         GenericIdentAndStdOptionOptionGenericIdent,
         StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent
     }
-    
     let generate_tokens_field_reader_token_stream = |
         struct_prefix_stringified: &dyn std::fmt::Display, 
         field_reader_content: &FieldReaderContent
@@ -496,10 +495,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             },
         )
     };
-
-    let generate_impl_serde_deserialize_for_options_to_read_origin_token_stream = |
-        struct_ident_stringified: &dyn std::fmt::Display,
-        struct_ident_token_stream: &proc_macro2::TokenStream,
+    let generate_impl_serde_deserialize_for_options_to_read_token_stream = |
+        struct_ident_token_stream: &dyn naming_conventions::StdFmtDisplayPlusQuoteToTokens,
         contains_id: std::primitive::bool,
     |{
         let range_end = {
@@ -903,7 +900,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let std_vec_vec_generic_with_id_ident_options_to_read_origin_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &struct_ident_stringified,
+            &struct_ident_token_stream,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
         quote::quote!{
@@ -1076,15 +1073,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &fields_with_id_some_value_self_options_to_read_initialization_content_token_stream,
     );
     ///////
-    //todo remove quote
-    let impl_serde_deserialize_for_ident_options_to_read_without_id_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
+    let impl_serde_deserialize_for_ident_options_to_read_without_id_token_stream = generate_impl_serde_deserialize_for_options_to_read_token_stream(
         &ident_options_to_read_without_id_upper_camel_case,
-        &quote::quote!{#ident_options_to_read_without_id_upper_camel_case},
         false,
     );
-    let impl_serde_deserialize_for_ident_options_to_read_with_id_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
+    let impl_serde_deserialize_for_ident_options_to_read_with_id_token_stream = generate_impl_serde_deserialize_for_options_to_read_token_stream(
         &ident_options_to_read_with_id_upper_camel_case,
-        &quote::quote!{#ident_options_to_read_with_id_upper_camel_case},
         true,
     );
     let generate_options_to_read_alias_token_stream = |tokens_options_to_read_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
