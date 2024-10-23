@@ -2531,11 +2531,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&ident_options_to_read_upper_camel_case, false);
 
-            let ident_reader_token_stream = generate_tokens_reader_token_stream(
-                &naming_conventions::SelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                &ident_options_to_read_upper_camel_case
-            );
-
             let ident_field_reader_upper_camel_case = naming_conventions::SelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
                 &ident.to_string(),
@@ -2625,6 +2620,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             };
+
+            let ident_reader_token_stream = generate_tokens_reader_token_stream(
+                &naming_conventions::SelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
+                &ident_options_to_read_upper_camel_case
+            );
 
             //this is temporary, todo remove and refactor later
             let impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream = {
@@ -3126,7 +3126,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             let generic_with_id_ident_reader_upper_camel_case = naming_conventions::GenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(&generic_with_id_ident_reader_upper_camel_case, &generic_with_id_ident_options_to_read_upper_camel_case);
+            let generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(
+                &generic_with_id_ident_reader_upper_camel_case,
+                &generic_with_id_ident_options_to_read_upper_camel_case
+            );
             quote::quote!{
                 #generic_with_id_ident_options_to_read_alias_token_stream
 
@@ -3271,7 +3274,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &naming_conventions::GenericSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &generic_ident_options_to_read_upper_camel_case
             );
-        
             let impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_generic_ident_field_reader_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
                 &generic_ident_field_reader_upper_camel_case_token_stream,
                 false,
@@ -3761,7 +3763,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &naming_conventions::StdOptionOptionGenericSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &ident_options_to_read_without_id_upper_camel_case
             );
-
             let impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
                 &std_option_option_generic_ident_field_reader_upper_camel_case,
                 false,
