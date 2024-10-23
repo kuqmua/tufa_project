@@ -373,56 +373,56 @@ pub struct Doggie {
     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
 
-    pub generic: GenericCat,
-    pub std_option_option_generic: StdOptionOptionGenericCat,
+    // pub generic: GenericCat,
+    // pub std_option_option_generic: StdOptionOptionGenericCat,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
-    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
+    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
+    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
 }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Cat {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-    pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Cat {
+//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+//     pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
 
-    pub generic: GenericBird,
-    pub std_option_option_generic: StdOptionOptionGenericBird,
+//     pub generic: GenericBird,
+//     pub std_option_option_generic: StdOptionOptionGenericBird,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdBird,
-    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdBird,
-}
+//     pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdBird,
+//     pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdBird,
+// }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Bird {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
-    pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Bird {
+//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
+//     pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
+// }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum CatFieldToRead {
@@ -4337,3 +4337,4 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
+
