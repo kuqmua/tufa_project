@@ -3570,6 +3570,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
+                        //todo use naming conventions
                         let element_type_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream = {
                             let value = format!(
                                 "{}{}",
@@ -3647,7 +3648,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         Ok(match &self.0 {
                             Some(value) => {
-                                //todo maybe reuse here value.try_generate_bind_increments_variants
                                 let mut #std_option_option_generic_acc_snake_case = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
                                 for element in &value.0 {
                                     match element {
@@ -3687,7 +3687,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         match self.0 {
                             Some(value) => {
-                                //todo maybe reuse here value.bind_value_to_query
                                 for element in value.0 {
                                     match element {
                                         #(#bind_value_to_query_variants_token_stream),*
@@ -3789,30 +3788,67 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
                 &quote::quote!{(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream])},
             );
-
+            let impl_try_new_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
+                let std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                let not_unique_id_upper_camel_case = naming_conventions::NotUniqueIdUpperCamelCase;
+                let try_new_error_named_token_stream = {
+                    quote::quote!{
+                        #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                        pub enum #std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case {
+                            #not_unique_id_upper_camel_case {
+                                #[eo_to_std_string_string_serialize_deserialize]
+                                error: std::string::String,
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                            }
+                        }
+                    }
+                };
+                let impl_pub_fn_try_new_token_stream = {
+                    let check_not_unique_id_token_stream = {
+                        quote::quote!{
+                            {
+                                let mut acc = vec![];
+                                for element in &value {
+                                    if let Some(value) = &element.id {
+                                        if acc.contains(&&value.value) {
+                                            return Err(#std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
+                                                error: format!("not unique id {}", value.value.0),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                        else {
+                                            acc.push(&value.value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    quote::quote!{
+                        impl #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
+                            pub fn try_new(value: std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>) -> Result<Self, #std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case> {
+                                #check_not_unique_id_token_stream
+                                Ok(Self(value))
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    #try_new_error_named_token_stream
+                    #impl_pub_fn_try_new_token_stream
+                }
+            };
             let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
-                let std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                 let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
                 let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
                 let std_option_option_generic_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                     &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
-                let check_not_unique_id_token_stream = {
-                    quote::quote!{
-                        {
-                            let mut acc = vec![];
-                            for element in &__field0 {
-                                if let Some(value) = &element.id {
-                                    if acc.contains(&&value.value) {
-                                        return Err(serde::de::Error::custom(format!("not unique id {}", value.value.0)));
-                                    }
-                                    else {
-                                        acc.push(&value.value);
-                                    }
-                                }
-                            }
-                        }
+                let try_new_token_stream = quote::quote!{
+                    match #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case::try_new(__field0) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                     }
                 };
                 quote::quote!{
@@ -3854,10 +3890,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     > = <std::vec::Vec<
                                         #ident_options_to_read_with_id_upper_camel_case,
                                     > as serde::Deserialize>::deserialize(__e)?;
-                                    #check_not_unique_id_token_stream
-                                    serde::__private::Ok(
-                                        #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case(__field0),
-                                    )
+                                    #try_new_token_stream
                                 }
                                 #[inline]
                                 fn visit_seq<__A>(
@@ -3882,10 +3915,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             );
                                         }
                                     };
-                                    #check_not_unique_id_token_stream
-                                    serde::__private::Ok(
-                                        #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case(__field0),
-                                    )
+                                    #try_new_token_stream
                                 }
                             }
                             serde::Deserializer::deserialize_newtype_struct(
@@ -4150,6 +4180,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             );
             quote::quote!{
                 #std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+                #impl_try_new_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
                 #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
 
@@ -4776,7 +4807,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     &quote::quote!{
-                        //todo write some Into Destructor for structs or enums what implements bind_value_to_query. need this to remove .clone() calls
                         match self.0 {
                             Some(value) => {
                                 query = value.bind_value_to_query(query);
