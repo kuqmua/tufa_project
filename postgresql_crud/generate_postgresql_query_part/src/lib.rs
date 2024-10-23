@@ -3187,16 +3187,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let read_token_stream = {
             let generic_ident_options_to_read_upper_camel_case = naming_conventions::GenericSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_ident_options_to_read_token_stream = generate_struct_tokens_options_to_read_token_stream(&generic_ident_options_to_read_upper_camel_case, false);
-            let impl_serde_deserialize_for_generic_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
-                &naming_conventions::GenericSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                &quote::quote!{#generic_ident_options_to_read_upper_camel_case},
-                false,
-            );
-            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                &generic_ident_options_to_read_upper_camel_case,
-                &fields_some_value_self_options_to_read_initialization_content_token_stream,
-            );
+            let generic_ident_options_to_read_alias_token_stream = quote::quote!{pub type #generic_ident_options_to_read_upper_camel_case = #ident_options_to_read_without_id_upper_camel_case;};
 
             let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::GenericSelfFieldReaderUpperCamelCase::from_dyn_std_fmt_display(&ident);
             let generic_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
@@ -3302,9 +3293,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))"}
             );
             quote::quote!{
-                #generic_ident_options_to_read_token_stream
-                #impl_serde_deserialize_for_generic_ident_options_to_read_origin_token_stream
-                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_ident_options_to_read_token_stream
+                #generic_ident_options_to_read_alias_token_stream
 
                 #generic_ident_field_reader_token_stream
                 #impl_serde_deserialize_for_generic_ident_field_reader_token_stream
