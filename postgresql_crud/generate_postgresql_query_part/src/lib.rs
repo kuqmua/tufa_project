@@ -1441,6 +1441,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &ident_to_create_origin_without_generated_id_upper_camel_case,
         false
     );
+    let generate_tokens_to_create_alias_token_stream = |tokens_to_create_token_stream: &dyn quote::ToTokens|{
+        quote::quote!{pub type #tokens_to_create_token_stream = #ident_to_create_origin_without_generated_id_upper_camel_case;}
+    };
     
     
     let ident_options_to_update_upper_camel_case = naming_conventions::SelfOptionsToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
@@ -3137,8 +3140,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
 
         let create_token_stream = {
-            let generic_ident_to_create_upper_camel_case = naming_conventions::GenericSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_ident_to_create_alias_token_stream = quote::quote!{pub type #generic_ident_to_create_upper_camel_case = #ident_to_create_origin_without_generated_id_upper_camel_case;};
+            let generic_ident_to_create_alias_token_stream = generate_tokens_to_create_alias_token_stream(&naming_conventions::GenericSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident));
             quote::quote!{
                 #generic_ident_to_create_alias_token_stream
             }
@@ -3581,7 +3583,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         let create_token_stream = {
             let std_option_option_generic_ident_to_create_origin_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfToCreateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let std_option_option_generic_ident_to_create_alias_token_stream = quote::quote!{pub type #std_option_option_generic_ident_to_create_origin_upper_camel_case = #ident_to_create_origin_without_generated_id_upper_camel_case;};
+            let std_option_option_generic_ident_to_create_alias_token_stream = generate_tokens_to_create_alias_token_stream(&std_option_option_generic_ident_to_create_origin_upper_camel_case);
 
             let std_option_option_generic_ident_to_create_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_option_option_generic_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
