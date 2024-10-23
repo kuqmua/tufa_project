@@ -1763,6 +1763,7 @@ pub struct JsonUuidOptionToUpdate(pub uuid::Uuid);
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonUuidOptionToUpdate {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        //maybe compile time uuid gen? not need to gen on runtime. if all different on compile time than its enough 
         Self(uuid::Uuid::new_v4())
     }
 }
