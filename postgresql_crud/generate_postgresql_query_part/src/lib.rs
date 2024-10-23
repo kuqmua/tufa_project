@@ -1087,6 +1087,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &quote::quote!{#ident_options_to_read_with_id_upper_camel_case},
         true,
     );
+    let generate_options_to_read_alias_token_stream = |tokens_options_to_read_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
+        let options_to_read_with_or_without_id_token_stream = if contains_id {
+            quote::quote!{#ident_options_to_read_with_id_upper_camel_case}
+        }
+        else {
+            quote::quote!{#ident_options_to_read_without_id_upper_camel_case}
+        };
+        quote::quote!{pub type #tokens_options_to_read_token_stream = #options_to_read_with_or_without_id_token_stream;}
+    };
     ///////
     //
     let generate_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
@@ -2520,7 +2529,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let read_token_stream = {
             let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let ident_options_to_read_alias_token_stream = quote::quote!{pub type #ident_options_to_read_upper_camel_case = #ident_options_to_read_without_id_upper_camel_case;};
+            let ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&ident_options_to_read_upper_camel_case, false);
 
             let ident_reader_token_stream = generate_tokens_reader_token_stream(
                 &naming_conventions::SelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
@@ -3023,7 +3032,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let read_token_stream = {
             let generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::GenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_with_id_ident_options_to_read_alias_token_stream = quote::quote!{pub type #generic_with_id_ident_options_to_read_upper_camel_case = #ident_options_to_read_with_id_upper_camel_case;};
+            let generic_with_id_ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&generic_with_id_ident_options_to_read_upper_camel_case, true);
 
             let generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
                 &naming_conventions::GenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident),
@@ -3163,7 +3172,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let read_token_stream = {
             let generic_ident_options_to_read_upper_camel_case = naming_conventions::GenericSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_ident_options_to_read_alias_token_stream = quote::quote!{pub type #generic_ident_options_to_read_upper_camel_case = #ident_options_to_read_without_id_upper_camel_case;};
+            let generic_ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&generic_ident_options_to_read_upper_camel_case, false);
 
             let generic_ident_field_reader_upper_camel_case_token_stream = naming_conventions::GenericSelfFieldReaderUpperCamelCase::from_dyn_std_fmt_display(&ident);
             let generic_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
@@ -3649,7 +3658,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let read_token_stream = {
             let std_option_option_generic_ident_options_to_read_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let std_option_option_generic_ident_options_to_read_alias_token_stream = quote::quote!{pub type #std_option_option_generic_ident_options_to_read_upper_camel_case = #ident_options_to_read_without_id_upper_camel_case;};
+            let std_option_option_generic_ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&std_option_option_generic_ident_options_to_read_upper_camel_case, false);
 
             let std_option_option_generic_ident_field_reader_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_option_option_generic_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
