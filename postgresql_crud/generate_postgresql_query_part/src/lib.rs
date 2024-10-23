@@ -1081,6 +1081,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &ident_options_to_read_with_id_upper_camel_case,
         true,
     );
+    let generate_pub_type_alias_token_stream = |alias_type_name_token_stream: &dyn quote::ToTokens, alias_actual_type_name_token_stream: &dyn quote::ToTokens|{
+        quote::quote!{pub type #alias_type_name_token_stream = #alias_actual_type_name_token_stream;}
+    };
     let generate_options_to_read_alias_token_stream = |tokens_options_to_read_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
         let options_to_read_with_or_without_id_token_stream = if contains_id {
             quote::quote!{#ident_options_to_read_with_id_upper_camel_case}
@@ -1088,7 +1091,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         else {
             quote::quote!{#ident_options_to_read_without_id_upper_camel_case}
         };
-        quote::quote!{pub type #tokens_options_to_read_token_stream = #options_to_read_with_or_without_id_token_stream;}
+        generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
     };
     ///////
     //
@@ -1237,7 +1240,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         )
     };
     let generate_tokens_reader_alias_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
-        quote::quote!{pub type #struct_ident_token_stream = #struct_options_to_read_token_stream;}
+        generate_pub_type_alias_token_stream(struct_ident_token_stream, struct_options_to_read_token_stream)
     };
 
     let generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream = |
@@ -1438,7 +1441,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         false
     );
     let generate_tokens_to_create_alias_token_stream = |tokens_to_create_token_stream: &dyn quote::ToTokens|{
-        quote::quote!{pub type #tokens_to_create_token_stream = #ident_to_create_origin_without_generated_id_upper_camel_case;}
+        generate_pub_type_alias_token_stream(tokens_to_create_token_stream, &ident_to_create_origin_without_generated_id_upper_camel_case)
     };
     
     
