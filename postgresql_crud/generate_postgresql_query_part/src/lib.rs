@@ -1448,10 +1448,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     
     let ident_to_create_origin_with_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    
+    let ident_to_create_origin_without_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithoutGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     
     let ident_to_create_origin_with_generated_id_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_origin_with_generated_id_upper_camel_case);
+    let ident_to_create_origin_without_generated_id_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_origin_without_generated_id_upper_camel_case);
+
     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_origin_with_generated_id_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&ident_to_create_origin_with_generated_id_upper_camel_case);
+    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_origin_without_generated_id_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_create_token_stream(&ident_to_create_origin_without_generated_id_upper_camel_case);
+
     let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_with_generated_id_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
         &ident_to_create_origin_with_generated_id_upper_camel_case,
         true,
@@ -5192,7 +5196,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let generated = quote::quote! {
         #ident_to_create_origin_with_generated_id_token_stream
+        #ident_to_create_origin_without_generated_id_token_stream
         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_origin_with_generated_id_token_stream
+        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_origin_without_generated_id_token_stream
         #impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_with_generated_id_token_stream
 
 
