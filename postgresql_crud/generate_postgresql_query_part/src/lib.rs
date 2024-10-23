@@ -1569,12 +1569,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &ident_options_to_update_upper_camel_case,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        let try_new_token_stream = quote::quote!{
-            match #ident_options_to_update_upper_camel_case::try_new(__field0, __field1) {
-                Ok(value) => serde::__private::Ok(value),
-                Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-            }
-        };
+        let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+            &ident_options_to_update_upper_camel_case,
+            &quote::quote!{__field0, __field1},
+        );
         quote::quote!{
             impl<'de> serde::Deserialize<'de> for #ident_options_to_update_upper_camel_case {
                 fn deserialize<__D>(
@@ -1709,7 +1707,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     );
                                 }
                             };
-                            #try_new_token_stream
+                            #match_try_new_in_deserialize_token_stream
                         }
                         #[inline]
                         fn visit_map<__A>(
@@ -1774,7 +1772,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     serde::__private::de::missing_field("fields")?
                                 }
                             };
-                            #try_new_token_stream
+                            #match_try_new_in_deserialize_token_stream
                         }
                     }
                     #[doc(hidden)]
@@ -2036,12 +2034,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &struct_ident_token_stream.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
-            let try_new_token_stream = quote::quote!{
-                match #struct_ident_token_stream::try_new(__field0, __field1, __field2) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-                }
-            };
+            let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                &struct_ident_token_stream,
+                &quote::quote!{__field0, __field1, __field2},
+            );
             quote::quote!{
                 impl<'de> serde::Deserialize<'de> for #struct_ident_token_stream {
                     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
@@ -2139,7 +2135,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         vec![]
                                     }
                                 };
-                                #try_new_token_stream
+                                #match_try_new_in_deserialize_token_stream
                             }
                             #[inline]
                             fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -2192,7 +2188,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         vec![]
                                     }
                                 };
-                                #try_new_token_stream
+                                #match_try_new_in_deserialize_token_stream
                             }
                         }
                         #[doc(hidden)]
@@ -2841,12 +2837,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &ident_option_to_update_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
-                let try_new_token_stream = quote::quote!{
-                    match #ident_option_to_update_upper_camel_case::try_new(__field0) {
-                        Ok(value) => serde::__private::Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-                    }
-                };
+                let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                    &ident_option_to_update_upper_camel_case,
+                    &quote::quote!{__field0},
+                );
                 quote::quote!{
                     impl<'de> serde::Deserialize<'de> for #ident_option_to_update_upper_camel_case {
                         fn deserialize<__D>(
@@ -2882,7 +2876,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     let __field0: std::vec::Vec<#ident_option_to_update_origin_upper_camel_case> = <std::vec::Vec<
                                         #ident_option_to_update_origin_upper_camel_case,
                                     > as serde::Deserialize>::deserialize(__e)?;
-                                    #try_new_token_stream
+                                    #match_try_new_in_deserialize_token_stream
                                 }
                                 #[inline]
                                 fn visit_seq<__A>(
@@ -2905,7 +2899,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             );
                                         }
                                     };
-                                    #try_new_token_stream
+                                    #match_try_new_in_deserialize_token_stream
                                 }
                             }
                             serde::Deserializer::deserialize_newtype_struct(
@@ -3845,12 +3839,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
-                let try_new_token_stream = quote::quote!{
-                    match #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case::try_new(__field0) {
-                        Ok(value) => serde::__private::Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-                    }
-                };
+                let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                    &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                    &quote::quote!{__field0},
+                );
                 quote::quote!{
                     impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
                         fn deserialize<__D>(
@@ -3890,7 +3882,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     > = <std::vec::Vec<
                                         #ident_options_to_read_with_id_upper_camel_case,
                                     > as serde::Deserialize>::deserialize(__e)?;
-                                    #try_new_token_stream
+                                    #match_try_new_in_deserialize_token_stream
                                 }
                                 #[inline]
                                 fn visit_seq<__A>(
@@ -3915,7 +3907,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             );
                                         }
                                     };
-                                    #try_new_token_stream
+                                    #match_try_new_in_deserialize_token_stream
                                 }
                             }
                             serde::Deserializer::deserialize_newtype_struct(
