@@ -3035,17 +3035,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let read_token_stream = {
             let generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::GenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_with_id_ident_options_to_read_token_stream = generate_struct_tokens_options_to_read_token_stream(&generic_with_id_ident_options_to_read_upper_camel_case, true);
-            let impl_serde_deserialize_for_generic_with_id_ident_options_to_read_origin_token_stream = generate_impl_serde_deserialize_for_options_to_read_origin_token_stream(
-                &naming_conventions::GenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                &quote::quote!{#generic_with_id_ident_options_to_read_upper_camel_case},
-                true,
-            );
-            //todo maybe no need to impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                &generic_with_id_ident_options_to_read_upper_camel_case,
-                &fields_with_id_some_value_self_options_to_read_initialization_content_token_stream,
-            );
+            let generic_with_id_ident_options_to_read_alias_token_stream = quote::quote!{pub type #generic_with_id_ident_options_to_read_upper_camel_case = #ident_options_to_read_with_id_upper_camel_case;};
 
             let generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
                 &naming_conventions::GenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident),
@@ -3141,9 +3131,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let generic_with_id_ident_reader_upper_camel_case = naming_conventions::GenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let generic_with_id_ident_reader_token_stream = generate_tokens_reader_token_stream(&generic_with_id_ident_reader_upper_camel_case, &generic_with_id_ident_options_to_read_upper_camel_case);
             quote::quote!{
-                #generic_with_id_ident_options_to_read_token_stream
-                #impl_serde_deserialize_for_generic_with_id_ident_options_to_read_origin_token_stream
-                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_generic_with_id_ident_options_to_read_token_stream
+                #generic_with_id_ident_options_to_read_alias_token_stream
 
                 #generic_with_id_ident_field_reader_token_stream
                 // #impl_try_new_token_stream
