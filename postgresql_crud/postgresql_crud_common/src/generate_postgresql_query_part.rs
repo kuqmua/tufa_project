@@ -1692,7 +1692,6 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::o
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderString,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionToUpdate,
     postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartToUpdateForIdentOptionToUpdate,
 )]
 pub struct JsonUuid(pub uuid::Uuid);
@@ -1761,6 +1760,12 @@ impl schemars::JsonSchema for JsonUuidOptionsToRead {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct JsonUuidOptionToUpdate(pub uuid::Uuid);
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonUuidOptionToUpdate {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(uuid::Uuid::new_v4())
+    }
+}
 impl schemars::JsonSchema for JsonUuidOptionToUpdate {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
         schemars::_private::alloc::borrow::Cow::Borrowed("JsonUuidOptionToUpdate")

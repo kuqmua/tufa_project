@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 strum_macros = {version = "=0.24.3"}
 futures = {version = "=0.3.28"}
-uuid = {version = "=1.10.0", features = ["serde"]}
+uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 generate_postgresql_query_part = {path = "./generate_postgresql_query_part"}
 postgresql_crud_common = {path = "./postgresql_crud_common"}
