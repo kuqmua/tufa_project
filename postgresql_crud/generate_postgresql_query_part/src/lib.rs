@@ -4119,6 +4119,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
                 true,
             );
+            //todo is there a reson to impl new? or maybe pub? or maybe std::convert::From
+            let impl_new_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = {
+                let impl_pub_fn_new_token_stream = {
+                    quote::quote!{
+                        impl #std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case {
+                            pub fn new(value: #std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case) -> Self {
+                                Self (value)
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    #impl_pub_fn_new_token_stream
+                }
+            };
+
             //todo maybe should impl trait for convetion  tokens_option_to_update into field to update. t
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                 &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
@@ -4175,6 +4191,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 #std_vec_vec_generic_with_id_ident_json_array_change_token_stream
                 #std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                #impl_new_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
 
                 #std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
