@@ -3560,19 +3560,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                        //todo path before ident also goinf to be upper camel case if use naming_conventions struct. maybe add methods from syn::Type or something
-                        let element_type_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream = {
-                            let value = format!(
-                                "{}{}",
-                                {
-                                    let element_type = &element.ty;
-                                    quote::quote!{#element_type}
-                                },
-                                naming_conventions::OptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase
-                            );
-                            value.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        let element_type_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                         quote::quote!{
                             #variant_ident_upper_camel_case_token_stream {
                                 #[eo_error_occurence]

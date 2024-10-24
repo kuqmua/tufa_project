@@ -225,7 +225,10 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     pub struct #struct_ident_token_stream(std::string::String);
                     impl #struct_ident_token_stream {
                         fn wrap(value: &dyn std::fmt::Display) -> Self {
-                            Self(format!(#elements_concat_value_case_double_quotes_token_stream))
+                            Self(Self::format(value))
+                        }
+                        fn format(value: &dyn std::fmt::Display) -> std::string::String {
+                            format!(#elements_concat_value_case_double_quotes_token_stream)
                         }
                         pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
                             Self::wrap(&#casing_token_stream(&value.to_string()))
@@ -236,6 +239,19 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                                 quote::ToTokens::to_tokens(&value, &mut tokens);
                                 tokens
                             }.to_string()))
+                        }
+                        pub fn from_syn_type_path_last_segment(value: &syn::Type) -> Self {
+                            match value {
+                                syn::Type::Path(type_path) => {
+                                    let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::from(""), |mut acc, elem| {
+                                        acc.push_str(&format!("{}::", elem.ident));
+                                        acc
+                                    });
+                                    let last = type_path.path.segments.iter().last().unwrap();
+                                    Self(format!("{path_before_stringified}{}", Self::format(&#casing_token_stream(&last.ident.to_string()))))
+                                },
+                                _ => panic!("syn::Type is not syn::Type::Path")
+                            }
                         }
                     }
                     impl std::fmt::Display for #struct_ident_token_stream {
