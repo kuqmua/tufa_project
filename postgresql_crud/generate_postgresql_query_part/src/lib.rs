@@ -1805,10 +1805,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     );
     let generate_ident_json_array_change_token_stream = |
-        struct_ident_token_stream: &proc_macro2::TokenStream,
+        struct_ident_token_stream: &dyn quote::ToTokens,
         struct_ident_try_new_error_named: &dyn quote::ToTokens,
         is_nullable: std::primitive::bool,
     |{
+        let struct_ident_stringified = quote::quote!{#struct_ident_token_stream}.to_string();
         let ident_json_array_change_token_stream = quote::quote!{
             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
             pub struct #struct_ident_token_stream {
@@ -1820,7 +1821,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
             }
         };
-        let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {struct_ident_token_stream}");
+        let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {struct_ident_stringified}");
         let impl_try_new_for_ident_json_array_change_token_stream = {
             let create_update_delete_check_fields_are_empty_upper_camel_case = naming_conventions::CreateUpdateDeleteCheckFieldsAreEmptyUpperCamelCase;
             let not_unique_id_in_json_update_array_upper_camel_case = naming_conventions::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
@@ -1966,9 +1967,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_serde_deserialize_for_ident_json_array_change_token_stream = {
-            let tuple_struct_struct_ident_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&struct_ident_token_stream);
+            let tuple_struct_struct_ident_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&struct_ident_stringified);
             let struct_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &struct_ident_token_stream.to_string(),
+                &struct_ident_stringified,
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
             let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
@@ -4107,7 +4108,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
-                &quote::quote!{#std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case},
+                &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
                 &naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 false,
             );
@@ -4652,7 +4653,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
             let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
-                &quote::quote!{#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case},
+                &std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
                 &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 true,
             );
