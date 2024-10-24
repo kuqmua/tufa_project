@@ -304,8 +304,8 @@ pub struct Something {
     pub generic: GenericDoggie,
     pub std_option_option_generic: StdOptionOptionGenericDoggie,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,
-    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie
+    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,
+    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
@@ -376,8 +376,8 @@ pub struct Doggie {
     pub generic: GenericCat,
     pub std_option_option_generic: StdOptionOptionGenericCat,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
-    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
+    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
+    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
 }
 
 #[derive(
