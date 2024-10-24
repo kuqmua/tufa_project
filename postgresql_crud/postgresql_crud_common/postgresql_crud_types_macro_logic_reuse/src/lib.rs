@@ -1379,6 +1379,22 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
+                            //
+// 	case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
+// 	then
+// 	    (sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic')::jsonb
+// 	else
+// 	    '{}'::jsonb
+// 	end
+// 	||
+// 	jsonb_build_object(
+// 	  	'generic',
+// 		jsonb_build_object(
+// 			'std_primitive_i32',
+// 			8
+// 		)
+// 	)
+                            //
                             Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
                         },
                         None => Err(#ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
