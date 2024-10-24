@@ -2293,9 +2293,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let update_token_stream = {
-            //todo there is a strict with id and fields. type of fields can be reused as ident_option_to_update_token_stream
-            //todo remove pub
-            //todo custom deserialize to check unique fields
             let ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
                 &ident_option_to_update_upper_camel_case,
                 &quote::quote!{std::vec::Vec<#ident_option_to_update_origin_upper_camel_case>},
