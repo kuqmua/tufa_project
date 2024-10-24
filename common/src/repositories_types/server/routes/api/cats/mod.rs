@@ -4337,3 +4337,74 @@ fn test_dd() {
 
 // /////////////////////////////////
 //todo this need for old version of update_many. later need to refactor update many and remove this
+
+
+
+
+
+
+
+
+//wrong
+
+// update 
+//   jsongeneric 
+// set 
+//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
+//     sqlx_types_json_t_as_postgresql_json_b_not_null, 
+//     '{std_option_option_generic}', 
+//     jsonb_set(
+//       case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
+// 	  then (sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic')::jsonb
+// 	  else 
+// 	  '{}'::jsonb
+// 	  end, 
+//       '{generic,std_primitive_i32}', 
+//       '10'
+//     )
+//   ) 
+// where 
+//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+
+
+//works
+
+// update 
+//   jsongeneric 
+// set 
+//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
+//     sqlx_types_json_t_as_postgresql_json_b_not_null, 
+//     '{std_option_option_generic}',
+// 	case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
+// 	then 
+// 	  	jsonb_set(
+// 			(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic')::jsonb,
+// 	  	    '{generic,std_primitive_i32}', 
+//     		'10'
+// 		)
+// 	else
+// 	  jsonb_build_object(
+// 	  	'generic',
+// 		jsonb_build_object(
+// 			'std_primitive_i32',
+// 			8
+// 		)
+// 	  )
+// 	end
+//   ) 
+// where 
+//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+
+
+//works
+
+// update 
+//   jsongeneric 
+// set 
+//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
+//     sqlx_types_json_t_as_postgresql_json_b_not_null, 
+//     '{std_option_option_generic}', 
+//     'null'
+//   ) 
+// where 
+//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
