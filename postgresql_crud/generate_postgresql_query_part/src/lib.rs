@@ -4105,14 +4105,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let update_token_stream = {
-            let std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+            let std_vec_vec_generic_with_id_ident_json_array_change_try_new_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
                 &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
-                &naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
+                &std_vec_vec_generic_with_id_ident_json_array_change_try_new_error_named_upper_camel_case,
                 false,
             );
 
+            let std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
                 &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
                 &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,

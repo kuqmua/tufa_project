@@ -510,6 +510,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["std", "vec", "vec", "generic", "with", "id", "self", "options", "to", "read", "try", "new", "error", "named"],
     ["self", "generate", "postgresql", "query", "part", "to", "read", "from", "vec", "error", "named"],
     ["std", "option", "option", "generic", "self", "option", "to", "update", "try", "new", "error", "named"]
+    
+    // ,
+    // ["std", "vec", "vec", "generic", "with", "id", "self", "json", "array", "change", "try", "new", "error", "named", "with", "serialize", "deserialize"],
+    // ["std", "vec", "vec", "generic", "with", "id", "self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named", "with", "serialize", "deserialize"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
