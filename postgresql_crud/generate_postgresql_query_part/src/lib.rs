@@ -1311,7 +1311,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_tokens_option_to_update_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         self_type_content_token_stream: &dyn quote::ToTokens,
-        impl_deserialize: bool
+        impl_deserialize: std::primitive::bool,
+        is_pub: std::primitive::bool,
     |{
         let maybe_impl_deserialize_token_stream = if impl_deserialize {
             quote::quote!{serde::Deserialize,}
@@ -1319,9 +1320,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         else {
             proc_macro2::TokenStream::new()
         };
+        let maybe_pub_token_stream = if is_pub {
+            quote::quote!{pub}
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_deserialize_token_stream utoipa::ToSchema)]
-            pub struct #struct_ident_token_stream(#self_type_content_token_stream);
+            pub struct #struct_ident_token_stream(#maybe_pub_token_stream #self_type_content_token_stream);
         }
     };
 
@@ -2629,6 +2636,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &ident_option_to_update_upper_camel_case,
                 &quote::quote!{std::vec::Vec<#ident_option_to_update_origin_upper_camel_case>},
                 false,
+                false,
             );
             let impl_try_new_for_ident_option_to_update_token_stream = {
                 let fields_are_empty_upper_camel_case = naming_conventions::FieldsAreEmptyUpperCamelCase;
@@ -3435,6 +3443,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_option_option_generic_ident_option_to_update_upper_camel_case,
                 &quote::quote!{std::option::Option<#ident_option_to_update_upper_camel_case>},
                 true,
+                false,
             );
             let impl_try_new_for_std_option_option_generic_ident_option_to_update_token_stream = {
                 let std_option_option_generic_ident_option_to_update_try_new_error_named_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfOptionToUpdateTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
@@ -4118,22 +4127,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
                 &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
                 true,
+                true,
             );
-            //todo is there a reson to impl new? or maybe pub? or maybe std::convert::From
-            let impl_new_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = {
-                let impl_pub_fn_new_token_stream = {
-                    quote::quote!{
-                        impl #std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case {
-                            pub fn new(value: #std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case) -> Self {
-                                Self (value)
-                            }
-                        }
-                    }
-                };
-                quote::quote!{
-                    #impl_pub_fn_new_token_stream
-                }
-            };
 
             //todo maybe should impl trait for convetion  tokens_option_to_update into field to update. t
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
@@ -4191,10 +4186,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 #std_vec_vec_generic_with_id_ident_json_array_change_token_stream
                 #std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                #impl_new_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-
                 #std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
                 #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
             }
@@ -4680,7 +4672,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
                 &quote::quote!{std::option::Option<#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case>},
                 true,
+                true,
             );
+
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                 &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
                 &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
