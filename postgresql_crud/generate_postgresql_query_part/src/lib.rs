@@ -4145,7 +4145,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
                     &{
                         quote::quote!{
-                            JsonArrayChange {
+                            #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case {
                                 #[eo_error_occurence]
                                 error: #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case, 
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -4166,7 +4166,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ) {
                             Ok(value) => Ok(value),
                             Err(error) => {
-                                return Err(#std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::JsonArrayChange {
+                                return Err(#std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case {
                                     error,
                                     code_occurence: error_occurence_lib::code_occurence!()
                                 });
