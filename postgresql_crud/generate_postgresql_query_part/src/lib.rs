@@ -1812,23 +1812,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     );
     let generate_ident_json_array_change_token_stream = |
-        struct_ident_token_stream: &dyn quote::ToTokens,
+        struct_ident_token_stream: &dyn naming_conventions::StdFmtDisplayPlusQuoteToTokens,
         struct_ident_try_new_error_named: &dyn quote::ToTokens,
         is_nullable: std::primitive::bool,
     |{
-        let struct_ident_stringified = quote::quote!{#struct_ident_token_stream}.to_string();
-        let ident_json_array_change_token_stream = quote::quote!{
-            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
-            pub struct #struct_ident_token_stream {
-                #[serde(skip_serializing_if = "Vec::is_empty")]
-                create: std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>,
-                #[serde(skip_serializing_if = "Vec::is_empty")]
-                update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
-                #[serde(skip_serializing_if = "Vec::is_empty")]
-                delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
+        let ident_json_array_change_token_stream = {
+            let serde_skip_serializing_if_vec_is_empty_token_stream = quote::quote!{#[serde(skip_serializing_if = "Vec::is_empty")]};
+            quote::quote!{
+                #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
+                pub struct #struct_ident_token_stream {
+                    #serde_skip_serializing_if_vec_is_empty_token_stream
+                    create: std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>,
+                    #serde_skip_serializing_if_vec_is_empty_token_stream
+                    update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
+                    #serde_skip_serializing_if_vec_is_empty_token_stream
+                    delete: std::vec::Vec<postgresql_crud::JsonUuidOptionToUpdate>,
+                }
             }
         };
-        let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {struct_ident_stringified}");
+        let custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified = format!("custom serde error deserializing {struct_ident_token_stream}");
         let impl_try_new_for_ident_json_array_change_token_stream = {
             let create_update_delete_check_fields_are_empty_upper_camel_case = naming_conventions::CreateUpdateDeleteCheckFieldsAreEmptyUpperCamelCase;
             let not_unique_id_in_json_update_array_upper_camel_case = naming_conventions::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
@@ -1974,9 +1976,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let impl_serde_deserialize_for_ident_json_array_change_token_stream = {
-            let tuple_struct_struct_ident_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&struct_ident_stringified);
+            let tuple_struct_struct_ident_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&struct_ident_token_stream);
             let struct_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &struct_ident_stringified,
+                &struct_ident_token_stream,
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
             let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
@@ -4286,6 +4288,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 );
+                //todo tryr_new
                 let check_not_unique_id_token_stream = {
                     quote::quote!{
                         if let Some(value) = &__field0 {
