@@ -228,7 +228,7 @@ pub struct Jsongeneric {
 pub struct Something {
     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+    // pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
     // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
     // pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
@@ -301,7 +301,7 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub generic: GenericDoggie,
+    // pub generic: GenericDoggie,
     pub std_option_option_generic: StdOptionOptionGenericDoggie,
 
     // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,
@@ -370,11 +370,11 @@ pub struct Something {
     postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+    // pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
     // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
 
     pub generic: GenericCat,
-    pub std_option_option_generic: StdOptionOptionGenericCat,
+    // pub std_option_option_generic: StdOptionOptionGenericCat,
 
     // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
     // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
