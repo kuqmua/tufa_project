@@ -1196,7 +1196,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToRead<SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, SomethingGeneratePostgresqlQueryPartToReadErrorNamed> for SomethingFieldToRead {
-//     fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+//     fn generate_postgresql_query_part_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
 //         if value.is_empty() {
 //             return Err(SomethingGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -1276,19 +1276,19 @@ fn test_dd() {
 //                 };
 //                 Ok(format!("jsonb_build_object('std_option_option_std_vec_vec_std_option_option_std_primitive_i8',case when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8') = 'array' then jsonb_build_object('Ok',(select jsonb_agg(case when jsonb_typeof(value) = 'number' then jsonb_build_object('Ok',value) when jsonb_typeof(value) = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_option_option_std_primitive_i8[array element] is not number and not null')) end) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8')) with ordinality where ordinality between {start} and {end}))when jsonb_typeof({column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8') = 'null' then jsonb_build_object('Ok',null) else jsonb_build_object(jsonb_build_object('Err','type of {column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_std_option_option_std_primitive_i8 is not array and not null')) end)"))
 //             }
-//             Self::Generic(fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(fields_vec, &format!("{column_name_and_maybe_field_getter}->'generic'"), &format!("{column_name_and_maybe_field_getter_for_error_message}.generic"), false) {
+//             Self::Generic(fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_vec(fields_vec, &format!("{column_name_and_maybe_field_getter}->'generic'"), &format!("{column_name_and_maybe_field_getter_for_error_message}.generic"), false) {
 //                 Ok(value) => Ok(format!("jsonb_build_object('generic',{value})")),
 //                 Err(error) => {
 //                     return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::CatGeneratePostgresqlQueryPartToReadFromSelfVec { field: error, code_occurence: error_occurence_lib::code_occurence!() });
 //                 }
 //             },
-//             Self::StdOptionOptionGeneric(fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(fields_vec, &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_generic"), true) {
+//             Self::StdOptionOptionGeneric(fields_vec) => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_vec(fields_vec, &format!("{column_name_and_maybe_field_getter}->'std_option_option_generic'"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_generic"), true) {
 //                 Ok(value) => Ok(format!("jsonb_build_object('std_option_option_generic',{value})")),
 //                 Err(error) => {
 //                     return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::MouseGeneratePostgresqlQueryPartToReadFromSelfVec { field: error, code_occurence: error_occurence_lib::code_occurence!() });
 //                 }
 //             },
-//             Self::StdVecVecGenericWithId { field_vec, limit, offset } => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(field_vec, &format!("value"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_generic_with_id[array element]"), false) {
+//             Self::StdVecVecGenericWithId { field_vec, limit, offset } => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_vec(field_vec, &format!("value"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_vec_vec_generic_with_id[array element]"), false) {
 //                 Ok(value) => {
 //                     let start = offset;
 //                     let end = match offset.checked_add(*limit) {
@@ -1303,7 +1303,7 @@ fn test_dd() {
 //                     return Err(SomethingGeneratePostgresqlQueryPartToReadErrorNamed::DoggieGeneratePostgresqlQueryPartToReadFromSelfVec { field: error, code_occurence: error_occurence_lib::code_occurence!() });
 //                 }
 //             },
-//             Self::StdOptionOptionStdVecVecGenericWithId { field_vec, limit, offset } => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_self_vec(field_vec, &format!("value"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_generic_with_id[array element]"), false) {
+//             Self::StdOptionOptionStdVecVecGenericWithId { field_vec, limit, offset } => match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_vec(field_vec, &format!("value"), &format!("{column_name_and_maybe_field_getter_for_error_message}.std_option_option_std_vec_vec_generic_with_id[array element]"), false) {
 //                 Ok(value) => {
 //                     let start = offset;
 //                     let end = match offset.checked_add(*limit) {
@@ -2989,7 +2989,7 @@ fn test_dd() {
 //     }
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToRead<DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, ()> for DoggieFieldToRead {
-//     fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+//     fn generate_postgresql_query_part_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
 //         if value.is_empty() {
 //             return Err(DoggieGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -3475,7 +3475,7 @@ fn test_dd() {
 //     }
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToRead<CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, ()> for CatFieldToRead {
-//     fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+//     fn generate_postgresql_query_part_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
 //         if value.is_empty() {
 //             return Err(CatGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -3958,7 +3958,7 @@ fn test_dd() {
 //     }
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToRead<MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed, ()> for MouseFieldToRead {
-//     fn generate_postgresql_query_part_to_read_from_self_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
+//     fn generate_postgresql_query_part_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_optional: std::primitive::bool) -> Result<std::string::String, MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed> {
 //         if value.is_empty() {
 //             return Err(MouseGeneratePostgresqlQueryPartToReadFromSelfVecErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }

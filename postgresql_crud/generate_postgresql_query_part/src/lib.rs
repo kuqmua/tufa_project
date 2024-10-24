@@ -19,13 +19,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_field_to_update_upper_camel_case = naming_conventions::SelfFieldToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let add_postfix_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_stringified = |value: &std::primitive::str| format!("{value}{}", naming_conventions::GeneratePostgresqlQueryPartToReadFromSelfVecErrorNamedUpperCamelCase);
-    let ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream = {
-        let value = add_postfix_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_stringified(&ident.to_string());
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+
+    let ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream = naming_conventions::SelfGeneratePostgresqlQueryPartToReadFromVecErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+
     let generic_ident_upper_camel_case = naming_conventions::GenericSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     fn generate_impl_std_fmt_display_for_tokens_token_stream(value_token_stream: &impl quote::ToTokens) -> proc_macro2::TokenStream {
         quote::quote!{
@@ -2653,7 +2649,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     });
                     quote::quote!{
                         impl postgresql_crud::GeneratePostgresqlQueryPartToRead<#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream, ()> for #ident_field_to_read_upper_camel_case {
-                            fn generate_postgresql_query_part_to_read_from_self_vec(
+                            fn generate_postgresql_query_part_to_read_from_vec(
                                 value: &std::vec::Vec<Self>,
                                 column_name_and_maybe_field_getter: &std::primitive::str,
                                 column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
@@ -3564,7 +3560,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                        //todo use naming conventions
+                        //todo path before ident also goinf to be upper camel case if use naming_conventions struct. maybe add methods from syn::Type or something
                         let element_type_option_to_update_try_generate_bind_increments_error_named_upper_camel_case_token_stream = {
                             let value = format!(
                                 "{}{}",
