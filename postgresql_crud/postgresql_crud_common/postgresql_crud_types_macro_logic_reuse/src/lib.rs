@@ -1367,24 +1367,6 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
     };
     let impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_option_to_update_try_generate_bind_increments_error_named_for_ident_option_to_update_token_stream = {
         let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-// std_primitive_i32 std_primitive_i64"
-        let pr = if ident == "JsonStdPrimitiveI32" || ident == "JsonStdPrimitiveI64" {
-            quote::quote!{
-                
-                
-            println!("jsonb_set_accumulator {jsonb_set_accumulator}");
-            println!("jsonb_set_target {jsonb_set_target}");
-            println!("jsonb_set_path {jsonb_set_path}");
-
-
-            println!("after macro try_generate_bind_increments end: {r}\n");
-            
-            
-            }
-        }
-        else {
-            quote::quote!{}
-        };
         quote::quote!{
             impl GeneratePostgresqlQueryPartToUpdate<#ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case> for #ident_option_to_update_upper_camel_case {
                 fn try_generate_bind_increments(
@@ -1398,55 +1380,7 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
-                            //
-//works
-
-	// case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
-	// then
-	//     (sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic')::jsonb
-	// else
-	//     '{}'::jsonb
-	// end
-	// ||
-	// jsonb_build_object(
-	//   	'generic',
-	// 	jsonb_build_object(
-	// 		'std_primitive_i32',
-	// 		8
-	// 	)
-	// )
-
-
-//not working
-
-// jsonb_set(case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'object' then (sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic')::jsonb else '{}'::jsonb end,'{generic,std_primitive_i32}',$1)
-
-                            //
-
-
-
-
-// jsonb_set_accumulator case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'object' then (sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic')::jsonb else '{}'::jsonb end
-// jsonb_set_target sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'generic'->'std_primitive_i32'
-// jsonb_set_path generic,std_primitive_i32
-
-
-                            let r = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})");
-
-// let r = format!("
-// 	{jsonb_set_accumulator}
-// 	||
-// 	jsonb_build_object(
-// 	  	'generic',
-// 		jsonb_build_object(
-// 			'std_primitive_i32',
-// 			8
-// 		)
-// 	)
-// ");
-
-                            #pr
-                            Ok(r)
+                            Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
                         },
                         None => Err(#ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
                     }
