@@ -1368,6 +1368,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     jsonb_set_target: &std::primitive::str,
                     jsonb_set_path: &std::primitive::str,
                     increment: &mut std::primitive::u64,
+                    is_optional_object: std::primitive::bool,
                 ) -> Result<std::string::String, #tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                     #try_generate_bind_increments_content_token_stream
                 }
@@ -1845,6 +1846,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                                 #field_ident_double_quotes_token_stream,
                                 increment,
+                                false,
                             ) {
                                 Ok(value) => {
                                     element_acc = value;
@@ -2546,6 +2548,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                                 &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
                                 increment,
+                                false,
                             ) {
                                 Ok(value) => {
                                     acc = value;
@@ -3215,6 +3218,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                                     #jsonb_set_path_field_ident_double_quotes_token_stream,
                                     increment,
+                                    false,
                                 ) {
                                     Ok(value) => {
                                         #std_option_option_generic_acc_snake_case = value;
@@ -3826,6 +3830,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             jsonb_set_target,
                             jsonb_set_path,
                             increment,
+                            false,
                         ) {
                             Ok(value) => Ok(value),
                             Err(error) => {
@@ -4398,6 +4403,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     jsonb_set_target,
                                     jsonb_set_path,
                                     increment,
+                                    false,
                                 ) {
                                     Ok(value) => Ok(value),
                                     Err(error) => {

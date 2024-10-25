@@ -810,6 +810,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                 "sqlx_types_json_t_as_postgresql_json_b_not_null", //sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic'->0->'generic'
                 "",                                                //{std_vec_vec_generic,0}
                 &mut increment,
+                false
             ) {
                 Ok(value) => {
                     query.push_str(&value);
@@ -4442,7 +4443,7 @@ fn test_dd() {
 
 
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionToUpdate {
-    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::from(jsonb_set_accumulator);
         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
             true => std::string::String::default(),
@@ -4451,7 +4452,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionToUpdat
         for element in &self.0 {
             match &element {
                 SomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
-                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i16'"), &format!("{previous_jsonb_set_path}std_primitive_i16"), increment) {
+                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i16'"), &format!("{previous_jsonb_set_path}std_primitive_i16"), increment, false) {
                         Ok(value) => {
                             acc = value;
                         }
@@ -4464,7 +4465,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionToUpdat
                     }
                 }
                 SomethingOptionToUpdateOrigin::StdOptionOptionGeneric(value) => {
-                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'std_option_option_generic'"), &format!("{previous_jsonb_set_path}std_option_option_generic"), increment) {
+                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'std_option_option_generic'"), &format!("{previous_jsonb_set_path}std_option_option_generic"), increment, false) {
                         Ok(value) => {
                             acc = value;
                         }
@@ -4496,7 +4497,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionToUpdat
     }
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<DoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> for DoggieOptionToUpdate {
-    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, DoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, DoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::from(jsonb_set_accumulator);
         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
             true => std::string::String::default(),
@@ -4504,7 +4505,9 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<DoggieOptionToUpdateTr
         };
         for element in &self.0 {
             match &element {
-                DoggieOptionToUpdateOrigin::StdPrimitiveI8(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i8'"), &format!("{previous_jsonb_set_path}std_primitive_i8"), increment) {
+                DoggieOptionToUpdateOrigin::StdPrimitiveI8(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                    &value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i8'"), &format!("{previous_jsonb_set_path}std_primitive_i8"), increment, false
+                ) {
                     Ok(value) => {
                         acc = value;
                     }
@@ -4515,7 +4518,9 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<DoggieOptionToUpdateTr
                         });
                     }
                 },
-                DoggieOptionToUpdateOrigin::Generic(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'generic'"), &format!("{previous_jsonb_set_path}generic"), increment) {
+                DoggieOptionToUpdateOrigin::Generic(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                    &value.value, &acc, &format!("{jsonb_set_target}->'generic'"), &format!("{previous_jsonb_set_path}generic"), increment, false
+                ) {
                     Ok(value) => {
                         acc = value;
                     }
@@ -4545,40 +4550,206 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<DoggieOptionToUpdateTr
     }
 }
 impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> for CatOptionToUpdate {
-    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
-        let mut acc = std::string::String::from(jsonb_set_accumulator);
-        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-            true => std::string::String::default(),
-            false => format!("{jsonb_set_path},"),
-        };
-        for element in &self.0 {
-            match &element {
-                CatOptionToUpdateOrigin::StdPrimitiveI32(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i32'"), &format!("{previous_jsonb_set_path}std_primitive_i32"), increment) {
-                    Ok(value) => {
-                        acc = value;
-                    }
-                    Err(error) => {
-                        return Err(CatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
-                            error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                },
-                CatOptionToUpdateOrigin::StdPrimitiveI64(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i64'"), &format!("{previous_jsonb_set_path}std_primitive_i64"), increment) {
-                    Ok(value) => {
-                        acc = value;
-                    }
-                    Err(error) => {
-                        return Err(CatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI64 {
-                            error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                },
+    // ..todo maybe add previous jsonb_set_target, like &format!("{jsonb_set_target}") instead of  &format!("{jsonb_set_target}->'std_option_option_generic'"),
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        if is_optional_object {
+            //
+
+            println!("INPUT ACC {jsonb_set_accumulator}");
+            println!("INPUT TARGET {jsonb_set_target}");
+            println!("INPUT PATH {jsonb_set_path}");
+
+// INPUT ACC jsonb_set(case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic') = 'object' then (sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic')::jsonb else '{}'::jsonb end,'{std_primitive_i8}',$2)
+// INPUT TARGET sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'->'generic'
+// INPUT PATH generic
+
+
+
+// jsonb_set(
+//   case when jsonb_typeof(
+//     sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//   ) = 'object' then (
+//     sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//   ):: jsonb else '{}' :: jsonb end, 
+//   '{std_primitive_i8}', 
+//   $2
+// )
+
+
+
+            let 
+            // mut
+             acc = std::string::String::from(jsonb_set_accumulator);
+            let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                true => std::string::String::default(),
+                false => format!("{jsonb_set_path},"),
+            };
+
+
+	// jsonb_set(
+
+
+
+	// 	jsonb_set(
+	// 	    case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
+	// 		then sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+	// 		else '{}'::jsonb
+	// 		end,
+	// 		'{generic}',
+	// 		jsonb_set(
+	// 			jsonb_set(
+	// 		    	case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
+	// 				then sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'->'generic'
+	// 				else '{}'::jsonb
+    //       			end, 
+    //       			'{std_primitive_i32}', 
+    //       			'3'
+    //     		),
+	// 			'{std_primitive_i64}',
+	// 			'4'
+	// 		)
+	// 	)
+        
+        
+        
+    //     ,
+	// 	'{std_primitive_i8}',
+	// 	'2'
+	// )
+
+//todo use previous target? 2 times
+            let mut local_acc = format!(
+"{jsonb_set_accumulator} || jsonb_set(case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object' then sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic' else '{{}}'::jsonb end, '{{{jsonb_set_path}}}', '{{}}'::jsonb)"
+);
+             //jsonb_set_accumulator
+// jsonb_set(
+//       case when jsonb_typeof(
+//         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//       ) = 'object' then (
+//         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//       ):: jsonb else '{}' :: jsonb end, 
+//       '{std_primitive_i8}', 
+//       $2
+//     )
+
+// jsonb_set(jsonb_set(,'{std_primitive_i32}',$3),'{std_primitive_i64}',$4)
+
+            for element in &self.0 {
+                match &element {
+                    CatOptionToUpdateOrigin::StdPrimitiveI32(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                        &value.value, 
+                        // &acc, 
+                        &local_acc,
+                        &format!("{jsonb_set_target}->'std_primitive_i32'"), 
+                        &format!("{previous_jsonb_set_path}std_primitive_i32"), 
+                        increment, 
+                        false
+                    ) {
+                        Ok(value) => {
+                            // acc = value;
+                            local_acc = value;
+                        }
+                        Err(error) => {
+                            return Err(CatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    },
+                    CatOptionToUpdateOrigin::StdPrimitiveI64(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                        &value.value,
+                        // &acc,
+                        &local_acc,
+                        &format!("{jsonb_set_target}->'std_primitive_i64'"),
+                        &format!("{previous_jsonb_set_path}std_primitive_i64"),
+                        increment,
+                        false
+                    ) {
+                        Ok(value) => {
+                            // acc = value;
+                            local_acc = value;
+                        }
+                        Err(error) => {
+                            return Err(CatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI64 {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    },
+                }
             }
+            //
+            println!("LOCALL ACCC {local_acc}");
+
+
+
+            // jsonb_set(jsonb_set(,'{std_primitive_i32}',$3),'{std_primitive_i64}',$4)
+
+// jsonb_set(
+//   jsonb_set(
+//     jsonb_set(
+//       case when jsonb_typeof(
+//         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//       ) = 'object' then (
+//         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//       ):: jsonb else '{}' :: jsonb end, 
+//       '{std_primitive_i8}', 
+//       $2
+//     ), 
+//     '{std_primitive_i32}', 
+//     $3
+//   ), 
+//   '{std_primitive_i64}', 
+//   $4
+// )
+
+            //
+            println!("CatOptionToUpdate END: {acc}");
+            // Ok(acc)
+            Ok(local_acc)
+            //
         }
-        println!("CatOptionToUpdate END: {acc}");
-        Ok(acc)
+        else {
+            //
+            let mut acc = std::string::String::from(jsonb_set_accumulator);
+            let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                true => std::string::String::default(),
+                false => format!("{jsonb_set_path},"),
+            };
+            for element in &self.0 {
+                match &element {
+                    CatOptionToUpdateOrigin::StdPrimitiveI32(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                        &value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i32'"), &format!("{previous_jsonb_set_path}std_primitive_i32"), increment, false
+                    ) {
+                        Ok(value) => {
+                            acc = value;
+                        }
+                        Err(error) => {
+                            return Err(CatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI32 {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    },
+                    CatOptionToUpdateOrigin::StdPrimitiveI64(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                        &value.value, &acc, &format!("{jsonb_set_target}->'std_primitive_i64'"), &format!("{previous_jsonb_set_path}std_primitive_i64"), increment, false
+                    ) {
+                        Ok(value) => {
+                            acc = value;
+                        }
+                        Err(error) => {
+                            return Err(CatOptionToUpdateTryGenerateBindIncrementsErrorNamed::StdPrimitiveI64 {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    },
+                }
+            }
+            println!("CatOptionToUpdate END: {acc}");
+            Ok(acc)
+            //
+        }
     }
     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.0 {
@@ -4606,6 +4777,7 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
+        is_optional_object: std::primitive::bool
     ) -> Result<std::string::String, StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         Ok(match &self.0 {
             Some(value) => {
@@ -4613,7 +4785,9 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
                 for element in &value.0 {
                     match element {
                         SomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
-                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i16'"), "std_primitive_i16", increment) {
+                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                &value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i16'"), "std_primitive_i16", increment, false
+                            ) {
                                 Ok(value) => {
                                     std_option_option_generic_acc = value;
                                 }
@@ -4626,7 +4800,9 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
                             }
                         }
                         SomethingOptionToUpdateOrigin::StdOptionOptionGeneric(value) => {
-                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_option_option_generic'"), "std_option_option_generic", increment) {
+                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                &value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_option_option_generic'"), "std_option_option_generic", increment, false
+                            ) {
                                 Ok(value) => {
                                     std_option_option_generic_acc = value;
                                 }
@@ -4681,13 +4857,24 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
+        is_optional_object: std::primitive::bool
     ) -> Result<std::string::String, StdOptionOptionGenericDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        println!("ACCCCCC   {jsonb_set_accumulator}");
+        println!("JSONB_SET_TARGET   {jsonb_set_target}");
+        println!("JSONB_SET_PATH   {jsonb_set_path}");
+
+// ACCCCCC   jsonb_set(sqlx_types_json_t_as_postgresql_json_b_not_null,'{std_primitive_i16}',$1)
+// JSONB_SET_TARGET   sqlx_types_json_t_as_postgresql_json_b_not_null->'std_option_option_generic'
+// JSONB_SET_PATH   std_option_option_generic
+
         Ok(match &self.0 {
             Some(value) => {
                 let mut std_option_option_generic_acc = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
                 for element in &value.0 {
                     match element {
-                        DoggieOptionToUpdateOrigin::StdPrimitiveI8(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i8'"), "std_primitive_i8", increment) {
+                        DoggieOptionToUpdateOrigin::StdPrimitiveI8(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                            &value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i8'"), "std_primitive_i8", increment, true
+                        ) {
                             Ok(value) => {
                                 std_option_option_generic_acc = value;
                             }
@@ -4698,7 +4885,9 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
                                 });
                             }
                         },
-                        DoggieOptionToUpdateOrigin::Generic(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'generic'"), "generic", increment) {
+                        DoggieOptionToUpdateOrigin::Generic(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                            &value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'generic'"), "generic", increment, true
+                        ) {
                             Ok(value) => {
                                 std_option_option_generic_acc = value;
                             }
@@ -4710,9 +4899,58 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
                             }
                         },
                     }
-                }                
+                }       
+                println!("+++++++++++++");
+                println!("STD_OPTION_OPTION_ACC {std_option_option_generic_acc}");
+// jsonb_set(
+//   jsonb_set(
+//     jsonb_set(
+//       case when jsonb_typeof(
+//         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//       ) = 'object' then (
+//         sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//       ):: jsonb else '{}' :: jsonb end, 
+//       '{std_primitive_i8}', 
+//       $2
+//     ), 
+//     '{generic,std_primitive_i32}', 
+//     $3
+//   ), 
+//   '{generic,std_primitive_i64}', 
+//   $4
+// )
+
+                println!("------------");
                 let f = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_generic_acc})");
                 println!("StdOptionOptionGenericDoggieOptionToUpdate END: {f}");
+
+// jsonb_set(
+//   jsonb_set(
+//     sqlx_types_json_t_as_postgresql_json_b_not_null, 
+//     '{std_primitive_i16}', $1
+//   ), 
+//   '{std_option_option_generic}', 
+//   jsonb_set(
+//     jsonb_set(
+//       jsonb_set(
+//         case when jsonb_typeof(
+//           sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//         ) = 'object' then (
+//           sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'
+//         ):: jsonb else '{}' :: jsonb end, 
+//         '{std_primitive_i8}', 
+//         $2
+//       ), 
+//       '{generic,std_primitive_i32}', 
+//       $3
+//     ), 
+//     '{generic,std_primitive_i64}', 
+//     $4
+//   )
+// )
+
+
+                
                 f
             }
             None => match increment.checked_add(1) {
@@ -4754,13 +4992,16 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
+        is_optional_object: std::primitive::bool
     ) -> Result<std::string::String, StdOptionOptionGenericCatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         Ok(match &self.0 {
             Some(value) => {
                 let mut std_option_option_generic_acc = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
                 for element in &value.0 {
                     match element {
-                        CatOptionToUpdateOrigin::StdPrimitiveI32(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i32'"), "std_primitive_i32", increment) {
+                        CatOptionToUpdateOrigin::StdPrimitiveI32(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                            &value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i32'"), "std_primitive_i32", increment, false
+                        ) {
                             Ok(value) => {
                                 std_option_option_generic_acc = value;
                             }
@@ -4771,7 +5012,9 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
                                 });
                             }
                         },
-                        CatOptionToUpdateOrigin::StdPrimitiveI64(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(&value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i64'"), "std_primitive_i64", increment) {
+                        CatOptionToUpdateOrigin::StdPrimitiveI64(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                            &value.value, &std_option_option_generic_acc, &format!("{jsonb_set_target}->'std_primitive_i64'"), "std_primitive_i64", increment, false
+                        ) {
                             Ok(value) => {
                                 std_option_option_generic_acc = value;
                             }
@@ -4862,3 +5105,43 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGeneric
 //   ) 
 // where 
 //   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+
+
+
+
+// update 
+//   jsongeneric 
+// set 
+//   sqlx_types_json_t_as_postgresql_json_b_not_null = jsonb_set(
+//     jsonb_set(
+//       sqlx_types_json_t_as_postgresql_json_b_not_null, 
+//       '{std_primitive_i16}', '1'
+//     ), 
+//     '{std_option_option_generic}', 
+//     jsonb_set(
+//       jsonb_set(
+// 		jsonb_set(
+//           jsonb_set(
+//           	case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic') = 'object'
+// 			then (sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic')::jsonb
+// 			else '{}'::jsonb
+// 			end, 
+//           	'{std_primitive_i8}', 
+//           	'1'
+//         	), 
+//           '{generic}', 
+// 		   case when jsonb_typeof(sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'->'generic') = 'object'
+// 		   then (sqlx_types_json_t_as_postgresql_json_b_not_null -> 'std_option_option_generic'->'generic')::jsonb
+// 		   else '{}'::jsonb
+// 		   end
+//         ), 
+//         '{generic,std_primitive_i32}', 
+//         '1'
+//       ), 
+//       '{generic,std_primitive_i64}', 
+//       '1'
+//     )
+//   ) 
+// where 
+//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+

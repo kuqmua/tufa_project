@@ -712,7 +712,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "value": [
       {
         "std_primitive_i16": {
-          "value": 0
+          "value": 1
         }
       },
       {
@@ -722,7 +722,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
           [
             {
               "std_primitive_i8": {
-                "value": 0
+                "value": 1
               }
             },
             {
@@ -730,12 +730,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                 "value": [
                   {
                     "std_primitive_i32": {
-                      "value": 0
+                      "value": 1
                     }
                   },
                   {
                     "std_primitive_i64": {
-                      "value": 0
+                      "value": 1
                     }
                   }
                 ]
