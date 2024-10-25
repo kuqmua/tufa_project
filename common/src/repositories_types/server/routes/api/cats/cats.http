@@ -646,22 +646,22 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "filter": [
           {
-            "std_primitive_i8": {}
-          },
-          {
             "std_primitive_i16": {}
-          },
-          {
-            "generic": [
-              {
-                "std_primitive_i32": {}
-              }
-            ]
           },
           {
             "std_option_option_generic": [
               {
-                "std_primitive_i32": {}
+                "std_primitive_i8": {}
+              },
+              {
+                "generic": [
+                  {
+                    "std_primitive_i32": {}
+                  },
+                  {
+                    "std_primitive_i64": {}
+                  }
+                ]
               }
             ]
           }
@@ -670,6 +670,11 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     }
   ]
 }
+
+# {
+#   "std_primitive_i16": 1,
+#   "std_option_option_generic": null
+# }
 
 ###
 
@@ -712,7 +717,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "value": [
       {
         "std_primitive_i16": {
-          "value": 1
+          "value": 2
         }
       },
       {
@@ -735,7 +740,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                   },
                   {
                     "std_primitive_i64": {
-                      "value": 1
+                      "value": 10
                     }
                   }
                 ]

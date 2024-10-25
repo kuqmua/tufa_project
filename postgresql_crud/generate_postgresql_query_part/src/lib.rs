@@ -2544,14 +2544,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{
                             #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                                 &value.value,
-                                &acc,
+                                &local_acc,
                                 &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
                                 &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
                                 increment,
                                 false,
                             ) {
                                 Ok(value) => {
-                                    acc = value;
+                                    local_acc = value;
                                 }
                                 Err(error) => {
                                     return Err(#ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::#variant_ident_upper_camel_case_token_stream {
@@ -2568,12 +2568,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             true => std::string::String::default(),
                             false => format!("{jsonb_set_path},"),
                         };
+                        let mut local_acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end)");
                         for element in &self.0 {
                             match &element {
                                 #(#try_generate_bind_increments_variants_token_stream),*
                             }
                         }
-                        Ok(acc)
+                        Ok(local_acc)
                     }
                 },
                 &{
@@ -2609,7 +2610,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #impl_serde_deserialize_for_ident_option_to_update_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
                 #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
-                // #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_option_to_update_try_generate_bind_increments_error_named_for_ident_option_to_update_token_stream
+                #impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_option_to_update_try_generate_bind_increments_error_named_for_ident_option_to_update_token_stream
             }
         };
         quote::quote!{
@@ -3295,7 +3296,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #impl_try_new_for_std_option_option_generic_ident_option_to_update_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_option_to_update_token_stream
                 #std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
-                // #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_generic_ident_option_to_update_token_stream
+                #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_generic_ident_option_to_update_token_stream
             }
         };
         quote::quote!{
