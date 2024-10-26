@@ -3304,7 +3304,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #impl_std_fmt_display_for_std_option_option_generic_ident_token_stream
 
             #create_token_stream
-            #read_token_stream
+            // #read_token_stream
             #update_token_stream
         }
     };
