@@ -3087,7 +3087,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 false,
                 &quote::quote!{"jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)"}
             );
-
             let std_option_option_generic_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::StdOptionOptionGenericSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &ident_options_to_read_without_id_upper_camel_case
@@ -3098,9 +3097,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #std_option_option_generic_ident_field_reader_token_stream
                 #impl_serde_deserialize_for_std_option_option_generic_ident_field_reader_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_field_reader_token_stream
-                // #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_token_stream
+                #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_token_stream
 
-                // #std_option_option_generic_ident_reader_token_stream
+                #std_option_option_generic_ident_reader_token_stream
             }
         };
         let update_token_stream = {

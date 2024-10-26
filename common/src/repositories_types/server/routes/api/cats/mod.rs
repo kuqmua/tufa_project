@@ -5121,31 +5121,31 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
 //         Self(postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
 //     }
 // }
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct StdOptionOptionGenericSomethingReader(pub StdOptionOptionGenericSomethingOptionsToRead);
-impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericSomethingFieldReader {
-    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
-        let mut acc = std::string::String::default();
-        for element in &self.0 {
-            match element {
-                SomethingFieldToRead::StdOptionOptionGeneric(value) => {
-                    acc.push_str(&format!(
-                        "{}||",
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            value,
-                            "std_option_option_generic",
-                            &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                            &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
-                        )
-                    ));
-                }
-            }
-        }
-        let _ = acc.pop();
-        let _ = acc.pop();
-        format!("jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)")
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct StdOptionOptionGenericSomethingReader(pub StdOptionOptionGenericSomethingOptionsToRead);
+// impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericSomethingFieldReader {
+//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//         let mut acc = std::string::String::default();
+//         for element in &self.0 {
+//             match element {
+//                 SomethingFieldToRead::StdOptionOptionGeneric(value) => {
+//                     acc.push_str(&format!(
+//                         "{}||",
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                             value,
+//                             "std_option_option_generic",
+//                             &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+//                             &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+//                         )
+//                     ));
+//                 }
+//             }
+//         }
+//         let _ = acc.pop();
+//         let _ = acc.pop();
+//         format!("jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)")
+//     }
+// }
 
 
 //////////////////////
@@ -5393,28 +5393,28 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
 //         Self(postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
 //     }
 // }
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct StdOptionOptionGenericDoggieReader(pub StdOptionOptionGenericDoggieOptionsToRead);
-impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericDoggieFieldReader {
-    fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
-        let mut acc = std::string::String::default();
-        for element in &self.0 {
-            match element {
-                DoggieFieldToRead::StdPrimitiveI8(value) => {
-                    acc.push_str(&format!(
-                        "{}||",
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            value,
-                            "std_primitive_i8",
-                            &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                            &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
-                        )
-                    ));
-                }
-            }
-        }
-        let _ = acc.pop();
-        let _ = acc.pop();
-        format!("jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)")
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct StdOptionOptionGenericDoggieReader(pub StdOptionOptionGenericDoggieOptionsToRead);
+// impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericDoggieFieldReader {
+//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//         let mut acc = std::string::String::default();
+//         for element in &self.0 {
+//             match element {
+//                 DoggieFieldToRead::StdPrimitiveI8(value) => {
+//                     acc.push_str(&format!(
+//                         "{}||",
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                             value,
+//                             "std_primitive_i8",
+//                             &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+//                             &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+//                         )
+//                     ));
+//                 }
+//             }
+//         }
+//         let _ = acc.pop();
+//         let _ = acc.pop();
+//         format!("jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)")
+//     }
+// }
