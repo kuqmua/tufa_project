@@ -486,13 +486,8 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 {
   "std_primitive_bool_as_postgresql_bool_not_null": false,
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
-    "std_primitive_i16": 0,
     "std_option_option_generic": {
-      "std_primitive_i8": 0,
-      "generic": {
-        "std_primitive_i32": 0,
-        "std_primitive_i64": 0
-      }
+      "std_primitive_i8": 0
     }
   }
 }
@@ -646,22 +641,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       "sqlx_types_json_t_as_postgresql_json_b_not_null": {
         "filter": [
           {
-            "std_primitive_i16": {}
-          },
-          {
             "std_option_option_generic": [
               {
                 "std_primitive_i8": {}
-              },
-              {
-                "generic": [
-                  {
-                    "std_primitive_i32": {}
-                  },
-                  {
-                    "std_primitive_i64": {}
-                  }
-                ]
               }
             ]
           }
@@ -670,11 +652,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     }
   ]
 }
-
-# {
-#   "std_primitive_i16": 1,
-#   "std_option_option_generic": null
-# }
 
 ###
 
@@ -716,37 +693,16 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
     "value": [
       {
-        "std_primitive_i16": {
-          "value": 2
-        }
-      },
-      {
         "std_option_option_generic": {
           "value": 
-          # null
-          [
-            {
-              "std_primitive_i8": {
-                "value": 1
-              }
-            },
-            {
-              "generic": {
-                "value": [
-                  {
-                    "std_primitive_i32": {
-                      "value": 1
-                    }
-                  },
-                  {
-                    "std_primitive_i64": {
-                      "value": 10
-                    }
-                  }
-                ]
-              }
-            }
-          ]
+          null         
+          # [
+          #   {
+          #     "std_primitive_i8": {
+          #       "value": 0
+          #     }
+          #   }
+          # ]
         }
       }
     ]
