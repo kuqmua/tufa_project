@@ -3097,7 +3097,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 #std_option_option_generic_ident_field_reader_token_stream
                 #impl_serde_deserialize_for_std_option_option_generic_ident_field_reader_token_stream
-                // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_field_reader_token_stream
+                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_field_reader_token_stream
                 // #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_generic_ident_field_reader_token_stream
 
                 // #std_option_option_generic_ident_reader_token_stream
