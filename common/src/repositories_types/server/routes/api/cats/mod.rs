@@ -5026,38 +5026,38 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
         ))
     }
 }
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct StdOptionOptionGenericSomethingFieldReader(std::vec::Vec<SomethingFieldToRead>);
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum StdOptionOptionGenericSomethingTryNewErrorNamed {
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: SomethingFieldToRead,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl StdOptionOptionGenericSomethingFieldReader {
-    pub fn try_new(value: std::vec::Vec<SomethingFieldToRead>) -> Result<Self, StdOptionOptionGenericSomethingTryNewErrorNamed> {
-        if value.is_empty() {
-            return Err(StdOptionOptionGenericSomethingTryNewErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-        }
-        let mut unique = vec![];
-        for element in value {
-            if unique.contains(&element) {
-                return Err(StdOptionOptionGenericSomethingTryNewErrorNamed::NotUniqueFieldFilter {
-                    field: element,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            } else {
-                unique.push(element);
-            }
-        }
-        Ok(Self(unique))
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct StdOptionOptionGenericSomethingFieldReader(std::vec::Vec<SomethingFieldToRead>);
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum StdOptionOptionGenericSomethingTryNewErrorNamed {
+//     FieldsFilterIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueFieldFilter {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: SomethingFieldToRead,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl StdOptionOptionGenericSomethingFieldReader {
+//     pub fn try_new(value: std::vec::Vec<SomethingFieldToRead>) -> Result<Self, StdOptionOptionGenericSomethingTryNewErrorNamed> {
+//         if value.is_empty() {
+//             return Err(StdOptionOptionGenericSomethingTryNewErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+//         }
+//         let mut unique = vec![];
+//         for element in value {
+//             if unique.contains(&element) {
+//                 return Err(StdOptionOptionGenericSomethingTryNewErrorNamed::NotUniqueFieldFilter {
+//                     field: element,
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 });
+//             } else {
+//                 unique.push(element);
+//             }
+//         }
+//         Ok(Self(unique))
+//     }
+// }
 impl<'de> serde::Deserialize<'de> for StdOptionOptionGenericSomethingFieldReader {
     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
     where
@@ -5146,6 +5146,10 @@ impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOption
         format!("jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)")
     }
 }
+
+
+//////////////////////
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
 pub struct StdOptionOptionGenericDoggieOptionsToReadOrigin {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5294,38 +5298,38 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
         ))
     }
 }
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct StdOptionOptionGenericDoggieFieldReader(std::vec::Vec<DoggieFieldToRead>);
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum StdOptionOptionGenericDoggieTryNewErrorNamed {
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: DoggieFieldToRead,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl StdOptionOptionGenericDoggieFieldReader {
-    pub fn try_new(value: std::vec::Vec<DoggieFieldToRead>) -> Result<Self, StdOptionOptionGenericDoggieTryNewErrorNamed> {
-        if value.is_empty() {
-            return Err(StdOptionOptionGenericDoggieTryNewErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-        }
-        let mut unique = vec![];
-        for element in value {
-            if unique.contains(&element) {
-                return Err(StdOptionOptionGenericDoggieTryNewErrorNamed::NotUniqueFieldFilter {
-                    field: element,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            } else {
-                unique.push(element);
-            }
-        }
-        Ok(Self(unique))
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct StdOptionOptionGenericDoggieFieldReader(std::vec::Vec<DoggieFieldToRead>);
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum StdOptionOptionGenericDoggieTryNewErrorNamed {
+//     FieldsFilterIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueFieldFilter {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: DoggieFieldToRead,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl StdOptionOptionGenericDoggieFieldReader {
+//     pub fn try_new(value: std::vec::Vec<DoggieFieldToRead>) -> Result<Self, StdOptionOptionGenericDoggieTryNewErrorNamed> {
+//         if value.is_empty() {
+//             return Err(StdOptionOptionGenericDoggieTryNewErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+//         }
+//         let mut unique = vec![];
+//         for element in value {
+//             if unique.contains(&element) {
+//                 return Err(StdOptionOptionGenericDoggieTryNewErrorNamed::NotUniqueFieldFilter {
+//                     field: element,
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 });
+//             } else {
+//                 unique.push(element);
+//             }
+//         }
+//         Ok(Self(unique))
+//     }
+// }
 impl<'de> serde::Deserialize<'de> for StdOptionOptionGenericDoggieFieldReader {
     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
     where
