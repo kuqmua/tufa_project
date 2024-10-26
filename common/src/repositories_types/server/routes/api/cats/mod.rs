@@ -5058,63 +5058,63 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
 //         Ok(Self(unique))
 //     }
 // }
-impl<'de> serde::Deserialize<'de> for StdOptionOptionGenericSomethingFieldReader {
-    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-    where
-        __D: serde::Deserializer<'de>,
-    {
-        #[doc(hidden)]
-        struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<StdOptionOptionGenericSomethingFieldReader>,
-            lifetime: serde::__private::PhantomData<&'de ()>,
-        }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = StdOptionOptionGenericSomethingFieldReader;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "tuple struct StdOptionOptionGenericSomethingFieldReader")
-            }
-            #[inline]
-            fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-            where
-                __E: serde::Deserializer<'de>,
-            {
-                let __field0: std::vec::Vec<SomethingFieldToRead> = <std::vec::Vec<SomethingFieldToRead> as serde::Deserialize>::deserialize(__e)?;
-                match StdOptionOptionGenericSomethingFieldReader::try_new(__field0) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                    }
-                }
-            }
-            #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::SeqAccess<'de>,
-            {
-                let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<SomethingFieldToRead>>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct StdOptionOptionGenericSomethingFieldReader with 1 element"));
-                    }
-                };
-                match StdOptionOptionGenericSomethingFieldReader::try_new(__field0) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                    }
-                }
-            }
-        }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "StdOptionOptionGenericSomethingFieldReader",
-            __Visitor {
-                marker: serde::__private::PhantomData::<StdOptionOptionGenericSomethingFieldReader>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
-    }
-}
+// impl<'de> serde::Deserialize<'de> for StdOptionOptionGenericSomethingFieldReader {
+//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+//     where
+//         __D: serde::Deserializer<'de>,
+//     {
+//         #[doc(hidden)]
+//         struct __Visitor<'de> {
+//             marker: serde::__private::PhantomData<StdOptionOptionGenericSomethingFieldReader>,
+//             lifetime: serde::__private::PhantomData<&'de ()>,
+//         }
+//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+//             type Value = StdOptionOptionGenericSomethingFieldReader;
+//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(__formatter, "tuple struct StdOptionOptionGenericSomethingFieldReader")
+//             }
+//             #[inline]
+//             fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+//             where
+//                 __E: serde::Deserializer<'de>,
+//             {
+//                 let __field0: std::vec::Vec<SomethingFieldToRead> = <std::vec::Vec<SomethingFieldToRead> as serde::Deserialize>::deserialize(__e)?;
+//                 match StdOptionOptionGenericSomethingFieldReader::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//             #[inline]
+//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::SeqAccess<'de>,
+//             {
+//                 let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<SomethingFieldToRead>>(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct StdOptionOptionGenericSomethingFieldReader with 1 element"));
+//                     }
+//                 };
+//                 match StdOptionOptionGenericSomethingFieldReader::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//         }
+//         serde::Deserializer::deserialize_newtype_struct(
+//             __deserializer,
+//             "StdOptionOptionGenericSomethingFieldReader",
+//             __Visitor {
+//                 marker: serde::__private::PhantomData::<StdOptionOptionGenericSomethingFieldReader>,
+//                 lifetime: serde::__private::PhantomData,
+//             },
+//         )
+//     }
+// }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionGenericSomethingFieldReader {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
@@ -5330,63 +5330,63 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
 //         Ok(Self(unique))
 //     }
 // }
-impl<'de> serde::Deserialize<'de> for StdOptionOptionGenericDoggieFieldReader {
-    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-    where
-        __D: serde::Deserializer<'de>,
-    {
-        #[doc(hidden)]
-        struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<StdOptionOptionGenericDoggieFieldReader>,
-            lifetime: serde::__private::PhantomData<&'de ()>,
-        }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = StdOptionOptionGenericDoggieFieldReader;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "tuple struct StdOptionOptionGenericDoggieFieldReader")
-            }
-            #[inline]
-            fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-            where
-                __E: serde::Deserializer<'de>,
-            {
-                let __field0: std::vec::Vec<DoggieFieldToRead> = <std::vec::Vec<DoggieFieldToRead> as serde::Deserialize>::deserialize(__e)?;
-                match StdOptionOptionGenericDoggieFieldReader::try_new(__field0) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                    }
-                }
-            }
-            #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::SeqAccess<'de>,
-            {
-                let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<DoggieFieldToRead>>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct StdOptionOptionGenericDoggieFieldReader with 1 element"));
-                    }
-                };
-                match StdOptionOptionGenericDoggieFieldReader::try_new(__field0) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                    }
-                }
-            }
-        }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "StdOptionOptionGenericDoggieFieldReader",
-            __Visitor {
-                marker: serde::__private::PhantomData::<StdOptionOptionGenericDoggieFieldReader>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
-    }
-}
+// impl<'de> serde::Deserialize<'de> for StdOptionOptionGenericDoggieFieldReader {
+//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+//     where
+//         __D: serde::Deserializer<'de>,
+//     {
+//         #[doc(hidden)]
+//         struct __Visitor<'de> {
+//             marker: serde::__private::PhantomData<StdOptionOptionGenericDoggieFieldReader>,
+//             lifetime: serde::__private::PhantomData<&'de ()>,
+//         }
+//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+//             type Value = StdOptionOptionGenericDoggieFieldReader;
+//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(__formatter, "tuple struct StdOptionOptionGenericDoggieFieldReader")
+//             }
+//             #[inline]
+//             fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+//             where
+//                 __E: serde::Deserializer<'de>,
+//             {
+//                 let __field0: std::vec::Vec<DoggieFieldToRead> = <std::vec::Vec<DoggieFieldToRead> as serde::Deserialize>::deserialize(__e)?;
+//                 match StdOptionOptionGenericDoggieFieldReader::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//             #[inline]
+//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::SeqAccess<'de>,
+//             {
+//                 let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<DoggieFieldToRead>>(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct StdOptionOptionGenericDoggieFieldReader with 1 element"));
+//                     }
+//                 };
+//                 match StdOptionOptionGenericDoggieFieldReader::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//         }
+//         serde::Deserializer::deserialize_newtype_struct(
+//             __deserializer,
+//             "StdOptionOptionGenericDoggieFieldReader",
+//             __Visitor {
+//                 marker: serde::__private::PhantomData::<StdOptionOptionGenericDoggieFieldReader>,
+//                 lifetime: serde::__private::PhantomData,
+//             },
+//         )
+//     }
+// }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionGenericDoggieFieldReader {
     #[inline]
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
