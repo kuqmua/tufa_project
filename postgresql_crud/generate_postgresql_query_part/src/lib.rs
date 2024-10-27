@@ -1042,18 +1042,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let field0_field1_token_stream = quote::quote!{__field0, __field1};
 
 
-    let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = |
-        enum_ident_token_stream: &dyn quote::ToTokens,
-        vec_content_token_stream: &dyn quote::ToTokens,
-    |{
-        quote::quote!{
-            impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #enum_ident_token_stream {
-                fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-                    vec![#vec_content_token_stream]
-                }
-            }
-        }
-    };
+
 
     let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
@@ -1061,6 +1050,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
 
     let common_token_stream = {
+        let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = |
+            enum_ident_token_stream: &dyn quote::ToTokens,
+            vec_content_token_stream: &dyn quote::ToTokens,
+        |{
+            quote::quote!{
+                impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #enum_ident_token_stream {
+                    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+                        vec![#vec_content_token_stream]
+                    }
+                }
+            }
+        };
         let create_token_stream = {
             let (
                 ident_to_create_origin_with_generated_id_token_stream,
