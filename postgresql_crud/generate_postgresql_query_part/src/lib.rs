@@ -2745,13 +2745,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         );
         let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&generic_with_id_ident_upper_camel_case);
 
-        let create_token_stream = {
-            let generic_with_id_ident_to_create_upper_camel_case = naming_conventions::GenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_with_id_ident_to_create_alias_token_stream = generate_pub_type_alias_token_stream(&generic_with_id_ident_to_create_upper_camel_case, &ident_to_create_origin_with_generated_id_upper_camel_case);
-            quote::quote!{
-                #generic_with_id_ident_to_create_alias_token_stream
-            }
-        };
         let read_token_stream = {
             let generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::GenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let generic_with_id_ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&generic_with_id_ident_options_to_read_upper_camel_case, true);
@@ -2865,7 +2858,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_generic_with_id_ident_token_stream
 
-            #create_token_stream
             #read_token_stream
         }
     };
