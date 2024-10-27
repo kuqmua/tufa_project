@@ -2866,7 +2866,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))"}
             );
 
-            //todo
             let generic_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::GenericSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &generic_ident_options_to_read_upper_camel_case
@@ -2947,7 +2946,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     match &self.0 {
                         Some(value) => match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(value, increment) {
                             Ok(value) => Ok(value),
-                            //todo additional error variant
                             Err(error) => Err(error)
                         },
                         //maybe not use null here and use increment logic
