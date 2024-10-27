@@ -2731,8 +2731,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
 
     let generic_with_id_ident_upper_camel_case = naming_conventions::GenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    
-    //its for GeneratePostgresqlQueryPart (json logic)
     let generic_with_id_ident_token_stream = {
         let generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
             &generic_with_id_ident_upper_camel_case,
@@ -2744,13 +2742,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         );
         let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&generic_with_id_ident_upper_camel_case);
-
         quote::quote!{
             #generic_with_id_ident_token_stream
             #impl_std_fmt_display_for_generic_with_id_ident_token_stream
         }
     };
-
 
     let json_value_variants_token_stream = {
         //its for GeneratePostgresqlQueryPart (json logic)
