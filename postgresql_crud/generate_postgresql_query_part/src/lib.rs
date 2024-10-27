@@ -1053,25 +1053,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
     };
     ///////
-    //
-    let generate_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
-        let fields_token_stream = vec_syn_field.iter().map(|element| {
-            let field_ident = element
-                .ident
-                .as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                });
-            let type_path_to_create_token_stream = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
-            quote::quote!{
-                #field_ident: #type_path_to_create_token_stream
-            }
-        });
-        generate_supported_generics_template_struct_token_stream(
-            struct_ident_token_stream,
-            &quote::quote!{{ #(#fields_token_stream),*}}
-        )
-    };
 
     let postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
@@ -2037,8 +2018,35 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
 
     let common_token_stream = {
-        let ident_to_create_origin_with_generated_id_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_origin_with_generated_id_upper_camel_case);
-        let ident_to_create_origin_without_generated_id_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_origin_without_generated_id_upper_camel_case);
+        let (
+            ident_to_create_origin_with_generated_id_token_stream,
+            ident_to_create_origin_without_generated_id_token_stream
+        ) = {
+            let generate_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
+                let fields_token_stream = vec_syn_field.iter().map(|element| {
+                    let field_ident = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        });
+                    let type_path_to_create_token_stream = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
+                    quote::quote!{
+                        #field_ident: #type_path_to_create_token_stream
+                    }
+                });
+                generate_supported_generics_template_struct_token_stream(
+                    struct_ident_token_stream,
+                    &quote::quote!{{ #(#fields_token_stream),*}}
+                )
+            };
+            let ident_to_create_origin_with_generated_id_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_origin_with_generated_id_upper_camel_case);
+            let ident_to_create_origin_without_generated_id_token_stream = generate_tokens_to_create_token_stream(&ident_to_create_origin_without_generated_id_upper_camel_case);
+            (
+                ident_to_create_origin_with_generated_id_token_stream,
+                ident_to_create_origin_without_generated_id_token_stream
+            )
+        };
         quote::quote!{
             #ident_to_create_origin_with_generated_id_token_stream
             #ident_to_create_origin_without_generated_id_token_stream
@@ -2052,7 +2060,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let create_token_stream = {
             let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_to_create_alias_token_stream = generate_pub_type_alias_token_stream(&ident_to_create_upper_camel_case, &ident_to_create_origin_without_generated_id_upper_camel_case);
-            //todo reuse it for ident_to_create_origin_without_generated_id_upper_camel_case and ident_to_create_origin_with_generated_id_upper_camel_case
             let impl_postgresql_crud_bind_query_for_ident_to_create_token_stream = {
                 let try_generate_bind_increments_token_stream = vec_syn_field.iter().map(|element| {
                     let element_ident = element.ident.as_ref().unwrap_or_else(|| {
