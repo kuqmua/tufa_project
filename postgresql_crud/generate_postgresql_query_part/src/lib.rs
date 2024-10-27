@@ -1332,16 +1332,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
-    let generate_custom_serde_error_deserializing_option_to_update_field_is_not_unique_to_update_token_stream = |
-        tokens_option_to_update_upper_camel_case: &dyn std::fmt::Display,
-        variant_ident_upper_camel_case: &dyn std::fmt::Display,
-    |{
-        proc_macro_common::generate_quotes::double_quotes_token_stream(
-            &format!("custom serde error deserializing {tokens_option_to_update_upper_camel_case}: {ident_field_to_update_upper_camel_case} variant {variant_ident_upper_camel_case} is not unique to update"),
-            &proc_macro_name_upper_camel_case_ident_stringified
-        )
-    };
-
     let generate_tokens_try_generate_bind_increments_error_named_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
         content_token_stream: &dyn quote::ToTokens,
