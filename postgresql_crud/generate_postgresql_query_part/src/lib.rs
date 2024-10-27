@@ -2838,8 +2838,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             quote::quote!{
-                #generic_with_id_ident_field_reader_token_stream
-                #impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream
+                // #generic_with_id_ident_field_reader_token_stream
+                // #impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream
             }
         };
         quote::quote!{
