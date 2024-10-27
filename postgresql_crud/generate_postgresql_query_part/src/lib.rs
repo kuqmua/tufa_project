@@ -1148,7 +1148,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
-                    //todo maybe wrap into own generic error type
                     quote::quote!{
                         match self.#element_field_ident.json_create_try_generate_bind_increments(increment) {
                             Ok(value) => {
@@ -2255,9 +2254,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let _ = acc.pop();
                                 let _ = acc.pop();
                                 Ok(format!("{acc}"))
-                            }
-                            fn generate_postgresql_query_part_to_read(&self, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, ()> {
-                                todo!()
                             }
                         }
                     }
