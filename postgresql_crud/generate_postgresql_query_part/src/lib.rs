@@ -335,40 +335,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     //
-    let generate_struct_tokens_options_to_read_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
-        generate_tokens_options_to_read_token_stream(
-            &struct_ident_token_stream,
-            false,
-            &{
-                let maybe_id_token_stream = if contains_id {
-                    quote::quote!{
-                        #[serde(skip_serializing_if = "Option::is_none")]
-                        id: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonUuidOptionsToRead>>,
-                    }
-                }
-                else {
-                    proc_macro2::TokenStream::new()
-                };
-                let fields_token_stream = vec_syn_field.iter().map(|element| {
-                    let field_ident = element
-                        .ident
-                        .as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                        });
-                    let type_path_options_to_read_token_stream = naming_conventions::SelfOptionsToReadUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
-                    quote::quote!{
-                        #[serde(skip_serializing_if = "Option::is_none")]
-                        #field_ident: std::option::Option<postgresql_crud::Value<#type_path_options_to_read_token_stream>>
-                    }
-                });
-                quote::quote!{{
-                    #maybe_id_token_stream
-                    #(#fields_token_stream),*
-                }}
-            },
-        )
-    };
     let generate_impl_serde_deserialize_for_options_to_read_token_stream = |
         struct_ident_token_stream: &dyn naming_conventions::StdFmtDisplayPlusQuoteToTokens,
         contains_id: std::primitive::bool,
@@ -1799,24 +1765,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_origin_token_stream = {
-        let elements_token_stream = vec_syn_field.iter().map(|element| {
-            let field_ident = element.ident.as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                });
-            let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
-            quote::quote!{
-                #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(postgresql_crud::Value {
-                    value: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                })
-            }
-        });
-        impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &ident_option_to_update_origin_upper_camel_case,
-            &quote::quote!{#(#elements_token_stream),*},
-        )
-    };
+    let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_origin_token_stream = impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+        &ident_option_to_update_origin_upper_camel_case,
+        &{
+            let elements_token_stream = vec_syn_field.iter().map(|element| {
+                let field_ident = element.ident.as_ref()
+                    .unwrap_or_else(|| {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    });
+                let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
+                quote::quote!{
+                    #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(postgresql_crud::Value {
+                        value: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    })
+                }
+            });
+            quote::quote!{#(#elements_token_stream),*}
+        },
+    );
 
     let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
@@ -2038,25 +2004,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     impl_error_occurence_lib_to_std_string_string_for_ident_with_id_field_to_read_token_stream
                 )
             };
-
-            let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_token_stream = {
-                let elements_token_stream = vec_syn_field.iter().map(|element|{
-                    let field_ident = &element.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                        });
-                    let field_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
-                    quote::quote!{
-                        #ident_field_to_read_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-                    }
-                });
-                impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_field_to_read_upper_camel_case,
-                    &quote::quote!{#(#elements_token_stream),*},
-                )
-            };
-            let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_with_id_field_to_read_token_stream = {
-                let elements_token_stream = {
+            let (
+                impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_token_stream,
+                impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_with_id_field_to_read_token_stream
+            ) = {
+                let generate_vec_content_token_stream = |enum_ident_token_stream: &dyn quote::ToTokens|{
                     let elements_token_stream = vec_syn_field.iter().map(|element|{
                         let field_ident = &element.ident.as_ref()
                             .unwrap_or_else(|| {
@@ -2064,22 +2016,75 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                         let field_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
                         quote::quote!{
-                            #ident_with_id_field_to_read_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
+                            #enum_ident_token_stream::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
                         }
                     });
-                    quote::quote!{
-                        #ident_with_id_field_to_read_upper_camel_case::Id(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream),
-                        #(#elements_token_stream),*
-                    }
+                    quote::quote!{#(#elements_token_stream),*}
                 };
-                impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_token_stream =    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_field_to_read_upper_camel_case,
+                    &generate_vec_content_token_stream(&ident_field_to_read_upper_camel_case)
+                );
+                let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_with_id_field_to_read_token_stream =    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_with_id_field_to_read_upper_camel_case,
-                    &elements_token_stream,
+                    &{
+                        let other_variants_token_stream = generate_vec_content_token_stream(&ident_with_id_field_to_read_upper_camel_case);
+                        quote::quote!{
+                            #ident_with_id_field_to_read_upper_camel_case::Id(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream),
+                            #other_variants_token_stream
+                        }
+                    }
+                );
+                (
+                    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_token_stream,
+                    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_with_id_field_to_read_token_stream
                 )
             };
-
-            let ident_options_to_read_without_id_token_stream = generate_struct_tokens_options_to_read_token_stream(&ident_options_to_read_without_id_upper_camel_case, false);
-            let ident_options_to_read_with_id_token_stream = generate_struct_tokens_options_to_read_token_stream(&ident_options_to_read_with_id_upper_camel_case, true);
+            let (
+                ident_options_to_read_without_id_token_stream,
+                ident_options_to_read_with_id_token_stream
+            ) = {
+                let generate_struct_tokens_options_to_read_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
+                    generate_tokens_options_to_read_token_stream(
+                        &struct_ident_token_stream,
+                        false,
+                        &{
+                            let maybe_id_token_stream = if contains_id {
+                                quote::quote!{
+                                    #[serde(skip_serializing_if = "Option::is_none")]
+                                    id: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonUuidOptionsToRead>>,
+                                }
+                            }
+                            else {
+                                proc_macro2::TokenStream::new()
+                            };
+                            let fields_token_stream = vec_syn_field.iter().map(|element| {
+                                let field_ident = element
+                                    .ident
+                                    .as_ref()
+                                    .unwrap_or_else(|| {
+                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    });
+                                let type_path_options_to_read_token_stream = naming_conventions::SelfOptionsToReadUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
+                                quote::quote!{
+                                    #[serde(skip_serializing_if = "Option::is_none")]
+                                    #field_ident: std::option::Option<postgresql_crud::Value<#type_path_options_to_read_token_stream>>
+                                }
+                            });
+                            quote::quote!{{
+                                #maybe_id_token_stream
+                                #(#fields_token_stream),*
+                            }}
+                        },
+                    )
+                };
+                let ident_options_to_read_without_id_token_stream = generate_struct_tokens_options_to_read_token_stream(&ident_options_to_read_without_id_upper_camel_case, false);
+                let ident_options_to_read_with_id_token_stream = generate_struct_tokens_options_to_read_token_stream(&ident_options_to_read_with_id_upper_camel_case, true);
+                (
+                    ident_options_to_read_without_id_token_stream,
+                    ident_options_to_read_with_id_token_stream
+                )
+            };
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_without_id_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                 &ident_options_to_read_without_id_upper_camel_case,
                 &fields_some_value_self_options_to_read_initialization_content_token_stream,
@@ -2108,6 +2113,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 #ident_options_to_read_without_id_token_stream
                 #ident_options_to_read_with_id_token_stream
+
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_without_id_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_with_id_token_stream
                 #impl_serde_deserialize_for_ident_options_to_read_without_id_token_stream
