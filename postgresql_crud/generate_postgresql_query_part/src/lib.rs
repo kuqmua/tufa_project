@@ -3256,1189 +3256,1198 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let (
-            generate_struct_tokens_double_quotes_token_stream,
-            generate_struct_tokens_with_2_elements_double_quotes_token_stream
+            std_vec_vec_generic_with_id_ident_token_stream,
+            std_option_option_std_vec_vec_generic_with_id_ident_token_stream
         ) = {
-            const STRUCT_SPACE_STRINGIFIED: &str = "struct ";
-            let generate_struct_tokens_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
-                proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{STRUCT_SPACE_STRINGIFIED}{value}"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                )
-            };
-            let generate_struct_tokens_with_2_elements_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
-                proc_macro_common::generate_quotes::double_quotes_token_stream(
-                    &format!("{STRUCT_SPACE_STRINGIFIED}{value} with 2 elements"),
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                )
-            };
-            (
+            let (
                 generate_struct_tokens_double_quotes_token_stream,
                 generate_struct_tokens_with_2_elements_double_quotes_token_stream
-            )
-        };
-        let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream = |tokens_field_reader_upper_camel_case: &dyn quote::ToTokens|{
-            generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                &tokens_field_reader_upper_camel_case,
-                &quote::quote!{
-                    {
-                        field_vec: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                        pagination: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                    }
-                },
-            )
-        };
-        //its for GeneratePostgresqlQueryPart (json logic)
-        let std_vec_vec_generic_with_id_ident_token_stream = {
-            let (
-                std_vec_vec_generic_with_id_ident_token_stream,
-                impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
             ) = {
-                let std_vec_vec_generic_with_id_ident_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
-                    &std_vec_vec_generic_with_id_ident_upper_camel_case,
-                    &quote::quote!{(pub std::vec::Vec<#generic_with_id_ident_upper_camel_case>);}
-                );
-                let impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&std_vec_vec_generic_with_id_ident_upper_camel_case);
+                const STRUCT_SPACE_STRINGIFIED: &str = "struct ";
+                let generate_struct_tokens_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
+                    proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{STRUCT_SPACE_STRINGIFIED}{value}"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    )
+                };
+                let generate_struct_tokens_with_2_elements_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
+                    proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{STRUCT_SPACE_STRINGIFIED}{value} with 2 elements"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    )
+                };
                 (
-                    std_vec_vec_generic_with_id_ident_token_stream,
-                    impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
+                    generate_struct_tokens_double_quotes_token_stream,
+                    generate_struct_tokens_with_2_elements_double_quotes_token_stream
                 )
             };
-
-
-            let create_token_stream = {
-                let std_vec_vec_generic_with_id_ident_to_create_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
-                    &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
-                    &quote::quote!{(pub std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>);}
-                );
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                    &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
-                    &quote::quote!{(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream])}
-                );
-                let impl_postgresql_crud_json_create_bind_query_for_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
-                    &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
+            let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream = |tokens_field_reader_upper_camel_case: &dyn quote::ToTokens|{
+                generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
+                    &tokens_field_reader_upper_camel_case,
                     &quote::quote!{
-                        let mut acc = std::string::String::default();
-                        for element in &self.0 {
-                            match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
-                                Ok(value) => {
-                                    acc.push_str(&format!("{value},"));
-                                },
-                                Err(error) => {
-                                    return Err(error);
+                        {
+                            field_vec: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                            pagination: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        }
+                    },
+                )
+            };
+            //its for GeneratePostgresqlQueryPart (json logic)
+            let std_vec_vec_generic_with_id_ident_token_stream = {
+                let (
+                    std_vec_vec_generic_with_id_ident_token_stream,
+                    impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
+                ) = {
+                    let std_vec_vec_generic_with_id_ident_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+                        &std_vec_vec_generic_with_id_ident_upper_camel_case,
+                        &quote::quote!{(pub std::vec::Vec<#generic_with_id_ident_upper_camel_case>);}
+                    );
+                    let impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&std_vec_vec_generic_with_id_ident_upper_camel_case);
+                    (
+                        std_vec_vec_generic_with_id_ident_token_stream,
+                        impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
+                    )
+                };
+
+
+                let create_token_stream = {
+                    let std_vec_vec_generic_with_id_ident_to_create_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
+                        &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
+                        &quote::quote!{(pub std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>);}
+                    );
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
+                        &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
+                        &quote::quote!{(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream])}
+                    );
+                    let impl_postgresql_crud_json_create_bind_query_for_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
+                        &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
+                        &quote::quote!{
+                            let mut acc = std::string::String::default();
+                            for element in &self.0 {
+                                match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                                    Ok(value) => {
+                                        acc.push_str(&format!("{value},"));
+                                    },
+                                    Err(error) => {
+                                        return Err(error);
+                                    }
                                 }
                             }
-                        }
-                        let _ = acc.pop();
-                        Ok(format!("jsonb_build_array({acc})"))
-                    },
-                    &quote::quote!{
-                        for element in self.0 {
-                            query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element, query);
-                        }
-                        query
-                    },
-                );
-                quote::quote!{
-                    #std_vec_vec_generic_with_id_ident_to_create_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
-                    #impl_postgresql_crud_json_create_bind_query_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
-                }
-            };
-            let read_token_stream = {
-                let std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(
-                    &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                    false,
-                    &quote::quote!{(std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>);},
-                );
+                            let _ = acc.pop();
+                            Ok(format!("jsonb_build_array({acc})"))
+                        },
+                        &quote::quote!{
+                            for element in self.0 {
+                                query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element, query);
+                            }
+                            query
+                        },
+                    );
+                    quote::quote!{
+                        #std_vec_vec_generic_with_id_ident_to_create_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
+                        #impl_postgresql_crud_json_create_bind_query_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
+                    }
+                };
+                let read_token_stream = {
+                    let std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(
+                        &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                        false,
+                        &quote::quote!{(std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>);},
+                    );
 
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream =             generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                    &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                    &quote::quote!{(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream])},
-                );
-                let impl_try_new_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
-                    let std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                    let not_unique_id_upper_camel_case = naming_conventions::NotUniqueIdUpperCamelCase;
-                    let try_new_error_named_token_stream = {
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream =             generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
+                        &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                        &quote::quote!{(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream])},
+                    );
+                    let impl_try_new_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
+                        let std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                        let not_unique_id_upper_camel_case = naming_conventions::NotUniqueIdUpperCamelCase;
+                        let try_new_error_named_token_stream = {
+                            quote::quote!{
+                                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                                pub enum #std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case {
+                                    #not_unique_id_upper_camel_case {
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        error: std::string::String,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    }
+                                }
+                            }
+                        };
+                        let impl_pub_fn_try_new_token_stream = {
+                            let check_not_unique_id_token_stream = {
+                                quote::quote!{
+                                    {
+                                        let mut acc = vec![];
+                                        for element in &value {
+                                            if let Some(value) = &element.id {
+                                                if acc.contains(&&value.value) {
+                                                    return Err(#std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
+                                                        error: format!("not unique id {}", value.value.0),
+                                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                                    });
+                                                }
+                                                else {
+                                                    acc.push(&value.value);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            };
+                            quote::quote!{
+                                impl #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
+                                    pub fn try_new(value: std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>) -> Result<Self, #std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case> {
+                                        #check_not_unique_id_token_stream
+                                        Ok(Self(value))
+                                    }
+                                }
+                            }
+                        };
                         quote::quote!{
-                            #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                            pub enum #std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case {
-                                #not_unique_id_upper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    error: std::string::String,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                            #try_new_error_named_token_stream
+                            #impl_pub_fn_try_new_token_stream
+                        }
+                    };
+                    let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
+                        let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
+                        let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
+                        let std_option_option_generic_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                            &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                            &quote::quote!{__field0},
+                        );
+                        quote::quote!{
+                            impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: serde::Deserializer<'de>,
+                                {
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: serde::__private::PhantomData<
+                                            #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                                        >,
+                                        lifetime: serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut serde::__private::Formatter<'_>,
+                                        ) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                #tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream,
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_newtype_struct<__E>(
+                                            self,
+                                            __e: __E,
+                                        ) -> serde::__private::Result<Self::Value, __E::Error>
+                                        where
+                                            __E: serde::Deserializer<'de>,
+                                        {
+                                            let __field0: std::vec::Vec<
+                                                #ident_options_to_read_with_id_upper_camel_case,
+                                            > = <std::vec::Vec<
+                                                #ident_options_to_read_with_id_upper_camel_case,
+                                            > as serde::Deserialize>::deserialize(__e)?;
+                                            #match_try_new_in_deserialize_token_stream
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match serde::de::SeqAccess::next_element::<
+                                                std::vec::Vec<
+                                                    #ident_options_to_read_with_id_upper_camel_case,
+                                                >,
+                                            >(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(
+                                                        serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &#tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            #match_try_new_in_deserialize_token_stream
+                                        }
+                                    }
+                                    serde::Deserializer::deserialize_newtype_struct(
+                                        __deserializer,
+                                        #std_option_option_generic_ident_field_reader_upper_camel_case_double_quotes_token_stream,
+                                        __Visitor {
+                                            marker: serde::__private::PhantomData::<
+                                                #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                                            >,
+                                            lifetime: serde::__private::PhantomData,
+                                        },
+                                    )
                                 }
                             }
                         }
                     };
-                    let impl_pub_fn_try_new_token_stream = {
-                        let check_not_unique_id_token_stream = {
-                            quote::quote!{
+
+                    let std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+                        &naming_conventions::StdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident),
+                        &FieldReaderContent::StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent
+                    );
+                    let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream = {
+                        let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                        let struct_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream = generate_struct_tokens_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
+                        let struct_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream = generate_struct_tokens_with_2_elements_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
+                        let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                            &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                            &field0_field1_token_stream,
+                        );
+                        quote::quote!{
+                            impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case {
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: serde::Deserializer<'de>,
                                 {
-                                    let mut acc = vec![];
-                                    for element in &value {
-                                        if let Some(value) = &element.id {
-                                            if acc.contains(&&value.value) {
-                                                return Err(#std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
-                                                    error: format!("not unique id {}", value.value.0),
-                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                });
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
+                                    impl serde::de::Visitor<'_> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut serde::__private::Formatter<'_>,
+                                        ) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "field identifier",
+                                            )
+                                        }
+                                        fn visit_u64<__E>(
+                                            self,
+                                            __value: u64,
+                                        ) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => serde::__private::Ok(__Field::__field0),
+                                                1u64 => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
                                             }
-                                            else {
-                                                acc.push(&value.value);
+                                        }
+                                        fn visit_str<__E>(
+                                            self,
+                                            __value: &str,
+                                        ) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                "field_vec" => serde::__private::Ok(__Field::__field0),
+                                                "pagination" => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
                                             }
+                                        }
+                                        fn visit_bytes<__E>(
+                                            self,
+                                            __value: &[u8],
+                                        ) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"field_vec" => serde::__private::Ok(__Field::__field0),
+                                                b"pagination" => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    impl<'de> serde::Deserialize<'de> for __Field {
+                                        #[inline]
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> serde::__private::Result<Self, __D::Error>
+                                        where
+                                            __D: serde::Deserializer<'de>,
+                                        {
+                                            serde::Deserializer::deserialize_identifier(
+                                                __deserializer,
+                                                __FieldVisitor,
+                                            )
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: serde::__private::PhantomData<
+                                            #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                                        >,
+                                        lifetime: serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut serde::__private::Formatter<'_>,
+                                        ) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                #struct_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream,
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match serde::de::SeqAccess::next_element::<
+                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                            >(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(
+                                                        serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &#struct_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field1 = match serde::de::SeqAccess::next_element::<
+                                                #postgersql_crud_pagination_token_stream,
+                                            >(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(
+                                                        serde::de::Error::invalid_length(
+                                                            1usize,
+                                                            &#struct_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            #match_try_new_in_deserialize_token_stream
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(
+                                            self,
+                                            mut __map: __A,
+                                        ) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: serde::__private::Option<
+                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                            > = serde::__private::None;
+                                            let mut __field1: serde::__private::Option<#postgersql_crud_pagination_token_stream> = serde::__private::None;
+                                            while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
+                                                __Field,
+                                            >(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if serde::__private::Option::is_some(&__field0) {
+                                                            return serde::__private::Err(
+                                                                <__A::Error as serde::de::Error>::duplicate_field(
+                                                                    "field_vec",
+                                                                ),
+                                                            );
+                                                        }
+                                                        __field0 = serde::__private::Some(
+                                                            serde::de::MapAccess::next_value::<
+                                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if serde::__private::Option::is_some(&__field1) {
+                                                            return serde::__private::Err(
+                                                                <__A::Error as serde::de::Error>::duplicate_field(
+                                                                    "pagination",
+                                                                ),
+                                                            );
+                                                        }
+                                                        __field1 = serde::__private::Some(
+                                                            serde::de::MapAccess::next_value::<#postgersql_crud_pagination_token_stream>(&mut __map)?,
+                                                        );
+                                                    }
+                                                    _ => {
+                                                        let _ = serde::de::MapAccess::next_value::<
+                                                            serde::de::IgnoredAny,
+                                                        >(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                serde::__private::Some(__field0) => __field0,
+                                                serde::__private::None => {
+                                                    serde::__private::de::missing_field("field_vec")?
+                                                }
+                                            };
+                                            let __field1 = match __field1 {
+                                                serde::__private::Some(__field1) => __field1,
+                                                serde::__private::None => {
+                                                    serde::__private::de::missing_field("pagination")?
+                                                }
+                                            };
+                                            #match_try_new_in_deserialize_token_stream
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["field_vec", "pagination"];
+                                    serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream,
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: serde::__private::PhantomData::<
+                                                #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                                            >,
+                                            lifetime: serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            }
+                        }
+                    };
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream(&std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
+                    let impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
+                        &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                        true,
+                        &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))"}
+                    );
+
+                    let std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
+                        &naming_conventions::StdVecVecGenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
+                        &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case
+                    );
+                    quote::quote!{
+                        #std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+                        #impl_try_new_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+                        #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+
+                        #std_vec_vec_generic_with_id_ident_field_reader_token_stream
+                        #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+                        #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+
+                        #std_vec_vec_generic_with_id_ident_reader_token_stream
+                    }
+                };
+                let update_token_stream = {
+                    let std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_vec_vec_generic_with_id_ident_json_array_change_try_new_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
+                        &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
+                        &std_vec_vec_generic_with_id_ident_json_array_change_try_new_error_named_upper_camel_case,
+                        false,
+                    );
+
+                    let std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
+                        &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
+                        &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
+                        true,
+                        true,
+                    );
+
+                    //todo maybe should impl trait for convetion  tokens_option_to_update into field to update. t
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
+                        &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
+                        &quote::quote!{(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
+                    );
+                    // println!("{impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_json_array_change_token_stream}");
+                    let (
+                        std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
+                        impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                    ) = {
+                        let std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                        let std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+                            &std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
+                            &{
+                                quote::quote!{
+                                    #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case {
+                                        #[eo_error_occurence]
+                                        error: #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case, 
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                }
+                            }
+                        );
+                        let impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_to_update_token_stream(
+                            &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
+                            &std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
+                            &quote::quote!{
+                                match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                    &self.0,
+                                    jsonb_set_accumulator,
+                                    jsonb_set_target,
+                                    jsonb_set_path,
+                                    increment,
+                                    false,
+                                ) {
+                                    Ok(value) => Ok(value),
+                                    Err(error) => {
+                                        return Err(#std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case {
+                                            error,
+                                            code_occurence: error_occurence_lib::code_occurence!()
+                                        });
+                                    }
+                                }
+                            },
+                            &quote::quote!{
+                                query = self.0.bind_value_to_query(query);
+                                query
+                            },
+                        );
+                        (
+                            std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
+                            impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                        )
+                    };
+                    quote::quote!{
+                        #std_vec_vec_generic_with_id_ident_json_array_change_token_stream
+                        #std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                        #std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+                        #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                    }
+                };
+                quote::quote!{
+                    #std_vec_vec_generic_with_id_ident_token_stream
+                    #impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
+
+                    #create_token_stream
+                    #read_token_stream
+                    #update_token_stream
+                }
+            };
+            //its for GeneratePostgresqlQueryPart (json logic)
+            let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = {
+                let (
+                    std_option_option_std_vec_vec_generic_with_id_ident_token_stream,
+                    impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
+                ) = {
+                    let std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case,
+                        &quote::quote!{(std::option::Option<std::vec::Vec<#generic_with_id_ident_upper_camel_case>>);}
+                    );
+                    let impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case);
+                    (
+                        std_option_option_std_vec_vec_generic_with_id_ident_token_stream,
+                        impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
+                    )
+                };
+
+                let create_token_stream = {
+                    let std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
+                        &quote::quote!{(pub std::option::Option<std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>>);}
+                    );
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream =  generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
+                        &quote::quote!{(Some(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream]))}
+                    );
+                    let impl_postgresql_crud_json_create_bind_query_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
+                        &quote::quote!{
+                            match &self.0 {
+                                Some(value) => {
+                                    let mut acc = std::string::String::default();
+                                    for element in value {
+                                        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                                            Ok(value) => {
+                                                acc.push_str(&format!("{value},"));
+                                            },
+                                            Err(error) => {
+                                                return Err(error);
+                                            }
+                                        }
+                                    }
+                                    let _ = acc.pop();
+                                    Ok(format!("jsonb_build_array({acc})"))
+                                },
+                                None => Ok(std::string::String::from("null"))
+                            }
+                        },
+                        &quote::quote!{
+                            if let Some(value) = self.0 {
+                                for element in value {
+                                    query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element, query);
+                                }
+                            }
+                            query
+                        },
+                    );
+                    quote::quote!{
+                        #std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream
+                        #impl_postgresql_crud_json_create_bind_query_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream
+                    }
+                };
+                let read_token_stream = {
+                    let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                
+                    let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                        false,
+                        &quote::quote!{(std::option::Option<std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>>);},
+                    );
+                    let impl_try_new_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
+                        let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                        let not_unique_id_upper_camel_case = naming_conventions::NotUniqueIdUpperCamelCase;
+                        let try_new_error_named_token_stream = {
+                            quote::quote!{
+                                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                                pub enum #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case {
+                                    #not_unique_id_upper_camel_case {
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        error: std::string::String,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    }
+                                }
+                            }
+                        };
+                        let impl_pub_fn_try_new_token_stream = {
+                            quote::quote!{
+                                impl #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
+                                    pub fn try_new(value: std::option::Option<std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>>) -> Result<Self, #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case> {
+                                        match value {
+                                            Some(value) => {
+                                                let mut acc = vec![];
+                                                for element in &value {
+                                                    if let Some(value) = &element.id {
+                                                        if acc.contains(&&value.value) {
+                                                            return Err(#std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
+                                                                error: format!("not unique id {}", value.value.0),
+                                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                                            });
+                                                        }
+                                                        else {
+                                                            acc.push(&value.value);
+                                                        }
+                                                    }
+                                                }
+                                                Ok(Self(Some(value)))
+                                            },
+                                            None => Ok(Self(None))
                                         }
                                     }
                                 }
                             }
                         };
                         quote::quote!{
-                            impl #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
-                                pub fn try_new(value: std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>) -> Result<Self, #std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case> {
-                                    #check_not_unique_id_token_stream
-                                    Ok(Self(value))
-                                }
-                            }
+                            #try_new_error_named_token_stream
+                            #impl_pub_fn_try_new_token_stream
                         }
                     };
-                    quote::quote!{
-                        #try_new_error_named_token_stream
-                        #impl_pub_fn_try_new_token_stream
-                    }
-                };
-                let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
-                    let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
-                    let tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
-                    let std_option_option_generic_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
-                        &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                        &quote::quote!{__field0},
-                    );
-                    quote::quote!{
-                        impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: serde::Deserializer<'de>,
-                            {
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: serde::__private::PhantomData<
-                                        #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                                    >,
-                                    lifetime: serde::__private::PhantomData<&'de ()>,
-                                }
-                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut serde::__private::Formatter<'_>,
-                                    ) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            #tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream,
-                                        )
-                                    }
-                                    #[inline]
-                                    fn visit_newtype_struct<__E>(
-                                        self,
-                                        __e: __E,
-                                    ) -> serde::__private::Result<Self::Value, __E::Error>
-                                    where
-                                        __E: serde::Deserializer<'de>,
-                                    {
-                                        let __field0: std::vec::Vec<
-                                            #ident_options_to_read_with_id_upper_camel_case,
-                                        > = <std::vec::Vec<
-                                            #ident_options_to_read_with_id_upper_camel_case,
-                                        > as serde::Deserialize>::deserialize(__e)?;
-                                        #match_try_new_in_deserialize_token_stream
-                                    }
-                                    #[inline]
-                                    fn visit_seq<__A>(
-                                        self,
-                                        mut __seq: __A,
-                                    ) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::SeqAccess<'de>,
-                                    {
-                                        let __field0 = match serde::de::SeqAccess::next_element::<
-                                            std::vec::Vec<
-                                                #ident_options_to_read_with_id_upper_camel_case,
-                                            >,
-                                        >(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(
-                                                    serde::de::Error::invalid_length(
-                                                        0usize,
-                                                        &#tuple_struct_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        #match_try_new_in_deserialize_token_stream
-                                    }
-                                }
-                                serde::Deserializer::deserialize_newtype_struct(
-                                    __deserializer,
-                                    #std_option_option_generic_ident_field_reader_upper_camel_case_double_quotes_token_stream,
-                                    __Visitor {
-                                        marker: serde::__private::PhantomData::<
-                                            #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                                        >,
-                                        lifetime: serde::__private::PhantomData,
-                                    },
-                                )
-                            }
-                        }
-                    }
-                };
-
-                let std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
-                    &naming_conventions::StdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                    &FieldReaderContent::StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent
-                );
-                let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream = {
-                    let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                    let struct_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream = generate_struct_tokens_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
-                    let struct_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream = generate_struct_tokens_with_2_elements_double_quotes_token_stream(&std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
-                    let std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    );
-                    let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
-                        &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                        &field0_field1_token_stream,
-                    );
-                    quote::quote!{
-                        impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case {
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: serde::Deserializer<'de>,
-                            {
-                                #[allow(non_camel_case_types)]
-                                #[doc(hidden)]
-                                enum __Field {
-                                    __field0,
-                                    __field1,
-                                    __ignore,
-                                }
-                                #[doc(hidden)]
-                                struct __FieldVisitor;
-                                impl serde::de::Visitor<'_> for __FieldVisitor {
-                                    type Value = __Field;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut serde::__private::Formatter<'_>,
-                                    ) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            "field identifier",
-                                        )
-                                    }
-                                    fn visit_u64<__E>(
-                                        self,
-                                        __value: u64,
-                                    ) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => serde::__private::Ok(__Field::__field0),
-                                            1u64 => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                    fn visit_str<__E>(
-                                        self,
-                                        __value: &str,
-                                    ) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            "field_vec" => serde::__private::Ok(__Field::__field0),
-                                            "pagination" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                    fn visit_bytes<__E>(
-                                        self,
-                                        __value: &[u8],
-                                    ) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"field_vec" => serde::__private::Ok(__Field::__field0),
-                                            b"pagination" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                }
-                                impl<'de> serde::Deserialize<'de> for __Field {
-                                    #[inline]
-                                    fn deserialize<__D>(
-                                        __deserializer: __D,
-                                    ) -> serde::__private::Result<Self, __D::Error>
-                                    where
-                                        __D: serde::Deserializer<'de>,
-                                    {
-                                        serde::Deserializer::deserialize_identifier(
-                                            __deserializer,
-                                            __FieldVisitor,
-                                        )
-                                    }
-                                }
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: serde::__private::PhantomData<
-                                        #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                                    >,
-                                    lifetime: serde::__private::PhantomData<&'de ()>,
-                                }
-                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut serde::__private::Formatter<'_>,
-                                    ) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            #struct_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream,
-                                        )
-                                    }
-                                    #[inline]
-                                    fn visit_seq<__A>(
-                                        self,
-                                        mut __seq: __A,
-                                    ) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::SeqAccess<'de>,
-                                    {
-                                        let __field0 = match serde::de::SeqAccess::next_element::<
-                                            std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
-                                        >(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(
-                                                    serde::de::Error::invalid_length(
-                                                        0usize,
-                                                        &#struct_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        let __field1 = match serde::de::SeqAccess::next_element::<
-                                            #postgersql_crud_pagination_token_stream,
-                                        >(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(
-                                                    serde::de::Error::invalid_length(
-                                                        1usize,
-                                                        &#struct_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        #match_try_new_in_deserialize_token_stream
-                                    }
-                                    #[inline]
-                                    fn visit_map<__A>(
-                                        self,
-                                        mut __map: __A,
-                                    ) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::MapAccess<'de>,
-                                    {
-                                        let mut __field0: serde::__private::Option<
-                                            std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
-                                        > = serde::__private::None;
-                                        let mut __field1: serde::__private::Option<#postgersql_crud_pagination_token_stream> = serde::__private::None;
-                                        while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
-                                            __Field,
-                                        >(&mut __map)? {
-                                            match __key {
-                                                __Field::__field0 => {
-                                                    if serde::__private::Option::is_some(&__field0) {
-                                                        return serde::__private::Err(
-                                                            <__A::Error as serde::de::Error>::duplicate_field(
-                                                                "field_vec",
-                                                            ),
-                                                        );
-                                                    }
-                                                    __field0 = serde::__private::Some(
-                                                        serde::de::MapAccess::next_value::<
-                                                            std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
-                                                        >(&mut __map)?,
-                                                    );
-                                                }
-                                                __Field::__field1 => {
-                                                    if serde::__private::Option::is_some(&__field1) {
-                                                        return serde::__private::Err(
-                                                            <__A::Error as serde::de::Error>::duplicate_field(
-                                                                "pagination",
-                                                            ),
-                                                        );
-                                                    }
-                                                    __field1 = serde::__private::Some(
-                                                        serde::de::MapAccess::next_value::<#postgersql_crud_pagination_token_stream>(&mut __map)?,
-                                                    );
-                                                }
-                                                _ => {
-                                                    let _ = serde::de::MapAccess::next_value::<
-                                                        serde::de::IgnoredAny,
-                                                    >(&mut __map)?;
-                                                }
-                                            }
-                                        }
-                                        let __field0 = match __field0 {
-                                            serde::__private::Some(__field0) => __field0,
-                                            serde::__private::None => {
-                                                serde::__private::de::missing_field("field_vec")?
-                                            }
-                                        };
-                                        let __field1 = match __field1 {
-                                            serde::__private::Some(__field1) => __field1,
-                                            serde::__private::None => {
-                                                serde::__private::de::missing_field("pagination")?
-                                            }
-                                        };
-                                        #match_try_new_in_deserialize_token_stream
-                                    }
-                                }
-                                #[doc(hidden)]
-                                const FIELDS: &'static [&'static str] = &["field_vec", "pagination"];
-                                serde::Deserializer::deserialize_struct(
-                                    __deserializer,
-                                    #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream,
-                                    FIELDS,
-                                    __Visitor {
-                                        marker: serde::__private::PhantomData::<
-                                            #std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                                        >,
-                                        lifetime: serde::__private::PhantomData,
-                                    },
-                                )
-                            }
-                        }
-                    }
-                };
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream(&std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
-                let impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
-                    &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                    true,
-                    &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))"}
-                );
-
-                let std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
-                    &naming_conventions::StdVecVecGenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                    &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case
-                );
-                quote::quote!{
-                    #std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-                    #impl_try_new_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-                    #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-
-                    #std_vec_vec_generic_with_id_ident_field_reader_token_stream
-                    #impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
-                    #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_vec_vec_generic_with_id_ident_field_reader_token_stream
-
-                    #std_vec_vec_generic_with_id_ident_reader_token_stream
-                }
-            };
-            let update_token_stream = {
-                let std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_vec_vec_generic_with_id_ident_json_array_change_try_new_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
-                    &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
-                    &std_vec_vec_generic_with_id_ident_json_array_change_try_new_error_named_upper_camel_case,
-                    false,
-                );
-
-                let std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
-                    &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
-                    &std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
-                    true,
-                    true,
-                );
-
-                //todo maybe should impl trait for convetion  tokens_option_to_update into field to update. t
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                    &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
-                    &quote::quote!{(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
-                );
-                // println!("{impl_serde_deserialize_for_std_vec_vec_generic_with_id_ident_json_array_change_token_stream}");
-                let (
-                    std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
-                    impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                ) = {
-                    let std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                    let std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
-                        &std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
-                        &{
-                            quote::quote!{
-                                #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case {
-                                    #[eo_error_occurence]
-                                    error: #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case, 
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            }
-                        }
-                    );
-                    let impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_to_update_token_stream(
-                        &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
-                        &std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
-                        &quote::quote!{
-                            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                                &self.0,
-                                jsonb_set_accumulator,
-                                jsonb_set_target,
-                                jsonb_set_path,
-                                increment,
-                                false,
-                            ) {
-                                Ok(value) => Ok(value),
-                                Err(error) => {
-                                    return Err(#std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case {
-                                        error,
-                                        code_occurence: error_occurence_lib::code_occurence!()
-                                    });
-                                }
-                            }
-                        },
-                        &quote::quote!{
-                            query = self.0.bind_value_to_query(query);
-                            query
-                        },
-                    );
-                    (
-                        std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
-                        impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                    )
-                };
-                quote::quote!{
-                    #std_vec_vec_generic_with_id_ident_json_array_change_token_stream
-                    #std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                    #std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
-                    #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                }
-            };
-            quote::quote!{
-                #std_vec_vec_generic_with_id_ident_token_stream
-                #impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream
-
-                #create_token_stream
-                #read_token_stream
-                #update_token_stream
-            }
-        };
-        //its for GeneratePostgresqlQueryPart (json logic)
-        let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = {
-            let (
-                std_option_option_std_vec_vec_generic_with_id_ident_token_stream,
-                impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
-            ) = {
-                let std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case,
-                    &quote::quote!{(std::option::Option<std::vec::Vec<#generic_with_id_ident_upper_camel_case>>);}
-                );
-                let impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case);
-                (
-                    std_option_option_std_vec_vec_generic_with_id_ident_token_stream,
-                    impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
-                )
-            };
-
-            let create_token_stream = {
-                let std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
-                    &quote::quote!{(pub std::option::Option<std::vec::Vec<#ident_to_create_origin_with_generated_id_upper_camel_case>>);}
-                );
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream =  generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
-                    &quote::quote!{(Some(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream]))}
-                );
-                let impl_postgresql_crud_json_create_bind_query_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
-                    &quote::quote!{
-                        match &self.0 {
-                            Some(value) => {
-                                let mut acc = std::string::String::default();
-                                for element in value {
-                                    match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
-                                        Ok(value) => {
-                                            acc.push_str(&format!("{value},"));
-                                        },
-                                        Err(error) => {
-                                            return Err(error);
-                                        }
-                                    }
-                                }
-                                let _ = acc.pop();
-                                Ok(format!("jsonb_build_array({acc})"))
-                            },
-                            None => Ok(std::string::String::from("null"))
-                        }
-                    },
-                    &quote::quote!{
-                        if let Some(value) = self.0 {
-                            for element in value {
-                                query = postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(element, query);
-                            }
-                        }
-                        query
-                    },
-                );
-                quote::quote!{
-                    #std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream
-                    #impl_postgresql_crud_json_create_bind_query_for_std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream
-                }
-            };
-            let read_token_stream = {
-                let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            
-                let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                    false,
-                    &quote::quote!{(std::option::Option<std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>>);},
-                );
-                let impl_try_new_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
-                    let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                    let not_unique_id_upper_camel_case = naming_conventions::NotUniqueIdUpperCamelCase;
-                    let try_new_error_named_token_stream = {
-                        quote::quote!{
-                            #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                            pub enum #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case {
-                                #not_unique_id_upper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    error: std::string::String,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                }
-                            }
-                        }
-                    };
-                    let impl_pub_fn_try_new_token_stream = {
-                        quote::quote!{
-                            impl #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
-                                pub fn try_new(value: std::option::Option<std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>>) -> Result<Self, #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case> {
-                                    match value {
-                                        Some(value) => {
-                                            let mut acc = vec![];
-                                            for element in &value {
-                                                if let Some(value) = &element.id {
-                                                    if acc.contains(&&value.value) {
-                                                        return Err(#std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
-                                                            error: format!("not unique id {}", value.value.0),
-                                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                                        });
-                                                    }
-                                                    else {
-                                                        acc.push(&value.value);
-                                                    }
-                                                }
-                                            }
-                                            Ok(Self(Some(value)))
-                                        },
-                                        None => Ok(Self(None))
-                                    }
-                                }
-                            }
-                        }
-                    };
-                    quote::quote!{
-                        #try_new_error_named_token_stream
-                        #impl_pub_fn_try_new_token_stream
-                    }
-                };
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                    &quote::quote!{(Some(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream]))},
-                );
-
-                let impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
-                    let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
-                    let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
-                    let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                         &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        &quote::quote!{(Some(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream]))},
                     );
-                    let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
-                        &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                        &quote::quote!{__field0},
-                    );
-                    quote::quote!{
-                        impl<'de> serde::Deserialize<'de> for #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: serde::Deserializer<'de>,
-                            {
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: serde::__private::PhantomData<
-                                        #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                                    >,
-                                    lifetime: serde::__private::PhantomData<&'de ()>,
-                                }
-                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut serde::__private::Formatter<'_>,
-                                    ) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            #tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream,
-                                        )
+
+                    let impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream = {
+                        let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
+                        let tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case);
+                        let std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                            &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                            &quote::quote!{__field0},
+                        );
+                        quote::quote!{
+                            impl<'de> serde::Deserialize<'de> for #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: serde::Deserializer<'de>,
+                                {
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: serde::__private::PhantomData<
+                                            #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                                        >,
+                                        lifetime: serde::__private::PhantomData<&'de ()>,
                                     }
-                                    #[inline]
-                                    fn visit_newtype_struct<__E>(
-                                        self,
-                                        __e: __E,
-                                    ) -> serde::__private::Result<Self::Value, __E::Error>
-                                    where
-                                        __E: serde::Deserializer<'de>,
-                                    {
-                                        let __field0: std::option::Option<
-                                            std::vec::Vec<
-                                                #ident_options_to_read_with_id_upper_camel_case,
-                                            >,
-                                        > = <std::option::Option<
-                                            std::vec::Vec<
-                                                #ident_options_to_read_with_id_upper_camel_case,
-                                            >,
-                                        > as serde::Deserialize>::deserialize(__e)?;
-                                        #match_try_new_in_deserialize_token_stream
-                                    }
-                                    #[inline]
-                                    fn visit_seq<__A>(
-                                        self,
-                                        mut __seq: __A,
-                                    ) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::SeqAccess<'de>,
-                                    {
-                                        let __field0 = match serde::de::SeqAccess::next_element::<
-                                            std::option::Option<
+                                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut serde::__private::Formatter<'_>,
+                                        ) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                #tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_double_quotes_token_stream,
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_newtype_struct<__E>(
+                                            self,
+                                            __e: __E,
+                                        ) -> serde::__private::Result<Self::Value, __E::Error>
+                                        where
+                                            __E: serde::Deserializer<'de>,
+                                        {
+                                            let __field0: std::option::Option<
                                                 std::vec::Vec<
                                                     #ident_options_to_read_with_id_upper_camel_case,
                                                 >,
-                                            >,
-                                        >(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(
-                                                    serde::de::Error::invalid_length(
-                                                        0usize,
-                                                        &#tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        #match_try_new_in_deserialize_token_stream
+                                            > = <std::option::Option<
+                                                std::vec::Vec<
+                                                    #ident_options_to_read_with_id_upper_camel_case,
+                                                >,
+                                            > as serde::Deserialize>::deserialize(__e)?;
+                                            #match_try_new_in_deserialize_token_stream
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match serde::de::SeqAccess::next_element::<
+                                                std::option::Option<
+                                                    std::vec::Vec<
+                                                        #ident_options_to_read_with_id_upper_camel_case,
+                                                    >,
+                                                >,
+                                            >(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(
+                                                        serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &#tuple_struct_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            #match_try_new_in_deserialize_token_stream
+                                        }
                                     }
+                                    serde::Deserializer::deserialize_newtype_struct(
+                                        __deserializer,
+                                        #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_double_quotes_token_stream,
+                                        __Visitor {
+                                            marker: serde::__private::PhantomData::<
+                                                #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
+                                            >,
+                                            lifetime: serde::__private::PhantomData,
+                                        },
+                                    )
                                 }
-                                serde::Deserializer::deserialize_newtype_struct(
-                                    __deserializer,
-                                    #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case_double_quotes_token_stream,
-                                    __Visitor {
-                                        marker: serde::__private::PhantomData::<
-                                            #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                                        >,
-                                        lifetime: serde::__private::PhantomData,
-                                    },
-                                )
                             }
                         }
-                    }
-                };
+                    };
 
-                let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
-                let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
-                    &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                    &FieldReaderContent::StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent
-                );
-                let impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = {
-                    let struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream = generate_struct_tokens_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
-                    let struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream = generate_struct_tokens_with_2_elements_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
-                    let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                    let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
+                        &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident),
+                        &FieldReaderContent::StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent
                     );
-                    let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
-                        &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                        &field0_field1_token_stream,
-                    );
-                    quote::quote!{
-                        impl<'de> serde::Deserialize<'de> for #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case {
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: serde::Deserializer<'de>,
-                            {
-                                #[allow(non_camel_case_types)]
-                                #[doc(hidden)]
-                                enum __Field {
-                                    __field0,
-                                    __field1,
-                                    __ignore,
-                                }
-                                #[doc(hidden)]
-                                struct __FieldVisitor;
-                                impl serde::de::Visitor<'_> for __FieldVisitor {
-                                    type Value = __Field;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut serde::__private::Formatter<'_>,
-                                    ) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            "field identifier",
-                                        )
+                    let impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = {
+                        let struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream = generate_struct_tokens_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
+                        let struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream = generate_struct_tokens_with_2_elements_double_quotes_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
+                        let std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                            &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                            &field0_field1_token_stream,
+                        );
+                        quote::quote!{
+                            impl<'de> serde::Deserialize<'de> for #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case {
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: serde::Deserializer<'de>,
+                                {
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __ignore,
                                     }
-                                    fn visit_u64<__E>(
-                                        self,
-                                        __value: u64,
-                                    ) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => serde::__private::Ok(__Field::__field0),
-                                            1u64 => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
+                                    impl serde::de::Visitor<'_> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut serde::__private::Formatter<'_>,
+                                        ) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "field identifier",
+                                            )
                                         }
-                                    }
-                                    fn visit_str<__E>(
-                                        self,
-                                        __value: &str,
-                                    ) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            "field_vec" => serde::__private::Ok(__Field::__field0),
-                                            "pagination" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                    fn visit_bytes<__E>(
-                                        self,
-                                        __value: &[u8],
-                                    ) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"field_vec" => serde::__private::Ok(__Field::__field0),
-                                            b"pagination" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                }
-                                impl<'de> serde::Deserialize<'de> for __Field {
-                                    #[inline]
-                                    fn deserialize<__D>(
-                                        __deserializer: __D,
-                                    ) -> serde::__private::Result<Self, __D::Error>
-                                    where
-                                        __D: serde::Deserializer<'de>,
-                                    {
-                                        serde::Deserializer::deserialize_identifier(
-                                            __deserializer,
-                                            __FieldVisitor,
-                                        )
-                                    }
-                                }
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: serde::__private::PhantomData<
-                                        #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                                    >,
-                                    lifetime: serde::__private::PhantomData<&'de ()>,
-                                }
-                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut serde::__private::Formatter<'_>,
-                                    ) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            #struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream,
-                                        )
-                                    }
-                                    #[inline]
-                                    fn visit_seq<__A>(
-                                        self,
-                                        mut __seq: __A,
-                                    ) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::SeqAccess<'de>,
-                                    {
-                                        let __field0 = match serde::de::SeqAccess::next_element::<
-                                            std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
-                                        >(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(
-                                                    serde::de::Error::invalid_length(
-                                                        0usize,
-                                                        &#struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        let __field1 = match serde::de::SeqAccess::next_element::<
-                                            #postgersql_crud_pagination_token_stream,
-                                        >(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(
-                                                    serde::de::Error::invalid_length(
-                                                        1usize,
-                                                        &#struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        #match_try_new_in_deserialize_token_stream
-                                    }
-                                    #[inline]
-                                    fn visit_map<__A>(
-                                        self,
-                                        mut __map: __A,
-                                    ) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::MapAccess<'de>,
-                                    {
-                                        let mut __field0: serde::__private::Option<
-                                            std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
-                                        > = serde::__private::None;
-                                        let mut __field1: serde::__private::Option<#postgersql_crud_pagination_token_stream> = serde::__private::None;
-                                        while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
-                                            __Field,
-                                        >(&mut __map)? {
-                                            match __key {
-                                                __Field::__field0 => {
-                                                    if serde::__private::Option::is_some(&__field0) {
-                                                        return serde::__private::Err(
-                                                            <__A::Error as serde::de::Error>::duplicate_field(
-                                                                "field_vec",
-                                                            ),
-                                                        );
-                                                    }
-                                                    __field0 = serde::__private::Some(
-                                                        serde::de::MapAccess::next_value::<
-                                                            std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
-                                                        >(&mut __map)?,
-                                                    );
-                                                }
-                                                __Field::__field1 => {
-                                                    if serde::__private::Option::is_some(&__field1) {
-                                                        return serde::__private::Err(
-                                                            <__A::Error as serde::de::Error>::duplicate_field(
-                                                                "pagination",
-                                                            ),
-                                                        );
-                                                    }
-                                                    __field1 = serde::__private::Some(
-                                                        serde::de::MapAccess::next_value::<#postgersql_crud_pagination_token_stream>(&mut __map)?,
-                                                    );
-                                                }
-                                                _ => {
-                                                    let _ = serde::de::MapAccess::next_value::<
-                                                        serde::de::IgnoredAny,
-                                                    >(&mut __map)?;
-                                                }
+                                        fn visit_u64<__E>(
+                                            self,
+                                            __value: u64,
+                                        ) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => serde::__private::Ok(__Field::__field0),
+                                                1u64 => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
                                             }
                                         }
-                                        let __field0 = match __field0 {
-                                            serde::__private::Some(__field0) => __field0,
-                                            serde::__private::None => {
-                                                serde::__private::de::missing_field("field_vec")?
+                                        fn visit_str<__E>(
+                                            self,
+                                            __value: &str,
+                                        ) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                "field_vec" => serde::__private::Ok(__Field::__field0),
+                                                "pagination" => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
                                             }
-                                        };
-                                        let __field1 = match __field1 {
-                                            serde::__private::Some(__field1) => __field1,
-                                            serde::__private::None => {
-                                                serde::__private::de::missing_field("pagination")?
+                                        }
+                                        fn visit_bytes<__E>(
+                                            self,
+                                            __value: &[u8],
+                                        ) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"field_vec" => serde::__private::Ok(__Field::__field0),
+                                                b"pagination" => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
                                             }
-                                        };
-                                        #match_try_new_in_deserialize_token_stream
+                                        }
                                     }
-                                }
-                                #[doc(hidden)]
-                                const FIELDS: &'static [&'static str] = &["field_vec", "pagination"];
-                                serde::Deserializer::deserialize_struct(
-                                    __deserializer,
-                                    #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream,
-                                    FIELDS,
-                                    __Visitor {
-                                        marker: serde::__private::PhantomData::<
+                                    impl<'de> serde::Deserialize<'de> for __Field {
+                                        #[inline]
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> serde::__private::Result<Self, __D::Error>
+                                        where
+                                            __D: serde::Deserializer<'de>,
+                                        {
+                                            serde::Deserializer::deserialize_identifier(
+                                                __deserializer,
+                                                __FieldVisitor,
+                                            )
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: serde::__private::PhantomData<
                                             #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
                                         >,
-                                        lifetime: serde::__private::PhantomData,
-                                    },
-                                )
-                            }
-                        }
-                    }
-                };
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream =   generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
-                let impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
-                    true,
-                    &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))"}
-                );
-
-                let std_option_option_std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
-                    &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                    &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case
-                );
-                quote::quote!{
-                    #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-                    #impl_try_new_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-                    #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
-
-                    #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
-                    #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
-                    #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
-
-                    #std_option_option_std_vec_vec_generic_with_id_ident_reader_token_stream
-                }
-            };
-            let update_token_stream = {
-                let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-
-                let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
-                    &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                    true,
-                );
-                let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
-                    &quote::quote!{std::option::Option<#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case>},
-                    true,
-                    true,
-                );
-
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
-                    &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
-                    &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
-                );
-
-                let (
-                    std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
-                    impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                ) = {
-                    let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                    let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
-                        &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
-                        &{
-                            quote::quote!{
-                                #checked_add_variant_declaration_token_stream,
-                                JsonArrayChange {
-                                    #[eo_error_occurence]
-                                    error: #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            }
-                        }
-                    );
-                    let impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_to_update_token_stream(
-                        &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
-                        &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
-                        &quote::quote!{
-                            match &self.0 {
-                                Some(value) => {
-                                    match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                                        value,
-                                        jsonb_set_accumulator,
-                                        jsonb_set_target,
-                                        jsonb_set_path,
-                                        increment,
-                                        false,
-                                    ) {
-                                        Ok(value) => Ok(value),
-                                        Err(error) => {
-                                            return Err(#std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::JsonArrayChange {
-                                                error,
-                                                code_occurence: error_occurence_lib::code_occurence!()
-                                            });
+                                        lifetime: serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut serde::__private::Formatter<'_>,
+                                        ) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                #struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_double_quotes_token_stream,
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match serde::de::SeqAccess::next_element::<
+                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                            >(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(
+                                                        serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &#struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field1 = match serde::de::SeqAccess::next_element::<
+                                                #postgersql_crud_pagination_token_stream,
+                                            >(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(
+                                                        serde::de::Error::invalid_length(
+                                                            1usize,
+                                                            &#struct_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_with_2_elements_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            #match_try_new_in_deserialize_token_stream
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(
+                                            self,
+                                            mut __map: __A,
+                                        ) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: serde::__private::Option<
+                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                            > = serde::__private::None;
+                                            let mut __field1: serde::__private::Option<#postgersql_crud_pagination_token_stream> = serde::__private::None;
+                                            while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
+                                                __Field,
+                                            >(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if serde::__private::Option::is_some(&__field0) {
+                                                            return serde::__private::Err(
+                                                                <__A::Error as serde::de::Error>::duplicate_field(
+                                                                    "field_vec",
+                                                                ),
+                                                            );
+                                                        }
+                                                        __field0 = serde::__private::Some(
+                                                            serde::de::MapAccess::next_value::<
+                                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if serde::__private::Option::is_some(&__field1) {
+                                                            return serde::__private::Err(
+                                                                <__A::Error as serde::de::Error>::duplicate_field(
+                                                                    "pagination",
+                                                                ),
+                                                            );
+                                                        }
+                                                        __field1 = serde::__private::Some(
+                                                            serde::de::MapAccess::next_value::<#postgersql_crud_pagination_token_stream>(&mut __map)?,
+                                                        );
+                                                    }
+                                                    _ => {
+                                                        let _ = serde::de::MapAccess::next_value::<
+                                                            serde::de::IgnoredAny,
+                                                        >(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                serde::__private::Some(__field0) => __field0,
+                                                serde::__private::None => {
+                                                    serde::__private::de::missing_field("field_vec")?
+                                                }
+                                            };
+                                            let __field1 = match __field1 {
+                                                serde::__private::Some(__field1) => __field1,
+                                                serde::__private::None => {
+                                                    serde::__private::de::missing_field("pagination")?
+                                                }
+                                            };
+                                            #match_try_new_in_deserialize_token_stream
                                         }
                                     }
-                                }
-                                None => match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
-                                    }
-                                    None => {
-                                        return Err(#std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::#checked_add_variant_initialization_token_stream);
-                                    }
-                                },
-                            }
-                        },
-                        &quote::quote!{
-                            match self.0 {
-                                Some(value) => {
-                                    query = value.bind_value_to_query(query);
-                                }
-                                None => {
-                                    query = query.bind(sqlx::types::Json(None::<std::option::Option<#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case>>));
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["field_vec", "pagination"];
+                                    serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case_double_quotes_token_stream,
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: serde::__private::PhantomData::<
+                                                #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                                            >,
+                                            lifetime: serde::__private::PhantomData,
+                                        },
+                                    )
                                 }
                             }
-                            query
-                        },
+                        }
+                    };
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream =   generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_field_reader_token_stream(&std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case);
+                    let impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
+                        true,
+                        &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))"}
                     );
-                    (
+
+                    let std_option_option_std_vec_vec_generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
+                        &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
+                        &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case
+                    );
+                    quote::quote!{
+                        #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+                        #impl_try_new_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+                        #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_token_stream
+
+                        #std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+                        #impl_serde_deserialize_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+                        #impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_std_option_option_std_vec_vec_generic_with_id_ident_field_reader_token_stream
+
+                        #std_option_option_std_vec_vec_generic_with_id_ident_reader_token_stream
+                    }
+                };
+                let update_token_stream = {
+                    let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+
+                    let std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream = generate_ident_json_array_change_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case,
+                        &naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
+                        true,
+                    );
+                    let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
+                        &quote::quote!{std::option::Option<#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case>},
+                        true,
+                        true,
+                    );
+
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
+                        &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
+                    );
+
+                    let (
                         std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
                         impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                    )
+                    ) = {
+                        let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                        let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+                            &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
+                            &{
+                                quote::quote!{
+                                    #checked_add_variant_declaration_token_stream,
+                                    JsonArrayChange {
+                                        #[eo_error_occurence]
+                                        error: #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                }
+                            }
+                        );
+                        let impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_generate_postgresql_query_part_to_update_token_stream(
+                            &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
+                            &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
+                            &quote::quote!{
+                                match &self.0 {
+                                    Some(value) => {
+                                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                            value,
+                                            jsonb_set_accumulator,
+                                            jsonb_set_target,
+                                            jsonb_set_path,
+                                            increment,
+                                            false,
+                                        ) {
+                                            Ok(value) => Ok(value),
+                                            Err(error) => {
+                                                return Err(#std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::JsonArrayChange {
+                                                    error,
+                                                    code_occurence: error_occurence_lib::code_occurence!()
+                                                });
+                                            }
+                                        }
+                                    }
+                                    None => match increment.checked_add(1) {
+                                        Some(value) => {
+                                            *increment = value;
+                                            Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+                                        }
+                                        None => {
+                                            return Err(#std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case::#checked_add_variant_initialization_token_stream);
+                                        }
+                                    },
+                                }
+                            },
+                            &quote::quote!{
+                                match self.0 {
+                                    Some(value) => {
+                                        query = value.bind_value_to_query(query);
+                                    }
+                                    None => {
+                                        query = query.bind(sqlx::types::Json(None::<std::option::Option<#std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_upper_camel_case>>));
+                                    }
+                                }
+                                query
+                            },
+                        );
+                        (
+                            std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
+                            impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                        )
+                    };
+                    quote::quote!{
+                        #std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream
+                        #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                        #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+                        #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                    }
                 };
                 quote::quote!{
-                    #std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream
-                    #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
-                    #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
-                    #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
+                    #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
+                    #impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
+
+                    #create_token_stream
+                    #read_token_stream
+                    #update_token_stream
                 }
             };
-            quote::quote!{
-                #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
-                #impl_std_fmt_display_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
-
-                #create_token_stream
-                #read_token_stream
-                #update_token_stream
-            }
+            (
+                std_vec_vec_generic_with_id_ident_token_stream,
+                std_option_option_std_vec_vec_generic_with_id_ident_token_stream
+            )
         };
         quote::quote!{
             #generic_ident_token_stream
