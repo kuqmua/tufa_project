@@ -2746,9 +2746,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let impl_std_fmt_display_for_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&generic_with_id_ident_upper_camel_case);
 
         let read_token_stream = {
-            let generic_with_id_ident_options_to_read_upper_camel_case = naming_conventions::GenericWithIdSelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let generic_with_id_ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&generic_with_id_ident_options_to_read_upper_camel_case, true);
-
             let generic_with_id_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(
                 &naming_conventions::GenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                 &FieldReaderContent::GenericWithIdIdentAndStdOptionOptionGenericWithIdIdent
@@ -2840,18 +2837,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             };
-
-            let generic_with_id_ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
-                &naming_conventions::GenericWithIdSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                &generic_with_id_ident_options_to_read_upper_camel_case
-            );
             quote::quote!{
-                #generic_with_id_ident_options_to_read_alias_token_stream
-
                 #generic_with_id_ident_field_reader_token_stream
                 #impl_serde_deserialize_for_generic_with_id_ident_field_reader_token_stream
-
-                #generic_with_id_ident_reader_token_stream
             }
         };
         quote::quote!{
