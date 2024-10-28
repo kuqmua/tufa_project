@@ -321,7 +321,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
                 &ident_to_create_origin_upper_camel_case,
                 &{
-                    let wrap_into_jsonb_build_object_upper_camel_case = naming_conventions::WrapIntoJsonbBuildObjectUpperCamelCase;
+                    let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
                     let json_create_try_generate_bind_increments_fields_token_stream = vec_syn_field.iter().map(|element| {
                         let element_field_ident = element
                             .ident
@@ -336,7 +336,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{
                             match self.#element_field_ident.json_create_try_generate_bind_increments(increment) {
                                 Ok(value) => {
-                                    increments.push_str(&#wrap_into_jsonb_build_object_upper_camel_case(#element_field_ident_double_quotes_token_stream, &value));
+                                    increments.push_str(&#wrap_into_jsonb_build_object_snake_case(#element_field_ident_double_quotes_token_stream, &value));
                                 }
                                 Err(error) => {
                                     return Err(error);
@@ -347,7 +347,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         let mut increments = std::string::String::from("");
                         {
-                            let #wrap_into_jsonb_build_object_upper_camel_case = |field: &std::primitive::str, value: &std::primitive::str|{
+                            let #wrap_into_jsonb_build_object_snake_case = |field: &std::primitive::str, value: &std::primitive::str|{
                                 format!("jsonb_build_object('{field}',{value})||")
                             };
                             #(#json_create_try_generate_bind_increments_fields_token_stream)*
