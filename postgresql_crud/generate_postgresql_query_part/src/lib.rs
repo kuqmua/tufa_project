@@ -318,6 +318,57 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{{#(#fields_token_stream),*}}
                 }
             );
+            let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
+                &ident_to_create_origin_upper_camel_case,
+                &{
+                    let json_create_try_generate_bind_increments_fields_token_stream = vec_syn_field.iter().map(|element| {
+                        let element_field_ident = element
+                            .ident
+                            .as_ref()
+                            .unwrap_or_else(|| {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            });
+                        let element_field_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        quote::quote!{
+                            match self.#element_field_ident.json_create_try_generate_bind_increments(increment) {
+                                Ok(value) => {
+                                    increments.push_str(&format!(#element_field_ident_value_comma_double_quotes_token_stream));
+                                }
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            }
+                        }
+                    });
+                    quote::quote!{
+                        let mut increments = std::string::String::from("");
+                        #(#json_create_try_generate_bind_increments_fields_token_stream)*
+                        let _ = increments.pop();
+                        let _ = increments.pop();
+                        Ok(format!("{increments}"))
+                    }
+                },
+                &{
+                    let json_create_bind_value_to_query_fields_token_stream = vec_syn_field.iter().map(|element| {
+                        let element_field_ident = element
+                            .ident
+                            .as_ref()
+                            .unwrap_or_else(|| {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            });
+                        quote::quote!{
+                            query = self.#element_field_ident.json_create_bind_value_to_query(query);
+                        }
+                    });
+                    quote::quote!{
+                        #(#json_create_bind_value_to_query_fields_token_stream)*
+                        query
+                    }
+                },
+            );
             let (
                 ident_to_create_with_generated_id_token_stream,
                 ident_to_create_without_generated_id_token_stream
@@ -392,56 +443,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
                         &struct_ident_token_stream,
                         &{
-                            let increment_initialization_string_content_token_stream = if contains_id {
-                                quote::quote!{"jsonb_build_object('id', to_jsonb(gen_random_uuid()))||"}
+                            let format_handle_token_stream = if contains_id {
+                                quote::quote!{"jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{value}"}
                             }
                             else {
-                                quote::quote!{""}
+                                quote::quote!{"{value}"}
                             };
-                            let json_create_try_generate_bind_increments_fields_token_stream = vec_syn_field.iter().map(|element| {
-                                let element_field_ident = element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                                    });
-                                let element_field_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                    &format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
-                                    &proc_macro_name_upper_camel_case_ident_stringified
-                                );
-                                quote::quote!{
-                                    match self.0.#element_field_ident.json_create_try_generate_bind_increments(increment) {
-                                        Ok(value) => {
-                                            increments.push_str(&format!(#element_field_ident_value_comma_double_quotes_token_stream));
-                                        }
-                                        Err(error) => {
-                                            return Err(error);
-                                        }
-                                    }
-                                }
-                            });
                             quote::quote!{
-                                let mut increments = std::string::String::from(#increment_initialization_string_content_token_stream);
-                                #(#json_create_try_generate_bind_increments_fields_token_stream)*
-                                let _ = increments.pop();
-                                let _ = increments.pop();
-                                Ok(format!("{increments}"))
+                                match self.0.json_create_try_generate_bind_increments(increment) {
+                                    Ok(value) => Ok(format!(#format_handle_token_stream)),
+                                    Err(error) => Err(error)
+                                }
                             }
                         },
                         &{
-                            let json_create_bind_value_to_query_fields_token_stream = vec_syn_field.iter().map(|element| {
-                                let element_field_ident = element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                                    });
-                                quote::quote!{
-                                    query = self.0.#element_field_ident.json_create_bind_value_to_query(query);
-                                }
-                            });
                             quote::quote!{
-                                #(#json_create_bind_value_to_query_fields_token_stream)*
+                                query = self.0.json_create_bind_value_to_query(query);
                                 query
                             }
                         },
@@ -463,6 +480,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 #ident_to_create_origin_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_origin_token_stream
+                #impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_token_stream
 
                 #ident_to_create_with_generated_id_token_stream
                 #ident_to_create_without_generated_id_token_stream
