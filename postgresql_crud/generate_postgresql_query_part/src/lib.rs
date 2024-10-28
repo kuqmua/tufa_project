@@ -20,8 +20,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_field_to_update_upper_camel_case = naming_conventions::SelfFieldToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
-    let generic_ident_upper_camel_case = naming_conventions::GenericSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-
     let ident_field_to_read_upper_camel_case = naming_conventions::SelfFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_with_id_field_to_read_upper_camel_case = naming_conventions::SelfWithIdFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
@@ -2191,6 +2189,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)},
             )
         };
+        let generic_ident_upper_camel_case = naming_conventions::GenericSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         //its for GeneratePostgresqlQueryPart (json logic)
         let generic_ident_token_stream = {
             let generic_ident_token_stream = generate_supported_generics_template_struct_token_stream(
