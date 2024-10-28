@@ -167,7 +167,6 @@ unreachable_code = { level = "deny", priority = 0 } #detects unreachable code pa
 unreachable_patterns = { level = "deny", priority = 0 } #detects unreachable patterns
 unstable_name_collisions = { level = "deny", priority = 0 } #detects name collision with an existing but unstable method
 unstable_syntax_pre_expansion = { level = "deny", priority = 0 } #unstable syntax can change at any point in the future, causing a hard error!
-unsupported_calling_conventions = { level = "deny", priority = 0 } #use of unsupported calling convention
 unused_allocation = { level = "deny", priority = 0 } #detects unnecessary allocations that can be eliminated
 unused_assignments = { level = "deny", priority = 0 } #detect assignments that will never be read
 unused_associated_type_bounds = { level = "deny", priority = 0 } #detects unused `Foo = Bar` bounds in `dyn Trait<Foo = Bar>`
@@ -192,7 +191,6 @@ arithmetic_overflow = { level = "deny", priority = 0 } #arithmetic operation ove
 bindings_with_variant_name = { level = "deny", priority = 0 } #detects pattern bindings with the same name as one of the matched variants
 cenum_impl_drop_cast = { level = "deny", priority = 0 } #a C_like enum implementing Drop is cast
 conflicting_repr_hints = { level = "deny", priority = 0 } #conflicts between `#[repr(..)]` hints that were previously accepted and used in practice
-deprecated_cfg_attr_crate_type_name = { level = "deny", priority = 0 } #detects usage of `#![cfg_attr(..., crate_type/crate_name = "...")]`
 enum_intrinsics_non_enums = { level = "deny", priority = 0 } #detects calls to `core::mem::discriminant` and `core::mem::variant_count` with non_enum types
 ill_formed_attribute_input = { level = "deny", priority = 0 } #ill_formed attribute inputs that were previously accepted and used in practice
 incomplete_include = { level = "deny", priority = 0 } #trailing content in included file
@@ -228,7 +226,6 @@ refining_impl_trait_internal = { level = "deny", priority = 0 } #impl trait in i
 refining_impl_trait_reachable = { level = "deny", priority = 0 } #impl trait in impl method signature does not match trait method signature
 static_mut_refs = { level = "deny", priority = 0 } #shared references or mutable references of mutable static is discouraged
 wasm_c_abi = { level = "deny", priority = 0 } #detects dependencies that are incompatible with the Wasm C ABI
-writes_through_immutable_pointer = { level = "deny", priority = 0 } #shared references are immutable, and pointers derived from them must not be written to
 # dereferencing_mut_binding = { level = "deny", priority = 0 } #detects `mut x` bindings that change the type of `x`
 # fuzzy_provenance_casts = { level = "deny", priority = 0 } #a fuzzy integer to pointer cast is used
 # lossy_provenance_casts = { level = "deny", priority = 0 } #a lossy pointer to integer cast is used
