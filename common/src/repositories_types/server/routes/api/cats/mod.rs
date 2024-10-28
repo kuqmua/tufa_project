@@ -810,7 +810,6 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
                 "sqlx_types_json_t_as_postgresql_json_b_not_null", //sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic'->0->'generic'
                 "",                                                //{std_vec_vec_generic,0}
                 &mut increment,
-                false
             ) {
                 Ok(value) => {
                     query.push_str(&value);
