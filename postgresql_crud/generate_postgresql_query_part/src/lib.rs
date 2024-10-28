@@ -329,10 +329,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .unwrap_or_else(|| {
                                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
-                        let element_field_ident_value_comma_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("jsonb_build_object('{element_field_ident}',{{value}})||"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
                         let element_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &element_field_ident.to_string(),
                             &proc_macro_name_upper_camel_case_ident_stringified
@@ -453,15 +449,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
                         &struct_ident_token_stream,
                         &{
-                            let format_handle_token_stream = if contains_id {
-                                quote::quote!{"jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{value}"}
+                            let ok_value_token_stream = if contains_id {
+                                quote::quote!{format!("jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{value}")}
                             }
                             else {
-                                quote::quote!{"{value}"}
+                                quote::quote!{value}
                             };
                             quote::quote!{
                                 match self.0.json_create_try_generate_bind_increments(increment) {
-                                    Ok(value) => Ok(format!(#format_handle_token_stream)),
+                                    Ok(value) => Ok(#ok_value_token_stream),
                                     Err(error) => Err(error)
                                 }
                             }
