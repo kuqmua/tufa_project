@@ -1726,17 +1726,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                         let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
                         quote::quote!{
-                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                acc.push_str(&format!(
-                                    "{}||",
-                                    postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                                        value,
-                                        #field_ident_double_quotes_token_stream,
-                                        column_name_and_maybe_field_getter,
-                                        column_name_and_maybe_field_getter_for_error_message
-                                    )
-                                ));
-                            }
+                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                value,
+                                #field_ident_double_quotes_token_stream,
+                                column_name_and_maybe_field_getter,
+                                column_name_and_maybe_field_getter_for_error_message
+                            )
                         }
                     });
                     quote::quote!{
@@ -1748,9 +1743,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             ) -> std::string::String {
                                 let mut acc = std::string::String::default();
                                 for element in value {
-                                    match element {
-                                        #(#variants_token_stream),*
-                                    }
+                                    acc.push_str(&format!(
+                                        "{}||",
+                                        match element {
+                                            #(#variants_token_stream),*
+                                        }
+                                    ));
                                 }
                                 let _ = acc.pop();
                                 let _ = acc.pop();
