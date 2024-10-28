@@ -919,16 +919,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote! {
                             #curly_brace_space_filter_snake_case_space_curly_braces_token_stream => format!(
                                 #filter_as_field_ident_string_double_quotes_token_stream,//todo should support arrays or "key: array" is enough?
-                                match postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_vec(
+                                postgresql_crud::GeneratePostgresqlQueryPartToRead::generate_postgresql_query_part_to_read_from_vec(
                                     #filter_snake_case,
                                     #element_field_ident_double_quotes_token_stream,
                                     #element_field_ident_double_quotes_token_stream,
-                                ) {
-                                    Ok(#value_snake_case) => #value_snake_case,
-                                    Err(#error_0_token_stream) => {
-                                        #generic_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                }
+                                ) 
                             )
                         }
                     }

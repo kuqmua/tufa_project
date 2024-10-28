@@ -1686,7 +1686,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 value: &std::vec::Vec<Self>,
                                 column_name_and_maybe_field_getter: &std::primitive::str,
                                 column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-                            ) -> Result<std::string::String, #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream> {
+                            ) -> std::string::String {
                                 let mut acc = std::string::String::default();
                                 for element in value {
                                     match element {
@@ -1695,7 +1695,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 }
                                 let _ = acc.pop();
                                 let _ = acc.pop();
-                                Ok(format!("{acc}"))
+                                format!("{acc}")
                             }
                         }
                     }

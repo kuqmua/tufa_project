@@ -1789,7 +1789,7 @@ impl schemars::JsonSchema for JsonUuidOptionToUpdate {
 
 //todo rename it coz it applied to read_one and read_many
 pub trait GeneratePostgresqlQueryPartToRead<T1> {
-    fn generate_postgresql_query_part_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> Result<std::string::String, T1>
+    fn generate_postgresql_query_part_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
     where
         Self: Sized;
 }
