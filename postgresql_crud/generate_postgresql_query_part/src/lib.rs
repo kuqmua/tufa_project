@@ -1993,7 +1993,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     quote::quote!{
-                        let mut acc = std::string::String::from(jsonb_set_accumulator);
                         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
                             true => std::string::String::default(),
                             false => format!("{jsonb_set_path},"),
@@ -2033,7 +2032,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
             );
-            // println!("{impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_option_to_update_try_generate_bind_increments_error_named_for_ident_option_to_update_token_stream}");
             quote::quote!{
                 #ident_option_to_update_token_stream
                 #impl_try_new_for_ident_option_to_update_token_stream
