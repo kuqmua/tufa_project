@@ -17,13 +17,34 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
+    let ident_to_create_origin_with_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_to_create_origin_without_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithoutGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+
+
     let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_field_to_update_upper_camel_case = naming_conventions::SelfFieldToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
     let ident_field_to_read_upper_camel_case = naming_conventions::SelfFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_with_id_field_to_read_upper_camel_case = naming_conventions::SelfWithIdFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
+    let ident_options_to_read_without_id_upper_camel_case = naming_conventions::SelfOptionsToReadWithoutIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_options_to_read_with_id_upper_camel_case = naming_conventions::SelfOptionsToReadWithIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+
+
+    let ident_option_to_update_origin_upper_camel_case = naming_conventions::SelfOptionToUpdateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    
+    let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_options_to_update_upper_camel_case = naming_conventions::SelfOptionsToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+
+
+    let ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfJsonArrayChangeTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+
+    let postgersql_crud_pagination_token_stream = quote::quote!{postgresql_crud::Pagination};
+
     let postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()};
+    let postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+    };
 
     let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
@@ -45,8 +66,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             pub struct #struct_ident_token_stream #content_token_stream
         }
     }
-
-    let postgersql_crud_pagination_token_stream = quote::quote!{postgresql_crud::Pagination};
 
     enum FieldReaderContent {
         GenericWithIdIdentAndStdOptionOptionGenericWithIdIdent,
@@ -181,10 +200,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     }
     
-    let ident_options_to_read_without_id_upper_camel_case = naming_conventions::SelfOptionsToReadWithoutIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_options_to_read_with_id_upper_camel_case = naming_conventions::SelfOptionsToReadWithIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    
-    
     let generate_pub_type_alias_token_stream = |alias_type_name_token_stream: &dyn quote::ToTokens, alias_actual_type_name_token_stream: &dyn quote::ToTokens|{
         quote::quote!{pub type #alias_type_name_token_stream = #alias_actual_type_name_token_stream;}
     };
@@ -196,10 +211,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{#ident_options_to_read_without_id_upper_camel_case}
         };
         generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
-    };
-
-    let postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-        postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
 
     let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream = |
@@ -219,8 +230,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
-    let ident_option_to_update_origin_upper_camel_case = naming_conventions::SelfOptionToUpdateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-
     let generate_tokens_try_generate_bind_increments_error_named_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
         content_token_stream: &dyn quote::ToTokens,
@@ -232,12 +241,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    
-    let ident_to_create_origin_with_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_to_create_origin_without_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithoutGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    
-    let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_options_to_update_upper_camel_case = naming_conventions::SelfOptionsToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
     let (
         checked_add_variant_declaration_token_stream,
@@ -260,9 +263,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             checked_add_variant_initialization_token_stream
         )
     };
-
-
-    let ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfJsonArrayChangeTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
     let generate_tokens_options_to_read_token_stream = |
         token_options_to_read_token_stream: &dyn quote::ToTokens,
