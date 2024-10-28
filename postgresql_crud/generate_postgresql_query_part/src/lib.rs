@@ -23,8 +23,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_field_to_update_upper_camel_case = naming_conventions::SelfFieldToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
-    let ident_field_to_read_upper_camel_case = naming_conventions::SelfFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_with_id_field_to_read_upper_camel_case = naming_conventions::SelfWithIdFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_field_to_read_without_id_upper_camel_case = naming_conventions::SelfFieldToReadWithoutIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_field_to_read_with_id_upper_camel_case = naming_conventions::SelfFieldToReadWithIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
     let ident_options_to_read_without_id_upper_camel_case = naming_conventions::SelfOptionsToReadWithoutIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_options_to_read_with_id_upper_camel_case = naming_conventions::SelfOptionsToReadWithIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
@@ -83,13 +83,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         field_reader_content: &FieldReaderContent
     |{
         let struct_ident = naming_conventions::SelfFieldReaderUpperCamelCase::from_dyn_std_fmt_display(&struct_prefix_stringified);
-        let std_vec_vec_ident_field_to_read_upper_camel_case_token_stream = quote::quote!{std::vec::Vec<#ident_field_to_read_upper_camel_case>};
-        let field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream = quote::quote!{field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>, pagination: #postgersql_crud_pagination_token_stream};
+        let std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream = quote::quote!{std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case>};
+        let field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream = quote::quote!{field_vec: std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>, pagination: #postgersql_crud_pagination_token_stream};
         let content_token_stream = match &field_reader_content {
-            FieldReaderContent::GenericIdentAndStdOptionOptionGenericIdent => quote::quote!{(#std_vec_vec_ident_field_to_read_upper_camel_case_token_stream);},
+            FieldReaderContent::GenericIdentAndStdOptionOptionGenericIdent => quote::quote!{(#std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream);},
             FieldReaderContent::StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent => quote::quote!{
                 {
-                    #field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream
+                    #field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream
                 }
             },
         };
@@ -102,11 +102,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             input_parameters_token_stream: &dyn quote::ToTokens,
             is_vec: std::primitive::bool,
         |{
-            let field_type_token_stream = if contains_id {
-                quote::quote!{#ident_with_id_field_to_read_upper_camel_case}
+            let field_type_token_stream: &dyn quote::ToTokens = if contains_id {
+                &ident_field_to_read_with_id_upper_camel_case
             }
             else {
-                quote::quote!{#ident_field_to_read_upper_camel_case}
+                &ident_field_to_read_without_id_upper_camel_case
             };
             
             let field_vec_snake_case = naming_conventions::FieldVecSnakeCase;
@@ -167,14 +167,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 FieldReaderContent::GenericIdentAndStdOptionOptionGenericIdent => {
                     generate_impl_pub_fn_try_new_token_stream(
                         false,
-                        &generate_value_input_parameter_type_token_stream(&std_vec_vec_ident_field_to_read_upper_camel_case_token_stream),
+                        &generate_value_input_parameter_type_token_stream(&std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream),
                         false,
                     )
                 },
                 FieldReaderContent::StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent => {
                     generate_impl_pub_fn_try_new_token_stream(
                         true,
-                        &field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream,
+                        &field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream,
                         true,
                     )
                 },
@@ -550,20 +550,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         }
                     };
-                    let ident_field_to_read_token_stream = generate_template_field_to_read_struct_token_stream(
-                        &ident_field_to_read_upper_camel_case,
+                    let ident_field_to_read_without_id_token_stream = generate_template_field_to_read_struct_token_stream(
+                        &ident_field_to_read_without_id_upper_camel_case,
                         &proc_macro2::TokenStream::new(),
                     );
-                    let ident_with_id_field_to_read_token_stream = generate_template_field_to_read_struct_token_stream(
-                        &ident_with_id_field_to_read_upper_camel_case,
+                    let ident_field_to_read_with_id_token_stream = generate_template_field_to_read_struct_token_stream(
+                        &ident_field_to_read_with_id_upper_camel_case,
                         &quote::quote!{
                             #[serde(rename(serialize = "id", deserialize = "id"))]
                              Id(postgresql_crud::JsonUuidFieldReader),
                         },
                     );
                     (
-                        ident_field_to_read_token_stream,
-                        ident_with_id_field_to_read_token_stream
+                        ident_field_to_read_without_id_token_stream,
+                        ident_field_to_read_with_id_token_stream
                     )
                 };
                 let (
@@ -579,11 +579,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         }
                     };
-                    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_field_to_read_upper_camel_case);
-                    let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_field_to_read_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_with_id_field_to_read_upper_camel_case);
+                    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_without_id_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_field_to_read_without_id_upper_camel_case);
+                    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_with_id_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_field_to_read_with_id_upper_camel_case);
                     (
-                        impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream,
-                        impl_error_occurence_lib_to_std_string_string_for_ident_with_id_field_to_read_token_stream
+                        impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_without_id_token_stream,
+                        impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_with_id_token_stream
                     )
                 };
                 let (
@@ -603,23 +603,23 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         });
                         quote::quote!{#(#elements_token_stream),*}
                     };
-                    let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_token_stream =    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_field_to_read_upper_camel_case,
-                        &generate_vec_content_token_stream(&ident_field_to_read_upper_camel_case)
+                    let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_without_id_token_stream =    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_field_to_read_without_id_upper_camel_case,
+                        &generate_vec_content_token_stream(&ident_field_to_read_without_id_upper_camel_case)
                     );
-                    let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_with_id_field_to_read_token_stream =    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_with_id_field_to_read_upper_camel_case,
+                    let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_with_id_token_stream =    impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_field_to_read_with_id_upper_camel_case,
                         &{
-                            let other_variants_token_stream = generate_vec_content_token_stream(&ident_with_id_field_to_read_upper_camel_case);
+                            let other_variants_token_stream = generate_vec_content_token_stream(&ident_field_to_read_with_id_upper_camel_case);
                             quote::quote!{
-                                #ident_with_id_field_to_read_upper_camel_case::Id(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream),
+                                #ident_field_to_read_with_id_upper_camel_case::Id(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream),
                                 #other_variants_token_stream
                             }
                         }
                     );
                     (
-                        impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_token_stream,
-                        impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_with_id_field_to_read_token_stream
+                        impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_without_id_token_stream,
+                        impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_to_read_with_id_token_stream
                     )
                 };
                 let (
@@ -1618,6 +1618,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         let read_token_stream = {
+            let ident_field_to_read_alias_token_stream = generate_pub_type_alias_token_stream(&naming_conventions::SelfFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident), &ident_field_to_read_without_id_upper_camel_case);
+
             let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&ident_options_to_read_upper_camel_case, false);
 
@@ -1669,8 +1671,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 where
                                     __E: serde::Deserializer<'de>,
                                 {
-                                    let __field0: std::vec::Vec<#ident_field_to_read_upper_camel_case> = <std::vec::Vec<
-                                        #ident_field_to_read_upper_camel_case,
+                                    let __field0: std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case> = <std::vec::Vec<
+                                        #ident_field_to_read_without_id_upper_camel_case,
                                     > as serde::Deserialize>::deserialize(__e)?;
                                     #match_try_new_in_deserialize_token_stream
                                 }
@@ -1683,7 +1685,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     __A: serde::de::SeqAccess<'de>,
                                 {
                                     let __field0 = match serde::de::SeqAccess::next_element::<
-                                        std::vec::Vec<#ident_field_to_read_upper_camel_case>,
+                                        std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case>,
                                     >(&mut __seq)? {
                                         serde::__private::Some(__value) => __value,
                                         serde::__private::None => {
@@ -1724,7 +1726,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                         let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
                         quote::quote!{
-                            #ident_field_to_read_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
+                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
                                 acc.push_str(&format!(
                                     "{}||",
                                     postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
@@ -1738,7 +1740,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     quote::quote!{
-                        impl postgresql_crud::GeneratePostgresqlQueryPartToRead for #ident_field_to_read_upper_camel_case {
+                        impl postgresql_crud::GeneratePostgresqlQueryPartToRead for #ident_field_to_read_without_id_upper_camel_case {
                             fn generate_postgresql_query_part_to_read_from_vec(
                                 value: &std::vec::Vec<Self>,
                                 column_name_and_maybe_field_getter: &std::primitive::str,
@@ -1767,6 +1769,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &ident_options_to_read_upper_camel_case
             );
             quote::quote!{
+                #ident_field_to_read_alias_token_stream
+
                 #ident_options_to_read_alias_token_stream
 
                 #ident_field_reader_token_stream
@@ -2136,11 +2140,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             contains_id: std::primitive::bool,
             format_handle_double_quotes_token_stream: &dyn quote::ToTokens,
         |{
-            let tokens_field_to_read_upper_camel_case_token_stream = if contains_id {
-                quote::quote!{#ident_with_id_field_to_read_upper_camel_case}
+            let tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = if contains_id {
+                &ident_field_to_read_with_id_upper_camel_case
             }
             else {
-                quote::quote!{#ident_field_to_read_upper_camel_case}
+                &ident_field_to_read_without_id_upper_camel_case
             };
             let generate_acc_push_str_variant_logic_token_stream = |
                 variant_name_token_stream: &dyn quote::ToTokens,
@@ -2148,7 +2152,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens,
             |{
                 quote::quote!{
-                    #tokens_field_to_read_upper_camel_case_token_stream::#variant_name_token_stream(value) => {
+                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => {
                         acc.push_str(&format!(
                             "{}||",
                             postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
@@ -2304,8 +2308,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         where
                                             __E: serde::Deserializer<'de>,
                                         {
-                                            let __field0: std::vec::Vec<#ident_field_to_read_upper_camel_case> = <std::vec::Vec<
-                                                #ident_field_to_read_upper_camel_case,
+                                            let __field0: std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case> = <std::vec::Vec<
+                                                #ident_field_to_read_without_id_upper_camel_case,
                                             > as serde::Deserialize>::deserialize(__e)?;
                                             #match_try_new_in_deserialize_token_stream
                                         }
@@ -2318,7 +2322,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             __A: serde::de::SeqAccess<'de>,
                                         {
                                             let __field0 = match serde::de::SeqAccess::next_element::<
-                                                std::vec::Vec<#ident_field_to_read_upper_camel_case>,
+                                                std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case>,
                                             >(&mut __seq)? {
                                                 serde::__private::Some(__value) => __value,
                                                 serde::__private::None => {
@@ -2517,8 +2521,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         where
                                             __E: serde::Deserializer<'de>,
                                         {
-                                            let __field0: std::vec::Vec<#ident_field_to_read_upper_camel_case> = <std::vec::Vec<
-                                                #ident_field_to_read_upper_camel_case,
+                                            let __field0: std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case> = <std::vec::Vec<
+                                                #ident_field_to_read_without_id_upper_camel_case,
                                             > as serde::Deserialize>::deserialize(__e)?;
                                             #match_try_new_in_deserialize_token_stream
                                         }
@@ -2531,7 +2535,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             __A: serde::de::SeqAccess<'de>,
                                         {
                                             let __field0 = match serde::de::SeqAccess::next_element::<
-                                                std::vec::Vec<#ident_field_to_read_upper_camel_case>,
+                                                std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case>,
                                             >(&mut __seq)? {
                                                 serde::__private::Some(__value) => __value,
                                                 serde::__private::None => {
@@ -3681,7 +3685,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             __A: serde::de::SeqAccess<'de>,
                                         {
                                             let __field0 = match serde::de::SeqAccess::next_element::<
-                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>,
                                             >(&mut __seq)? {
                                                 serde::__private::Some(__value) => __value,
                                                 serde::__private::None => {
@@ -3717,7 +3721,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             __A: serde::de::MapAccess<'de>,
                                         {
                                             let mut __field0: serde::__private::Option<
-                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>,
                                             > = serde::__private::None;
                                             let mut __field1: serde::__private::Option<#postgersql_crud_pagination_token_stream> = serde::__private::None;
                                             while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
@@ -3734,7 +3738,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                         }
                                                         __field0 = serde::__private::Some(
                                                             serde::de::MapAccess::next_value::<
-                                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                                std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>,
                                                             >(&mut __map)?,
                                                         );
                                                     }
@@ -4252,7 +4256,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             __A: serde::de::SeqAccess<'de>,
                                         {
                                             let __field0 = match serde::de::SeqAccess::next_element::<
-                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>,
                                             >(&mut __seq)? {
                                                 serde::__private::Some(__value) => __value,
                                                 serde::__private::None => {
@@ -4288,7 +4292,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             __A: serde::de::MapAccess<'de>,
                                         {
                                             let mut __field0: serde::__private::Option<
-                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>,
                                             > = serde::__private::None;
                                             let mut __field1: serde::__private::Option<#postgersql_crud_pagination_token_stream> = serde::__private::None;
                                             while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
@@ -4305,7 +4309,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                         }
                                                         __field0 = serde::__private::Some(
                                                             serde::de::MapAccess::next_value::<
-                                                                std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>,
+                                                                std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>,
                                                             >(&mut __map)?,
                                                         );
                                                     }

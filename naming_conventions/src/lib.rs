@@ -437,8 +437,8 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["std", "vec", "vec", "generic", "with", "id", "self"],
     ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self"],
     ["self", "field", "reader"],
-    ["self", "field", "to", "read"],
-    ["self", "with", "id", "field", "to", "read"],
+    ["self", "field", "to", "read", "without", "id"],
+    ["self", "field", "to", "read", "with", "id"],
     ["generic", "self", "field", "reader"],
     ["generic", "with", "id", "self", "field", "reader"],
     ["std", "option", "option", "generic", "self", "field", "reader"],
@@ -511,7 +511,8 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["std", "vec", "vec", "generic", "with", "id", "self", "options", "to", "read", "try", "new", "error", "named"],
     ["self", "generate", "postgresql", "query", "part", "to", "read", "from", "vec", "error", "named"],
     ["std", "option", "option", "generic", "self", "option", "to", "update", "try", "new", "error", "named"],
-    ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self", "options", "to", "read", "try", "new", "error", "named"]
+    ["std", "option", "option", "std", "vec", "vec", "generic", "with", "id", "self", "options", "to", "read", "try", "new", "error", "named"],
+    ["self", "field", "to", "read"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
