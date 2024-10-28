@@ -68,7 +68,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     }
 
     enum FieldReaderContent {
-        GenericWithIdIdentAndStdOptionOptionGenericWithIdIdent,
         GenericIdentAndStdOptionOptionGenericIdent,
         StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent
     }
@@ -77,11 +76,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         field_reader_content: &FieldReaderContent
     |{
         let struct_ident = naming_conventions::SelfFieldReaderUpperCamelCase::from_dyn_std_fmt_display(&struct_prefix_stringified);
-        let std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream = quote::quote!{std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>};
         let std_vec_vec_ident_field_to_read_upper_camel_case_token_stream = quote::quote!{std::vec::Vec<#ident_field_to_read_upper_camel_case>};
         let field_vec_std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream = quote::quote!{field_vec: std::vec::Vec<#ident_with_id_field_to_read_upper_camel_case>, pagination: #postgersql_crud_pagination_token_stream};
         let content_token_stream = match &field_reader_content {
-            FieldReaderContent::GenericWithIdIdentAndStdOptionOptionGenericWithIdIdent => quote::quote!{(#std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream);},
             FieldReaderContent::GenericIdentAndStdOptionOptionGenericIdent => quote::quote!{(#std_vec_vec_ident_field_to_read_upper_camel_case_token_stream);},
             FieldReaderContent::StdVecVecGenericWithIdIdentAndStdOptionOptionStdVecVecGenericWithIdIdent => quote::quote!{
                 {
@@ -160,13 +157,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 quote::quote!{#value_snake_case: #value_token_stream}
             };
             match &field_reader_content {
-                FieldReaderContent::GenericWithIdIdentAndStdOptionOptionGenericWithIdIdent => {
-                    generate_impl_pub_fn_try_new_token_stream(
-                        true,
-                        &generate_value_input_parameter_type_token_stream(&std_vec_vec_ident_with_id_field_to_read_upper_camel_case_token_stream_token_stream),
-                        false,
-                    )
-                },
                 FieldReaderContent::GenericIdentAndStdOptionOptionGenericIdent => {
                     generate_impl_pub_fn_try_new_token_stream(
                         false,
