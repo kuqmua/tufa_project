@@ -1681,7 +1681,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     quote::quote!{
-                        impl postgresql_crud::GeneratePostgresqlQueryPartToRead<#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream, ()> for #ident_field_to_read_upper_camel_case {
+                        impl postgresql_crud::GeneratePostgresqlQueryPartToRead<#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream> for #ident_field_to_read_upper_camel_case {
                             fn generate_postgresql_query_part_to_read_from_vec(
                                 value: &std::vec::Vec<Self>,
                                 column_name_and_maybe_field_getter: &std::primitive::str,
@@ -1706,6 +1706,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream
                 }
             };
+            // if ident == "Something" {
+            //     println!("{impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream}");
+            // }
 
             let ident_reader_token_stream = generate_tokens_reader_alias_token_stream(
                 &naming_conventions::SelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
