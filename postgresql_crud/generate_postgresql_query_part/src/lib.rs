@@ -45,7 +45,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             pub struct #struct_ident_token_stream #content_token_stream
         }
     }
-    //
+
     let postgersql_crud_pagination_token_stream = quote::quote!{postgresql_crud::Pagination};
 
     enum FieldReaderContent {
@@ -218,35 +218,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     };
-    let generate_tokens_reader_alias_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
-        generate_pub_type_alias_token_stream(struct_ident_token_stream, struct_options_to_read_token_stream)
-    };
 
     let ident_option_to_update_origin_upper_camel_case = naming_conventions::SelfOptionToUpdateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-
-    let generate_tokens_option_to_update_token_stream = |
-        struct_ident_token_stream: &dyn quote::ToTokens,
-        self_type_content_token_stream: &dyn quote::ToTokens,
-        impl_deserialize: std::primitive::bool,
-        is_pub: std::primitive::bool,
-    |{
-        let maybe_impl_deserialize_token_stream = if impl_deserialize {
-            quote::quote!{serde::Deserialize,}
-        }
-        else {
-            proc_macro2::TokenStream::new()
-        };
-        let maybe_pub_token_stream = if is_pub {
-            quote::quote!{pub}
-        }
-        else {
-            proc_macro2::TokenStream::new()
-        };
-        quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_deserialize_token_stream utoipa::ToSchema)]
-            pub struct #struct_ident_token_stream(#maybe_pub_token_stream #self_type_content_token_stream);
-        }
-    };
 
     let generate_tokens_try_generate_bind_increments_error_named_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
@@ -262,12 +235,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     
     let ident_to_create_origin_with_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_to_create_origin_without_generated_id_upper_camel_case = naming_conventions::SelfToCreateOriginWithoutGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    //here
-
-
-    let generate_tokens_to_create_alias_token_stream = |tokens_to_create_token_stream: &dyn quote::ToTokens|{
-        generate_pub_type_alias_token_stream(tokens_to_create_token_stream, &ident_to_create_origin_without_generated_id_upper_camel_case)
-    };
     
     let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_options_to_update_upper_camel_case = naming_conventions::SelfOptionsToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
@@ -297,16 +264,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
     let ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfJsonArrayChangeTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
-
-    let field0_token_stream = quote::quote!{__field0};
-    let field0_field1_token_stream = quote::quote!{__field0, __field1};
-
-
-
-
-    let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_option_to_update_try_new_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let generate_tokens_options_to_read_token_stream = |
         token_options_to_read_token_stream: &dyn quote::ToTokens,
         impl_serde_deserialize: std::primitive::bool,
@@ -1494,6 +1451,35 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         }
     }
+    let generate_tokens_reader_alias_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
+        generate_pub_type_alias_token_stream(struct_ident_token_stream, struct_options_to_read_token_stream)
+    };
+    let generate_tokens_option_to_update_token_stream = |
+        struct_ident_token_stream: &dyn quote::ToTokens,
+        self_type_content_token_stream: &dyn quote::ToTokens,
+        impl_deserialize: std::primitive::bool,
+        is_pub: std::primitive::bool,
+    |{
+        let maybe_impl_deserialize_token_stream = if impl_deserialize {
+            quote::quote!{serde::Deserialize,}
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
+        let maybe_pub_token_stream = if is_pub {
+            quote::quote!{pub}
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
+        quote::quote!{
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_deserialize_token_stream utoipa::ToSchema)]
+            pub struct #struct_ident_token_stream(#maybe_pub_token_stream #self_type_content_token_stream);
+        }
+    };
+    let field0_token_stream = quote::quote!{__field0};
+    let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_option_to_update_try_new_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
         let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&ident);
@@ -1854,7 +1840,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
                 let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
                     &ident_option_to_update_upper_camel_case,
-                    &quote::quote!{__field0},
+                    &field0_token_stream,
                 );
                 quote::quote!{
                     impl<'de> serde::Deserialize<'de> for #ident_option_to_update_upper_camel_case {
@@ -2192,6 +2178,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             )
         };
         let generic_ident_upper_camel_case = naming_conventions::GenericSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+        let generate_tokens_to_create_alias_token_stream = |tokens_to_create_token_stream: &dyn quote::ToTokens|{
+            generate_pub_type_alias_token_stream(tokens_to_create_token_stream, &ident_to_create_origin_without_generated_id_upper_camel_case)
+        };
         //its for GeneratePostgresqlQueryPart (json logic)
         let generic_ident_token_stream = {
             let generic_ident_token_stream = generate_supported_generics_template_struct_token_stream(
@@ -2334,7 +2323,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
                 let generic_ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_alias_token_stream = generate_pub_type_alias_token_stream(
                     &naming_conventions::GenericSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-                    &ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_upper_camel_case
+                    &naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident)
                 );
                 quote::quote!{
                     #generic_ident_option_to_update_alias_token_stream
@@ -3292,6 +3281,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                 )
             };
+            let field0_field1_token_stream = quote::quote!{__field0, __field1};
             //its for GeneratePostgresqlQueryPart (json logic)
             let std_vec_vec_generic_with_id_ident_token_stream = {
                 let (
@@ -3420,7 +3410,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
                             &std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                            &quote::quote!{__field0},
+                            &field0_token_stream,
                         );
                         quote::quote!{
                             impl<'de> serde::Deserialize<'de> for #std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
@@ -3986,7 +3976,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
                             &std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case,
-                            &quote::quote!{__field0},
+                            &field0_token_stream,
                         );
                         quote::quote!{
                             impl<'de> serde::Deserialize<'de> for #std_option_option_std_vec_vec_generic_with_id_ident_options_to_read_upper_camel_case {
