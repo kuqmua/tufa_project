@@ -2583,20 +2583,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream = quote::quote! {
         {#fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
     };
-    let generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().fold(vec![], |mut acc, element| {
-        if let Some(value) = &element.option_generic {
-            acc.push(new_syn_variant_wrapper(
-                &value.generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified,
-                Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
-                vec![(
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                    &value.generate_postgresql_query_part_from_vec_error_named_snake_case_stringified,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&value.generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified], &proc_macro_name_upper_camel_case_ident_stringified),
-                )],
-            ));
-        }
-        acc
-    });
+    // let generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().fold(vec![], |mut acc, element| {
+    //     if let Some(value) = &element.option_generic {
+    //         acc.push(new_syn_variant_wrapper(
+    //             &value.generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified,
+    //             Some(proc_macro_helpers::status_code::StatusCode::InternalServerError500),
+    //             vec![(
+    //                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+    //                 &value.generate_postgresql_query_part_from_vec_error_named_snake_case_stringified,
+    //                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&value.generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified], &proc_macro_name_upper_camel_case_ident_stringified),
+    //             )],
+    //         ));
+    //     }
+    //     acc
+    // });
     let (create_many_token_stream, create_many_test_token_stream) = {
         let operation = Operation::CreateMany;
         let expected_length_snake_case = naming_conventions::ExpectedLengthSnakeCase;
@@ -3089,9 +3089,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
                     value.push(&not_unique_column_json_reader_syn_variant_wrapper.get_syn_variant());
                 }
-                generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers.iter().for_each(|element| {
-                    value.push(&element.get_syn_variant());
-                });
+                // generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers.iter().for_each(|element| {
+                //     value.push(&element.get_syn_variant());
+                // });
                 value
             },
             &operation,
@@ -3537,9 +3537,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
                     value.push(&not_unique_column_json_reader_syn_variant_wrapper.get_syn_variant());
                 }
-                generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers.iter().for_each(|element| {
-                    value.push(&element.get_syn_variant());
-                });
+                // generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers.iter().for_each(|element| {
+                //     value.push(&element.get_syn_variant());
+                // });
                 value
             },
             &operation,

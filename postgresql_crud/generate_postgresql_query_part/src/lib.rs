@@ -1,4 +1,3 @@
-//todo maybe generate example of valid json to create - maybe with serde_json::to_string() adn #[derive(Default)} then println or write into file
 //todo maybe in many few dimantional array error message would be wrong. test it
 //todo generate authorization rights enum for json fields
 #[proc_macro_derive(GeneratePostgresqlQueryPart)]
@@ -1633,28 +1632,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
 
-            //this is temporary, todo remove and refactor later
             let impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream = {
-                let ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream = naming_conventions::SelfGeneratePostgresqlQueryPartToReadFromVecErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                let pub_enum_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream = {
-                    quote::quote!{
-                        #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                        pub enum #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream {
-                            Todo {
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                            },
-                        }
-                    }
-                };
-                let impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream = {
-                    quote::quote!{
-                        impl error_occurence_lib::ToStdStringString for #ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream {
-                            fn to_std_string_string(&self) -> std::string::String {
-                                format!("{self:?}")
-                            }
-                        }
-                    }
-                };
                 let impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream = {
                     let variants_token_stream = vec_syn_field.iter().map(|element| {
                         let field_ident_stringified = element
@@ -1681,7 +1659,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     quote::quote!{
-                        impl postgresql_crud::GeneratePostgresqlQueryPartToRead<#ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_upper_camel_case_token_stream> for #ident_field_to_read_upper_camel_case {
+                        impl postgresql_crud::GeneratePostgresqlQueryPartToRead for #ident_field_to_read_upper_camel_case {
                             fn generate_postgresql_query_part_to_read_from_vec(
                                 value: &std::vec::Vec<Self>,
                                 column_name_and_maybe_field_getter: &std::primitive::str,
@@ -1701,8 +1679,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 };
                 quote::quote!{
-                    #pub_enum_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_token_stream
                     #impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream
                 }
             };
