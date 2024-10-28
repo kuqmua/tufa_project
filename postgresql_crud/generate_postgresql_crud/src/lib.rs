@@ -923,7 +923,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #filter_snake_case,
                                     #element_field_ident_double_quotes_token_stream,
                                     #element_field_ident_double_quotes_token_stream,
-                                    false
                                 ) {
                                     Ok(#value_snake_case) => #value_snake_case,
                                     Err(#error_0_token_stream) => {
