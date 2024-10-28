@@ -61,10 +61,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
-    fn generate_supported_generics_template_struct_token_stream(struct_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    fn generate_supported_generics_template_struct_token_stream(is_pub: std::primitive::bool, struct_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let maybe_pub_token_stream = if is_pub {
+            quote::quote!{pub}
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-            pub struct #struct_ident_token_stream #content_token_stream
+            #maybe_pub_token_stream struct #struct_ident_token_stream #content_token_stream
         }
     }
 
@@ -276,6 +282,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let create_token_stream = {
             let ident_to_create_origin_upper_camel_case = naming_conventions::SelfToCreateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_to_create_origin_token_stream = generate_supported_generics_template_struct_token_stream(
+                true,
                 &ident_to_create_origin_upper_camel_case,
                 &{
                     let fields_token_stream = vec_syn_field.iter().map(|element| {
@@ -317,10 +324,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let content_token_stream = quote::quote!{(pub #ident_to_create_origin_upper_camel_case);};
                 //todo maybe impl new instead of pub inner struct? just to not write boilerplate every time? (current struct name + inner struct name)
                 let ident_to_create_with_generated_id_token_stream = generate_supported_generics_template_struct_token_stream(
+                    true,
                     &ident_to_create_with_generated_id_upper_camel_case,
                     &content_token_stream
                 );
                 let ident_to_create_without_generated_id_token_stream = generate_supported_generics_template_struct_token_stream(
+                    true,
                     &ident_to_create_without_generated_id_upper_camel_case,
                     &content_token_stream
                 );
@@ -2050,6 +2059,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generic_with_id_ident_upper_camel_case = naming_conventions::GenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let generic_with_id_ident_token_stream = {
         let generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+            true,
             &generic_with_id_ident_upper_camel_case,
             &{
                 quote::quote!{{
@@ -2175,6 +2185,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //its for GeneratePostgresqlQueryPart (json logic)
             let generic_ident_token_stream = {
                 let generic_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+                    true,
                     &generic_ident_upper_camel_case,
                     &quote::quote!{{#fields_token_stream}}
                 );
@@ -2337,6 +2348,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 ) = {
                     let std_option_option_generic_ident_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                     let std_option_option_generic_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+                        true,
                         &std_option_option_generic_ident_upper_camel_case,
                         &quote::quote!{(pub std::option::Option<#generic_ident_upper_camel_case>);}
                     );
@@ -2353,6 +2365,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                     let std_option_option_generic_ident_to_create_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                     let std_option_option_generic_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
+                        true,
                         &std_option_option_generic_ident_to_create_upper_camel_case,
                         &quote::quote!{(pub std::option::Option<#std_option_option_generic_ident_to_create_origin_upper_camel_case>);}
                     );
@@ -3281,6 +3294,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 ) = {
                     let std_vec_vec_generic_with_id_ident_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                     let std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+                        true,
                         &std_vec_vec_generic_with_id_ident_upper_camel_case,
                         &quote::quote!{(pub std::vec::Vec<#generic_with_id_ident_upper_camel_case>);}
                     );
@@ -3293,6 +3307,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let create_token_stream = {
                     let std_vec_vec_generic_with_id_ident_to_create_upper_camel_case = naming_conventions::StdVecVecGenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                     let std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
+                        true,
                         &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
                         &quote::quote!{(pub std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>);}
                     );
@@ -3837,6 +3852,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 ) = {
                     let std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                     let std_option_option_std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+                        true,
                         &std_option_option_std_vec_vec_generic_with_id_ident_upper_camel_case,
                         &quote::quote!{(std::option::Option<std::vec::Vec<#generic_with_id_ident_upper_camel_case>>);}
                     );
@@ -3850,6 +3866,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let create_token_stream = {
                     let std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecGenericWithIdSelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                     let std_option_option_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
+                        true,
                         &std_option_option_std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
                         &quote::quote!{(pub std::option::Option<std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>>);}
                     );
