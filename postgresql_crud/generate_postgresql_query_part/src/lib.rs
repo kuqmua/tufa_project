@@ -280,25 +280,26 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
     let common_token_stream = {
         let create_token_stream = {
+            let fields_declaration_token_stream = {
+                let value = vec_syn_field.iter().map(|element| {
+                    let field_ident = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        });
+                    let type_path_to_create_token_stream = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
+                    quote::quote!{
+                        #field_ident: #type_path_to_create_token_stream
+                    }
+                });
+                quote::quote!{#(#value),*}
+            };
             let ident_to_create_origin_upper_camel_case = naming_conventions::SelfToCreateOriginUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_to_create_origin_token_stream = generate_supported_generics_template_struct_token_stream(
-                true,
+                false,
                 &ident_to_create_origin_upper_camel_case,
-                &{
-                    let fields_token_stream = vec_syn_field.iter().map(|element| {
-                        let field_ident = element
-                            .ident
-                            .as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                            });
-                        let type_path_to_create_token_stream = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
-                        quote::quote!{
-                            #field_ident: #type_path_to_create_token_stream
-                        }
-                    });
-                    quote::quote!{{ #(#fields_token_stream),*}}
-                }
+                &quote::quote!{{ #fields_declaration_token_stream }}
             );
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                 &ident_to_create_origin_upper_camel_case,
@@ -321,8 +322,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 ident_to_create_with_generated_id_token_stream,
                 ident_to_create_without_generated_id_token_stream
             ) = {
-                let content_token_stream = quote::quote!{(pub #ident_to_create_origin_upper_camel_case);};
-                //todo maybe impl new instead of pub inner struct? just to not write boilerplate every time? (current struct name + inner struct name)
+                let content_token_stream = quote::quote!{(#ident_to_create_origin_upper_camel_case);};
                 let ident_to_create_with_generated_id_token_stream = generate_supported_generics_template_struct_token_stream(
                     true,
                     &ident_to_create_with_generated_id_upper_camel_case,
@@ -336,6 +336,34 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 (
                     ident_to_create_with_generated_id_token_stream,
                     ident_to_create_without_generated_id_token_stream
+                )
+            };
+            let (
+                impl_new_for_ident_to_create_with_generated_id_token_stream,
+                impl_new_for_ident_to_create_without_generated_id_token_stream
+            ) = {
+                let generate_impl_pub_new_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens|{
+                    let fields_initialization_token_stream = vec_syn_field.iter().map(|element| {
+                        element.ident.as_ref()
+                            .unwrap_or_else(|| {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            })
+                    });
+                    quote::quote!{
+                        impl #struct_ident_token_stream {
+                            pub fn new(#fields_declaration_token_stream) -> Self {
+                                Self(#ident_to_create_origin_upper_camel_case {
+                                    #(#fields_initialization_token_stream),*
+                                })
+                            }
+                        }
+                    }
+                };
+                let impl_new_for_ident_to_create_with_generated_id_token_stream = generate_impl_pub_new_token_stream(&ident_to_create_with_generated_id_upper_camel_case);
+                let impl_new_for_ident_to_create_without_generated_id_token_stream = generate_impl_pub_new_token_stream(&ident_to_create_without_generated_id_upper_camel_case);
+                (
+                    impl_new_for_ident_to_create_with_generated_id_token_stream,
+                    impl_new_for_ident_to_create_without_generated_id_token_stream
                 )
             };
             let (
@@ -438,6 +466,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 #ident_to_create_with_generated_id_token_stream
                 #ident_to_create_without_generated_id_token_stream
+
+                #impl_new_for_ident_to_create_with_generated_id_token_stream
+                #impl_new_for_ident_to_create_without_generated_id_token_stream
                 
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_with_generated_id_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_without_generated_id_token_stream
