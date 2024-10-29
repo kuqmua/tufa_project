@@ -1828,6 +1828,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         };
                         let check_unique_fields_token_stream = {
+                            let generate_not_unique_field_snake_case = naming_conventions::GenerateNotUniqueFieldSnakeCase;
                             let variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident = element
                                     .ident
@@ -1837,8 +1838,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     });
                                 let field_ident_stringified = field_ident.to_string();
                                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                                let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                    &format!("not unique {field_ident_stringified} field"),
+                                let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                                    &field_ident_stringified,
                                     &proc_macro_name_upper_camel_case_ident_stringified
                                 );
                                 let not_unique_field_self_upper_camel_case_token_stream = naming_conventions::NotUniqueFieldSelfUpperCamelCase::from_dyn_quote_to_tokens(&field_ident);
@@ -1847,7 +1848,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         let value = #ident_field_to_update_upper_camel_case::#variant_ident_upper_camel_case_token_stream;
                                         if acc.contains(&value) {
                                             return Err(#ident_option_to_update_try_new_error_named_upper_camel_case::#not_unique_field_self_upper_camel_case_token_stream {
-                                                error: format!(#format_handle_double_quotes_token_stream),
+                                                error: #generate_not_unique_field_snake_case(#field_ident_double_quotes_token_stream),
                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                             });
                                         }
@@ -1860,6 +1861,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             quote::quote!{
                                 {
                                     let mut acc = vec![];
+                                    let #generate_not_unique_field_snake_case = |value: &std::primitive::str|{
+                                        format!("not unique {value} field")
+                                    };
                                     for element in &value {
                                         match element {
                                             #(#variants_token_stream),*
@@ -4531,7 +4535,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         #json_value_variants_token_stream
     };
-    // if ident == "Doggie" {
+    // if ident == "Something" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "GeneratePostgresqlQueryPart",
     //         &generated,
