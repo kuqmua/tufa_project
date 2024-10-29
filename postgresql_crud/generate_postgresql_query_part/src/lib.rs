@@ -727,6 +727,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ident_options_to_read_with_id_token_stream
                     )
                 };
+                //todo generate try_new for ident_options_to_read_without_id_token_stream and ident_options_to_read_with_id_token_stream and reuse it for impl serde deserialize
                 let (
                     impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_without_id_token_stream,
                     impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_with_id_token_stream
