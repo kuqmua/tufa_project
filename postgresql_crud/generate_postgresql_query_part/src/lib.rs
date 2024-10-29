@@ -2008,6 +2008,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &ident_option_to_update_upper_camel_case,
                 &ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
                 &{
+                    let generate_jsonb_set_target_snake_case = naming_conventions::GenerateJsonbSetTargetSnakeCase;
+                    let generate_jsonb_set_path_snake_case = naming_conventions::GenerateJsonbSetPathSnakeCase;
                     let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
                         let field_ident_stringified = element
                             .ident
@@ -2017,20 +2019,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                        let jsonb_set_target_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{jsonb_set_target}}->'{field_ident_stringified}'"),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
-                        let previous_jsonb_set_path_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{previous_jsonb_set_path}}{field_ident_stringified}"),
+                        let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &field_ident_stringified,
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
                         quote::quote!{
                             #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                                 &value.value,
                                 &local_acc,
-                                &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
-                                &format!(#previous_jsonb_set_path_field_ident_double_quotes_token_stream),
+                                &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
+                                &#generate_jsonb_set_path_snake_case(#field_ident_double_quotes_token_stream),
                                 increment,
                             ) {
                                 Ok(value) => {
@@ -2046,9 +2044,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     quote::quote!{
-                        let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
-                            true => std::string::String::default(),
-                            false => format!("{jsonb_set_path},"),
+                        let #generate_jsonb_set_target_snake_case = |value: &std::primitive::str|{
+                            format!("{jsonb_set_target}->'{value}'")
+                        };
+                        let #generate_jsonb_set_path_snake_case = |value: &std::primitive::str|{
+                            let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
+                                true => std::string::String::default(),
+                                false => format!("{jsonb_set_path},"),
+                            };
+                            format!("{previous_jsonb_set_path}{value}")
                         };
                         let mut local_acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end)");
                         for element in &self.0 {
