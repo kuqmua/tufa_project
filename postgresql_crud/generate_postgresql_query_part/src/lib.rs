@@ -480,6 +480,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     impl_postgresql_crud_json_create_bind_query_for_ident_to_create_without_generated_id_token_stream
                 )
             };
+            //for compatibility with GeneratePostgersqlCrud logic
             let impl_postgresql_crud_bind_query_for_ident_to_create_without_generated_id_token_stream = {
                 //todo reuse logic of binding query
                 let try_generate_bind_increments_token_stream = vec_syn_field.iter().map(|element| {
@@ -1712,6 +1713,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
 
+            //for compatibility with GeneratePostgersqlCrud logic
             let impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream = {
                 let impl_postgresql_crud_generate_postgresql_query_part_to_read_ident_generate_postgresql_query_part_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream = {
                     let variants_token_stream = vec_syn_field.iter().map(|element| {
