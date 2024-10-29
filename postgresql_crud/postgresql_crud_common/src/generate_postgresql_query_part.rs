@@ -2143,3 +2143,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         }
     }
 }
+
+pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::primitive::str) -> std::string::String {
+    format!("jsonb_build_object('{field}',{value})||")
+}

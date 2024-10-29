@@ -321,7 +321,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
                 &ident_to_create_origin_upper_camel_case,
                 &{
-                    let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
                     let json_create_try_generate_bind_increments_fields_token_stream = vec_syn_field.iter().map(|element| {
                         let element_field_ident = element
                             .ident
@@ -333,10 +332,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &element_field_ident.to_string(),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
+                        let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
                         quote::quote!{
                             match self.#element_field_ident.json_create_try_generate_bind_increments(increment) {
                                 Ok(value) => {
-                                    increments.push_str(&#wrap_into_jsonb_build_object_snake_case(#element_field_ident_double_quotes_token_stream, &value));
+                                    increments.push_str(&postgresql_crud::#wrap_into_jsonb_build_object_snake_case(#element_field_ident_double_quotes_token_stream, &value));
                                 }
                                 Err(error) => {
                                     return Err(error);
@@ -346,12 +346,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     });
                     quote::quote!{
                         let mut increments = std::string::String::from("");
-                        {
-                            let #wrap_into_jsonb_build_object_snake_case = |field: &std::primitive::str, value: &std::primitive::str|{
-                                format!("jsonb_build_object('{field}',{value})||")
-                            };
-                            #(#json_create_try_generate_bind_increments_fields_token_stream)*
-                        }
+                        #(#json_create_try_generate_bind_increments_fields_token_stream)*
                         let _ = increments.pop();
                         let _ = increments.pop();
                         Ok(format!("{increments}"))
@@ -1567,7 +1562,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let ident_to_create_alias_token_stream = generate_pub_type_alias_token_stream(&ident_to_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
             let impl_postgresql_crud_bind_query_for_ident_to_create_token_stream = {
                 //todo reuse logic of binding query
-                let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
                 let try_generate_bind_increments_token_stream = vec_syn_field.iter().map(|element| {
                     let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
@@ -1575,11 +1569,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let element_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                         &element_field_ident.to_string(),
                         &proc_macro_name_upper_camel_case_ident_stringified
-                     );
+                    );
+                    let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
                     quote::quote!{
                         match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.0.#element_field_ident, increment) {
                             Ok(value) => {
-                                increments.push_str(&#wrap_into_jsonb_build_object_snake_case(#element_field_ident_double_quotes_token_stream, &value));
+                                increments.push_str(&postgresql_crud::#wrap_into_jsonb_build_object_snake_case(#element_field_ident_double_quotes_token_stream, &value));
                             }
                             Err(error) => {
                                 return Err(error.into());
@@ -1602,12 +1597,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                         fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                             let mut increments = std::string::String::from("");
-                            {
-                                let #wrap_into_jsonb_build_object_snake_case = |field: &std::primitive::str, value: &std::primitive::str|{
-                                    format!("jsonb_build_object('{field}',{value})||")
-                                };
-                                #(#try_generate_bind_increments_token_stream)*
-                            }
+                            #(#try_generate_bind_increments_token_stream)*
                             let _ = increments.pop();
                             let _ = increments.pop();
                             Ok(format!("{increments}"))

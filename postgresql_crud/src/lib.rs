@@ -1130,3 +1130,5 @@ pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJ
 
 pub use postgresql_crud_common::generate_postgresql_query_part::GeneratePostgresqlQueryPartFieldToRead;
 pub use postgresql_crud_common::generate_postgresql_query_part::Pagination;
+
+pub use postgresql_crud_common::generate_postgresql_query_part::wrap_into_jsonb_build_object;
