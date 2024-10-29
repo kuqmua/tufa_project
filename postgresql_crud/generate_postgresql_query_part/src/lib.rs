@@ -2143,6 +2143,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             contains_id: std::primitive::bool,
             format_handle_double_quotes_token_stream: &dyn quote::ToTokens,
         |{
+            let column_name_and_maybe_field_getter_field_ident_snake_case = naming_conventions::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
+            let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming_conventions::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
             let generate_acc_push_str_variant_logic_token_stream = |
                 variant_name_token_stream: &dyn quote::ToTokens,
                 field_ident_double_quotes_token_stream: &dyn quote::ToTokens,
@@ -2159,7 +2161,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         value,
                         #field_ident_double_quotes_token_stream,
                         #column_name_and_maybe_field_getter_token_stream,
-                        &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}")
+                        &#column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case
                     )
                 }
             };
@@ -2196,7 +2198,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             value_snake_case_double_quotes_token_stream.clone()
                         }
                         else {
-                            quote::quote!{&format!("{column_name_and_maybe_field_getter}->'{field_ident}'")}
+                            quote::quote!{&#column_name_and_maybe_field_getter_field_ident_snake_case}
                         },
                     )
                 });
@@ -2221,6 +2223,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for #tokens_field_reader_token_stream {
                     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         let mut acc = std::string::String::default();
+                        let #column_name_and_maybe_field_getter_field_ident_snake_case = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+                        let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}");
                         for element in &self.#self_field_vec_token_stream {
                             acc.push_str(&format!(
                                 "{}||",
@@ -4527,7 +4531,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         #json_value_variants_token_stream
     };
-    // if ident == "Something" {
+    // if ident == "Doggie" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "GeneratePostgresqlQueryPart",
     //         &generated,

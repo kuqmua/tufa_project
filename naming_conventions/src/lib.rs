@@ -372,7 +372,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["fields", "are", "empty"],
     ["wrap", "into", "jsonb", "build", "object"],
     ["generate", "jsonb", "set", "target"],
-    ["generate", "jsonb", "set", "path"]
+    ["generate", "jsonb", "set", "path"],
+    ["column", "name", "and", "maybe", "field", "getter", "field", "ident"],
+    ["column", "name", "and", "maybe", "field", "getter", "for", "error", "message", "field", "ident"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
