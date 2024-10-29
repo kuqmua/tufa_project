@@ -281,6 +281,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
         quote::quote!{postgresql_crud::#wrap_into_jsonb_build_object_snake_case}
     };
+    let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
+        proc_macro_common::generate_quotes::double_quotes_token_stream(
+            &value
+                .ident
+                .as_ref()
+                .unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                })
+                .to_string(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        )
+    };
     let common_token_stream = {
         let create_token_stream = {
             let fields_declaration_token_stream = {
@@ -1063,18 +1075,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 #(#visit_map_fields_initialization_token_stream)*
                             }
                         };
-                        let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
-                            proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                &value
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string(),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            )
-                        };
                         let visit_map_match_variants_token_stream = {
                             let generate_field_initialization_token_stream = |
                                 index: std::primitive::usize,
@@ -1418,10 +1418,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                         let type_path_option_to_update_token_stream = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
-                        let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &field_ident.to_string(),
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
+                        let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         quote::quote!{
                             #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
                             #variant_ident_upper_camel_case_token_stream(postgresql_crud::Value<#type_path_option_to_update_token_stream>)
@@ -1740,7 +1737,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                        let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+                        let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         quote::quote!{
                             #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
                                 value,
@@ -1853,10 +1850,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     });
                                 let field_ident_stringified = field_ident.to_string();
                                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                                let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                    &field_ident_stringified,
-                                    &proc_macro_name_upper_camel_case_ident_stringified
-                                );
+                                let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                                 let not_unique_field_self_upper_camel_case_token_stream = naming_conventions::NotUniqueFieldSelfUpperCamelCase::from_dyn_quote_to_tokens(&field_ident);
                                 quote::quote!{
                                     #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(_) => {
@@ -2040,10 +2034,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                         //todo maybe reuse?
-                        let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &field_ident_stringified,
-                            &proc_macro_name_upper_camel_case_ident_stringified
-                        );
+                        let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         quote::quote!{
                             #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                                 &value.value,
@@ -2717,10 +2708,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     })
                                     .to_string();
                                 let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                                let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                    &field_ident_stringified,
-                                    &proc_macro_name_upper_camel_case_ident_stringified
-                                );
+                                let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                                 quote::quote!{
                                     #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
                                         match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
@@ -3181,10 +3169,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                            let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                &field_ident_stringified,
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            );
+                            let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
                                     match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
