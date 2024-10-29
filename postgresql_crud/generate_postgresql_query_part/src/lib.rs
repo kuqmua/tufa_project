@@ -2155,17 +2155,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &ident_field_to_read_without_id_upper_camel_case
                 };
                 quote::quote!{
-                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => {
-                        acc.push_str(&format!(
-                            "{}||",
-                            postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                                value,
-                                #field_ident_double_quotes_token_stream,
-                                #column_name_and_maybe_field_getter_token_stream,
-                                &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
-                            )
-                        ));
-                    }
+                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                        value,
+                        #field_ident_double_quotes_token_stream,
+                        #column_name_and_maybe_field_getter_token_stream,
+                        &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}")
+                    )
                 }
             };
             let value_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&naming_conventions::ValueSnakeCase.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
@@ -2176,11 +2171,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let maybe_id_variant_token_stream = if contains_id {
                     let id_upper_camel_case = naming_conventions::IdUpperCamelCase;
                     let id_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&naming_conventions::IdSnakeCase.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
-                    generate_acc_push_str_variant_logic_token_stream(
+                    let value = generate_acc_push_str_variant_logic_token_stream(
                         &quote::quote!{#id_upper_camel_case},
                         &id_snake_case_double_quotes_token_stream,
                         &value_snake_case_double_quotes_token_stream,
-                    )
+                    );
+                    quote::quote!{#value,}
                 }
                 else {
                     proc_macro2::TokenStream::new()
@@ -2226,10 +2222,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         let mut acc = std::string::String::default();
                         for element in &self.#self_field_vec_token_stream {
-                            match element {
-                                #maybe_id_variant_token_stream
-                                #(#variants_token_stream),*
-                            }
+                            acc.push_str(&format!(
+                                "{}||",
+                                match element {
+                                    #maybe_id_variant_token_stream
+                                    #(#variants_token_stream),*
+                                }
+                            ));
                         }
                         let _ = acc.pop();
                         let _ = acc.pop();
