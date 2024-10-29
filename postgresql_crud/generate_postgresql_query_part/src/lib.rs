@@ -3162,6 +3162,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &struct_ident_token_stream,
                     &ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case,
                     &{
+                        let generate_jsonb_set_target_snake_case = naming_conventions::GenerateJsonbSetTargetSnakeCase;//todo reuse
                         let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident_stringified = element
                                 .ident
@@ -3171,10 +3172,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                            let jsonb_set_target_field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                &format!("{{jsonb_set_target}}->'{field_ident_stringified}'"),
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            );
                             let field_ident_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                                 &field_ident_stringified,
                                 &proc_macro_name_upper_camel_case_ident_stringified
@@ -3184,7 +3181,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
                                         &value.value,
                                         &element_acc,
-                                        &format!(#jsonb_set_target_field_ident_double_quotes_token_stream),
+                                        &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                                         #field_ident_double_quotes_token_stream,
                                         increment,
                                     ) {
@@ -3219,6 +3216,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 }
                                 else {
                                     let mut update_query_part_acc = std::string::String::default();
+                                    let #generate_jsonb_set_target_snake_case = |value: &std::primitive::str|{
+                                        format!("{jsonb_set_target}->'{value}'")
+                                    };
                                     for element_handle in &self.update {
                                         let id_increment = match increment.checked_add(1) {
                                             Some(value) => {
