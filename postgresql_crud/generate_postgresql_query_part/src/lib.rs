@@ -996,6 +996,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 }
                                 acc
                             };
+                            //todo reuse error messages
                             let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                                 &format!("custom serde error deserializing {struct_ident_token_stream}: all fields are None"),
                                 &proc_macro_name_upper_camel_case_ident_stringified
