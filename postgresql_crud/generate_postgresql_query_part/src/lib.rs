@@ -2143,17 +2143,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             contains_id: std::primitive::bool,
             format_handle_double_quotes_token_stream: &dyn quote::ToTokens,
         |{
-            let tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = if contains_id {
-                &ident_field_to_read_with_id_upper_camel_case
-            }
-            else {
-                &ident_field_to_read_without_id_upper_camel_case
-            };
             let generate_acc_push_str_variant_logic_token_stream = |
                 variant_name_token_stream: &dyn quote::ToTokens,
                 field_ident_double_quotes_token_stream: &dyn quote::ToTokens,
                 column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens,
             |{
+                let tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = if contains_id {
+                    &ident_field_to_read_with_id_upper_camel_case
+                }
+                else {
+                    &ident_field_to_read_without_id_upper_camel_case
+                };
                 quote::quote!{
                     #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => {
                         acc.push_str(&format!(
@@ -2169,42 +2169,51 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 }
             };
             let value_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&naming_conventions::ValueSnakeCase.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
-            let variants_token_stream = vec_syn_field.iter().map(|element| {
-                let field_ident_stringified = element
-                    .ident
-                    .as_ref()
-                    .unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                    })
-                    .to_string();
-                generate_acc_push_str_variant_logic_token_stream(
-                    &proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified),
-                    &proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified),
-                    &if contains_id {
-                        value_snake_case_double_quotes_token_stream.clone()
-                    }
-                    else {
-                        quote::quote!{&format!("{column_name_and_maybe_field_getter}->'{field_ident}'")}
-                    },
+            let (
+                maybe_id_variant_token_stream,
+                variants_token_stream
+            ) = {
+                let maybe_id_variant_token_stream = if contains_id {
+                    let id_upper_camel_case = naming_conventions::IdUpperCamelCase;
+                    let id_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&naming_conventions::IdSnakeCase.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
+                    generate_acc_push_str_variant_logic_token_stream(
+                        &quote::quote!{#id_upper_camel_case},
+                        &id_snake_case_double_quotes_token_stream,
+                        &value_snake_case_double_quotes_token_stream,
+                    )
+                }
+                else {
+                    proc_macro2::TokenStream::new()
+                };
+                let variants_token_stream = vec_syn_field.iter().map(|element| {
+                    let field_ident_stringified = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string();
+                    generate_acc_push_str_variant_logic_token_stream(
+                        &proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified),
+                        &proc_macro_common::generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified),
+                        &if contains_id {
+                            value_snake_case_double_quotes_token_stream.clone()
+                        }
+                        else {
+                            quote::quote!{&format!("{column_name_and_maybe_field_getter}->'{field_ident}'")}
+                        },
+                    )
+                });
+                (
+                    maybe_id_variant_token_stream,
+                    variants_token_stream
                 )
-            });
+            };
             let self_field_vec_token_stream = if contains_id {
                 quote::quote!{field_vec}
             }
             else {
                 quote::quote!{0}
-            };
-            let maybe_id_variant_token_stream = if contains_id {
-                let id_upper_camel_case = naming_conventions::IdUpperCamelCase;
-                let id_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(&naming_conventions::IdSnakeCase.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
-                generate_acc_push_str_variant_logic_token_stream(
-                    &quote::quote!{#id_upper_camel_case},
-                    &id_snake_case_double_quotes_token_stream,
-                    &value_snake_case_double_quotes_token_stream,
-                )
-            }
-            else {
-                proc_macro2::TokenStream::new()
             };
             let maybe_pagination_start_end_initialization_token_stream = if contains_id {
                 proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream()
