@@ -277,7 +277,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             pub struct #token_options_to_read_token_stream #content_token_stream
         }
     };
-
+    let postgresql_crud_wrap_into_jsonb_build_object_token_stream = {
+        let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
+        quote::quote!{postgresql_crud::#wrap_into_jsonb_build_object_snake_case}
+    };
     let common_token_stream = {
         let create_token_stream = {
             let fields_declaration_token_stream = {
@@ -332,11 +335,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &element_field_ident.to_string(),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
-                        let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
                         quote::quote!{
                             match self.#element_field_ident.json_create_try_generate_bind_increments(increment) {
                                 Ok(value) => {
-                                    increments.push_str(&postgresql_crud::#wrap_into_jsonb_build_object_snake_case(#element_field_ident_double_quotes_token_stream, &value));
+                                    increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                                 }
                                 Err(error) => {
                                     return Err(error);
@@ -1570,11 +1572,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &element_field_ident.to_string(),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
-                    let wrap_into_jsonb_build_object_snake_case = naming_conventions::WrapIntoJsonbBuildObjectSnakeCase;
                     quote::quote!{
                         match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(&self.0.#element_field_ident, increment) {
                             Ok(value) => {
-                                increments.push_str(&postgresql_crud::#wrap_into_jsonb_build_object_snake_case(#element_field_ident_double_quotes_token_stream, &value));
+                                increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                             }
                             Err(error) => {
                                 return Err(error.into());
