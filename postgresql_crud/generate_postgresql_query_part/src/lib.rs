@@ -1599,8 +1599,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
                         pub struct #ident_options_to_update_upper_camel_case {
-                            id: #postgresql_crud_json_uuid_option_to_update_token_stream,
-                            fields: #ident_option_to_update_upper_camel_case
+                            pub id: #postgresql_crud_json_uuid_option_to_update_token_stream,
+                            pub fields: #ident_option_to_update_upper_camel_case
                         }
                     }
                 };
