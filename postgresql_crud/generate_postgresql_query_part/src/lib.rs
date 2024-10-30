@@ -1038,33 +1038,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 #(#visit_seq_fields_initialization_token_stream)*
                             }
                         };
-                        let if_let_nones_fields_serde_custom_error_token_stream = {
-                            let nones_token_stream = {
-                                let mut acc = vec![];
-                                for _ in 0..range_end {
-                                    acc.push(quote::quote!{None});
-                                }
-                                acc
-                            };
-                            let fields_token_stream = {
-                                let mut acc = vec![];
-                                for element in 0..range_end {
-                                    let field_index_token_stream = generate_field_index_token_stream(element);
-                                    acc.push(quote::quote!{&#field_index_token_stream});
-                                }
-                                acc
-                            };
-                            //todo reuse error messages
-                            let format_handle_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                &format!("custom serde error deserializing {struct_ident_token_stream}: all fields are None"),
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            );
-                            quote::quote!{
-                                if let (#(#nones_token_stream),*) = (#(#fields_token_stream),*) {
-                                    return Err(serde::de::Error::custom(format!(#format_handle_double_quotes_token_stream)));
-                                }
+                        let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
+                            if contains_id {
+                                &ident_options_to_read_with_id_upper_camel_case
                             }
-                        };
+                            else {
+                                &ident_options_to_read_without_id_upper_camel_case
+                            },
+                            &{
+                                let fields_token_stream = {
+                                    let mut acc = vec![];
+                                    for element in 0..range_end {
+                                        let field_index_token_stream = generate_field_index_token_stream(element);
+                                        acc.push(quote::quote!{#field_index_token_stream});
+                                    }
+                                    acc
+                                };
+                                quote::quote!{#(#fields_token_stream),*}
+                            },
+                        );
                         let visit_seq_fields_assignment_token_stream = {
                             let generate_field_ident_field_index_token_stream = |
                                 field_ident: &dyn quote::ToTokens,
@@ -1342,10 +1334,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             __A: serde::de::SeqAccess<'de>,
                                         {
                                             #visit_seq_fields_initialization_token_stream
-                                            #if_let_nones_fields_serde_custom_error_token_stream
-                                            serde::__private::Ok(#struct_ident_token_stream {
-                                                #visit_seq_fields_assignment_token_stream
-                                            })
+                                            #match_try_new_in_deserialize_token_stream
                                         }
                                         #[inline]
                                         fn visit_map<__A>(
@@ -1369,10 +1358,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                 }
                                             }
                                             #visit_map_missing_fields_check_token_stream
-                                            #if_let_nones_fields_serde_custom_error_token_stream
-                                            serde::__private::Ok(#struct_ident_token_stream {
-                                                #visit_seq_fields_assignment_token_stream
-                                            })
+                                            #match_try_new_in_deserialize_token_stream
                                         }
                                     }
                                     #[doc(hidden)]
