@@ -2601,7 +2601,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let std_option_option_generic_ident_options_to_read_token_stream = generate_tokens_options_to_read_token_stream(
                         &std_option_option_generic_ident_options_to_read_upper_camel_case,
                         true,
-                        &quote::quote!{(std::option::Option<#ident_options_to_read_without_id_upper_camel_case>);},
+                        &quote::quote!{(pub std::option::Option<#ident_options_to_read_without_id_upper_camel_case>);},
                     );
                     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_options_to_read_token_stream =             generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                         &std_option_option_generic_ident_options_to_read_upper_camel_case,
