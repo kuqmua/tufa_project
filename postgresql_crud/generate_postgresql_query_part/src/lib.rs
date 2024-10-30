@@ -3438,7 +3438,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let std_vec_vec_generic_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
                         true,
                         &std_vec_vec_generic_with_id_ident_upper_camel_case,
-                        &quote::quote!{(pub std::vec::Vec<#generic_with_id_ident_upper_camel_case>);}
+                        &quote::quote!{(std::vec::Vec<#generic_with_id_ident_upper_camel_case>);}
                     );
                     let impl_std_fmt_display_for_std_vec_vec_generic_with_id_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&std_vec_vec_generic_with_id_ident_upper_camel_case);
                     (
