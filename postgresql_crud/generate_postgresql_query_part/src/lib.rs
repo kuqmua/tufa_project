@@ -2726,51 +2726,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let std_option_option_generic_ident_option_to_update_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
                     let std_option_option_generic_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
                         &std_option_option_generic_ident_option_to_update_upper_camel_case,
-                        &quote::quote!{std::option::Option<#ident_option_to_update_upper_camel_case>},
+                        &quote::quote!{pub std::option::Option<#ident_option_to_update_upper_camel_case>},
                         true,
                         false,
                     );
-                    let impl_try_new_for_std_option_option_generic_ident_option_to_update_token_stream = {
-                        let std_option_option_generic_ident_option_to_update_try_new_error_named_upper_camel_case = naming_conventions::StdOptionOptionGenericSelfOptionToUpdateTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-                        let try_new_error_named_token_stream = {
-                            quote::quote!{
-                                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                                pub enum #std_option_option_generic_ident_option_to_update_try_new_error_named_upper_camel_case {
-                                    #ident_option_to_update_try_new_error_named_upper_camel_case {
-                                        #[eo_error_occurence]
-                                        error: #ident_option_to_update_try_new_error_named_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    },
-                                }
-                            }
-                        };
-                        let impl_pub_fn_try_new_token_stream = {
-                            quote::quote!{
-                                impl #std_option_option_generic_ident_option_to_update_upper_camel_case {
-                                    pub fn try_new(value: std::option::Option<#ident_option_to_update_upper_camel_case>) -> Result<Self, #std_option_option_generic_ident_option_to_update_try_new_error_named_upper_camel_case> {
-                                        match value {
-                                            Some(value) => match #ident_option_to_update_upper_camel_case::try_new(value.0) {
-                                                Ok(value) => Ok(Self(Some(value))),
-                                                Err(error) => Err(
-                                                    #std_option_option_generic_ident_option_to_update_try_new_error_named_upper_camel_case::#ident_option_to_update_try_new_error_named_upper_camel_case {
-                                                        error,
-                                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                                    }
-                                                )
-                                            },
-                                            None => {
-                                                Ok(Self(None))
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        };
-                        quote::quote!{
-                            #try_new_error_named_token_stream
-                            #impl_pub_fn_try_new_token_stream
-                        }
-                    };
                     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                         &std_option_option_generic_ident_option_to_update_upper_camel_case,
                         &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
@@ -2904,7 +2863,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     quote::quote!{
                         #std_option_option_generic_ident_option_to_update_token_stream
-                        #impl_try_new_for_std_option_option_generic_ident_option_to_update_token_stream
                         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_option_to_update_token_stream
                         #std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
                         #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_generic_ident_option_to_update_token_stream
