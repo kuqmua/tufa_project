@@ -2171,7 +2171,7 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 //     type SelfOptionToUpdateOrigin;
 //     type SelfJsonArrayChangeTryGenerateBindIncrementsErrorNamed;
 //     // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdateOrigin
-//     pub struct SomethingOptionsToUpdate;
+//     type SelfOptionsToUpdate;
 //     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToUpdate
 //     // impl std::fmt::Display for Something
 
