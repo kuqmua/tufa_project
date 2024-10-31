@@ -2139,159 +2139,37 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 
 
 // pub trait PostgresqlJson {
-//     type SelfToCreateOrigin;
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingToCreateOrigin
-//     // impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for SomethingToCreateOrigin
-//     type SelfToCreateWithGeneratedId;
-//     type SelfToCreateWithoutGeneratedId;
-//     // impl SomethingToCreateWithGeneratedId { pub fn new(
-//     // impl SomethingToCreateWithoutGeneratedId {pub fn new(
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingToCreateWithGeneratedId 
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingToCreateWithoutGeneratedId
-//     // impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for SomethingToCreateWithGeneratedId
-//     // impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for SomethingToCreateWithoutGeneratedId
-//     // impl<'a> postgresql_crud::BindQuery<'a> for SomethingToCreateWithoutGeneratedId
-//     type SelfFieldToReadWithoutId;
-//     type SelfFieldToReadWithId;
-//     // impl error_occurence_lib::ToStdStringString for SomethingFieldToReadWithoutId;
-//     // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingFieldToReadWithoutId
-//     // impl error_occurence_lib::ToStdStringString for SomethingFieldToReadWithId
-//     // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingFieldToReadWithId
-//     type SelfOptionsToReadWithoutId;
-//     type SelfOptionsToReadWithId;
-//     type SelfOptionsToReadWithOrWithoutIdTryFromErrorNamed;
-//     // impl SomethingOptionsToReadWithoutId { pub fn try_new(
-//     // impl SomethingOptionsToReadWithId { pub fn try_new(
-//     // impl<'de> serde::Deserialize<'de> for SomethingOptionsToReadWithoutId
-//     // impl<'de> serde::Deserialize<'de> for SomethingOptionsToReadWithId
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToReadWithoutId
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToReadWithId
-//     type SelfFieldToUpdate;
-//     // impl error_occurence_lib::ToStdStringString for SomethingFieldToUpdate
-//     type SelfOptionToUpdateOrigin;
-//     type SelfJsonArrayChangeTryGenerateBindIncrementsErrorNamed;
-//     // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdateOrigin
-//     type SelfOptionsToUpdate;
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToUpdate
-//     // impl std::fmt::Display for Something
 
-//     // pub type SomethingToCreate = SomethingToCreateWithoutGeneratedId;
-//     // pub type SomethingFieldToRead = SomethingFieldToReadWithoutId;
-//     // pub type SomethingOptionsToRead = SomethingOptionsToReadWithoutId;
-
-//     type SelfFieldReader
-//     pub enum SomethingTryNewErrorNamed
-//     // impl SomethingFieldReader {pub fn try_new
-//     // impl<'de> serde::Deserialize<'de> for SomethingFieldReader
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartToRead for SomethingFieldToReadWithoutId
-//     pub type SomethingReader = SomethingOptionsToRead;
-//     pub struct SomethingOptionToUpdate
-//     pub enum SomethingOptionToUpdateTryNewErrorNamed
-//     // impl SomethingOptionToUpdate {pub fn try_new(
-//     // impl<'de> serde::Deserialize<'de> for SomethingOptionToUpdate
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdate
-//     pub enum SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionToUpdate
-//     pub struct GenericWithIdSomething
-//     pub struct GenericSomething
-//     pub type GenericSomethingToCreate = SomethingToCreateWithoutGeneratedId;
-//     pub type GenericSomethingOptionsToRead = SomethingOptionsToReadWithoutId;
-//     pub struct GenericSomethingFieldReader
-//     pub enum GenericSomethingTryNewErrorNamed
-//     // impl GenericSomethingFieldReader {pub fn try_new(
-//     // impl<'de> serde::Deserialize<'de> for GenericSomethingFieldReader
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for GenericSomethingFieldReader
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericSomethingFieldReader
-//     pub type GenericSomethingReader = GenericSomethingOptionsToRead;
-//     pub type GenericSomethingOptionToUpdate = SomethingOptionToUpdate;
-//     pub type GenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed = SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed;
-//     pub type GenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserialize = SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserialize;
-//     pub struct StdOptionOptionGenericSomething
-//     pub struct StdOptionOptionGenericSomethingToCreate
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionGenericSomethingToCreate
-//     // impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for StdOptionOptionGenericSomethingToCreate
-//     pub struct StdOptionOptionGenericSomethingOptionsToRead
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionGenericSomethingOptionsToRead
-//     pub struct StdOptionOptionGenericSomethingFieldReader
-//     pub enum StdOptionOptionGenericSomethingTryNewErrorNamed
-//     // impl StdOptionOptionGenericSomethingFieldReader {pub fn try_new
-//     // impl<'de> serde::Deserialize<'de> for StdOptionOptionGenericSomethingFieldReader
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionGenericSomethingFieldReader
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericSomethingFieldReader
-//     pub type StdOptionOptionGenericSomethingReader = SomethingOptionsToReadWithoutId;
-//     pub struct StdOptionOptionGenericSomethingOptionToUpdate
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionGenericSomethingOptionToUpdate
-//     pub enum StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionGenericSomethingOptionToUpdate
-//     pub struct StdVecVecGenericWithIdSomething
-//     pub struct StdVecVecGenericWithIdSomethingToCreate
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecGenericWithIdSomethingToCreate
-//     // impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for StdVecVecGenericWithIdSomethingToCreate
-//     pub struct StdVecVecGenericWithIdSomethingOptionsToRead
-//     pub enum StdVecVecGenericWithIdSomethingOptionsToReadTryNewErrorNamed
-//     // impl StdVecVecGenericWithIdSomethingOptionsToRead {pub fn try_new(
-//     // impl<'de> serde::Deserialize<'de> for StdVecVecGenericWithIdSomethingOptionsToRead
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecGenericWithIdSomethingOptionsToRead
-//     pub struct StdVecVecGenericWithIdSomethingFieldReader
-//     pub enum StdVecVecGenericWithIdSomethingTryNewErrorNamed
-//     // impl StdVecVecGenericWithIdSomethingFieldReader {pub fn try_new(
-//     // impl<'de> serde::Deserialize<'de> for StdVecVecGenericWithIdSomethingFieldReader
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecGenericWithIdSomethingFieldReader
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdVecVecGenericWithIdSomethingFieldReader
-//     pub type StdVecVecGenericWithIdSomethingReader = StdVecVecGenericWithIdSomethingOptionsToRead;
-//     pub struct StdVecVecGenericWithIdSomethingJsonArrayChange
-//     pub enum StdVecVecGenericWithIdSomethingJsonArrayChangeTryNewErrorNamed
-//     // impl StdVecVecGenericWithIdSomethingJsonArrayChange {pub fn try_new(
-//     // impl<'de> serde::Deserialize<'de> for StdVecVecGenericWithIdSomethingJsonArrayChange
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingJsonArrayChangeTryGenerateBindIncrementsErrorNamed> for StdVecVecGenericWithIdSomethingJsonArrayChange
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecGenericWithIdSomethingJsonArrayChange
-//     pub struct StdVecVecGenericWithIdSomethingOptionToUpdate
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecGenericWithIdSomethingOptionToUpdate
-//     pub enum StdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdVecVecGenericWithIdSomethingOptionToUpdate
-//     pub struct StdOptionOptionStdVecVecGenericWithIdSomething
-//     pub struct StdOptionOptionStdVecVecGenericWithIdSomethingToCreate
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdVecVecGenericWithIdSomethingToCreate
-//     // impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for StdOptionOptionStdVecVecGenericWithIdSomethingToCreate
-//     pub struct StdOptionOptionStdVecVecGenericWithIdSomethingOptionsToRead
-//     pub enum StdOptionOptionStdVecVecGenericWithIdSomethingOptionsToReadTryNewErrorNamed
-//     // impl StdOptionOptionStdVecVecGenericWithIdSomethingOptionsToRead {pub fn try_new(
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdVecVecGenericWithIdSomethingOptionsToRead
-//     // impl<'de> serde::Deserialize<'de> for StdOptionOptionStdVecVecGenericWithIdSomethingOptionsToRead
-//     pub struct StdOptionOptionStdVecVecGenericWithIdSomethingFieldReader
-//     pub enum StdOptionOptionStdVecVecGenericWithIdSomethingTryNewErrorNamed
-//     // impl StdOptionOptionStdVecVecGenericWithIdSomethingFieldReader
-//     // impl<'de> serde::Deserialize<'de> for StdOptionOptionStdVecVecGenericWithIdSomethingFieldReader
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdVecVecGenericWithIdSomethingFieldReader
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionStdVecVecGenericWithIdSomethingFieldReader
-//     pub type StdOptionOptionStdVecVecGenericWithIdSomethingReader = StdOptionOptionStdVecVecGenericWithIdSomethingOptionsToRead;
-//     pub struct StdOptionOptionStdVecVecGenericWithIdSomethingJsonArrayChange
-//     pub enum StdOptionOptionStdVecVecGenericWithIdSomethingJsonArrayChangeTryNewErrorNamed
-//     // impl StdOptionOptionStdVecVecGenericWithIdSomethingJsonArrayChange {pub fn try_new(
-//     // impl<'de> serde::Deserialize<'de> for StdOptionOptionStdVecVecGenericWithIdSomethingJsonArrayChange
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingJsonArrayChangeTryGenerateBindIncrementsErrorNamed> for StdOptionOptionStdVecVecGenericWithIdSomethingJsonArrayChange
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdVecVecGenericWithIdSomethingJsonArrayChange
-//     pub struct StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdate
-//     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdate
-//     pub enum StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed
-//     // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdate
 // }
 
 
 pub trait PostgresqlJsonType {
-    type SelfToCreate;
+    type SelfToCreate<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // impl<'a> JsonCreateBindQuery<'a> for JsonStdPrimitiveI8ToCreate
-    // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
-    // fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
+    fn json_create_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate
-    type SelfFieldReader;
+    type SelfFieldReader<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader
-    type SelfOptionsToRead;
+    type SelfOptionsToRead<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead
     // impl GeneratePostgresqlQueryPartFieldToRead for JsonStdPrimitiveI8FieldReader
-    type SelfOptionToUpdate;
+    fn generate_postgresql_query_part_field_to_read(
+        &self,
+        field_ident: &std::primitive::str,
+        column_name_and_maybe_field_getter: &std::primitive::str,
+        //todo remove this coz its used properly now
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+    ) -> std::string::String;
+    type SelfOptionToUpdate<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionToUpdate
-    type SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+    type SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed: std::fmt::Debug + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
     // impl GeneratePostgresqlQueryPartToUpdate<JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed> for JsonStdPrimitiveI8OptionToUpdate
-
+    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed>;
+    fn bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
+
+
+// impl JsonStdPrimitiveI8ToCreate {
+
+// }
