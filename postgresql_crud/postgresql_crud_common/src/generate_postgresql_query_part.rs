@@ -7,9 +7,9 @@
     Default,
     serde::Serialize,
     serde::Deserialize,
+    //todo do i need utoipa::ToSchema and schemars::JsonSchema for original type? maybe just for create update delete types
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -33,7 +33,6 @@ pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub 
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -57,7 +56,6 @@ pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i1
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -81,7 +79,6 @@ pub struct JsonStdPrimitiveI32(#[validate(range(min = -2_147_483_648i32, max = 2
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -105,7 +102,6 @@ pub struct JsonStdPrimitiveI64(#[validate(range(min = -9_223_372_036_854_775_808
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -129,7 +125,6 @@ pub struct JsonStdPrimitiveU8(#[validate(range(min = 0u8, max = 255u8))] pub std
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -153,7 +148,6 @@ pub struct JsonStdPrimitiveU16(#[validate(range(min = 0u16, max = 65_535u16))] p
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -177,7 +171,6 @@ pub struct JsonStdPrimitiveU32(#[validate(range(min = 0u32, max = 4_294_967_295u
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -200,7 +193,6 @@ pub struct JsonStdPrimitiveU64(#[validate(range(min = 0u64, max = 18_446_744_073
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -226,7 +218,6 @@ pub struct JsonStdPrimitiveF32(
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -253,7 +244,6 @@ pub struct JsonStdPrimitiveF64(
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -276,7 +266,6 @@ pub struct JsonStdPrimitiveBool(pub std::primitive::bool);
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateIdentToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
@@ -1686,7 +1675,6 @@ pub struct JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::o
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema,
-    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
     postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
     postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader,
@@ -2285,4 +2273,9 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 //     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdate
 //     pub enum StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed
 //     // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdate
+// }
+
+
+// pub trait PostgresqlJsonType {
+
 // }
