@@ -2158,26 +2158,28 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 //     // impl error_occurence_lib::ToStdStringString for SomethingFieldToReadWithId
 //     // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingFieldToReadWithId
 //     type SelfOptionsToReadWithoutId;
-//     type SomethingOptionsToReadWithId;
-//     pub enum SomethingOptionsToReadWithOrWithoutIdTryFromErrorNamed;
+//     type SelfOptionsToReadWithId;
+//     type SelfOptionsToReadWithOrWithoutIdTryFromErrorNamed;
 //     // impl SomethingOptionsToReadWithoutId { pub fn try_new(
 //     // impl SomethingOptionsToReadWithId { pub fn try_new(
 //     // impl<'de> serde::Deserialize<'de> for SomethingOptionsToReadWithoutId
 //     // impl<'de> serde::Deserialize<'de> for SomethingOptionsToReadWithId
 //     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToReadWithoutId
 //     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToReadWithId
-//     pub enum SomethingFieldToUpdate;
+//     type SelfFieldToUpdate;
 //     // impl error_occurence_lib::ToStdStringString for SomethingFieldToUpdate
-//     pub enum SomethingOptionToUpdateOrigin;
-//     pub enum SomethingJsonArrayChangeTryGenerateBindIncrementsErrorNamed;
+//     type SelfOptionToUpdateOrigin;
+//     type SelfJsonArrayChangeTryGenerateBindIncrementsErrorNamed;
 //     // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdateOrigin
 //     pub struct SomethingOptionsToUpdate;
 //     // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionsToUpdate
 //     // impl std::fmt::Display for Something
-//     pub type SomethingToCreate = SomethingToCreateWithoutGeneratedId;
-//     pub type SomethingFieldToRead = SomethingFieldToReadWithoutId;
-//     pub type SomethingOptionsToRead = SomethingOptionsToReadWithoutId;
-//     pub struct SomethingFieldReader
+
+//     // pub type SomethingToCreate = SomethingToCreateWithoutGeneratedId;
+//     // pub type SomethingFieldToRead = SomethingFieldToReadWithoutId;
+//     // pub type SomethingOptionsToRead = SomethingOptionsToReadWithoutId;
+
+//     type SelfFieldReader
 //     pub enum SomethingTryNewErrorNamed
 //     // impl SomethingFieldReader {pub fn try_new
 //     // impl<'de> serde::Deserialize<'de> for SomethingFieldReader
@@ -2276,6 +2278,20 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 // }
 
 
-// pub trait PostgresqlJsonType {
+pub trait PostgresqlJsonType {
+    type SelfToCreate;
+    // impl<'a> JsonCreateBindQuery<'a> for JsonStdPrimitiveI8ToCreate
+    // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
+    // fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate
+    type SelfFieldReader;
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader
+    type SelfOptionsToRead;
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead
+    // impl GeneratePostgresqlQueryPartFieldToRead for JsonStdPrimitiveI8FieldReader
+    type SelfOptionToUpdate;
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionToUpdate
+    type SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+    // impl GeneratePostgresqlQueryPartToUpdate<JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed> for JsonStdPrimitiveI8OptionToUpdate
 
-// }
+}
