@@ -412,6 +412,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     )
                 }
             });
+            //todo maybe make a trait?
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
