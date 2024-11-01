@@ -2154,7 +2154,15 @@ pub trait PostgresqlJsonType {
     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate
-    type FieldReader<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type FieldReader<'a>: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + Default
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + utoipa::ToSchema<'a>
+        + schemars::JsonSchema
+        + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader
     type OptionsToRead<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead
@@ -2166,9 +2174,18 @@ pub trait PostgresqlJsonType {
         //todo remove this coz its used properly now
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
     ) -> std::string::String;
-    // type SelfOptionToUpdate<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type SelfOptionToUpdate<'a>: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + Default
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + utoipa::ToSchema<'a>
+        + schemars::JsonSchema
+        + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionToUpdate
-    // type SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed: std::fmt::Debug + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
+    // type SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed: std::fmt::Debug
+    //     + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
     // // impl GeneratePostgresqlQueryPartToUpdate<JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed> for JsonStdPrimitiveI8OptionToUpdate
     // //todo add update naming
     // fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed>;
@@ -2228,6 +2245,23 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(::core::default::Default::default())
     }
 }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+)]
+pub struct FJsonStdPrimitiveI8OptionToUpdate(pub std::primitive::i8);
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8OptionToUpdate {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(::core::default::Default::default())
+    }
+}
 
 
 
@@ -2256,4 +2290,5 @@ impl PostgresqlJsonType for JsonStdPrimitiveI8ToCreate {
     ) -> std::string::String {
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
     }
+    type SelfOptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
 }
