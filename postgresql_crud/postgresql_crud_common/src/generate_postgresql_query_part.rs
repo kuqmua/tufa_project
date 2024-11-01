@@ -2195,7 +2195,7 @@ pub trait PostgresqlJsonType {
     // impl GeneratePostgresqlQueryPartToUpdate<JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed> for JsonStdPrimitiveI8OptionToUpdate
     //todo add update naming
     fn try_generate_bind_increments(
-        &self,
+        option_to_update: &Self::OptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
@@ -2203,7 +2203,7 @@ pub trait PostgresqlJsonType {
     ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed>;
     //todo add update naming
     fn bind_value_to_query<'a>(
-        self,
+        option_to_update: Self::OptionToUpdate<'_>,
         query: sqlx::query::Query<'a, sqlx::Postgres,
         sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
@@ -2322,7 +2322,7 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimit
     type OptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
     type OptionToUpdateTryGenerateBindIncrementsErrorNamed = FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
     fn try_generate_bind_increments(
-        &self,
+        option_to_update: &Self::OptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
@@ -2337,10 +2337,10 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimit
         }
     }
     fn bind_value_to_query<'a>(
-        self,
+        option_to_update: Self::OptionToUpdate<'_>,
         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(self.0));
+        query = query.bind(sqlx::types::Json(option_to_update.0));
         query
     }
 }

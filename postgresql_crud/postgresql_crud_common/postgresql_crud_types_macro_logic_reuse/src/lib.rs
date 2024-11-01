@@ -1524,11 +1524,11 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
             impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
         )
     };
+    let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let (
         ident_option_to_update_token_stream,
         impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
     ) = {
-        let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let ident_option_to_update_token_stream = {
             quote::quote!{
                 #[derive(
@@ -1559,8 +1559,8 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
             impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
         )
     };
+    let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
-        let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         quote::quote!{
             #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
             pub enum #ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case {
@@ -1652,47 +1652,62 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                 generate_postgresql_query_part_field_to_read_token_stream
             )
         };
-        let option_to_update_token_stream = {
-            quote::quote!{
-                type OptionToUpdate<'a>: = JsonStdPrimitiveI8OptionToUpdate;
-            }
-        };
-        let option_to_update_try_generate_bind_increments_error_named_token_stream = {
-            quote::quote!{
-                type OptionToUpdateTryGenerateBindIncrementsErrorNamed = JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
-            }
-        };
-        //todo maybe rename later
-        let try_generate_bind_increments_token_stream = {
-            quote::quote!{
-                fn try_generate_bind_increments(
-                    &self,
-                    jsonb_set_accumulator: &std::primitive::str,
-                    jsonb_set_target: &std::primitive::str,
-                    jsonb_set_path: &std::primitive::str,
-                    increment: &mut std::primitive::u64,
-                ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+        let (
+            option_to_update_token_stream,
+            option_to_update_try_generate_bind_increments_error_named_token_stream,
+            try_generate_bind_increments_token_stream,
+            bind_value_to_query_token_stream
+        ) = {
+            let option_to_update_upper_camel_case = naming_conventions::OptionToUpdateUpperCamelCase;
+            let option_to_update_token_stream = {
+                quote::quote!{
+                    type #option_to_update_upper_camel_case<'a>: = #ident_option_to_update_upper_camel_case;
+                }
+            };
+            let option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::OptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase;
+            let option_to_update_try_generate_bind_increments_error_named_token_stream = {
+                quote::quote!{
+                    type #option_to_update_try_generate_bind_increments_error_named_upper_camel_case = #ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case;
+                }
+            };
+            //todo maybe rename later
+            let try_generate_bind_increments_token_stream = {
+                quote::quote!{
+                    fn try_generate_bind_increments(
+                        option_to_update: &Self::#option_to_update_upper_camel_case<'_>,
+                        jsonb_set_accumulator: &std::primitive::str,
+                        jsonb_set_target: &std::primitive::str,
+                        jsonb_set_path: &std::primitive::str,
+                        increment: &mut std::primitive::u64,
+                    ) -> Result<std::string::String, Self::#option_to_update_try_generate_bind_increments_error_named_upper_camel_case> {
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+                            }
+                            None => Err(Self::#option_to_update_try_generate_bind_increments_error_named_upper_camel_case::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
-                        None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 }
-            }
-        };
-        //todo maybe rename later
-        let bind_value_to_query_token_stream = {
-            quote::quote!{
-                fn bind_value_to_query<'a>(
-                    self,
-                    mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                    query = query.bind(sqlx::types::Json(self.0));
-                    query
+            };
+            //todo maybe rename later
+            let bind_value_to_query_token_stream = {
+                quote::quote!{
+                    fn bind_value_to_query<'a>(
+                        option_to_update: Self::#option_to_update_upper_camel_case<'_>,
+                        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        query = query.bind(sqlx::types::Json(option_to_update.0));
+                        query
+                    }
                 }
-            }
+            };
+            (
+                option_to_update_token_stream,
+                option_to_update_try_generate_bind_increments_error_named_token_stream,
+                try_generate_bind_increments_token_stream,
+                bind_value_to_query_token_stream
+            )
         };
         quote::quote!{
             impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimitiveI8 {
@@ -1706,7 +1721,6 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                 #option_to_update_try_generate_bind_increments_error_named_token_stream
                 #try_generate_bind_increments_token_stream
                 #bind_value_to_query_token_stream
-
             }
         }
     };
