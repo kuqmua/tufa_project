@@ -1405,23 +1405,25 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+
+    let data_struct = match syn_derive_input.data {
+        syn::Data::Struct(value) => value,
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works on Struct"),
+    };
+    let fields_unnamed = match data_struct.fields {
+        syn::Fields::Unnamed(value) => value.unnamed,
+        syn::Fields::Named(_) | syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works with syn::Fields::Unnamed"),
+    };
+    assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed !== 1");
+    let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
+    let first_field_unnamed_type = &first_field_unnamed.ty;
+
     let (
         ident_to_create_token_stream,
         impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
     ) = {
         let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let ident_to_create_token_stream = {
-            let data_struct = match syn_derive_input.data {
-                syn::Data::Struct(value) => value,
-                syn::Data::Enum(_) | syn::Data::Union(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works on Struct"),
-            };
-            let fields_unnamed = match data_struct.fields {
-                syn::Fields::Unnamed(value) => value.unnamed,
-                syn::Fields::Named(_) | syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works with syn::Fields::Unnamed"),
-            };
-            assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed !== 1");
-            let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
-            let first_field_unnamed_type = &first_field_unnamed.ty;
             quote::quote!{
                 #[derive(
                     Debug,
@@ -1487,30 +1489,40 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
             impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
         )
     };
-    let ident_options_to_read_token_stream = {
-        quote::quote!{
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                Default,
-                serde::Serialize,
-                serde::Deserialize,
-                utoipa::ToSchema,
-                schemars::JsonSchema,
-            )]
-            pub struct JsonStdPrimitiveI8OptionsToRead(pub std::primitive::i8);
-        }
-    };
-    let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream = {
-        quote::quote!{
-            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead {
-                #[inline]
-                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                    Self(::core::default::Default::default())
+    let (
+        ident_options_to_read_token_stream,
+        impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
+    ) = {
+        let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+        let ident_options_to_read_token_stream = {
+            quote::quote!{
+                #[derive(
+                    Debug,
+                    Clone,
+                    PartialEq,
+                    Default,
+                    serde::Serialize,
+                    serde::Deserialize,
+                    utoipa::ToSchema,
+                    schemars::JsonSchema,
+                )]
+                pub struct #ident_options_to_read_upper_camel_case(pub #first_field_unnamed_type);
+            }
+        };
+        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream = {
+            quote::quote!{
+                impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_options_to_read_upper_camel_case {
+                    #[inline]
+                    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                        Self(::core::default::Default::default())
+                    }
                 }
             }
-        }
+        };
+        (
+            ident_options_to_read_token_stream,
+            impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
+        )
     };
     let ident_option_to_update_token_stream = {
         quote::quote!{
@@ -1666,8 +1678,8 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
         #ident_field_reader_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
-        // #ident_options_to_read_token_stream
-        // #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
+        #ident_options_to_read_token_stream
+        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
         // #ident_option_to_update_token_stream
         // #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
         // #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
