@@ -2144,9 +2144,7 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 
 
 pub trait PostgresqlJsonType {
-    type SelfToCreate<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema
-    //  + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-     ;
+    type SelfToCreate<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     
     // // impl<'a> JsonCreateBindQuery<'a> for JsonStdPrimitiveI8ToCreate
     // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
@@ -2187,6 +2185,13 @@ pub trait PostgresqlJsonType {
     schemars::JsonSchema,
 )]
 pub struct FJsonStdPrimitiveI8ToCreate(pub std::primitive::i8);
+impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8ToCreate {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(::core::default::Default::default())
+    }
+}
+
 
 impl PostgresqlJsonType for JsonStdPrimitiveI8ToCreate {
     type SelfToCreate<'a> = FJsonStdPrimitiveI8ToCreate;
