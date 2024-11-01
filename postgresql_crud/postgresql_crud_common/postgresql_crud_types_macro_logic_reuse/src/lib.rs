@@ -1418,11 +1418,11 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
     let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
 
+    let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let (
         ident_to_create_token_stream,
         impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
     ) = {
-        let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let ident_to_create_token_stream = {
             quote::quote!{
                 #[derive(
@@ -1560,47 +1560,60 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
         )
     };
     let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
+        let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         quote::quote!{
             #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-            pub enum JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
+            pub enum #ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case {
                 CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
             }
         }
     };
     let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = {
-        let to_create_token_stream = {
-            quote::quote!{
-                type ToCreate<'a> = JsonStdPrimitiveI8ToCreate;
-            }
-        };
-        //todo maybe rename later
-        let json_create_try_generate_bind_increments_token_stream = {
-            quote::quote!{
-                fn json_create_try_generate_bind_increments(
-                    self_to_create: &Self::ToCreate<'_>,
-                    increment: &mut std::primitive::u64
-                ) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
-                    match increment.checked_add(1) {
-                        Some(incr) => {
-                            *increment = incr;
-                            Ok(format!("${increment}"))
+        let (
+            to_create_token_stream,
+            json_create_try_generate_bind_increments_token_stream,
+            json_create_bind_value_to_query_token_stream
+        ) = {
+            let to_create_upper_camel_case = naming_conventions::ToCreateUpperCamelCase;
+            let to_create_token_stream = {
+                quote::quote!{
+                    type #to_create_upper_camel_case<'a> = #ident_to_create_upper_camel_case;
+                }
+            };
+            //todo maybe rename later
+            let json_create_try_generate_bind_increments_token_stream = {
+                quote::quote!{
+                    fn json_create_try_generate_bind_increments(
+                        self_to_create: &Self::#to_create_upper_camel_case<'_>,
+                        increment: &mut std::primitive::u64
+                    ) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                        match increment.checked_add(1) {
+                            Some(incr) => {
+                                *increment = incr;
+                                Ok(format!("${increment}"))
+                            }
+                            None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
-                        None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 }
-            }
-        };
-        let json_create_bind_value_to_query_token_stream = {
-            quote::quote!{
-                fn json_create_bind_value_to_query<'a>(
-                    self_to_create: Self::ToCreate<'a>,
-                    mut query: sqlx::query::Query<'a,
-                    sqlx::Postgres, sqlx::postgres::PgArguments>
-                ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                    query = query.bind(sqlx::types::Json(self_to_create.0));
-                    query
+            };
+            let json_create_bind_value_to_query_token_stream = {
+                quote::quote!{
+                    fn json_create_bind_value_to_query<'a>(
+                        self_to_create: Self::#to_create_upper_camel_case<'a>,
+                        mut query: sqlx::query::Query<'a,
+                        sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        query = query.bind(sqlx::types::Json(self_to_create.0));
+                        query
+                    }
                 }
-            }
+            };
+            (
+                to_create_token_stream,
+                json_create_try_generate_bind_increments_token_stream,
+                json_create_bind_value_to_query_token_stream
+            )
         };
         let field_reader_token_stream = {
             quote::quote!{
@@ -1692,7 +1705,7 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
         #ident_option_to_update_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
-        // #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+        #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
         // #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
     };
     // println!("{generated}");
