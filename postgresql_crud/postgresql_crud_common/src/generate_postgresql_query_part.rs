@@ -2180,7 +2180,7 @@ pub trait PostgresqlJsonType {
         //todo remove this coz its used properly now
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
     ) -> std::string::String;
-    type SelfOptionToUpdate<'a>: std::fmt::Debug
+    type OptionToUpdate<'a>: std::fmt::Debug
         + Clone
         + PartialEq
         + Default
@@ -2309,6 +2309,6 @@ impl PostgresqlJsonType for JsonStdPrimitiveI8ToCreate {
     ) -> std::string::String {
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
     }
-    type SelfOptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
+    type OptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
     type OptionToUpdateTryGenerateBindIncrementsErrorNamed = FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
 }
