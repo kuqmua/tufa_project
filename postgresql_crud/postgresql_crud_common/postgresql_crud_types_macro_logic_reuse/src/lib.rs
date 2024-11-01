@@ -1514,9 +1514,14 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
         }
     };
     let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = {
-        quote::quote!{
-            impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimitiveI8 {
+        let to_create_token_stream = {
+            quote::quote!{
                 type ToCreate<'a> = FJsonStdPrimitiveI8ToCreate;
+            }
+        };
+        //todo maybe rename later
+        let json_create_try_generate_bind_increments_token_stream = {
+            quote::quote!{
                 fn json_create_try_generate_bind_increments(
                     self_to_create: &Self::ToCreate<'_>,
                     increment: &mut std::primitive::u64
@@ -1529,6 +1534,10 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                         None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 }
+            }
+        };
+        let json_create_bind_value_to_query_token_stream = {
+            quote::quote!{
                 fn json_create_bind_value_to_query<'a>(
                     self_to_create: Self::ToCreate<'a>,
                     mut query: sqlx::query::Query<'a,
@@ -1537,8 +1546,21 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                     query = query.bind(sqlx::types::Json(self_to_create.0));
                     query
                 }
+            }
+        };
+        let field_reader_token_stream = {
+            quote::quote!{
                 type FieldReader<'a> = FJsonStdPrimitiveI8FieldReader;
+            }
+        };
+        let options_to_read_token_stream = {
+            quote::quote!{
                 type OptionsToRead<'a> = FJsonStdPrimitiveI8OptionsToRead;
+            }
+        };
+        //todo maybe rename later
+        let generate_postgresql_query_part_field_to_read_token_stream = {
+            quote::quote!{
                 fn generate_postgresql_query_part_field_to_read(
                     options_to_read: &Self::OptionsToRead<'_>,
                     field_ident: &std::primitive::str,
@@ -1547,8 +1569,21 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                 ) -> std::string::String {
                     format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
                 }
+            }
+        };
+        let option_to_update_token_stream = {
+            quote::quote!{
                 type OptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
+            }
+        };
+        let option_to_update_try_generate_bind_increments_error_named_token_stream = {
+            quote::quote!{
                 type OptionToUpdateTryGenerateBindIncrementsErrorNamed = FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
+            }
+        };
+        //todo maybe rename later
+        let try_generate_bind_increments_token_stream = {
+            quote::quote!{
                 fn try_generate_bind_increments(
                     &self,
                     jsonb_set_accumulator: &std::primitive::str,
@@ -1564,6 +1599,11 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                         None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 }
+            }
+        };
+        //todo maybe rename later
+        let bind_value_to_query_token_stream = {
+            quote::quote!{
                 fn bind_value_to_query<'a>(
                     self,
                     mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
@@ -1571,6 +1611,21 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                     query = query.bind(sqlx::types::Json(self.0));
                     query
                 }
+            }
+        };
+        quote::quote!{
+            impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimitiveI8 {
+                #to_create_token_stream
+                #json_create_try_generate_bind_increments_token_stream
+                #json_create_bind_value_to_query_token_stream
+                #field_reader_token_stream
+                #options_to_read_token_stream
+                #generate_postgresql_query_part_field_to_read_token_stream
+                #option_to_update_token_stream
+                #option_to_update_try_generate_bind_increments_error_named_token_stream
+                #try_generate_bind_increments_token_stream
+                #bind_value_to_query_token_stream
+
             }
         }
     };
