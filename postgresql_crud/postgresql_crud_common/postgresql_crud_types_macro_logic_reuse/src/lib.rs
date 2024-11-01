@@ -1398,3 +1398,193 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
     };
     generated.into()
 }
+
+#[proc_macro_derive(GenerateImplPostgresqlJsonType)]
+pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "GenerateImplPostgresqlJsonType";
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_to_create_token_stream = {
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                Default,
+                serde::Serialize,
+                serde::Deserialize,
+                utoipa::ToSchema,
+                schemars::JsonSchema,
+            )]
+            pub struct FJsonStdPrimitiveI8ToCreate(pub std::primitive::i8);
+        }
+    };
+    let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = {
+        quote::quote!{
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8ToCreate {
+                #[inline]
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    Self(::core::default::Default::default())
+                }
+            }
+        }
+    };
+    let ident_field_reader_token_stream = {
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                Default,
+                serde::Serialize,
+                serde::Deserialize,
+                utoipa::ToSchema,
+                schemars::JsonSchema,
+            )]
+            pub struct FJsonStdPrimitiveI8FieldReader {}
+        }
+    };
+    let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream = {
+        quote::quote!{
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8FieldReader {
+                #[inline]
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    ::core::default::Default::default()
+                }
+            }
+        }
+    };
+    let ident_options_to_read_token_stream = {
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                Default,
+                serde::Serialize,
+                serde::Deserialize,
+                utoipa::ToSchema,
+                schemars::JsonSchema,
+            )]
+            pub struct FJsonStdPrimitiveI8OptionsToRead(pub std::primitive::i8);
+        }
+    };
+    let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream = {
+        quote::quote!{
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8OptionsToRead {
+                #[inline]
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    Self(::core::default::Default::default())
+                }
+            }
+        }
+    };
+    let ident_option_to_update_token_stream = {
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                Default,
+                serde::Serialize,
+                serde::Deserialize,
+                utoipa::ToSchema,
+                schemars::JsonSchema,
+            )]
+            pub struct FJsonStdPrimitiveI8OptionToUpdate(pub std::primitive::i8);
+        }
+    };
+    let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream = {
+        quote::quote!{
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8OptionToUpdate {
+                #[inline]
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    Self(::core::default::Default::default())
+                }
+            }
+        }
+    };
+    let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
+        quote::quote!{
+            #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+            pub enum FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
+                CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+            }
+        }
+    };
+    let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = {
+        quote::quote!{
+            impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimitiveI8 {
+                type ToCreate<'a> = FJsonStdPrimitiveI8ToCreate;
+                fn json_create_try_generate_bind_increments(
+                    self_to_create: &Self::ToCreate<'_>,
+                    increment: &mut std::primitive::u64
+                ) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                    match increment.checked_add(1) {
+                        Some(incr) => {
+                            *increment = incr;
+                            Ok(format!("${increment}"))
+                        }
+                        None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                }
+                fn json_create_bind_value_to_query<'a>(
+                    self_to_create: Self::ToCreate<'a>,
+                    mut query: sqlx::query::Query<'a,
+                    sqlx::Postgres, sqlx::postgres::PgArguments>
+                ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    query = query.bind(sqlx::types::Json(self_to_create.0));
+                    query
+                }
+                type FieldReader<'a> = FJsonStdPrimitiveI8FieldReader;
+                type OptionsToRead<'a> = FJsonStdPrimitiveI8OptionsToRead;
+                fn generate_postgresql_query_part_field_to_read(
+                    options_to_read: &Self::OptionsToRead<'_>,
+                    field_ident: &std::primitive::str,
+                    column_name_and_maybe_field_getter: &std::primitive::str,
+                    column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+                ) -> std::string::String {
+                    format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+                }
+                type OptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
+                type OptionToUpdateTryGenerateBindIncrementsErrorNamed = FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
+                fn try_generate_bind_increments(
+                    &self,
+                    jsonb_set_accumulator: &std::primitive::str,
+                    jsonb_set_target: &std::primitive::str,
+                    jsonb_set_path: &std::primitive::str,
+                    increment: &mut std::primitive::u64,
+                ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+                        }
+                        None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                }
+                fn bind_value_to_query<'a>(
+                    self,
+                    mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    query = query.bind(sqlx::types::Json(self.0));
+                    query
+                }
+            }
+        }
+    };
+    let generated = quote::quote!{
+        #ident_to_create_token_stream
+        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
+        #ident_field_reader_token_stream
+        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
+        #ident_options_to_read_token_stream
+        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
+        #ident_option_to_update_token_stream
+        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
+        #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+        #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
+    };
+    generated.into()
+}
