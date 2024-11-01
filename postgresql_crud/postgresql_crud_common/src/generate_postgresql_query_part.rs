@@ -2138,11 +2138,6 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 
 
 
-// pub trait PostgresqlJson {
-
-// }
-
-
 pub trait PostgresqlJsonType {
     type ToCreate<'a>: std::fmt::Debug 
         + Clone 
@@ -2159,7 +2154,7 @@ pub trait PostgresqlJsonType {
     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate
-    // type SelfFieldReader<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type FieldReader<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader
     // type SelfOptionsToRead<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead
@@ -2183,6 +2178,7 @@ pub trait PostgresqlJsonType {
 
 
 
+
 #[derive(
     Debug,
     Clone,
@@ -2200,6 +2196,24 @@ impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOn
         Self(::core::default::Default::default())
     }
 }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+)]
+pub struct FJsonStdPrimitiveI8FieldReader {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8FieldReader {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
+    }
+}
+
 
 
 impl PostgresqlJsonType for JsonStdPrimitiveI8ToCreate {
@@ -2217,4 +2231,5 @@ impl PostgresqlJsonType for JsonStdPrimitiveI8ToCreate {
         query = query.bind(sqlx::types::Json(self_to_create.0));
         query
     }
+    type FieldReader<'a> = FJsonStdPrimitiveI8FieldReader;
 }
