@@ -2144,11 +2144,21 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 
 
 pub trait PostgresqlJsonType {
-    type SelfToCreate<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    
-    // // impl<'a> JsonCreateBindQuery<'a> for JsonStdPrimitiveI8ToCreate
-    // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
-    // fn json_create_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    type SelfToCreate<'a>: std::fmt::Debug 
+        + Clone 
+        + PartialEq 
+        + Default 
+        + serde::Serialize 
+        + serde::Deserialize<'a> 
+        + utoipa::ToSchema<'a> 
+        + schemars::JsonSchema 
+        + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+        // JsonCreateBindQuery
+        ;
+    // impl<'a> JsonCreateBindQuery<'a> for JsonStdPrimitiveI8ToCreate
+    fn json_create_try_generate_bind_increments(self_to_create: &Self::SelfToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
+    fn json_create_bind_value_to_query<'a>(self_to_create: Self::SelfToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate
     // type SelfFieldReader<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader
@@ -2195,4 +2205,17 @@ impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOn
 
 impl PostgresqlJsonType for JsonStdPrimitiveI8ToCreate {
     type SelfToCreate<'a> = FJsonStdPrimitiveI8ToCreate;
+    fn json_create_try_generate_bind_increments(self_to_create: &Self::SelfToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                Ok(format!("${increment}"))
+            }
+            None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn json_create_bind_value_to_query<'a>(self_to_create: Self::SelfToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(self_to_create.0));
+        query
+    }
 }
