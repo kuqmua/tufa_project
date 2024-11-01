@@ -1435,7 +1435,7 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
     };
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = {
         quote::quote!{
-            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8ToCreate {
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate {
                 #[inline]
                 fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                     Self(::core::default::Default::default())
@@ -1455,12 +1455,12 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                 utoipa::ToSchema,
                 schemars::JsonSchema,
             )]
-            pub struct FJsonStdPrimitiveI8FieldReader {}
+            pub struct JsonStdPrimitiveI8FieldReader {}
         }
     };
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream = {
         quote::quote!{
-            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8FieldReader {
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader {
                 #[inline]
                 fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                     ::core::default::Default::default()
@@ -1480,12 +1480,12 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                 utoipa::ToSchema,
                 schemars::JsonSchema,
             )]
-            pub struct FJsonStdPrimitiveI8OptionsToRead(pub std::primitive::i8);
+            pub struct JsonStdPrimitiveI8OptionsToRead(pub std::primitive::i8);
         }
     };
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream = {
         quote::quote!{
-            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8OptionsToRead {
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead {
                 #[inline]
                 fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                     Self(::core::default::Default::default())
@@ -1505,12 +1505,12 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
                 utoipa::ToSchema,
                 schemars::JsonSchema,
             )]
-            pub struct FJsonStdPrimitiveI8OptionToUpdate(pub std::primitive::i8);
+            pub struct JsonStdPrimitiveI8OptionToUpdate(pub std::primitive::i8);
         }
     };
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream = {
         quote::quote!{
-            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for FJsonStdPrimitiveI8OptionToUpdate {
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionToUpdate {
                 #[inline]
                 fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                     Self(::core::default::Default::default())
@@ -1521,7 +1521,7 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
     let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
         quote::quote!{
             #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-            pub enum FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
+            pub enum JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
                 CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
             }
         }
@@ -1529,7 +1529,7 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
     let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = {
         let to_create_token_stream = {
             quote::quote!{
-                type ToCreate<'a> = FJsonStdPrimitiveI8ToCreate;
+                type ToCreate<'a> = JsonStdPrimitiveI8ToCreate;
             }
         };
         //todo maybe rename later
@@ -1563,12 +1563,12 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
         };
         let field_reader_token_stream = {
             quote::quote!{
-                type FieldReader<'a> = FJsonStdPrimitiveI8FieldReader;
+                type FieldReader<'a> = JsonStdPrimitiveI8FieldReader;
             }
         };
         let options_to_read_token_stream = {
             quote::quote!{
-                type OptionsToRead<'a> = FJsonStdPrimitiveI8OptionsToRead;
+                type OptionsToRead<'a> = JsonStdPrimitiveI8OptionsToRead;
             }
         };
         //todo maybe rename later
@@ -1586,12 +1586,12 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
         };
         let option_to_update_token_stream = {
             quote::quote!{
-                type OptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
+                type OptionToUpdate<'a>: = JsonStdPrimitiveI8OptionToUpdate;
             }
         };
         let option_to_update_try_generate_bind_increments_error_named_token_stream = {
             quote::quote!{
-                type OptionToUpdateTryGenerateBindIncrementsErrorNamed = FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
+                type OptionToUpdateTryGenerateBindIncrementsErrorNamed = JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
             }
         };
         //todo maybe rename later
@@ -1644,15 +1644,16 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
     };
     let generated = quote::quote!{
         #ident_to_create_token_stream
-        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
-        #ident_field_reader_token_stream
-        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
-        #ident_options_to_read_token_stream
-        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
-        #ident_option_to_update_token_stream
-        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
-        #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
-        #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
+        // #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
+        // #ident_field_reader_token_stream
+        // #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
+        // #ident_options_to_read_token_stream
+        // #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
+        // #ident_option_to_update_token_stream
+        // #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
+        // #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+        // #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
     };
+    // println!("{generated}");
     generated.into()
 }
