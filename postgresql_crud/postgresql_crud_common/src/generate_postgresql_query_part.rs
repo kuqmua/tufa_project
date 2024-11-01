@@ -2159,7 +2159,7 @@ pub trait PostgresqlJsonType {
         self_to_create: Self::ToCreate<'a>,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8ToCreate
     type FieldReader<'a>: std::fmt::Debug
         + Clone
         + PartialEq
@@ -2169,10 +2169,10 @@ pub trait PostgresqlJsonType {
         + utoipa::ToSchema<'a>
         + schemars::JsonSchema
         + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader
     type OptionsToRead<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead
-    // // impl GeneratePostgresqlQueryPartFieldToRead for JsonStdPrimitiveI8FieldReader
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead
+    // impl GeneratePostgresqlQueryPartFieldToRead for JsonStdPrimitiveI8FieldReader
     fn generate_postgresql_query_part_field_to_read(
         options_to_read: &Self::OptionsToRead<'_>,
         field_ident: &std::primitive::str,
@@ -2189,24 +2189,24 @@ pub trait PostgresqlJsonType {
         + utoipa::ToSchema<'a>
         + schemars::JsonSchema
         + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    // // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionToUpdate
+    // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionToUpdate
     type OptionToUpdateTryGenerateBindIncrementsErrorNamed: std::fmt::Debug
         + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
-    // // impl GeneratePostgresqlQueryPartToUpdate<JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed> for JsonStdPrimitiveI8OptionToUpdate
-    // //todo add update naming
-    // fn try_generate_bind_increments(
-    //     &self,
-    //     jsonb_set_accumulator: &std::primitive::str,
-    //     jsonb_set_target: &std::primitive::str,
-    //     jsonb_set_path: &std::primitive::str,
-    //     increment: &mut std::primitive::u64
-    // ) -> Result<std::string::String, Self::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamed>;
-    // // //todo add update naming
-    // fn bind_value_to_query<'a>(
-    //     self,
-    //     query: sqlx::query::Query<'a, sqlx::Postgres,
-    //     sqlx::postgres::PgArguments>
-    // ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    // impl GeneratePostgresqlQueryPartToUpdate<JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed> for JsonStdPrimitiveI8OptionToUpdate
+    //todo add update naming
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64
+    ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed>;
+    //todo add update naming
+    fn bind_value_to_query<'a>(
+        self,
+        query: sqlx::query::Query<'a, sqlx::Postgres,
+        sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
 
@@ -2321,4 +2321,26 @@ impl PostgresqlJsonType for JsonStdPrimitiveI8ToCreate {
     }
     type OptionToUpdate<'a>: = FJsonStdPrimitiveI8OptionToUpdate;
     type OptionToUpdateTryGenerateBindIncrementsErrorNamed = FJsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
+    fn try_generate_bind_increments(
+        &self,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+            }
+            None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn bind_value_to_query<'a>(
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(self.0));
+        query
+    }
 }
