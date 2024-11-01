@@ -1524,30 +1524,40 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
             impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
         )
     };
-    let ident_option_to_update_token_stream = {
-        quote::quote!{
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                Default,
-                serde::Serialize,
-                serde::Deserialize,
-                utoipa::ToSchema,
-                schemars::JsonSchema,
-            )]
-            pub struct JsonStdPrimitiveI8OptionToUpdate(pub std::primitive::i8);
-        }
-    };
-    let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream = {
-        quote::quote!{
-            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionToUpdate {
-                #[inline]
-                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                    Self(::core::default::Default::default())
+    let (
+        ident_option_to_update_token_stream,
+        impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
+    ) = {
+        let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+        let ident_option_to_update_token_stream = {
+            quote::quote!{
+                #[derive(
+                    Debug,
+                    Clone,
+                    PartialEq,
+                    Default,
+                    serde::Serialize,
+                    serde::Deserialize,
+                    utoipa::ToSchema,
+                    schemars::JsonSchema,
+                )]
+                pub struct #ident_option_to_update_upper_camel_case(pub #first_field_unnamed_type);
+            }
+        };
+        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream = {
+            quote::quote!{
+                impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_option_to_update_upper_camel_case {
+                    #[inline]
+                    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                        Self(::core::default::Default::default())
+                    }
                 }
             }
-        }
+        };
+        (
+            ident_option_to_update_token_stream,
+            impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
+        )
     };
     let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
         quote::quote!{
@@ -1680,8 +1690,8 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
         #ident_options_to_read_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
-        // #ident_option_to_update_token_stream
-        // #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
+        #ident_option_to_update_token_stream
+        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
         // #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
         // #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
     };
