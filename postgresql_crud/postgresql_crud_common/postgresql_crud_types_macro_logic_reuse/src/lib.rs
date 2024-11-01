@@ -1247,8 +1247,29 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
     generated.into()
 }
 
-#[proc_macro_derive(GenerateImplPostgresqlJsonType)]
-pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+
+
+
+
+
+
+
+
+
+
+
+// #[derive(strum_macros::Display)]
+// enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant {
+//     FullTypePath,
+//     StdOptionOptionFullTypePath,
+//     StdVecVecFullTypePath,
+//     StdOptionOptionStdVecVecFullTypePath,
+//     StdVecVecStdOptionOptionFullTypePath,
+//     StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+// }
+
+
+fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStream, variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant) -> proc_macro::TokenStream {
     //todo add validation like this: (-128 +127) pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GenerateImplPostgresqlJsonType";
@@ -1588,4 +1609,9 @@ pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> pro
     };
     // println!("{generated}");
     generated.into()
+}
+
+#[proc_macro_derive(GenerateImplPostgresqlJsonType)]
+pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_impl_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath)
 }
