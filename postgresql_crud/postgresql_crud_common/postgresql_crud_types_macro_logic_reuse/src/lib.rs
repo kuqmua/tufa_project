@@ -926,6 +926,11 @@ fn generate_nullable_array_primitive_postgresql_part_field_to_read_query(proc_ma
     )
 }
 ///
+
+
+
+
+
 #[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReader)]
 pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -943,42 +948,10 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     generated.into()
 }
 
-#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber)]
-pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArray)]
+pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNumber";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
-        &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
-    );
-    let generated = quote::quote!{
-        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
-    };
-    generated.into()
-}
-#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayBoolean)]
-pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_boolean(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayBoolean";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
-        &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
-    );
-    let generated = quote::quote!{
-        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
-    };
-    generated.into()
-}
-#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayString)]
-pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayString";
+    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArray";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1039,22 +1012,6 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     };
     generated.into()
 }
-#[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullable)]
-pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_array_nullable(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderArrayNullable";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
-        &ident,
-        &postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_array_primitive_postgresql_part_field_to_read_query(&proc_macro_name_upper_camel_case_ident_stringified))
-    );
-    let generated = quote::quote!{
-        #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
-    };
-    generated.into()
-}
 #[proc_macro_derive(GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReaderNullableArrayNullableNumber)]
 pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_field_reader_nullable_array_nullable_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
@@ -1103,6 +1060,20 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     };
     generated.into()
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #[proc_macro_derive(GenerateIdentOptionToUpdate)]
 pub fn generate_ident_option_to_update(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -1564,8 +1535,16 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             };
             //todo maybe rename later
             let generate_postgresql_query_part_field_to_read_token_stream = {
-                let content_token_stream = quote::quote!{
-                    format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+                //here
+                let content_token_stream = match &variant {
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
+                        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+                    },
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => todo!(),
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => todo!(),
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => todo!(),
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => todo!(),
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => todo!(),
                 };
                 quote::quote!{
                     fn generate_postgresql_query_part_field_to_read(
