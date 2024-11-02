@@ -1434,7 +1434,11 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
     generated.into()
 }
 
-#[proc_macro_derive(GenerateImplPostgresqlJsonType)]
-pub fn generate_impl_postgresql_json_type(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GenerateImplPostgresqlJsonTypeFullTypePath)]
+pub fn generate_impl_postgresql_json_type_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_impl_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath)
+}
+#[proc_macro_derive(GenerateImplPostgresqlJsonTypeStdOptionOptionFullTypePath)]
+pub fn generate_impl_postgresql_json_type_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_impl_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath)
 }
