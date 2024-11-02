@@ -1552,7 +1552,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             )
         };
         quote::quote!{
-            impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimitiveI8 {
+            impl crate::generate_postgresql_query_part::PostgresqlJsonType for #ident {
                 #to_create_token_stream
                 #json_create_try_generate_bind_increments_token_stream
                 #json_create_bind_value_to_query_token_stream
@@ -1576,7 +1576,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         #ident_option_to_update_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
         #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
-        // #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
+        #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
     };
     // println!("{generated}");
     generated.into()
