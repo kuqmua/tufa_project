@@ -1119,24 +1119,7 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
 
 
 
-
-
-
-
-
-// #[derive(strum_macros::Display)]
-// enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant {
-//     FullTypePath,
-//     StdOptionOptionFullTypePath,
-//     StdVecVecFullTypePath,
-//     StdOptionOptionStdVecVecFullTypePath,
-//     StdVecVecStdOptionOptionFullTypePath,
-//     StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-// }
-
-
 fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStream, variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant) -> proc_macro::TokenStream {
-    //todo add validation like this: (-128 +127) pub struct JsonStdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GenerateImplPostgresqlJsonType";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
@@ -1155,61 +1138,38 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
     let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
 
-    let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let (
-        ident_to_create_token_stream,
-        impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
-    ) = {
-        let ident_to_create_token_stream = {
-            quote::quote!{
-                #[derive(
-                    Debug,
-                    Clone,
-                    PartialEq,
-                    Default,
-                    serde::Serialize,
-                    serde::Deserialize,
-                    utoipa::ToSchema,
-                    schemars::JsonSchema,
-                )]
-                pub struct #ident_to_create_upper_camel_case(pub #first_field_unnamed_type);
-            }
+    let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = {
+        let content_token_stream = match &variant {
+            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
+                ::core::default::Default::default()
+            },
+            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
+                Some(::core::default::Default::default())
+            },
+            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
+                vec![::core::default::Default::default()]
+            },
+            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
+                Some(vec![::core::default::Default::default()])
+            },
+            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
+                vec![Some(::core::default::Default::default())]
+            },
+            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
+                Some(vec![Some(::core::default::Default::default())])
+            },
         };
-        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = {
-            let content_token_stream = match &variant {
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
-                    ::core::default::Default::default()
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
-                    Some(::core::default::Default::default())
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
-                    vec![::core::default::Default::default()]
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
-                    Some(vec![::core::default::Default::default()])
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                    vec![Some(::core::default::Default::default())]
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                    Some(vec![Some(::core::default::Default::default())])
-                },
-            };
-            quote::quote!{
-                impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_to_create_upper_camel_case {
-                    #[inline]
-                    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                        Self(#content_token_stream)
-                    }
+        quote::quote!{
+            impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
+                #[inline]
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    Self(#content_token_stream)
                 }
             }
-        };
-        (
-            ident_to_create_token_stream,
-            impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
-        )
+        }
     };
+    let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_to_create_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_to_create_upper_camel_case, &ident);
     let ident_field_reader_upper_camel_case = naming_conventions::SelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let (
         ident_field_reader_token_stream,
@@ -1266,116 +1226,9 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         )
     };
     let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let (
-        ident_options_to_read_token_stream,
-        impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
-    ) = {
-        let ident_options_to_read_token_stream = {
-            //todo maybe just use alias?
-            quote::quote!{
-                #[derive(
-                    Debug,
-                    Clone,
-                    PartialEq,
-                    Default,
-                    serde::Serialize,
-                    serde::Deserialize,
-                    utoipa::ToSchema,
-                    schemars::JsonSchema,
-                )]
-                pub struct #ident_options_to_read_upper_camel_case(pub #first_field_unnamed_type);
-            }
-        };
-        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream = {
-            let content_token_stream = match &variant {
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
-                    ::core::default::Default::default()
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
-                    Some(::core::default::Default::default())
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
-                    vec![::core::default::Default::default()]
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
-                    Some(vec![::core::default::Default::default()])
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                    vec![Some(::core::default::Default::default())]
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                    Some(vec![Some(::core::default::Default::default())])
-                },
-            };
-            quote::quote!{
-                impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_options_to_read_upper_camel_case {
-                    #[inline]
-                    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                        Self(#content_token_stream)
-                    }
-                }
-            }
-        };
-        (
-            ident_options_to_read_token_stream,
-            impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
-        )
-    };
+    let ident_options_to_read_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_options_to_read_upper_camel_case, &ident);
     let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let (
-        ident_option_to_update_token_stream,
-        impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
-    ) = {
-        let ident_option_to_update_token_stream = {
-            quote::quote!{
-                #[derive(
-                    Debug,
-                    Clone,
-                    PartialEq,
-                    Default,
-                    serde::Serialize,
-                    serde::Deserialize,
-                    utoipa::ToSchema,
-                    schemars::JsonSchema,
-                )]
-                pub struct #ident_option_to_update_upper_camel_case(pub #first_field_unnamed_type);
-            }
-        };
-        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream = {
-            let content_token_stream = match &variant {
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
-                    ::core::default::Default::default()
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
-                    Some(::core::default::Default::default())
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
-                    vec![::core::default::Default::default()]
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
-                    Some(vec![::core::default::Default::default()])
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                    vec![Some(::core::default::Default::default())]
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                    Some(vec![Some(::core::default::Default::default())])
-                },
-            };
-            quote::quote!{
-                impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_option_to_update_upper_camel_case {
-                    #[inline]
-                    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                        Self(#content_token_stream)
-                    }
-                }
-            }
-        };
-        (
-            ident_option_to_update_token_stream,
-            impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
-        )
-    };
+    let ident_option_to_update_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_option_to_update_upper_camel_case, &ident);
     let ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
         quote::quote!{
@@ -1567,14 +1420,13 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         }
     };
     let generated = quote::quote!{
-        #ident_to_create_token_stream
-        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
+        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
+
+        #ident_to_create_alias_token_stream
         #ident_field_reader_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
-        #ident_options_to_read_token_stream
-        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_token_stream
-        #ident_option_to_update_token_stream
-        #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
+        #ident_options_to_read_alias_token_stream
+        #ident_option_to_update_alias_token_stream
         #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
         #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
     };
