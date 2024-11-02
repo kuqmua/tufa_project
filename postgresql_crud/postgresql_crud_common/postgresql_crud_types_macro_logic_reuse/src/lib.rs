@@ -894,9 +894,6 @@ fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         }
     }
 }
-fn generate_primitive_postgresql_part_field_to_read_query_format(format_handle_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
-    quote::quote!{format!(#format_handle_token_stream)}
-}
 //todo refactor it to pagination struct with custom Deserialize and try_new check
 fn postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(format_handle_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     let pagination_start_end_initialization_token_stream = proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream();
@@ -918,12 +915,7 @@ pub fn generate_impl_generate_postgresql_query_part_field_to_read_for_ident_fiel
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream = impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
         &ident,
-        &generate_primitive_postgresql_part_field_to_read_query_format(
-            &proc_macro_common::generate_quotes::double_quotes_token_stream(
-                &format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value', {{column_name_and_maybe_field_getter}}->'{{field_ident}}'))"),
-                &proc_macro_name_upper_camel_case_ident_stringified
-            )
-        )
+        &quote::quote!{format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")}
     );
     let generated = quote::quote!{
         #impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream
@@ -1440,13 +1432,14 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             let generate_postgresql_query_part_field_to_read_token_stream = {
                 //here
                 let content_token_stream = match &variant {
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
                         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
                     },
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => todo!(),
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => todo!(),
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => todo!(),
+                     //different order
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath |
                     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => todo!(),
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath |
                     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => todo!(),
                 };
                 quote::quote!{
