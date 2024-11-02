@@ -206,9 +206,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     }
     
-    let generate_pub_type_alias_token_stream = |alias_type_name_token_stream: &dyn quote::ToTokens, alias_actual_type_name_token_stream: &dyn quote::ToTokens|{
-        quote::quote!{pub type #alias_type_name_token_stream = #alias_actual_type_name_token_stream;}
-    };
     let generate_options_to_read_alias_token_stream = |tokens_options_to_read_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
         let options_to_read_with_or_without_id_token_stream = if contains_id {
             quote::quote!{#ident_options_to_read_with_id_upper_camel_case}
@@ -216,7 +213,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         else {
             quote::quote!{#ident_options_to_read_without_id_upper_camel_case}
         };
-        generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
+        proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
     };
 
     let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream = |
@@ -1689,7 +1686,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         )
     };
     let generate_tokens_reader_alias_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, struct_options_to_read_token_stream: &dyn quote::ToTokens|{
-        generate_pub_type_alias_token_stream(struct_ident_token_stream, struct_options_to_read_token_stream)
+        proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(struct_ident_token_stream, struct_options_to_read_token_stream)
     };
     let generate_tokens_option_to_update_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
@@ -1743,13 +1740,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         let create_token_stream = {
             let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-            let ident_to_create_alias_token_stream = generate_pub_type_alias_token_stream(&ident_to_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
+            let ident_to_create_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_to_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
             quote::quote!{
                 #ident_to_create_alias_token_stream
             }
         };
         let read_token_stream = {
-            let ident_field_to_read_alias_token_stream = generate_pub_type_alias_token_stream(&naming_conventions::SelfFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident), &ident_field_to_read_without_id_upper_camel_case);
+            let ident_field_to_read_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&naming_conventions::SelfFieldToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident), &ident_field_to_read_without_id_upper_camel_case);
 
             let ident_options_to_read_upper_camel_case = naming_conventions::SelfOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let ident_options_to_read_alias_token_stream = generate_options_to_read_alias_token_stream(&ident_options_to_read_upper_camel_case, false);
@@ -2365,7 +2362,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         ) = {
             let generic_ident_upper_camel_case = naming_conventions::GenericSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
             let generate_tokens_to_create_alias_token_stream = |tokens_to_create_token_stream: &dyn quote::ToTokens|{
-                generate_pub_type_alias_token_stream(tokens_to_create_token_stream, &ident_to_create_without_generated_id_upper_camel_case)
+                proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(tokens_to_create_token_stream, &ident_to_create_without_generated_id_upper_camel_case)
             };
             let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_non_vec_field_reader_token_stream = |tokens_field_reader_token_stream: &dyn quote::ToTokens|{
                 generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
@@ -2500,15 +2497,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 };
                 let update_token_stream = {
-                    let generic_ident_option_to_update_alias_token_stream = generate_pub_type_alias_token_stream(
+                    let generic_ident_option_to_update_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                         &naming_conventions::GenericSelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident), 
                         &ident_option_to_update_upper_camel_case
                     );
-                    let generic_ident_option_to_update_try_generate_bind_increments_error_named_alias_token_stream = generate_pub_type_alias_token_stream(
+                    let generic_ident_option_to_update_try_generate_bind_increments_error_named_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                         &naming_conventions::GenericSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                         &ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case
                     );
-                    let generic_ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_alias_token_stream = generate_pub_type_alias_token_stream(
+                    let generic_ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                         &naming_conventions::GenericSelfOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                         &naming_conventions::SelfOptionToUpdateTryGenerateBindIncrementsErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident)
                     );

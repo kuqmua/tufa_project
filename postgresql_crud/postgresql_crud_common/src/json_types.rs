@@ -191,24 +191,32 @@ pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i1
 //         Self(::core::default::Default::default())
 //     }
 // }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Default,
-//     serde :: Serialize,
-//     serde ::
-// Deserialize,
-//     utoipa :: ToSchema,
-//     schemars :: JsonSchema,
-// )]
-// pub struct JsonStdPrimitiveI8FieldReader {}
-// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader {
-//     #[inline]
-//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         ::core::default::Default::default()
-//     }
-// }
+pub type JsonStdPrimitiveI8ToCreate = JsonStdPrimitiveI8;
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8 {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(::core::default::Default::default())
+    }
+}
+
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    serde ::
+Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct JsonStdPrimitiveI8FieldReader {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8FieldReader {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
+    }
+}
 // #[derive(
 //     Debug,
 //     Clone,
@@ -227,6 +235,9 @@ pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i1
 //         Self(::core::default::Default::default())
 //     }
 // }
+pub type JsonStdPrimitiveI8OptionsToRead = JsonStdPrimitiveI8;
+
+
 // #[derive(
 //     Debug,
 //     Clone,
@@ -245,49 +256,53 @@ pub struct JsonStdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i1
 //         Self(::core::default::Default::default())
 //     }
 // }
-// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-// pub enum JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
-//     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-// }
-// impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimitiveI8 {
-//     type ToCreate<'a> = JsonStdPrimitiveI8ToCreate;
-//     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(incr) => {
-//                 *increment = incr;
-//                 Ok(format!("${increment}"))
-//             }
-//             None => Err(crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//         }
-//     }
-//     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(sqlx::types::Json(self_to_create.0));
-//         query
-//     }
-//     type FieldReader<'a> = JsonStdPrimitiveI8FieldReader;
-//     type OptionsToRead<'a> = JsonStdPrimitiveI8OptionsToRead;
-//     fn generate_postgresql_query_part_field_to_read(options_to_read: &Self::OptionsToRead<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
-//         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
-//     }
-//     type OptionToUpdate<'a> = JsonStdPrimitiveI8OptionToUpdate;
-//     type OptionToUpdateTryGenerateBindIncrementsErrorNamed = JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
-//     fn try_generate_bind_increments(
-//         option_to_update: &Self::OptionToUpdate<'_>,
-//         jsonb_set_accumulator: &std::primitive::str,
-//         jsonb_set_target: &std::primitive::str,
-//         jsonb_set_path: &std::primitive::str,
-//         increment: &mut std::primitive::u64,
-//     ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(value) => {
-//                 *increment = value;
-//                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
-//             }
-//             None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//         }
-//     }
-//     fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(sqlx::types::Json(option_to_update.0));
-//         query
-//     }
-// }
+
+pub type JsonStdPrimitiveI8OptionToUpdate = JsonStdPrimitiveI8;
+
+
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
+    CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimitiveI8 {
+    type ToCreate<'a> = JsonStdPrimitiveI8ToCreate;
+    fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                Ok(format!("${increment}"))
+            }
+            None => Err(crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(self_to_create.0));
+        query
+    }
+    type FieldReader<'a> = JsonStdPrimitiveI8FieldReader;
+    type OptionsToRead<'a> = JsonStdPrimitiveI8OptionsToRead;
+    fn generate_postgresql_query_part_field_to_read(options_to_read: &Self::OptionsToRead<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+    }
+    type OptionToUpdate<'a> = JsonStdPrimitiveI8OptionToUpdate;
+    type OptionToUpdateTryGenerateBindIncrementsErrorNamed = JsonStdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed;
+    fn try_generate_bind_increments(
+        option_to_update: &Self::OptionToUpdate<'_>,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+            }
+            None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(option_to_update.0));
+        query
+    }
+}

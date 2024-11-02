@@ -12,6 +12,7 @@ pub mod type_variants_from_request_response;
 pub mod wrap_derive;
 pub mod write_token_stream_into_file;
 pub mod pagination_start_end_initialization_token_stream;
+pub mod generate_pub_type_alias_token_stream;
 
 // impl OperationHttpMethod {
 //     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
