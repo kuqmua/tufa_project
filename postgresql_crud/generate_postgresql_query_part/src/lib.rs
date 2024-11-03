@@ -2520,12 +2520,56 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #generic_ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_alias_token_stream
                     }
                 };
+                let impl_postgresql_crud_postgresql_json_type_for_generic_ident_token_stream = {
+                    quote::quote!{
+                        impl postgresql_crud::PostgresqlJsonType for GenericSomething {
+                            type ToCreate<'a> = GenericSomethingToCreate;
+                            fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
+                            }
+                            fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
+                            }
+                            type FieldReader<'a> = GenericSomethingFieldReader;
+                            type OptionsToRead<'a> = GenericSomethingOptionsToRead;
+                            fn generate_postgresql_query_part_field_to_read(field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                                postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                    field_reader,
+                                    field_ident,
+                                    column_name_and_maybe_field_getter,
+                                    column_name_and_maybe_field_getter_for_error_message
+                                )
+                            }
+                            type OptionToUpdate<'a> = GenericSomethingOptionToUpdate;
+                            type OptionToUpdateTryGenerateBindIncrementsErrorNamed = GenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+                            fn try_generate_bind_increments(
+                                option_to_update: &Self::OptionToUpdate<'_>,
+                                jsonb_set_accumulator: &std::primitive::str,
+                                jsonb_set_target: &std::primitive::str,
+                                jsonb_set_path: &std::primitive::str,
+                                increment: &mut std::primitive::u64,
+                            ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+                                 postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                    option_to_update,
+                                    jsonb_set_accumulator,
+                                    jsonb_set_target,
+                                    jsonb_set_path,
+                                    increment,
+                                )
+                            }
+                            fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)
+                            }
+                        }
+                    }
+                };
                 quote::quote!{
                     #generic_ident_token_stream
 
                     #create_token_stream
                     #read_token_stream
                     #update_token_stream
+                    // #impl_postgresql_crud_postgresql_json_type_for_generic_ident_token_stream
                 }
             };
             //its for GeneratePostgresqlQueryPart (json logic)
@@ -2846,12 +2890,56 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_generic_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_generic_ident_option_to_update_token_stream
                     }
                 };
+                let impl_postgresql_crud_postgresql_json_type_for_std_option_option_generic_ident_token_stream = {
+                    quote::quote!{
+                        impl postgresql_crud::PostgresqlJsonType for StdOptionOptionGenericSomething {
+                            type ToCreate<'a> = StdOptionOptionGenericSomethingToCreate;
+                            fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
+                            }
+                            fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
+                            }
+                            type FieldReader<'a> = StdOptionOptionGenericSomethingFieldReader;
+                            type OptionsToRead<'a> = StdOptionOptionGenericSomethingOptionsToRead;
+                            fn generate_postgresql_query_part_field_to_read(field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                                postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                    field_reader,
+                                    field_ident,
+                                    column_name_and_maybe_field_getter,
+                                    column_name_and_maybe_field_getter_for_error_message
+                                )
+                            }
+                            type OptionToUpdate<'a> = StdOptionOptionGenericSomethingOptionToUpdate;
+                            type OptionToUpdateTryGenerateBindIncrementsErrorNamed = StdOptionOptionGenericSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+                            fn try_generate_bind_increments(
+                                option_to_update: &Self::OptionToUpdate<'_>,
+                                jsonb_set_accumulator: &std::primitive::str,
+                                jsonb_set_target: &std::primitive::str,
+                                jsonb_set_path: &std::primitive::str,
+                                increment: &mut std::primitive::u64,
+                            ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+                                 postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                    option_to_update,
+                                    jsonb_set_accumulator,
+                                    jsonb_set_target,
+                                    jsonb_set_path,
+                                    increment,
+                                )
+                            }
+                            fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)
+                            }
+                        }
+                    }
+                };
                 quote::quote!{
                     #std_option_option_generic_ident_token_stream
 
                     #create_token_stream
                     #read_token_stream
                     #update_token_stream
+                    // #impl_postgresql_crud_postgresql_json_type_for_std_option_option_generic_ident_token_stream
                 }
             };
             (
@@ -3940,12 +4028,56 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
                     }
                 };
+                let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_generic_with_id_ident_token_stream = {
+                    quote::quote!{
+                        impl postgresql_crud::PostgresqlJsonType for StdVecVecGenericWithIdSomething {
+                            type ToCreate<'a> = StdVecVecGenericWithIdSomethingToCreate;
+                            fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
+                            }
+                            fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
+                            }
+                            type FieldReader<'a> = StdVecVecGenericWithIdSomethingFieldReader;
+                            type OptionsToRead<'a> = StdVecVecGenericWithIdSomethingOptionsToRead;
+                            fn generate_postgresql_query_part_field_to_read(field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                                postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                    field_reader,
+                                    field_ident,
+                                    column_name_and_maybe_field_getter,
+                                    column_name_and_maybe_field_getter_for_error_message
+                                )
+                            }
+                            type OptionToUpdate<'a> = StdVecVecGenericWithIdSomethingOptionToUpdate;
+                            type OptionToUpdateTryGenerateBindIncrementsErrorNamed = StdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+                            fn try_generate_bind_increments(
+                                option_to_update: &Self::OptionToUpdate<'_>,
+                                jsonb_set_accumulator: &std::primitive::str,
+                                jsonb_set_target: &std::primitive::str,
+                                jsonb_set_path: &std::primitive::str,
+                                increment: &mut std::primitive::u64,
+                            ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+                                 postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                    option_to_update,
+                                    jsonb_set_accumulator,
+                                    jsonb_set_target,
+                                    jsonb_set_path,
+                                    increment,
+                                )
+                            }
+                            fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)
+                            }
+                        }
+                    }
+                };
                 quote::quote!{
                     #std_vec_vec_generic_with_id_ident_token_stream
 
                     #create_token_stream
                     #read_token_stream
                     #update_token_stream
+                    // #impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_generic_with_id_ident_token_stream
                 }
             };
             //its for GeneratePostgresqlQueryPart (json logic)
@@ -4517,12 +4649,56 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #impl_postgresql_crud_generate_postgresql_query_part_to_update_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_for_std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
                     }
                 };
+                let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream = {
+                    quote::quote!{
+                        impl postgresql_crud::PostgresqlJsonType for StdOptionOptionStdVecVecGenericWithIdSomething {
+                            type ToCreate<'a> = StdOptionOptionStdVecVecGenericWithIdSomethingToCreate;
+                            fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
+                            }
+                            fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
+                            }
+                            type FieldReader<'a> = StdOptionOptionStdVecVecGenericWithIdSomethingFieldReader;
+                            type OptionsToRead<'a> = StdOptionOptionStdVecVecGenericWithIdSomethingOptionsToRead;
+                            fn generate_postgresql_query_part_field_to_read(field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                                postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+                                    field_reader,
+                                    field_ident,
+                                    column_name_and_maybe_field_getter,
+                                    column_name_and_maybe_field_getter_for_error_message
+                                )
+                            }
+                            type OptionToUpdate<'a> = StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdate;
+                            type OptionToUpdateTryGenerateBindIncrementsErrorNamed = StdOptionOptionStdVecVecGenericWithIdSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+                            fn try_generate_bind_increments(
+                                option_to_update: &Self::OptionToUpdate<'_>,
+                                jsonb_set_accumulator: &std::primitive::str,
+                                jsonb_set_target: &std::primitive::str,
+                                jsonb_set_path: &std::primitive::str,
+                                increment: &mut std::primitive::u64,
+                            ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+                                 postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
+                                    option_to_update,
+                                    jsonb_set_accumulator,
+                                    jsonb_set_target,
+                                    jsonb_set_path,
+                                    increment,
+                                )
+                            }
+                            fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)
+                            }
+                        }
+                    }
+                };
                 quote::quote!{
                     #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
 
                     #create_token_stream
                     #read_token_stream
                     #update_token_stream
+                    // #impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream
                 }
             };
             (
