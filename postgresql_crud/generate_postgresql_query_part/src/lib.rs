@@ -45,7 +45,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
 
-    let postgresql_crud_json_uuid_option_to_update_token_stream = quote::quote!{postgresql_crud::JsonUuidOptionToUpdate};
+    let postgresql_crud_uuid_option_to_update_token_stream = quote::quote!{postgresql_crud::old_json_types::UuidOptionToUpdate};
 
     let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
@@ -624,7 +624,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &ident_field_to_read_with_id_upper_camel_case,
                         &quote::quote!{
                             #[serde(rename(serialize = "id", deserialize = "id"))]
-                             Id(postgresql_crud::JsonUuidFieldReader),
+                             Id(postgresql_crud::old_json_types::UuidFieldReader),
                         },
                     );
                     (
@@ -698,7 +698,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let maybe_id_token_stream = if contains_id {
                         quote::quote!{
                             #maybe_serde_skip_serializing_if_option_is_none_token_stream
-                            id: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonUuidOptionsToRead>>,
+                            id: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::UuidOptionsToRead>>,
                         }
                     }
                     else {
@@ -1033,7 +1033,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let maybe_id_serde_de_seq_access_next_element_token_stream = if contains_id {
                                 generate_serde_de_seq_access_next_element_token_stream(
                                     0,
-                                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
+                                    &quote::quote!{postgresql_crud::old_json_types::UuidOptionsToRead},
                                 )
                             }
                             else {
@@ -1121,7 +1121,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let maybe_id_mut_field_index_serde_private_option_token_stream = if contains_id {
                                 generate_mut_field_index_serde_private_option_token_stream(
                                     0,
-                                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
+                                    &quote::quote!{postgresql_crud::old_json_types::UuidOptionsToRead},
                                 )
                             }
                             else {
@@ -1170,7 +1170,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 generate_field_initialization_token_stream(
                                     0,
                                     &quote::quote!{"id"},
-                                    &quote::quote!{postgresql_crud::JsonUuidOptionsToRead},
+                                    &quote::quote!{postgresql_crud::old_json_types::UuidOptionsToRead},
                                 )
                             }
                             else {
@@ -1605,7 +1605,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
                         pub struct #ident_options_to_update_upper_camel_case {
-                            pub id: #postgresql_crud_json_uuid_option_to_update_token_stream,
+                            pub id: #postgresql_crud_uuid_option_to_update_token_stream,
                             pub fields: #ident_option_to_update_upper_camel_case
                         }
                     }
@@ -2245,7 +2245,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &generic_with_id_ident_upper_camel_case,
         &{
             quote::quote!{{
-                pub id: #postgresql_crud_json_uuid_option_to_update_token_stream,
+                pub id: #postgresql_crud_uuid_option_to_update_token_stream,
                 #fields_token_stream
             }}
         }
@@ -2873,7 +2873,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             #serde_skip_serializing_if_vec_is_empty_token_stream
                             update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
                             #serde_skip_serializing_if_vec_is_empty_token_stream
-                            delete: std::vec::Vec<#postgresql_crud_json_uuid_option_to_update_token_stream>,
+                            delete: std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>,
                         }
                     }
                 };
@@ -3004,7 +3004,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 pub fn try_new(
                                     create: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
                                     update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
-                                    delete: std::vec::Vec<#postgresql_crud_json_uuid_option_to_update_token_stream>,
+                                    delete: std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>,
                                 ) -> Result<Self, #struct_ident_try_new_error_named> {
                                     #maybe_check_create_update_delete_check_fields_are_empty_token_stream
                                     #check_not_unique_id_token_stream
@@ -3123,7 +3123,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                 vec![]
                                             }
                                         };
-                                        let __field2 = match serde::de::SeqAccess::next_element::<std::vec::Vec<#postgresql_crud_json_uuid_option_to_update_token_stream>>(&mut __seq)? {
+                                        let __field2 = match serde::de::SeqAccess::next_element::<std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>>(&mut __seq)? {
                                             serde::__private::Some(__value) => __value,
                                             serde::__private::None => {
                                                 vec![]
@@ -3138,7 +3138,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     {
                                         let mut __field0: serde::__private::Option<std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>> = serde::__private::None;
                                         let mut __field1: serde::__private::Option<std::vec::Vec<#ident_options_to_update_upper_camel_case>> = serde::__private::None;
-                                        let mut __field2: serde::__private::Option<std::vec::Vec<#postgresql_crud_json_uuid_option_to_update_token_stream>> = serde::__private::None;
+                                        let mut __field2: serde::__private::Option<std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>> = serde::__private::None;
                                         while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                                             match __key {
                                                 __Field::__field0 => {
@@ -3157,7 +3157,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                     if serde::__private::Option::is_some(&__field2) {
                                                         return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
                                                     }
-                                                    __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<#postgresql_crud_json_uuid_option_to_update_token_stream>>(&mut __map)?);
+                                                    __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>>(&mut __map)?);
                                                 }
                                                 _ => {
                                                     let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;

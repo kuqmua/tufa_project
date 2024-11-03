@@ -530,14 +530,14 @@ pub fn generate_generate_ident_to_create(input: proc_macro::TokenStream) -> proc
     let impl_json_create_bind_query_for_ident_to_create_token_stream = {
         //maybe its not correct to bind array of json. maybe should use bing each element of array instead
         quote::quote! {
-            impl<'a> JsonCreateBindQuery<'a> for #ident_to_create_upper_camel_case {
-                fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed> {
+            impl<'a> crate::generate_postgresql_query_part::JsonCreateBindQuery<'a> for #ident_to_create_upper_camel_case {
+                fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
                     match increment.checked_add(1) {
                         Some(incr) => {
                             *increment = incr;
                             Ok(format!("${increment}"))
                         }
-                        None => Err(JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
+                        None => Err(crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
                     }
                 }
                 fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -620,7 +620,7 @@ fn empty_content_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{{}}
 }
 fn pagination_content_token_stream() -> proc_macro2::TokenStream {
-    quote::quote!{{ pagination: Pagination }}
+    quote::quote!{{ pagination: crate::generate_postgresql_query_part::Pagination }}
 }
 
     // let impl_std_convert_from_ident_for_ident_options_to_read_token_stream = {
@@ -882,7 +882,7 @@ fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
 ) -> proc_macro2::TokenStream {
     let ident_field_reader_upper_camel_case = naming_conventions::SelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     quote::quote!{
-        impl GeneratePostgresqlQueryPartFieldToRead for #ident_field_reader_upper_camel_case {
+        impl crate::generate_postgresql_query_part::GeneratePostgresqlQueryPartFieldToRead for #ident_field_reader_upper_camel_case {
             fn generate_postgresql_query_part_field_to_read(
                 &self,
                 field_ident: &std::primitive::str,
@@ -1082,7 +1082,7 @@ pub fn generate_impl_generate_postgresql_query_part_to_update_for_ident_option_t
     let impl_postgresql_crud_generate_postgresql_query_part_to_update_ident_option_to_update_try_generate_bind_increments_error_named_for_ident_option_to_update_token_stream = {
         let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         quote::quote!{
-            impl GeneratePostgresqlQueryPartToUpdate<#ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case> for #ident_option_to_update_upper_camel_case {
+            impl crate::generate_postgresql_query_part::GeneratePostgresqlQueryPartToUpdate<#ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case> for #ident_option_to_update_upper_camel_case {
                 fn try_generate_bind_increments(
                     &self,
                     jsonb_set_accumulator: &std::primitive::str,

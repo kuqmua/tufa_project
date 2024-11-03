@@ -226,80 +226,80 @@ pub struct Jsongeneric {
     postgresql_crud::GeneratePostgresqlQueryPart
 )] //user type must implement utoipa::ToSchema trait
 pub struct Something {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-    // pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
-    // pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-    // pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
-    // pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
-    // pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
-    // pub std_primitive_u32: postgresql_crud::JsonStdPrimitiveU32,
-    // pub std_primitive_u64: postgresql_crud::JsonStdPrimitiveU64,
-    // pub std_primitive_f32: postgresql_crud::JsonStdPrimitiveF32,
-    // pub std_primitive_f64: postgresql_crud::JsonStdPrimitiveF64,
-    // pub std_primitive_bool: postgresql_crud::JsonStdPrimitiveBool,
-    // pub std_string_string: postgresql_crud::JsonStdStringString,
-    pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
-    // pub std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdPrimitiveI16,
-    // pub std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdPrimitiveI32,
-    // pub std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdPrimitiveI64,
-    // pub std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdPrimitiveU8,
-    // pub std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdPrimitiveU16,
-    // pub std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdPrimitiveU32,
-    // pub std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdPrimitiveU64,
-    // pub std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdPrimitiveF32,
-    // pub std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdPrimitiveF64,
-    // pub std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdPrimitiveBool,
-    // pub std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdStringString,
-    pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
-    // pub std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdVecVecStdPrimitiveI16,
-    // pub std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdVecVecStdPrimitiveI32,
-    // pub std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdVecVecStdPrimitiveI64,
-    // pub std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdVecVecStdPrimitiveU8,
-    // pub std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdVecVecStdPrimitiveU16,
-    // pub std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdVecVecStdPrimitiveU32,
-    // pub std_vec_vec_std_primitive_u64: postgresql_crud::JsonStdVecVecStdPrimitiveU64,
-    // pub std_vec_vec_std_primitive_f32: postgresql_crud::JsonStdVecVecStdPrimitiveF32,
-    // pub std_vec_vec_std_primitive_f64: postgresql_crud::JsonStdVecVecStdPrimitiveF64,
-    // pub std_vec_vec_std_primitive_bool: postgresql_crud::JsonStdVecVecStdPrimitiveBool,
-    // pub std_vec_vec_std_string_string: postgresql_crud::JsonStdVecVecStdStringString,
-    pub std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8,
-    // pub std_option_option_std_vec_vec_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI16,
-    // pub std_option_option_std_vec_vec_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI32,
-    // pub std_option_option_std_vec_vec_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI64,
-    // pub std_option_option_std_vec_vec_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU8,
-    // pub std_option_option_std_vec_vec_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU16,
-    // pub std_option_option_std_vec_vec_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU32,
-    // pub std_option_option_std_vec_vec_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveU64,
-    // pub std_option_option_std_vec_vec_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveF32,
-    // pub std_option_option_std_vec_vec_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveF64,
-    // pub std_option_option_std_vec_vec_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveBool,
-    // pub std_option_option_std_vec_vec_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdStringString,
-    pub std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8,
-    // pub std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI16,
-    // pub std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI32,
-    // pub std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI64,
-    // pub std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU8,
-    // pub std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU16,
-    // pub std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU32,
-    // pub std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveU64,
-    // pub std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveF32,
-    // pub std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveF64,
-    // pub std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveBool,
-    // pub std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdVecVecStdOptionOptionStdStringString,
-    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
-    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
-    // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdStringString,
+    pub std_primitive_i8: postgresql_crud::old_json_types::StdPrimitiveI8,
+    // pub std_primitive_i16: postgresql_crud::old_json_types::StdPrimitiveI16,
+    // pub std_primitive_i32: postgresql_crud::old_json_types::StdPrimitiveI32,
+    // pub std_primitive_i64: postgresql_crud::old_json_types::StdPrimitiveI64,
+    // pub std_primitive_u8: postgresql_crud::old_json_types::StdPrimitiveU8,
+    // pub std_primitive_u16: postgresql_crud::old_json_types::StdPrimitiveU16,
+    // pub std_primitive_u32: postgresql_crud::old_json_types::StdPrimitiveU32,
+    // pub std_primitive_u64: postgresql_crud::old_json_types::StdPrimitiveU64,
+    // pub std_primitive_f32: postgresql_crud::old_json_types::StdPrimitiveF32,
+    // pub std_primitive_f64: postgresql_crud::old_json_types::StdPrimitiveF64,
+    // pub std_primitive_bool: postgresql_crud::old_json_types::StdPrimitiveBool,
+    // pub std_string_string: postgresql_crud::old_json_types::StdStringString,
+    pub std_option_option_std_primitive_i8: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8,
+    // pub std_option_option_std_primitive_i16: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI16,
+    // pub std_option_option_std_primitive_i32: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI32,
+    // pub std_option_option_std_primitive_i64: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI64,
+    // pub std_option_option_std_primitive_u8: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveU8,
+    // pub std_option_option_std_primitive_u16: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveU16,
+    // pub std_option_option_std_primitive_u32: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveU32,
+    // pub std_option_option_std_primitive_u64: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveU64,
+    // pub std_option_option_std_primitive_f32: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveF32,
+    // pub std_option_option_std_primitive_f64: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveF64,
+    // pub std_option_option_std_primitive_bool: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveBool,
+    // pub std_option_option_std_string_string: postgresql_crud::old_json_types::StdOptionOptionStdStringString,
+    pub std_vec_vec_std_primitive_i8: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8,
+    // pub std_vec_vec_std_primitive_i16: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI16,
+    // pub std_vec_vec_std_primitive_i32: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI32,
+    // pub std_vec_vec_std_primitive_i64: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI64,
+    // pub std_vec_vec_std_primitive_u8: postgresql_crud::old_json_types::StdVecVecStdPrimitiveU8,
+    // pub std_vec_vec_std_primitive_u16: postgresql_crud::old_json_types::StdVecVecStdPrimitiveU16,
+    // pub std_vec_vec_std_primitive_u32: postgresql_crud::old_json_types::StdVecVecStdPrimitiveU32,
+    // pub std_vec_vec_std_primitive_u64: postgresql_crud::old_json_types::StdVecVecStdPrimitiveU64,
+    // pub std_vec_vec_std_primitive_f32: postgresql_crud::old_json_types::StdVecVecStdPrimitiveF32,
+    // pub std_vec_vec_std_primitive_f64: postgresql_crud::old_json_types::StdVecVecStdPrimitiveF64,
+    // pub std_vec_vec_std_primitive_bool: postgresql_crud::old_json_types::StdVecVecStdPrimitiveBool,
+    // pub std_vec_vec_std_string_string: postgresql_crud::old_json_types::StdVecVecStdStringString,
+    pub std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8,
+    // pub std_option_option_std_vec_vec_std_primitive_i16: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI16,
+    // pub std_option_option_std_vec_vec_std_primitive_i32: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI32,
+    // pub std_option_option_std_vec_vec_std_primitive_i64: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI64,
+    // pub std_option_option_std_vec_vec_std_primitive_u8: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveU8,
+    // pub std_option_option_std_vec_vec_std_primitive_u16: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveU16,
+    // pub std_option_option_std_vec_vec_std_primitive_u32: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveU32,
+    // pub std_option_option_std_vec_vec_std_primitive_u64: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveU64,
+    // pub std_option_option_std_vec_vec_std_primitive_f32: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveF32,
+    // pub std_option_option_std_vec_vec_std_primitive_f64: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveF64,
+    // pub std_option_option_std_vec_vec_std_primitive_bool: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveBool,
+    // pub std_option_option_std_vec_vec_std_string_string: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdStringString,
+    pub std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8,
+    // pub std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI16,
+    // pub std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI32,
+    // pub std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI64,
+    // pub std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveU8,
+    // pub std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveU16,
+    // pub std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveU32,
+    // pub std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveU64,
+    // pub std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveF32,
+    // pub std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveF64,
+    // pub std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveBool,
+    // pub std_vec_vec_std_option_option_std_string_string: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdStringString,
+    pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i16: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i32: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_i64: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u8: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u16: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u32: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_u64: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_f32: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
+    // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
+    // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
     pub generic: GenericDoggie,
     pub std_option_option_generic: StdOptionOptionGenericDoggie,
@@ -335,17 +335,17 @@ pub struct Something {
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum SomethingFieldToRead {
 //     #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
-//     StdPrimitiveI8(postgresql_crud::JsonStdPrimitiveI8FieldReader),
+//     StdPrimitiveI8(postgresql_crud::old_json_types::StdPrimitiveI8FieldReader),
 //     #[serde(rename(serialize = "std_option_option_std_primitive_i8", deserialize = "std_option_option_std_primitive_i8"))]
-//     StdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdPrimitiveI8FieldReader),
+//     StdOptionOptionStdPrimitiveI8(postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8FieldReader),
 //     #[serde(rename(serialize = "std_vec_vec_std_primitive_i8", deserialize = "std_vec_vec_std_primitive_i8"))]
-//     StdVecVecStdPrimitiveI8(postgresql_crud::JsonStdVecVecStdPrimitiveI8FieldReader),
+//     StdVecVecStdPrimitiveI8(postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8FieldReader),
 //     #[serde(rename(serialize = "std_option_option_std_vec_vec_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_primitive_i8"))]
-//     StdOptionOptionStdVecVecStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8FieldReader),
+//     StdOptionOptionStdVecVecStdPrimitiveI8(postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8FieldReader),
 //     #[serde(rename(serialize = "std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_vec_vec_std_option_option_std_primitive_i8"))]
-//     StdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
+//     StdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
 //     #[serde(rename(serialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8", deserialize = "std_option_option_std_vec_vec_std_option_option_std_primitive_i8"))]
-//     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
+//     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8FieldReader),
 //     // #[serde(rename(serialize = "generic", deserialize = "generic"))]
 //     // Generic(GenericCatFieldReader),
 //     // #[serde(rename(serialize = "std_option_option_generic", deserialize = "std_option_option_generic"))]
@@ -370,8 +370,8 @@ pub struct Something {
     postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Doggie {
-    pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-    pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+    pub std_primitive_i8: postgresql_crud::old_json_types::StdPrimitiveI8,
+    pub std_primitive_i16: postgresql_crud::old_json_types::StdPrimitiveI16,
 
     pub generic: GenericCat,
     pub std_option_option_generic: StdOptionOptionGenericCat,
@@ -394,9 +394,9 @@ pub struct Doggie {
     postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Cat {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
-    pub std_primitive_i64: postgresql_crud::JsonStdPrimitiveI64,
+    // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    pub std_primitive_i32: postgresql_crud::old_json_types::StdPrimitiveI32,
+    pub std_primitive_i64: postgresql_crud::old_json_types::StdPrimitiveI64,
 
     pub generic: GenericBird,
     pub std_option_option_generic: StdOptionOptionGenericBird,
@@ -419,15 +419,15 @@ pub struct Cat {
     postgresql_crud::GeneratePostgresqlQueryPart,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Bird {
-    // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_u8: postgresql_crud::JsonStdPrimitiveU8,
-    pub std_primitive_u16: postgresql_crud::JsonStdPrimitiveU16,
+    // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+    pub std_primitive_u8: postgresql_crud::old_json_types::StdPrimitiveU8,
+    pub std_primitive_u16: postgresql_crud::old_json_types::StdPrimitiveU16,
 }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum CatFieldToRead {
 //     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-//     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
+//     StdPrimitiveI32(postgresql_crud::old_json_types::StdPrimitiveI32FieldReader),
 // }
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct GenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
@@ -477,7 +477,7 @@ pub struct Bird {
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum CatFieldToRead {
 //     #[serde(rename(serialize = "std_primitive_i32", deserialize = "std_primitive_i32"))]
-//     StdPrimitiveI32(postgresql_crud::JsonStdPrimitiveI32FieldReader),
+//     StdPrimitiveI32(postgresql_crud::old_json_types::StdPrimitiveI32FieldReader),
 // }
 
 
@@ -528,31 +528,31 @@ pub struct Bird {
 //     // postgresql_crud::GeneratePostgresqlQueryPart,
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Mouse {
-//     // pub id: postgresql_crud::JsonUuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-//     pub std_primitive_i32: postgresql_crud::JsonStdPrimitiveI32,
+//     // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_i32: postgresql_crud::old_json_types::StdPrimitiveI32,
 // }
 
 #[test]
 fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() {
-    // let default = postgresql_crud::JsonGeneric(Something{
+    // let default = postgresql_crud::old_json_types::Generic(Something{
 
     // });
     // println!("{default:#?}");
-    // let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element: postgresql_crud::JsonGeneric::<Something> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
+    // let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element: postgresql_crud::old_json_types::Generic::<Something> = postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
     //     println!("{default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element:#?}");
     // let serialized = serde_json::to_string(&default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element).unwrap();
     //     println!("{serialized:#?}");
-    //     let deserialized: postgresql_crud::JsonGeneric::<Something> = serde_json::from_str(&serialized).unwrap();
+    //     let deserialized: postgresql_crud::old_json_types::Generic::<Something> = serde_json::from_str(&serialized).unwrap();
     //     println!("{deserialized:#?}");
 
     // let s = Something {
-    //     std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8(8),
-    //     std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16(16),
+    //     std_primitive_i8: postgresql_crud::old_json_types::StdPrimitiveI8(8),
+    //     std_primitive_i16: postgresql_crud::old_json_types::StdPrimitiveI16(16),
     // };
 
     // #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
     // struct Thing {
-    //     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
+    //     pub std_primitive_i8: postgresql_crud::old_json_types::StdPrimitiveI8,
     // }
     // let schema = schemars::schema_for!(Thing);
     // println!("{}", serde_json::to_string_pretty(&schema).unwrap());
@@ -566,10 +566,10 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     //         JsongenericColumn::SqlxTypesJsonTAsPostgresqlJsonBNotNull {
     //             filter: vec![
     //                 SomethingFieldToRead::StdPrimitiveI8(
-    //                     postgresql_crud::JsonStdPrimitiveI8FieldReader{}
+    //                     postgresql_crud::old_json_types::StdPrimitiveI8FieldReader{}
     //                 ),
     //                 SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(
-    //                     postgresql_crud::JsonStdOptionOptionStdPrimitiveI8FieldReader{}
+    //                     postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8FieldReader{}
     //                 )
     //             ]
     //         }
@@ -583,11 +583,11 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     //     //here
     //     SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value {
     //         value: vec![
-    //             DoggieOptionsToUpdate { id: postgresql_crud::JsonUuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")), fields: vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value { value: std::primitive::i16::default() })] },
-    //             // DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Create(DoggieToCreate {
-    //             //     std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16::default(),
+    //             DoggieOptionsToUpdate { id: postgresql_crud::old_json_types::Uuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")), fields: vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value { value: std::primitive::i16::default() })] },
+    //             // DoggieOptionsToUpdate(postgresql_crud::old_json_types::ArrayElementChange::Create(DoggieToCreate {
+    //             //     std_primitive_i16: postgresql_crud::old_json_types::StdPrimitiveI16::default(),
     //             // })),
-    //             // DoggieOptionsToUpdate(postgresql_crud::JsonArrayElementChange::Delete(postgresql_crud::JsonUuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")))),
+    //             // DoggieOptionsToUpdate(postgresql_crud::old_json_types::ArrayElementChange::Delete(postgresql_crud::old_json_types::Uuid(uuid::uuid!("d6a4aa72-b154-4699-889f-33ef34a8c7f2")))),
 
     //             // StdVecVecGenericWithId(postgresql_crud::Value<std::vec::Vec<DoggieJsonArrayElementChange>>),
     //             // #[serde(rename(
@@ -605,17 +605,17 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
     // println!("{serialized:#?}");
     println!("---------------");
     let g = SomethingReader(SomethingOptionsToRead {
-        // std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI8OptionsToRead>>,
-        // std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(1) }),
-        // std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead>>,
-        // std_option_option_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(Some(1)) }),
+        // std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdPrimitiveI8OptionsToRead>>,
+        // std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::old_json_types::StdPrimitiveI8OptionsToRead(1) }),
+        // std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8OptionsToRead>>,
+        // std_option_option_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8OptionsToRead(Some(1)) }),
 
         //here
 
-        // std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(vec![1]) }),
+        // std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value { value: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8OptionsToRead(vec![1]) }),
         // generic: Some(postgresql_crud::Value { value: GenericCatOptionsToRead {
         //     std_primitive_i32: Some(postgresql_crud::Value {
-        //         value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
+        //         value: postgresql_crud::old_json_types::StdPrimitiveI32OptionsToRead(1)
         //     })
         // }}),
         // std_option_option_generic: Some(postgresql_crud::Value { value: StdOptionOptionGenericCatOptionsToRead(None)
@@ -623,32 +623,32 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         // std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: StdVecVecGenericWithIdDoggieOptionsToRead(vec![
         //     StdVecVecGenericWithIdDoggieOptionsToReadOrigin {
         //         id: Some(postgresql_crud::Value {
-        //             value: postgresql_crud::JsonUuidOptionsToRead::default()
+        //             value: postgresql_crud::old_json_types::UuidOptionsToRead::default()
         //         }),
         //         std_primitive_i16: Some(postgresql_crud::Value {
-        //             value: postgresql_crud::JsonStdPrimitiveI16OptionsToRead(1)
+        //             value: postgresql_crud::old_json_types::StdPrimitiveI16OptionsToRead(1)
         //         })
         //     }
         // ])}),
         std_option_option_std_vec_vec_generic_with_id: Some(postgresql_crud::Value { value: StdOptionOptionStdVecVecGenericWithIdDoggieOptionsToRead(Some(vec![
             StdOptionOptionStdVecVecGenericWithIdDoggieOptionsToReadOrigin {
                 id: Some(postgresql_crud::Value {
-                    value: postgresql_crud::JsonUuidOptionsToRead::default()
+                    value: postgresql_crud::old_json_types::UuidOptionsToRead::default()
                 }),
                 std_primitive_i16: Some(postgresql_crud::Value {
-                    value: postgresql_crud::JsonStdPrimitiveI16OptionsToRead(1)
+                    value: postgresql_crud::old_json_types::StdPrimitiveI16OptionsToRead(1)
                 })
             }
         ]))}),
             
             // {
             // std_primitive_i32: Some(postgresql_crud::Value {
-            //     value: postgresql_crud::JsonStdPrimitiveI32OptionsToRead(1)
+            //     value: postgresql_crud::old_json_types::StdPrimitiveI32OptionsToRead(1)
             // })
             // }
         // }),
         
-        // postgresql_crud::JsonStdVecVecStdPrimitiveI8
+        // postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8
     });
     println!("{g:#?}");
     let serialized = serde_json::to_string(&g).unwrap();
@@ -881,8 +881,8 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
 
             // query = query.bind(sqlx::types::Json(value.value));
             // query = postgresql_crud::BindQuery::bind_value_to_query(value.value.0.0, query);
-            // query = postgresql_crud::BindQuery::bind_value_to_query(sqlx::types::Json(postgresql_crud::JsonStdStringString(std::string::String::new("cat"))), query);
-            // query = postgresql_crud::BindQuery::bind_value_to_query(sqlx::types::Json(postgresql_crud::JsonStdPrimitiveI8(42)), query);
+            // query = postgresql_crud::BindQuery::bind_value_to_query(sqlx::types::Json(postgresql_crud::old_json_types::StdStringString(std::string::String::new("cat"))), query);
+            // query = postgresql_crud::BindQuery::bind_value_to_query(sqlx::types::Json(postgresql_crud::old_json_types::StdPrimitiveI8(42)), query);
         }
         query = postgresql_crud::BindQuery::bind_value_to_query(parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key, query);
         query
@@ -1324,19 +1324,19 @@ fn test_dd() {
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema)]
 // pub struct SomethingOptionsToRead {
 //     #[serde(skip_serializing_if = "Option::is_none")]
-//     std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdPrimitiveI8OptionsToRead>>,//here
+//     std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdPrimitiveI8OptionsToRead>>,//here
 //     #[serde(skip_serializing_if = "Option::is_none")]
-//     std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead>>,
+//     std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8OptionsToRead>>,
     
     
 //     #[serde(skip_serializing_if = "Option::is_none")]
-//     std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead>>,
+//     std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8OptionsToRead>>,
 //     #[serde(skip_serializing_if = "Option::is_none")]
-//     std_option_option_std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead>>,
+//     std_option_option_std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead>>,
 //     #[serde(skip_serializing_if = "Option::is_none")]
-//     std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead>>,
+//     std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead>>,
 //     #[serde(skip_serializing_if = "Option::is_none")]
-//     std_option_option_std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead>>,
+//     std_option_option_std_vec_vec_std_option_option_std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead>>,
 
 //     // #[serde(skip_serializing_if = "Option::is_none")]
 //     // std_vec_vec_std_primitive_i8: std::option::Option<postgresql_crud::Value<std::vec::Vec<std::primitive::i8>>>,
@@ -1360,27 +1360,27 @@ fn test_dd() {
 // //     fn from(value: Something) -> Self {
 // //         Self {
 // //             std_primitive_i8: Some(postgresql_crud::Value {
-// //                 value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead::from(value.std_primitive_i8)
+// //                 value: postgresql_crud::old_json_types::StdPrimitiveI8OptionsToRead::from(value.std_primitive_i8)
 // //             }),
 // //             std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-// //                 value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_primitive_i8)
+// //                 value: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_primitive_i8)
 // //             }),
 // //             std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
-// //                 value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_primitive_i8)
+// //                 value: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_primitive_i8)
 // //             }),
 // //             std_option_option_std_vec_vec_std_primitive_i8: Some(postgresql_crud::Value {
-// //                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_primitive_i8),
+// //                 value: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_primitive_i8),
 // //             }),
 // //             std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-// //                 value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_option_option_std_primitive_i8),
+// //                 value: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_vec_vec_std_option_option_std_primitive_i8),
 // //             }),
 // //             std_option_option_std_vec_vec_std_option_option_std_primitive_i8: Some(postgresql_crud::Value {
-// //                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8),
+// //                 value: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead::from(value.std_option_option_std_vec_vec_std_option_option_std_primitive_i8),
 // //             }),
 // //             generic: Some(postgresql_crud::Value {
 // //                 value: 
 // //                 CatOptionsToRead::from(value.generic.0)
-// //                 // postgresql_crud::JsonGenericOptionsToRead<CatOptionsToRead>::from(value.generic)
+// //                 // postgresql_crud::old_json_types::GenericOptionsToRead<CatOptionsToRead>::from(value.generic)
 
 // //                 // CatOptionsToRead::from(value.generic)
 // //                 // CatOptionsToRead::from(value.generic.0)
@@ -1393,7 +1393,7 @@ fn test_dd() {
 // //                 // std::option::Option::<MouseOptionsToRead>::from(value.std_option_option_generic),
                 
 
-// //                 // postgresql_crud::JsonStdOptionOptionGeneric<Mouse>
+// //                 // postgresql_crud::old_json_types::StdOptionOptionGeneric<Mouse>
 
 // //                 // std::option::Option<MouseOptionsToRead>>
 // //             }),
@@ -1577,7 +1577,7 @@ fn test_dd() {
 //                 serde::__private::Ok(SomethingOptionsToRead {
 //                     std_primitive_i8: match __field0 {
 //                         Some(value) => match value {
-//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdPrimitiveI8(value)) }),
+//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::old_json_types::StdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdPrimitiveI8(value)) }),
 //                             Err(error) => {
 //                                 return Err(serde::de::Error::custom(error));
 //                             }
@@ -1586,8 +1586,8 @@ fn test_dd() {
 //                     },
 //                     std_option_option_std_primitive_i8: match __field1 {
 //                         Some(value) => match value {
-//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdPrimitiveI8(match value {
-//                                 Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value)), 
+//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8(match value {
+//                                 Some(value) => Some(postgresql_crud::old_json_types::StdPrimitiveI8(value)), 
 //                                 None => None
 //                             })) }),
 //                             Err(error) => {
@@ -1599,12 +1599,12 @@ fn test_dd() {
 //                     std_vec_vec_std_primitive_i8: match __field2 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdVecVecStdPrimitiveI8({
+//                                 value: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8({
 //                                     let mut acc = vec![];
 //                                     for element in value {
 //                                         match element {
 //                                             Ok(value) => {
-//                                                 acc.push(postgresql_crud::JsonStdPrimitiveI8(value));
+//                                                 acc.push(postgresql_crud::old_json_types::StdPrimitiveI8(value));
 //                                             }
 //                                             Err(error) => {
 //                                                 return Err(serde::de::Error::custom(error));
@@ -1623,13 +1623,13 @@ fn test_dd() {
 //                     std_option_option_std_vec_vec_std_primitive_i8: match __field3 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8(match value {
+//                                 value: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8(match value {
 //                                     Some(value) => {
 //                                         let mut acc = vec![];
 //                                         for element in value {
 //                                             match element {
 //                                                 Ok(value) => {
-//                                                     acc.push(postgresql_crud::JsonStdPrimitiveI8(value));
+//                                                     acc.push(postgresql_crud::old_json_types::StdPrimitiveI8(value));
 //                                                 }
 //                                                 Err(error) => {
 //                                                     return Err(serde::de::Error::custom(error));
@@ -1650,13 +1650,13 @@ fn test_dd() {
 //                     std_vec_vec_std_option_option_std_primitive_i8: match __field4 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8({
+//                                 value: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8({
 //                                     let mut acc = vec![];
 //                                     for element in value {
 //                                         match element {
 //                                             Ok(value) => {
 //                                                 acc.push(match value {
-//                                                     Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value)),
+//                                                     Some(value) => Some(postgresql_crud::old_json_types::StdPrimitiveI8(value)),
 //                                                     None => None,
 //                                                 });
 //                                             }
@@ -1677,14 +1677,14 @@ fn test_dd() {
 //                     std_option_option_std_vec_vec_std_option_option_std_primitive_i8: match __field5 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(match value {
+//                                 value: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(match value {
 //                                     Some(value) => {
 //                                         let mut acc = vec![];
 //                                         for element in value {
 //                                             match element {
 //                                                 Ok(value) => {
 //                                                     acc.push(match value {
-//                                                         Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value)),
+//                                                         Some(value) => Some(postgresql_crud::old_json_types::StdPrimitiveI8(value)),
 //                                                         None => None
 //                                                     });
 //                                                 }
@@ -1902,7 +1902,7 @@ fn test_dd() {
 //                 serde::__private::Ok(SomethingOptionsToRead {
 //                     std_primitive_i8: match __field0 {
 //                         Some(value) => match value {
-//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdPrimitiveI8(value)) }),
+//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::old_json_types::StdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdPrimitiveI8(value)) }),
 //                             Err(error) => {
 //                                 return Err(serde::de::Error::custom(error));
 //                             }
@@ -1911,8 +1911,8 @@ fn test_dd() {
 //                     },
 //                     std_option_option_std_primitive_i8: match __field1 {
 //                         Some(value) => match value {
-//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdPrimitiveI8(match value {
-//                                 Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value)),
+//                             Ok(value) => Some(postgresql_crud::Value { value: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8(match value {
+//                                 Some(value) => Some(postgresql_crud::old_json_types::StdPrimitiveI8(value)),
 //                                 None => None,
 //                             })) }),
 //                             Err(error) => {
@@ -1924,19 +1924,19 @@ fn test_dd() {
 //                     std_vec_vec_std_primitive_i8: match __field2 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdVecVecStdPrimitiveI8OptionsToRead({
+//                                 value: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8OptionsToRead({
 //                                     let mut acc = vec![];
 //                                     for element in value {
 //                                         match element {
 //                                             Ok(value) => {
-//                                                 acc.push(postgresql_crud::JsonStdPrimitiveI8(value));
+//                                                 acc.push(postgresql_crud::old_json_types::StdPrimitiveI8(value));
 //                                             }
 //                                             Err(error) => {
 //                                                 return Err(serde::de::Error::custom(error));
 //                                             }
 //                                         }
 //                                     }
-//                                     postgresql_crud::JsonStdVecVecStdPrimitiveI8(acc)
+//                                     postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8(acc)
 //                                 }),
 //                             }),
 //                             Err(error) => {
@@ -1948,13 +1948,13 @@ fn test_dd() {
 //                     std_option_option_std_vec_vec_std_primitive_i8: match __field3 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8(match value {
+//                                 value: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8(match value {
 //                                     Some(value) => {
 //                                         let mut acc = vec![];
 //                                         for element in value {
 //                                             match element {
 //                                                 Ok(value) => {
-//                                                     acc.push(postgresql_crud::JsonStdPrimitiveI8(value));
+//                                                     acc.push(postgresql_crud::old_json_types::StdPrimitiveI8(value));
 //                                                 }
 //                                                 Err(error) => {
 //                                                     return Err(serde::de::Error::custom(error));
@@ -1975,13 +1975,13 @@ fn test_dd() {
 //                     std_vec_vec_std_option_option_std_primitive_i8: match __field4 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8({
+//                                 value: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8({
 //                                     let mut acc = vec![];
 //                                     for element in value {
 //                                         match element {
 //                                             Ok(value) => {
 //                                                 acc.push(match value {
-//                                                     Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value)),
+//                                                     Some(value) => Some(postgresql_crud::old_json_types::StdPrimitiveI8(value)),
 //                                                     None => None
 //                                                 });
 //                                             }
@@ -2002,14 +2002,14 @@ fn test_dd() {
 //                     std_option_option_std_vec_vec_std_option_option_std_primitive_i8: match __field5 {
 //                         Some(value) => match value {
 //                             Ok(value) => Some(postgresql_crud::Value {
-//                                 value: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(match value {
+//                                 value: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8OptionsToRead(postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(match value {
 //                                     Some(value) => {
 //                                         let mut acc = vec![];
 //                                         for element in value {
 //                                             match element {
 //                                                 Ok(value) => {
 //                                                     acc.push(match value {
-//                                                         Some(value) => Some(postgresql_crud::JsonStdPrimitiveI8(value)),
+//                                                         Some(value) => Some(postgresql_crud::old_json_types::StdPrimitiveI8(value)),
 //                                                         None => None
 //                                                     });
 //                                                 }
@@ -2222,29 +2222,29 @@ fn test_dd() {
 //     #[serde(rename(serialize = "std_option_option_generic", deserialize = "std_option_option_generic"))]
 //     StdOptionOptionGeneric(postgresql_crud::Value<std::option::Option<MouseOptionsToUpdate>>),
 //     #[serde(rename(serialize = "std_vec_vec_generic_with_id", deserialize = "std_vec_vec_generic_with_id"))]
-//     StdVecVecGenericWithId(postgresql_crud::Value<postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>),
+//     StdVecVecGenericWithId(postgresql_crud::Value<postgresql_crud::old_json_types::ArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>),
 //     #[serde(rename(serialize = "std_option_option_std_vec_vec_generic_with_id", deserialize = "std_option_option_std_vec_vec_generic_with_id"))]
-//     StdOptionOptionStdVecVecGenericWithId(postgresql_crud::Value<std::option::Option<postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>>),
+//     StdOptionOptionStdVecVecGenericWithId(postgresql_crud::Value<std::option::Option<postgresql_crud::old_json_types::ArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>>),
 // }
 // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingOptionToUpdate {
 //     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<SomethingOptionToUpdate> {
 //         vec![
-//             SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value { value: <postgresql_crud::JsonStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 }),
+//             SomethingOptionToUpdate::StdPrimitiveI8(postgresql_crud::Value { value: <postgresql_crud::old_json_types::StdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 }),
 //             SomethingOptionToUpdate::StdOptionOptionStdPrimitiveI8(postgresql_crud::Value {
-//                 value: match <postgresql_crud::JsonStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
+//                 value: match <postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
 //                     Some(value) => Some(value.0),
 //                     None => None,
 //                 },
 //             }),
-//             SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(postgresql_crud::Value { value: <postgresql_crud::JsonStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0.into_iter().map(|element| element.0).collect() }),
+//             SomethingOptionToUpdate::StdVecVecStdPrimitiveI8(postgresql_crud::Value { value: <postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0.into_iter().map(|element| element.0).collect() }),
 //             SomethingOptionToUpdate::StdOptionOptionStdVecVecStdPrimitiveI8(postgresql_crud::Value {
-//                 value: match <postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
+//                 value: match <postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
 //                     Some(value) => Some(value.into_iter().map(|element| element.0).collect()),
 //                     None => None,
 //                 },
 //             }),
 //             SomethingOptionToUpdate::StdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::Value {
-//                 value: <postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+//                 value: <postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
 //                     .0
 //                     .into_iter()
 //                     .map(|element| match element {
@@ -2254,7 +2254,7 @@ fn test_dd() {
 //                     .collect(),
 //             }),
 //             SomethingOptionToUpdate::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(postgresql_crud::Value {
-//                 value: match <postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
+//                 value: match <postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 {
 //                     Some(value) => Some(
 //                         value
 //                             .into_iter()
@@ -2269,8 +2269,8 @@ fn test_dd() {
 //             }),
 //             SomethingOptionToUpdate::Generic(postgresql_crud::Value { value: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() }),
 //             SomethingOptionToUpdate::StdOptionOptionGeneric(postgresql_crud::Value { value: Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()) }),
-//             SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value { value: postgresql_crud::JsonArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] } }),
-//             SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(postgresql_crud::Value { value: Some(postgresql_crud::JsonArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] }) }),
+//             SomethingOptionToUpdate::StdVecVecGenericWithId(postgresql_crud::Value { value: postgresql_crud::old_json_types::ArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] } }),
+//             SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(postgresql_crud::Value { value: Some(postgresql_crud::old_json_types::ArrayChange { create: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], update: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()], delete: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()] }) }),
 //         ]
 //     }
 // }
@@ -2307,7 +2307,7 @@ fn test_dd() {
 //     },
 //     StdVecVecGenericWithIdDoggieNotUniqueId {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         std_vec_vec_generic_with_id_doggie_not_unique_id: postgresql_crud::JsonUuid,
+//         std_vec_vec_generic_with_id_doggie_not_unique_id: postgresql_crud::old_json_types::Uuid,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     StdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
@@ -2327,7 +2327,7 @@ fn test_dd() {
 //     },
 //     StdOptionOptionStdVecVecGenericWithIdDoggieNotUniqueId {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: postgresql_crud::JsonUuid,
+//         std_option_option_std_vec_vec_generic_with_id_doggie_not_unique_id: postgresql_crud::old_json_types::Uuid,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     StdOptionOptionStdVecVecGenericWithIdDoggieTryGenerateJsonArrayElementUpdateBindIncrements {
@@ -2528,7 +2528,7 @@ fn test_dd() {
 //                 },
 //                 SomethingOptionToUpdate::StdVecVecGenericWithId(value) => {
 //                     {
-//                         let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+//                         let mut ids: std::vec::Vec<&postgresql_crud::old_json_types::Uuid> = vec![];
 //                         for element in &value.value.update {
 //                             if ids.contains(&&element.id) {
 //                                 return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::StdVecVecGenericWithIdDoggieNotUniqueId { std_vec_vec_generic_with_id_doggie_not_unique_id: element.id, code_occurence: error_occurence_lib::code_occurence!() });
@@ -2547,7 +2547,7 @@ fn test_dd() {
 //                     let current_jsonb_set_target = format!("{jsonb_set_target}->'std_vec_vec_generic_with_id'");
 //                     let mut update_query_part_acc = std::string::String::default();
 //                     for (index, element) in &value.value.update.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-//                         match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
+//                         match postgresql_crud::old_json_types::ArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
 //                             Ok(value) => {
 //                                 if let Some(value) = value {
 //                                     update_query_part_acc.push_str(&value);
@@ -2563,7 +2563,7 @@ fn test_dd() {
 //                             std::string::String::default()
 //                         } else {
 //                             let mut delete_query_part_acc = std::string::String::default();
-//                             for (index, element) in &value.value.delete.iter().enumerate().collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>() {
+//                             for (index, element) in &value.value.delete.iter().enumerate().collect::<std::vec::Vec<(usize, &postgresql_crud::old_json_types::Uuid)>>() {
 //                                 match increment.checked_add(1) {
 //                                     Some(value) => {
 //                                         *increment = value;
@@ -2580,7 +2580,7 @@ fn test_dd() {
 //                     };
 //                     let mut create_query_part_acc = std::string::String::default();
 //                     for (index, element) in &value.value.create.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieToCreate)>>() {
-//                         match postgresql_crud::JsonArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
+//                         match postgresql_crud::old_json_types::ArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
 //                             Ok(value) => {
 //                                 if let Some(value) = value {
 //                                     create_query_part_acc.push_str(&format!("{value},"));
@@ -2599,7 +2599,7 @@ fn test_dd() {
 //                 }
 //                 SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(value) => {
 //                     {
-//                         let mut ids: std::vec::Vec<&postgresql_crud::JsonUuid> = vec![];
+//                         let mut ids: std::vec::Vec<&postgresql_crud::old_json_types::Uuid> = vec![];
 //                         if let Some(value) = &value.value {
 //                             for element in &value.update {
 //                                 if ids.contains(&&element.id) {
@@ -2622,7 +2622,7 @@ fn test_dd() {
 //                         Some(value) => {
 //                             let mut update_query_part_acc = std::string::String::default();
 //                             for (index, element) in &value.update.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieOptionsToUpdate)>>() {
-//                                 match postgresql_crud::JsonArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
+//                                 match postgresql_crud::old_json_types::ArrayElementUpdateBindQuery::try_generate_update_bind_increments(*element, &jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
 //                                     Ok(value) => {
 //                                         if let Some(value) = value {
 //                                             update_query_part_acc.push_str(&value);
@@ -2638,7 +2638,7 @@ fn test_dd() {
 //                                     std::string::String::default()
 //                                 } else {
 //                                     let mut delete_query_part_acc = std::string::String::default();
-//                                     for (index, element) in &value.delete.iter().enumerate().collect::<std::vec::Vec<(usize, &postgresql_crud::JsonUuid)>>() {
+//                                     for (index, element) in &value.delete.iter().enumerate().collect::<std::vec::Vec<(usize, &postgresql_crud::old_json_types::Uuid)>>() {
 //                                         match increment.checked_add(1) {
 //                                             Some(value) => {
 //                                                 *increment = value;
@@ -2655,7 +2655,7 @@ fn test_dd() {
 //                             };
 //                             let mut create_query_part_acc = std::string::String::default();
 //                             for (index, element) in &value.create.iter().enumerate().collect::<std::vec::Vec<(usize, &DoggieToCreate)>>() {
-//                                 match postgresql_crud::JsonArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
+//                                 match postgresql_crud::old_json_types::ArrayElementCreateBindQuery::try_generate_create_bind_increments(*element, increment) {
 //                                     Ok(value) => {
 //                                         if let Some(value) = value {
 //                                             create_query_part_acc.push_str(&format!("{value},"));
@@ -2722,29 +2722,29 @@ fn test_dd() {
 //                 },
 //                 SomethingOptionToUpdate::StdVecVecGenericWithId(value) => {
 //                     for element in &value.value.update {
-//                         query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(element.clone(), query);
+//                         query = postgresql_crud::old_json_types::ArrayElementUpdateBindQuery::bind_update_value_to_query(element.clone(), query);
 //                     }
 //                     for element in &value.value.delete {
 //                         query = query.bind(element.0.to_string());
 //                     }
 //                     for element in &value.value.create {
-//                         query = postgresql_crud::JsonArrayElementCreateBindQuery::bind_create_value_to_query(element.clone(), query);
+//                         query = postgresql_crud::old_json_types::ArrayElementCreateBindQuery::bind_create_value_to_query(element.clone(), query);
 //                     }
 //                 }
 //                 SomethingOptionToUpdate::StdOptionOptionStdVecVecGenericWithId(value) => match &value.value {
 //                     Some(value) => {
 //                         for element in &value.update {
-//                             query = postgresql_crud::JsonArrayElementUpdateBindQuery::bind_update_value_to_query(element.clone(), query);
+//                             query = postgresql_crud::old_json_types::ArrayElementUpdateBindQuery::bind_update_value_to_query(element.clone(), query);
 //                         }
 //                         for element in &value.delete {
 //                             query = query.bind(element.0.to_string());
 //                         }
 //                         for element in &value.create {
-//                             query = postgresql_crud::JsonArrayElementCreateBindQuery::bind_create_value_to_query(element.clone(), query);
+//                             query = postgresql_crud::old_json_types::ArrayElementCreateBindQuery::bind_create_value_to_query(element.clone(), query);
 //                         }
 //                     }
 //                     None => {
-//                         query = query.bind(sqlx::types::Json(None::<std::option::Option<postgresql_crud::JsonArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>>));
+//                         query = query.bind(sqlx::types::Json(None::<std::option::Option<postgresql_crud::old_json_types::ArrayChange<DoggieToCreate, DoggieOptionsToUpdate>>>));
 //                     }
 //                 },
 //             }
@@ -2764,16 +2764,16 @@ fn test_dd() {
 //     schemars :: JsonSchema,
 // )]
 // pub struct SomethingToCreate {
-//     pub std_primitive_i8: postgresql_crud::JsonStdPrimitiveI8,
-//     pub std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdPrimitiveI8,
-//     pub std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdVecVecStdPrimitiveI8,
-//     pub std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdPrimitiveI8,
-//     pub std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdVecVecStdOptionOptionStdPrimitiveI8,
-//     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::JsonStdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
-//     pub generic: postgresql_crud::JsonGeneric<CatToCreate>,
-//     pub std_option_option_generic: postgresql_crud::JsonStdOptionOptionGeneric<MouseToCreate>,
-//     pub std_vec_vec_generic_with_id: postgresql_crud::JsonStdVecVecGenericWithId<DoggieToCreate>,
-//     pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::JsonStdOptionOptionStdVecVecGenericWithId<DoggieToCreate>,
+//     pub std_primitive_i8: postgresql_crud::old_json_types::StdPrimitiveI8,
+//     pub std_option_option_std_primitive_i8: postgresql_crud::old_json_types::StdOptionOptionStdPrimitiveI8,
+//     pub std_vec_vec_std_primitive_i8: postgresql_crud::old_json_types::StdVecVecStdPrimitiveI8,
+//     pub std_option_option_std_vec_vec_std_primitive_i8: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdPrimitiveI8,
+//     pub std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::old_json_types::StdVecVecStdOptionOptionStdPrimitiveI8,
+//     pub std_option_option_std_vec_vec_std_option_option_std_primitive_i8: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+//     pub generic: postgresql_crud::old_json_types::Generic<CatToCreate>,
+//     pub std_option_option_generic: postgresql_crud::old_json_types::StdOptionOptionGeneric<MouseToCreate>,
+//     pub std_vec_vec_generic_with_id: postgresql_crud::old_json_types::StdVecVecGenericWithId<DoggieToCreate>,
+//     pub std_option_option_std_vec_vec_generic_with_id: postgresql_crud::old_json_types::StdOptionOptionStdVecVecGenericWithId<DoggieToCreate>,
 // }
 // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingToCreate {
 //     #[inline]
@@ -3285,12 +3285,12 @@ fn test_dd() {
 // }
 // impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionToUpdate {
 //     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<DoggieOptionToUpdate> {
-//         vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value { value: <postgresql_crud::JsonStdPrimitiveI16 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 })]
+//         vec![DoggieOptionToUpdate::StdPrimitiveI16(postgresql_crud::Value { value: <postgresql_crud::old_json_types::StdPrimitiveI16 as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().0 })]
 //     }
 // }
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 // pub struct DoggieOptionsToUpdate {
-//     pub id: postgresql_crud::JsonUuid,
+//     pub id: postgresql_crud::old_json_types::Uuid,
 //     pub fields: std::vec::Vec<DoggieOptionToUpdate>,
 // }
 // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieOptionsToUpdate {
@@ -3408,7 +3408,7 @@ fn test_dd() {
 //     schemars :: JsonSchema,
 // )]
 // pub struct DoggieToCreate {
-//     pub std_primitive_i16: postgresql_crud::JsonStdPrimitiveI16,
+//     pub std_primitive_i16: postgresql_crud::old_json_types::StdPrimitiveI16,
 // }
 // impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for DoggieToCreate {
 //     #[inline]
@@ -3531,8 +3531,8 @@ fn test_dd() {
 // //         }
 // //     }
 // // }
-// // impl std::convert::From<postgresql_crud::JsonStdOptionOptionGeneric<Cat>> for std::option::Option<CatOptionsToRead> {
-// //     fn from(value: postgresql_crud::JsonStdOptionOptionGeneric<Cat>) -> Self {
+// // impl std::convert::From<postgresql_crud::old_json_types::StdOptionOptionGeneric<Cat>> for std::option::Option<CatOptionsToRead> {
+// //     fn from(value: postgresql_crud::old_json_types::StdOptionOptionGeneric<Cat>) -> Self {
 // //         // match 
 // //         todo!()
 // //         // Self {
