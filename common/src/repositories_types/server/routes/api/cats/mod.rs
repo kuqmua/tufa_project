@@ -4842,38 +4842,6 @@ fn test_dd() {
 
 ////////////////////////////////////////
 
-// impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Something {
-//     #[inline]
-//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         // Self(::core::default::Default::default())
-//         todo!()
-//     }
-// }
-// pub type StdPrimitiveI8ToCreate = StdPrimitiveI8;
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Default,
-//     serde :: Serialize,
-//     serde ::
-// Deserialize,
-//     utoipa :: ToSchema,
-//     schemars :: JsonSchema,
-// )]
-// pub struct StdPrimitiveI8FieldReader {}
-// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI8FieldReader {
-//     #[inline]
-//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         ::core::default::Default::default()
-//     }
-// }
-// pub type StdPrimitiveI8OptionsToRead = StdPrimitiveI8;
-// pub type StdPrimitiveI8OptionToUpdate = StdPrimitiveI8;
-// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-// pub enum StdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
-//     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-// }
 impl postgresql_crud::PostgresqlJsonType for Something {
     type ToCreate<'a> = SomethingToCreate;
     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
@@ -4922,18 +4890,6 @@ impl postgresql_crud::PostgresqlJsonType for Something {
     query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         // query = query.bind(sqlx::types::Json(option_to_update.0));
         // query
-        todo!()
-    }
-}
-
-
-
-///////////
-//todo need to implement
-impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingFieldReader {
-    #[inline]
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        // Self(::core::default::Default::default())
         todo!()
     }
 }
