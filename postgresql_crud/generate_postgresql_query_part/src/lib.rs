@@ -2328,7 +2328,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 quote::quote!{0}
             };
             let maybe_pagination_start_end_initialization_token_stream = if contains_id {
-                proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream()
+                proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&naming_conventions::SelfSnakeCase)
             }
             else {
                 proc_macro2::TokenStream::new()

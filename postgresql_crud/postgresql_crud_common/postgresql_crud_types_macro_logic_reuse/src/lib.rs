@@ -896,7 +896,7 @@ fn impl_generate_postgresql_query_part_field_to_read_for_ident_token_stream(
 }
 //todo refactor it to pagination struct with custom Deserialize and try_new check
 fn postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(format_handle_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
-    let pagination_start_end_initialization_token_stream = proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream();
+    let pagination_start_end_initialization_token_stream = proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&naming_conventions::SelfSnakeCase);
     quote::quote! {
         #pagination_start_end_initialization_token_stream
         format!(#format_handle_token_stream)
@@ -1181,7 +1181,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath |
                 StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath |
                 StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath |
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{{ pagination: Pagination }},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{{ pagination: crate::generate_postgresql_query_part::Pagination }},
             };
             quote::quote!{
                 #[derive(
@@ -1285,8 +1285,8 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 json_create_bind_value_to_query_token_stream
             )
         };
+        let field_reader_upper_camel_case = naming_conventions::FieldReaderUpperCamelCase;
         let field_reader_token_stream = {
-            let field_reader_upper_camel_case = naming_conventions::FieldReaderUpperCamelCase;
             quote::quote!{
                 type #field_reader_upper_camel_case<'a> = #ident_field_reader_upper_camel_case;
             }
@@ -1303,8 +1303,9 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             };
             //todo maybe rename later
             let generate_postgresql_query_part_field_to_read_token_stream = {
+                let field_reader_snake_case = naming_conventions::FieldReaderSnakeCase;
                 let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &proc_macro2::TokenStream| {
-                    let pagination_start_end_initialization_token_stream = proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream();
+                    let pagination_start_end_initialization_token_stream = proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&field_reader_snake_case);
                     quote::quote! {
                         #pagination_start_end_initialization_token_stream
                         format!(#format_handle_token_stream)
@@ -1333,7 +1334,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 };
                 quote::quote!{
                     fn generate_postgresql_query_part_field_to_read(
-                        options_to_read: &Self::#options_to_read_upper_camel_case<'_>,
+                        #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
                         field_ident: &std::primitive::str,
                         column_name_and_maybe_field_getter: &std::primitive::str,
                         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
@@ -1430,7 +1431,6 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
         #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
     };
-    // println!("{generated}");
     generated.into()
 }
 

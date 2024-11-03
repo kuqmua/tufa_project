@@ -2114,7 +2114,7 @@ pub trait PostgresqlJsonType {
     // impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for JsonStdPrimitiveI8OptionsToRead
     // impl GeneratePostgresqlQueryPartFieldToRead for JsonStdPrimitiveI8FieldReader
     fn generate_postgresql_query_part_field_to_read(
-        options_to_read: &Self::OptionsToRead<'_>,
+        field_reader: &Self::FieldReader<'_>,
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
         //todo remove this coz its used properly now
@@ -2252,7 +2252,7 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for JsonStdPrimit
     type FieldReader<'a> = FJsonStdPrimitiveI8FieldReader;
     type OptionsToRead<'a> = FJsonStdPrimitiveI8OptionsToRead;
     fn generate_postgresql_query_part_field_to_read(
-        options_to_read: &Self::OptionsToRead<'_>,
+        read_reader: &Self::FieldReader<'_>,
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str

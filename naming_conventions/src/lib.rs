@@ -376,7 +376,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["column", "name", "and", "maybe", "field", "getter", "field", "ident"],
     ["column", "name", "and", "maybe", "field", "getter", "for", "error", "message", "field", "ident"],
     ["generate", "not", "unique", "field"],
-    ["all", "fields", "are", "none"]
+    ["all", "fields", "are", "none"],
+    ["self"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
