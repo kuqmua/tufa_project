@@ -301,11 +301,11 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::old_json_types::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub generic: GenericDoggie,
-    pub std_option_option_generic: StdOptionOptionGenericDoggie,
+    // pub generic: GenericDoggie,
+    // pub std_option_option_generic: StdOptionOptionGenericDoggie,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,
-    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie
+    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,
+    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
@@ -356,73 +356,73 @@ pub struct Something {
 //     // StdOptionOptionStdVecVecGenericWithId(StdOptionOptionStdVecVecGenericWithIdDoggieFieldReader)
 // }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Doggie {
-    pub std_primitive_i8: postgresql_crud::old_json_types::StdPrimitiveI8,
-    pub std_primitive_i16: postgresql_crud::old_json_types::StdPrimitiveI16,
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Doggie {
+//     pub std_primitive_i8: postgresql_crud::old_json_types::StdPrimitiveI8,
+//     pub std_primitive_i16: postgresql_crud::old_json_types::StdPrimitiveI16,
 
-    pub generic: GenericCat,
-    pub std_option_option_generic: StdOptionOptionGenericCat,
+//     pub generic: GenericCat,
+//     pub std_option_option_generic: StdOptionOptionGenericCat,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
-    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
-}
+//     pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
+//     pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
+// }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Cat {
-    // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_i32: postgresql_crud::old_json_types::StdPrimitiveI32,
-    pub std_primitive_i64: postgresql_crud::old_json_types::StdPrimitiveI64,
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Cat {
+//     // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_i32: postgresql_crud::old_json_types::StdPrimitiveI32,
+//     pub std_primitive_i64: postgresql_crud::old_json_types::StdPrimitiveI64,
 
-    pub generic: GenericBird,
-    pub std_option_option_generic: StdOptionOptionGenericBird,
+//     pub generic: GenericBird,
+//     pub std_option_option_generic: StdOptionOptionGenericBird,
 
-    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdBird,
-    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdBird,
-}
+//     pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdBird,
+//     pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdBird,
+// }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Bird {
-    // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
-    pub std_primitive_u8: postgresql_crud::old_json_types::StdPrimitiveU8,
-    pub std_primitive_u16: postgresql_crud::old_json_types::StdPrimitiveU16,
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Bird {
+//     // pub id: postgresql_crud::old_json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
+//     pub std_primitive_u8: postgresql_crud::old_json_types::StdPrimitiveU8,
+//     pub std_primitive_u16: postgresql_crud::old_json_types::StdPrimitiveU16,
+// }
 
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub enum CatFieldToRead {
@@ -4837,3 +4837,103 @@ fn test_dd() {
 // //   ) 
 // // where 
 // //   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = 1 returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+
+
+
+////////////////////////////////////////
+
+// impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Something {
+//     #[inline]
+//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         // Self(::core::default::Default::default())
+//         todo!()
+//     }
+// }
+// pub type StdPrimitiveI8ToCreate = StdPrimitiveI8;
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Default,
+//     serde :: Serialize,
+//     serde ::
+// Deserialize,
+//     utoipa :: ToSchema,
+//     schemars :: JsonSchema,
+// )]
+// pub struct StdPrimitiveI8FieldReader {}
+// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI8FieldReader {
+//     #[inline]
+//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         ::core::default::Default::default()
+//     }
+// }
+// pub type StdPrimitiveI8OptionsToRead = StdPrimitiveI8;
+// pub type StdPrimitiveI8OptionToUpdate = StdPrimitiveI8;
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum StdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
+//     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+// }
+impl postgresql_crud::PostgresqlJsonType for Something {
+    type ToCreate<'a> = SomethingToCreate;
+    fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        // match increment.checked_add(1) {
+        //     Some(incr) => {
+        //         *increment = incr;
+        //         Ok(format!("${increment}"))
+        //     }
+        //     None => Err(crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        // }
+        todo!()
+    }
+    fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, 
+    // mut 
+    query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        // query = query.bind(sqlx::types::Json(self_to_create.0));
+        // query
+        todo!()
+    }
+    type FieldReader<'a> = SomethingFieldReader;
+    type OptionsToRead<'a> = SomethingOptionsToRead;
+    fn generate_postgresql_query_part_field_to_read(field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+        // format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+        todo!()
+    }
+    type OptionToUpdate<'a> = SomethingOptionToUpdate;
+    type OptionToUpdateTryGenerateBindIncrementsErrorNamed = SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+    fn try_generate_bind_increments(
+        option_to_update: &Self::OptionToUpdate<'_>,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        // match increment.checked_add(1) {
+        //     Some(value) => {
+        //         *increment = value;
+        //         Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+        //     }
+        //     None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        // }
+        todo!()
+    }
+    fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, 
+    // mut 
+    query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        // query = query.bind(sqlx::types::Json(option_to_update.0));
+        // query
+        todo!()
+    }
+}
+
+
+
+///////////
+//todo need to implement
+impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SomethingFieldReader {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        // Self(::core::default::Default::default())
+        todo!()
+    }
+}

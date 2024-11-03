@@ -190,7 +190,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }
         };
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
             pub struct #tokens_field_reader_upper_camel_case_token_stream #content_token_stream
             #impl_pub_fn_try_new_token_stream
         }
@@ -279,7 +279,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             proc_macro2::TokenStream::new()
         };
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_serde_deserialize_token_stream utoipa::ToSchema)]
+            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, #maybe_impl_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
             pub struct #token_options_to_read_token_stream #content_token_stream
         }
     };
@@ -1545,7 +1545,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     quote::quote!{
-                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                         pub enum #ident_option_to_update_origin_upper_camel_case {
                             #(#variants_token_stream),*
                         }
@@ -1603,7 +1603,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 );
                 let ident_options_to_update_token_stream = {
                     quote::quote!{
-                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                         pub struct #ident_options_to_update_upper_camel_case {
                             pub id: #postgresql_crud_uuid_option_to_update_token_stream,
                             pub fields: #ident_option_to_update_upper_camel_case
@@ -1707,7 +1707,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             proc_macro2::TokenStream::new()
         };
         quote::quote!{
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_deserialize_token_stream utoipa::ToSchema)]
+            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, #maybe_impl_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
             pub struct #struct_ident_token_stream(#maybe_pub_token_stream #self_type_content_token_stream);
         }
     };
@@ -2866,7 +2866,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let ident_json_array_change_token_stream = {
                     let serde_skip_serializing_if_vec_is_empty_token_stream = quote::quote!{#[serde(skip_serializing_if = "Vec::is_empty")]};
                     quote::quote!{
-                        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema)]
+                        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
                         pub struct #struct_ident_token_stream {
                             #serde_skip_serializing_if_vec_is_empty_token_stream
                             create: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
@@ -4532,6 +4532,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #std_option_option_std_vec_vec_generic_with_id_ident_token_stream
         }
     };
+    
     let generated = quote::quote! {
         #common_token_stream
 

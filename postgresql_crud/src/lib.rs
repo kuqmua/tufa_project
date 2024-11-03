@@ -570,3 +570,5 @@ pub use postgresql_crud_common::generate_postgresql_query_part::wrap_into_jsonb_
 
 pub use postgresql_crud_common::json_types;
 pub use postgresql_crud_common::old_json_types;
+
+pub use postgresql_crud_common::generate_postgresql_query_part::PostgresqlJsonType;
