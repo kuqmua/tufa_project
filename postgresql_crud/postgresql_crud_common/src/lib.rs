@@ -1,5 +1,4 @@
 pub mod json_types;
-pub mod old_json_types;
 pub mod generate_postgresql_query_part;
 pub mod value;
 
