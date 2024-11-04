@@ -543,9 +543,6 @@ pub use postgresql_crud_common::generate_postgresql_query_part::JsonCreateTryGen
 pub use postgresql_crud_common::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamedWithSerializeDeserialize;
 pub use postgresql_crud_common::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 
-
-pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGenericFields;
-
 // pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGeneric;
 // pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionGeneric;
 
