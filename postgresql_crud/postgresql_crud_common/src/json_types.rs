@@ -957,3 +957,189 @@ pub struct StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool(pub std::opti
     postgresql_crud_types_macro_logic_reuse::GenerateImplPostgresqlJsonTypeStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
 )]
 pub struct StdOptionOptionStdVecVecStdOptionOptionStdStringString(pub std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>);
+
+
+
+///////////////////
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathToCreate,
+    postgresql_crud_types_macro_logic_reuse::GenerateFullTypePathFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePathOptionsToRead,
+    postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartFieldToReadForIdentFieldReader,
+    postgresql_crud_types_macro_logic_reuse::GenerateImplGeneratePostgresqlQueryPartToUpdateForIdentOptionToUpdate,
+)]
+pub struct Uuid(pub uuid::Uuid);
+impl schemars::JsonSchema for Uuid {
+    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("Uuid")
+    }
+    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::Uuid")
+    }
+    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+        {
+            let mut schema = generator.subschema_for::<std::string::String>();
+            schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
+            schema
+        }
+    }
+}
+impl error_occurence_lib::ToStdStringString for Uuid {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct UuidToCreate(pub uuid::Uuid);
+impl schemars::JsonSchema for UuidToCreate {
+    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("UuidToCreate")
+    }
+    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidToCreate")
+    }
+    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+        {
+            let mut schema = generator.subschema_for::<std::string::String>();
+            schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
+            schema
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct UuidOptionsToRead(pub uuid::Uuid);
+impl schemars::JsonSchema for UuidOptionsToRead {
+    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("UuidOptionsToRead")
+    }
+    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidOptionsToRead")
+    }
+    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+        {
+            let mut schema = generator.subschema_for::<std::string::String>();
+            schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
+            schema
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct UuidOptionToUpdate(pub uuid::Uuid);
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidOptionToUpdate {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        //maybe compile time uuid gen? not need to gen on runtime. if all different on compile time than its enough 
+        Self(uuid::Uuid::new_v4())
+    }
+}
+impl schemars::JsonSchema for UuidOptionToUpdate {
+    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("UuidOptionToUpdate")
+    }
+    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidOptionToUpdate")
+    }
+    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+        {
+            let mut schema = generator.subschema_for::<std::string::String>();
+            schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
+            schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
+            schema
+        }
+    }
+}
+///////////////////
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Uuid {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(::core::default::Default::default())
+    }
+}
+// pub type UuidToCreate = Uuid;
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Default,
+//     serde :: Serialize,
+//     serde ::
+// Deserialize,
+//     utoipa :: ToSchema,
+//     schemars :: JsonSchema,
+// )]
+// pub struct StdPrimitiveI8FieldReader {}
+// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI8FieldReader {
+//     #[inline]
+//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         ::core::default::Default::default()
+//     }
+// }
+// pub type StdPrimitiveI8OptionsToRead = StdPrimitiveI8;
+// pub type StdPrimitiveI8OptionToUpdate = StdPrimitiveI8;
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum StdPrimitiveI8OptionToUpdateTryGenerateBindIncrementsErrorNamed {
+//     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+// }
+impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
+    type ToCreate<'a> = UuidToCreate;
+    fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                Ok(format!("${increment}"))
+            }
+            None => Err(crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(self_to_create.0));
+        query
+    }
+    type FieldReader<'a> = UuidFieldReader;
+    type OptionsToRead<'a> = UuidOptionsToRead;
+    fn generate_postgresql_query_part_field_to_read(field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+    }
+    type OptionToUpdate<'a> = UuidOptionToUpdate;
+    type OptionToUpdateTryGenerateBindIncrementsErrorNamed = UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+    fn try_generate_bind_increments(
+        option_to_update: &Self::OptionToUpdate<'_>,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+            }
+            None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn bind_value_to_query<'a>(option_to_update: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(option_to_update.0));
+        query
+    }
+}
