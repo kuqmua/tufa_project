@@ -4921,6 +4921,63 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
         }
     }
 }
+//here4
+impl SomethingToCreateOrigin {
+    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        let mut increments = std::string::String::from("");
+        match <postgresql_crud::json_types::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        match <postgresql_crud::json_types::StdOptionOptionStdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.std_option_option_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_option_option_std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        match <postgresql_crud::json_types::StdVecVecStdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.std_vec_vec_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_vec_vec_std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        match <postgresql_crud::json_types::StdOptionOptionStdVecVecStdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.std_option_option_std_vec_vec_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_option_option_std_vec_vec_std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        match <postgresql_crud::json_types::StdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.std_vec_vec_std_option_option_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_vec_vec_std_option_option_std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        match <postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.std_option_option_std_vec_vec_std_option_option_std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_option_option_std_vec_vec_std_option_option_std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        let _ = increments.pop();
+        let _ = increments.pop();
+        Ok(format!("{increments}"))
+    }
+}
 impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for SomethingToCreateOrigin {
     //here2
     // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
@@ -5061,6 +5118,15 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
         Self(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
+//here4
+impl SomethingToCreateWithGeneratedId {
+    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        match self.0.json_create_try_generate_bind_increments(increment) {
+            Ok(value) => Ok(format!("jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{value}")),
+            Err(error) => Err(error),
+        }
+    }
+}
 impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for SomethingToCreateWithGeneratedId {
     //here2
     // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
@@ -5072,6 +5138,15 @@ impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for SomethingToCreateWithGener
     fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = self.0.json_create_bind_value_to_query(query);
         query
+    }
+}
+//here4
+impl SomethingToCreateWithoutGeneratedId {
+    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        match self.0.json_create_try_generate_bind_increments(increment) {
+            Ok(value) => Ok(value),
+            Err(error) => Err(error),
+        }
     }
 }
 impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for SomethingToCreateWithoutGeneratedId {
@@ -6742,8 +6817,8 @@ impl postgresql_crud::PostgresqlJsonType for GenericSomething {
     type ToCreate<'a> = GenericSomethingToCreate;
     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
         //here3
-        // postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
-        todo!()
+        self_to_create.json_create_try_generate_bind_increments(increment)
+        // todo!()
     }
     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
@@ -6799,6 +6874,18 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
         Self(Some(
             postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         ))
+    }
+}
+//here4
+impl StdOptionOptionGenericSomethingToCreate {
+    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        match &self.0 {
+            Some(value) => match value.json_create_try_generate_bind_increments(increment) {
+                Ok(value) => Ok(value),
+                Err(error) => Err(error),
+            },
+            None => Ok(std::string::String::from("null")),
+        }
     }
 }
 impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for StdOptionOptionGenericSomethingToCreate {
@@ -7223,8 +7310,8 @@ impl postgresql_crud::PostgresqlJsonType for StdOptionOptionGenericSomething {
     type ToCreate<'a> = StdOptionOptionGenericSomethingToCreate;
     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
         //here3
-        // postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
-        todo!()
+        self_to_create.json_create_try_generate_bind_increments(increment)
+        // todo!()
     }
     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
@@ -7279,6 +7366,24 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
         Self(vec![
             postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         ])
+    }
+}
+//here4
+impl StdVecVecGenericWithIdSomethingToCreate {
+    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        for element in &self.0 {
+            match element.json_create_try_generate_bind_increments(increment) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value},"));
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("jsonb_build_array({acc})"))
     }
 }
 impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for StdVecVecGenericWithIdSomethingToCreate {
@@ -8067,18 +8172,18 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingJsonArrayChan
             let mut create_query_part_acc = std::string::String::default();
             for element in &self.create {
                 //here3
-                // match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
-                //     Ok(value) => {
-                //         create_query_part_acc.push_str(&format!("{value},"));
-                //     }
-                //     Err(error) => {
-                //         return Err(SomethingJsonArrayChangeTryGenerateBindIncrementsErrorNamed::Create {
-                //             error,
-                //             code_occurence: error_occurence_lib::code_occurence!(),
-                //         });
-                //     }
-                // }
-                todo!()
+                match element.json_create_try_generate_bind_increments(increment) {
+                    Ok(value) => {
+                        create_query_part_acc.push_str(&format!("{value},"));
+                    }
+                    Err(error) => {
+                        return Err(SomethingJsonArrayChangeTryGenerateBindIncrementsErrorNamed::Create {
+                            error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+                // todo!()
             }
             let _ = create_query_part_acc.pop();
             create_query_part_acc
@@ -8186,8 +8291,8 @@ impl postgresql_crud::PostgresqlJsonType for StdVecVecGenericWithIdSomething {
     type ToCreate<'a> = StdVecVecGenericWithIdSomethingToCreate;
     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
         //here3
-        // postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
-        todo!()
+        self_to_create.json_create_try_generate_bind_increments(increment)
+        // todo!()
     }
     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
@@ -8242,6 +8347,29 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
         Self(Some(vec![
             postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         ]))
+    }
+}
+//here4
+impl StdOptionOptionStdVecVecGenericWithIdSomethingToCreate {
+    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+        match &self.0 {
+            Some(value) => {
+                let mut acc = std::string::String::default();
+                for element in value {
+                    match element.json_create_try_generate_bind_increments(increment) {
+                        Ok(value) => {
+                            acc.push_str(&format!("{value},"));
+                        }
+                        Err(error) => {
+                            return Err(error);
+                        }
+                    }
+                }
+                let _ = acc.pop();
+                Ok(format!("jsonb_build_array({acc})"))
+            }
+            None => Ok(std::string::String::from("null")),
+        }
     }
 }
 impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for StdOptionOptionStdVecVecGenericWithIdSomethingToCreate {
@@ -9035,18 +9163,18 @@ impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingJsonArrayChan
             let mut create_query_part_acc = std::string::String::default();
             for element in &self.create {
                 //here3
-                // match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
-                //     Ok(value) => {
-                //         create_query_part_acc.push_str(&format!("{value},"));
-                //     }
-                //     Err(error) => {
-                //         return Err(SomethingJsonArrayChangeTryGenerateBindIncrementsErrorNamed::Create {
-                //             error,
-                //             code_occurence: error_occurence_lib::code_occurence!(),
-                //         });
-                //     }
-                // }
-                todo!()
+                match element.json_create_try_generate_bind_increments(increment) {
+                    Ok(value) => {
+                        create_query_part_acc.push_str(&format!("{value},"));
+                    }
+                    Err(error) => {
+                        return Err(SomethingJsonArrayChangeTryGenerateBindIncrementsErrorNamed::Create {
+                            error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+                // todo!()
             }
             let _ = create_query_part_acc.pop();
             create_query_part_acc
@@ -9177,8 +9305,8 @@ impl postgresql_crud::PostgresqlJsonType for StdOptionOptionStdVecVecGenericWith
     type ToCreate<'a> = StdOptionOptionStdVecVecGenericWithIdSomethingToCreate;
     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
         //here3
-        // postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)
-        todo!()
+        self_to_create.json_create_try_generate_bind_increments(increment)
+        // todo!()
     }
     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)
