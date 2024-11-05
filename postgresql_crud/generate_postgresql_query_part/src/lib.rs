@@ -215,7 +215,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
     };
-
+    //todo rename it and others (read, update)
     let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         json_create_try_generate_bind_increments_content_token_stream: &dyn quote::ToTokens,
@@ -2460,7 +2460,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
                         #json_create_try_generate_bind_increments_content_token_stream
                     }
-                    fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #json_create_bind_value_to_query_content_token_stream
                     }
                     type FieldReader<'a> = #tokens_ident_field_reader_token_stream;
@@ -2692,31 +2692,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &std_option_option_generic_ident_to_create_upper_camel_case,
                         &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
                     );
-                    let impl_postgresql_crud_json_create_bind_query_for_std_option_option_generic_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
-                        &std_option_option_generic_ident_to_create_upper_camel_case,
-                        &quote::quote!{
-                            match &self.0 {
-                                Some(value) => match value.json_create_try_generate_bind_increments(increment) {
-                                    Ok(value) => Ok(value),
-                                    Err(error) => Err(error)
-                                },
-                                //maybe not use null here and use increment logic
-                                None => Ok(std::string::String::from("null"))
-                            }
-                        },
-                        &quote::quote!{
-                            if let Some(value) = self.0 {
-                                query = value.json_create_bind_value_to_query(query);
-                            }
-                            query
-                        },
-                    );
                     quote::quote!{
                         #std_option_option_generic_ident_to_create_alias_token_stream
 
                         #std_option_option_generic_ident_to_create_token_stream
                         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_generic_ident_to_create_token_stream
-                        #impl_postgresql_crud_json_create_bind_query_for_std_option_option_generic_ident_to_create_token_stream
                     }
                 };
                 let read_token_stream = {
@@ -2988,8 +2968,22 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_std_option_option_generic_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::StdOptionOptionGenericIdent,
-                    &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
-                    &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
+                    &quote::quote!{
+                        match &self_to_create.0 {
+                            Some(value) => match value.json_create_try_generate_bind_increments(increment) {
+                                Ok(value) => Ok(value),
+                                Err(error) => Err(error)
+                            },
+                            //maybe not use null here and use increment logic
+                            None => Ok(std::string::String::from("null"))
+                        }
+                    },
+                    &quote::quote!{
+                        if let Some(value) = self_to_create.0 {
+                            query = value.json_create_bind_value_to_query(query);
+                        }
+                        query
+                    },
                     &quote::quote!{
                         field_reader.generate_postgresql_query_part_field_to_read(
                             field_ident,
