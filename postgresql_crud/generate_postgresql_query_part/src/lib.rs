@@ -215,8 +215,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
     };
-    //todo rename it and others (read, update)
-    let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream = |
+    let generate_impl_json_create_tokens_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         json_create_try_generate_bind_increments_content_token_stream: &dyn quote::ToTokens,
         json_create_bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
@@ -339,7 +338,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{{#(#fields_token_stream),*}}
                 }
             );
-            let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
+            let impl_json_create_ident_to_create_origin_token_stream = generate_impl_json_create_tokens_token_stream(
                 &ident_to_create_origin_upper_camel_case,
                 &{
                     let json_create_try_generate_bind_increments_fields_token_stream = vec_syn_field.iter().map(|element| {
@@ -462,8 +461,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 impl_postgresql_crud_json_create_bind_query_for_ident_to_create_with_generated_id_token_stream,
                 impl_postgresql_crud_json_create_bind_query_for_ident_to_create_without_generated_id_token_stream
             ) = {
-                let generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
-                    generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
+                let generate_impl_json_create_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool|{
+                    generate_impl_json_create_tokens_token_stream(
                         &struct_ident_token_stream,
                         &{
                             let ok_value_token_stream = if contains_id {
@@ -487,11 +486,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         },
                     )
                 };
-                let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_with_generated_id_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
+                let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_with_generated_id_token_stream = generate_impl_json_create_tokens_to_create_token_stream(
                     &ident_to_create_with_generated_id_upper_camel_case,
                     true
                 );
-                let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_without_generated_id_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_to_create_token_stream(
+                let impl_postgresql_crud_json_create_bind_query_for_ident_to_create_without_generated_id_token_stream = generate_impl_json_create_tokens_to_create_token_stream(
                     &ident_to_create_without_generated_id_upper_camel_case,
                     false
                 );
@@ -554,7 +553,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 #ident_to_create_origin_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_origin_token_stream
-                #impl_postgresql_crud_json_create_bind_query_for_ident_to_create_origin_token_stream
+                #impl_json_create_ident_to_create_origin_token_stream
 
                 #ident_to_create_with_generated_id_token_stream
                 #ident_to_create_without_generated_id_token_stream
