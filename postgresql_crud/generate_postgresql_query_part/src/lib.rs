@@ -222,10 +222,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         json_create_bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
     |{
         quote::quote!{
-            impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for #struct_ident_token_stream {
+            impl #struct_ident_token_stream {
                 fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
                     #json_create_try_generate_bind_increments_content_token_stream
                 }
+                // fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                //     #json_create_bind_value_to_query_content_token_stream
+                // }
+            }
+            impl<'a> postgresql_crud::JsonCreateBindQuery<'a> for #struct_ident_token_stream {
+                // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                //     #json_create_try_generate_bind_increments_content_token_stream
+                // }
                 fn json_create_bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     #json_create_bind_value_to_query_content_token_stream
                 }
@@ -2643,7 +2651,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_generic_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::GenericIdent,
-                    &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)},
+                    &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)},
                     &quote::quote!{
                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
@@ -2698,7 +2706,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &std_option_option_generic_ident_to_create_upper_camel_case,
                         &quote::quote!{
                             match &self.0 {
-                                Some(value) => match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(value, increment) {
+                                Some(value) => match value.json_create_try_generate_bind_increments(increment) {
                                     Ok(value) => Ok(value),
                                     Err(error) => Err(error)
                                 },
@@ -2990,7 +2998,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_std_option_option_generic_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::StdOptionOptionGenericIdent,
-                    &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)},
+                    &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)},
                     &quote::quote!{
                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
@@ -3467,7 +3475,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let create_query_part_acc = {
                                 let mut create_query_part_acc = std::string::String::default();
                                 for element in &self.create {
-                                    match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                                    match element.json_create_try_generate_bind_increments(increment) {
                                         Ok(value) => {
                                             create_query_part_acc.push_str(&format!("{value},"));
                                         }
@@ -3595,7 +3603,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{
                             let mut acc = std::string::String::default();
                             for element in &self.0 {
-                                match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                                match element.json_create_try_generate_bind_increments(increment) {
                                     Ok(value) => {
                                         acc.push_str(&format!("{value},"));
                                     },
@@ -4105,7 +4113,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_generic_with_id_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::StdVecVecGenericWithIdIdent,
-                    &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)},
+                    &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)},
                     &quote::quote!{
                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
@@ -4160,7 +4168,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 Some(value) => {
                                     let mut acc = std::string::String::default();
                                     for element in value {
-                                        match postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(element, increment) {
+                                        match element.json_create_try_generate_bind_increments(increment) {
                                             Ok(value) => {
                                                 acc.push_str(&format!("{value},"));
                                             },
@@ -4699,7 +4707,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_generic_with_id_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::StdOptionOptionStdVecVecGenericWithIdIdent,
-                    &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_try_generate_bind_increments(self_to_create, increment)},
+                    &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{postgresql_crud::JsonCreateBindQuery::json_create_bind_value_to_query(self_to_create, query)},
                     &quote::quote!{
                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
