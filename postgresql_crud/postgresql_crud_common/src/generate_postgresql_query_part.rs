@@ -3,7 +3,7 @@ pub enum JsonCreateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 pub trait JsonCreateBindQuery<'a> {
-    fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
+    // fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
     fn json_create_bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 pub trait GeneratePostgresqlQueryPartFieldToRead {
