@@ -1149,7 +1149,7 @@ impl UuidFieldReader {
 pub enum UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl crate::generate_postgresql_query_part::GeneratePostgresqlQueryPartToUpdate<UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed> for UuidOptionToUpdate {
+impl UuidOptionToUpdate {
     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {

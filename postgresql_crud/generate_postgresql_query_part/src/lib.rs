@@ -1651,7 +1651,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
     |{
         quote::quote!{
-            impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<#tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> for #struct_token_stream {
+            impl #struct_token_stream {
                 fn try_generate_bind_increments(
                     &self,
                     jsonb_set_accumulator: &std::primitive::str,
@@ -2653,15 +2653,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         )
                     },
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                            option_to_update,
+                        option_to_update.try_generate_bind_increments(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
                             increment,
                         )
                     },
-                    &quote::quote!{postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)},
+                    &quote::quote!{option_to_update.bind_value_to_query(query)},
                 );
                 quote::quote!{
                     #generic_ident_token_stream
@@ -2999,15 +2998,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         )
                     },
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                            option_to_update,
+                        option_to_update.try_generate_bind_increments(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
                             increment,
                         )
                     },
-                    &quote::quote!{postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)},
+                    &quote::quote!{option_to_update.bind_value_to_query(query)},
                 );
                 quote::quote!{
                     #std_option_option_generic_ident_token_stream
@@ -4067,8 +4065,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &std_vec_vec_generic_with_id_ident_option_to_update_upper_camel_case,
                             &std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
                             &quote::quote!{
-                                match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                                    &self.0,
+                                match self.0.try_generate_bind_increments(
                                     jsonb_set_accumulator,
                                     jsonb_set_target,
                                     jsonb_set_path,
@@ -4113,15 +4110,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         )
                     },
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                            option_to_update,
+                        option_to_update.try_generate_bind_increments(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
                             increment,
                         )
                     },
-                    &quote::quote!{postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)},
+                    &quote::quote!{option_to_update.bind_value_to_query(query)},
                 );
                 quote::quote!{
                     #std_vec_vec_generic_with_id_ident_token_stream
@@ -4642,8 +4638,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &quote::quote!{
                                 match &self.0 {
                                     Some(value) => {
-                                        match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                                            value,
+                                        match value.try_generate_bind_increments(
                                             jsonb_set_accumulator,
                                             jsonb_set_target,
                                             jsonb_set_path,
@@ -4706,15 +4701,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         )
                     },
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                            option_to_update,
+                        option_to_update.try_generate_bind_increments(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
                             increment,
                         )
                     },
-                    &quote::quote!{postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(option_to_update, query)},
+                    &quote::quote!{option_to_update.bind_value_to_query(query)},
                 );
                 quote::quote!{
                     #std_option_option_std_vec_vec_generic_with_id_ident_token_stream

@@ -804,8 +804,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
             // }
 
             query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = ");
-            match postgresql_crud::GeneratePostgresqlQueryPartToUpdate::try_generate_bind_increments(
-                &value.value.0.0,
+            match value.value.0.0.try_generate_bind_increments(
                 "sqlx_types_json_t_as_postgresql_json_b_not_null",
                 "sqlx_types_json_t_as_postgresql_json_b_not_null", //sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_generic'->0->'generic'
                 "",                                                //{std_vec_vec_generic,0}
@@ -861,7 +860,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
-            query = postgresql_crud::GeneratePostgresqlQueryPartToUpdate::bind_value_to_query(value.value.0 .0, query);
+            query = value.value.0.0.bind_value_to_query(query);
             // for element in value.value.0.0.0 {
             //     match element {
             //         SomethingOptionToUpdate::StdPrimitiveI8(value) => {
