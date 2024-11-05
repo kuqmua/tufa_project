@@ -1140,7 +1140,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(::core::default::Default::default())
     }
 }
-impl crate::generate_postgresql_query_part::GeneratePostgresqlQueryPartFieldToRead for UuidFieldReader {
+impl UuidFieldReader {
     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str) -> std::string::String {
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
     }

@@ -2,14 +2,6 @@
 pub enum JsonCreateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-pub trait GeneratePostgresqlQueryPartFieldToRead {
-    fn generate_postgresql_query_part_field_to_read(
-        &self,
-        field_ident: &std::primitive::str,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str //todo remove this coz does not have 
-    ) -> std::string::String;
-}
 pub trait GeneratePostgresqlQueryPartToUpdate<T1> {
     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, T1>;
     fn bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;

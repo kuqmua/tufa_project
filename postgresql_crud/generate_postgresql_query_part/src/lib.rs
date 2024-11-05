@@ -2352,7 +2352,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 proc_macro2::TokenStream::new()
             };
             quote::quote!{
-                impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for #tokens_field_reader_token_stream {
+                impl #tokens_field_reader_token_stream {
                     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         let mut acc = std::string::String::default();
                         let #column_name_and_maybe_field_getter_field_ident_snake_case = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
@@ -2646,8 +2646,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            field_reader,
+                        field_reader.generate_postgresql_query_part_field_to_read(
                             field_ident,
                             column_name_and_maybe_field_getter,
                             column_name_and_maybe_field_getter_for_error_message
@@ -2993,8 +2992,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            field_reader,
+                        field_reader.generate_postgresql_query_part_field_to_read(
                             field_ident,
                             column_name_and_maybe_field_getter,
                             column_name_and_maybe_field_getter_for_error_message
@@ -4108,8 +4106,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            field_reader,
+                        field_reader.generate_postgresql_query_part_field_to_read(
                             field_ident,
                             column_name_and_maybe_field_getter,
                             column_name_and_maybe_field_getter_for_error_message
@@ -4702,8 +4699,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
                     &quote::quote!{
-                        postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
-                            field_reader,
+                        field_reader.generate_postgresql_query_part_field_to_read(
                             field_ident,
                             column_name_and_maybe_field_getter,
                             column_name_and_maybe_field_getter_for_error_message
