@@ -3580,34 +3580,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
                         &quote::quote!{(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream])}
                     );
-                    let impl_postgresql_crud_json_create_bind_query_for_std_vec_vec_generic_with_id_ident_to_create_token_stream = generate_impl_postgresql_crud_json_create_bind_query_for_tokens_token_stream(
-                        &std_vec_vec_generic_with_id_ident_to_create_upper_camel_case,
-                        &quote::quote!{
-                            let mut acc = std::string::String::default();
-                            for element in &self.0 {
-                                match element.json_create_try_generate_bind_increments(increment) {
-                                    Ok(value) => {
-                                        acc.push_str(&format!("{value},"));
-                                    },
-                                    Err(error) => {
-                                        return Err(error);
-                                    }
-                                }
-                            }
-                            let _ = acc.pop();
-                            Ok(format!("jsonb_build_array({acc})"))
-                        },
-                        &quote::quote!{
-                            for element in self.0 {
-                                query = element.json_create_bind_value_to_query(query);
-                            }
-                            query
-                        },
-                    );
                     quote::quote!{
                         #std_vec_vec_generic_with_id_ident_to_create_token_stream
                         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
-                        #impl_postgresql_crud_json_create_bind_query_for_std_vec_vec_generic_with_id_ident_to_create_token_stream
                     }
                 };
                 let read_token_stream = {
@@ -4094,8 +4069,27 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_generic_with_id_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::StdVecVecGenericWithIdIdent,
-                    &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
-                    &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
+                    &quote::quote!{
+                        let mut acc = std::string::String::default();
+                        for element in &self_to_create.0 {
+                            match element.json_create_try_generate_bind_increments(increment) {
+                                Ok(value) => {
+                                    acc.push_str(&format!("{value},"));
+                                },
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            }
+                        }
+                        let _ = acc.pop();
+                        Ok(format!("jsonb_build_array({acc})"))
+                    },
+                    &quote::quote!{
+                        for element in self_to_create.0 {
+                            query = element.json_create_bind_value_to_query(query);
+                        }
+                        query
+                    },
                     &quote::quote!{
                         field_reader.generate_postgresql_query_part_field_to_read(
                             field_ident,
