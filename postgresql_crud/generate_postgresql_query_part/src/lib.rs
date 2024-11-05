@@ -4503,22 +4503,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
                     );
 
-                    let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
-                        let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
-                            &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
-                            &{
-                                quote::quote!{
-                                    #checked_add_variant_declaration_token_stream,
-                                    JsonArrayChange {
-                                        #[eo_error_occurence]
-                                        error: #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    },
-                                }
+                    let std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+                        &std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_upper_camel_case,
+                        &{
+                            quote::quote!{
+                                #checked_add_variant_declaration_token_stream,
+                                JsonArrayChange {
+                                    #[eo_error_occurence]
+                                    error: #ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
                             }
-                        );
-                            std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
-                    };
+                        }
+                    );
                     quote::quote!{
                         #std_option_option_std_vec_vec_generic_with_id_ident_json_array_change_token_stream
                         #std_option_option_std_vec_vec_generic_with_id_ident_option_to_update_token_stream
