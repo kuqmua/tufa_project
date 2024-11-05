@@ -301,11 +301,11 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    // pub generic: GenericDoggie,
-    // pub std_option_option_generic: StdOptionOptionGenericDoggie,
+    pub generic: GenericDoggie,
+    pub std_option_option_generic: StdOptionOptionGenericDoggie,
 
-    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,
-    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie
+    pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdDoggie,
+    pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdDoggie
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
@@ -356,29 +356,29 @@ pub struct Something {
 //     // StdOptionOptionStdVecVecGenericWithId(StdOptionOptionStdVecVecGenericWithIdDoggieFieldReader)
 // }
 
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     // Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     //
-//     postgresql_crud::GeneratePostgresqlQueryPart,
-// )] //user type must implement utoipa::ToSchema trait
-// pub struct Doggie {
-//     pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
-//     pub std_primitive_i16: postgresql_crud::json_types::StdPrimitiveI16,
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    // Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    //
+    postgresql_crud::GeneratePostgresqlQueryPart,
+)] //user type must implement utoipa::ToSchema trait
+pub struct Doggie {
+    pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
+    pub std_primitive_i16: postgresql_crud::json_types::StdPrimitiveI16,
 
-//     pub generic: GenericCat,
-//     pub std_option_option_generic: StdOptionOptionGenericCat,
+    // pub generic: GenericCat,
+    // pub std_option_option_generic: StdOptionOptionGenericCat,
 
-//     pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
-//     pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
-// }
+    // pub std_vec_vec_generic_with_id: StdVecVecGenericWithIdCat,
+    // pub std_option_option_std_vec_vec_generic_with_id: StdOptionOptionStdVecVecGenericWithIdCat,
+}
 
 // #[derive(
 //     Debug,

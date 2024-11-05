@@ -502,422 +502,22 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
     ],
     "generic": {
       "std_primitive_i8": 0,
-      "std_primitive_i16": 0,
-      "generic": {
-        "std_primitive_i32": 0,
-        "std_primitive_i64": 0,
-        "generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_option_option_generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ],
-        "std_option_option_std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ]
-      },
-      "std_option_option_generic": {
-        "std_primitive_i32": 0,
-        "std_primitive_i64": 0,
-        "generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_option_option_generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ],
-        "std_option_option_std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ]
-      },
-      "std_vec_vec_generic_with_id": [
-        {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        }
-      ],
-      "std_option_option_std_vec_vec_generic_with_id": [
-        {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        }
-      ]
+      "std_primitive_i16": 0
     },
     "std_option_option_generic": {
       "std_primitive_i8": 0,
-      "std_primitive_i16": 0,
-      "generic": {
-        "std_primitive_i32": 0,
-        "std_primitive_i64": 0,
-        "generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_option_option_generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ],
-        "std_option_option_std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ]
-      },
-      "std_option_option_generic": {
-        "std_primitive_i32": 0,
-        "std_primitive_i64": 0,
-        "generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_option_option_generic": {
-          "std_primitive_u8": 0,
-          "std_primitive_u16": 0
-        },
-        "std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ],
-        "std_option_option_std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          }
-        ]
-      },
-      "std_vec_vec_generic_with_id": [
-        {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        }
-      ],
-      "std_option_option_std_vec_vec_generic_with_id": [
-        {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        }
-      ]
+      "std_primitive_i16": 0
     },
     "std_vec_vec_generic_with_id": [
       {
         "std_primitive_i8": 0,
-        "std_primitive_i16": 0,
-        "generic": {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        },
-        "std_option_option_generic": {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        },
-        "std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_i32": 0,
-            "std_primitive_i64": 0,
-            "generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_option_option_generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ],
-            "std_option_option_std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ]
-          }
-        ],
-        "std_option_option_std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_i32": 0,
-            "std_primitive_i64": 0,
-            "generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_option_option_generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ],
-            "std_option_option_std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ]
-          }
-        ]
+        "std_primitive_i16": 0
       }
     ],
     "std_option_option_std_vec_vec_generic_with_id": [
       {
         "std_primitive_i8": 0,
-        "std_primitive_i16": 0,
-        "generic": {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        },
-        "std_option_option_generic": {
-          "std_primitive_i32": 0,
-          "std_primitive_i64": 0,
-          "generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_option_option_generic": {
-            "std_primitive_u8": 0,
-            "std_primitive_u16": 0
-          },
-          "std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ],
-          "std_option_option_std_vec_vec_generic_with_id": [
-            {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            }
-          ]
-        },
-        "std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_i32": 0,
-            "std_primitive_i64": 0,
-            "generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_option_option_generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ],
-            "std_option_option_std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ]
-          }
-        ],
-        "std_option_option_std_vec_vec_generic_with_id": [
-          {
-            "std_primitive_i32": 0,
-            "std_primitive_i64": 0,
-            "generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_option_option_generic": {
-              "std_primitive_u8": 0,
-              "std_primitive_u16": 0
-            },
-            "std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ],
-            "std_option_option_std_vec_vec_generic_with_id": [
-              {
-                "std_primitive_u8": 0,
-                "std_primitive_u16": 0
-              }
-            ]
-          }
-        ]
+        "std_primitive_i16": 0
       }
     ]
   }
@@ -1116,296 +716,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
               },
               {
                 "std_primitive_i16": {}
-              },
-              {
-                "generic": [
-                  {
-                    "std_primitive_i32": {}
-                  },
-                  {
-                    "std_primitive_i64": {}
-                  },
-                  {
-                    "generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_option_option_generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  },
-                  {
-                    "std_option_option_std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "std_option_option_generic": [
-                  {
-                    "std_primitive_i32": {}
-                  },
-                  {
-                    "std_primitive_i64": {}
-                  },
-                  {
-                    "generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_option_option_generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  },
-                  {
-                    "std_option_option_std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "std_vec_vec_generic_with_id": {
-                  "field_vec": [
-                    {
-                      "id": {}
-                    },
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ],
-                  "pagination": {
-                    "limit": 1,
-                    "offset": 0
-                  }
-                }
-              },
-              {
-                "std_option_option_std_vec_vec_generic_with_id": {
-                  "field_vec": [
-                    {
-                      "id": {}
-                    },
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ],
-                  "pagination": {
-                    "limit": 1,
-                    "offset": 0
-                  }
-                }
               }
             ]
           },
@@ -1416,296 +726,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
               },
               {
                 "std_primitive_i16": {}
-              },
-              {
-                "generic": [
-                  {
-                    "std_primitive_i32": {}
-                  },
-                  {
-                    "std_primitive_i64": {}
-                  },
-                  {
-                    "generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_option_option_generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  },
-                  {
-                    "std_option_option_std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "std_option_option_generic": [
-                  {
-                    "std_primitive_i32": {}
-                  },
-                  {
-                    "std_primitive_i64": {}
-                  },
-                  {
-                    "generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_option_option_generic": [
-                      {
-                        "std_primitive_u8": {}
-                      },
-                      {
-                        "std_primitive_u16": {}
-                      }
-                    ]
-                  },
-                  {
-                    "std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  },
-                  {
-                    "std_option_option_std_vec_vec_generic_with_id": {
-                      "field_vec": [
-                        {
-                          "id": {}
-                        },
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ],
-                      "pagination": {
-                        "limit": 1,
-                        "offset": 0
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "std_vec_vec_generic_with_id": {
-                  "field_vec": [
-                    {
-                      "id": {}
-                    },
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ],
-                  "pagination": {
-                    "limit": 1,
-                    "offset": 0
-                  }
-                }
-              },
-              {
-                "std_option_option_std_vec_vec_generic_with_id": {
-                  "field_vec": [
-                    {
-                      "id": {}
-                    },
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ],
-                  "pagination": {
-                    "limit": 1,
-                    "offset": 0
-                  }
-                }
               }
             ]
           },
@@ -1720,296 +740,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                 },
                 {
                   "std_primitive_i16": {}
-                },
-                {
-                  "generic": [
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "std_option_option_generic": [
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "std_vec_vec_generic_with_id": {
-                    "field_vec": [
-                      {
-                        "id": {}
-                      },
-                      {
-                        "std_primitive_i32": {}
-                      },
-                      {
-                        "std_primitive_i64": {}
-                      },
-                      {
-                        "generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_option_option_generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      },
-                      {
-                        "std_option_option_std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      }
-                    ],
-                    "pagination": {
-                      "limit": 1,
-                      "offset": 0
-                    }
-                  }
-                },
-                {
-                  "std_option_option_std_vec_vec_generic_with_id": {
-                    "field_vec": [
-                      {
-                        "id": {}
-                      },
-                      {
-                        "std_primitive_i32": {}
-                      },
-                      {
-                        "std_primitive_i64": {}
-                      },
-                      {
-                        "generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_option_option_generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      },
-                      {
-                        "std_option_option_std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      }
-                    ],
-                    "pagination": {
-                      "limit": 1,
-                      "offset": 0
-                    }
-                  }
                 }
               ],
               "pagination": {
@@ -2029,296 +759,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
                 },
                 {
                   "std_primitive_i16": {}
-                },
-                {
-                  "generic": [
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "std_option_option_generic": [
-                    {
-                      "std_primitive_i32": {}
-                    },
-                    {
-                      "std_primitive_i64": {}
-                    },
-                    {
-                      "generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_option_option_generic": [
-                        {
-                          "std_primitive_u8": {}
-                        },
-                        {
-                          "std_primitive_u16": {}
-                        }
-                      ]
-                    },
-                    {
-                      "std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    },
-                    {
-                      "std_option_option_std_vec_vec_generic_with_id": {
-                        "field_vec": [
-                          {
-                            "id": {}
-                          },
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ],
-                        "pagination": {
-                          "limit": 1,
-                          "offset": 0
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "std_vec_vec_generic_with_id": {
-                    "field_vec": [
-                      {
-                        "id": {}
-                      },
-                      {
-                        "std_primitive_i32": {}
-                      },
-                      {
-                        "std_primitive_i64": {}
-                      },
-                      {
-                        "generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_option_option_generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      },
-                      {
-                        "std_option_option_std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      }
-                    ],
-                    "pagination": {
-                      "limit": 1,
-                      "offset": 0
-                    }
-                  }
-                },
-                {
-                  "std_option_option_std_vec_vec_generic_with_id": {
-                    "field_vec": [
-                      {
-                        "id": {}
-                      },
-                      {
-                        "std_primitive_i32": {}
-                      },
-                      {
-                        "std_primitive_i64": {}
-                      },
-                      {
-                        "generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_option_option_generic": [
-                          {
-                            "std_primitive_u8": {}
-                          },
-                          {
-                            "std_primitive_u16": {}
-                          }
-                        ]
-                      },
-                      {
-                        "std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      },
-                      {
-                        "std_option_option_std_vec_vec_generic_with_id": {
-                          "field_vec": [
-                            {
-                              "id": {}
-                            },
-                            {
-                              "std_primitive_u8": {}
-                            },
-                            {
-                              "std_primitive_u16": {}
-                            }
-                          ],
-                          "pagination": {
-                            "limit": 1,
-                            "offset": 0
-                          }
-                        }
-                      }
-                    ],
-                    "pagination": {
-                      "limit": 1,
-                      "offset": 0
-                    }
-                  }
                 }
               ],
               "pagination": {
@@ -2373,15 +813,137 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "sqlx_types_json_t_as_postgresql_json_b_not_null": {
     "value": [
       {
-        "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
-          "value": 
-          # null
-          [
-            0,
-            2,
-            null,
-            1
+        "std_primitive_i8": {
+          "value": 0
+        }
+      },
+      {
+        "std_option_option_std_primitive_i8": {
+          "value": 0
+        }
+      },
+      {
+        "std_vec_vec_std_primitive_i8": {
+          "value": [
+            0
           ]
+        }
+      },
+      {
+        "std_option_option_std_vec_vec_std_primitive_i8": {
+          "value": [
+            0
+          ]
+        }
+      },
+      {
+        "std_vec_vec_std_option_option_std_primitive_i8": {
+          "value": [
+            0
+          ]
+        }
+      },
+      {
+        "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+          "value": [
+            0
+          ]
+        }
+      },
+      {
+        "generic": {
+          "value": [
+            {
+              "std_primitive_i8": {
+                "value": 0
+              }
+            },
+            {
+              "std_primitive_i16": {
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "std_option_option_generic": {
+          "value": [
+            {
+              "std_primitive_i8": {
+                "value": 0
+              }
+            },
+            {
+              "std_primitive_i16": {
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "std_vec_vec_generic_with_id": {
+          "value": {
+            "create": [
+              {
+                "std_primitive_i8": 0,
+                "std_primitive_i16": 0
+              }
+            ],
+            "update": [
+              {
+                "id": "00003ecf-1488-4492-b9a1-19b1b05d9b73",
+                "fields": [
+                  {
+                    "std_primitive_i8": {
+                      "value": 0
+                    }
+                  },
+                  {
+                    "std_primitive_i16": {
+                      "value": 0
+                    }
+                  }
+                ]
+              }
+            ],
+            "delete": [
+              "99f68bf2-7d9c-4014-b246-d1fb95e7f557"
+            ]
+          }
+        }
+      },
+      {
+        "std_option_option_std_vec_vec_generic_with_id": {
+          "value": {
+            "create": [
+              {
+                "std_primitive_i8": 0,
+                "std_primitive_i16": 0
+              }
+            ],
+            "update": [
+              {
+                "id": "624a32c1-e03a-45ab-9658-5a9b299e293b",
+                "fields": [
+                  {
+                    "std_primitive_i8": {
+                      "value": 0
+                    }
+                  },
+                  {
+                    "std_primitive_i16": {
+                      "value": 0
+                    }
+                  }
+                ]
+              }
+            ],
+            "delete": [
+              "61939f56-27ee-4635-a178-dfed795de7c2"
+            ]
+          }
         }
       }
     ]
