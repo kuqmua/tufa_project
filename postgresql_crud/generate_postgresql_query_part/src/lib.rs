@@ -2263,8 +2263,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     );
 
     let json_value_variants_token_stream = {
-        //todo rename
-        let generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream = |
+        let generate_generate_postgresql_query_part_field_to_read_content_token_stream = |
             tokens_field_reader_token_stream: &dyn quote::ToTokens,
             contains_id: std::primitive::bool,
             format_handle_double_quotes_token_stream: &dyn quote::ToTokens,
@@ -2637,7 +2636,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedJsonValue::GenericIdent,
                     &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
                     &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
-                    &generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
+                    &generate_generate_postgresql_query_part_field_to_read_content_token_stream(
                         &generic_ident_field_reader_upper_camel_case_token_stream,
                         false,
                         &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))"},
@@ -2867,7 +2866,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                         query
                     },
-                    &generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
+                    &generate_generate_postgresql_query_part_field_to_read_content_token_stream(
                         &std_option_option_generic_ident_field_reader_upper_camel_case,
                         false,
                         &quote::quote!{"jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)"}
@@ -4018,7 +4017,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                         query
                     },
-                    &generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
+                    &generate_generate_postgresql_query_part_field_to_read_content_token_stream(
                         &std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
                         true,
                         &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))"}
@@ -4552,7 +4551,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                         query
                     },
-                    &generate_impl_postgresql_crud_generate_postgresql_query_part_field_to_read_for_tokens_token_stream(
+                    &generate_generate_postgresql_query_part_field_to_read_content_token_stream(
                         &std_option_option_std_vec_vec_generic_with_id_ident_field_reader_upper_camel_case,
                         true,
                         &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))"}
