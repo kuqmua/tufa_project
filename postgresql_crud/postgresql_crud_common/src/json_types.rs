@@ -1083,7 +1083,7 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
     }
     type OptionToUpdate<'a> = UuidOptionToUpdate;
     type OptionToUpdateTryGenerateBindIncrementsErrorNamed = UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed;
-    fn try_generate_bind_increments(
+    fn try_generate_postgresql_query_part_to_update(
         _: &Self::OptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         _: &std::primitive::str,
@@ -1150,7 +1150,7 @@ pub enum UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 impl UuidOptionToUpdate {
-    fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;

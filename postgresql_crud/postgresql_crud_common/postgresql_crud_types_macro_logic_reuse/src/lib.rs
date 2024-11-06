@@ -680,7 +680,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             //todo maybe rename later
             let try_generate_bind_increments_token_stream = {
                 quote::quote!{
-                    fn try_generate_bind_increments(
+                    fn try_generate_postgresql_query_part_to_update(
                         option_to_update: &Self::#option_to_update_upper_camel_case<'_>,
                         jsonb_set_accumulator: &std::primitive::str,
                         jsonb_set_target: &std::primitive::str,

@@ -67,8 +67,7 @@ pub trait PostgresqlJsonType {
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type OptionToUpdateTryGenerateBindIncrementsErrorNamed: std::fmt::Debug
         + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
-    //todo add update naming
-    fn try_generate_bind_increments(//try_generate_postgresql_query_part_to_update
+    fn try_generate_postgresql_query_part_to_update(
         option_to_update: &Self::OptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,

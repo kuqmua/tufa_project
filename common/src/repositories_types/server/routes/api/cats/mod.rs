@@ -804,7 +804,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
             // }
 
             query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = ");
-            match value.value.0.0.try_generate_bind_increments(
+            match value.value.0.0.try_generate_postgresql_query_part_to_update(
                 "sqlx_types_json_t_as_postgresql_json_b_not_null",
                 "sqlx_types_json_t_as_postgresql_json_b_not_null", //sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_object'->0->'object'
                 "",                                                //{std_vec_vec_object,0}
@@ -2346,7 +2346,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionsToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         if self.0.is_empty() {
 //             return Err(SomethingOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -3828,7 +3828,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for CatOptionsToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         if self.0.is_empty() {
 //             return Err(CatOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -4237,7 +4237,7 @@ fn test_dd() {
 //     },
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> for MouseOptionsToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         if self.0.is_empty() {
 //             return Err(MouseOptionsToUpdateTryGenerateBindIncrementsErrorNamed::FieldsIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
 //         }
@@ -4338,7 +4338,7 @@ fn test_dd() {
 //todo this need for old version of update_many. later need to refactor update many and remove this
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for SomethingOptionToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, SomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         let mut acc = std::string::String::from(jsonb_set_accumulator);
 //         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
 //             true => std::string::String::default(),
@@ -4391,7 +4391,7 @@ fn test_dd() {
 //     }
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<DoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> for DoggieOptionToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, DoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, DoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
 //         let mut acc = std::string::String::from(jsonb_set_accumulator);
 //         let previous_jsonb_set_path = match jsonb_set_path.is_empty() {
 //             true => std::string::String::default(),
@@ -4444,7 +4444,7 @@ fn test_dd() {
 //     }
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> for CatOptionToUpdate {
-//     fn try_generate_bind_increments(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64, is_optional_object: std::primitive::bool) -> Result<std::string::String, CatOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
         
 //         // if is_optional_object {
 //             //todo maybe remove it at all? just use this branch?
@@ -4561,7 +4561,7 @@ fn test_dd() {
 
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionObjectSomethingOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionObjectSomethingOptionToUpdate {
-//     fn try_generate_bind_increments(
+//     fn try_generate_postgresql_query_part_to_update(
 //         &self,
 //         jsonb_set_accumulator: &std::primitive::str,
 //         jsonb_set_target: &std::primitive::str,
@@ -4641,7 +4641,7 @@ fn test_dd() {
 //     }
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionObjectDoggieOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionObjectDoggieOptionToUpdate {
-//     fn try_generate_bind_increments(
+//     fn try_generate_postgresql_query_part_to_update(
 //         &self,
 //         jsonb_set_accumulator: &std::primitive::str,
 //         jsonb_set_target: &std::primitive::str,
@@ -4717,7 +4717,7 @@ fn test_dd() {
 //     }
 // }
 // impl postgresql_crud::GeneratePostgresqlQueryPartToUpdate<StdOptionOptionObjectCatOptionToUpdateTryGenerateBindIncrementsErrorNamed> for StdOptionOptionObjectCatOptionToUpdate {
-//     fn try_generate_bind_increments(
+//     fn try_generate_postgresql_query_part_to_update(
 //         &self,
 //         jsonb_set_accumulator: &std::primitive::str,
 //         jsonb_set_target: &std::primitive::str,
