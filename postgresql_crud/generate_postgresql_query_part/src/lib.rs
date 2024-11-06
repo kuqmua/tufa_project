@@ -215,6 +215,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
     };
     let postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed};
+    let try_generate_postgresql_query_part_to_create_snake_case = naming_conventions::TryGeneratePostgresqlQueryPartToCreateSnakeCase;
+    let bind_value_to_postgresql_query_part_to_create_snake_case = naming_conventions::BindValueToPostgresqlQueryPartToCreateSnakeCase;
     let generate_tokens_to_create_methods_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
@@ -222,10 +224,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     |{
         quote::quote!{
             impl #struct_ident_token_stream {
-                fn try_generate_postgresql_query_part_to_create(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
+                fn #try_generate_postgresql_query_part_to_create_snake_case(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                     #try_generate_postgresql_query_part_to_create_content_token_stream
                 }
-                fn bind_value_to_postgresql_query_part_to_create<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     #bind_value_to_postgresql_query_part_to_create_content_token_stream
                 }
             }
@@ -354,7 +356,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let element_type = &element.ty;
                         quote::quote!{
-                            match <#element_type as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_create(&self.#element_field_ident, increment) {
+                            match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.#element_field_ident, increment) {
                                 Ok(value) => {
                                     increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                                 }
@@ -472,7 +474,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 quote::quote!{value}
                             };
                             quote::quote!{
-                                match self.0.try_generate_postgresql_query_part_to_create(increment) {
+                                match self.0.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
                                     Ok(value) => Ok(#ok_value_token_stream),
                                     Err(error) => Err(error)
                                 }
@@ -512,7 +514,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     let element_type = &element.ty;
                     quote::quote!{
-                        match <#element_type as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_create(&self.0.#element_field_ident, increment) {
+                        match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.0.#element_field_ident, increment) {
                             Ok(value) => {
                                 increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                             }
@@ -2461,7 +2463,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
                     type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
-                    fn try_generate_postgresql_query_part_to_create(#to_create_snake_case: &Self::#to_create_upper_camel_case<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
+                    fn #try_generate_postgresql_query_part_to_create_snake_case(#to_create_snake_case: &Self::#to_create_upper_camel_case<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                         #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
                     fn bind_value_to_postgresql_query_part_to_create<'a>(#to_create_snake_case: Self::#to_create_upper_camel_case<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -2641,7 +2643,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::ObjectIdent,
-                    &quote::quote!{#to_create_snake_case.try_generate_postgresql_query_part_to_create(increment)},
+                    &quote::quote!{#to_create_snake_case.#try_generate_postgresql_query_part_to_create_snake_case(increment)},
                     &quote::quote!{#to_create_snake_case.bind_value_to_postgresql_query_part_to_create(query)},
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
                         &object_ident_field_reader_upper_camel_case_token_stream,
@@ -2859,7 +2861,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedJsonValue::StdOptionOptionObjectIdent,
                     &quote::quote!{
                         match &#to_create_snake_case.0 {
-                            Some(value) => match value.try_generate_postgresql_query_part_to_create(increment) {
+                            Some(value) => match value.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
                                 Ok(value) => Ok(value),
                                 Err(error) => Err(error)
                             },
@@ -3431,7 +3433,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let create_query_part_acc = {
                                 let mut create_query_part_acc = std::string::String::default();
                                 for element in &self.create {
-                                    match element.try_generate_postgresql_query_part_to_create(increment) {
+                                    match element.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
                                         Ok(value) => {
                                             create_query_part_acc.push_str(&format!("{value},"));
                                         }
@@ -4006,7 +4008,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         let mut acc = std::string::String::default();
                         for element in &#to_create_snake_case.0 {
-                            match element.try_generate_postgresql_query_part_to_create(increment) {
+                            match element.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
                                 Ok(value) => {
                                     acc.push_str(&format!("{value},"));
                                 },
@@ -4535,7 +4537,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             Some(value) => {
                                 let mut acc = std::string::String::default();
                                 for element in value {
-                                    match element.try_generate_postgresql_query_part_to_create(increment) {
+                                    match element.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
                                         Ok(value) => {
                                             acc.push_str(&format!("{value},"));
                                         },
