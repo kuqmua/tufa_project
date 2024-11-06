@@ -2456,6 +2456,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
             };
             let to_create_upper_camel_case = naming_conventions::ToCreateUpperCamelCase;
+            let field_reader_upper_camel_case = naming_conventions::FieldReaderUpperCamelCase;
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
                     type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
@@ -2465,9 +2466,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     fn bind_value_to_postgresql_query_part_to_create<'a>(#to_create_snake_case: Self::#to_create_upper_camel_case<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_create_content_token_stream
                     }
-                    type FieldReader<'a> = #tokens_ident_field_reader_token_stream;
+                    type #field_reader_upper_camel_case<'a> = #tokens_ident_field_reader_token_stream;
                     type OptionsToRead<'a> = #tokens_ident_options_to_read_token_stream;
-                    fn generate_postgresql_query_part_to_read(field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                    fn generate_postgresql_query_part_to_read(field_reader: &Self::#field_reader_upper_camel_case<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         #generate_postgresql_query_part_to_read_content_token_stream
                     }
                     type OptionToUpdate<'a> = #tokens_ident_option_to_update_token_stream;
