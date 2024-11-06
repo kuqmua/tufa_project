@@ -1735,6 +1735,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             generate_jsonb_set_target_token_stream
         )
     };
+    let generate_postgresql_query_part_to_read_snake_case = naming_conventions::GeneratePostgresqlQueryPartToReadSnakeCase;
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
         let impl_std_fmt_display_for_ident_token_stream = quote::quote!{
@@ -1863,7 +1864,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         let element_type = &element.ty;
                         quote::quote!{
-                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => <#element_type as postgresql_crud::PostgresqlJsonType>::generate_postgresql_query_part_to_read(
+                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => <#element_type as postgresql_crud::PostgresqlJsonType>::#generate_postgresql_query_part_to_read_snake_case(
                                 value,
                                 #field_ident_double_quotes_token_stream,
                                 column_name_and_maybe_field_getter,
@@ -2286,7 +2287,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &ident_field_to_read_without_id_upper_camel_case
                 };
                 quote::quote!{
-                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => <#element_type as postgresql_crud::PostgresqlJsonType>::generate_postgresql_query_part_to_read(
+                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => <#element_type as postgresql_crud::PostgresqlJsonType>::#generate_postgresql_query_part_to_read_snake_case(
                         value,
                         #field_ident_double_quotes_token_stream,
                         #column_name_and_maybe_field_getter_token_stream,
@@ -2471,7 +2472,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     type #field_reader_upper_camel_case<'a> = #tokens_ident_field_reader_token_stream;
                     type OptionsToRead<'a> = #tokens_ident_options_to_read_token_stream;
-                    fn generate_postgresql_query_part_to_read(field_reader: &Self::#field_reader_upper_camel_case<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                    fn #generate_postgresql_query_part_to_read_snake_case(field_reader: &Self::#field_reader_upper_camel_case<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         #generate_postgresql_query_part_to_read_content_token_stream
                     }
                     type OptionToUpdate<'a> = #tokens_ident_option_to_update_token_stream;

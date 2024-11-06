@@ -380,7 +380,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["self"],
     ["option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
     ["try", "generate", "postgresql", "query", "part", "to", "create"],
-    ["bind", "value", "to", "postgresql", "query", "part", "to", "create"]
+    ["bind", "value", "to", "postgresql", "query", "part", "to", "create"],
+    ["generate", "postgresql", "query", "part", "to", "read"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
