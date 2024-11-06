@@ -700,7 +700,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             //todo maybe rename later
             let bind_value_to_query_token_stream = {
                 quote::quote!{
-                    fn bind_value_to_query<'a>(
+                    fn bind_value_to_postgresql_query_part_to_update<'a>(
                         option_to_update: Self::#option_to_update_upper_camel_case<'_>,
                         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

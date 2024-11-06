@@ -74,8 +74,7 @@ pub trait PostgresqlJsonType {
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64
     ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed>;
-    //todo add update naming
-    fn bind_value_to_query<'a>(//bind_value_to_postgresql_query_part_to_update
+    fn bind_value_to_postgresql_query_part_to_update<'a>(
         option_to_update: Self::OptionToUpdate<'_>,
         query: sqlx::query::Query<'a, sqlx::Postgres,
         sqlx::postgres::PgArguments>

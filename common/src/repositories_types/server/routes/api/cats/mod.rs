@@ -860,7 +860,7 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.sqlx_types_json_t_as_postgresql_json_b_not_null {
-            query = value.value.0.0.bind_value_to_query(query);
+            query = value.value.0.0.bind_value_to_postgresql_query_part_to_update(query);
             // for element in value.value.0.0.0 {
             //     match element {
             //         SomethingOptionToUpdate::StdPrimitiveI8(value) => {
@@ -2687,7 +2687,7 @@ fn test_dd() {
 //         }
 //         Ok(acc)
 //     }
-//     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//     fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         for element in self.0 {
 //             match element {
 //                 SomethingOptionToUpdate::StdPrimitiveI8(value) => {
@@ -3867,7 +3867,7 @@ fn test_dd() {
 //         }
 //         Ok(acc)
 //     }
-//     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//     fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         for element in self.0 {
 //             match element {
 //                 CatOptionToUpdate::StdPrimitiveI32(value) => {
@@ -4276,7 +4276,7 @@ fn test_dd() {
 //         }
 //         Ok(acc)
 //     }
-//     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//     fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         for element in self.0 {
 //             match element {
 //                 MouseOptionToUpdate::StdPrimitiveI32(value) => {
@@ -4376,7 +4376,7 @@ fn test_dd() {
 //         }
 //         Ok(acc)
 //     }
-//     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//     fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         for element in self.0 {
 //             match element {
 //                 SomethingOptionToUpdateOrigin::StdPrimitiveI16(value) => {
