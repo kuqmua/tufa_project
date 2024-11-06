@@ -65,7 +65,7 @@ pub trait PostgresqlJsonType {
         + utoipa::ToSchema<'a>
         + schemars::JsonSchema
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type OptionToUpdateTryGenerateBindIncrementsErrorNamed: std::fmt::Debug
+    type OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed: std::fmt::Debug
         + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
     fn try_generate_postgresql_query_part_to_update(
         option_to_update: &Self::OptionToUpdate<'_>,
@@ -73,7 +73,7 @@ pub trait PostgresqlJsonType {
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64
-    ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed>;
+    ) -> Result<std::string::String, Self::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed>;
     fn bind_value_to_postgresql_query_part_to_update<'a>(
         option_to_update: Self::OptionToUpdate<'_>,
         query: sqlx::query::Query<'a, sqlx::Postgres,

@@ -1082,20 +1082,20 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
     }
     type OptionToUpdate<'a> = UuidOptionToUpdate;
-    type OptionToUpdateTryGenerateBindIncrementsErrorNamed = UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed;
+    type OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed = UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed;
     fn try_generate_postgresql_query_part_to_update(
         _: &Self::OptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         _: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+    ) -> Result<std::string::String, Self::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
             }
-            None => Err(Self::OptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(Self::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
     fn bind_value_to_postgresql_query_part_to_update<'a>(option_to_update: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1146,17 +1146,17 @@ impl UuidFieldReader {
     }
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed {
+pub enum UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 impl UuidOptionToUpdate {
-    fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
             }
-            None => Err(UuidOptionToUpdateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
     fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

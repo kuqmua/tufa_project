@@ -377,7 +377,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["column", "name", "and", "maybe", "field", "getter", "for", "error", "message", "field", "ident"],
     ["generate", "not", "unique", "field"],
     ["all", "fields", "are", "none"],
-    ["self"]
+    ["self"],
+    ["option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -488,13 +489,8 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["object", "self", "option", "to", "update", "origin"],
     ["std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change"],
     ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change"],
-    ["object", "self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
-    ["object", "self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named", "with", "serialize", "deserialize"],
-    ["self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
-    ["self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named", "with", "serialize", "deserialize"],
-    ["std", "option", "option", "object", "self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
-    ["std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
-    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
+    ["self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named", "with", "serialize", "deserialize"],
     ["self", "option", "to", "update", "origin"],
     ["self", "json", "array", "change"],
     ["self", "to", "create", "origin"],
@@ -502,10 +498,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "to", "create", "with", "generated", "id"],
     ["self", "to", "create", "without", "generated", "id"],
     ["self", "json", "array", "change", "try", "generate", "bind", "increments", "error", "named"],
-    ["std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change", "try", "generate", "bind", "increments", "error", "named"],
-    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change", "try", "generate", "bind", "increments", "error", "named"],
     ["self", "field", "to", "update"],
-    ["self", "options", "to", "update", "try", "generate", "bind", "increments", "error", "named"],
     ["self", "generate", "postgresql", "query", "part", "to", "read", "error", "named"],
     ["self", "try", "generate", "json", "array", "element", "update", "bind", "increments", "error", "named"],
     ["std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change", "try", "new", "error", "named"],
@@ -525,7 +518,12 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["object", "self", "field", "reader", "try", "new", "error", "named"],
     ["std", "option", "option", "object", "self", "field", "reader", "try", "new", "error", "named"],
     ["std", "vec", "vec", "object", "with", "id", "self", "field", "reader", "try", "new", "error", "named"],
-    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader", "try", "new", "error", "named"]
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader", "try", "new", "error", "named"],
+    ["object", "self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["object", "self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named", "with", "serialize", "deserialize"],
+    ["std", "option", "option", "object", "self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
