@@ -1646,6 +1646,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     let try_generate_postgresql_query_part_to_update_snake_case = naming_conventions::TryGeneratePostgresqlQueryPartToUpdateSnakeCase;
+    let bind_value_to_postgresql_query_part_to_update_snake_case = naming_conventions::BindValueToPostgresqlQueryPartToUpdateSnakeCase;
     let generate_tokens_to_update_methods_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
         //todo rename
@@ -1664,7 +1665,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 ) -> Result<std::string::String, #tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                     #try_generate_postgresql_query_part_to_update_content_token_stream
                 }
-                fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     #bind_value_to_postgresql_query_part_to_update_content_token_stream
                 }
             }
@@ -2214,7 +2215,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let element_type = &element.ty;
                         quote::quote!{
                             #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                query = <#element_type as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_update(value.value, query);
+                                query = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_update_snake_case(value.value, query);
                             }
                         }
                     });
@@ -2487,7 +2488,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ) -> Result<std::string::String, Self::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
                         #try_generate_postgresql_query_part_to_update_content_token_stream
                     }
-                    fn bind_value_to_postgresql_query_part_to_update<'a>(#option_to_update_snake_case: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(#option_to_update_snake_case: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_update_content_token_stream
                     }
                 }
@@ -2660,7 +2661,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             increment,
                         )
                     },
-                    &quote::quote!{#option_to_update_snake_case.bind_value_to_postgresql_query_part_to_update(query)},
+                    &quote::quote!{#option_to_update_snake_case.#bind_value_to_postgresql_query_part_to_update_snake_case(query)},
                 );
                 quote::quote!{
                     #object_ident_token_stream
@@ -2958,7 +2959,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let element_type = &element.ty;
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    query = <#element_type as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_update(value.value, query);
+                                    query = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_update_snake_case(value.value, query);
                                 }
                             }
                         });
@@ -3468,7 +3469,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let element_type = &element.ty;
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    query = <#element_type as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_update(value.value, query);
+                                    query = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_update_snake_case(value.value, query);
                                 }
                             }
                         });
@@ -4051,7 +4052,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     &quote::quote!{
-                        query = #option_to_update_snake_case.0.bind_value_to_postgresql_query_part_to_update(query);
+                        query = #option_to_update_snake_case.0.#bind_value_to_postgresql_query_part_to_update_snake_case(query);
                         query
                     }
                 );
@@ -4599,7 +4600,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         match #option_to_update_snake_case.0 {
                             Some(value) => {
-                                query = value.bind_value_to_postgresql_query_part_to_update(query);
+                                query = value.#bind_value_to_postgresql_query_part_to_update_snake_case(query);
                             }
                             None => {
                                 query = query.bind(sqlx::types::Json(None::<std::option::Option<#std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case>>));
