@@ -2402,6 +2402,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecObjectWithIdSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
         let to_create_snake_case = naming_conventions::ToCreateUpperCamelCase;
+        let option_to_update_snake_case = naming_conventions::OptionToUpdateSnakeCase;
         
         enum SupportedJsonValue {
             ObjectIdent,
@@ -2474,7 +2475,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     type OptionToUpdate<'a> = #tokens_ident_option_to_update_token_stream;
                     type OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed = #tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream;
                     fn try_generate_postgresql_query_part_to_update(
-                        option_to_update: &Self::OptionToUpdate<'_>,
+                        #option_to_update_snake_case: &Self::OptionToUpdate<'_>,
                         jsonb_set_accumulator: &std::primitive::str,
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
@@ -2482,7 +2483,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ) -> Result<std::string::String, Self::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
                         #try_generate_postgresql_query_part_to_update_content_token_stream
                     }
-                    fn bind_value_to_postgresql_query_part_to_update<'a>(option_to_update: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn bind_value_to_postgresql_query_part_to_update<'a>(#option_to_update_snake_case: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_update_content_token_stream
                     }
                 }
@@ -2648,14 +2649,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))"},
                     ),
                     &quote::quote!{
-                        option_to_update.try_generate_postgresql_query_part_to_update(
+                        #option_to_update_snake_case.try_generate_postgresql_query_part_to_update(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
                             increment,
                         )
                     },
-                    &quote::quote!{option_to_update.bind_value_to_postgresql_query_part_to_update(query)},
+                    &quote::quote!{#option_to_update_snake_case.bind_value_to_postgresql_query_part_to_update(query)},
                 );
                 quote::quote!{
                     #object_ident_token_stream
@@ -2917,7 +2918,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         });
                         quote::quote!{
-                            Ok(match &option_to_update.0 {
+                            Ok(match &#option_to_update_snake_case.0 {
                                 Some(value) => {
                                     let mut #std_option_option_object_acc_snake_case = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
                                     #generate_jsonb_set_target_token_stream
@@ -2958,7 +2959,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         });
                         quote::quote!{
-                            match option_to_update.0 {
+                            match #option_to_update_snake_case.0 {
                                 Some(value) => {
                                     for element in value.0 {
                                         match element {
@@ -4030,7 +4031,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ),
                     &
                     quote::quote!{
-                        match option_to_update.0.try_generate_postgresql_query_part_to_update(
+                        match #option_to_update_snake_case.0.try_generate_postgresql_query_part_to_update(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
@@ -4046,7 +4047,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     &quote::quote!{
-                        query = option_to_update.0.bind_value_to_postgresql_query_part_to_update(query);
+                        query = #option_to_update_snake_case.0.bind_value_to_postgresql_query_part_to_update(query);
                         query
                     }
                 );
@@ -4563,7 +4564,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))"}
                     ),
                     &quote::quote!{
-                        match &option_to_update.0 {
+                        match &#option_to_update_snake_case.0 {
                             Some(value) => {
                                 match value.try_generate_postgresql_query_part_to_update(
                                     jsonb_set_accumulator,
@@ -4592,7 +4593,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     &quote::quote!{
-                        match option_to_update.0 {
+                        match #option_to_update_snake_case.0 {
                             Some(value) => {
                                 query = value.bind_value_to_postgresql_query_part_to_update(query);
                             }
