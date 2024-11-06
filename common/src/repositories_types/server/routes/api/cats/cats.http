@@ -500,21 +500,21 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
     "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
       0
     ],
-    "generic": {
+    "object": {
       "std_primitive_i8": 0,
       "std_primitive_i16": 0
     },
-    "std_option_option_generic": {
+    "std_option_option_object": {
       "std_primitive_i8": 0,
       "std_primitive_i16": 0
     },
-    "std_vec_vec_generic_with_id": [
+    "std_vec_vec_object_with_id": [
       {
         "std_primitive_i8": 0,
         "std_primitive_i16": 0
       }
     ],
-    "std_option_option_std_vec_vec_generic_with_id": [
+    "std_option_option_std_vec_vec_object_with_id": [
       {
         "std_primitive_i8": 0,
         "std_primitive_i16": 0
@@ -710,7 +710,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             }
           },
           {
-            "generic": [
+            "object": [
               {
                 "std_primitive_i8": {}
               },
@@ -720,7 +720,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             ]
           },
           {
-            "std_option_option_generic": [
+            "std_option_option_object": [
               {
                 "std_primitive_i8": {}
               },
@@ -730,7 +730,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             ]
           },
           {
-            "std_vec_vec_generic_with_id": {
+            "std_vec_vec_object_with_id": {
               "field_vec": [
                 {
                   "id": {}
@@ -749,7 +749,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             }
           },
           {
-            "std_option_option_std_vec_vec_generic_with_id": {
+            "std_option_option_std_vec_vec_object_with_id": {
               "field_vec": [
                 {
                   "id": {}
@@ -851,7 +851,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         }
       },
       {
-        "generic": {
+        "object": {
           "value": [
             {
               "std_primitive_i8": {
@@ -867,7 +867,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         }
       },
       {
-        "std_option_option_generic": {
+        "std_option_option_object": {
           "value": [
             {
               "std_primitive_i8": {
@@ -883,7 +883,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         }
       },
       {
-        "std_vec_vec_generic_with_id": {
+        "std_vec_vec_object_with_id": {
           "value": {
             "create": [
               {
@@ -893,7 +893,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             ],
             "update": [
               {
-                "id": "00003ecf-1488-4492-b9a1-19b1b05d9b73",
+                "id": "ecea4ddd-4dfa-4a62-b747-27c1bcf9041a",
                 "fields": [
                   {
                     "std_primitive_i8": {
@@ -909,13 +909,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
               }
             ],
             "delete": [
-              "99f68bf2-7d9c-4014-b246-d1fb95e7f557"
+              "4ace83d4-947d-4672-ba62-9c6b2eaa3e40"
             ]
           }
         }
       },
       {
-        "std_option_option_std_vec_vec_generic_with_id": {
+        "std_option_option_std_vec_vec_object_with_id": {
           "value": {
             "create": [
               {
@@ -925,7 +925,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
             ],
             "update": [
               {
-                "id": "624a32c1-e03a-45ab-9658-5a9b299e293b",
+                "id": "f6e7d667-e17d-45b3-80d6-a908242fcebf",
                 "fields": [
                   {
                     "std_primitive_i8": {
@@ -941,7 +941,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
               }
             ],
             "delete": [
-              "61939f56-27ee-4635-a178-dfed795de7c2"
+              "089be3c7-27c6-40ef-b699-afd1992c04b6"
             ]
           }
         }
