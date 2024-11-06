@@ -49,7 +49,7 @@ pub trait PostgresqlJsonType {
         + schemars::JsonSchema
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type OptionsToRead<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    fn generate_postgresql_query_part_field_to_read(//generate_postgresql_query_part_to_read
+    fn generate_postgresql_query_part_to_read(
         field_reader: &Self::FieldReader<'_>,
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,

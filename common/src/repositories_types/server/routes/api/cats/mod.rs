@@ -309,14 +309,14 @@ pub struct Something {
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for ObjectCatFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 CatFieldToRead::StdPrimitiveI32(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('object',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_primitive_i32",
 //                             &format!("{column_name_and_maybe_field_getter}->'std_primitive_i32'"),
@@ -433,14 +433,14 @@ pub struct Doggie {
 // pub struct ObjectCatFieldReader(std::vec::Vec<CatFieldToRead>);
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for ObjectCatFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 CatFieldToRead::StdPrimitiveI32(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('object',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_primitive_i32",
 //                             &format!("{column_name_and_maybe_field_getter}->'std_primitive_i32'"),

@@ -108,20 +108,20 @@
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct GenericSomethingFieldReader(std::vec::Vec<SomethingFieldToRead>);
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericSomethingFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 SomethingFieldToRead::StdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "std_primitive_i8", "{column_name_and_maybe_field_getter}->'std_primitive_i8'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "std_primitive_i8", "{column_name_and_maybe_field_getter}->'std_primitive_i8'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8")
 //                     ));
 //                 }
 //                 SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8'",
@@ -132,7 +132,7 @@
 //                 SomethingFieldToRead::StdVecVecStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_vec_vec_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_i8'",
@@ -143,7 +143,7 @@
 //                 SomethingFieldToRead::StdOptionOptionStdVecVecStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_vec_vec_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8'",
@@ -154,7 +154,7 @@
 //                 SomethingFieldToRead::StdVecVecStdOptionOptionStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_vec_vec_std_option_option_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_std_primitive_i8'",
@@ -165,7 +165,7 @@
 //                 SomethingFieldToRead::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_vec_vec_std_option_option_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8'",
@@ -176,13 +176,13 @@
 //                 SomethingFieldToRead::Generic(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "generic", "{column_name_and_maybe_field_getter}->'generic'", "{column_name_and_maybe_field_getter_for_error_message}.generic")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "generic", "{column_name_and_maybe_field_getter}->'generic'", "{column_name_and_maybe_field_getter_for_error_message}.generic")
 //                     ));
 //                 }
 //                 SomethingFieldToRead::StdOptionOptionGeneric(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_generic",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_generic'",
@@ -193,7 +193,7 @@
 //                 SomethingFieldToRead::StdVecVecGenericWithId(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_vec_vec_generic_with_id",
 //                             "{column_name_and_maybe_field_getter}->'std_vec_vec_generic_with_id'",
@@ -204,7 +204,7 @@
 //                 SomethingFieldToRead::StdOptionOptionStdVecVecGenericWithId(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_vec_vec_generic_with_id",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id'",
@@ -239,20 +239,20 @@
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct StdOptionOptionGenericSomethingFieldReader(std::vec::Vec<SomethingFieldToRead>);
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericSomethingFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 SomethingFieldToRead::StdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "std_primitive_i8", "{column_name_and_maybe_field_getter}->'std_primitive_i8'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "std_primitive_i8", "{column_name_and_maybe_field_getter}->'std_primitive_i8'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i8")
 //                     ));
 //                 }
 //                 SomethingFieldToRead::StdOptionOptionStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_primitive_i8'",
@@ -263,7 +263,7 @@
 //                 SomethingFieldToRead::StdVecVecStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_vec_vec_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_vec_vec_std_primitive_i8'",
@@ -274,7 +274,7 @@
 //                 SomethingFieldToRead::StdOptionOptionStdVecVecStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_vec_vec_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_primitive_i8'",
@@ -285,7 +285,7 @@
 //                 SomethingFieldToRead::StdVecVecStdOptionOptionStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_vec_vec_std_option_option_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_vec_vec_std_option_option_std_primitive_i8'",
@@ -296,7 +296,7 @@
 //                 SomethingFieldToRead::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_vec_vec_std_option_option_std_primitive_i8",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_std_option_option_std_primitive_i8'",
@@ -307,13 +307,13 @@
 //                 SomethingFieldToRead::Generic(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "generic", "{column_name_and_maybe_field_getter}->'generic'", "{column_name_and_maybe_field_getter_for_error_message}.generic")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "generic", "{column_name_and_maybe_field_getter}->'generic'", "{column_name_and_maybe_field_getter_for_error_message}.generic")
 //                     ));
 //                 }
 //                 SomethingFieldToRead::StdOptionOptionGeneric(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_generic",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_generic'",
@@ -324,7 +324,7 @@
 //                 SomethingFieldToRead::StdVecVecGenericWithId(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_vec_vec_generic_with_id",
 //                             "{column_name_and_maybe_field_getter}->'std_vec_vec_generic_with_id'",
@@ -335,7 +335,7 @@
 //                 SomethingFieldToRead::StdOptionOptionStdVecVecGenericWithId(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(
 //                             value,
 //                             "std_option_option_std_vec_vec_generic_with_id",
 //                             "{column_name_and_maybe_field_getter}->'std_option_option_std_vec_vec_generic_with_id'",
@@ -452,14 +452,14 @@
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct GenericDoggieFieldReader(std::vec::Vec<DoggieFieldToRead>);
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericDoggieFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 DoggieFieldToRead::StdPrimitiveI16(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "std_primitive_i16", "{column_name_and_maybe_field_getter}->'std_primitive_i16'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "std_primitive_i16", "{column_name_and_maybe_field_getter}->'std_primitive_i16'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16")
 //                     ));
 //                 }
 //             }
@@ -489,14 +489,14 @@
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct StdOptionOptionGenericDoggieFieldReader(std::vec::Vec<DoggieFieldToRead>);
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericDoggieFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 DoggieFieldToRead::StdPrimitiveI16(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "std_primitive_i16", "{column_name_and_maybe_field_getter}->'std_primitive_i16'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "std_primitive_i16", "{column_name_and_maybe_field_getter}->'std_primitive_i16'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i16")
 //                     ));
 //                 }
 //             }
@@ -608,14 +608,14 @@
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct GenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for GenericCatFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 CatFieldToRead::StdPrimitiveI32(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "std_primitive_i32", "{column_name_and_maybe_field_getter}->'std_primitive_i32'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "std_primitive_i32", "{column_name_and_maybe_field_getter}->'std_primitive_i32'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32")
 //                     ));
 //                 }
 //             }
@@ -645,14 +645,14 @@
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct StdOptionOptionGenericCatFieldReader(std::vec::Vec<CatFieldToRead>);
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for StdOptionOptionGenericCatFieldReader {
-//     fn generate_postgresql_query_part_field_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
 //         let mut acc = std::string::String::default();
 //         for element in &self.0 {
 //             match element {
 //                 CatFieldToRead::StdPrimitiveI32(value) => {
 //                     acc.push_str(&format!(
 //                         "jsonb_build_object('{field_ident}',{})||",
-//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_field_to_read(value, "std_primitive_i32", "{column_name_and_maybe_field_getter}->'std_primitive_i32'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32")
+//                         postgresql_crud::GeneratePostgresqlQueryPartFieldToRead::generate_postgresql_query_part_to_read(value, "std_primitive_i32", "{column_name_and_maybe_field_getter}->'std_primitive_i32'", "{column_name_and_maybe_field_getter_for_error_message}.std_primitive_i32")
 //                     ));
 //                 }
 //             }

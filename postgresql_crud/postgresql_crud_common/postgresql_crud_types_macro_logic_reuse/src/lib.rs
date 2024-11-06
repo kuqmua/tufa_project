@@ -604,7 +604,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         };
         let (
             options_to_read_token_stream,
-            generate_postgresql_query_part_field_to_read_token_stream
+            generate_postgresql_query_part_to_read_token_stream
         ) = {
             let options_to_read_upper_camel_case = naming_conventions::OptionsToReadUpperCamelCase;
             let options_to_read_token_stream = {
@@ -613,7 +613,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 }
             };
             //todo maybe rename later
-            let generate_postgresql_query_part_field_to_read_token_stream = {
+            let generate_postgresql_query_part_to_read_token_stream = {
                 let field_reader_snake_case = naming_conventions::FieldReaderSnakeCase;
                 let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &proc_macro2::TokenStream| {
                     let pagination_start_end_initialization_token_stream = proc_macro_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&field_reader_snake_case);
@@ -644,7 +644,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                     ),
                 };
                 quote::quote!{
-                    fn generate_postgresql_query_part_field_to_read(
+                    fn generate_postgresql_query_part_to_read(
                         #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
                         field_ident: &std::primitive::str,
                         column_name_and_maybe_field_getter: &std::primitive::str,
@@ -656,7 +656,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             };
             (
                 options_to_read_token_stream,
-                generate_postgresql_query_part_field_to_read_token_stream
+                generate_postgresql_query_part_to_read_token_stream
             )
         };
         let (
@@ -723,7 +723,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 #bind_value_to_postgresql_query_part_to_create_token_stream
                 #field_reader_token_stream
                 #options_to_read_token_stream
-                #generate_postgresql_query_part_field_to_read_token_stream
+                #generate_postgresql_query_part_to_read_token_stream
                 #option_to_update_token_stream
                 #option_to_update_try_generate_bind_increments_error_named_token_stream
                 #try_generate_bind_increments_token_stream
