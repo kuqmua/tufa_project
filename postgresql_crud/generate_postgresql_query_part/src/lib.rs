@@ -1648,6 +1648,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let try_generate_postgresql_query_part_to_update_snake_case = naming_conventions::TryGeneratePostgresqlQueryPartToUpdateSnakeCase;
     let bind_value_to_postgresql_query_part_to_update_snake_case = naming_conventions::BindValueToPostgresqlQueryPartToUpdateSnakeCase;
     let jsonb_set_accumulator_snake_case = naming_conventions::JsonbSetAccumulatorSnakeCase;
+    let jsonb_set_target_snake_case = naming_conventions::JsonbSetTargetSnakeCase;
     let generate_tokens_to_update_methods_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
         //todo rename
@@ -1660,7 +1661,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 fn #try_generate_postgresql_query_part_to_update_snake_case(
                     &self,
                     #jsonb_set_accumulator_snake_case: &std::primitive::str,
-                    jsonb_set_target: &std::primitive::str,
+                    #jsonb_set_target_snake_case: &std::primitive::str,
                     jsonb_set_path: &std::primitive::str,
                     increment: &mut std::primitive::u64,
                 ) -> Result<std::string::String, #tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
@@ -1728,10 +1729,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         generate_jsonb_set_target_token_stream
     ) = {
         let generate_jsonb_set_target_snake_case = naming_conventions::GenerateJsonbSetTargetSnakeCase;
-        let generate_jsonb_set_target_token_stream = quote::quote!{
-            let #generate_jsonb_set_target_snake_case = |value: &std::primitive::str|{
-                format!("{jsonb_set_target}->'{value}'")
-            };
+        let generate_jsonb_set_target_token_stream = {
+            let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{{{jsonb_set_target_snake_case}}}->'{{value}}'"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
+            quote::quote!{
+                let #generate_jsonb_set_target_snake_case = |value: &std::primitive::str|{
+                    format!(#format_handle_token_stream)
+                };
+            }
         };
         (
             generate_jsonb_set_target_snake_case,
@@ -2186,7 +2193,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     });
                     let local_acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                        &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',case when jsonb_typeof({{jsonb_set_target}}) = 'object' then ({{jsonb_set_target}})::jsonb else '{{{{}}}}'::jsonb end)"),
+                        &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'object' then ({{{jsonb_set_target_snake_case}}})::jsonb else '{{{{}}}}'::jsonb end)"),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
                     quote::quote!{
@@ -2490,7 +2497,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     fn #try_generate_postgresql_query_part_to_update_snake_case(
                         #option_to_update_snake_case: &Self::#option_to_update_upper_camel_case<'_>,
                         #jsonb_set_accumulator_snake_case: &std::primitive::str,
-                        jsonb_set_target: &std::primitive::str,
+                        #jsonb_set_target_snake_case: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
                     ) -> Result<std::string::String, Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case> {
@@ -2664,7 +2671,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         #option_to_update_snake_case.#try_generate_postgresql_query_part_to_update_snake_case(
                             #jsonb_set_accumulator_snake_case,
-                            jsonb_set_target,
+                            #jsonb_set_target_snake_case,
                             jsonb_set_path,
                             increment,
                         )
@@ -2930,6 +2937,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 }
                             }
                         });
+                        let some_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'object' then ({{{jsonb_set_target_snake_case}}})::jsonb else '{{{{}}}}'::jsonb end"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
                         let none_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"),
                             &proc_macro_name_upper_camel_case_ident_stringified
@@ -2937,7 +2948,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{
                             Ok(match &#option_to_update_snake_case.0 {
                                 Some(value) => {
-                                    let mut #std_option_option_object_acc_snake_case = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
+                                    let mut #std_option_option_object_acc_snake_case = format!(#some_format_handle_token_stream);
                                     #generate_jsonb_set_target_token_stream
                                     for element in &value.0 {
                                         match element {
@@ -3391,7 +3402,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         });
                         let ok_format_handle_token_stream = if is_nullable {
                             let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}', case when jsonb_typeof({{jsonb_set_target}}) = 'array' then case when jsonb_array_length({{jsonb_set_target}}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({{update_query_part_acc}}) from jsonb_array_elements({{jsonb_set_target}}) as elem {{maybe_where}}), '[]'::jsonb)) end else '[]'::jsonb end {{maybe_jsonb_build_array}})"),
+                                &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}', case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'array' then case when jsonb_array_length({{{jsonb_set_target_snake_case}}}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({{update_query_part_acc}}) from jsonb_array_elements({{{jsonb_set_target_snake_case}}}) as elem {{maybe_where}}), '[]'::jsonb)) end else '[]'::jsonb end {{maybe_jsonb_build_array}})"),
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             );
                             quote::quote!{
@@ -3400,7 +3411,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                         else {
                             let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}', case when jsonb_array_length({{jsonb_set_target}}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({{update_query_part_acc}}) from jsonb_array_elements({{jsonb_set_target}}) as elem {{maybe_where}}), '[]'::jsonb)) end {{maybe_jsonb_build_array}})"),
+                                &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}', case when jsonb_array_length({{{jsonb_set_target_snake_case}}}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({{update_query_part_acc}}) from jsonb_array_elements({{{jsonb_set_target_snake_case}}}) as elem {{maybe_where}}), '[]'::jsonb)) end {{maybe_jsonb_build_array}})"),
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             );
                             quote::quote!{
@@ -4058,7 +4069,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         match #option_to_update_snake_case.0.#try_generate_postgresql_query_part_to_update_snake_case(
                             #jsonb_set_accumulator_snake_case,
-                            jsonb_set_target,
+                            #jsonb_set_target_snake_case,
                             jsonb_set_path,
                             increment,
                         ) {
@@ -4598,7 +4609,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 Some(value) => {
                                     match value.#try_generate_postgresql_query_part_to_update_snake_case(
                                         #jsonb_set_accumulator_snake_case,
-                                        jsonb_set_target,
+                                        #jsonb_set_target_snake_case,
                                         jsonb_set_path,
                                         increment,
                                     ) {
