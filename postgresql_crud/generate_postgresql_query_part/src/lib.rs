@@ -2468,6 +2468,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             };
             let to_create_upper_camel_case = naming_conventions::ToCreateUpperCamelCase;
             let field_reader_upper_camel_case = naming_conventions::FieldReaderUpperCamelCase;
+            let options_to_read_upper_camel_case = naming_conventions::OptionsToReadUpperCamelCase;
+            let option_to_update_upper_camel_case = naming_conventions::OptionToUpdateUpperCamelCase;
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
                     type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
@@ -2478,14 +2480,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #bind_value_to_postgresql_query_part_to_create_content_token_stream
                     }
                     type #field_reader_upper_camel_case<'a> = #tokens_ident_field_reader_token_stream;
-                    type OptionsToRead<'a> = #tokens_ident_options_to_read_token_stream;
+                    type #options_to_read_upper_camel_case<'a> = #tokens_ident_options_to_read_token_stream;
                     fn #generate_postgresql_query_part_to_read_snake_case(field_reader: &Self::#field_reader_upper_camel_case<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         #generate_postgresql_query_part_to_read_content_token_stream
                     }
-                    type OptionToUpdate<'a> = #tokens_ident_option_to_update_token_stream;
+                    type #option_to_update_upper_camel_case<'a> = #tokens_ident_option_to_update_token_stream;
                     type OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed = #tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream;
                     fn #try_generate_postgresql_query_part_to_update_snake_case(
-                        #option_to_update_snake_case: &Self::OptionToUpdate<'_>,
+                        #option_to_update_snake_case: &Self::#option_to_update_upper_camel_case<'_>,
                         #jsonb_set_accumulator_snake_case: &std::primitive::str,
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
@@ -2493,7 +2495,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ) -> Result<std::string::String, Self::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
                         #try_generate_postgresql_query_part_to_update_content_token_stream
                     }
-                    fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(#option_to_update_snake_case: Self::OptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(#option_to_update_snake_case: Self::#option_to_update_upper_camel_case<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_update_content_token_stream
                     }
                 }
