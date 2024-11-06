@@ -1063,13 +1063,13 @@ impl schemars::JsonSchema for UuidOptionToUpdate {
 //
 impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
     type ToCreate<'a> = UuidToCreate;
-    fn try_generate_postgresql_query_part_to_create(_: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_postgresql_query_part_to_create(_: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
                 Ok(format!("${increment}"))
             }
-            None => Err(crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
     fn bind_value_to_postgresql_query_part_to_create<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

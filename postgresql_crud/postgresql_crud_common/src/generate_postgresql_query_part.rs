@@ -18,7 +18,7 @@ pub trait AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAnd
 }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum JsonCreateTryGenerateBindIncrementsErrorNamed {
+pub enum PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 pub trait PostgresqlJsonType {
@@ -34,7 +34,7 @@ pub trait PostgresqlJsonType {
     fn try_generate_postgresql_query_part_to_create(
         self_to_create: &Self::ToCreate<'_>,
         increment: &mut std::primitive::u64
-    ) -> Result<std::string::String, JsonCreateTryGenerateBindIncrementsErrorNamed>;
+    ) -> Result<std::string::String, PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed>;
     fn bind_value_to_postgresql_query_part_to_create<'a>(
         self_to_create: Self::ToCreate<'a>,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>

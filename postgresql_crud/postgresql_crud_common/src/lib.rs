@@ -8103,11 +8103,11 @@ pub trait AsPostgresqlJsonB {}
 pub enum TryGenerateBindIncrementsErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-//todo add another error variant instead for JsonCreateTryGenerateBindIncrementsErrorNamed
-impl std::convert::From<crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> for TryGenerateBindIncrementsErrorNamed {
-    fn from(value: crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed) -> Self {
+//todo add another error variant instead for PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed
+impl std::convert::From<crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> for TryGenerateBindIncrementsErrorNamed {
+    fn from(value: crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed) -> Self {
         match value {
-            crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence }
+            crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence }
         }
     }
 }

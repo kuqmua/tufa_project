@@ -221,7 +221,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     |{
         quote::quote!{
             impl #struct_ident_token_stream {
-                fn try_generate_postgresql_query_part_to_create(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                fn try_generate_postgresql_query_part_to_create(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
                     #try_generate_postgresql_query_part_to_create_content_token_stream
                 }
                 fn bind_value_to_postgresql_query_part_to_create<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1578,7 +1578,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             #checked_add_variant_declaration_token_stream,
                             Create {
                                 #[eo_error_occurence]
-                                error: postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed,
+                                error: postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed,
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                             },
                             #(#variants_token_stream),*
@@ -2455,7 +2455,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
                     type ToCreate<'a> = #tokens_ident_to_create_token_stream;
-                    fn try_generate_postgresql_query_part_to_create(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                    fn try_generate_postgresql_query_part_to_create(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
                         #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
                     fn bind_value_to_postgresql_query_part_to_create<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

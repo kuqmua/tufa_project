@@ -567,13 +567,13 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                     fn try_generate_postgresql_query_part_to_create(
                         self_to_create: &Self::#to_create_upper_camel_case<'_>,
                         increment: &mut std::primitive::u64
-                    ) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                    ) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
                         match increment.checked_add(1) {
                             Some(incr) => {
                                 *increment = incr;
                                 Ok(format!("${increment}"))
                             }
-                            None => Err(crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
                     }
                 }
