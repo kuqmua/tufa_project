@@ -553,7 +553,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         let (
             to_create_token_stream,
             try_generate_postgresql_query_part_to_create_token_stream,
-            json_create_bind_value_to_query_token_stream
+            bind_value_to_postgresql_query_part_to_create_token_stream
         ) = {
             let to_create_upper_camel_case = naming_conventions::ToCreateUpperCamelCase;
             let to_create_token_stream = {
@@ -578,9 +578,9 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                     }
                 }
             };
-            let json_create_bind_value_to_query_token_stream = {
+            let bind_value_to_postgresql_query_part_to_create_token_stream = {
                 quote::quote!{
-                    fn json_create_bind_value_to_query<'a>(
+                    fn bind_value_to_postgresql_query_part_to_create<'a>(
                         self_to_create: Self::#to_create_upper_camel_case<'a>,
                         mut query: sqlx::query::Query<'a,
                         sqlx::Postgres, sqlx::postgres::PgArguments>
@@ -593,7 +593,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             (
                 to_create_token_stream,
                 try_generate_postgresql_query_part_to_create_token_stream,
-                json_create_bind_value_to_query_token_stream
+                bind_value_to_postgresql_query_part_to_create_token_stream
             )
         };
         let field_reader_upper_camel_case = naming_conventions::FieldReaderUpperCamelCase;
@@ -720,7 +720,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             impl crate::generate_postgresql_query_part::PostgresqlJsonType for #ident {
                 #to_create_token_stream
                 #try_generate_postgresql_query_part_to_create_token_stream
-                #json_create_bind_value_to_query_token_stream
+                #bind_value_to_postgresql_query_part_to_create_token_stream
                 #field_reader_token_stream
                 #options_to_read_token_stream
                 #generate_postgresql_query_part_field_to_read_token_stream

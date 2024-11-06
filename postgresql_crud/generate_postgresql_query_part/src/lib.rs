@@ -217,15 +217,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_tokens_to_create_methods_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
-        json_create_bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
+        bind_value_to_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
     |{
         quote::quote!{
             impl #struct_ident_token_stream {
                 fn try_generate_postgresql_query_part_to_create(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
                     #try_generate_postgresql_query_part_to_create_content_token_stream
                 }
-                fn json_create_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                    #json_create_bind_value_to_query_content_token_stream
+                fn bind_value_to_postgresql_query_part_to_create<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    #bind_value_to_postgresql_query_part_to_create_content_token_stream
                 }
             }
         }
@@ -372,7 +372,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
                 &{
-                    let json_create_bind_value_to_query_fields_token_stream = vec_syn_field.iter().map(|element| {
+                    let bind_value_to_postgresql_query_part_to_create_fields_token_stream = vec_syn_field.iter().map(|element| {
                         let element_field_ident = element
                             .ident
                             .as_ref()
@@ -381,11 +381,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                         let element_type = &element.ty;
                         quote::quote!{
-                            query = <#element_type as postgresql_crud::PostgresqlJsonType>::json_create_bind_value_to_query(self.#element_field_ident, query);
+                            query = <#element_type as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_create(self.#element_field_ident, query);
                         }
                     });
                     quote::quote!{
-                        #(#json_create_bind_value_to_query_fields_token_stream)*
+                        #(#bind_value_to_postgresql_query_part_to_create_fields_token_stream)*
                         query
                     }
                 },
@@ -479,7 +479,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         },
                         &{
                             quote::quote!{
-                                query = self.0.json_create_bind_value_to_query(query);
+                                query = self.0.bind_value_to_postgresql_query_part_to_create(query);
                                 query
                             }
                         },
@@ -527,7 +527,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                     });
                     quote::quote!{
-                        query = <#element_type as postgresql_crud::PostgresqlJsonType>::json_create_bind_value_to_query(self.0.#element_ident, query);
+                        query = <#element_type as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_create(self.0.#element_ident, query);
                     }
                 });
                 quote::quote!{
@@ -2409,7 +2409,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = |
             supported_json_value: SupportedJsonValue,
             try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
-            json_create_bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
+            bind_value_to_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
             generate_postgresql_query_part_field_to_read_content_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_content_token_stream: &dyn quote::ToTokens,
             bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
@@ -2456,8 +2456,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     fn try_generate_postgresql_query_part_to_create(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
                         #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
-                    fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        #json_create_bind_value_to_query_content_token_stream
+                    fn bind_value_to_postgresql_query_part_to_create<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        #bind_value_to_postgresql_query_part_to_create_content_token_stream
                     }
                     type FieldReader<'a> = #tokens_ident_field_reader_token_stream;
                     type OptionsToRead<'a> = #tokens_ident_options_to_read_token_stream;
@@ -2634,7 +2634,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::ObjectIdent,
                     &quote::quote!{self_to_create.try_generate_postgresql_query_part_to_create(increment)},
-                    &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
+                    &quote::quote!{self_to_create.bind_value_to_postgresql_query_part_to_create(query)},
                     &generate_generate_postgresql_query_part_field_to_read_content_token_stream(
                         &object_ident_field_reader_upper_camel_case_token_stream,
                         false,
@@ -2861,7 +2861,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     &quote::quote!{
                         if let Some(value) = self_to_create.0 {
-                            query = value.json_create_bind_value_to_query(query);
+                            query = value.bind_value_to_postgresql_query_part_to_create(query);
                         }
                         query
                     },
@@ -3473,7 +3473,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 query = query.bind(element.0.to_string());//postgresql: error returned from database: operator does not exist: text <> jsonb
                             }
                             for element in self.create {
-                                query = element.json_create_bind_value_to_query(query);
+                                query = element.bind_value_to_postgresql_query_part_to_create(query);
                             }
                             query
                         }
@@ -4012,7 +4012,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     &quote::quote!{
                         for element in self_to_create.0 {
-                            query = element.json_create_bind_value_to_query(query);
+                            query = element.bind_value_to_postgresql_query_part_to_create(query);
                         }
                         query
                     },
@@ -4545,7 +4545,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         if let Some(value) = self_to_create.0 {
                             for element in value {
-                                query = element.json_create_bind_value_to_query(query);
+                                query = element.bind_value_to_postgresql_query_part_to_create(query);
                             }
                         }
                         query
