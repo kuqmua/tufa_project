@@ -217,6 +217,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed};
     let try_generate_postgresql_query_part_to_create_snake_case = naming_conventions::TryGeneratePostgresqlQueryPartToCreateSnakeCase;
     let bind_value_to_postgresql_query_part_to_create_snake_case = naming_conventions::BindValueToPostgresqlQueryPartToCreateSnakeCase;
+    let increment_snake_case = naming_conventions::IncrementSnakeCase;
+    let increments_snake_case = naming_conventions::IncrementsSnakeCase;
     let generate_tokens_to_create_methods_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
@@ -224,7 +226,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     |{
         quote::quote!{
             impl #struct_ident_token_stream {
-                fn #try_generate_postgresql_query_part_to_create_snake_case(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
+                fn #try_generate_postgresql_query_part_to_create_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                     #try_generate_postgresql_query_part_to_create_content_token_stream
                 }
                 fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -356,9 +358,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let element_type = &element.ty;
                         quote::quote!{
-                            match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.#element_field_ident, increment) {
+                            match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.#element_field_ident, #increment_snake_case) {
                                 Ok(value) => {
-                                    increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
+                                    #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                                 }
                                 Err(error) => {
                                     return Err(error);
@@ -366,12 +368,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         }
                     });
+                    let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                        &format!("{{{increments_snake_case}}}"),
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    );
                     quote::quote!{
-                        let mut increments = std::string::String::from("");
+                        let mut #increments_snake_case = std::string::String::from("");
                         #(#try_generate_postgresql_query_part_to_create_fields_token_stream)*
-                        let _ = increments.pop();
-                        let _ = increments.pop();
-                        Ok(format!("{increments}"))
+                        let _ = #increments_snake_case.pop();
+                        let _ = #increments_snake_case.pop();
+                        Ok(format!(#format_handle_token_stream))
                     }
                 },
                 &{
@@ -474,7 +480,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 quote::quote!{value}
                             };
                             quote::quote!{
-                                match self.0.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
+                                match self.0.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case) {
                                     Ok(value) => Ok(#ok_value_token_stream),
                                     Err(error) => Err(error)
                                 }
@@ -514,9 +520,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     let element_type = &element.ty;
                     quote::quote!{
-                        match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.0.#element_field_ident, increment) {
+                        match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.0.#element_field_ident, #increment_snake_case) {
                             Ok(value) => {
-                                increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
+                                #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                             }
                             Err(error) => {
                                 return Err(error.into());
@@ -533,17 +539,21 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         query = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_create_snake_case(self.0.#element_ident, query);
                     }
                 });
+                let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                    &format!("{{{increments_snake_case}}}"),
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                );
                 quote::quote!{
                     impl<'a> postgresql_crud::BindQuery<'a> for #ident_to_create_without_generated_id_upper_camel_case {
-                        fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                        fn try_increment(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<(), postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                             todo!()
                         }
                         fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-                            let mut increments = std::string::String::from("");
+                            let mut #increments_snake_case = std::string::String::from("");
                             #(#try_generate_bind_increments_token_stream)*
-                            let _ = increments.pop();
-                            let _ = increments.pop();
-                            Ok(format!("{increments}"))
+                            let _ = #increments_snake_case.pop();
+                            let _ = #increments_snake_case.pop();
+                            Ok(format!(#format_handle_token_stream))
                         }
                         fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                             #(#bind_value_to_query_token_stream)*
@@ -1664,7 +1674,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #jsonb_set_accumulator_snake_case: &std::primitive::str,
                     #jsonb_set_target_snake_case: &std::primitive::str,
                     #jsonb_set_path_snake_case: &std::primitive::str,
-                    increment: &mut std::primitive::u64,
+                    #increment_snake_case: &mut std::primitive::u64,
                 ) -> Result<std::string::String, #tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                     #try_generate_postgresql_query_part_to_update_content_token_stream
                 }
@@ -2179,7 +2189,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 &local_acc,
                                 &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                                 &#generate_jsonb_set_path_snake_case(#field_ident_double_quotes_token_stream),
-                                increment,
+                                #increment_snake_case,
                             ) {
                                 Ok(value) => {
                                     local_acc = value;
@@ -2486,7 +2496,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
                     type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
-                    fn #try_generate_postgresql_query_part_to_create_snake_case(#to_create_snake_case: &Self::#to_create_upper_camel_case<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
+                    fn #try_generate_postgresql_query_part_to_create_snake_case(#to_create_snake_case: &Self::#to_create_upper_camel_case<'_>, #increment_snake_case: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                         #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
                     fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(#to_create_snake_case: Self::#to_create_upper_camel_case<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -2504,7 +2514,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #jsonb_set_accumulator_snake_case: &std::primitive::str,
                         #jsonb_set_target_snake_case: &std::primitive::str,
                         #jsonb_set_path_snake_case: &std::primitive::str,
-                        increment: &mut std::primitive::u64,
+                        #increment_snake_case: &mut std::primitive::u64,
                     ) -> Result<std::string::String, Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case> {
                         #try_generate_postgresql_query_part_to_update_content_token_stream
                     }
@@ -2666,7 +2676,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::ObjectIdent,
-                    &quote::quote!{#to_create_snake_case.#try_generate_postgresql_query_part_to_create_snake_case(increment)},
+                    &quote::quote!{#to_create_snake_case.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case)},
                     &quote::quote!{#to_create_snake_case.#bind_value_to_postgresql_query_part_to_create_snake_case(query)},
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
                         &object_ident_field_reader_upper_camel_case_token_stream,
@@ -2678,7 +2688,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             #jsonb_set_accumulator_snake_case,
                             #jsonb_set_target_snake_case,
                             #jsonb_set_path_snake_case,
-                            increment,
+                            #increment_snake_case,
                         )
                     },
                     &quote::quote!{#option_to_update_snake_case.#bind_value_to_postgresql_query_part_to_update_snake_case(query)},
@@ -2884,7 +2894,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedJsonValue::StdOptionOptionObjectIdent,
                     &quote::quote!{
                         match &#to_create_snake_case.0 {
-                            Some(value) => match value.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
+                            Some(value) => match value.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case) {
                                 Ok(value) => Ok(value),
                                 Err(error) => Err(error)
                             },
@@ -2927,7 +2937,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         &#std_option_option_object_acc_snake_case,
                                         &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                                         #field_ident_double_quotes_token_stream,
-                                        increment,
+                                        #increment_snake_case,
                                     ) {
                                         Ok(value) => {
                                             #std_option_option_object_acc_snake_case = value;
@@ -2947,7 +2957,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
                         let none_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{increment}})"),
+                            &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
                         quote::quote!{
@@ -2962,9 +2972,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     }
                                     format!(#std_option_option_object_acc_jsonb_set_double_quotes_token_stream)
                                 },
-                                None => match increment.checked_add(1) {
+                                None => match #increment_snake_case.checked_add(1) {
                                     Some(value) => {
-                                        *increment = value;
+                                        *#increment_snake_case = value;
                                         format!(#none_format_handle_token_stream)
                                     },
                                     None => {
@@ -3390,7 +3400,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         &element_acc,
                                         &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                                         #field_ident_double_quotes_token_stream,
-                                        increment,
+                                        #increment_snake_case,
                                     ) {
                                         Ok(value) => {
                                             element_acc = value;
@@ -3423,6 +3433,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 Ok(format!(#format_handle_token_stream))
                             }
                         };
+                        let delete_query_part_acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("{{maybe_space_and_space}}elem->>'id' <> ${{{increment_snake_case}}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
                         quote::quote!{
                             let update_query_part_acc = {
                                 let mut element_acc = std::string::String::from("elem");
@@ -3433,10 +3447,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     let mut update_query_part_acc = std::string::String::default();
                                     #generate_jsonb_set_target_token_stream
                                     for element_handle in &self.update {
-                                        let id_increment = match increment.checked_add(1) {
+                                        let id_increment = match #increment_snake_case.checked_add(1) {
                                             Some(value) => {
-                                                *increment = value;
-                                                increment.to_string()
+                                                *#increment_snake_case = value;
+                                                #increment_snake_case.to_string()
                                             }
                                             None => {
                                                 return Err(#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case::#checked_add_variant_initialization_token_stream);
@@ -3456,11 +3470,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let delete_query_part_acc = {
                                 let mut delete_query_part_acc = std::string::String::default();
                                 for _ in &self.delete {
-                                    match increment.checked_add(1) {
+                                    match #increment_snake_case.checked_add(1) {
                                         Some(value) => {
-                                            *increment = value;
+                                            *#increment_snake_case = value;
                                             let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
-                                            delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+                                            delete_query_part_acc.push_str(&format!(#delete_query_part_acc_format_handle_token_stream));
                                         }
                                         None => {
                                             return Err(#ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case::#checked_add_variant_initialization_token_stream);
@@ -3472,7 +3486,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let create_query_part_acc = {
                                 let mut create_query_part_acc = std::string::String::default();
                                 for element in &self.create {
-                                    match element.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
+                                    match element.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case) {
                                         Ok(value) => {
                                             create_query_part_acc.push_str(&format!("{value},"));
                                         }
@@ -4047,7 +4061,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         let mut acc = std::string::String::default();
                         for element in &#to_create_snake_case.0 {
-                            match element.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
+                            match element.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case) {
                                 Ok(value) => {
                                     acc.push_str(&format!("{value},"));
                                 },
@@ -4076,7 +4090,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             #jsonb_set_accumulator_snake_case,
                             #jsonb_set_target_snake_case,
                             #jsonb_set_path_snake_case,
-                            increment,
+                            #increment_snake_case,
                         ) {
                             Ok(value) => Ok(value),
                             Err(error) => {
@@ -4576,7 +4590,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             Some(value) => {
                                 let mut acc = std::string::String::default();
                                 for element in value {
-                                    match element.#try_generate_postgresql_query_part_to_create_snake_case(increment) {
+                                    match element.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case) {
                                         Ok(value) => {
                                             acc.push_str(&format!("{value},"));
                                         },
@@ -4606,7 +4620,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ),
                     &{
                         let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{increment}})"),
+                            &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
                         quote::quote!{
@@ -4616,7 +4630,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         #jsonb_set_accumulator_snake_case,
                                         #jsonb_set_target_snake_case,
                                         #jsonb_set_path_snake_case,
-                                        increment,
+                                        #increment_snake_case,
                                     ) {
                                         Ok(value) => Ok(value),
                                         Err(error) => {
@@ -4627,9 +4641,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         }
                                     }
                                 }
-                                None => match increment.checked_add(1) {
+                                None => match #increment_snake_case.checked_add(1) {
                                     Some(value) => {
-                                        *increment = value;
+                                        *#increment_snake_case = value;
                                         Ok(format!(#format_handle_token_stream))
                                     }
                                     None => {
