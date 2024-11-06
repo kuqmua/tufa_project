@@ -1645,6 +1645,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             #update_token_stream
         }
     };
+    let try_generate_postgresql_query_part_to_update_snake_case = naming_conventions::TryGeneratePostgresqlQueryPartToUpdateSnakeCase;
     let generate_tokens_to_update_methods_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
         //todo rename
@@ -1654,7 +1655,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     |{
         quote::quote!{
             impl #struct_token_stream {
-                fn try_generate_postgresql_query_part_to_update(
+                fn #try_generate_postgresql_query_part_to_update_snake_case(
                     &self,
                     jsonb_set_accumulator: &std::primitive::str,
                     jsonb_set_target: &std::primitive::str,
@@ -2163,7 +2164,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         let element_type = &element.ty;
                         quote::quote!{
-                            #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match <#element_type as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_update(
+                            #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_update_snake_case(
                                 &value.value,
                                 &local_acc,
                                 &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -2477,7 +2478,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     type OptionToUpdate<'a> = #tokens_ident_option_to_update_token_stream;
                     type OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed = #tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream;
-                    fn try_generate_postgresql_query_part_to_update(
+                    fn #try_generate_postgresql_query_part_to_update_snake_case(
                         #option_to_update_snake_case: &Self::OptionToUpdate<'_>,
                         jsonb_set_accumulator: &std::primitive::str,
                         jsonb_set_target: &std::primitive::str,
@@ -2652,7 +2653,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))"},
                     ),
                     &quote::quote!{
-                        #option_to_update_snake_case.try_generate_postgresql_query_part_to_update(
+                        #option_to_update_snake_case.#try_generate_postgresql_query_part_to_update_snake_case(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
@@ -2900,7 +2901,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let element_type = &element.ty;
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    match <#element_type as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_update(
+                                    match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_update_snake_case(
                                         &value.value,
                                         &#std_option_option_object_acc_snake_case,
                                         &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -3355,7 +3356,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let element_type = &element.ty;
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    match <#element_type as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_update(
+                                    match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_update_snake_case(
                                         &value.value,
                                         &element_acc,
                                         &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -4034,7 +4035,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ),
                     &
                     quote::quote!{
-                        match #option_to_update_snake_case.0.try_generate_postgresql_query_part_to_update(
+                        match #option_to_update_snake_case.0.#try_generate_postgresql_query_part_to_update_snake_case(
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
@@ -4569,7 +4570,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         match &#option_to_update_snake_case.0 {
                             Some(value) => {
-                                match value.try_generate_postgresql_query_part_to_update(
+                                match value.#try_generate_postgresql_query_part_to_update_snake_case(
                                     jsonb_set_accumulator,
                                     jsonb_set_target,
                                     jsonb_set_path,
