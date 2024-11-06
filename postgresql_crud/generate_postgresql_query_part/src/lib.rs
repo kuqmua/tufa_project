@@ -2401,6 +2401,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::StdVecVecObjectWithIdSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecObjectWithIdSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
+        let self_to_create_snake_case = quote::quote!{self_to_create};
+        
         enum SupportedJsonValue {
             ObjectIdent,
             StdOptionOptionObjectIdent,
@@ -2453,13 +2455,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
                 SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
             };
+            let to_create_upper_camel_case = naming_conventions::ToCreateUpperCamelCase;
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
-                    type ToCreate<'a> = #tokens_ident_to_create_token_stream;
-                    fn try_generate_postgresql_query_part_to_create(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
+                    type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
+                    fn try_generate_postgresql_query_part_to_create(#self_to_create_snake_case: &Self::#to_create_upper_camel_case<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                         #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
-                    fn bind_value_to_postgresql_query_part_to_create<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn bind_value_to_postgresql_query_part_to_create<'a>(#self_to_create_snake_case: Self::#to_create_upper_camel_case<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_create_content_token_stream
                     }
                     type FieldReader<'a> = #tokens_ident_field_reader_token_stream;
@@ -2636,8 +2639,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::ObjectIdent,
-                    &quote::quote!{self_to_create.try_generate_postgresql_query_part_to_create(increment)},
-                    &quote::quote!{self_to_create.bind_value_to_postgresql_query_part_to_create(query)},
+                    &quote::quote!{#self_to_create_snake_case.try_generate_postgresql_query_part_to_create(increment)},
+                    &quote::quote!{#self_to_create_snake_case.bind_value_to_postgresql_query_part_to_create(query)},
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
                         &object_ident_field_reader_upper_camel_case_token_stream,
                         false,
@@ -2853,7 +2856,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::StdOptionOptionObjectIdent,
                     &quote::quote!{
-                        match &self_to_create.0 {
+                        match &#self_to_create_snake_case.0 {
                             Some(value) => match value.try_generate_postgresql_query_part_to_create(increment) {
                                 Ok(value) => Ok(value),
                                 Err(error) => Err(error)
@@ -2863,7 +2866,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     &quote::quote!{
-                        if let Some(value) = self_to_create.0 {
+                        if let Some(value) = #self_to_create_snake_case.0 {
                             query = value.bind_value_to_postgresql_query_part_to_create(query);
                         }
                         query
@@ -4000,7 +4003,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedJsonValue::StdVecVecObjectWithIdIdent,
                     &quote::quote!{
                         let mut acc = std::string::String::default();
-                        for element in &self_to_create.0 {
+                        for element in &#self_to_create_snake_case.0 {
                             match element.try_generate_postgresql_query_part_to_create(increment) {
                                 Ok(value) => {
                                     acc.push_str(&format!("{value},"));
@@ -4014,7 +4017,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         Ok(format!("jsonb_build_array({acc})"))
                     },
                     &quote::quote!{
-                        for element in self_to_create.0 {
+                        for element in #self_to_create_snake_case.0 {
                             query = element.bind_value_to_postgresql_query_part_to_create(query);
                         }
                         query
@@ -4526,7 +4529,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent,
                     &quote::quote!{
-                        match &self_to_create.0 {
+                        match &#self_to_create_snake_case.0 {
                             Some(value) => {
                                 let mut acc = std::string::String::default();
                                 for element in value {
@@ -4546,7 +4549,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     },
                     &quote::quote!{
-                        if let Some(value) = self_to_create.0 {
+                        if let Some(value) = #self_to_create_snake_case.0 {
                             for element in value {
                                 query = element.bind_value_to_postgresql_query_part_to_create(query);
                             }
