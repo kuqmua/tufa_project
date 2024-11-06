@@ -103,7 +103,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             FieldReaderType::Ident => &naming_conventions::SelfFieldReaderTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
             FieldReaderType::ObjectIdent => &naming_conventions::ObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
             FieldReaderType::StdOptionOptionObjectIdent => &naming_conventions::StdOptionOptionObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
-            //todo maybe remove postfix with id
             FieldReaderType::StdVecVecObjectWithIdIdent => &naming_conventions::StdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
             FieldReaderType::StdOptionOptionStdVecVecObjectWithIdIdent => &naming_conventions::StdOptionOptionStdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident),
         };
