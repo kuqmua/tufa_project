@@ -552,7 +552,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
     let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = {
         let (
             to_create_token_stream,
-            json_create_try_generate_bind_increments_token_stream,
+            try_generate_postgresql_query_part_to_create_token_stream,
             json_create_bind_value_to_query_token_stream
         ) = {
             let to_create_upper_camel_case = naming_conventions::ToCreateUpperCamelCase;
@@ -562,9 +562,9 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 }
             };
             //todo maybe rename later
-            let json_create_try_generate_bind_increments_token_stream = {
+            let try_generate_postgresql_query_part_to_create_token_stream = {
                 quote::quote!{
-                    fn json_create_try_generate_bind_increments(
+                    fn try_generate_postgresql_query_part_to_create(
                         self_to_create: &Self::#to_create_upper_camel_case<'_>,
                         increment: &mut std::primitive::u64
                     ) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
@@ -592,7 +592,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             };
             (
                 to_create_token_stream,
-                json_create_try_generate_bind_increments_token_stream,
+                try_generate_postgresql_query_part_to_create_token_stream,
                 json_create_bind_value_to_query_token_stream
             )
         };
@@ -719,7 +719,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         quote::quote!{
             impl crate::generate_postgresql_query_part::PostgresqlJsonType for #ident {
                 #to_create_token_stream
-                #json_create_try_generate_bind_increments_token_stream
+                #try_generate_postgresql_query_part_to_create_token_stream
                 #json_create_bind_value_to_query_token_stream
                 #field_reader_token_stream
                 #options_to_read_token_stream

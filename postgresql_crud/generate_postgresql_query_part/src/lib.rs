@@ -216,13 +216,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let generate_tokens_to_create_methods_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
-        json_create_try_generate_bind_increments_content_token_stream: &dyn quote::ToTokens,
+        try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
         json_create_bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
     |{
         quote::quote!{
             impl #struct_ident_token_stream {
-                fn json_create_try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
-                    #json_create_try_generate_bind_increments_content_token_stream
+                fn try_generate_postgresql_query_part_to_create(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                    #try_generate_postgresql_query_part_to_create_content_token_stream
                 }
                 fn json_create_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     #json_create_bind_value_to_query_content_token_stream
@@ -340,7 +340,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let ident_to_create_origin_methods_token_stream = generate_tokens_to_create_methods_token_stream(
                 &ident_to_create_origin_upper_camel_case,
                 &{
-                    let json_create_try_generate_bind_increments_fields_token_stream = vec_syn_field.iter().map(|element| {
+                    let try_generate_postgresql_query_part_to_create_fields_token_stream = vec_syn_field.iter().map(|element| {
                         let element_field_ident = element
                             .ident
                             .as_ref()
@@ -353,7 +353,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         );
                         let element_type = &element.ty;
                         quote::quote!{
-                            match <#element_type as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.#element_field_ident, increment) {
+                            match <#element_type as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_create(&self.#element_field_ident, increment) {
                                 Ok(value) => {
                                     increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                                 }
@@ -365,7 +365,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     });
                     quote::quote!{
                         let mut increments = std::string::String::from("");
-                        #(#json_create_try_generate_bind_increments_fields_token_stream)*
+                        #(#try_generate_postgresql_query_part_to_create_fields_token_stream)*
                         let _ = increments.pop();
                         let _ = increments.pop();
                         Ok(format!("{increments}"))
@@ -471,7 +471,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 quote::quote!{value}
                             };
                             quote::quote!{
-                                match self.0.json_create_try_generate_bind_increments(increment) {
+                                match self.0.try_generate_postgresql_query_part_to_create(increment) {
                                     Ok(value) => Ok(#ok_value_token_stream),
                                     Err(error) => Err(error)
                                 }
@@ -511,7 +511,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     );
                     let element_type = &element.ty;
                     quote::quote!{
-                        match <#element_type as postgresql_crud::PostgresqlJsonType>::json_create_try_generate_bind_increments(&self.0.#element_field_ident, increment) {
+                        match <#element_type as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_create(&self.0.#element_field_ident, increment) {
                             Ok(value) => {
                                 increments.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                             }
@@ -2408,7 +2408,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         //todo rename
         let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = |
             supported_json_value: SupportedJsonValue,
-            json_create_try_generate_bind_increments_content_token_stream: &dyn quote::ToTokens,
+            try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
             json_create_bind_value_to_query_content_token_stream: &dyn quote::ToTokens,
             generate_postgresql_query_part_field_to_read_content_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_content_token_stream: &dyn quote::ToTokens,
@@ -2453,8 +2453,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
                     type ToCreate<'a> = #tokens_ident_to_create_token_stream;
-                    fn json_create_try_generate_bind_increments(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
-                        #json_create_try_generate_bind_increments_content_token_stream
+                    fn try_generate_postgresql_query_part_to_create(self_to_create: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+                        #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
                     fn json_create_bind_value_to_query<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #json_create_bind_value_to_query_content_token_stream
@@ -2633,7 +2633,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::ObjectIdent,
-                    &quote::quote!{self_to_create.json_create_try_generate_bind_increments(increment)},
+                    &quote::quote!{self_to_create.try_generate_postgresql_query_part_to_create(increment)},
                     &quote::quote!{self_to_create.json_create_bind_value_to_query(query)},
                     &generate_generate_postgresql_query_part_field_to_read_content_token_stream(
                         &object_ident_field_reader_upper_camel_case_token_stream,
@@ -2851,7 +2851,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedJsonValue::StdOptionOptionObjectIdent,
                     &quote::quote!{
                         match &self_to_create.0 {
-                            Some(value) => match value.json_create_try_generate_bind_increments(increment) {
+                            Some(value) => match value.try_generate_postgresql_query_part_to_create(increment) {
                                 Ok(value) => Ok(value),
                                 Err(error) => Err(error)
                             },
@@ -3423,7 +3423,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let create_query_part_acc = {
                                 let mut create_query_part_acc = std::string::String::default();
                                 for element in &self.create {
-                                    match element.json_create_try_generate_bind_increments(increment) {
+                                    match element.try_generate_postgresql_query_part_to_create(increment) {
                                         Ok(value) => {
                                             create_query_part_acc.push_str(&format!("{value},"));
                                         }
@@ -3998,7 +3998,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         let mut acc = std::string::String::default();
                         for element in &self_to_create.0 {
-                            match element.json_create_try_generate_bind_increments(increment) {
+                            match element.try_generate_postgresql_query_part_to_create(increment) {
                                 Ok(value) => {
                                     acc.push_str(&format!("{value},"));
                                 },
@@ -4527,7 +4527,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             Some(value) => {
                                 let mut acc = std::string::String::default();
                                 for element in value {
-                                    match element.json_create_try_generate_bind_increments(increment) {
+                                    match element.try_generate_postgresql_query_part_to_create(increment) {
                                         Ok(value) => {
                                             acc.push_str(&format!("{value},"));
                                         },

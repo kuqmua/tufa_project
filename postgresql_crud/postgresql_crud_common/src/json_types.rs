@@ -1063,7 +1063,7 @@ impl schemars::JsonSchema for UuidOptionToUpdate {
 //
 impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
     type ToCreate<'a> = UuidToCreate;
-    fn json_create_try_generate_bind_increments(_: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_postgresql_query_part_to_create(_: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::JsonCreateTryGenerateBindIncrementsErrorNamed> {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
