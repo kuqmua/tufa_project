@@ -1072,8 +1072,8 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
             None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_create<'a>(self_to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(self_to_create.0));
+    fn bind_value_to_postgresql_query_part_to_create<'a>(to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(to_create.0));
         query
     }
     type FieldReader<'a> = UuidFieldReader;

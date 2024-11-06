@@ -565,7 +565,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             let try_generate_postgresql_query_part_to_create_token_stream = {
                 quote::quote!{
                     fn try_generate_postgresql_query_part_to_create(
-                        self_to_create: &Self::#to_create_upper_camel_case<'_>,
+                        to_create: &Self::#to_create_upper_camel_case<'_>,
                         increment: &mut std::primitive::u64
                     ) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
                         match increment.checked_add(1) {
@@ -581,11 +581,11 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             let bind_value_to_postgresql_query_part_to_create_token_stream = {
                 quote::quote!{
                     fn bind_value_to_postgresql_query_part_to_create<'a>(
-                        self_to_create: Self::#to_create_upper_camel_case<'a>,
+                        to_create: Self::#to_create_upper_camel_case<'a>,
                         mut query: sqlx::query::Query<'a,
                         sqlx::Postgres, sqlx::postgres::PgArguments>
                     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        query = query.bind(sqlx::types::Json(self_to_create.0));
+                        query = query.bind(sqlx::types::Json(to_create.0));
                         query
                     }
                 }

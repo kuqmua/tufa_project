@@ -32,11 +32,11 @@ pub trait PostgresqlJsonType {
         + schemars::JsonSchema 
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     fn try_generate_postgresql_query_part_to_create(
-        self_to_create: &Self::ToCreate<'_>,
+        to_create: &Self::ToCreate<'_>,
         increment: &mut std::primitive::u64
     ) -> Result<std::string::String, PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed>;
     fn bind_value_to_postgresql_query_part_to_create<'a>(
-        self_to_create: Self::ToCreate<'a>,
+        to_create: Self::ToCreate<'a>,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     type FieldReader<'a>: std::fmt::Debug
