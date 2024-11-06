@@ -2279,7 +2279,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             }}
         }
     );
-
+    let field_reader_snake_case = naming_conventions::FieldReaderSnakeCase;
     let json_value_variants_token_stream = {
         let generate_generate_postgresql_query_part_to_read_content_token_stream = |
             tokens_field_reader_token_stream: &dyn quote::ToTokens,
@@ -2373,7 +2373,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let mut acc = std::string::String::default();
                 let #column_name_and_maybe_field_getter_field_ident_snake_case = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
                 let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}");
-                for element in &field_reader.#self_field_vec_token_stream {
+                for element in &#field_reader_snake_case.#self_field_vec_token_stream {
                     acc.push_str(&format!(
                         "{}||",
                         match element {
@@ -2418,7 +2418,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::StdVecVecObjectWithIdSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::StdOptionOptionStdVecVecObjectWithIdSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
-        let to_create_snake_case = naming_conventions::ToCreateUpperCamelCase;
+        let to_create_snake_case = naming_conventions::ToCreateSnakeCase;
         let option_to_update_snake_case = naming_conventions::OptionToUpdateSnakeCase;
         
         enum SupportedJsonValue {
@@ -2489,7 +2489,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                     type #field_reader_upper_camel_case<'a> = #tokens_ident_field_reader_token_stream;
                     type #options_to_read_upper_camel_case<'a> = #tokens_ident_options_to_read_token_stream;
-                    fn #generate_postgresql_query_part_to_read_snake_case(field_reader: &Self::#field_reader_upper_camel_case<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                    fn #generate_postgresql_query_part_to_read_snake_case(#field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
                         #generate_postgresql_query_part_to_read_content_token_stream
                     }
                     type #option_to_update_upper_camel_case<'a> = #tokens_ident_option_to_update_token_stream;
