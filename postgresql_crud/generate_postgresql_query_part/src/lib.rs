@@ -384,7 +384,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                         let element_type = &element.ty;
                         quote::quote!{
-                            query = <#element_type as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_create(self.#element_field_ident, query);
+                            query = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_create_snake_case(self.#element_field_ident, query);
                         }
                     });
                     quote::quote!{
@@ -482,7 +482,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         },
                         &{
                             quote::quote!{
-                                query = self.0.bind_value_to_postgresql_query_part_to_create(query);
+                                query = self.0.#bind_value_to_postgresql_query_part_to_create_snake_case(query);
                                 query
                             }
                         },
@@ -530,7 +530,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                     });
                     quote::quote!{
-                        query = <#element_type as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_create(self.0.#element_ident, query);
+                        query = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_create_snake_case(self.0.#element_ident, query);
                     }
                 });
                 quote::quote!{
@@ -2466,7 +2466,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     fn #try_generate_postgresql_query_part_to_create_snake_case(#to_create_snake_case: &Self::#to_create_upper_camel_case<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                         #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
-                    fn bind_value_to_postgresql_query_part_to_create<'a>(#to_create_snake_case: Self::#to_create_upper_camel_case<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(#to_create_snake_case: Self::#to_create_upper_camel_case<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_create_content_token_stream
                     }
                     type #field_reader_upper_camel_case<'a> = #tokens_ident_field_reader_token_stream;
@@ -2644,7 +2644,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                     SupportedJsonValue::ObjectIdent,
                     &quote::quote!{#to_create_snake_case.#try_generate_postgresql_query_part_to_create_snake_case(increment)},
-                    &quote::quote!{#to_create_snake_case.bind_value_to_postgresql_query_part_to_create(query)},
+                    &quote::quote!{#to_create_snake_case.#bind_value_to_postgresql_query_part_to_create_snake_case(query)},
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
                         &object_ident_field_reader_upper_camel_case_token_stream,
                         false,
@@ -2871,7 +2871,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     &quote::quote!{
                         if let Some(value) = #to_create_snake_case.0 {
-                            query = value.bind_value_to_postgresql_query_part_to_create(query);
+                            query = value.#bind_value_to_postgresql_query_part_to_create_snake_case(query);
                         }
                         query
                     },
@@ -3483,7 +3483,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 query = query.bind(element.0.to_string());//postgresql: error returned from database: operator does not exist: text <> jsonb
                             }
                             for element in self.create {
-                                query = element.bind_value_to_postgresql_query_part_to_create(query);
+                                query = element.#bind_value_to_postgresql_query_part_to_create_snake_case(query);
                             }
                             query
                         }
@@ -4022,7 +4022,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
                     &quote::quote!{
                         for element in #to_create_snake_case.0 {
-                            query = element.bind_value_to_postgresql_query_part_to_create(query);
+                            query = element.#bind_value_to_postgresql_query_part_to_create_snake_case(query);
                         }
                         query
                     },
@@ -4555,7 +4555,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{
                         if let Some(value) = #to_create_snake_case.0 {
                             for element in value {
-                                query = element.bind_value_to_postgresql_query_part_to_create(query);
+                                query = element.#bind_value_to_postgresql_query_part_to_create_snake_case(query);
                             }
                         }
                         query
