@@ -1759,6 +1759,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let generate_postgresql_query_part_to_read_snake_case = naming_conventions::GeneratePostgresqlQueryPartToReadSnakeCase;
     let column_name_and_maybe_field_getter_snake_case = naming_conventions::ColumnNameAndMaybeFieldGetterSnakeCase;
+    let column_name_and_maybe_field_getter_for_error_message_snake_case = naming_conventions::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
         let impl_std_fmt_display_for_ident_token_stream = quote::quote!{
@@ -1891,7 +1892,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 value,
                                 #field_ident_double_quotes_token_stream,
                                 #column_name_and_maybe_field_getter_snake_case,
-                                column_name_and_maybe_field_getter_for_error_message
+                                #column_name_and_maybe_field_getter_for_error_message_snake_case
                             )
                         }
                     });
@@ -1900,7 +1901,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             fn generate_postgresql_query_part_to_read_from_vec(
                                 value: &std::vec::Vec<Self>,
                                 #column_name_and_maybe_field_getter_snake_case: &std::primitive::str,
-                                column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+                                #column_name_and_maybe_field_getter_for_error_message_snake_case: &std::primitive::str,
                             ) -> std::string::String {
                                 let mut acc = std::string::String::default();
                                 for element in value {
@@ -2390,10 +2391,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'"),
                 &proc_macro_name_upper_camel_case_ident_stringified
             );
+            let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{{{column_name_and_maybe_field_getter_for_error_message_snake_case}}}.{{field_ident}}"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
             quote::quote!{
                 let mut acc = std::string::String::default();
                 let #column_name_and_maybe_field_getter_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_format_handle_token_stream);
-                let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}");
+                let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
                 for element in &#field_reader_snake_case.#self_field_vec_token_stream {
                     acc.push_str(&format!(
                         "{}||",
@@ -2520,7 +2525,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
                         field_ident: &std::primitive::str,
                         #column_name_and_maybe_field_getter_snake_case: &std::primitive::str,
-                        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+                        #column_name_and_maybe_field_getter_for_error_message_snake_case: &std::primitive::str
                     ) -> std::string::String {
                         #generate_postgresql_query_part_to_read_content_token_stream
                     }
