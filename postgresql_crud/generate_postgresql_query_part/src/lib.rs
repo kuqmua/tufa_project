@@ -826,7 +826,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         proc_macro2::TokenStream::new()
                                     };
                                     let maybe_id_token_stream = if contains_id {
-                                        //todo reuse id
                                         quote::quote!{#maybe_reference_symbol_token_stream #id_snake_case,}
                                     }
                                     else {
@@ -898,7 +897,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         impl_try_new_for_ident_options_to_read_with_id_token_stream
                     )
                 };
-                //todo reuse try_new
                 let (
                     impl_serde_deserialize_for_ident_options_to_read_without_id_token_stream,
                     impl_serde_deserialize_for_ident_options_to_read_with_id_token_stream
