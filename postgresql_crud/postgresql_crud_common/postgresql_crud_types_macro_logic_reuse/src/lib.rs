@@ -541,11 +541,14 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
     let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_option_to_update_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_option_to_update_upper_camel_case, &ident);
     let ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+
+    let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
+
     let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
         quote::quote!{
             #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
             pub enum #ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case {
-                CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+                #checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
             }
         }
     };
@@ -573,7 +576,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                                 *increment = incr;
                                 Ok(format!("${increment}"))
                             }
-                            None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
                     }
                 }
@@ -692,7 +695,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                                 *increment = value;
                                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
                             }
-                            None => Err(Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
                     }
                 }
