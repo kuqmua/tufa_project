@@ -1107,41 +1107,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 quote::quote!{#(#fields_token_stream),*}
                             },
                         );
-                        let visit_seq_fields_assignment_token_stream = {
-                            let generate_field_ident_field_index_token_stream = |
-                                field_ident: &dyn quote::ToTokens,
-                                index: std::primitive::usize,
-                            |{
-                                let field_index_token_stream = generate_field_index_token_stream(index);
-                                quote::quote! {
-                                    #field_ident: #field_index_token_stream
-                                }
-                            };
-                            let visit_seq_fields_assignment_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                                let index = generate_index(index);
-                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
-                                });
-                                generate_field_ident_field_index_token_stream(
-                                    &quote::quote!{#field_ident},
-                                    index,
-                                )
-                            });
-                            let maybe_id_field_ident_field_index_token_stream = if contains_id {
-                                let value_token_stream = generate_field_ident_field_index_token_stream(
-                                    &quote::quote!{id},
-                                    0,
-                                );
-                                quote::quote!{#value_token_stream,}
-                            }
-                            else {
-                                proc_macro2::TokenStream::new()
-                            };
-                            quote::quote! {
-                                #maybe_id_field_ident_field_index_token_stream
-                                #(#visit_seq_fields_assignment_token_stream),*
-                            }
-                        };
                         let visit_map_fields_initialization_token_stream = {
                             let generate_mut_field_index_serde_private_option_token_stream = |
                                 index: std::primitive::usize,
