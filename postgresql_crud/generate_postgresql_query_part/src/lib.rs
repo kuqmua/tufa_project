@@ -220,7 +220,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         };
         proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(tokens_options_to_read_token_stream, &options_to_read_with_or_without_id_token_stream)
     };
-    let postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{#postgresql_crud_path_token_stream PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed};
+    let postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = {
+        let postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_upper_camel_case = naming_conventions::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamedUpperCamelCase;
+        quote::quote!{#postgresql_crud_path_token_stream #postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_upper_camel_case}
+    };
     let try_generate_postgresql_query_part_to_create_snake_case = naming_conventions::TryGeneratePostgresqlQueryPartToCreateSnakeCase;
     let bind_value_to_postgresql_query_part_to_create_snake_case = naming_conventions::BindValueToPostgresqlQueryPartToCreateSnakeCase;
     let increment_snake_case = naming_conventions::IncrementSnakeCase;
