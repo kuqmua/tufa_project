@@ -1758,6 +1758,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         )
     };
     let generate_postgresql_query_part_to_read_snake_case = naming_conventions::GeneratePostgresqlQueryPartToReadSnakeCase;
+    let column_name_and_maybe_field_getter_snake_case = naming_conventions::ColumnNameAndMaybeFieldGetterSnakeCase;
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
         let impl_std_fmt_display_for_ident_token_stream = quote::quote!{
@@ -1889,7 +1890,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => <#element_type as postgresql_crud::PostgresqlJsonType>::#generate_postgresql_query_part_to_read_snake_case(
                                 value,
                                 #field_ident_double_quotes_token_stream,
-                                column_name_and_maybe_field_getter,
+                                #column_name_and_maybe_field_getter_snake_case,
                                 column_name_and_maybe_field_getter_for_error_message
                             )
                         }
@@ -1898,7 +1899,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         impl postgresql_crud::GeneratePostgresqlQueryPartToRead for #ident_field_to_read_without_id_upper_camel_case {
                             fn generate_postgresql_query_part_to_read_from_vec(
                                 value: &std::vec::Vec<Self>,
-                                column_name_and_maybe_field_getter: &std::primitive::str,
+                                #column_name_and_maybe_field_getter_snake_case: &std::primitive::str,
                                 column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
                             ) -> std::string::String {
                                 let mut acc = std::string::String::default();
@@ -2385,9 +2386,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             else {
                 proc_macro2::TokenStream::new()
             };
+            let column_name_and_maybe_field_getter_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                &format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'"),
+                &proc_macro_name_upper_camel_case_ident_stringified
+            );
             quote::quote!{
                 let mut acc = std::string::String::default();
-                let #column_name_and_maybe_field_getter_field_ident_snake_case = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+                let #column_name_and_maybe_field_getter_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_format_handle_token_stream);
                 let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}");
                 for element in &#field_reader_snake_case.#self_field_vec_token_stream {
                     acc.push_str(&format!(
@@ -2497,15 +2502,26 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             quote::quote!{
                 impl postgresql_crud::PostgresqlJsonType for #tokens_ident_token_stream {
                     type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
-                    fn #try_generate_postgresql_query_part_to_create_snake_case(#to_create_snake_case: &Self::#to_create_upper_camel_case<'_>, #increment_snake_case: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
+                    fn #try_generate_postgresql_query_part_to_create_snake_case(
+                        #to_create_snake_case: &Self::#to_create_upper_camel_case<'_>,
+                        #increment_snake_case: &mut std::primitive::u64
+                    ) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                         #try_generate_postgresql_query_part_to_create_content_token_stream
                     }
-                    fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(#to_create_snake_case: Self::#to_create_upper_camel_case<'a>, mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(
+                        #to_create_snake_case: Self::#to_create_upper_camel_case<'a>,
+                        mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_create_content_token_stream
                     }
                     type #field_reader_upper_camel_case<'a> = #tokens_ident_field_reader_token_stream;
                     type #options_to_read_upper_camel_case<'a> = #tokens_ident_options_to_read_token_stream;
-                    fn #generate_postgresql_query_part_to_read_snake_case(#field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
+                    fn #generate_postgresql_query_part_to_read_snake_case(
+                        #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
+                        field_ident: &std::primitive::str,
+                        #column_name_and_maybe_field_getter_snake_case: &std::primitive::str,
+                        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+                    ) -> std::string::String {
                         #generate_postgresql_query_part_to_read_content_token_stream
                     }
                     type #option_to_update_upper_camel_case<'a> = #tokens_ident_option_to_update_token_stream;
@@ -2519,7 +2535,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     ) -> Result<std::string::String, Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case> {
                         #try_generate_postgresql_query_part_to_update_content_token_stream
                     }
-                    fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(#option_to_update_snake_case: Self::#option_to_update_upper_camel_case<'_>, mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(
+                        #option_to_update_snake_case: Self::#option_to_update_upper_camel_case<'_>,
+                        mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         #bind_value_to_postgresql_query_part_to_update_content_token_stream
                     }
                 }
@@ -2912,7 +2931,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
                         &std_option_option_object_ident_field_reader_upper_camel_case,
                         false,
-                        &quote::quote!{"jsonb_build_object('{field_ident}', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{acc}) end)"}
+                        &proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("jsonb_build_object('{{field_ident}}', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{{acc}}) end)"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        )
                     ),
                     &{
                         let std_option_option_object_acc_snake_case = naming_conventions::StdOptionOptionObjectAccSnakeCase;
@@ -4083,7 +4105,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
                         &std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
                         true,
-                        &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value',(select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))"}
+                        &proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value',(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})))"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        )
                     ),
                     &
                     quote::quote!{
@@ -4617,7 +4642,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
                         &std_option_option_std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
                         true,
-                        &quote::quote!{"jsonb_build_object('{field_ident}', jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else (select jsonb_agg({acc}) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end}) end))"}
+                        &proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') = 'null' then null else (select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) end))"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        )
                     ),
                     &{
                         let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
