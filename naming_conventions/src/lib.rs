@@ -389,7 +389,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["jsonb", "set", "path"],
     ["column", "name", "and", "maybe", "field", "getter"],
     ["column", "name", "and", "maybe", "field", "getter", "for", "error", "message"],
-    ["field", "ident"]
+    ["field", "ident"],
+    ["postgresql", "json", "type"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

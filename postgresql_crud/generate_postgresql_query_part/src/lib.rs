@@ -309,8 +309,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &proc_macro_name_upper_camel_case_ident_stringified,
         )
     };
+    let postgresql_json_type_upper_camel_case = naming_conventions::PostgresqlJsonTypeUpperCamelCase;
     let generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
-        quote::quote!{<#value_token_stream as #postgresql_crud_path_token_stream PostgresqlJsonType>::}
+        quote::quote!{<#value_token_stream as #postgresql_crud_path_token_stream #postgresql_json_type_upper_camel_case>::}
     };
     let generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field|{
         generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty)
@@ -2519,7 +2520,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let option_to_update_upper_camel_case = naming_conventions::OptionToUpdateUpperCamelCase;
             let option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase;
             quote::quote!{
-                impl #postgresql_crud_path_token_stream PostgresqlJsonType for #tokens_ident_token_stream {
+                impl #postgresql_crud_path_token_stream #postgresql_json_type_upper_camel_case for #tokens_ident_token_stream {
                     type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
                     fn #try_generate_postgresql_query_part_to_create_snake_case(
                         #to_create_snake_case: &Self::#to_create_upper_camel_case<'_>,
