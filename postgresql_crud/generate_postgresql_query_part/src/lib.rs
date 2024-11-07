@@ -246,7 +246,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
 
-    let generate_tokens_try_generate_bind_increments_error_named_token_stream = |
+    let generate_tokens_try_generate_postgresql_query_part_error_named_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
         content_token_stream: &dyn quote::ToTokens,
     |{
@@ -1583,7 +1583,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let ident_json_array_change_try_generate_postgresql_query_part_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+                let ident_json_array_change_try_generate_postgresql_query_part_error_named_token_stream = generate_tokens_try_generate_postgresql_query_part_error_named_token_stream(
                     &ident_json_array_change_try_generate_postgresql_query_part_error_named_upper_camel_case,
                     &{
                         let variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -2158,7 +2158,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
             );
             
-            let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+            let ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream = generate_tokens_try_generate_postgresql_query_part_error_named_token_stream(
                 &ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
                 &{
                     let variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -2280,7 +2280,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #impl_try_new_for_ident_option_to_update_token_stream
                 #impl_serde_deserialize_for_ident_option_to_update_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
-                #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+                #ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                 #impl_ident_option_to_update_methods_token_stream
             }
         };
@@ -2903,7 +2903,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
                     );
 
-                    let std_option_option_object_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+                    let std_option_option_object_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream = generate_tokens_try_generate_postgresql_query_part_error_named_token_stream(
                         &std_option_option_object_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
                         &{
                             let variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -2933,7 +2933,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         #std_option_option_object_ident_option_to_update_token_stream
                         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_object_ident_option_to_update_token_stream
-                        #std_option_option_object_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+                        #std_option_option_object_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                     }
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
@@ -4086,7 +4086,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
                         &quote::quote!{(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
                     );
-                    let std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+                    let std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream = generate_tokens_try_generate_postgresql_query_part_error_named_token_stream(
                         &std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
                         &{
                             quote::quote!{
@@ -4615,7 +4615,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
                     );
 
-                    let std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = generate_tokens_try_generate_bind_increments_error_named_token_stream(
+                    let std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream = generate_tokens_try_generate_postgresql_query_part_error_named_token_stream(
                         &std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
                         &{
                             quote::quote!{
@@ -4632,7 +4632,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #std_option_option_std_vec_vec_object_with_id_ident_json_array_change_token_stream
                         #std_option_option_std_vec_vec_object_with_id_ident_option_to_update_token_stream
                         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_token_stream
-                        #std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+                        #std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                     }
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
