@@ -303,6 +303,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             &proc_macro_name_upper_camel_case_ident_stringified,
         )
     };
+    let generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
+        quote::quote!{<#value_token_stream as postgresql_crud::PostgresqlJsonType>::}
+    };
+    let generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field|{
+        generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty)
+    };
     let common_token_stream = {
         let create_token_stream = {
             let fields_declaration_token_stream = {
@@ -357,9 +363,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             &element_field_ident.to_string(),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
-                        let element_type = &element.ty;
+                        let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
-                            match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.#element_field_ident, #increment_snake_case) {
+                            match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_query_part_to_create_snake_case(&self.#element_field_ident, #increment_snake_case) {
                                 Ok(value) => {
                                     #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                                 }
@@ -389,9 +395,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .unwrap_or_else(|| {
                                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
-                        let element_type = &element.ty;
+                        let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
-                            #query_snake_case = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_create_snake_case(self.#element_field_ident, #query_snake_case);
+                            #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #bind_value_to_postgresql_query_part_to_create_snake_case(self.#element_field_ident, #query_snake_case);
                         }
                     });
                     quote::quote!{
@@ -519,9 +525,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &element_field_ident.to_string(),
                         &proc_macro_name_upper_camel_case_ident_stringified
                     );
-                    let element_type = &element.ty;
+                    let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                     quote::quote!{
-                        match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_create_snake_case(&self.0.#element_field_ident, #increment_snake_case) {
+                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_query_part_to_create_snake_case(&self.0.#element_field_ident, #increment_snake_case) {
                             Ok(value) => {
                                 #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
                             }
@@ -532,12 +538,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 });
                 let bind_value_to_query_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_type = &element.ty;
                     let element_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
                     });
+                    let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                     quote::quote!{
-                        #query_snake_case = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_create_snake_case(self.0.#element_ident, #query_snake_case);
+                        #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #bind_value_to_postgresql_query_part_to_create_snake_case(self.0.#element_ident, #query_snake_case);
                     }
                 });
                 let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
@@ -1886,9 +1892,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
-                        let element_type = &element.ty;
+                        let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
-                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => <#element_type as postgresql_crud::PostgresqlJsonType>::#generate_postgresql_query_part_to_read_snake_case(
+                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #generate_postgresql_query_part_to_read_snake_case(
                                 value,
                                 #field_ident_double_quotes_token_stream,
                                 #column_name_and_maybe_field_getter_snake_case,
@@ -2185,9 +2191,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                         //todo maybe reuse?
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
-                        let element_type = &element.ty;
+                        let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
-                            #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_update_snake_case(
+                            #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_query_part_to_update_snake_case(
                                 &value.value,
                                 &local_acc,
                                 &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -2242,10 +2248,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                        let element_type = &element.ty;
+                        let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
                             #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                #query_snake_case = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_update_snake_case(value.value, #query_snake_case);
+                                #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #bind_value_to_postgresql_query_part_to_update_snake_case(value.value, #query_snake_case);
                             }
                         }
                     });
@@ -2319,8 +2325,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 else {
                     &ident_field_to_read_without_id_upper_camel_case
                 };
+                let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&element_type);
                 quote::quote!{
-                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => <#element_type as postgresql_crud::PostgresqlJsonType>::#generate_postgresql_query_part_to_read_snake_case(
+                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #generate_postgresql_query_part_to_read_snake_case(
                         value,
                         #field_ident_double_quotes_token_stream,
                         #column_name_and_maybe_field_getter_token_stream,
@@ -2961,10 +2968,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                             let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
-                            let element_type = &element.ty;
+                            let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_update_snake_case(
+                                    match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_query_part_to_update_snake_case(
                                         &value.value,
                                         &#std_option_option_object_acc_snake_case,
                                         &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -3026,10 +3033,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                            let element_type = &element.ty;
+                            let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    #query_snake_case = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_update_snake_case(value.value, #query_snake_case);
+                                    #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #bind_value_to_postgresql_query_part_to_update_snake_case(value.value, #query_snake_case);
                                 }
                             }
                         });
@@ -3424,10 +3431,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
                             let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
-                            let element_type = &element.ty;
+                            let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    match <#element_type as postgresql_crud::PostgresqlJsonType>::#try_generate_postgresql_query_part_to_update_snake_case(
+                                    match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_query_part_to_update_snake_case(
                                         &value.value,
                                         &element_acc,
                                         &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -3548,10 +3555,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = proc_macro_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
-                            let element_type = &element.ty;
+                            let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                    #query_snake_case = <#element_type as postgresql_crud::PostgresqlJsonType>::#bind_value_to_postgresql_query_part_to_update_snake_case(value.value, #query_snake_case);
+                                    #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #bind_value_to_postgresql_query_part_to_update_snake_case(value.value, #query_snake_case);
                                 }
                             }
                         });
