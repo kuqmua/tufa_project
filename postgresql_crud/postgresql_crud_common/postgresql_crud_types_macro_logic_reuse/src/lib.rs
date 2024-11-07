@@ -682,11 +682,12 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                     type #option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = #ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case;
                 }
             };
+            let option_to_update_snake_case = naming_conventions::OptionToUpdateSnakeCase;
             //todo maybe rename later
             let try_generate_bind_increments_token_stream = {
                 quote::quote!{
                     fn try_generate_postgresql_query_part_to_update(
-                        option_to_update: &Self::#option_to_update_upper_camel_case<'_>,
+                        #option_to_update_snake_case: &Self::#option_to_update_upper_camel_case<'_>,
                         jsonb_set_accumulator: &std::primitive::str,
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
@@ -706,10 +707,10 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             let bind_value_to_query_token_stream = {
                 quote::quote!{
                     fn bind_value_to_postgresql_query_part_to_update<'a>(
-                        option_to_update: Self::#option_to_update_upper_camel_case<'_>,
+                        #option_to_update_snake_case: Self::#option_to_update_upper_camel_case<'_>,
                         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        query = query.bind(sqlx::types::Json(option_to_update.0));
+                        query = query.bind(sqlx::types::Json(#option_to_update_snake_case.0));
                         query
                     }
                 }
