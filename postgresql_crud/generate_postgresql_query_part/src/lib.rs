@@ -37,7 +37,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
 
     let ident_json_array_change_try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::SelfJsonArrayChangeTryGenerateBindIncrementsErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let postgresql_crud_path_token_stream = quote::quote!{postgresql_crud::};
+    let postgresql_crud_path_token_stream = {
+        let postgresql_crud_snake_case = naming_conventions::PostgresqlCrudSnakeCase;
+        quote::quote!{#postgresql_crud_snake_case::}
+    };
 
     let postgersql_crud_pagination_token_stream = quote::quote!{#postgresql_crud_path_token_stream Pagination};
 
