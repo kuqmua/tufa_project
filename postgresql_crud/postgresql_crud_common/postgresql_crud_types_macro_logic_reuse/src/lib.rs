@@ -627,6 +627,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                         format!(#format_handle_token_stream)
                     }
                 };
+                let column_name_and_maybe_field_getter_snake_case = naming_conventions::ColumnNameAndMaybeFieldGetterSnakeCase;
                 let content_token_stream = match &variant {
                     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath |
                     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
