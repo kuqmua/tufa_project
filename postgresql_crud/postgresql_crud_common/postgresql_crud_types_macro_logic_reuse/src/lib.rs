@@ -546,7 +546,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
 
     let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
         quote::quote!{
-            #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+            #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
             pub enum #ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case {
                 #checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
             }
@@ -564,19 +564,21 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                     type #to_create_upper_camel_case<'a> = #ident_to_create_upper_camel_case;
                 }
             };
+            let to_create_snake_case = naming_conventions::ToCreateSnakeCase;
             //todo maybe rename later
             let try_generate_postgresql_query_part_to_create_token_stream = {
+                let crate_generate_postgresql_query_part_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed};
                 quote::quote!{
                     fn try_generate_postgresql_query_part_to_create(
-                        to_create: &Self::#to_create_upper_camel_case<'_>,
+                        #to_create_snake_case: &Self::#to_create_upper_camel_case<'_>,
                         increment: &mut std::primitive::u64
-                    ) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
+                    ) -> Result<std::string::String, #crate_generate_postgresql_query_part_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
                         match increment.checked_add(1) {
                             Some(incr) => {
                                 *increment = incr;
                                 Ok(format!("${increment}"))
                             }
-                            None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_generate_postgresql_query_part_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
                     }
                 }
@@ -584,11 +586,11 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             let bind_value_to_postgresql_query_part_to_create_token_stream = {
                 quote::quote!{
                     fn bind_value_to_postgresql_query_part_to_create<'a>(
-                        to_create: Self::#to_create_upper_camel_case<'a>,
+                        #to_create_snake_case: Self::#to_create_upper_camel_case<'a>,
                         mut query: sqlx::query::Query<'a,
                         sqlx::Postgres, sqlx::postgres::PgArguments>
                     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        query = query.bind(sqlx::types::Json(to_create.0));
+                        query = query.bind(sqlx::types::Json(#to_create_snake_case.0));
                         query
                     }
                 }
