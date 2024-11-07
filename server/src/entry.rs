@@ -7,10 +7,10 @@ pub fn entry(config: &'static common::repositories_types::server::config::Config
         panic!("common::repositories_types::server::telemetry::init_subscriber::init_subscriber failed, error: {error:#?}")
     }
     //preparation logic must be enabled by default. service must check on existing database tables.
-    println!("checking net availability...");
-    if let Err(error) = runtime.block_on(common::server::net::net_check_availability::net_check_availability(config)) {
-        eprintln!("{error}");
-    }
+    // println!("checking net availability...");
+    // if let Err(error) = runtime.block_on(common::server::net::net_check_availability::net_check_availability(config)) {
+    //     eprintln!("{error}");
+    // }
     if let Err(error) = runtime.block_on(crate::server_wrapper::server_wrapper(config)) {
         eprintln!("server stopped");
         eprintln!("{error}");
