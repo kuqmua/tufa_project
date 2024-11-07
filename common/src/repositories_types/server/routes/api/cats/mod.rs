@@ -301,11 +301,11 @@ pub struct Something {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub object: ObjectDoggie,
-    pub std_option_option_object: StdOptionOptionObjectDoggie,
+    // pub object: ObjectDoggie,
+    // pub std_option_option_object: StdOptionOptionObjectDoggie,
 
-    pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
-    pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
+    // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
+    // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 
 // impl postgresql_crud::GeneratePostgresqlQueryPartFieldToRead for ObjectCatFieldReader {
@@ -356,29 +356,29 @@ pub struct Something {
 //     // StdOptionOptionStdVecVecObjectWithId(StdOptionOptionStdVecVecObjectWithIdDoggieFieldReader)
 // }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    // Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    //
-    postgresql_crud::GeneratePostgresqlQueryPart,
-)] //user type must implement utoipa::ToSchema trait
-pub struct Doggie {
-    pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
-    pub std_primitive_i16: postgresql_crud::json_types::StdPrimitiveI16,
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     // Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     //
+//     postgresql_crud::GeneratePostgresqlQueryPart,
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Doggie {
+//     pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
+//     pub std_primitive_i16: postgresql_crud::json_types::StdPrimitiveI16,
 
-    // pub object: ObjectCat,
-    // pub std_option_option_object: StdOptionOptionObjectCat,
+//     // pub object: ObjectCat,
+//     // pub std_option_option_object: StdOptionOptionObjectCat,
 
-    // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdCat,
-    // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdCat,
-}
+//     // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdCat,
+//     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdCat,
+// }
 
 // #[derive(
 //     Debug,

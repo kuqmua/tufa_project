@@ -510,7 +510,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "options", "to", "update"],
     ["self", "to", "create", "with", "generated", "id"],
     ["self", "to", "create", "without", "generated", "id"],
-    ["self", "json", "array", "change", "try", "generate", "bind", "increments", "error", "named"],
+    ["self", "json", "array", "change", "try", "generate", "postgresql", "query", "part", "error", "named"],
     ["self", "field", "to", "update"],
     ["self", "generate", "postgresql", "query", "part", "to", "read", "error", "named"],
     ["self", "try", "generate", "json", "array", "element", "update", "bind", "increments", "error", "named"],
