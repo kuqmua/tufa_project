@@ -3100,17 +3100,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 struct_ident_try_new_error_named: &dyn quote::ToTokens,
                 is_nullable: std::primitive::bool,
             |{
+                let create_snake_case = naming_conventions::CreateSnakeCase;
+                let update_snake_case = naming_conventions::UpdateSnakeCase;
+                let delete_snake_case = naming_conventions::DeleteSnakeCase;
                 let ident_json_array_change_token_stream = {
                     let serde_skip_serializing_if_vec_is_empty_token_stream = quote::quote!{#[serde(skip_serializing_if = "Vec::is_empty")]};
                     quote::quote!{
                         #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
                         pub struct #struct_ident_token_stream {
                             #serde_skip_serializing_if_vec_is_empty_token_stream
-                            create: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
+                            #create_snake_case: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
                             #serde_skip_serializing_if_vec_is_empty_token_stream
-                            update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
+                            #update_snake_case: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
                             #serde_skip_serializing_if_vec_is_empty_token_stream
-                            delete: std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>,
+                            #delete_snake_case: std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>,
                         }
                     }
                 };
@@ -3159,7 +3162,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                         else {
                             quote::quote!{
-                                if create.is_empty() && update.is_empty() && delete.is_empty() {
+                                if #create_snake_case.is_empty() && #update_snake_case.is_empty() && #delete_snake_case.is_empty() {
                                     return Err(#struct_ident_try_new_error_named::#create_update_delete_check_fields_are_empty_upper_camel_case {
                                         code_occurence: error_occurence_lib::code_occurence!()
                                     });
@@ -3239,16 +3242,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{
                             impl #struct_ident_token_stream {
                                 pub fn try_new(
-                                    create: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
-                                    update: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
-                                    delete: std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>,
+                                    #create_snake_case: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
+                                    #update_snake_case: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
+                                    #delete_snake_case: std::vec::Vec<#postgresql_crud_uuid_option_to_update_token_stream>,
                                 ) -> Result<Self, #struct_ident_try_new_error_named> {
                                     #maybe_check_create_update_delete_check_fields_are_empty_token_stream
                                     #check_not_unique_id_token_stream
                                     Ok(Self {
-                                        create,
-                                        update,
-                                        delete
+                                        #create_snake_case,
+                                        #update_snake_case,
+                                        #delete_snake_case
                                     })
                                 }
                             }
@@ -3499,13 +3502,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{
                             let update_query_part_acc = {
                                 let mut element_acc = std::string::String::from("elem");
-                                if self.update.is_empty() {
+                                if self.#update_snake_case.is_empty() {
                                     element_acc
                                 }
                                 else {
                                     let mut update_query_part_acc = std::string::String::default();
                                     #generate_jsonb_set_target_token_stream
-                                    for element_handle in &self.update {
+                                    for element_handle in &self.#update_snake_case {
                                         let id_increment = match #increment_snake_case.checked_add(1) {
                                             Some(value) => {
                                                 *#increment_snake_case = value;
@@ -3528,7 +3531,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             };
                             let delete_query_part_acc = {
                                 let mut delete_query_part_acc = std::string::String::default();
-                                for _ in &self.delete {
+                                for _ in &self.#delete_snake_case {
                                     match #increment_snake_case.checked_add(1) {
                                         Some(value) => {
                                             *#increment_snake_case = value;
@@ -3544,7 +3547,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             };
                             let create_query_part_acc = {
                                 let mut create_query_part_acc = std::string::String::default();
-                                for element in &self.create {
+                                for element in &self.#create_snake_case {
                                     match element.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case) {
                                         Ok(value) => {
                                             create_query_part_acc.push_str(&format!("{value},"));
@@ -3583,7 +3586,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         });
                         quote::quote!{
-                            for element_handle in self.update {
+                            for element_handle in self.#update_snake_case {
                                 #query_snake_case = #query_snake_case.bind(element_handle.#id_snake_case.0.to_string());//postgresql: error returned from database: operator does not exist: text = jsonb
                                 for element in element_handle.fields.0 {
                                     match element {
@@ -3591,10 +3594,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     }
                                 }
                             }
-                            for element in self.delete {
+                            for element in self.#delete_snake_case {
                                 #query_snake_case = #query_snake_case.bind(element.0.to_string());//postgresql: error returned from database: operator does not exist: text <> jsonb
                             }
-                            for element in self.create {
+                            for element in self.#create_snake_case {
                                 #query_snake_case = element.#bind_value_to_postgresql_query_part_to_create_snake_case(#query_snake_case);
                             }
                             #query_snake_case
@@ -3604,9 +3607,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_json_array_change_with_content_token_stream =       generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                     &struct_ident_token_stream,
                     &quote::quote!{{
-                        create: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
-                        update: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
-                        delete: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
+                        #create_snake_case: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
+                        #update_snake_case: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
+                        #delete_snake_case: vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream],
                     }},
                 );
                 quote::quote!{
