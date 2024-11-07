@@ -319,6 +319,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field|{
         generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty)
     };
+    let id_upper_camel_case = naming_conventions::IdUpperCamelCase;
+    let id_snake_case = naming_conventions::IdSnakeCase;
+    let id_snake_case_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+        &id_snake_case,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let common_token_stream = {
         let create_token_stream = {
             let fields_declaration_token_stream = {
@@ -655,7 +661,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let ident_field_to_read_with_id_token_stream = generate_template_field_to_read_struct_token_stream(
                         &ident_field_to_read_with_id_upper_camel_case,
                         &quote::quote!{
-                            #[serde(rename(serialize = "id", deserialize = "id"))]
+                            #[serde(rename(serialize = #id_snake_case_double_quotes_token_stream, deserialize = #id_snake_case_double_quotes_token_stream))]
                              Id(#postgresql_crud_path_token_stream json_types::UuidFieldReader),
                         },
                     );
@@ -730,7 +736,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let maybe_id_token_stream = if contains_id {
                         quote::quote!{
                             #maybe_serde_skip_serializing_if_option_is_none_token_stream
-                            id: std::option::Option<#postgresql_crud_path_token_stream Value<#postgresql_crud_path_token_stream json_types::UuidOptionsToRead>>,
+                            #id_snake_case: std::option::Option<#postgresql_crud_path_token_stream Value<#postgresql_crud_path_token_stream json_types::UuidOptionsToRead>>,
                         }
                     }
                     else {
@@ -817,7 +823,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     };
                                     let maybe_id_token_stream = if contains_id {
                                         //todo reuse id
-                                        quote::quote!{#maybe_reference_symbol_token_stream id,}
+                                        quote::quote!{#maybe_reference_symbol_token_stream #id_snake_case,}
                                     }
                                     else {
                                         proc_macro2::TokenStream::new()
@@ -976,7 +982,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                             let maybe_id_field_ident_double_quotes_serde_private_ok_field_token_stream = if contains_id {
                                 let value_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
-                                    &quote::quote!{"id"},
+                                    &id_snake_case_double_quotes_token_stream,
                                     0,
                                 );
                                 quote::quote!{#value_token_stream,}
@@ -1014,7 +1020,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             });
                             let maybe_b_field_ident_double_quotes_token_stream = if contains_id {
                                 let value_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
-                                    &quote::quote!{b"id"},
+                                    &{
+                                        let value = format!("b{id_snake_case_double_quotes_token_stream}");
+                                        value.parse::<proc_macro2::TokenStream>()
+                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    },
                                     0,
                                 );
                                 quote::quote!{#value_token_stream,}
@@ -1201,7 +1211,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let id_field_initialization_token_stream = if contains_id {
                                 generate_field_initialization_token_stream(
                                     0,
-                                    &quote::quote!{"id"},
+                                    &id_snake_case_double_quotes_token_stream,
                                     &quote::quote!{#postgresql_crud_path_token_stream json_types::UuidOptionsToRead},
                                 )
                             }
@@ -1239,7 +1249,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let maybe_id_missing_field_token_stream = if contains_id {
                                 generate_missing_field_token_stream(
                                     0,
-                                    &quote::quote!{"id"}
+                                    &id_snake_case_double_quotes_token_stream
                                 )
                             }
                             else {
@@ -1253,7 +1263,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let fields_array_elements_token_stream = {
                             let fields_array_elements_token_stream = vec_syn_field.iter().map(|element| generate_field_ident_double_quotes_token_stream(&element));
                             let maybe_id_double_quotes_comma_token_stream = if contains_id {
-                                quote::quote! {"id",}
+                                quote::quote! {#id_snake_case_double_quotes_token_stream,}
                             }
                             else {
                                 proc_macro2::TokenStream::new()
@@ -1637,7 +1647,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                         pub struct #ident_options_to_update_upper_camel_case {
-                            pub id: #postgresql_crud_uuid_option_to_update_token_stream,
+                            pub #id_snake_case: #postgresql_crud_uuid_option_to_update_token_stream,
                             pub fields: #ident_option_to_update_upper_camel_case
                         }
                     }
@@ -1645,7 +1655,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_update_token_stream =        generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_with_content_token_stream(
                     &ident_options_to_update_upper_camel_case,
                     &quote::quote!{{
-                        id: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        #id_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                         fields: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                     }}
                 );
@@ -2308,7 +2318,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         &object_with_id_ident_upper_camel_case,
         &{
             quote::quote!{{
-                pub id: #postgresql_crud_uuid_option_to_update_token_stream,
+                pub #id_snake_case: #postgresql_crud_uuid_option_to_update_token_stream,
                 #fields_token_stream
             }}
         }
@@ -3166,14 +3176,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     let update_acc = {
                                         let mut update_acc = vec![];
                                         for element in &update {
-                                            let id = &element.id;
-                                            if update_acc.contains(&id) {
+                                            let #id_snake_case = &element.#id_snake_case;
+                                            if update_acc.contains(&#id_snake_case) {
                                                 return Err(#struct_ident_try_new_error_named::#not_unique_id_in_json_update_array_upper_camel_case {
-                                                    error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, id.0),
+                                                    error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, #id_snake_case.0),
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             } else {
-                                                update_acc.push(id);
+                                                update_acc.push(#id_snake_case);
                                             }
                                         }
                                         update_acc
@@ -3182,7 +3192,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             };
                             let check_not_unique_id_in_delete_aray_token_stream = {
                                 let not_unique_id_in_json_delete_array_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                    &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json delete array: {{}}"),
+                                    &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique {id_snake_case} in json delete array: {{}}"),
                                     &proc_macro_name_upper_camel_case_ident_stringified
                                 );
                                 quote::quote!{
@@ -3204,7 +3214,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             };
                             let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
                                 let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                                    &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique id in json update and delete arrays: {{}}"),
+                                    &format!("{custom_serde_error_deserializing_tokens_json_array_change_upper_camel_case_token_stream_stringified}: not unique {id_snake_case} in json update and delete arrays: {{}}"),
                                     &proc_macro_name_upper_camel_case_ident_stringified
                                 );
                                 quote::quote!{
@@ -3574,7 +3584,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         });
                         quote::quote!{
                             for element_handle in self.update {
-                                #query_snake_case = #query_snake_case.bind(element_handle.id.0.to_string());//postgresql: error returned from database: operator does not exist: text = jsonb
+                                #query_snake_case = #query_snake_case.bind(element_handle.#id_snake_case.0.to_string());//postgresql: error returned from database: operator does not exist: text = jsonb
                                 for element in element_handle.fields.0 {
                                     match element {
                                         #(#bind_value_to_postgresql_query_part_to_update_variants_token_stream),*
@@ -3691,14 +3701,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         };
                         let impl_pub_fn_try_new_token_stream = {
                             let check_not_unique_id_token_stream = {
+                                let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                                    &format!("not unique {id_snake_case} {{}}"),
+                                    &proc_macro_name_upper_camel_case_ident_stringified
+                                );
                                 quote::quote!{
                                     {
                                         let mut acc = vec![];
                                         for element in &value {
-                                            if let Some(value) = &element.id {
+                                            if let Some(value) = &element.#id_snake_case {
                                                 if acc.contains(&&value.value) {
                                                     return Err(#std_vec_vec_object_with_id_ident_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
-                                                        error: format!("not unique id {}", value.value.0),
+                                                        error: format!(#format_handle_token_stream, value.value.0),
                                                         code_occurence: error_occurence_lib::code_occurence!(),
                                                     });
                                                 }
@@ -4212,6 +4226,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         };
                         let impl_pub_fn_try_new_token_stream = {
+                            let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                                &format!("not unique {id_snake_case} {{}}"),
+                                &proc_macro_name_upper_camel_case_ident_stringified
+                            );
                             quote::quote!{
                                 impl #std_option_option_std_vec_vec_object_with_id_ident_options_to_read_upper_camel_case {
                                     pub fn try_new(value: std::option::Option<std::vec::Vec<#ident_options_to_read_with_id_upper_camel_case>>) -> Result<Self, #std_option_option_std_vec_vec_object_with_id_ident_options_to_read_try_new_error_named_upper_camel_case> {
@@ -4219,10 +4237,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             Some(value) => {
                                                 let mut acc = vec![];
                                                 for element in &value {
-                                                    if let Some(value) = &element.id {
+                                                    if let Some(value) = &element.#id_snake_case {
                                                         if acc.contains(&&value.value) {
                                                             return Err(#std_option_option_std_vec_vec_object_with_id_ident_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
-                                                                error: format!("not unique id {}", value.value.0),
+                                                                error: format!(#format_handle_token_stream, value.value.0),
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                             });
                                                         }
