@@ -2703,18 +2703,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &object_ident_option_to_update_upper_camel_case, 
                         &ident_option_to_update_upper_camel_case
                     );
-                    let object_ident_option_to_update_try_generate_bind_increments_error_named_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                    let object_ident_option_to_update_try_generate_postgresql_query_part_error_named_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                         &object_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
                         &ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case
                     );
-                    let object_ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                    let object_ident_option_to_update_try_generate_postgresql_query_part_error_named_with_serialize_deserialize_alias_token_stream = proc_macro_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                         &naming_conventions::ObjectSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                         &naming_conventions::SelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident)
                     );
                     quote::quote!{
                         #object_ident_option_to_update_alias_token_stream
-                        #object_ident_option_to_update_try_generate_bind_increments_error_named_alias_token_stream
-                        #object_ident_option_to_update_try_generate_bind_increments_error_named_with_serialize_deserialize_alias_token_stream
+                        #object_ident_option_to_update_try_generate_postgresql_query_part_error_named_alias_token_stream
+                        #object_ident_option_to_update_try_generate_postgresql_query_part_error_named_with_serialize_deserialize_alias_token_stream
                     }
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
