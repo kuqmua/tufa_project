@@ -497,7 +497,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &struct_ident_token_stream,
                         &{
                             let ok_value_token_stream = if contains_id {
-                                quote::quote!{format!("jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{value}")}
+                                let format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                                    &format!("jsonb_build_object('{id_snake_case}', to_jsonb(gen_random_uuid()))||{{value}}"),
+                                    &proc_macro_name_upper_camel_case_ident_stringified
+                                );
+                                quote::quote!{format!(#format_handle_token_stream)}
                             }
                             else {
                                 quote::quote!{value}
@@ -3496,7 +3500,11 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         };
                         let delete_query_part_acc_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
-                            &format!("{{maybe_space_and_space}}elem->>'id' <> ${{{increment_snake_case}}}"),
+                            &format!("{{maybe_space_and_space}}elem->>'{id_snake_case}' <> ${{{increment_snake_case}}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified
+                        );
+                        let update_push_str_format_handle_token_stream = proc_macro_common::generate_quotes::double_quotes_token_stream(
+                            &format!("when elem ->> '{id_snake_case}' = ${{id_increment}} then {{element_acc}} "),
                             &proc_macro_name_upper_camel_case_ident_stringified
                         );
                         quote::quote!{
@@ -3523,7 +3531,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                                 #(#try_generate_bind_increments_variants_token_stream),*
                                             }
                                         }
-                                        update_query_part_acc.push_str(&format!("when elem ->> 'id' = ${id_increment} then {element_acc} "));
+                                        update_query_part_acc.push_str(&format!(#update_push_str_format_handle_token_stream));
                                     }
                                     let _ = update_query_part_acc.pop();
                                     format!("case {update_query_part_acc} else elem end")
