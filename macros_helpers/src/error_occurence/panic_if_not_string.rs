@@ -2,6 +2,6 @@ pub fn panic_if_not_string(segments_stringified: &str, std_string_string_stringi
     assert!(
         segments_stringified == std_string_string_stringified,
         "{proc_macro_name_ident_stringified} {} {supports_only_stringified} {std_string_string_stringified} {as_std_collections_hashmap_key_type_stringified} (hashmap key must be string for deserialization)",
-        macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(attribute)
+        crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(attribute)
     );
 }

@@ -809,7 +809,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         segments: {
                                             let mut handle = syn::punctuated::Punctuated::new();
                                             handle.push(syn::PathSegment {
-                                                ident: proc_macro2::Ident::new(macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&element.0), proc_macro2::Span::call_site()),
+                                                ident: proc_macro2::Ident::new(macros_helpers::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&element.0), proc_macro2::Span::call_site()),
                                                 arguments: syn::PathArguments::None,
                                             });
                                             handle
@@ -1961,7 +1961,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             match error_occurence_attribute {
                                 Some(value) => panic!(
                                     "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported",
-                                    macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
+                                    macros_helpers::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
                                 ),
                                 None => {
                                     error_occurence_attribute = Some(value);

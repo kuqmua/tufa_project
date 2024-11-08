@@ -70,7 +70,7 @@ impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
         option_attribute.unwrap_or_else(|| panic!("option attribute {}", naming_conventions::IS_NONE_STRINGIFIED))
     }
 }
-impl macros_common::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
+impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
     fn attribute_ident_stringified(&self) -> &str {
         match self {
             Self::EoToStdStringString => "eo_to_std_string_string",
@@ -87,7 +87,7 @@ impl macros_common::attribute_ident_stringified::AttributeIdentStringified for E
 }
 impl ErrorOccurenceFieldAttribute {
     pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
-        let value = format!("#[{}]", macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
+        let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }

@@ -1,3 +1,4 @@
+pub mod attribute_ident_stringified;
 pub mod code_occurence_syn_field;
 pub mod enum_variants;
 pub mod error_occurence;
