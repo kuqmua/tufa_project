@@ -2,6 +2,13 @@ pub use naming_macros::EnumWithUnitFieldsToUpperCamelCaseStringified;
 pub use naming_macros::EnumWithUnitFieldsToSnakeCaseStringified;
 pub use naming_macros::EnumWithUnitFieldsToScreamingSnakeCaseStringified;
 
+pub use naming_conventions_common::ToUpperCamelCaseStringified;
+pub use naming_conventions_common::ToUpperCamelCaseTokenStream;
+pub use naming_conventions_common::ToSnakeCaseStringified;
+pub use naming_conventions_common::ToSnakeCaseTokenStream;
+pub use naming_conventions_common::ToScreamingSnakeCaseStringified;
+pub use naming_conventions_common::ToScreamingSnakeCaseTokenStream;
+
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
 pub const SYN_FIELDS: &str = "syn::Fields";
@@ -550,7 +557,7 @@ pub trait SwaggerUrlPathSelfQuotesStringified {
 
 impl<T> SwaggerUrlPathSelfQuotesStringified for T
 where
-    T: macros_common::naming_conventions::ToSnakeCaseStringified,
+    T: naming_conventions_common::ToSnakeCaseStringified,
 {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String {
         macros_common::generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.to_snake_case_stringified(),))
@@ -577,7 +584,7 @@ pub trait UrlHandleSelfSnakeCaseStringified {
 
 impl<T> UrlHandleSelfSnakeCaseStringified for T
 where
-    T: macros_common::naming_conventions::ToSnakeCaseStringified,
+    T: naming_conventions_common::ToSnakeCaseStringified,
 {
     fn url_handle_self_snake_case_stringified(&self, table_name_stringified: &str) -> std::string::String {
         format!("\"{{}}/{}/{}\"", table_name_stringified, self.to_snake_case_stringified())
@@ -903,3 +910,6 @@ where
 //         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
+
+////////////////////////////////////
+

@@ -69,7 +69,7 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {get_ident_upper_camel_case_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let get_ident_snake_case_token_stream = {
-        let value = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_ident_upper_camel_case_stringified);
+        let value = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_ident_upper_camel_case_stringified);
         value
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))

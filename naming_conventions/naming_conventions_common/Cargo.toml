@@ -1,0 +1,9 @@
+[package]
+name = "naming_conventions_common"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+proc-macro2 = {version = "=1.0.81"}
+convert_case = {version = "=0.6.0"}
+macros_common = {path = "../../macros_common"}

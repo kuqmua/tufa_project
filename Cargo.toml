@@ -36,6 +36,7 @@ members = [
   "error_occurence_test",
   "token_patterns",
   "naming_conventions",
+  "naming_conventions/naming_conventions_common",
   "naming_conventions/naming_macros",
 ]
 exclude = [

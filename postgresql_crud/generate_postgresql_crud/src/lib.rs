@@ -131,7 +131,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", macros_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let ident_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
+    let ident_snake_case_stringified = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let table_name_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
     #[derive(Debug, Clone)]
@@ -221,8 +221,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             }
                                             if let Some(value) = value.path.segments.first() {
                                                 Ok(match case {
-                                                    Case::UpperCamel => macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
-                                                    Case::Snake => macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&format!("{}_{postfix}", &value.ident)),
+                                                    Case::UpperCamel => naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
+                                                    Case::Snake => naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&format!("{}_{postfix}", &value.ident)),
                                                 })
                                             } else {
                                                 return Err("value.path.segments.first() is None".to_string());
@@ -497,7 +497,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
     let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
     fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string::String {
-        macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())
+        naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())
     }
     let syn_ident_to_upper_camel_case_token_stream = |value: &syn::Ident| -> proc_macro2::TokenStream {
         let value = syn_ident_to_upper_camel_case_stringified(value);
@@ -785,7 +785,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             segments: {
                                 let mut handle = syn::punctuated::Punctuated::new();
                                 handle.push(syn::PathSegment {
-                                    ident: proc_macro2::Ident::new(&macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(*&value), proc_macro2::Span::call_site()),
+                                    ident: proc_macro2::Ident::new(&naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(*&value), proc_macro2::Span::call_site()),
                                     arguments: syn::PathArguments::None,
                                 });
                                 handle
@@ -1667,7 +1667,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let generics_fiter_checks_token_stream = syn_field_with_additional_info_fields_named
                 .iter()
                 .map(|element| {
-                    let field_ident_upper_camel_case_token_stream = macros_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element.field_ident.to_string());
+                    let field_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element.field_ident.to_string());
                     if element.option_generic.is_some() {
                         let empty_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &empty_column_json_reader_syn_variant_wrapper, file!(), line!(), column!());
                         let not_unique_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream =
@@ -1828,7 +1828,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &format!(
                     "{}{}",
                     naming_conventions::NotUniqueUpperCamelCase,
-                    macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
+                    naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
                 ),
                 Some(not_unique_primary_key_syn_variant_wrapper.get_option_status_code().unwrap()),
                 vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &format!("{}_{}", naming_conventions::NotUniqueSnakeCase, &element.field_ident,), {
@@ -2305,7 +2305,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let future_snake_case = naming_conventions::FutureSnakeCase;
         let future_token_stream = {
-            let operation_http_method_snake_case_token_stream = macros_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&operation.http_method());
+            let operation_http_method_snake_case_token_stream = naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&operation.http_method());
             let commit_header_addition_token_stream = quote::quote! {
                 .header(
                     &#postgresql_crud_snake_case::CommitSnakeCase.to_string(),//todo remove it
@@ -2467,7 +2467,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &format!(
                     "{}{}",
                     naming_conventions::NotUniqueUpperCamelCase,
-                    macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
+                    naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string()),
                 ),
                 Some(not_unique_primary_key_syn_variant_wrapper.get_option_status_code().unwrap()),
                 vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &format!("{}_{}", naming_conventions::NotUniqueSnakeCase, &element.field_ident,), {
@@ -3390,7 +3390,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let value = format!(
                                         "{}{}",
                                         naming_conventions::NotUniqueUpperCamelCase,
-                                        macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_field_ident.to_string()),
+                                        naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_field_ident.to_string()),
                                     );
                                     value
                                         .parse::<proc_macro2::TokenStream>()
@@ -4831,7 +4831,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 //         let request_body_description_token_stream = {
 //             let value = macros_common::generate_quotes::double_quotes_stringified(&format!(
 //                 "{ident_snake_case_stringified} {} {}",
-//                 macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation),
+//                 naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation),
 //                 naming_conventions::PayloadSnakeCase
 //             ));
 //             value.parse::<proc_macro2::TokenStream>()
@@ -4914,71 +4914,70 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 //     }
 // }
 
-//todo maybe refactor or remove later
-#[derive(Debug, Clone, Copy, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
-enum TestOperationPrintlnInfo {
-    Start,
-    End,
-}
+// //todo maybe refactor or remove later
+// #[derive(Debug, Clone, Copy, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
+// enum TestOperationPrintlnInfo {
+//     Start,
+//     End,
+// }
+// // impl std::fmt::Display for TestOperationPrintlnInfo {
+// //     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+// //         match self {
+// //             Self::Start => write!(f, "start"),
+// //             Self::End => write!(f, "end")
+// //         }
+// //     }
+// // }
+// trait TrySelfSnakeCasePrintlnStringified {
+//     fn try_self_snake_case_println_stringified(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> std::string::String;
+// }
 
-// impl std::fmt::Display for TestOperationPrintlnInfo {
-//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-//         match self {
-//             Self::Start => write!(f, "start"),
-//             Self::End => write!(f, "end")
+// impl<T> TrySelfSnakeCasePrintlnStringified for T
+// where
+//     T: naming_conventions::ToSnakeCaseStringified,
+// {
+//     fn try_self_snake_case_println_stringified(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> std::string::String {
+//         let slashes = "-------";
+//         format!(
+//             "\"{}{}{} {}{}\"",
+//             slashes,
+//             naming_conventions::TrySnakeCase,
+//             self.to_snake_case_stringified(),
+//             naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(test_operation_print_in_info),
+//             slashes,
+//         )
+//     }
+// }
+// trait TrySelfSnakeCasePrintlnTokenStream {
+//     fn try_self_snake_case_println_token_stream(&self, test_operation_print_in_info: &TestOperationPrintlnInfo) -> proc_macro2::TokenStream;
+// }
+
+// impl<T> TrySelfSnakeCasePrintlnTokenStream for T
+// where
+//     T: TrySelfSnakeCasePrintlnStringified,
+// {
+//     fn try_self_snake_case_println_token_stream(&self, test_operation_print_in_info: &TestOperationPrintlnInfo) -> proc_macro2::TokenStream {
+//         let value = self.try_self_snake_case_println_stringified(test_operation_print_in_info);
+//         let value_token_stream = value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+//         quote::quote! {println!(#value_token_stream);}
+//     }
+// }
+
+// trait WrapIntoStartEndPrintlnSelfTokenStream {
+//     fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream;
+// }
+
+// impl<T> WrapIntoStartEndPrintlnSelfTokenStream for T
+// where
+//     T: TrySelfSnakeCasePrintlnTokenStream,
+// {
+//     fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+//         let start_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::Start);
+//         let end_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::End);
+//         quote::quote! {
+//             #start_println_token_stream
+//             #test_content_token_stream
+//             #end_println_token_stream
 //         }
 //     }
 // }
-trait TrySelfSnakeCasePrintlnStringified {
-    fn try_self_snake_case_println_stringified(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> std::string::String;
-}
-
-impl<T> TrySelfSnakeCasePrintlnStringified for T
-where
-    T: macros_common::naming_conventions::ToSnakeCaseStringified,
-{
-    fn try_self_snake_case_println_stringified(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> std::string::String {
-        let slashes = "-------";
-        format!(
-            "\"{}{}{} {}{}\"",
-            slashes,
-            naming_conventions::TrySnakeCase,
-            self.to_snake_case_stringified(),
-            macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(test_operation_print_in_info),
-            slashes,
-        )
-    }
-}
-trait TrySelfSnakeCasePrintlnTokenStream {
-    fn try_self_snake_case_println_token_stream(&self, test_operation_print_in_info: &TestOperationPrintlnInfo) -> proc_macro2::TokenStream;
-}
-
-impl<T> TrySelfSnakeCasePrintlnTokenStream for T
-where
-    T: TrySelfSnakeCasePrintlnStringified,
-{
-    fn try_self_snake_case_println_token_stream(&self, test_operation_print_in_info: &TestOperationPrintlnInfo) -> proc_macro2::TokenStream {
-        let value = self.try_self_snake_case_println_stringified(test_operation_print_in_info);
-        let value_token_stream = value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-        quote::quote! {println!(#value_token_stream);}
-    }
-}
-
-trait WrapIntoStartEndPrintlnSelfTokenStream {
-    fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream;
-}
-
-impl<T> WrapIntoStartEndPrintlnSelfTokenStream for T
-where
-    T: TrySelfSnakeCasePrintlnTokenStream,
-{
-    fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
-        let start_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::Start);
-        let end_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::End);
-        quote::quote! {
-            #start_println_token_stream
-            #test_content_token_stream
-            #end_println_token_stream
-        }
-    }
-}
