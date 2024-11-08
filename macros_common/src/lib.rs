@@ -17,7 +17,7 @@ pub fn generate_function_name_snake_case_token_stream(proc_macro_name_upper_came
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
 pub fn trait_path_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {proc_macro_common::naming_conventions}
+    quote::quote! {macros_common::naming_conventions}
 }
 pub fn eprintln_error_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {eprintln!("{error}");}

@@ -14,6 +14,6 @@ quote = {version = "=1.0.36"}
 syn = {version = "=2.0.60"}
 strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
-proc_macro_common = {path = "../../../proc_macro_common"}
+macros_common = {path = "../../../macros_common"}
 proc_macro_helpers = {path = "../../../proc_macro_helpers"}
 naming_conventions = {path = "../../../naming_conventions"}

@@ -15,7 +15,7 @@
 //         <naming_conventions::String as naming_conventions::Naming>::snake_case_stringified(),
 //         <naming_conventions::String as naming_conventions::Naming>::upper_camel_case_stringified()
 //     );
-//     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
+//     let std_string_string_token_stream = macros_common::std_string_string_token_stream();
 //     let as_std_collections_hashmap_key_type_stringified = format!(
 //         "as {}::collections::{} key type",
 //         naming_conventions::STD_STRINGIFIED,
@@ -62,7 +62,7 @@
 //             else {
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {} {}{}",
-//                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                     macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
 //                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
 //                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
@@ -76,7 +76,7 @@
 //                         let type_stringified = format!("{path}{}",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
 //                         type_stringified
 //                         .parse::<proc_macro2::TokenStream>()
-//                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                     }
 //                 },
 //                 crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident, .. } => {
@@ -92,7 +92,7 @@
 //                 crate::error_occurence::supported_container::SupportedContainer::Vec{ .. } |
 //                 crate::error_occurence::supported_container::SupportedContainer::HashMap{ .. } => panic!(
 //                     "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}",
-//                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                     macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
 //                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                     naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
@@ -106,13 +106,13 @@
 //                     let type_stringified = format!("{path}{with_serialize_deserialize_upper_camel_case}");
 //                     type_stringified
 //                     .parse::<proc_macro2::TokenStream>()
-//                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                 }
 //             }
 //             else {
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
-//                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                     macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Path as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }
@@ -126,12 +126,12 @@
 //                     let type_stringified = format!("{path}<{std_string_string_stringified}>");
 //                     type_stringified
 //                     .parse::<proc_macro2::TokenStream>()
-//                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                 }
 //                 else {
 //                     panic!(
 //                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}",
-//                         proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                         macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
 //                 }
@@ -139,7 +139,7 @@
 //             else {
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
-//                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                     macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }
@@ -154,7 +154,7 @@
 //                         let type_stringified = format!("{path}<{element_path}{}>",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
 //                         type_stringified
 //                         .parse::<proc_macro2::TokenStream>()
-//                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                     },
 //                     crate::error_occurence::vec_element_type::VecElementType::Reference { reference_ident, .. } => {
 //                         crate::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -168,7 +168,7 @@
 //                             let type_stringified = format!("{path}<{std_string_string_stringified}>");
 //                             type_stringified
 //                             .parse::<proc_macro2::TokenStream>()
-//                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                         }
 //                     },
 //                 }
@@ -176,7 +176,7 @@
 //             else {
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
-//                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                     macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }
@@ -191,13 +191,13 @@
 //                         let type_stringified = format!("{path}<{element_path}{with_serialize_deserialize_upper_camel_case}{}>",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
 //                         type_stringified
 //                         .parse::<proc_macro2::TokenStream>()
-//                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                     }
 //                 }
 //                 else {
 //                     panic!(
 //                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}",
-//                         proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                         macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                         naming_conventions::SUPPORTS_ONLY_STRINGIFIED
 //                     );
 //                 }
@@ -205,7 +205,7 @@
 //             else {
 //                 panic!(
 //                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
-//                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+//                     macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
 //                     <naming_conventions::Vec as naming_conventions::Naming>::upper_camel_case_stringified(),
 //                 );
 //             }

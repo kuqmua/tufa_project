@@ -1,8 +1,8 @@
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
+    macros_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "TryFromEnv";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", proc_macro_common::constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", macros_common::constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named = syn::Ident::new(
         &format!(
@@ -34,7 +34,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         try_from_std_env_var_ok_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
             panic!(
                 "{proc_macro_name_upper_camel_case_stringified} {try_from_std_env_var_ok_upper_camel_case_stringified} {}",
-                proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
     };
@@ -42,10 +42,10 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let variants_token_stream = fields_named.iter().map(|element| {
             let element_ident = &element.ident;
             let element_ident_upper_camel_case_token_stream = {
-                let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
+                let value = macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let error_upper_camel_case_token_stream = {
                 let value = format!(
@@ -55,7 +55,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 );
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {
                 #element_ident_upper_camel_case_token_stream {
@@ -81,10 +81,10 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let variants_token_stream = fields_named.iter().map(|element| {
             let element_ident = &element.ident;
             let element_ident_upper_camel_case_token_stream = {
-                let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
+                let value = macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {
                 Self::#element_ident_upper_camel_case_token_stream { #element_ident } => write!(formatter, "{}", #element_ident)
@@ -112,16 +112,16 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let element_ident = &element.ident;
             let element_ident_quotes_screaming_snake_case_string = syn::LitStr::new(&convert_case::Casing::to_case(&element_ident.as_ref().expect(ident_in_none_stringified).to_string(), convert_case::Case::ScreamingSnake), ident.span());
             let element_ident_upper_camel_case_token_stream = {
-                let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
+                let value = macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let element_ident_wrapper_upper_camel_case_token_stream = {
-                let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
+                let value = macros_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {
                 let #element_ident = {

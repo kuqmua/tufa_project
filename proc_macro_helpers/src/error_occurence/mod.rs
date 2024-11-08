@@ -73,7 +73,7 @@ impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
         option_attribute.unwrap_or_else(|| panic!("option attribute {}", naming_conventions::IS_NONE_STRINGIFIED))
     }
 }
-impl proc_macro_common::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
+impl macros_common::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
     fn attribute_ident_stringified(&self) -> &str {
         match self {
             Self::EoToStdStringString => "eo_to_std_string_string",
@@ -90,8 +90,8 @@ impl proc_macro_common::attribute_ident_stringified::AttributeIdentStringified f
 }
 impl ErrorOccurenceFieldAttribute {
     pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
-        let value = format!("#[{}]", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
-        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = format!("#[{}]", macros_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 pub fn attribute_view(attribute: &str) -> std::string::String {
@@ -166,9 +166,9 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
     let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields
         .iter()
-        .filter(|element| *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *naming_conventions::CodeOccurenceSnakeCase.to_string())
+        .filter(|element| *element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE) != *naming_conventions::CodeOccurenceSnakeCase.to_string())
         .map(|element| {
-            let element_ident = element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
+            let element_ident = element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE);
             let element_type_token_stream = {
                 let element_type = &element.ty;
                 quote::quote! {#element_type}
@@ -193,7 +193,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                         );
                         value
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     quote::quote! {
                         #element_type_with_serialize_deserialize_token_stream
@@ -247,7 +247,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                         );
                         value
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     } else {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.arguments != syn::PathArguments::AngleBracketed");
                     };
@@ -271,7 +271,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                         let value = format!("{}{}", quote::quote! {#second_argument}, naming_conventions::WithSerializeDeserializeUpperCamelCase,);
                         value
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     quote::quote! {
                         std::collections::HashMap<#std_string_string, #element_hashmap_value_type_with_serialize_deserialize_token_stream>

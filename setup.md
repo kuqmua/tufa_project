@@ -15,7 +15,7 @@
 33. [from_str](#heading32)
 34. [type_variants_from_reqwest_response](#heading35)
 35. [macros_assistants](#heading35)
-36. [proc_macro_common](#heading35)
+36. [macros_common](#heading35)
 37. [postgresql_crud](#heading37)
 38. [error_occurence_lib](#heading38)
 39. [config](#heading39)
@@ -34,7 +34,7 @@
 
 ## macros_assistants <a name="heading35"/>
 
-## proc_macro_common <a name="heading35"/>
+## macros_common <a name="heading35"/>
 
 ## postgresql_crud <a name="heading37"/>
 

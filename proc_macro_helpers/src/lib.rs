@@ -18,7 +18,7 @@ pub mod generate_pub_type_alias_token_stream;
 //     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value_snake_case_stringified = proc_macro_helpers::naming_conventions::ToSnakeCase::to_snake_case(self);
 //         value_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-//         .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 
@@ -35,7 +35,7 @@ pub mod generate_pub_type_alias_token_stream;
 //             self.to_upper_camel_case()
 //         );
 //         value.parse::<proc_macro2::TokenStream>()
-//         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         .unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 
@@ -60,7 +60,7 @@ pub trait TrySelfSnakeCasePrintlnStringified {
 
 impl<T> TrySelfSnakeCasePrintlnStringified for T
 where
-    T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
+    T: macros_common::naming_conventions::ToSnakeCaseStringified,
 {
     fn try_self_snake_case_println_stringified(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> std::string::String {
         let slashes = "-------";
@@ -69,7 +69,7 @@ where
             slashes,
             naming_conventions::TrySnakeCase,
             self.to_snake_case_stringified(),
-            proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(test_operation_print_in_info),
+            macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(test_operation_print_in_info),
             slashes,
         )
     }
@@ -85,7 +85,7 @@ where
 {
     fn try_self_snake_case_println_token_stream(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> proc_macro2::TokenStream {
         let value = self.try_self_snake_case_println_stringified(test_operation_print_in_info);
-        let value_token_stream = value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        let value_token_stream = value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
         quote::quote! {println!(#value_token_stream);}
     }
 }

@@ -1,6 +1,6 @@
 #[proc_macro_derive(SvgComponent)]
 pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    proc_macro_common::panic_location::panic_location();
+    macros_common::panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("SvgComponent syn::parse(input) failed");
     let ident = &syn_derive_input.ident;
     // let get_html_variants: TokenStream;
@@ -10,7 +10,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
             let variant_ident = v.ident;
             let module = syn::Ident::new(
-                &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                &macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
                     &variant_ident.to_string(),
                 ),
                 ident.span(),
@@ -35,7 +35,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
             let variant_ident = v.ident;
             let class = &format!(
                 "anticon-{}",
-                proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
                     &variant_ident.to_string()
                 )
             );
