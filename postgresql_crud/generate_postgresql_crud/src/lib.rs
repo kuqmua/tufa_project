@@ -4915,17 +4915,66 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 // }
 
 //todo maybe refactor or remove later
+#[derive(Debug, Clone, Copy, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
+enum TestOperationPrintlnInfo {
+    Start,
+    End,
+}
+
+// impl std::fmt::Display for TestOperationPrintlnInfo {
+//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         match self {
+//             Self::Start => write!(f, "start"),
+//             Self::End => write!(f, "end")
+//         }
+//     }
+// }
+trait TrySelfSnakeCasePrintlnStringified {
+    fn try_self_snake_case_println_stringified(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> std::string::String;
+}
+
+impl<T> TrySelfSnakeCasePrintlnStringified for T
+where
+    T: macros_common::naming_conventions::ToSnakeCaseStringified,
+{
+    fn try_self_snake_case_println_stringified(&self, test_operation_print_in_info: &crate::TestOperationPrintlnInfo) -> std::string::String {
+        let slashes = "-------";
+        format!(
+            "\"{}{}{} {}{}\"",
+            slashes,
+            naming_conventions::TrySnakeCase,
+            self.to_snake_case_stringified(),
+            macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(test_operation_print_in_info),
+            slashes,
+        )
+    }
+}
+trait TrySelfSnakeCasePrintlnTokenStream {
+    fn try_self_snake_case_println_token_stream(&self, test_operation_print_in_info: &TestOperationPrintlnInfo) -> proc_macro2::TokenStream;
+}
+
+impl<T> TrySelfSnakeCasePrintlnTokenStream for T
+where
+    T: TrySelfSnakeCasePrintlnStringified,
+{
+    fn try_self_snake_case_println_token_stream(&self, test_operation_print_in_info: &TestOperationPrintlnInfo) -> proc_macro2::TokenStream {
+        let value = self.try_self_snake_case_println_stringified(test_operation_print_in_info);
+        let value_token_stream = value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        quote::quote! {println!(#value_token_stream);}
+    }
+}
+
 trait WrapIntoStartEndPrintlnSelfTokenStream {
     fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream;
 }
 
 impl<T> WrapIntoStartEndPrintlnSelfTokenStream for T
 where
-    T: macros_helpers::TrySelfSnakeCasePrintlnTokenStream,
+    T: TrySelfSnakeCasePrintlnTokenStream,
 {
     fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
-        let start_println_token_stream = self.try_self_snake_case_println_token_stream(&macros_helpers::TestOperationPrintlnInfo::Start);
-        let end_println_token_stream = self.try_self_snake_case_println_token_stream(&macros_helpers::TestOperationPrintlnInfo::End);
+        let start_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::Start);
+        let end_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::End);
         quote::quote! {
             #start_println_token_stream
             #test_content_token_stream
