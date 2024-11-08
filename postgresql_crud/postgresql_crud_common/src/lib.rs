@@ -284,7 +284,7 @@ impl PostgresqlTypeWithMetadata {
     }
 }
 
-#[derive(Debug, Clone, Copy, strum_macros::Display, strum_macros::EnumIter, macros_assistants::EnumWithUnitFieldsToSnakeCaseStringified)]
+#[derive(Debug, Clone, Copy, strum_macros::Display, strum_macros::EnumIter, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
 pub enum SupportedSqlxPostgresType {
     StdPrimitiveBool,
     StdOptionOptionStdPrimitiveBool,

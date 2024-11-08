@@ -1,3 +1,7 @@
+pub use naming_macros::EnumWithUnitFieldsToUpperCamelCaseStringified;
+pub use naming_macros::EnumWithUnitFieldsToSnakeCaseStringified;
+pub use naming_macros::EnumWithUnitFieldsToScreamingSnakeCaseStringified;
+
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
 pub const SYN_FIELDS: &str = "syn::Fields";

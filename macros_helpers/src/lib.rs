@@ -40,7 +40,7 @@ pub mod generate_pub_type_alias_token_stream;
 //     }
 // }
 
-#[derive(Debug, Clone, Copy, macros_assistants::EnumWithUnitFieldsToSnakeCaseStringified)]
+#[derive(Debug, Clone, Copy, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
 pub enum TestOperationPrintlnInfo {
     Start,
     End,

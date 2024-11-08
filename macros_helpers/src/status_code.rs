@@ -1,4 +1,4 @@
-#[derive(Debug, strum_macros::Display, PartialEq, Eq, Clone, Copy, Hash, macros_assistants::EnumWithUnitFieldsToUpperCamelCaseStringified, macros_assistants::EnumWithUnitFieldsToSnakeCaseStringified)]
+#[derive(Debug, strum_macros::Display, PartialEq, Eq, Clone, Copy, Hash, naming_conventions::EnumWithUnitFieldsToUpperCamelCaseStringified, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
 pub enum StatusCode {
     Continue100,
     SwitchingProtocols101,

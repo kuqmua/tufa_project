@@ -19,7 +19,6 @@ members = [
   "postgresql_crud/generate_postgresql_query_part",
   "postgresql_crud/postgresql_crud_common",
   "postgresql_crud/postgresql_crud_common/postgresql_crud_types_macro_logic_reuse",
-  "macros_assistants",
   "macros_common",
   "macros_helpers",
   "server",
