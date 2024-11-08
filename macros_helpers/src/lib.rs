@@ -16,7 +16,7 @@ pub mod generate_pub_type_alias_token_stream;
 
 // impl OperationHttpMethod {
 //     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-//         let value_snake_case_stringified = proc_macro_helpers::naming_conventions::ToSnakeCase::to_snake_case(self);
+//         let value_snake_case_stringified = macros_helpers::naming_conventions::ToSnakeCase::to_snake_case(self);
 //         value_snake_case_stringified.parse::<proc_macro2::TokenStream>()
 //         .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
@@ -27,7 +27,7 @@ pub mod generate_pub_type_alias_token_stream;
 // }
 
 // impl<Generic> ParametersUpperCamelCaseTokenStream for Generic
-//     where Generic: proc_macro_helpers::naming_conventions::ToUpperCamelCase
+//     where Generic: macros_helpers::naming_conventions::ToUpperCamelCase
 // {
 //     fn parameters_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = format!(

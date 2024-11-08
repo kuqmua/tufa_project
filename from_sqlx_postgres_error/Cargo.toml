@@ -10,7 +10,7 @@ proc-macro = true
 [dependencies]
 # quote = {version = "=1.0.36"}
 # syn = {version = "=2.0.60"}
-# proc_macro_helpers = {path = "../proc_macro_helpers"}
+# macros_helpers = {path = "../macros_helpers"}
 # macros_common = {path = "../macros_common"}
 
 [lints]

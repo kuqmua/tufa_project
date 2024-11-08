@@ -16,7 +16,7 @@ strum_macros = {version = "=0.24.3"}
 postgresql_crud_common = {path = "./../postgresql_crud_common"}
 macros_assistants = {path = "../../macros_assistants"}
 macros_common = {path = "../../macros_common"}
-proc_macro_helpers = {path = "../../proc_macro_helpers"}
+macros_helpers = {path = "../../macros_helpers"}
 naming_conventions = {path = "../../naming_conventions"}
 token_patterns = {path = "../../token_patterns"}
 

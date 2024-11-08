@@ -2,7 +2,7 @@
 1. [git_sync_command](#heading1)
 2. [compile_time_git_info](#heading2)
 3. [enum_extension](#heading3)
-18. [proc_macro_helpers](#heading18)
+18. [macros_helpers](#heading18)
 22. [svg_component](#heading22)
 23. [client](#heading23)
 24. [common](#heading24) 
@@ -26,7 +26,7 @@
 
 ## enum_extension <a name="heading3"/>
 
-## proc_macro_helpers <a name="heading18"/>
+## macros_helpers <a name="heading18"/>
 
 ## svg_component <a name="heading22"/>
 

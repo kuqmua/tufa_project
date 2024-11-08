@@ -29,7 +29,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
     };
-    let supported_enum_variant = proc_macro_helpers::error_occurence::supported_enum_variant::create(&data_enum, &proc_macro_name_upper_camel_case_ident_stringified);
+    let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::create(&data_enum, &proc_macro_name_upper_camel_case_ident_stringified);
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
     let std_string_string = token_patterns::StdStringString;
     let code_occurence_snake_case_stringified = naming_conventions::CodeOccurenceSnakeCase;
@@ -65,7 +65,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         }
     };
     let tokens = match supported_enum_variant {
-        proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
+        macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let generate_impl_std_fmt_display_handle_token_stream = |ident_token_stream: &proc_macro2::TokenStream| {
                 generate_impl_std_fmt_display_token_stream(ident_token_stream, &{
                     let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -92,13 +92,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         );
                         let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()).map(|element| {
                             let element_ident = &element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE);
-                            match proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                            match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
+                                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                     quote::quote! {
                                         error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
                                     }
                                 }
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
+                                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                     quote::quote! {
                                         #element_ident.to_string().lines().fold(
                                             #std_string_string::new(),
@@ -109,7 +109,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         )
                                     }
                                 }
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                     quote::quote! {
                                         #element_ident.iter().fold(
                                             #std_string_string::new(),
@@ -130,7 +130,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         )
                                     }
                                 }
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+                                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                     quote::quote! {
                                         #element_ident.iter().fold(
                                             #std_string_string::new(),
@@ -147,7 +147,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         )
                                     }
                                 }
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                     quote::quote! {
                                         #element_ident
                                             .iter()
@@ -165,7 +165,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             )
                                     }
                                 }
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                     quote::quote! {
                                         #element_ident
                                             .iter()
@@ -246,43 +246,43 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let fields_idents_token_stream = fields.iter().map(|element| &element.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()).map(|element| {
                         let element_ident = &element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE);
-                        let conversion_token_stream = match proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
+                        let conversion_token_stream = match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
+                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote! {
                                     #element_ident: {
                                         error_occurence_lib::ToStdStringString::to_std_string_string(&#element_ident)
                                     }
                                 }
                             }
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize
-                            | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize
-                            | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize
+                            | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize
+                            | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 quote::quote! {
                                     #element_ident
                                 }
                             }
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
+                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 quote::quote! {
                                     #element_ident: {
                                         #element_ident.into_serialize_deserialize_version()
                                     }
                                 }
                             }
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
+                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote::quote! {
                                     #element_ident: {
                                         #element_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
                                     }
                                 }
                             }
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 quote::quote! {
                                     #element_ident: {
                                         #element_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
                                     }
                                 }
                             }
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                 quote::quote! {
                                     #element_ident: {
                                         #element_ident.into_iter().map(|(key, value)|
@@ -291,7 +291,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     }
                                 }
                             }
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 quote::quote! {
                                     #element_ident: {
                                         #element_ident.into_iter().map(
@@ -318,7 +318,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let variants_token_stream = data_enum
                     .variants
                     .iter()
-                    .map(|element| proc_macro_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(&element, &proc_macro_name_upper_camel_case_ident_stringified));
+                    .map(|element| macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(&element, &proc_macro_name_upper_camel_case_ident_stringified));
                 generate_enum_ident_with_serialize_deserialize_token_stream(&quote::quote! {#(#variants_token_stream),*})
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_handle_token_stream(&ident_with_serialize_deserialize_token_stream);
@@ -339,7 +339,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 #impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream
             }
         }
-        proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
+        macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
             let generate_display_formatter_unnamed_token_stream = || {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
@@ -426,7 +426,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     };
     // println!("{generated} ");
     // if ident == "" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         &proc_macro_name_upper_camel_case,
     //         &generated,
     //         &proc_macro_name_upper_camel_case_ident_stringified
