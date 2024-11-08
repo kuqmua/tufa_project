@@ -14,7 +14,7 @@
 32. [from_sqlx_postgres_error](#heading32)
 33. [from_str](#heading32)
 34. [type_variants_from_reqwest_response](#heading35)
-35. [proc_macro_assistants](#heading35)
+35. [macros_assistants](#heading35)
 36. [proc_macro_common](#heading35)
 37. [postgresql_crud](#heading37)
 38. [error_occurence_lib](#heading38)
@@ -32,7 +32,7 @@
 
 ## client <a name="heading23"/>
 
-## proc_macro_assistants <a name="heading35"/>
+## macros_assistants <a name="heading35"/>
 
 ## proc_macro_common <a name="heading35"/>
 

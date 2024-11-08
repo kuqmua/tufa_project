@@ -9,7 +9,7 @@ proc-macro2 = {version = "=1.0.81"}
 quote = {version = "=1.0.36"}
 syn = {version = "=2.0.60"} # activate impl Display trait in proc macros: syn = { version = "1.0.75", features = ["extra-traits"]}
 strum_macros = {version = "=0.24.3"}
-proc_macro_assistants = {path = "../proc_macro_assistants"}
+macros_assistants = {path = "../macros_assistants"}
 proc_macro_common = {path = "../proc_macro_common"}
 token_patterns = {path = "../token_patterns"}
 naming_conventions = {path = "../naming_conventions"}

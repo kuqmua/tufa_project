@@ -21,7 +21,7 @@ postgresql_crud_types_macro_logic_reuse = {path = "./postgresql_crud_types_macro
 error_occurence_lib = {path = "../../error_occurence_lib"}
 enum_extension_lib = {path = "../../enum_extension_lib"}
 proc_macro_common = {path = "../../proc_macro_common"}
-proc_macro_assistants = {path = "../../proc_macro_assistants"}
+macros_assistants = {path = "../../macros_assistants"}
 naming_conventions = {path = "../../naming_conventions"}
 from_str = {path = "../../from_str"}
 

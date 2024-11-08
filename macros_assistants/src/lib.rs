@@ -1,6 +1,6 @@
 /*
 only works if all enum variants without fields like this
-#[derive(proc_macro_assistants::ToUpperCamelCaseStringified)]
+#[derive(macros_assistants::ToUpperCamelCaseStringified)]
 enum Operation {
      One,
      Two,
@@ -51,7 +51,7 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
 
 /*
 only works if all enum variants without fields like this
- #[derive(proc_macro_assistants::ToSnakeCaseStringified)]
+ #[derive(macros_assistants::ToSnakeCaseStringified)]
  enum Operation {
      One,
      Two,
@@ -101,7 +101,7 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
 }
 /*
 only works if all enum variants without fields like this
- #[derive(proc_macro_assistants::ToScreamingSnakeCaseStringified)]
+ #[derive(macros_assistants::ToScreamingSnakeCaseStringified)]
  enum Operation {
      One,
      Two,

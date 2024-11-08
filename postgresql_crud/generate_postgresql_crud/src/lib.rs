@@ -1010,7 +1010,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             format!("{}::{value}", naming_conventions::PostgresqlCrudSnakeCase)
         }
     }
-    #[derive(Debug, Clone, Copy, proc_macro_assistants::ToUpperCamelCaseStringified, proc_macro_assistants::ToSnakeCaseStringified)]
+    #[derive(Debug, Clone, Copy, macros_assistants::ToUpperCamelCaseStringified, macros_assistants::ToSnakeCaseStringified)]
     enum Operation {
         CreateMany,
         CreateOne,
@@ -1078,7 +1078,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     }
-    #[derive(proc_macro_assistants::ToSnakeCaseStringified)]
+    #[derive(macros_assistants::ToSnakeCaseStringified)]
     enum OperationHttpMethod {
         Post,
         Patch,
