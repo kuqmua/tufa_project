@@ -29,7 +29,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
     };
-    let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::create(&data_enum, &proc_macro_name_upper_camel_case_ident_stringified);
+    let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::new_or_panic(&data_enum, &proc_macro_name_upper_camel_case_ident_stringified);
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
     let std_string_string = token_patterns::StdStringString;
     let code_occurence_snake_case_stringified = naming_conventions::CodeOccurenceSnakeCase;
