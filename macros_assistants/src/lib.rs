@@ -33,9 +33,9 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
         })
         .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    let function_name_snake_case_token_stream = macros_common::generate_function_name_snake_case_token_stream(proc_macro_name_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+    let function_name_snake_case_token_stream = macros_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&proc_macro_name_upper_camel_case_stringified);
     let trait_path_token_stream = macros_common::trait_path_token_stream();
-    let proc_macro_name_upper_camel_case_token_stream = macros_common::generate_function_name_upper_camel_case_token_stream(proc_macro_name_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+    let proc_macro_name_upper_camel_case_token_stream = macros_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&proc_macro_name_upper_camel_case_stringified);
     let generated = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
             fn #function_name_snake_case_token_stream(&self) -> #std_string_string {//todo maybe write duplicate Trait with &str instead of std::string::String
@@ -84,9 +84,9 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
         })
         .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    let function_name_snake_case_token_stream = macros_common::generate_function_name_snake_case_token_stream(proc_macro_name_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+    let function_name_snake_case_token_stream = macros_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&proc_macro_name_upper_camel_case_stringified);
     let trait_path_token_stream = macros_common::trait_path_token_stream();
-    let proc_macro_name_upper_camel_case_token_stream = macros_common::generate_function_name_upper_camel_case_token_stream(proc_macro_name_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+    let proc_macro_name_upper_camel_case_token_stream = macros_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&proc_macro_name_upper_camel_case_stringified);
     let generated = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
             fn #function_name_snake_case_token_stream(&self) -> #std_string_string {
@@ -134,9 +134,9 @@ pub fn to_screaming_snake_case_stringified(input: proc_macro::TokenStream) -> pr
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
         })
         .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    let function_name_snake_case_token_stream = macros_common::generate_function_name_snake_case_token_stream(proc_macro_name_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+    let function_name_snake_case_token_stream = macros_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&proc_macro_name_upper_camel_case_stringified);
     let trait_path_token_stream = macros_common::trait_path_token_stream();
-    let proc_macro_name_upper_camel_case_token_stream = macros_common::generate_function_name_upper_camel_case_token_stream(proc_macro_name_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+    let proc_macro_name_upper_camel_case_token_stream = macros_common::naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&proc_macro_name_upper_camel_case_stringified);
     let generated = quote::quote! {
         impl #trait_path_token_stream::#proc_macro_name_upper_camel_case_token_stream for #ident {
             fn #function_name_snake_case_token_stream(&self) -> #std_string_string {
