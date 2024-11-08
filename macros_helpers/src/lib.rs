@@ -90,22 +90,3 @@ where
         quote::quote! {println!(#value_token_stream);}
     }
 }
-
-pub trait WrapIntoStartEndPrintlnSelfTokenStream {
-    fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream;
-}
-
-impl<T> WrapIntoStartEndPrintlnSelfTokenStream for T
-where
-    T: TrySelfSnakeCasePrintlnTokenStream,
-{
-    fn wrap_into_start_end_println_self_token_stream(&self, test_content_token_stream: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
-        let start_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::Start);
-        let end_println_token_stream = self.try_self_snake_case_println_token_stream(&TestOperationPrintlnInfo::End);
-        quote::quote! {
-            #start_println_token_stream
-            #test_content_token_stream
-            #end_println_token_stream
-        }
-    }
-}
