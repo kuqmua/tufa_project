@@ -524,7 +524,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let debug_upper_camel_case = naming_conventions::DebugUpperCamelCase;
     let error_snake_case = naming_conventions::ErrorSnakeCase;
-    let eprintln_error_token_stream = macros_common::eprintln_error_token_stream();
+    let eprintln_error_token_stream = quote::quote!{eprintln!("{error}");};
     let serde_serialize = token_patterns::SerdeSerialize;
     let serde_deserialize = token_patterns::SerdeDeserialize;
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
