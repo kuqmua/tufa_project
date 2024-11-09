@@ -53,10 +53,10 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
                     .parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let generate_struct_declaration = |struct_name_token_stream: &proc_macro2::TokenStream| quote::quote! {pub struct #struct_name_token_stream;};
+            let generate_struct_declaration = |struct_name_token_stream: &dyn quote::ToTokens| quote::quote! {pub struct #struct_name_token_stream;};
             let upper_camel_case_struct_declaration_token_stream = generate_struct_declaration(&phrase_part_upper_camel_case_upper_camel_case_token_stream);
             let snake_case_struct_declaration_token_stream = generate_struct_declaration(&phrase_part_snake_case_upper_camel_case_token_stream);
-            let generate_display_implementation_token_stream = |struct_name_token_stream: &proc_macro2::TokenStream, write_content_token_stream: &proc_macro2::TokenStream| {
+            let generate_display_implementation_token_stream = |struct_name_token_stream: &dyn quote::ToTokens, write_content_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {
                     impl std::fmt::Display for #struct_name_token_stream {
                         fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -67,7 +67,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
             };
             let upper_camel_case_display_implementation_token_stream = generate_display_implementation_token_stream(&phrase_part_upper_camel_case_upper_camel_case_token_stream, &phrase_part_upper_camel_case_double_quotes_token_stream);
             let snake_case_display_implementation_token_stream = generate_display_implementation_token_stream(&phrase_part_snake_case_upper_camel_case_token_stream, &phrase_part_snake_case_double_quotes_token_stream);
-            let generate_to_tokens_implementation_token_stream = |struct_name_token_stream: &proc_macro2::TokenStream, quote_content_token_stream: &proc_macro2::TokenStream| {
+            let generate_to_tokens_implementation_token_stream = |struct_name_token_stream: &dyn quote::ToTokens, quote_content_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {
                     impl quote::ToTokens for #struct_name_token_stream {
                         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -201,17 +201,21 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 )
             };
             let generate_struct_token_stream = |
-                struct_ident_token_stream: &proc_macro2::TokenStream,
-                elements_concat_value_case_double_quotes_token_stream: &proc_macro2::TokenStream,
+                elements_concat_value_case_double_quotes_token_stream: &dyn quote::ToTokens,
                 is_upper_camel_case: std::primitive::bool,
-                trait_ident_token_stream: &proc_macro2::TokenStream,
+                trait_ident_token_stream: &dyn quote::ToTokens,
             |{
+                let struct_ident_token_stream = if is_upper_camel_case {
+                    quote::quote!{#struct_upper_camel_case_upper_camel_case_token_stream}
+                }
+                else {
+                    quote::quote!{#struct_snake_case_token_upper_camel_case_stream}
+                };
                 let panic_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("failed to parse stringified {struct_ident_token_stream} into proc_macro2::TokenStream: {{value_stringified}}"));
                 let casing_token_stream = if is_upper_camel_case {
                     quote::quote!{naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified}
                 }
                 else {
-                    //todo bug????
                     quote::quote!{naming_conventions_common::ToSnakeCaseStringified::to_snake_case_stringified}
                 };
                 quote::quote!{
@@ -266,13 +270,11 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 }
             };
             let pub_struct_upper_camel_case_token_stream = generate_struct_token_stream(
-                &struct_upper_camel_case_upper_camel_case_token_stream,
                 &elements_concat_value_upper_camel_case_double_quotes_token_stream,
                 true,
                 &trait_upper_camel_case_upper_camel_case_token_stream,
             );
             let pub_struct_snake_case_token_stream = generate_struct_token_stream(
-                &struct_snake_case_token_upper_camel_case_stream,
                 &elements_concat_value_snake_case_double_quotes_token_stream,
                 false,
                 &trait_snake_case_token_upper_camel_case_stream,

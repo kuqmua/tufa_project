@@ -614,7 +614,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             //todo maybe rename later
             let generate_postgresql_query_part_to_read_token_stream = {
                 let field_reader_snake_case = naming_conventions::FieldReaderSnakeCase;
-                let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &proc_macro2::TokenStream| {
+                let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
                     let pagination_start_end_initialization_token_stream = macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&field_reader_snake_case);
                     quote::quote! {
                         #pagination_start_end_initialization_token_stream

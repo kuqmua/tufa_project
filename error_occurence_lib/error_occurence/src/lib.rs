@@ -37,7 +37,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         }
     };
-    let generate_enum_ident_with_serialize_deserialize_token_stream = |variants_token_stream: &proc_macro2::TokenStream| {
+    let generate_enum_ident_with_serialize_deserialize_token_stream = |variants_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
             #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
             pub enum #ident_with_serialize_deserialize_upper_camel_case {
@@ -45,7 +45,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         }
     };
-    let generate_impl_ident_into_serialize_deserialize_version_token_stream = |variants: &proc_macro2::TokenStream| {
+    let generate_impl_ident_into_serialize_deserialize_version_token_stream = |variants: &dyn quote::ToTokens| {
         quote::quote! {
             impl #ident {
                 pub fn #into_serialize_deserialize_version_snake_case_token_stream(self) -> #ident_with_serialize_deserialize_upper_camel_case {
