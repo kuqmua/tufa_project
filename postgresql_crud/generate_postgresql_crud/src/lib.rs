@@ -129,7 +129,7 @@ pub fn common_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     macros_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", macros_common::constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
@@ -1593,7 +1593,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute| -> std::vec::Vec<syn::Variant> {
         let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
         let common_additional_error_variants_attribute_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &generate_postgresql_crud_attribute.generate_path_to_attribute(), &proc_macro_name_upper_camel_case_ident_stringified);
-        let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}: {error}", macros_common::constants::AST_PARSE_FAILED));
+        let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}: {error}", constants::AST_PARSE_FAILED));
         let value_ident_stringified = value.ident.to_string();
         assert!(
             value_ident_stringified == generate_postgresql_crud_attribute_stringified,
@@ -2650,7 +2650,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
                     let column_names = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                        let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", macros_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                        let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                         acc.push_str(&format!("{}", &element.field_ident));
                         if incremented_index != syn_field_with_additional_info_fields_named_excluding_primary_key_len {
                             acc.push_str(&format!(","));
@@ -2893,7 +2893,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_names = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         acc.push_str(&format!("{}", &element.field_ident));
                         acc.push_str({
-                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", macros_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                             if incremented_index == syn_field_with_additional_info_fields_named_excluding_primary_key_len {
                                 ""
                             } else {
@@ -2905,7 +2905,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_increments = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
                         acc.push_str(&format!("{{}}"));
                         acc.push_str({
-                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", macros_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                             if incremented_index == syn_field_with_additional_info_fields_named_excluding_primary_key_len {
                                 ""
                             } else {

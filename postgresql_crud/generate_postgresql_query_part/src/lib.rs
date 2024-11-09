@@ -4,7 +4,7 @@
 pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     macros_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlQueryPart";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", macros_common::constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {

@@ -5,7 +5,7 @@
 //     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
 //         panic!(
 //             "{}",
-//             macros_common::constants::AST_PARSE_FAILED
+//             constants::AST_PARSE_FAILED
 //         )
 //     });
 //     let ident = &syn_derive_input.ident;

@@ -2,7 +2,7 @@
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     macros_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "TryFromEnv";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", macros_common::constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named = syn::Ident::new(
         &format!(
