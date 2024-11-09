@@ -663,9 +663,9 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         };
         let (
             option_to_update_token_stream,
-            option_to_update_try_generate_bind_increments_error_named_token_stream,
-            try_generate_bind_increments_token_stream,
-            bind_value_to_query_token_stream
+            option_to_update_try_generate_postgresql_query_part_error_named_token_stream,
+            try_generate_postgresql_query_part_to_update_token_stream,
+            bind_value_to_postgresql_query_part_to_update_token_stream
         ) = {
             let option_to_update_upper_camel_case = naming_conventions::OptionToUpdateUpperCamelCase;
             let option_to_update_token_stream = {
@@ -680,12 +680,15 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 }
             };
             let option_to_update_snake_case = naming_conventions::OptionToUpdateSnakeCase;
-            //todo maybe rename later
-            let try_generate_bind_increments_token_stream = {
+            let try_generate_postgresql_query_part_to_update_token_stream = {
+                let jsonb_set_accumulator_snake_case = naming_conventions::JsonbSetAccumulatorSnakeCase;
+                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                    &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})")
+                );
                 quote::quote!{
                     fn try_generate_postgresql_query_part_to_update(
                         #option_to_update_snake_case: &Self::#option_to_update_upper_camel_case<'_>,
-                        jsonb_set_accumulator: &std::primitive::str,
+                        #jsonb_set_accumulator_snake_case: &std::primitive::str,
                         jsonb_set_target: &std::primitive::str,
                         jsonb_set_path: &std::primitive::str,
                         increment: &mut std::primitive::u64,
@@ -693,15 +696,14 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                         match increment.checked_add(1) {
                             Some(value) => {
                                 *increment = value;
-                                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+                                Ok(format!(#format_handle_token_stream))
                             }
                             None => Err(Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
                     }
                 }
             };
-            //todo maybe rename later
-            let bind_value_to_query_token_stream = {
+            let bind_value_to_postgresql_query_part_to_update_token_stream = {
                 quote::quote!{
                     fn bind_value_to_postgresql_query_part_to_update<'a>(
                         #option_to_update_snake_case: Self::#option_to_update_upper_camel_case<'_>,
@@ -715,8 +717,8 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             (
                 option_to_update_token_stream,
                 option_to_update_try_generate_postgresql_query_part_error_named_token_stream,
-                try_generate_bind_increments_token_stream,
-                bind_value_to_query_token_stream
+                try_generate_postgresql_query_part_to_update_token_stream,
+                bind_value_to_postgresql_query_part_to_update_token_stream
             )
         };
         quote::quote!{
@@ -728,9 +730,9 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 #options_to_read_token_stream
                 #generate_postgresql_query_part_to_read_token_stream
                 #option_to_update_token_stream
-                #option_to_update_try_generate_bind_increments_error_named_token_stream
-                #try_generate_bind_increments_token_stream
-                #bind_value_to_query_token_stream
+                #option_to_update_try_generate_postgresql_query_part_error_named_token_stream
+                #try_generate_postgresql_query_part_to_update_token_stream
+                #bind_value_to_postgresql_query_part_to_update_token_stream
             }
         }
     };
