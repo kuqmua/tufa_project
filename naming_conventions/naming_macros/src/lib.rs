@@ -3,7 +3,6 @@ const REGEX_VALUE: &str = r"^[a-zA-Z]+$";
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_snake_case_stringified = "generate_upper_camel_and_snake_case_stringified_and_token_stream";
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input.to_string())
         .expect("failed to convert tokens input into valid json string[][] pattern")
         .into_iter()
@@ -12,7 +11,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
                 let regex = regex::Regex::new(REGEX_VALUE).unwrap();
                 for element in &element {
                     if !regex.is_match(&element) {
-                        panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {REGEX_VALUE}");
+                        panic!("invalid element {element}, regex: {REGEX_VALUE}");
                     }
                 }
             }
@@ -35,24 +34,24 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
             let phrase_part_upper_camel_case_token_stream = {
                 phrase_part_upper_camel_case_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {phrase_part_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{phrase_part_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_part_snake_case_token_stream = {
                 phrase_part_snake_case_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {phrase_part_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{phrase_part_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_part_upper_camel_case_upper_camel_case_token_stream = {
                 let value = format!("{phrase_part_upper_camel_case_stringified}UpperCamelCase");
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_part_snake_case_upper_camel_case_token_stream = {
                 let value = format!("{phrase_part_upper_camel_case_stringified}SnakeCase");
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let generate_struct_declaration = |struct_name_token_stream: &proc_macro2::TokenStream| quote::quote! {pub struct #struct_name_token_stream;};
             let upper_camel_case_struct_declaration_token_stream = generate_struct_declaration(&phrase_part_upper_camel_case_upper_camel_case_token_stream);
@@ -96,7 +95,6 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
 #[proc_macro]
 pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_snake_case_stringified = "generate_self_upper_camel_and_snake_case_stringified_and_token_stream";
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input.to_string())
         .expect("failed to convert tokens input into valid json string[][] pattern")
         .into_iter()
@@ -105,7 +103,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 let regex = regex::Regex::new(REGEX_VALUE).unwrap();
                 for element in &element {
                     if !regex.is_match(&element) {
-                        panic!("{proc_macro_name_snake_case_stringified} invalid element {element}, regex: {REGEX_VALUE}");
+                        panic!("invalid element {element}, regex: {REGEX_VALUE}");
                     }
                 }
             }
@@ -119,7 +117,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     }
                 }
                 if !is_self_exists_and_only_one {
-                    panic!("{proc_macro_name_snake_case_stringified} cannot find {self_match_name}");
+                    panic!("cannot find {self_match_name}");
                 }
             }
             let (
@@ -166,12 +164,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 let struct_upper_camel_case_upper_camel_case_token_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}");
                     value.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let struct_snake_case_token_upper_camel_case_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}");
                     value.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let (
                     trait_upper_camel_case_upper_camel_case_token_stream,
@@ -181,12 +179,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     let trait_upper_camel_case_upper_camel_case_token_stream = {
                         let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
                         value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let trait_snake_case_token_upper_camel_case_stream = {
                         let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
                         value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     (
                         trait_upper_camel_case_upper_camel_case_token_stream,
@@ -307,7 +305,6 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{ident}");
     let data_enum = if let syn::Data::Enum(data_enum) = &syn_derive_input.data {
         data_enum
     } else {
@@ -355,7 +352,6 @@ pub fn enum_with_unit_fields_to_snake_case_stringified(input: proc_macro::TokenS
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{ident}");
     let data_enum = if let syn::Data::Enum(data_enum) = &syn_derive_input.data {
         data_enum
     } else {
@@ -402,7 +398,6 @@ pub fn enum_with_unit_fields_to_screaming_snake_case_stringified(input: proc_mac
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{ident}");
     let data_enum = if let syn::Data::Enum(data_enum) = &syn_derive_input.data {
         data_enum
     } else {

@@ -6,9 +6,7 @@
 //             &["std", "string", "String"],
 //             proc_macro_name_upper_camel_case_ident_stringified,
 //         );
-//     let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(
-//         proc_macro_name_upper_camel_case_ident_stringified,
-//     );
+//     let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field();
 //     let configuration_error_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Configuration as naming_conventions::Naming>::upper_camel_case_stringified();
@@ -298,9 +296,7 @@
 //     proc_macro_name_upper_camel_case_ident_stringified: &str,
 // ) -> [syn::Variant; 4] {
 //     let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::std_string_string_syn_punctuated_punctuated(proc_macro_name_upper_camel_case_ident_stringified);
-//     let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(
-//         proc_macro_name_upper_camel_case_ident_stringified,
-//     );
+//     let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field();
 //     let json_data_error_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::json_data_error_upper_camel_case_stringified();

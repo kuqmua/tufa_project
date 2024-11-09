@@ -1,16 +1,14 @@
 fn common_handle(
     input: proc_macro::TokenStream,
-    proc_macro_name_upper_camel_case: &str,
     where_ident_should_implement_eq: std::primitive::bool,
     std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
     where_std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
@@ -369,22 +367,20 @@ fn common_handle(
 
 #[proc_macro_derive(CommonWithEqImpl)] //todo check on postgresql max length value of type
 pub fn common_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_handle(input, "CommonWithEqImpl", true, true, true)
+    common_handle(input, true, true, true)
 }
 #[proc_macro_derive(CommonWithoutEqImpl)] //todo check on postgresql max length value of type
 pub fn common_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_handle(input, "CommonWithoutEqImpl", false, false, false)
+    common_handle(input, false, false, false)
 }
 
 #[proc_macro_derive(AsPostgresqlCommon)] //todo check on postgresql max length value of type
 pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "AsPostgresqlCommon";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let _field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
@@ -408,8 +404,7 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
 #[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
 pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let generated = quote::quote! {
         impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
@@ -434,9 +429,8 @@ enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOn
 
 fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStream, variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant, proc_macro_name_upper_camel_case: &std::primitive::str) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
 
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,

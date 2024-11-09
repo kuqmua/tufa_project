@@ -3,10 +3,8 @@
 #[proc_macro_derive(GeneratePostgresqlQueryPart)]
 pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GeneratePostgresqlQueryPart";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             fields_named.named.iter().map(|element| element).collect::<std::vec::Vec<&syn::Field>>()
@@ -4652,7 +4650,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "GeneratePostgresqlQueryPart",
     //         &generated,
-    //         "GeneratePostgresqlQueryPart",
     //     );
     //     quote::quote!{}.into()
     // }

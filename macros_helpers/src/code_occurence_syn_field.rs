@@ -1,4 +1,4 @@
-pub fn code_occurence_syn_field(proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::Field {
+pub fn code_occurence_syn_field() -> syn::Field {
     syn::Field {
         attrs: vec![],
         vis: syn::Visibility::Inherited,

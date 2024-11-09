@@ -1,7 +1,7 @@
 #[proc_macro_derive(SvgComponent)]
 pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("SvgComponent syn::parse(input) failed");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("syn::parse(input) failed");
     let ident = &syn_derive_input.ident;
     // let get_html_variants: TokenStream;
     // let get_class_variants: TokenStream;
@@ -28,7 +28,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                 }
             }
         }),
-        _ => panic!("SvgComponent works only on enums"),
+        _ => panic!("works only on enums"),
     };
     let get_class_variants = match syn_derive_input.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
@@ -43,7 +43,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                 SvgType::#variant_ident(_) => AttrValue::Static(#class)
             }
         }),
-        _ => panic!("SvgComponent works only on enums"),
+        _ => panic!("works only on enums"),
     };
     let generated = quote::quote! {
         impl SvgComponent for #ident {

@@ -128,11 +128,9 @@ pub fn common_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_
 #[proc_macro_derive(GeneratePostgresqlCrud)]
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let table_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
     #[derive(Debug, Clone)]
     struct Generic<'a> {
@@ -828,7 +826,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             acc.push_punct(syn::token::Comma { spans: [proc_macro2::Span::call_site()] });
                             acc
                         });
-                        handle.push_value(macros_helpers::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified));
+                        handle.push_value(macros_helpers::code_occurence_syn_field::code_occurence_syn_field());
                         handle
                     },
                 }),
@@ -2861,7 +2859,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &create_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
@@ -3064,7 +3061,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &create_one_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     //todo add additional filters
     let (read_many_token_stream, read_many_test_token_stream) = {
@@ -3519,7 +3515,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &read_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     let (read_one_token_stream, read_one_http_request_test_expect_success_token_stream, read_one_http_request_test_expect_fail_token_stream) = {
         let operation = Operation::ReadOne;
@@ -3765,7 +3760,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &read_one_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     //todo update where ...?
     let (update_many_token_stream, update_many_test_token_stream) = {
@@ -4091,7 +4085,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &update_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let (update_one_token_stream, update_one_test_token_stream) = {
@@ -4266,7 +4259,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &update_one_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     let (delete_many_token_stream, delete_many_test_token_stream) = {
         let operation = Operation::DeleteMany;
@@ -4584,7 +4576,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &delete_many_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     let (delete_one_token_stream, delete_one_test_token_stream) = {
         let operation = Operation::DeleteOne;
@@ -4694,7 +4685,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &delete_one_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     // let emulate_crud_api_usage_test_token_stream = {
     //     let ident_emulate_crud_api_usage_test_snake_case_token_stream = {
@@ -4758,7 +4748,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &common_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     //comment out coz its impossible to correctly generate tokens for debug purposes
     // let _mod_name_snake_case_token_stream = {
@@ -4786,7 +4775,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
     //     &generated,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
     // }
     generated.into()
