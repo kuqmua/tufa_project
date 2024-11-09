@@ -3,17 +3,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let ident_try_from_env_error_named = syn::Ident::new(
-        &format!(
-            "{ident}{}{}{}{}{}",
-            naming_conventions::TryUpperCamelCase,
-            naming_conventions::FromUpperCamelCase,
-            naming_conventions::EnvUpperCamelCase,
-            naming_conventions::ErrorUpperCamelCase,
-            naming_conventions::NamedUpperCamelCase,
-        ),
-        ident.span(),
-    );
+    let ident_try_from_env_error_named_upper_camel_case = naming_conventions::SelfTryFromEnvErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
@@ -64,7 +54,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         });
         quote::quote! {
             #[derive(Debug, thiserror::Error)]
-            pub enum #ident_try_from_env_error_named {
+            pub enum #ident_try_from_env_error_named_upper_camel_case {
                 #dotenv_upper_camel_case_token_stream {
                     #dotenv_snake_case_token_stream: dotenv::Error,
                 },
@@ -90,7 +80,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         });
         quote::quote! {
-            impl std::fmt::Display for #ident_try_from_env_error_named {
+            impl std::fmt::Display for #ident_try_from_env_error_named_upper_camel_case {
                 fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                     match self {
                         Self::#dotenv_upper_camel_case_token_stream {
@@ -127,7 +117,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     let env_var_name = std::string::String::from(#element_ident_quotes_screaming_snake_case_string);
                     match std::env::var(&env_var_name) {
                         Err(error) => {
-                            return Err(#ident_try_from_env_error_named::#std_env_var_error_upper_camel_case_token_stream {
+                            return Err(#ident_try_from_env_error_named_upper_camel_case::#std_env_var_error_upper_camel_case_token_stream {
                                 #std_env_var_error_snake_case_token_stream: error,
                                 #env_var_name_snake_case_token_stream,
                             });
@@ -137,7 +127,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                             config_lib::#try_from_std_env_var_ok_upper_camel_case_token_stream
                         >::try_from_std_env_var_ok(value) {
                             Err(error) => {
-                                return Err(#ident_try_from_env_error_named::#element_ident_upper_camel_case_token_stream {
+                                return Err(#ident_try_from_env_error_named_upper_camel_case::#element_ident_upper_camel_case_token_stream {
                                     #element_ident: error,
                                 });
                             }
@@ -150,9 +140,9 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let fields_token_stream = fields_named.iter().map(|element| &element.ident);
         quote::quote! {
             impl #ident {
-                pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_named> {
+                pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_named_upper_camel_case> {
                     if let Err(error) = dotenv::dotenv() {
-                        return Err(#ident_try_from_env_error_named::#dotenv_upper_camel_case_token_stream {
+                        return Err(#ident_try_from_env_error_named_upper_camel_case::#dotenv_upper_camel_case_token_stream {
                             #dotenv_snake_case_token_stream: error,
                         });
                     }
