@@ -1,8 +1,7 @@
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case_stringified = "TryFromEnv";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named = syn::Ident::new(
         &format!(
@@ -17,11 +16,11 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     );
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("{proc_macro_name_upper_camel_case_stringified} only works on Struct"),
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
     };
     let fields_named = match data_struct.fields {
         syn::Fields::Named(value) => value.named,
-        syn::Fields::Unnamed(_) | syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_stringified} only works with syn::Fields::Named"),
+        syn::Fields::Unnamed(_) | syn::Fields::Unit => panic!("only works with syn::Fields::Named"),
     };
     let ident_in_none_stringified = "ident is None";
     let dotenv_upper_camel_case_token_stream = quote::quote! {Dotenv};
@@ -33,7 +32,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let try_from_std_env_var_ok_upper_camel_case_token_stream = {
         try_from_std_env_var_ok_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
             panic!(
-                "{proc_macro_name_upper_camel_case_stringified} {try_from_std_env_var_ok_upper_camel_case_stringified} {}",
+                "{try_from_std_env_var_ok_upper_camel_case_stringified} {}",
                 constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
@@ -45,7 +44,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 let value = naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let error_upper_camel_case_token_stream = {
                 let value = format!(
@@ -55,7 +54,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 );
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {
                 #element_ident_upper_camel_case_token_stream {
@@ -84,7 +83,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 let value = naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {
                 Self::#element_ident_upper_camel_case_token_stream { #element_ident } => write!(formatter, "{}", #element_ident)
@@ -115,13 +114,13 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 let value = naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let element_ident_wrapper_upper_camel_case_token_stream = {
                 let value = naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_ident.as_ref().expect(ident_in_none_stringified).to_string());
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {
                 let #element_ident = {

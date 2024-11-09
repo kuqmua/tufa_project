@@ -22,12 +22,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let data_enum = if let syn::Data::Enum(data_enum) = syn_derive_input.data {
         data_enum
     } else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+        panic!("{} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
     };
     let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::new_or_panic(&data_enum, &proc_macro_name_upper_camel_case_ident_stringified);
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
@@ -73,7 +73,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         let fields = if let syn::Fields::Named(fields) = &element.fields {
                             &fields.named
                         } else {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                            panic!("{} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
                         };
                         let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()).map(|element| {
                             let element_ident = &element.ident;
@@ -241,7 +241,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let fields = if let syn::Fields::Named(fields) = &element.fields {
                         &fields.named
                     } else {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                        panic!("{} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
                     };
                     let fields_idents_token_stream = fields.iter().map(|element| &element.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()).map(|element| {
@@ -380,13 +380,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let fields = if let syn::Fields::Unnamed(fields) = &element.fields {
                         &fields.unnamed
                     } else {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                        panic!("{} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
                     };
                     let inner_type_with_serialize_deserialize_token_stream = {
                         let value = format!(
                             "{}{}",
                             {
-                                assert!(fields.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} fields.len() != 1");
+                                assert!(fields.len() == 1, "fields.len() != 1");
                                 let field_type = &fields.iter().next().expect("no first field type").ty;
                                 quote::quote! {#field_type}.to_string()
                             },
@@ -394,7 +394,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         );
                         value
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     quote::quote! {
                         #element_ident(#inner_type_with_serialize_deserialize_token_stream)

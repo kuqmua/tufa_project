@@ -11,10 +11,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             fields_named.named.iter().map(|element| element).collect::<std::vec::Vec<&syn::Field>>()
         } else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Named");
+            panic!("supports only syn::Fields::Named");
         }
     } else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+        panic!("does work only on structs!");
     };
     let ident_to_create_with_generated_id_upper_camel_case = naming_conventions::SelfToCreateWithGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_to_create_without_generated_id_upper_camel_case = naming_conventions::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_dyn_quote_to_tokens(&ident);
@@ -306,7 +306,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 .ident
                 .as_ref()
                 .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                 })
                 .to_string(),
             &proc_macro_name_upper_camel_case_ident_stringified,
@@ -333,7 +333,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         .ident
                         .as_ref()
                         .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                         });
                     let type_path_to_create_token_stream = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                     quote::quote!{
@@ -356,7 +356,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
                         quote::quote!{
                             #field_ident: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -373,7 +373,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
                         let element_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                             &element_field_ident.to_string(),
@@ -409,7 +409,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
@@ -450,7 +450,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     let fields_initialization_token_stream = vec_syn_field.iter().map(|element| {
                         element.ident.as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                     });
                     quote::quote!{
@@ -539,7 +539,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 //todo reuse logic of binding query
                 let try_generate_bind_increments_token_stream = vec_syn_field.iter().map(|element| {
                     let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                     });
                     let element_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                         &element_field_ident.to_string(),
@@ -559,7 +559,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 });
                 let bind_value_to_query_token_stream = vec_syn_field.iter().map(|element| {
                     let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                        panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                     });
                     let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                     quote::quote!{
@@ -639,7 +639,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .ident
                                 .as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
                             let serialize_deserialize_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
@@ -702,7 +702,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let elements_token_stream = vec_syn_field.iter().map(|element|{
                             let field_ident = &element.ident.as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 });
                             let field_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
                             quote::quote!{
@@ -751,7 +751,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
                         let type_path_options_to_read_token_stream = naming_conventions::SelfOptionsToReadUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                         quote::quote!{
@@ -834,7 +834,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     let fields_token_stream = vec_syn_field.iter().map(|element| {
                                         let field_ident = element.ident.as_ref()
                                             .unwrap_or_else(|| {
-                                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                             });
                                         quote::quote!{#maybe_reference_symbol_token_stream #field_ident}
                                     });
@@ -855,7 +855,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     let range_end = {
                                         let vec_syn_field_len = vec_syn_field.len();
                                         if contains_id {
-                                            vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"))
+                                            vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("vec_syn_field_len + 1 is None(int overflow)"))
                                         }
                                         else {
                                             vec_syn_field_len
@@ -908,7 +908,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let range_end = {
                             let vec_syn_field_len = vec_syn_field.len();
                             if contains_id {
-                                vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"))
+                                vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("vec_syn_field_len + 1 is None(int overflow)"))
                             }
                             else {
                                 vec_syn_field_len
@@ -920,7 +920,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let value = format!("__{}{element}", naming_conventions::FieldSnakeCase);
                                 vec.push(
                                     value.parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                 );
                             }
                             vec
@@ -929,7 +929,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             let value = format!("__field{index}");
                             value
                                 .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
                         let visit_u64_value_enum_variants_token_stream = {
                             let mut acc = vec![];
@@ -938,7 +938,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     let value = format!("{index}u64");
                                     value
                                         .parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                 };
                                 let field_index_token_stream = generate_field_index_token_stream(index);
                                 acc.push(quote::quote! {
@@ -956,7 +956,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         };
                         let generate_index = |index: std::primitive::usize|{
                             if contains_id {
-                                index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} vec_syn_field_len + 1 is None(int overflow)"))
+                                index.checked_add(1).unwrap_or_else(|| panic!("vec_syn_field_len + 1 is None(int overflow)"))
                             }
                             else {
                                 index
@@ -971,7 +971,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             .ident
                                             .as_ref()
                                             .unwrap_or_else(|| {
-                                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                             })
                                             .to_string()
                                     },
@@ -1006,14 +1006,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                             .ident
                                             .as_ref()
                                             .unwrap_or_else(|| {
-                                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                             })
                                             .to_string(),
                                     );
                                     let value = format!("b{element_ident_double_quotes_stringified}");
                                     value
                                         .parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                 };
                                 generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
                                     &b_field_name_double_quotes_token_stream,
@@ -1025,7 +1025,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     &{
                                         let value = format!("b{id_snake_case_double_quotes_token_stream}");
                                         value.parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                     },
                                     0,
                                 );
@@ -1429,7 +1429,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .ident
                                 .as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                             ));
                             quote::quote!{{#(#fields_token_stream),*}}
@@ -1441,7 +1441,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     .ident
                                     .as_ref()
                                     .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                        panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                     })
                                 ));
                                 let id_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = generate_field_ident_some_value_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(
@@ -1500,7 +1500,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let ident_field_to_update_token_stream = {
                     let variants_token_stream = vec_syn_field.iter().map(|element| {
                         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                         });
                         let element_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
                         let element_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
@@ -1519,7 +1519,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream = {
                     let variants_token_stream = vec_syn_field.iter().map(|element| {
                         let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                         });
                         let element_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident.to_string(), &proc_macro_name_upper_camel_case_ident_stringified);
                         let element_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element_ident.to_string());
@@ -1543,7 +1543,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
                         let type_path_option_to_update_token_stream = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                         let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
@@ -1568,7 +1568,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .ident
                                 .as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -1598,7 +1598,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let elements_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident = element.ident.as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 });
                             let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident.to_string());
                             quote::quote!{
@@ -1874,7 +1874,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -1950,7 +1950,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
                         let not_unique_field_self_upper_camel_case_token_stream = naming_conventions::NotUniqueFieldSelfUpperCamelCase::from_dyn_quote_to_tokens(&field_ident);
                         quote::quote!{
@@ -1989,7 +1989,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     .ident
                                     .as_ref()
                                     .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                        panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                     });
                                 let field_ident_stringified = field_ident.to_string();
                                 let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -2143,7 +2143,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -2172,7 +2172,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -2231,7 +2231,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             .ident
                             .as_ref()
                             .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
                         let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -2272,7 +2272,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let fields_token_stream = {
         let fields_token_stream = vec_syn_field.iter().map(|element| {
             let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
             });
             let element_type = &element.ty;
             quote::quote!{pub #element_ident: #element_type}
@@ -2346,7 +2346,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         .ident
                         .as_ref()
                         .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                            panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                         })
                         .to_string();
                     generate_acc_push_str_variant_logic_token_stream(
@@ -2888,7 +2888,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     .ident
                                     .as_ref()
                                     .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                        panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                     })
                                     .to_string();
                                 let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -2950,7 +2950,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .ident
                                 .as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -3016,7 +3016,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .ident
                                 .as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -3416,7 +3416,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .ident
                                 .as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident_stringified);
@@ -3543,7 +3543,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         let bind_value_to_postgresql_query_part_to_update_variants_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident = element.ident.as_ref()
                                 .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
                             let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&field_ident);

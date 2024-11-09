@@ -15,32 +15,32 @@ fn common_handle(
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
                 1 => &fields_unnamed.unnamed[0],
-                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed with one field"),
+                _ => panic!("supports only syn::Fields::Unnamed with one field"),
             }
         } else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed");
+            panic!("supports only syn::Fields::Unnamed");
         }
     } else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+        panic!("does work only on structs!");
     };
     let field_type = &field.ty;
     let where_ident_token_stream = {
         let value = format!("{}{ident}", naming_conventions::WhereUpperCamelCase);
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!("{}{ident}", naming_conventions::StdOptionOptionUpperCamelCase);
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let where_std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!("{}{}{ident}", naming_conventions::WhereUpperCamelCase, naming_conventions::StdOptionOptionUpperCamelCase);
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     //
     let where_ident_should_implement_eq_token_stream = if where_ident_should_implement_eq {
@@ -389,13 +389,13 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
                 1 => &fields_unnamed.unnamed[0],
-                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed with one field"),
+                _ => panic!("supports only syn::Fields::Unnamed with one field"),
             }
         } else {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed");
+            panic!("supports only syn::Fields::Unnamed");
         }
     } else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+        panic!("does work only on structs!");
     };
     let generated = quote::quote! {
         impl CheckSupportedRustAndPostgresqlColumnType for #ident {
@@ -440,14 +440,14 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
 
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works on Struct"),
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
     };
     let fields_unnamed = match data_struct.fields {
         syn::Fields::Unnamed(value) => value.unnamed,
-        syn::Fields::Named(_) | syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_ident_stringified} only works with syn::Fields::Unnamed"),
+        syn::Fields::Named(_) | syn::Fields::Unit => panic!("only works with syn::Fields::Unnamed"),
     };
-    assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed !== 1");
-    let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
+    assert!(fields_unnamed.len() == 1, "fields_unnamed !== 1");
+    let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("fields_unnamed.iter().nth(0) is None"), |value| value);
 
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = {
         let content_token_stream = match &variant {

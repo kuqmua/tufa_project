@@ -1,12 +1,11 @@
 #[proc_macro_derive(GenerateGetterTraitsForStructFields)]
 pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case_stringified = "GenerateGetterTraitsForStructFields";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("{proc_macro_name_upper_camel_case_stringified} syn::parse(input) failed");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("syn::parse(input) failed");
     let ident = &syn_derive_input.ident;
     let datastruct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("{proc_macro_name_upper_camel_case_stringified} only works on Struct"),
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
     };
     let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, upper_camel_case_field_ident) = {
@@ -21,7 +20,7 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
             };
             element_type_stringified
                 .parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {element_type_stringified } {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                .unwrap_or_else(|_| panic!("{element_type_stringified } {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let path_trait_ident = format!("app_state::Get{upper_camel_case_field_ident}").parse::<proc_macro2::TokenStream>().expect("path_trait_ident parse failed");
         let function_name_ident = format!("get_{field_ident}").parse::<proc_macro2::TokenStream>().expect("function_name_ident parse failed");
@@ -48,8 +47,7 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
 #[proc_macro_derive(GenerateGetterTrait)]
 pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case_stringified = "GenerateGetterTrait";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("{proc_macro_name_upper_camel_case_stringified} syn::parse(input) failed");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("syn::parse(input) failed");
     let ident = &syn_derive_input.ident;
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
@@ -57,22 +55,22 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
     };
     let fields_unnamed = match data_struct.fields {
         syn::Fields::Unnamed(value) => value.unnamed,
-        syn::Fields::Named(_) | syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_stringified} only works with syn::Fields::Unnamed"),
+        syn::Fields::Named(_) | syn::Fields::Unit => panic!("only works with syn::Fields::Unnamed"),
     };
-    assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_stringified} fields_unnamed !== 1");
-    let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
+    assert!(fields_unnamed.len() == 1, "fields_unnamed !== 1");
+    let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_upper_camel_case_stringified = format!("{}{ident}", naming_conventions::GetUpperCamelCase,);
     let get_ident_upper_camel_case_token_stream = {
         get_ident_upper_camel_case_stringified
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {get_ident_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{get_ident_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let get_ident_snake_case_token_stream = {
         let value = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_ident_upper_camel_case_stringified);
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let generated = quote::quote! {
         pub trait #get_ident_upper_camel_case_token_stream {

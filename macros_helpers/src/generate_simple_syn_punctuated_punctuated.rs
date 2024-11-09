@@ -19,7 +19,7 @@ pub fn generate_simple_syn_punctuated_punctuated(parts_vec: &[&str], proc_macro_
         }
         handle
     } else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}");
+        panic!("generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}");
     }
 }
 
