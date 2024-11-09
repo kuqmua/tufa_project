@@ -574,7 +574,7 @@ where
 {
     fn swagger_url_path_self_quotes_token_stream(&self, table_name_stringified: &str) -> proc_macro2::TokenStream {
         let value = self.swagger_url_path_self_quotes_stringified(table_name_stringified);
-        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -601,7 +601,7 @@ where
 {
     fn url_handle_self_snake_case_token_stream(&self, table_name_stringified: &str) -> proc_macro2::TokenStream {
         let value = self.url_handle_self_snake_case_stringified(table_name_stringified);
-        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 // fn generate_url_handle_token_stream(
@@ -611,7 +611,7 @@ where
 // ) -> proc_macro2::TokenStream {
 //     let url_handle_stringified = format!("\"{{}}/{table_name_stringified}/{operation_name_snake_case_stringified}\"");
 //     url_handle_stringified.parse::<proc_macro2::TokenStream>()
-//     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {url_handle_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {url_handle_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 // }
 
 
@@ -757,7 +757,7 @@ where
 // {
 //     fn generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.generic_self_field_reader_upper_camel_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 // pub trait GenericSelfFieldReaderSnakeCaseTokenStream {
@@ -769,7 +769,7 @@ where
 // {
 //     fn generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.generic_self_field_reader_snake_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified {
@@ -803,7 +803,7 @@ where
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseTokenStream {
@@ -815,7 +815,7 @@ where
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 // pub trait GenericSelfFieldReaderUpperCamelCaseStringified {
@@ -849,7 +849,7 @@ where
 // {
 //     fn generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.generic_self_field_reader_upper_camel_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 // pub trait GenericSelfFieldReaderSnakeCaseTokenStream {
@@ -861,7 +861,7 @@ where
 // {
 //     fn generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.generic_self_field_reader_snake_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseStringified {
@@ -895,7 +895,7 @@ where
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseTokenStream {
@@ -907,7 +907,7 @@ where
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value = self.impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 

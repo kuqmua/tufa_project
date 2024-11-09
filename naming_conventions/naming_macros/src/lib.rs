@@ -35,24 +35,24 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
             let phrase_part_upper_camel_case_token_stream = {
                 phrase_part_upper_camel_case_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {phrase_part_upper_camel_case_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {phrase_part_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_part_snake_case_token_stream = {
                 phrase_part_snake_case_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {phrase_part_snake_case_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {phrase_part_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_part_upper_camel_case_upper_camel_case_token_stream = {
                 let value = format!("{phrase_part_upper_camel_case_stringified}UpperCamelCase");
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let phrase_part_snake_case_upper_camel_case_token_stream = {
                 let value = format!("{phrase_part_upper_camel_case_stringified}SnakeCase");
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let generate_struct_declaration = |struct_name_token_stream: &proc_macro2::TokenStream| quote::quote! {pub struct #struct_name_token_stream;};
             let upper_camel_case_struct_declaration_token_stream = generate_struct_declaration(&phrase_part_upper_camel_case_upper_camel_case_token_stream);
@@ -168,12 +168,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 let struct_upper_camel_case_upper_camel_case_token_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}");
                     value.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let struct_snake_case_token_upper_camel_case_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}");
                     value.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let (
                     trait_upper_camel_case_upper_camel_case_token_stream,
@@ -183,12 +183,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     let trait_upper_camel_case_upper_camel_case_token_stream = {
                         let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
                         value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     let trait_snake_case_token_upper_camel_case_stream = {
                         let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
                         value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_snake_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     (
                         trait_upper_camel_case_upper_camel_case_token_stream,

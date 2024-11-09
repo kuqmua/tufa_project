@@ -21,7 +21,7 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
             };
             element_type_stringified
                 .parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {element_type_stringified } {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {element_type_stringified } {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let path_trait_ident = format!("app_state::Get{upper_camel_case_field_ident}").parse::<proc_macro2::TokenStream>().expect("path_trait_ident parse failed");
         let function_name_ident = format!("get_{field_ident}").parse::<proc_macro2::TokenStream>().expect("function_name_ident parse failed");
@@ -66,13 +66,13 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
     let get_ident_upper_camel_case_token_stream = {
         get_ident_upper_camel_case_stringified
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {get_ident_upper_camel_case_stringified} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {get_ident_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let get_ident_snake_case_token_stream = {
         let value = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_ident_upper_camel_case_stringified);
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let generated = quote::quote! {
         pub trait #get_ident_upper_camel_case_token_stream {

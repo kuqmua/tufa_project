@@ -88,7 +88,7 @@ impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccu
 impl ErrorOccurenceFieldAttribute {
     pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
-        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 pub fn attribute_view(attribute: &str) -> std::string::String {
@@ -190,7 +190,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                         );
                         value
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     quote::quote! {
                         #element_type_with_serialize_deserialize_token_stream
@@ -244,7 +244,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                         );
                         value
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     } else {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.arguments != syn::PathArguments::AngleBracketed");
                     };
@@ -268,7 +268,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                         let value = format!("{}{}", quote::quote! {#second_argument}, naming_conventions::WithSerializeDeserializeUpperCamelCase,);
                         value
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", macros_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     quote::quote! {
                         std::collections::HashMap<#std_string_string, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
