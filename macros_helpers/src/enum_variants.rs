@@ -12,7 +12,7 @@
 //     let configuration_error_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Configuration as naming_conventions::Naming>::upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -30,7 +30,7 @@
 //     let database_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Database as naming_conventions::Naming>::upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -47,7 +47,7 @@
 //     let io_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Io as naming_conventions::Naming>::upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -67,7 +67,7 @@
 //     let tls_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Tls as naming_conventions::Naming>::upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -84,7 +84,7 @@
 //     let protocol_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Protocol as naming_conventions::Naming>::upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -128,7 +128,7 @@
 //     };
 //     let column_index_out_of_bounds_syn_variant = {
 //         let variant_name_upper_camel_case_stringified = crate::naming_conventions::ColumnIndexOutOfBoundsUpperCamelCase;
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -156,7 +156,7 @@
 //     let column_not_found_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::column_not_found_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr400BadRequest,
 //             &variant_name_upper_camel_case_stringified,
@@ -190,7 +190,7 @@
 //     let decode_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Decode as naming_conventions::Naming>::upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -207,7 +207,7 @@
 //     let pool_timed_out_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::pool_timed_out_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr408RequestTimeout,
 //             &variant_name_upper_camel_case_stringified,
@@ -224,7 +224,7 @@
 //     let pool_closed_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::pool_closed_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -241,7 +241,7 @@
 //     let worker_crashed_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::worker_crashed_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -258,7 +258,7 @@
 //     let migrate_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             <naming_conventions::Migrate as naming_conventions::Naming>::upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,
@@ -304,7 +304,7 @@
 //     let json_data_error_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::json_data_error_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr400BadRequest,
 //             &variant_name_upper_camel_case_stringified,
@@ -324,7 +324,7 @@
 //     let json_syntax_error_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::json_syntax_error_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr400BadRequest,
 //             &variant_name_upper_camel_case_stringified,
@@ -344,7 +344,7 @@
 //     let missing_json_content_type_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::missing_json_content_type_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr400BadRequest,
 //             &variant_name_upper_camel_case_stringified,
@@ -361,7 +361,7 @@
 //     let bytes_rejection_syn_variant = {
 //         let variant_name_upper_camel_case_stringified =
 //             crate::naming_conventions::bytes_rejection_upper_camel_case_stringified();
-//         let variant_name_snake_case_stringified = macros_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+//         let variant_name_snake_case_stringified = generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
 //         crate::construct_syn_variant::construct_syn_variant_with_status_code(
 //             crate::status_code::StatusCode::Tvfrr500InternalServerError,
 //             &variant_name_upper_camel_case_stringified,

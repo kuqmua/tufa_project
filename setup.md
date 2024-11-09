@@ -14,7 +14,7 @@
 32. [from_sqlx_postgres_error](#heading32)
 33. [from_str](#heading32)
 34. [type_variants_from_reqwest_response](#heading35)
-35. [macros_common](#heading35)
+35. [generate_quotes](#heading35)
 36. [postgresql_crud](#heading37)
 37. [error_occurence_lib](#heading38)
 38. [config](#heading39)
@@ -31,7 +31,7 @@
 
 ## client <a name="heading23"/>
 
-## macros_common <a name="heading35"/>
+## generate_quotes <a name="heading35"/>
 
 ## postgresql_crud <a name="heading37"/>
 

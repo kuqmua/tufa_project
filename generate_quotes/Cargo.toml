@@ -1,5 +1,5 @@
 [package]
-name = "macros_common"
+name = "generate_quotes"
 version = "0.1.0"
 edition = "2021"
 

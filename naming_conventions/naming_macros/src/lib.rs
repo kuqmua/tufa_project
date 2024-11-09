@@ -30,8 +30,8 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
                 }
                 acc
             });
-            let phrase_part_upper_camel_case_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(&phrase_part_upper_camel_case_stringified, &proc_macro_name_snake_case_stringified);
-            let phrase_part_snake_case_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(&phrase_part_snake_case_stringified, &proc_macro_name_snake_case_stringified);
+            let phrase_part_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_upper_camel_case_stringified, &proc_macro_name_snake_case_stringified);
+            let phrase_part_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_snake_case_stringified, &proc_macro_name_snake_case_stringified);
             let phrase_part_upper_camel_case_token_stream = {
                 phrase_part_upper_camel_case_stringified
                     .parse::<proc_macro2::TokenStream>()
@@ -136,7 +136,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     acc.push_str(&naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(element));
                     acc
                 });
-                let elements_concat_value_upper_camel_case_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(
+                let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                     &element.iter().fold(std::string::String::from(""), |mut acc, element| {
                         if element == "self" {
                             acc.push_str("{value}");
@@ -148,7 +148,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     }),
                     &proc_macro_name_snake_case_stringified
                 );
-                let elements_concat_value_snake_case_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(
+                let elements_concat_value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                     &{
                         let mut value = element.iter().fold(std::string::String::from(""), |mut acc, element| {
                             let symbol = '_';
@@ -210,7 +210,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 is_upper_camel_case: std::primitive::bool,
                 trait_ident_token_stream: &proc_macro2::TokenStream,
             |{
-                let panic_handle_token_stream = macros_common::generate_quotes::double_quotes_token_stream(
+                let panic_handle_token_stream = generate_quotes::double_quotes_token_stream(
                     &format!("failed to parse stringified {struct_ident_token_stream} into proc_macro2::TokenStream: {{value_stringified}}"),
                     &proc_macro_name_snake_case_stringified
                 );
@@ -327,7 +327,7 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_upper_camel_case_stringified = naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&variant_ident.to_string());
-                let variant_ident_upper_camel_case_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(&variant_ident_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+                let variant_ident_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_upper_camel_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_upper_camel_case_double_quotes_token_stream)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
@@ -378,7 +378,7 @@ pub fn enum_with_unit_fields_to_snake_case_stringified(input: proc_macro::TokenS
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_snake_case_stringified = <dyn naming_conventions_common::ToSnakeCaseStringified>::to_snake_case_stringified(&variant_ident.to_string());
-                let variant_ident_snake_case_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+                let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
@@ -428,7 +428,7 @@ pub fn enum_with_unit_fields_to_screaming_snake_case_stringified(input: proc_mac
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_snake_case_stringified = naming_conventions_common::ToScreamingSnakeCaseStringified::to_screaming_snake_case_stringified(&variant_ident.to_string());
-                let variant_ident_snake_case_double_quotes_token_stream = macros_common::generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
+                let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified, &proc_macro_name_upper_camel_case_ident_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),

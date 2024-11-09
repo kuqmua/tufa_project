@@ -11,7 +11,7 @@ proc-macro = true
 # quote = {version = "=1.0.36"}
 # syn = {version = "=2.0.60"}
 # macros_helpers = {path = "../macros_helpers"}
-# macros_common = {path = "../macros_common"}
+# generate_quotes = {path = "../generate_quotes"}
 
 [lints]
 workspace = true
