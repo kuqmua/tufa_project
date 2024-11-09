@@ -163,9 +163,9 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
     let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields
         .iter()
-        .filter(|element| *element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE) != *naming_conventions::CodeOccurenceSnakeCase.to_string())
+        .filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *naming_conventions::CodeOccurenceSnakeCase.to_string())
         .map(|element| {
-            let element_ident = element.ident.as_ref().expect(macros_common::constants::IDENT_IS_NONE);
+            let element_ident = element.ident.as_ref().expect(constants::IDENT_IS_NONE);
             let element_type_token_stream = {
                 let element_type = &element.ty;
                 quote::quote! {#element_type}
