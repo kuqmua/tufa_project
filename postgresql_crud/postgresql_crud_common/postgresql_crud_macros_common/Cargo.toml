@@ -1,0 +1,7 @@
+[package]
+name = "postgresql_crud_macros_common"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+quote = {version = "=1.0.36"}
