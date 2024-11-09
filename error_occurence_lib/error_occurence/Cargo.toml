@@ -14,6 +14,7 @@ syn = {version = "=2.0.60"}
 macros_helpers = {path = "../../macros_helpers"}
 constants = {path = "../../constants"}
 macros_common = {path = "../../macros_common"}
+panic_location = {path = "../../panic_location"}
 token_patterns = {path = "../../token_patterns"}
 naming_conventions = {path = "../../naming_conventions"}
 

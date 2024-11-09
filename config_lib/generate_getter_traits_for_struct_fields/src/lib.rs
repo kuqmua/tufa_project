@@ -1,6 +1,6 @@
 #[proc_macro_derive(GenerateGetterTraitsForStructFields)]
 pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "GenerateGetterTraitsForStructFields";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("{proc_macro_name_upper_camel_case_stringified} syn::parse(input) failed");
     let ident = &syn_derive_input.ident;
@@ -47,7 +47,7 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
 
 #[proc_macro_derive(GenerateGetterTrait)]
 pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "GenerateGetterTrait";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("{proc_macro_name_upper_camel_case_stringified} syn::parse(input) failed");
     let ident = &syn_derive_input.ident;

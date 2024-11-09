@@ -127,7 +127,7 @@ pub fn common_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_
 
 #[proc_macro_derive(GeneratePostgresqlCrud)]
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case} {}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;

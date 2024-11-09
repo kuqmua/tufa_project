@@ -13,7 +13,7 @@
     )
 )]
 pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "ErrorOccurence";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case} {}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;

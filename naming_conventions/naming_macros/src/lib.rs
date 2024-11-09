@@ -2,7 +2,7 @@ const REGEX_VALUE: &str = r"^[a-zA-Z]+$";
 
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_snake_case_stringified = "generate_upper_camel_and_snake_case_stringified_and_token_stream";
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input.to_string())
         .expect("failed to convert tokens input into valid json string[][] pattern")
@@ -95,7 +95,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
 
 #[proc_macro]
 pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_snake_case_stringified = "generate_self_upper_camel_and_snake_case_stringified_and_token_stream";
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input.to_string())
         .expect("failed to convert tokens input into valid json string[][] pattern")
@@ -309,7 +309,7 @@ enum Operation {
 */
 #[proc_macro_derive(EnumWithUnitFieldsToUpperCamelCaseStringified)]
 pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "ToUpperCamelCaseStringified";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -360,7 +360,7 @@ only works if all enum variants without fields like this
 */
 #[proc_macro_derive(EnumWithUnitFieldsToSnakeCaseStringified)]
 pub fn enum_with_unit_fields_to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "ToSnakeCaseStringified";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -410,7 +410,7 @@ only works if all enum variants without fields like this
 */
 #[proc_macro_derive(EnumWithUnitFieldsToScreamingSnakeCaseStringified)]
 pub fn enum_with_unit_fields_to_screaming_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "ToScreamingSnakeCaseStringified";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{proc_macro_name_upper_camel_case_stringified} {}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;

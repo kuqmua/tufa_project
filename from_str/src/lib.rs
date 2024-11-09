@@ -1,6 +1,6 @@
 #[proc_macro_derive(FromStr)]
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    macros_common::panic_location::panic_location();
+    panic_location::panic_location();
     let proc_macro_name = "FromStr";
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("let syn_derive_input: syn::DeriveInput = syn::parse(input) failed"));
     let ident = &syn_derive_input.ident;

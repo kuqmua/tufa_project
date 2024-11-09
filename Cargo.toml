@@ -38,6 +38,7 @@ members = [
   "naming_conventions",
   "naming_conventions/naming_conventions_common",
   "naming_conventions/naming_macros",
+  "panic_location",
 ]
 exclude = [
   "client",
