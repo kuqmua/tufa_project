@@ -1,6 +1,6 @@
-pub fn generate_field_code_occurence_new_token_stream(file: &'static str, line: std::primitive::u32, column: std::primitive::u32, proc_macro_name_upper_camel_case_ident_stringified: &str) -> proc_macro2::TokenStream {
+pub fn generate_field_code_occurence_new_token_stream(file: &'static str, line: std::primitive::u32, column: std::primitive::u32) -> proc_macro2::TokenStream {
     let code_occurence_new_token_stream = {
-        let file_token_stream = generate_quotes::double_quotes_token_stream(&file, &proc_macro_name_upper_camel_case_ident_stringified);
+        let file_token_stream = generate_quotes::double_quotes_token_stream(&file);
         let line_token_stream = {
             let line_stringified = line.to_string();
             line_stringified

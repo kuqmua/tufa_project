@@ -14,10 +14,8 @@
 )]
 pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "ErrorOccurence";
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case} {}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("{}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let ident_with_serialize_deserialize_token_stream = {
         let value = format!("{ident}{}", naming_conventions::WithSerializeDeserializeUpperCamelCase);
         value
@@ -29,7 +27,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     } else {
         panic!("{} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
     };
-    let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::new_or_panic(&data_enum, &proc_macro_name_upper_camel_case_ident_stringified);
+    let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::new_or_panic(&data_enum);
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
     let std_string_string = token_patterns::StdStringString;
     let code_occurence_snake_case_stringified = naming_conventions::CodeOccurenceSnakeCase;
@@ -80,15 +78,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             quote::quote! {#element_ident,}
                         });
                         let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(
-                            &fields
-                                .iter()
+                            &fields.iter()
                                 .filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string())
                                 .fold(std::string::String::new(), |mut acc, element| {
                                     let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
                                     acc.push_str(&format!("{element_ident}: {{}}\n"));
                                     acc
-                                }),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
+                                })
                         );
                         let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified.to_string()).map(|element| {
                             let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
@@ -318,7 +314,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let variants_token_stream = data_enum
                     .variants
                     .iter()
-                    .map(|element| macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(&element, &proc_macro_name_upper_camel_case_ident_stringified));
+                    .map(|element| macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(&element));
                 generate_enum_ident_with_serialize_deserialize_token_stream(&quote::quote! {#(#variants_token_stream),*})
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_handle_token_stream(&ident_with_serialize_deserialize_token_stream);

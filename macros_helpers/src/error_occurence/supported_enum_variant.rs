@@ -4,11 +4,11 @@ pub enum SuportedEnumVariant {
     Unnamed,
 }
 impl SuportedEnumVariant {
-    pub fn new_or_panic(data_enum: &syn::DataEnum, proc_macro_name_ident_stringified: &std::string::String) -> SuportedEnumVariant {
+    pub fn new_or_panic(data_enum: &syn::DataEnum) -> SuportedEnumVariant {
         let mut all_equal: Option<SuportedEnumVariant> = None;
-        assert!(!data_enum.variants.is_empty(), "{proc_macro_name_ident_stringified} enum variants are empty");
+        assert!(!data_enum.variants.is_empty(), "enum variants are empty");
         let error_message = format!(
-            "{proc_macro_name_ident_stringified} {} enums where all variants are {}::{} or all variants are {}::{}",
+            "{} enums where all variants are {}::{} or all variants are {}::{}",
             naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
             naming_conventions::SYN_FIELDS,
             naming_conventions::SYN_FIELDS,
@@ -36,7 +36,7 @@ impl SuportedEnumVariant {
         });
         all_equal.map_or_else(
             || {
-                panic!("{proc_macro_name_ident_stringified} {} with enums where all variants are named or unnamed", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                panic!("{} with enums where all variants are named or unnamed", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
             },
             |supported_enum_variant| supported_enum_variant,
         )

@@ -1,4 +1,4 @@
-pub fn generate_simple_syn_punctuated_punctuated(parts_vec: &[&str], proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
+pub fn generate_simple_syn_punctuated_punctuated(parts_vec: &[&str]) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
     let parts_vec_len = parts_vec.len();
     if parts_vec_len >= 1 {
         let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
@@ -23,6 +23,6 @@ pub fn generate_simple_syn_punctuated_punctuated(parts_vec: &[&str], proc_macro_
     }
 }
 
-pub fn std_string_string_syn_punctuated_punctuated(proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
-    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"], proc_macro_name_upper_camel_case_ident_stringified)
+pub fn std_string_string_syn_punctuated_punctuated() -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
+    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"])
 }

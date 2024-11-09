@@ -97,7 +97,6 @@ pub fn attribute_view(attribute: &str) -> std::string::String {
 
 pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     value: &'a syn::Field,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
     std_snake_case: &naming_conventions::StdSnakeCase,
     std_string_string: &token_patterns::StdStringString,
 ) -> &'a syn::GenericArgument {
@@ -153,7 +152,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     args.iter().nth(1).expect("args.iter().nth(1) is None")
 }
 
-pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::Variant, proc_macro_name_upper_camel_case_ident_stringified: &str) -> proc_macro2::TokenStream {
+pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::Variant) -> proc_macro2::TokenStream {
     let element_ident = &value.ident;
     let fields = if let syn::Fields::Named(fields) = &value.fields {
         &fields.named
@@ -253,17 +252,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     }
                 }
                 crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                    let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &proc_macro_name_upper_camel_case_ident_stringified, &std_snake_case, &std_string_string);
+                    let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
                     quote::quote! {
                         std::collections::HashMap<#std_string_string, #std_string_string>
                     }
                 }
                 crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                    let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &proc_macro_name_upper_camel_case_ident_stringified, &std_snake_case, &std_string_string);
+                    let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
                     element_type_token_stream
                 }
                 crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                    let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &proc_macro_name_upper_camel_case_ident_stringified, &std_snake_case, &std_string_string);
+                    let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
                     let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
                         let value = format!("{}{}", quote::quote! {#second_argument}, naming_conventions::WithSerializeDeserializeUpperCamelCase,);
                         value
