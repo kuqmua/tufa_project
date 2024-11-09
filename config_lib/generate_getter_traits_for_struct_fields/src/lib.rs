@@ -10,28 +10,19 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
     let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, upper_camel_case_field_ident) = {
             let field_ident = field.ident.as_ref().unwrap_or_else(|| panic!("{ident} {}", naming_conventions::FIELD_IDENT_IS_NONE));
-            (field_ident, syn::Ident::new(&convert_case::Casing::to_case(&format!("{field_ident}"), convert_case::Case::UpperCamel), ident.span()))
+            (field_ident, naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&field_ident.to_string()))
         };
-        let type_ident = field.ty;
-        let type_ident_wrapper_token_stream = {
-            let element_type_stringified = {
-                let value_token_stream = quote::quote! {#type_ident};
-                value_token_stream.to_string()
-            };
-            element_type_stringified
-                .parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{element_type_stringified } {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let field_type = field.ty;
         let path_trait_ident = format!("app_state::Get{upper_camel_case_field_ident}").parse::<proc_macro2::TokenStream>().expect("path_trait_ident parse failed");
         let function_name_ident = format!("get_{field_ident}").parse::<proc_macro2::TokenStream>().expect("function_name_ident parse failed");
         quote::quote! {
             impl #path_trait_ident for #ident {
-                fn #function_name_ident (&self) -> &#type_ident_wrapper_token_stream {
+                fn #function_name_ident (&self) -> &#field_type {
                     &self.#field_ident
                 }
             }
             impl #path_trait_ident for &#ident {
-                fn #function_name_ident (&self) -> &#type_ident_wrapper_token_stream {
+                fn #function_name_ident (&self) -> &#field_type {
                     &self.#field_ident
                 }
             }
