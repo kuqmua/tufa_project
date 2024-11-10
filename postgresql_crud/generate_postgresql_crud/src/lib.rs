@@ -3808,30 +3808,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                     let fields_named_excluding_primary_key_update_assignment_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        let is_field_ident_update_exists_token_stream = {
-                            let is_snake_case = naming_conventions::IsSnakeCase;
-                            let value = format!("{is_snake_case}_{}_update_exist", &field_ident);
-                            value
-                                .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        let is_field_ident_update_exists_snake_case = naming_conventions::IsSelfUpdateExistSnakeCase::from_dyn_quote_to_tokens(&field_ident);
                         let case_snake_case = naming_conventions::CaseSnakeCase;
                         let field_ident_equals_case_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {case_snake_case} "));
                         let else_snake_case = naming_conventions::ElseSnakeCase;
                         let end_snake_case = naming_conventions::EndSnakeCase;
                         let else_field_ident_end_token_stream = generate_quotes::double_quotes_token_stream(&format!("{else_snake_case} {field_ident} {end_snake_case},"));
-                        let when_primary_key_field_ident_equals_then_token_stream =
-                            generate_quotes::double_quotes_token_stream(&format!("{} {primary_key_field_ident} = {{}} {} {{}} ", naming_conventions::WhenSnakeCase, naming_conventions::ThenSnakeCase));
+                        let when_primary_key_field_ident_equals_then_token_stream = generate_quotes::double_quotes_token_stream(
+                            &format!("{} {primary_key_field_ident} = {{}} {} {{}} ", naming_conventions::WhenSnakeCase, naming_conventions::ThenSnakeCase)
+                        );
                         quote::quote! {
                             {
-                                let mut #is_field_ident_update_exists_token_stream = false;
+                                let mut #is_field_ident_update_exists_snake_case = false;
                                 for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                     if #element_snake_case.#field_ident.is_some() {
-                                        #is_field_ident_update_exists_token_stream = true;
+                                        #is_field_ident_update_exists_snake_case = true;
                                         break;
                                     }
                                 }
-                                if #is_field_ident_update_exists_token_stream {
+                                if #is_field_ident_update_exists_snake_case {
                                     let mut #acc_snake_case = #std_string_string::#from_snake_case(#field_ident_equals_case_token_stream);
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
