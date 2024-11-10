@@ -3895,23 +3895,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     let fields_named_excluding_primary_key_update_assignment_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        let is_field_ident_update_exists_token_stream = {
-                            let is_snake_case = naming_conventions::IsSnakeCase;
-                            let value = format!("{is_snake_case}_{}_update_exist", &field_ident);
-                            value
-                                .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        let is_field_ident_update_exists_snake_case = naming_conventions::IsSelfUpdateExistSnakeCase::from_dyn_quote_to_tokens(&field_ident);
                         quote::quote! {
                             {
-                                let mut #is_field_ident_update_exists_token_stream = false;
+                                let mut #is_field_ident_update_exists_snake_case = false;
                                 for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                     if #element_snake_case.#field_ident.is_some() {
-                                        #is_field_ident_update_exists_token_stream = true;
+                                        #is_field_ident_update_exists_snake_case = true;
                                         break;
                                     }
                                 }
-                                if #is_field_ident_update_exists_token_stream {
+                                if #is_field_ident_update_exists_snake_case {
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             #query_snake_case = #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.into_inner());
