@@ -1,30 +1,32 @@
 pub fn generate_postgresql_json_type_token_stream(
-    ident: &dyn: quote::ToTokens,
-    ident_to_create_token_stream: &dyn: quote::ToTokens,
-    try_generate_postgresql_query_part_to_create_token_stream: &dyn: quote::ToTokens,
-    bind_value_to_postgresql_query_part_to_create_token_stream: &dyn: quote::ToTokens,
-    ident_field_reader: &dyn: quote::ToTokens,
-    ident_options_to_read: &dyn: quote::ToTokens,
-    generate_postgresql_query_part_to_read_token_stream: &dyn: quote::ToTokens,
-    ident_option_to_update: &dyn: quote::ToTokens,
-    ident_option_to_update_try_generate_postgresql_query_part_error_named: &dyn: quote::ToTokens,
-    try_generate_postgresql_query_part_to_update_token_stream: &dyn: quote::ToTokens,
-    bind_value_to_postgresql_query_part_to_update_token_stream: &dyn: quote::ToTokens,
+    path_token_stream: &dyn quote::ToTokens,
+    ident: &dyn quote::ToTokens,
+    ident_to_create_token_stream: &dyn quote::ToTokens,
+    try_generate_postgresql_query_part_to_create_token_stream: &dyn quote::ToTokens,
+    bind_value_to_postgresql_query_part_to_create_token_stream: &dyn quote::ToTokens,
+    ident_field_reader: &dyn quote::ToTokens,
+    ident_options_to_read: &dyn quote::ToTokens,
+    generate_postgresql_query_part_to_read_token_stream: &dyn quote::ToTokens,
+    ident_option_to_update: &dyn quote::ToTokens,
+    ident_option_to_update_try_generate_postgresql_query_part_error_named: &dyn quote::ToTokens,
+    try_generate_postgresql_query_part_to_update_token_stream: &dyn quote::ToTokens,
+    bind_value_to_postgresql_query_part_to_update_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
+    //todo maybe reexport sqlx?
     quote::quote!{
-        impl postgresql_crud::PostgresqlJsonType for #ident {
+        impl #path_token_stream PostgresqlJsonType for #ident {
             type ToCreate<'a> = #ident_to_create_token_stream;
             fn try_generate_postgresql_query_part_to_create(
                 to_create: &Self::ToCreate<'_>,
                 increment: &mut std::primitive::u64
-            ) -> Result<std::string::String, postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
+            ) -> Result<std::string::String, #path_token_stream PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
                 #try_generate_postgresql_query_part_to_create_token_stream
             }
             fn bind_value_to_postgresql_query_part_to_create<'a>(
                 to_create: Self::ToCreate<'a>,
                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                #bind_value_to_postgresql_query_part_to_create_token_steram
+                #bind_value_to_postgresql_query_part_to_create_token_stream
             }
             type FieldReader<'a> = #ident_field_reader;
             type OptionsToRead<'a> = #ident_options_to_read;
