@@ -3369,27 +3369,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let filter_not_unique_fields_named_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
                             let element_field_ident = &element.field_ident;
                             let not_unique_fields_syn_variant_initialization_token_stream = {
-                                let not_unique_field_ident_upper_camel_case_token_stream = {
-                                    let value = format!(
-                                        "{}{}",
-                                        naming_conventions::NotUniqueUpperCamelCase,
-                                        naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element_field_ident.to_string()),
-                                    );
-                                    value
-                                        .parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                };
-                                let not_unique_field_ident_snake_case_token_stream = {
-                                    let value = format!("{}_{}", naming_conventions::NotUniqueSnakeCase, &element_field_ident,);
-                                    value
-                                        .parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                };
-                                let field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream =
-                                    macros_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(file!(), line!(), column!());
+                                let not_unique_field_ident_upper_camel_case = naming_conventions::NotUniqueSelfUpperCamelCase::from_dyn_quote_to_tokens(&element_field_ident);
+                                let not_unique_field_ident_snake_case = naming_conventions::NotUniqueSelfSnakeCase::from_dyn_quote_to_tokens(&element_field_ident);
+                                let field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream = macros_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                                    file!(),
+                                    line!(),
+                                    column!()
+                                );
                                 quote::quote! {
-                                    #not_unique_field_ident_upper_camel_case_token_stream {
-                                        #not_unique_field_ident_snake_case_token_stream: #error_0_token_stream,
+                                    #not_unique_field_ident_upper_camel_case {
+                                        #not_unique_field_ident_snake_case: #error_0_token_stream,
                                         #field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream,
                                     }
                                 }
