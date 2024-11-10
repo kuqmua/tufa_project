@@ -838,13 +838,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 if &field_ident.as_ref().unwrap_or_else(|| panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE)).to_string() == &naming_conventions::CodeOccurenceSnakeCase.to_string() {
                     macros_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(file, line, column)
                 } else {
-                    let error_increment_token_stream = {
-                        let value = format!("{}_{index}", naming_conventions::ErrorSnakeCase);
-                        value
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
-                    quote::quote! {#field_ident: #error_increment_token_stream}
+                    let error_increment_snake_case = naming_conventions::ErrorSelfSnakeCase::from_dyn_std_fmt_display(&index);
+                    quote::quote! {#field_ident: #error_increment_snake_case}
                 }
             })
         } else {
