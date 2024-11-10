@@ -2395,68 +2395,73 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             StdVecVecObjectWithIdIdent,
             StdOptionOptionStdVecVecObjectWithIdIdent,
         }
-        //todo rename
         let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = |
             supported_json_value: SupportedJsonValue,
             try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
             bind_value_to_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
             generate_postgresql_query_part_to_read_content_token_stream: &dyn quote::ToTokens,
-            //todo rename
             try_generate_postgresql_query_part_to_update_content_token_stream: &dyn quote::ToTokens,
             bind_value_to_postgresql_query_part_to_update_content_token_stream: &dyn quote::ToTokens,
         |{
-            let tokens_ident_token_stream: &dyn quote::ToTokens = match &supported_json_value {
-                SupportedJsonValue::ObjectIdent => &object_ident_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_upper_camel_case,
-                SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case,
-            };
-            let tokens_ident_to_create_token_stream: &dyn quote::ToTokens = match &supported_json_value {
-                SupportedJsonValue::ObjectIdent => &object_ident_to_create_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_to_create_upper_camel_case,
-                SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_to_create_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_to_create_upper_camel_case,
-            };
-            let tokens_ident_field_reader_token_stream: &dyn quote::ToTokens = match &supported_json_value {
-                SupportedJsonValue::ObjectIdent => &object_ident_field_reader_upper_camel_case_token_stream,
-                SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_field_reader_upper_camel_case,
-                SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
-            };
-            let tokens_ident_options_to_read_token_stream: &dyn quote::ToTokens = match &supported_json_value {
-                SupportedJsonValue::ObjectIdent => &object_ident_options_to_read_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_options_to_read_upper_camel_case,
-                SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_options_to_read_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_options_to_read_upper_camel_case,
-            };
-            let tokens_ident_option_to_update_token_stream: &dyn quote::ToTokens = match &supported_json_value {
-                SupportedJsonValue::ObjectIdent => &object_ident_option_to_update_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_option_to_update_upper_camel_case,
-                SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
-            };
-            let tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream: &dyn quote::ToTokens = match &supported_json_value {
-                SupportedJsonValue::ObjectIdent => &object_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
-                SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
-                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
-            };
-            let to_create_upper_camel_case = naming_conventions::ToCreateUpperCamelCase;
-            let field_reader_upper_camel_case = naming_conventions::FieldReaderUpperCamelCase;
-            let options_to_read_upper_camel_case = naming_conventions::OptionsToReadUpperCamelCase;
-            let option_to_update_upper_camel_case = naming_conventions::OptionToUpdateUpperCamelCase;
-            let option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase;
             postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                 &postgresql_crud_path_token_stream,
-                &tokens_ident_token_stream,
-                &tokens_ident_to_create_token_stream,
+                &{
+                    let tokens_ident_token_stream: &dyn quote::ToTokens = match &supported_json_value {
+                        SupportedJsonValue::ObjectIdent => &object_ident_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_upper_camel_case,
+                        SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case,
+                    };
+                    tokens_ident_token_stream
+                },
+                &{
+                    let tokens_ident_to_create_token_stream: &dyn quote::ToTokens = match &supported_json_value {
+                        SupportedJsonValue::ObjectIdent => &object_ident_to_create_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_to_create_upper_camel_case,
+                        SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_to_create_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_to_create_upper_camel_case,
+                    };
+                    tokens_ident_to_create_token_stream
+                },
                 &try_generate_postgresql_query_part_to_create_content_token_stream,
                 &bind_value_to_postgresql_query_part_to_create_content_token_stream,
-                &tokens_ident_field_reader_token_stream,
-                &tokens_ident_options_to_read_token_stream,
+                &{
+                    let tokens_ident_field_reader_token_stream: &dyn quote::ToTokens = match &supported_json_value {
+                        SupportedJsonValue::ObjectIdent => &object_ident_field_reader_upper_camel_case_token_stream,
+                        SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_field_reader_upper_camel_case,
+                        SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
+                    };
+                    tokens_ident_field_reader_token_stream
+                },
+                &{
+                    let tokens_ident_options_to_read_token_stream: &dyn quote::ToTokens = match &supported_json_value {
+                        SupportedJsonValue::ObjectIdent => &object_ident_options_to_read_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_options_to_read_upper_camel_case,
+                        SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_options_to_read_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_options_to_read_upper_camel_case,
+                    };
+                    tokens_ident_options_to_read_token_stream
+                },
                 &generate_postgresql_query_part_to_read_content_token_stream,
-                &tokens_ident_option_to_update_token_stream,
-                &tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
+                &{
+                    let tokens_ident_option_to_update_token_stream: &dyn quote::ToTokens = match &supported_json_value {
+                        SupportedJsonValue::ObjectIdent => &object_ident_option_to_update_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_option_to_update_upper_camel_case,
+                        SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                    };
+                    tokens_ident_option_to_update_token_stream
+                },
+                &{
+                    let tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream: &dyn quote::ToTokens = match &supported_json_value {
+                        SupportedJsonValue::ObjectIdent => &object_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionObjectIdent => &std_option_option_object_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
+                        SupportedJsonValue::StdVecVecObjectWithIdIdent => &std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
+                    };
+                    tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+                },
                 &try_generate_postgresql_query_part_to_update_content_token_stream,
                 &bind_value_to_postgresql_query_part_to_update_content_token_stream,
             )
