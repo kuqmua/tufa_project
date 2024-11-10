@@ -2446,50 +2446,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             let options_to_read_upper_camel_case = naming_conventions::OptionsToReadUpperCamelCase;
             let option_to_update_upper_camel_case = naming_conventions::OptionToUpdateUpperCamelCase;
             let option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase;
-            quote::quote!{
-                impl #postgresql_crud_path_token_stream #postgresql_json_type_upper_camel_case for #tokens_ident_token_stream {
-                    type #to_create_upper_camel_case<'a> = #tokens_ident_to_create_token_stream;
-                    fn #try_generate_postgresql_query_part_to_create_snake_case(
-                        #to_create_snake_case: &Self::#to_create_upper_camel_case<'_>,
-                        #increment_snake_case: &mut std::primitive::u64
-                    ) -> Result<std::string::String, #postgresql_crud_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream> {
-                        #try_generate_postgresql_query_part_to_create_content_token_stream
-                    }
-                    fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(
-                        #to_create_snake_case: Self::#to_create_upper_camel_case<'a>,
-                        mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        #bind_value_to_postgresql_query_part_to_create_content_token_stream
-                    }
-                    type #field_reader_upper_camel_case<'a> = #tokens_ident_field_reader_token_stream;
-                    type #options_to_read_upper_camel_case<'a> = #tokens_ident_options_to_read_token_stream;
-                    fn #generate_postgresql_query_part_to_read_snake_case(
-                        #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
-                        #field_ident_snake_case: &std::primitive::str,
-                        #column_name_and_maybe_field_getter_snake_case: &std::primitive::str,
-                        #column_name_and_maybe_field_getter_for_error_message_snake_case: &std::primitive::str
-                    ) -> std::string::String {
-                        #generate_postgresql_query_part_to_read_content_token_stream
-                    }
-                    type #option_to_update_upper_camel_case<'a> = #tokens_ident_option_to_update_token_stream;
-                    type #option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = #tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream;
-                    fn #try_generate_postgresql_query_part_to_update_snake_case(
-                        #option_to_update_snake_case: &Self::#option_to_update_upper_camel_case<'_>,
-                        #jsonb_set_accumulator_snake_case: &std::primitive::str,
-                        #jsonb_set_target_snake_case: &std::primitive::str,
-                        #jsonb_set_path_snake_case: &std::primitive::str,
-                        #increment_snake_case: &mut std::primitive::u64,
-                    ) -> Result<std::string::String, Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case> {
-                        #try_generate_postgresql_query_part_to_update_content_token_stream
-                    }
-                    fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(
-                        #option_to_update_snake_case: Self::#option_to_update_upper_camel_case<'_>,
-                        mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        #bind_value_to_postgresql_query_part_to_update_content_token_stream
-                    }
-                }
-            }
+            postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+                &postgresql_crud_path_token_stream,
+                &tokens_ident_token_stream,
+                &tokens_ident_to_create_token_stream,
+                &try_generate_postgresql_query_part_to_create_content_token_stream,
+                &bind_value_to_postgresql_query_part_to_create_content_token_stream,
+                &tokens_ident_field_reader_token_stream,
+                &tokens_ident_options_to_read_token_stream,
+                &generate_postgresql_query_part_to_read_content_token_stream,
+                &tokens_ident_option_to_update_token_stream,
+                &tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream,
+                &try_generate_postgresql_query_part_to_update_content_token_stream,
+                &bind_value_to_postgresql_query_part_to_update_content_token_stream,
+            )
         };
         let (
             object_ident_token_stream,
