@@ -1,6 +1,0 @@
-[package]
-name = "postgresql_crud_types"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
