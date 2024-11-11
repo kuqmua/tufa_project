@@ -5,7 +5,6 @@ pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
 pub mod generate_impl_std_convert_from_token_stream;
 pub mod generate_impl_std_convert_try_from_token_stream;
-pub mod generate_serde_skip_serializing_if_value_attribute_token_stream;
 pub mod generate_simple_syn_punctuated_punctuated;
 pub mod get_macro_attribute;
 pub mod status_code;

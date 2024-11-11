@@ -524,7 +524,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let eprintln_error_token_stream = quote::quote!{eprintln!("{error}");};
     // let serde_serialize = token_patterns::SerdeSerialize;
     // let serde_deserialize = token_patterns::SerdeDeserialize;
-    // let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
+    let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
     // // let from_str_upper_camel_case = naming_conventions::FromStrUpperCamelCase;
     // // let from_str_snake_case = naming_conventions::FromStrSnakeCase;
     // let sqlx_row = token_patterns::SqlxRow;
@@ -539,32 +539,32 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let generate_postgresql_crud_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
     //     quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case{#value_snake_case: #content_token_stream}}
     // };
-    // let struct_options_token_stream = {
-    //     let serde_skip_serializing_if_value_attribute_token_stream = macros_helpers::generate_serde_skip_serializing_if_value_attribute_token_stream::generate_serde_skip_serializing_if_value_attribute_token_stream();
-    //     let field_option_primary_key_token_stream = {
-    //         let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_inner_type_token_stream);
-    //         quote::quote! {
-    //             #serde_skip_serializing_if_value_attribute_token_stream
-    //             pub #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
-    //         }
-    //     };
-    //     let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
-    //         let field_vis = &element.field.vis;
-    //         let field_ident = &element.field_ident;
-    //         let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_reader_token_stream);
-    //         quote::quote! {
-    //             #serde_skip_serializing_if_value_attribute_token_stream
-    //             #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
-    //         }
-    //     });
-    //     quote::quote! {
-    //         #derive_debug_serde_serialize_serde_deserialize
-    //         pub struct #ident_options_upper_camel_case {
-    //             #field_option_primary_key_token_stream,
-    //             #(#fields_options_excluding_primary_key_token_stream),*
-    //         }
-    //     }
-    // };
+    let ident_options_token_stream = {
+        let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
+        // let field_option_primary_key_token_stream = {
+        //     let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_inner_type_token_stream);
+        //     quote::quote! {
+        //         #serde_skip_serializing_if_value_attribute_token_stream
+        //         pub #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
+        //     }
+        // };
+        // let fields_options_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
+        //     let field_vis = &element.field.vis;
+        //     let field_ident = &element.field_ident;
+        //     let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.inner_type_with_generic_reader_token_stream);
+        //     quote::quote! {
+        //         #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
+        //         #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
+        //     }
+        // });
+        quote::quote! {
+            // #derive_debug_serde_serialize_serde_deserialize
+            // pub struct #ident_options_upper_camel_case {
+            //     #field_option_primary_key_token_stream,
+            //     #(#fields_options_excluding_primary_key_token_stream),*
+            // }
+        }
+    };
     // let from_ident_for_ident_options_to_read_token_stream = {
     //     let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&quote::quote! {
     //         #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case.#primary_key_field_ident.0)
@@ -4709,10 +4709,13 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 }
             }
         };
+        // let ident_options_token_stream = {
+
+        // };
         quote::quote! {
             #impl_ident_table_name_token_stream
+            // #ident_options_token_stream
 
-            // #struct_options_token_stream
             // // #from_ident_for_ident_options_to_read_token_stream
             // #column_token_stream
             // #allow_methods_token_stream

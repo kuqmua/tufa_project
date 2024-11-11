@@ -209,8 +209,10 @@ impl quote::ToTokens for Error3 {
         quote::quote! {error_3}.to_tokens(tokens)
     }
 }
-
-// let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {
-//     #code_occurence_snake_case: #error_occurence_lib_code_occurence_code_occurence_token_stream
-// };
-//
+#[derive(Debug, Clone, Copy)]
+pub struct FieldAttributeSerdeSkipSerializingIfOptionIsNone;
+impl quote::ToTokens for FieldAttributeSerdeSkipSerializingIfOptionIsNone {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote!{#[serde(skip_serializing_if = "Option::is_none")]}.to_tokens(tokens)
+    }
+}
