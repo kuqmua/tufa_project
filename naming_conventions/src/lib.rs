@@ -407,7 +407,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dotenv"],
     ["std", "env", "var", "error"],
     ["env", "var", "name"],
-    ["try", "from", "std", "env", "var", "ok"]
+    ["try", "from", "std", "env", "var", "ok"],
+    ["table", "name"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
