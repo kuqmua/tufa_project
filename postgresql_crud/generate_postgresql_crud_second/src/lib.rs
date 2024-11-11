@@ -130,8 +130,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    // let ident_snake_case_stringified = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
-    // let table_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
+    let ident_snake_case_stringified = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
+    let table_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
     // #[derive(Debug, Clone)]
     // struct Generic<'a> {
     //     syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
@@ -943,7 +943,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //     Some(macros_helpers::status_code::StatusCode::InternalServerError500),
     //     vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming_conventions::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
     // );
-    // let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     // //todo find out how to declare lifetime on closures
     // //todo refactor as &[&'a SynRust...]
     // let generate_self_fields_token_stream = |fields: &[&syn::Field]| -> std::vec::Vec<syn::Ident> {
@@ -1072,6 +1071,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //     Patch,
     //     Delete,
     // }
+    // let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     // let generate_options_try_from_sqlx_row_token_stream = |operation: &Operation| {
     //     let declaration_primary_key_token_stream = {
     //         let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_inner_type_token_stream);
@@ -4698,21 +4698,26 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // // };
     // // println!("{emulate_crud_api_usage_test_token_stream}");
     // // println!("{create_table_if_not_exists_function_token_stream}");
-    // let common_token_stream = quote::quote! {
-    //     pub const TABLE_NAME: #ref_std_primitive_str = #table_name_double_quotes_token_stream;
-    //     #struct_options_token_stream
-    //     // #from_ident_for_ident_options_to_read_token_stream
-    //     #column_token_stream
-    //     #allow_methods_token_stream
-    //     #ident_column_read_permission_token_stream
-    //     #(#reexport_postgresql_sqlx_column_types_token_stream)*
-    //     #create_table_if_not_exists_function_token_stream
+    let common_token_stream = quote::quote! {
+        // pub const TABLE_NAME: #ref_std_primitive_str = #table_name_double_quotes_token_stream;
+        impl #ident {
+            pub fn table_name() -> &'static str {
+                #table_name_double_quotes_token_stream
+            }
+        }
+        // #struct_options_token_stream
+        // // #from_ident_for_ident_options_to_read_token_stream
+        // #column_token_stream
+        // #allow_methods_token_stream
+        // #ident_column_read_permission_token_stream
+        // #(#reexport_postgresql_sqlx_column_types_token_stream)*
+        // #create_table_if_not_exists_function_token_stream
 
-    //     // #[cfg(test)]
-    //     // mod test_try_create_many {
-    //         // #emulate_crud_api_usage_test_token_stream
-    //     // }
-    // };
+        // #[cfg(test)]
+        // mod test_try_create_many {
+            // #emulate_crud_api_usage_test_token_stream
+        // }
+    };
     // // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     // //     &proc_macro_name_upper_camel_case,
     // //     &common_token_stream,
@@ -4727,7 +4732,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let generated = quote::quote! {
         // //comment out coz its impossible to correctly generate tokens
         // // pub mod #mod_name_snake_case_token_stream {/
-        //     #common_token_stream
+            #common_token_stream
 
         //     #create_many_token_stream
         //     #create_one_token_stream

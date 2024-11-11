@@ -131,7 +131,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
-    let table_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
     #[derive(Debug, Clone)]
     struct Generic<'a> {
         syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
@@ -4699,7 +4698,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{emulate_crud_api_usage_test_token_stream}");
     // println!("{create_table_if_not_exists_function_token_stream}");
     let common_token_stream = quote::quote! {
-        pub const TABLE_NAME: #ref_std_primitive_str = #table_name_double_quotes_token_stream;
         #struct_options_token_stream
         // #from_ident_for_ident_options_to_read_token_stream
         #column_token_stream

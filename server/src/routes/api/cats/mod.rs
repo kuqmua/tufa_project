@@ -9,7 +9,7 @@ pub(crate) fn routes(app_state: common::repositories_types::server::routes::app_
         &format!(
             "/{}",
             // "todo", 
-            common::repositories_types::server::routes::api::cats::TABLE_NAME
+            common::repositories_types::server::routes::api::cats::Jsongeneric::table_name()// TABLE_NAME
         ),
         axum::Router::new().merge(crud(app_state)),
     )
