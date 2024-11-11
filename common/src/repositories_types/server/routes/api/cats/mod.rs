@@ -1,5 +1,3 @@
-mod f;
-
 #[derive(
     Debug,
     postgresql_crud::GeneratePostgresqlCrud

@@ -51,79 +51,79 @@
 //* validate update json field with json schema - all recursive tree variants to update
 //* delete not need?
 
-// #[proc_macro_attribute]
-// pub fn create_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn create_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn read_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn read_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn update_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn update_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn delete_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn delete_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn common_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
+#[proc_macro_attribute]
+pub fn create_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn create_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn read_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn read_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn update_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn update_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn delete_one_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn delete_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn common_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
 
-// #[proc_macro_attribute]
-// pub fn create_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn create_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn read_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn read_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn update_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn update_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn delete_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn delete_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
-// #[proc_macro_attribute]
-// pub fn common_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     item
-// }
+#[proc_macro_attribute]
+pub fn create_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn create_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn read_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn read_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn update_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn update_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn delete_many_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn delete_one_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
+pub fn common_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
 
 #[proc_macro_derive(GeneratePostgresqlCrudSecond)]
 pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
