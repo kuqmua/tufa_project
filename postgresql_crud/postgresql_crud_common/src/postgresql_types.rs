@@ -10,8 +10,136 @@
     Debug,
     Clone,
     Copy,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
 )]
-pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
+pub struct PostgresqlBoolNotNull(std::primitive::bool);
+impl std::fmt::Display for PostgresqlBoolNotNull {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
+    }
+}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlBoolNotNull {
+    #[inline]
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(::core::default::Default::default())
+    }
+}
+impl error_occurence_lib::ToStdStringString for PostgresqlBoolNotNull {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{}", self.0)
+    }
+}
+// impl PostgresqlBoolNotNull {
+//     pub fn into_inner(self) -> std::primitive::bool {
+//         self.0
+//     }
+// }
+// impl std::convert::From<StdPrimitiveBool> for std::primitive::bool {
+//     fn from(value: StdPrimitiveBool) -> Self {
+//         value.0
+//     }
+// }
+impl sqlx::Type<sqlx::Postgres> for PostgresqlBoolNotNull {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+// impl CheckSupportedPostgresqlColumnType for PostgresqlBoolNotNull {
+//     fn check_supported_postgresql_column_type() {}
+// }
+// impl std::convert::From<StdPrimitiveBool> for SupportedSqlxPostgresType {
+//     fn from(_value: StdPrimitiveBool) -> Self {
+//         Self::StdPrimitiveBool
+//     }
+// }
+// impl PostgresqlBoolNotNull {
+//     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
+//         value.into_iter().map(Self::into_inner).collect()
+//     }
+// }
+impl crate::BindQuery<'_> for PostgresqlBoolNotNull {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(())
+            },
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                code_occurence: error_occurence_lib::code_occurence!()
+            })
+        }
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("${increment}"))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                code_occurence: error_occurence_lib::code_occurence!()
+            })
+        }
+        
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.0);
+        query
+    }
+}
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, Eq)]
+pub struct WherePostgresqlBoolNotNull {
+    pub value: PostgresqlBoolNotNull,
+    pub conjuctive_operator: crate::ConjunctiveOperator,
+}
+impl std::fmt::Display for WherePostgresqlBoolNotNull {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+    }
+}
+impl crate::BindQuery<'_> for WherePostgresqlBoolNotNull {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(())
+            },
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                code_occurence: error_occurence_lib::code_occurence!()
+            })
+        }
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("${increment}"))
+            },
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                code_occurence: error_occurence_lib::code_occurence!()
+            })
+        }
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.value.0);
+        query
+    }
+}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WherePostgresqlBoolNotNull {
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            conjuctive_operator: crate::ConjunctiveOperator::default(),
+        }
+    }
+}
+
 
 ///////////////////////////////////
 //new type pattern
@@ -29,129 +157,12 @@ pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
     // postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
-// impl AsPostgresqlBool for StdPrimitiveBool {}
-// impl PostgresqlOrder for StdPrimitiveBool {}
-// impl AsPostgresqlBool for StdOptionOptionStdPrimitiveBool {}
-// impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 
-        impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBool {
-            #[inline]
-            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                Self(::core::default::Default::default())
-            }
-        }
 
-// impl std::fmt::Display for StdPrimitiveBool {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(formatter, "{:?}", self.0)
-//     }
-// }
-// impl error_occurence_lib::ToStdStringString for StdPrimitiveBool {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl StdPrimitiveBool {
-//     pub fn into_inner(self) -> std::primitive::bool {
-//         self.0
-//     }
-// }
-// impl std::convert::From<StdPrimitiveBool> for std::primitive::bool {
-//     fn from(value: StdPrimitiveBool) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-//         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl CheckSupportedPostgresqlColumnType for StdPrimitiveBool {
-//     fn check_supported_postgresql_column_type() {}
-// }
-// impl std::convert::From<StdPrimitiveBool> for SupportedSqlxPostgresType {
-//     fn from(_value: StdPrimitiveBool) -> Self {
-//         Self::StdPrimitiveBool
-//     }
-// }
-// impl StdPrimitiveBool {
-//     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
-//         value.into_iter().map(Self::into_inner).collect()
-//     }
-// }
-// impl BindQuery<'_> for StdPrimitiveBool {
-//     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-//         increment.checked_add(1).map_or_else(
-//             || Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//             |incr| {
-//                 *increment = incr;
-//                 Ok(())
-//             },
-//         )
-//     }
-//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-//         let mut increments = std::string::String::default();
-//         match increment.checked_add(1) {
-//             Some(incr) => {
-//                 *increment = incr;
-//                 increments.push_str(&format!("${increment}"));
-//             }
-//             None => {
-//                 return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//             }
-//         }
-//         Ok(increments)
-//     }
-//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(self.0);
-//         query
-//     }
-// }
-// #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
-// pub struct WhereStdPrimitiveBool {
-//     pub value: StdPrimitiveBool,
-//     pub conjuctive_operator: ConjunctiveOperator,
-// }
-// impl std::fmt::Display for WhereStdPrimitiveBool {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
-//     }
-// }
-// impl BindQuery<'_> for WhereStdPrimitiveBool {
-//     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-//         increment.checked_add(1).map_or_else(
-//             || Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//             |incr| {
-//                 *increment = incr;
-//                 Ok(())
-//             },
-//         )
-//     }
-//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-//         increment.checked_add(1).map_or_else(
-//             || Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//             |incr| {
-//                 *increment = incr;
-//                 Ok(format!("${increment}"))
-//             },
-//         )
-//     }
-//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(self.value.0);
-//         query
-//     }
-// }
-// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereStdPrimitiveBool {
-//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self {
-//             value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//             conjuctive_operator: ConjunctiveOperator::default(),
-//         }
-//     }
-// }
+
+
+
+
 // #[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize, Eq)]
 // pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<StdPrimitiveBool>);
 // impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
