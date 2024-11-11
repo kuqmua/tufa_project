@@ -25,6 +25,7 @@ pub use generate_postgresql_crud::update_many_additional_route_logic;
 pub use generate_postgresql_crud::update_one_additional_route_logic;
 
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
+pub use generate_postgresql_crud_second::GeneratePostgresqlCrudSecond;
 
 pub use postgresql_crud_common::NumBigintBigInt;
 pub use postgresql_crud_common::NumBigintSign;
