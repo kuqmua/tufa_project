@@ -8,7 +8,6 @@ pub mod generate_impl_std_convert_try_from_token_stream;
 pub mod generate_simple_syn_punctuated_punctuated;
 pub mod get_macro_attribute;
 pub mod status_code;
-pub mod type_variants_from_request_response;
 pub mod wrap_derive;
 pub mod write_token_stream_into_file;
 pub mod pagination_start_end_initialization_token_stream;
