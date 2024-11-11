@@ -8128,6 +8128,11 @@ impl std::default::Default for ConjunctiveOperator {
         Self::Or
     }
 }
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ConjunctiveOperator {
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
+    }
+}
 impl std::fmt::Display for ConjunctiveOperator {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
