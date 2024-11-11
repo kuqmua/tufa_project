@@ -2,8 +2,7 @@ mod f;
 
 #[derive(
     Debug,
-    postgresql_crud::GeneratePostgresqlCrud,
-    postgresql_crud::GeneratePostgresqlCrudSecond
+    postgresql_crud::GeneratePostgresqlCrud
 )]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
