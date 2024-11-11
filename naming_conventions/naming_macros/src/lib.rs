@@ -312,7 +312,7 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
     } else {
         panic!("does work only on structs!");
     };
-    let std_string_string = quote::quote! {std::string::String};
+    let std_string_string_token_stream = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
         .variants
         .iter()
@@ -321,7 +321,7 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
                 let variant_ident = &variant.ident;
                 let variant_ident_upper_camel_case_stringified = naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&variant_ident.to_string());
                 let variant_ident_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_upper_camel_case_stringified);
-                quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_upper_camel_case_double_quotes_token_stream)}
+                quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_upper_camel_case_double_quotes_token_stream)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("supported only syn::Fields::Unit"),
         })
@@ -329,7 +329,7 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
     let trait_path_token_stream = trait_path_token_stream();
     let generated = quote::quote! {
         impl #trait_path_token_stream::ToUpperCamelCaseStringified for #ident {
-            fn to_upper_camel_case_stringified(&self) -> #std_string_string {//todo maybe write duplicate Trait with &str instead of std::string::String
+            fn to_upper_camel_case_stringified(&self) -> #std_string_string_token_stream {//todo maybe write duplicate Trait with &str instead of std::string::String
                 match self {
                     #(#variants_matching_values_token_stream),*
                 }

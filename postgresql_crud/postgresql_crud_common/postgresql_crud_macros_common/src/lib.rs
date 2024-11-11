@@ -39,7 +39,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let reference_mut_std_primitive_u64_token_stream = quote::quote!{&mut std::primitive::u64};
     let mut_query_sqlx_query_postgres_arguments_token_stream = quote::quote!{mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_postgres_arguments_token_stream = quote::quote!{sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let std_string_string_token_stream = quote::quote!{std::string::String};
+    let std_string_string_token_stream = token_patterns::StdStringString;
     //todo maybe reexport sqlx?
     quote::quote!{
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
