@@ -125,7 +125,10 @@ pub fn common_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_
     item
 }
 
-#[proc_macro_derive(GeneratePostgresqlCrudSecond)]
+#[proc_macro_derive(
+    GeneratePostgresqlCrudSecond,
+    attributes(generate_postgresql_crud_second_primary_key)
+)]
 pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -442,6 +445,47 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         })
     //     }
     // }
+
+
+// #[allow(clippy::enum_variant_names)]
+// #[derive(Debug, Clone, Copy)]
+// pub enum ErrorOccurenceFieldAttribute {
+//     EoToStdStringString,
+// }
+// impl std::str::FromStr for ErrorOccurenceFieldAttribute {
+//     type Err = ();
+//     fn from_str(value: &std::primitive::str) -> Result<Self, Self::Err> {
+//         if value == "eo_to_std_string_string" {
+//             Ok(Self::EoToStdStringString)
+//         } else if value == "eo_to_std_string_string_serialize_deserialize" {
+//             Ok(Self::EoToStdStringStringSerializeDeserialize)
+//         } else {
+//             Err(())
+//         }
+//     }
+// }
+// impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
+//     fn from(value: &syn::Field) -> Self {
+//         let mut option_attribute = None;
+//         for attr in &value.attrs {
+//             if attr.path().segments.len() == 1 {
+//                 let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
+//                 if let Ok(value) = {
+//                     use std::str::FromStr;
+//                     ErrorOccurenceFieldAttribute::from_str(&first_segment_ident.to_string())
+//                 } {
+//                     if option_attribute.is_some() {
+//                         panic!("two or more supported attributes!");
+//                     } else {
+//                         option_attribute = Some(value);
+//                     }
+//                 }
+//             } //other attributes are not for this proc_macro
+//         }
+//         option_attribute.unwrap_or_else(|| panic!("option attribute {}", naming_conventions::IS_NONE_STRINGIFIED))
+//     }
+// }
+
     #[derive(Debug, Clone)]
     struct SynFieldWrapper {
         syn_field: syn::Field,
@@ -454,30 +498,35 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             let mut fields = vec![];
             let mut fields_without_primary_key = vec![];
-            let 
-            // mut 
-            primary_key_field: std::option::Option<SynFieldWrapper> = None;
+            let mut option_primary_key_field: std::option::Option<SynFieldWrapper> = None;
             for element in &fields_named.named {
-                // let elementt: syn::Field = element;
                 fields.push(SynFieldWrapper {
                     syn_field: element.clone(),
                 });
                 fields_without_primary_key.push(SynFieldWrapper {
                     syn_field: element.clone(),
                 });
-                
+                {
+                    for attr in &element.attrs {
+                        if attr.path().segments.len() == 1 {
+                            let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
+                            if first_segment_ident == "generate_postgresql_crud_second_primary_key" {
+                                if option_primary_key_field.is_some() {
+                                    panic!("two or more supported generate_postgresql_crud_second_primary_key attributes!");
+                                } else {
+                                    option_primary_key_field = Some(SynFieldWrapper {
+                                        syn_field: element.clone(),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            // fields_named
-            //     .named
-            //     .iter()
-            //     .map(|element| SynFieldWrapper {
-            //         syn_field: element,
-            //     })
-            //     .collect::<std::vec::Vec<SynFieldWrapper<'_>>>()
             (
                 fields,
                 fields_without_primary_key,
-                primary_key_field.unwrap_or_else(|| panic!("primary_key_field is None"))
+                option_primary_key_field.unwrap_or_else(|| panic!("primary_key_field is None"))
             )
         } else {
             panic!("supports only syn::Fields::Named");
