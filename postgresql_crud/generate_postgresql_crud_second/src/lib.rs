@@ -145,7 +145,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // struct SynFieldWithAdditionalInfo<'a> {
     //     field: &'a syn::Field,
     //     field_ident: &'a syn::Ident,
-    //     rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
+    //     // rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
     //     original_type_token_stream: proc_macro2::TokenStream,
     //     original_type_with_generic_token_stream: proc_macro2::TokenStream,
     //     original_type_with_generic_reader_token_stream: proc_macro2::TokenStream,
@@ -155,7 +155,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //     // where_inner_type_token_stream: proc_macro2::TokenStream,
     //     where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
     //     original_wrapper_type_token_stream: proc_macro2::TokenStream,
-    //     option_generic: std::option::Option<Generic<'a>>,
+    //     // option_generic: std::option::Option<Generic<'a>>,
     // }
     // impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
     //     type Error = std::string::String;
@@ -167,7 +167,13 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                 return Err(format!("{name} field ident is none"));
     //             }
     //         };
-    //         let (rust_sqlx_map_to_postgres_type_variant, option_generic) = match &value.ty {
+    //         let 
+    //         // (
+    //             rust_sqlx_map_to_postgres_type_variant
+    //             // ,
+    //             // option_generic
+    //         // )
+    //         = match &value.ty {
     //             syn::Type::Path(value) => {
     //                 if value.path.segments.len() != 2 {
     //                     return Err(std::string::String::from("value.path.segments.len() != 2"));
@@ -193,98 +199,102 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                         return Err(std::string::String::from("no second element"));
     //                     }
     //                 };
-    //                 let rust_sqlx_map_to_postgres_type_variant = match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(&second_element.ident.to_string()) {
-    //                     Ok(value) => value,
-    //                     Err(error) => {
-    //                         return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {error}"));
-    //                     }
-    //                 };
-    //                 let option_generic = match &second_element.arguments {
-    //                     syn::PathArguments::None => None,
-    //                     syn::PathArguments::AngleBracketed(value) => Some({
-    //                         enum Case {
-    //                             UpperCamel,
-    //                             Snake,
-    //                         }
-    //                         let generate_generic_option_string = |syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments, postfix: &std::primitive::str, case: Case| -> Result<std::string::String, std::string::String> {
-    //                             if syn_angle_bracketed_generic_arguments.args.len() != 1 {
-    //                                 return Err("value.args.len() != 1".to_string());
-    //                             }
-    //                             if let Some(value) = syn_angle_bracketed_generic_arguments.args.first() {
-    //                                 if let syn::GenericArgument::Type(value) = value {
-    //                                     if let syn::Type::Path(value) = value {
-    //                                         if value.path.segments.len() != 1 {
-    //                                             return Err("value.path.segments.len() != 1".to_string());
-    //                                         }
-    //                                         if let Some(value) = value.path.segments.first() {
-    //                                             Ok(match case {
-    //                                                 Case::UpperCamel => naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
-    //                                                 Case::Snake => naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&format!("{}_{postfix}", &value.ident)),
-    //                                             })
-    //                                         } else {
-    //                                             return Err("value.path.segments.first() is None".to_string());
-    //                                         }
-    //                                     } else {
-    //                                         return Err("value is not syn::Type::Path".to_string());
-    //                                     }
-    //                                 } else {
-    //                                     return Err("value is not syn::GenericArgument::Type".to_string());
-    //                                 }
-    //                             } else {
-    //                                 return Err("value.args.first() is None".to_string());
-    //                             }
-    //                         };
-    //                         let upper_camel_case_stringified = match generate_generic_option_string(&value, "", Case::UpperCamel) {
-    //                             Ok(value) => value,
-    //                             Err(error) => {
-    //                                 return Err(error);
-    //                             }
-    //                         };
-    //                         let reader_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::ReaderUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                             Ok(value) => value,
-    //                             Err(error) => {
-    //                                 return Err(error);
-    //                             }
-    //                         };
-    //                         let options_to_read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::OptionsToReadUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                             Ok(value) => value,
-    //                             Err(error) => {
-    //                                 return Err(error);
-    //                             }
-    //                         };
-    //                         let field_to_read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::FieldToReadUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                             Ok(value) => value,
-    //                             Err(error) => {
-    //                                 return Err(error);
-    //                             }
-    //                         };
-    //                         let generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::GeneratePostgresqlQueryPartToReadFromVecErrorNamedUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                             Ok(value) => value,
-    //                             Err(error) => {
-    //                                 return Err(error);
-    //                             }
-    //                         };
-    //                         let generate_postgresql_query_part_from_vec_error_named_snake_case_stringified = match generate_generic_option_string(&value, &naming_conventions::GeneratePostgresqlQueryPartToReadFromVecErrorNamedSnakeCase.to_string(), Case::Snake) {
-    //                             Ok(value) => value,
-    //                             Err(error) => {
-    //                                 return Err(error);
-    //                             }
-    //                         };
-    //                         Generic {
-    //                             syn_angle_bracketed_generic_arguments: value,
-    //                             upper_camel_case_stringified,
-    //                             reader_upper_camel_case_stringified,
-    //                             options_to_read_upper_camel_case_stringified,
-    //                             field_to_read_upper_camel_case_stringified,
-    //                             generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified,
-    //                             generate_postgresql_query_part_from_vec_error_named_snake_case_stringified,
-    //                         }
-    //                     }),
-    //                     syn::PathArguments::Parenthesized(_) => {
-    //                         return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
-    //                     }
-    //                 };
-    //                 (rust_sqlx_map_to_postgres_type_variant, option_generic)
+    //                 // let rust_sqlx_map_to_postgres_type_variant = match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(&second_element.ident.to_string()) {
+    //                 //     Ok(value) => value,
+    //                 //     Err(error) => {
+    //                 //         return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {error}"));
+    //                 //     }
+    //                 // };
+    //                 // let option_generic = match &second_element.arguments {
+    //                 //     syn::PathArguments::None => None,
+    //                 //     syn::PathArguments::AngleBracketed(value) => Some({
+    //                 //         enum Case {
+    //                 //             UpperCamel,
+    //                 //             Snake,
+    //                 //         }
+    //                 //         let generate_generic_option_string = |syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments, postfix: &std::primitive::str, case: Case| -> Result<std::string::String, std::string::String> {
+    //                 //             if syn_angle_bracketed_generic_arguments.args.len() != 1 {
+    //                 //                 return Err("value.args.len() != 1".to_string());
+    //                 //             }
+    //                 //             if let Some(value) = syn_angle_bracketed_generic_arguments.args.first() {
+    //                 //                 if let syn::GenericArgument::Type(value) = value {
+    //                 //                     if let syn::Type::Path(value) = value {
+    //                 //                         if value.path.segments.len() != 1 {
+    //                 //                             return Err("value.path.segments.len() != 1".to_string());
+    //                 //                         }
+    //                 //                         if let Some(value) = value.path.segments.first() {
+    //                 //                             Ok(match case {
+    //                 //                                 Case::UpperCamel => naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
+    //                 //                                 Case::Snake => naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&format!("{}_{postfix}", &value.ident)),
+    //                 //                             })
+    //                 //                         } else {
+    //                 //                             return Err("value.path.segments.first() is None".to_string());
+    //                 //                         }
+    //                 //                     } else {
+    //                 //                         return Err("value is not syn::Type::Path".to_string());
+    //                 //                     }
+    //                 //                 } else {
+    //                 //                     return Err("value is not syn::GenericArgument::Type".to_string());
+    //                 //                 }
+    //                 //             } else {
+    //                 //                 return Err("value.args.first() is None".to_string());
+    //                 //             }
+    //                 //         };
+    //                 //         let upper_camel_case_stringified = match generate_generic_option_string(&value, "", Case::UpperCamel) {
+    //                 //             Ok(value) => value,
+    //                 //             Err(error) => {
+    //                 //                 return Err(error);
+    //                 //             }
+    //                 //         };
+    //                 //         let reader_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::ReaderUpperCamelCase.to_string(), Case::UpperCamel) {
+    //                 //             Ok(value) => value,
+    //                 //             Err(error) => {
+    //                 //                 return Err(error);
+    //                 //             }
+    //                 //         };
+    //                 //         let options_to_read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::OptionsToReadUpperCamelCase.to_string(), Case::UpperCamel) {
+    //                 //             Ok(value) => value,
+    //                 //             Err(error) => {
+    //                 //                 return Err(error);
+    //                 //             }
+    //                 //         };
+    //                 //         let field_to_read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::FieldToReadUpperCamelCase.to_string(), Case::UpperCamel) {
+    //                 //             Ok(value) => value,
+    //                 //             Err(error) => {
+    //                 //                 return Err(error);
+    //                 //             }
+    //                 //         };
+    //                 //         let generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming_conventions::GeneratePostgresqlQueryPartToReadFromVecErrorNamedUpperCamelCase.to_string(), Case::UpperCamel) {
+    //                 //             Ok(value) => value,
+    //                 //             Err(error) => {
+    //                 //                 return Err(error);
+    //                 //             }
+    //                 //         };
+    //                 //         let generate_postgresql_query_part_from_vec_error_named_snake_case_stringified = match generate_generic_option_string(&value, &naming_conventions::GeneratePostgresqlQueryPartToReadFromVecErrorNamedSnakeCase.to_string(), Case::Snake) {
+    //                 //             Ok(value) => value,
+    //                 //             Err(error) => {
+    //                 //                 return Err(error);
+    //                 //             }
+    //                 //         };
+    //                 //         Generic {
+    //                 //             syn_angle_bracketed_generic_arguments: value,
+    //                 //             upper_camel_case_stringified,
+    //                 //             reader_upper_camel_case_stringified,
+    //                 //             options_to_read_upper_camel_case_stringified,
+    //                 //             field_to_read_upper_camel_case_stringified,
+    //                 //             generate_postgresql_query_part_from_vec_error_named_upper_camel_case_stringified,
+    //                 //             generate_postgresql_query_part_from_vec_error_named_snake_case_stringified,
+    //                 //         }
+    //                 //     }),
+    //                 //     syn::PathArguments::Parenthesized(_) => {
+    //                 //         return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
+    //                 //     }
+    //                 // };
+    //                 // (
+    //                     rust_sqlx_map_to_postgres_type_variant
+    //                     // ,
+    //                     // option_generic
+    //                 // )
     //             }
     //             _ => {
     //                 return Err(format!("{name} field_type is not syn::Type::Path"));
@@ -406,15 +416,15 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                 }
     //             }
     //         };
-    //         let original_wrapper_type_token_stream = {
-    //             let value = postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&rust_sqlx_map_to_postgres_type_variant.get_supported_sqlx_postgres_type()).get_path_stringified();
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
+    //         // let original_wrapper_type_token_stream = {
+    //         //     let value = postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&rust_sqlx_map_to_postgres_type_variant.get_supported_sqlx_postgres_type()).get_path_stringified();
+    //         //     match value.parse::<proc_macro2::TokenStream>() {
+    //         //         Ok(value) => value,
+    //         //         Err(error) => {
+    //         //             return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    //         //         }
+    //         //     }
+    //         // };
     //         Ok(Self {
     //             field: value,
     //             field_ident,
@@ -432,19 +442,39 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         })
     //     }
     // }
-    // let syn_field_with_additional_info_fields_named = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
-    //     if let syn::Fields::Named(fields_named) = &data_struct.fields {
-    //         fields_named
-    //             .named
-    //             .iter()
-    //             .map(|element| SynFieldWithAdditionalInfo::try_from(element).unwrap_or_else(|error| panic!("SynFieldWithAdditionalInfo::try_from(element) failed {error}")))
-    //             .collect::<std::vec::Vec<SynFieldWithAdditionalInfo<'_>>>()
-    //     } else {
-    //         panic!("supports only syn::Fields::Named");
-    //     }
-    // } else {
-    //     panic!("does work only on structs!");
-    // };
+    #[derive(Debug, Clone)]
+    struct SynFieldWrapper<'a> {
+        syn_field: &'a syn::Field,
+        is_primery_key: std::primitive::bool,
+        // upper_camel_case_stringified: std::string::String,
+    }
+    let (
+        fields,
+        fields_without_primary_key,
+        primary_key_field,
+    ) = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
+        if let syn::Fields::Named(fields_named) = &data_struct.fields {
+            // for element in fields_named.named {
+            //     let elementt: syn::Field = element;
+            // }
+            // fields_named
+            //     .named
+            //     .iter()
+            //     .map(|element| SynFieldWrapper {
+            //         syn_field: element,
+            //     })
+            //     .collect::<std::vec::Vec<SynFieldWrapper<'_>>>()
+            (
+                true,
+                true,
+                true
+            )
+        } else {
+            panic!("supports only syn::Fields::Named");
+        }
+    } else {
+        panic!("does work only on structs!");
+    };
     // let contains_generic_json = {
     //     let mut contains_generic_json = false;
     //     for element in &syn_field_with_additional_info_fields_named {
