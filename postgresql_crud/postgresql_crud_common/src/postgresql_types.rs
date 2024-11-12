@@ -10,7 +10,7 @@
     // postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
     // postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
-pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
+pub struct StdPrimitiveBool(std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
 impl crate::AsPostgresqlBool for StdPrimitiveBool {}
 impl crate::PostgresqlOrder for StdPrimitiveBool {}
 impl crate::AsPostgresqlBool for StdOptionOptionStdPrimitiveBool {}
@@ -89,8 +89,8 @@ impl crate::BindQuery<'_> for StdPrimitiveBool {
 }
 #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
 pub struct WhereStdPrimitiveBool {
-    pub value: StdPrimitiveBool,
-    pub conjuctive_operator: crate::ConjunctiveOperator,
+    value: StdPrimitiveBool,
+    conjuctive_operator: crate::ConjunctiveOperator,
 }
 impl std::fmt::Display for WhereStdPrimitiveBool {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -130,7 +130,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     }
 }
 #[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize, Eq)]
-pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<StdPrimitiveBool>);
+pub struct StdOptionOptionStdPrimitiveBool(std::option::Option<StdPrimitiveBool>);
 impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -220,8 +220,8 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 }
 #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
 pub struct WhereStdOptionOptionStdPrimitiveBool {
-    pub value: StdOptionOptionStdPrimitiveBool,
-    pub conjuctive_operator: crate::ConjunctiveOperator,
+    value: StdOptionOptionStdPrimitiveBool,
+    conjuctive_operator: crate::ConjunctiveOperator,
 }
 impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBool {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -288,7 +288,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl,
     // postgresql_crud_types_macro_logic_reuse::GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath,
 )]
-pub struct StdPrimitiveI64(pub std::primitive::i64);
+pub struct StdPrimitiveI64(std::primitive::i64);
 impl crate::AsPostgresqlBigInt for StdPrimitiveI64 {}
 impl crate::AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl crate::AsPostgresqlInt8 for StdPrimitiveI64 {}
@@ -365,8 +365,8 @@ impl crate::BindQuery<'_> for StdPrimitiveI64 {
 }
 #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
 pub struct WhereStdPrimitiveI64 {
-    pub value: StdPrimitiveI64,
-    pub conjuctive_operator: crate::ConjunctiveOperator,
+    value: StdPrimitiveI64,
+    conjuctive_operator: crate::ConjunctiveOperator,
 }
 impl std::fmt::Display for WhereStdPrimitiveI64 {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -406,7 +406,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     }
 }
 #[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize, Eq)]
-pub struct StdOptionOptionStdPrimitiveI64(pub std::option::Option<StdPrimitiveI64>);
+pub struct StdOptionOptionStdPrimitiveI64(std::option::Option<StdPrimitiveI64>);
 impl std::fmt::Display for StdOptionOptionStdPrimitiveI64 {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -496,8 +496,8 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 }
 #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
 pub struct WhereStdOptionOptionStdPrimitiveI64 {
-    pub value: StdOptionOptionStdPrimitiveI64,
-    pub conjuctive_operator: crate::ConjunctiveOperator,
+    value: StdOptionOptionStdPrimitiveI64,
+    conjuctive_operator: crate::ConjunctiveOperator,
 }
 impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveI64 {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -559,7 +559,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
-pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
+pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(StdPrimitiveBool);
 
 impl crate::CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
@@ -576,7 +576,7 @@ impl crate::CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPost
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
-pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
+pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(StdPrimitiveI64);
 // #[derive(Debug, Clone, Copy, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 // pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey(pub StdPrimitiveI64);
 
