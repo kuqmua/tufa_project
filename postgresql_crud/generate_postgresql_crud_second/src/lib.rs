@@ -443,10 +443,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //     }
     // }
     #[derive(Debug, Clone)]
-    struct SynFieldWrapper<'a> {
-        syn_field: &'a syn::Field,
-        is_primery_key: std::primitive::bool,
-        // upper_camel_case_stringified: std::string::String,
+    struct SynFieldWrapper {
+        syn_field: syn::Field,
     }
     let (
         fields,
@@ -454,9 +452,21 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         primary_key_field,
     ) = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
-            // for element in fields_named.named {
-            //     let elementt: syn::Field = element;
-            // }
+            let mut fields = vec![];
+            let mut fields_without_primary_key = vec![];
+            let 
+            // mut 
+            primary_key_field: std::option::Option<SynFieldWrapper> = None;
+            for element in &fields_named.named {
+                // let elementt: syn::Field = element;
+                fields.push(SynFieldWrapper {
+                    syn_field: element.clone(),
+                });
+                fields_without_primary_key.push(SynFieldWrapper {
+                    syn_field: element.clone(),
+                });
+                
+            }
             // fields_named
             //     .named
             //     .iter()
@@ -465,9 +475,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             //     })
             //     .collect::<std::vec::Vec<SynFieldWrapper<'_>>>()
             (
-                true,
-                true,
-                true
+                fields,
+                fields_without_primary_key,
+                primary_key_field.unwrap_or_else(|| panic!("primary_key_field is None"))
             )
         } else {
             panic!("supports only syn::Fields::Named");
