@@ -74,7 +74,7 @@ pub struct Example {
     // pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
 
     #[generate_postgresql_crud_second_primary_key]
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::postgresql_types::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::postgresql_types::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
     // pub std_primitive_i64_as_postgresql_big_int8: postgresql_crud::StdPrimitiveI64AsPostgresqlInt8,
     // pub std_primitive_i64_as_postgresql_big_int8_not_null: postgresql_crud::StdPrimitiveI64AsPostgresqlInt8NotNull,
 

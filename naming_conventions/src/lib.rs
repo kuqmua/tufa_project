@@ -408,7 +408,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["std", "env", "var", "error"],
     ["env", "var", "name"],
     ["try", "from", "std", "env", "var", "ok"],
-    ["table", "name"]
+    ["table", "name"],
+    //todo remove "second" later
+    ["generate", "postgresql", "crud", "second", "primary", "key"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
