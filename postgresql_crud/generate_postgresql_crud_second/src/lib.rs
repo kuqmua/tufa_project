@@ -489,6 +489,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     #[derive(Debug, Clone)]
     struct SynFieldWrapper {
         syn_field: syn::Field,
+        field_ident: syn::Ident,
     }
     let (
         fields,
@@ -500,11 +501,14 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let mut fields_without_primary_key = vec![];
             let mut option_primary_key_field: std::option::Option<SynFieldWrapper> = None;
             for element in &fields_named.named {
+                let field_ident = element.ident.clone().unwrap();
                 fields.push(SynFieldWrapper {
                     syn_field: element.clone(),
+                    field_ident: field_ident.clone(),
                 });
                 fields_without_primary_key.push(SynFieldWrapper {
                     syn_field: element.clone(),
+                    field_ident: field_ident.clone(),
                 });
                 {
                     for attr in &element.attrs {
@@ -516,6 +520,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                 } else {
                                     option_primary_key_field = Some(SynFieldWrapper {
                                         syn_field: element.clone(),
+                                        field_ident: field_ident.clone(),
                                     });
                                 }
                             }
