@@ -632,11 +632,11 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         }
     };
 
-    // let debug_upper_camel_case = naming_conventions::DebugUpperCamelCase;
+    let debug_upper_camel_case = naming_conventions::DebugUpperCamelCase;
     // let error_snake_case = naming_conventions::ErrorSnakeCase;
     // let eprintln_error_token_stream = quote::quote!{eprintln!("{error}");};
-    // let serde_serialize = token_patterns::SerdeSerialize;
-    // let serde_deserialize = token_patterns::SerdeDeserialize;
+    let serde_serialize = token_patterns::SerdeSerialize;
+    let serde_deserialize = token_patterns::SerdeDeserialize;
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
     // // let from_str_upper_camel_case = naming_conventions::FromStrUpperCamelCase;
     // // let from_str_snake_case = naming_conventions::FromStrSnakeCase;
@@ -734,54 +734,57 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         }
     //     }
     // };
+    let ident_column_upper_camel_case = naming_conventions::SelfColumnUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     // let ident_column_upper_camel_case_stringified = format!("{ident}{}", naming_conventions::ColumnUpperCamelCase);
+    // let ident_column_upper_camel_case_token_stream = 
     // let ident_column_upper_camel_case_token_stream = ident_column_upper_camel_case_stringified
     //     .parse::<proc_macro2::TokenStream>()
     //     .unwrap_or_else(|_| panic!("{ident_column_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    // let filter_snake_case = naming_conventions::FilterSnakeCase;
+    let filter_snake_case = naming_conventions::FilterSnakeCase;
     let column_token_stream = {
         let ident_column_token_stream = {
-            // let variants = fields.iter().map(|element| {
-            //     let field_ident_stringified = element.field_ident.to_string();
-            //     let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&field_ident_stringified);
-            //     let field_ident_upper_camel_case_token_stream = {
-            //         let value = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
-            //         value
-            //             .parse::<proc_macro2::TokenStream>()
-            //             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            //     };
-            //     let maybe_generic_filter_declaration_token_stream = match &element.option_generic {
-            //         Some(value) => {
-            //             let ident_field_upper_camel_case_token_stream = value.field_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
-            //                 panic!(
-            //                     "{} {}",
-            //                     &value.field_to_read_upper_camel_case_stringified,
-            //                     constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-            //                 )
-            //             });
-            //             quote::quote! {{ #filter_snake_case: std::vec::Vec<#ident_field_upper_camel_case_token_stream> }}
-            //         }
-            //         None => proc_macro2::TokenStream::new(),
-            //     };
-            //     quote::quote! {
-            //         #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
-            //         #field_ident_upper_camel_case_token_stream #maybe_generic_filter_declaration_token_stream
-            //     }
-            // });
+            let variants = fields.iter().map(|element| {
+                let field_ident_stringified = element.field_ident.to_string();
+                let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&field_ident_stringified);
+                let field_ident_upper_camel_case_token_stream = {
+                    let value = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
+                    value
+                        .parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                // let maybe_generic_filter_declaration_token_stream = match &element.option_generic {
+                //     Some(value) => {
+                //         let ident_field_upper_camel_case_token_stream = value.field_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
+                //             panic!(
+                //                 "{} {}",
+                //                 &value.field_to_read_upper_camel_case_stringified,
+                //                 constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                //             )
+                //         });
+                //         quote::quote! {{ #filter_snake_case: std::vec::Vec<#ident_field_upper_camel_case_token_stream> }}
+                //     }
+                //     None => proc_macro2::TokenStream::new(),
+                // };
+                quote::quote! {
+                    #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
+                    #field_ident_upper_camel_case_token_stream 
+                    // #maybe_generic_filter_declaration_token_stream
+                }
+            });
             quote::quote! {
-                // #[derive(
-                //     #debug_upper_camel_case,
-                //     #serde_serialize,
-                //     #serde_deserialize,
-                //     PartialEq,
-                //     // Eq,
-                //     // #from_str_snake_case::#from_str_upper_camel_case,
-                //     Clone,
-                //     // Copy,
-                // )]
-                // pub enum #ident_column_upper_camel_case_token_stream {
-                //     #(#variants),*
-                // }
+                #[derive(
+                    #debug_upper_camel_case,
+                    #serde_serialize,
+                    #serde_deserialize,
+                    PartialEq,
+                    // Eq,
+                    // #from_str_snake_case::#from_str_upper_camel_case,
+                    Clone,
+                    // Copy,
+                )]
+                pub enum #ident_column_upper_camel_case {
+                    #(#variants),*
+                }
             }
         };
         // let impl_std_fmt_display_for_ident_column_token_stream = {
@@ -801,7 +804,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         //     //     }
         //     // });
         //     quote::quote! {
-        //         impl std::fmt::Display for #ident_column_upper_camel_case_token_stream {
+        //         impl std::fmt::Display for #ident_column_upper_camel_case {
         //             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         //                 // match self {
         //                 //     #(#display_variants),*
@@ -814,7 +817,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         // let impl_error_occurence_lib_to_std_string_string_for_ident_column_token_stream = {
         //     quote::quote! {
         //         //todo maybe reuse naming
-        //         impl error_occurence_lib::ToStdStringString for #ident_column_upper_camel_case_token_stream {
+        //         impl error_occurence_lib::ToStdStringString for #ident_column_upper_camel_case {
         //             fn to_std_string_string(&self) -> #std_string_string {
         //                 format!("{self}")
         //             }
@@ -839,11 +842,11 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         //             None => proc_macro2::TokenStream::new(),
         //         };
         //         quote::quote! {
-        //             #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_initialization_token_stream
+        //             #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_initialization_token_stream
         //         }
         //     });
         //     quote::quote! {
-        //         impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_column_upper_camel_case_token_stream {
+        //         impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_column_upper_camel_case {
         //             fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         //                 vec![#(#elements_token_stream),*]
         //             }
@@ -1035,7 +1038,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                     quote::quote! {=> #field_ident_string_double_quotes_token_stream.to_string()}
     //                 }
     //             };
-    //             quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #initialization_token_stream}
+    //             quote::quote! {#ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #initialization_token_stream}
     //         })
     //         .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     //     quote::quote! {
@@ -1214,7 +1217,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //             #primary_key_inner_type_token_stream(#value_snake_case)
     //         });
     //         quote::quote! {
-    //             #ident_column_upper_camel_case_token_stream::#primary_key_field_ident_upper_camel_case_token_stream => match sqlx::Row::try_get::<
+    //             #ident_column_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream => match sqlx::Row::try_get::<
     //                 #primary_key_original_type_token_stream,
     //                 #ref_std_primitive_str
     //             >(
@@ -1261,7 +1264,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                 }
     //             });
     //             quote::quote! {
-    //                 #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream => match sqlx::Row::try_get::<
+    //                 #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream => match sqlx::Row::try_get::<
     //                     #original_type_with_generic_reader_token_stream,
     //                     #ref_std_primitive_str
     //                 >(
@@ -1755,7 +1758,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //     quote::quote! {pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_handle_token_stream>>}
     // };
     // let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
-    //     quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case_token_stream>}
+    //     quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case>}
     // };
     // let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = {
     //     let is_pub = true;
@@ -1775,7 +1778,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                     let not_unique_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream =
     //                         generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &not_unique_column_json_reader_syn_variant_wrapper, file!(), line!(), column!());
     //                     quote::quote! {
-    //                         #ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream #curly_brace_space_filter_snake_case_space_curly_braces_token_stream => {
+    //                         #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #curly_brace_space_filter_snake_case_space_curly_braces_token_stream => {
     //                             if #filter_snake_case.is_empty() {
     //                                 let #error_0_token_stream = #element_snake_case.clone();//here
     //                                 #empty_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -1797,7 +1800,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                         },
     //                     }
     //                 } else {
-    //                     quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => ()}
+    //                     quote::quote! {#ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream => ()}
     //                 }
     //             })
     //             .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -3202,7 +3205,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                 #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
     //                 #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
     //                 #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
-    //                 pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
+    //                 pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case>,
     //                 pub #limit_snake_case: #limit_and_offset_type_token_stream,
     //                 pub #offset_snake_case: #limit_and_offset_type_token_stream,
     //             },
@@ -4857,7 +4860,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         //     // #delete_one_token_stream
         // // }
     };
-    println!("{generated}");
+    // println!("{generated}");
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     &proc_macro_name_upper_camel_case,
