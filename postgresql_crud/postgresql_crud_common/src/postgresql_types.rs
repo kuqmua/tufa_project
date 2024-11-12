@@ -555,6 +555,8 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     Debug,
     Clone,
     Copy,
+    serde::Serialize,
+    serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
@@ -570,6 +572,8 @@ impl crate::CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPost
     Debug,
     Clone,
     Copy,
+    serde::Serialize,
+    serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
