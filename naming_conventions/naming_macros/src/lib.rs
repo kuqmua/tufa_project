@@ -16,7 +16,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
                 }
             }
             let phrase_part_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
-                let element_upper_camel_case_stringified = naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(*&element);
+                let element_upper_camel_case_stringified = naming_conventions_common::ToUpperCamelCaseStringified::new(*&element);
                 acc.push_str(&element_upper_camel_case_stringified);
                 acc
             });
@@ -131,7 +131,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
                 let snake_case_upper_camel_case_stringified = "SnakeCase";
                 let elements_concat_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
-                    acc.push_str(&naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(element));
+                    acc.push_str(&naming_conventions_common::ToUpperCamelCaseStringified::new(element));
                     acc
                 });
                 let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
@@ -140,7 +140,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                             acc.push_str("{value}");
                         }
                         else {
-                            acc.push_str(&naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(element));
+                            acc.push_str(&naming_conventions_common::ToUpperCamelCaseStringified::new(element));
                         }
                         acc
                     })
@@ -213,7 +213,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 };
                 let panic_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("failed to parse stringified {struct_ident_token_stream} into proc_macro2::TokenStream: {{value_stringified}}"));
                 let casing_token_stream = if is_upper_camel_case {
-                    quote::quote!{naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified}
+                    quote::quote!{naming_conventions_common::ToUpperCamelCaseStringified::new}
                 }
                 else {
                     quote::quote!{naming_conventions_common::ToSnakeCaseStringified::to_snake_case_stringified}
@@ -319,7 +319,7 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
         .map(|variant| match &variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_upper_camel_case_stringified = naming_conventions_common::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&variant_ident.to_string());
+                let variant_ident_upper_camel_case_stringified = naming_conventions_common::ToUpperCamelCaseStringified::new(&variant_ident.to_string());
                 let variant_ident_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_upper_camel_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_upper_camel_case_double_quotes_token_stream)}
             }
@@ -329,7 +329,7 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
     let trait_path_token_stream = trait_path_token_stream();
     let generated = quote::quote! {
         impl #trait_path_token_stream::ToUpperCamelCaseStringified for #ident {
-            fn to_upper_camel_case_stringified(&self) -> #std_string_string_token_stream {//todo maybe write duplicate Trait with &str instead of std::string::String
+            fn new(&self) -> #std_string_string_token_stream {//todo maybe write duplicate Trait with &str instead of std::string::String
                 match self {
                     #(#variants_matching_values_token_stream),*
                 }

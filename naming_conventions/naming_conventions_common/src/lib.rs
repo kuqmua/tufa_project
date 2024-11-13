@@ -1,6 +1,6 @@
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
 pub trait ToUpperCamelCaseStringified {
-    fn to_upper_camel_case_stringified(&self) -> std::string::String;
+    fn new(&self) -> std::string::String;
 }
 
 impl<T: Sized> ToUpperCamelCaseStringified for T
@@ -8,7 +8,7 @@ where
     std::string::String: PartialEq<T>,
     Self: AsRef<str>,
 {
-    fn to_upper_camel_case_stringified(&self) -> std::string::String {
+    fn new(&self) -> std::string::String {
         convert_case::Casing::to_case(self, convert_case::Case::UpperCamel)
     }
 }
@@ -22,7 +22,7 @@ where
     T: ToUpperCamelCaseStringified,
 {
     fn to_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_upper_camel_case_stringified = ToUpperCamelCaseStringified::to_upper_camel_case_stringified(self);
+        let value_upper_camel_case_stringified = ToUpperCamelCaseStringified::new(self);
         value_upper_camel_case_stringified
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
