@@ -84,6 +84,80 @@ where
 
 
 ////////////
+pub trait DisplayToUpperCamelCaseStringified {
+    fn new(&self) -> std::string::String;
+}
+impl<T> DisplayToUpperCamelCaseStringified for T
+where T: std::fmt::Display,
+{
+    fn new(&self) -> std::string::String {
+        convert_case::Casing::to_case(&self.to_string(), convert_case::Case::UpperCamel)
+    }
+}
+
+pub trait DisplayToUpperCamelCaseTokenStream {
+    fn new_or_panic(&self) -> proc_macro2::TokenStream;
+}
+impl<T> DisplayToUpperCamelCaseTokenStream for T
+where T: DisplayToUpperCamelCaseStringified,
+{
+    fn new_or_panic(&self) -> proc_macro2::TokenStream {
+        let value = DisplayToUpperCamelCaseStringified::new(self);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}
+
+
+pub trait DisplayToSnakeCaseStringified {
+    fn new(&self) -> std::string::String;
+}
+impl<T> DisplayToSnakeCaseStringified for T
+where T: std::fmt::Display,
+{
+    fn new(&self) -> std::string::String {
+        convert_case::Casing::to_case(&self.to_string(), convert_case::Case::Snake)
+    }
+}
+
+pub trait DisplayToSnakeCaseTokenStream {
+    fn new_or_panic(&self) -> proc_macro2::TokenStream;
+}
+impl<T> DisplayToSnakeCaseTokenStream for T
+where T: DisplayToSnakeCaseStringified,
+{
+    fn new_or_panic(&self) -> proc_macro2::TokenStream {
+        let value = DisplayToSnakeCaseStringified::new(self);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}
+
+
+pub trait DisplayToScreamingSnakeCaseStringified {
+    fn new(&self) -> std::string::String;
+}
+impl<T> DisplayToScreamingSnakeCaseStringified for T
+where T: std::fmt::Display,
+{
+    fn new(&self) -> std::string::String {
+        convert_case::Casing::to_case(&self.to_string(), convert_case::Case::ScreamingSnake)
+    }
+}
+
+pub trait DisplayToScreamingSnakeCaseTokenStream {
+    fn new_or_panic(&self) -> proc_macro2::TokenStream;
+}
+impl<T> DisplayToScreamingSnakeCaseTokenStream for T
+where T: DisplayToScreamingSnakeCaseStringified,
+{
+    fn new_or_panic(&self) -> proc_macro2::TokenStream {
+        let value = DisplayToScreamingSnakeCaseStringified::new(self);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}
+////////////
 
 pub trait ToTokensToUpperCamelCaseStringified {
     fn new(&self) -> std::string::String;
