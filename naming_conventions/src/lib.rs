@@ -576,7 +576,7 @@ where
     T: naming_conventions_common::ToSnakeCaseStringified,
 {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String {
-        generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.to_snake_case_stringified(),))
+        generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.new(),))
     }
 }
 
@@ -603,7 +603,7 @@ where
     T: naming_conventions_common::ToSnakeCaseStringified,
 {
     fn url_handle_self_snake_case_stringified(&self, table_name_stringified: &str) -> std::string::String {
-        format!("\"{{}}/{}/{}\"", table_name_stringified, self.to_snake_case_stringified())
+        format!("\"{{}}/{}/{}\"", table_name_stringified, self.new())
     }
 }
 
@@ -688,10 +688,10 @@ where
 //         Self(format!("generic_{value}_field_reader"))
 //     }
 //     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&value.to_string()))
+//         Self::wrap(&generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&value.to_string()))
 //     }
 //     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&{
+//         Self::wrap(&generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);
 //             tokens
@@ -807,7 +807,7 @@ where
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
-//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&quote::quote! { #self }.to_string()),)
+//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {
@@ -899,7 +899,7 @@ where
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
-//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&quote::quote! { #self }.to_string()),)
+//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {
