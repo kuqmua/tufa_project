@@ -744,27 +744,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let column_token_stream = {
         let ident_column_token_stream = {
             let variants = fields.iter().map(|element| {
-                let field_ident_stringified = element.field_ident.to_string();
-                let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&field_ident_stringified);
-                let field_ident_upper_camel_case_token_stream = {
-                    let value = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
-                    value
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                // let maybe_generic_filter_declaration_token_stream = match &element.option_generic {
-                //     Some(value) => {
-                //         let ident_field_upper_camel_case_token_stream = value.field_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
-                //             panic!(
-                //                 "{} {}",
-                //                 &value.field_to_read_upper_camel_case_stringified,
-                //                 constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                //             )
-                //         });
-                //         quote::quote! {{ #filter_snake_case: std::vec::Vec<#ident_field_upper_camel_case_token_stream> }}
-                //     }
-                //     None => proc_macro2::TokenStream::new(),
-                // };
+                let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                let field_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::to_upper_camel_case_token_stream(&element.field_ident.to_string());
                 quote::quote! {
                     #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
                     #field_ident_upper_camel_case_token_stream 
