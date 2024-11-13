@@ -89,3 +89,59 @@ where
             .unwrap_or_else(|_| panic!("{value_screaming_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
+
+pub fn display_to_upper_camel_case_stringified(value: &dyn std::fmt::Display) -> std::string::String {
+    convert_case::Casing::to_case(&value.to_string(), convert_case::Case::UpperCamel)
+}
+pub fn display_to_upper_camel_case_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    let value_upper_camel_case_stringified = display_to_upper_camel_case_stringified(value);
+    value_upper_camel_case_stringified
+    .parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn display_to_snake_case_stringified(value: &dyn std::fmt::Display) -> std::string::String {
+    convert_case::Casing::to_case(&value.to_string(), convert_case::Case::Snake)
+}
+pub fn display_to_snake_case_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    let value_snake_case_stringified = display_to_snake_case_stringified(value);
+    value_snake_case_stringified
+    .parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn display_to_screaming_snake_case_stringified(value: &dyn std::fmt::Display) -> std::string::String {
+    convert_case::Casing::to_case(&value.to_string(), convert_case::Case::ScreamingSnake)
+}
+pub fn display_to_screaming_snake_case_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    let value_screaming_snake_case_stringified = display_to_screaming_snake_case_stringified(value);
+    value_screaming_snake_case_stringified
+    .parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value_screaming_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+
+pub fn tokens_to_upper_camel_case_stringified(value: &dyn quote::ToTokens) -> std::string::String {
+    convert_case::Casing::to_case(&quote::quote!{#value}.to_string(), convert_case::Case::UpperCamel)
+}
+pub fn tokens_to_upper_camel_case_token_stream(value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_upper_camel_case_stringified = tokens_to_upper_camel_case_stringified(value);
+    value_upper_camel_case_stringified
+    .parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn tokens_to_snake_case_stringified(value: &dyn quote::ToTokens) -> std::string::String {
+    convert_case::Casing::to_case(&quote::quote!{#value}.to_string(), convert_case::Case::Snake)
+}
+pub fn tokens_to_snake_case_token_stream(value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case_stringified = tokens_to_snake_case_stringified(value);
+    value_snake_case_stringified
+    .parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn tokens_to_screaming_snake_case_stringified(value: &dyn quote::ToTokens) -> std::string::String {
+    convert_case::Casing::to_case(&quote::quote!{#value}.to_string(), convert_case::Case::ScreamingSnake)
+}
+pub fn tokens_to_screaming_snake_case_token_stream(value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_screaming_snake_case_stringified = tokens_to_screaming_snake_case_stringified(value);
+    value_screaming_snake_case_stringified
+    .parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value_screaming_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}

@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 proc-macro2 = {version = "=1.0.81"}
+quote = {version = "=1.0.36"}
 convert_case = {version = "=0.6.0"}
 constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
