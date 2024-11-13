@@ -998,7 +998,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             format!("{}::{value}", naming_conventions::PostgresqlCrudSnakeCase)
         }
     }
-    #[derive(Debug, Clone, Copy, naming_conventions::EnumWithUnitFieldsToUpperCamelCaseStringified, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
+    #[derive(Debug, Clone, Copy, naming_conventions::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     enum Operation {
         CreateMany,
         CreateOne,
@@ -1066,7 +1066,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     }
-    #[derive(naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
+    #[derive(naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     enum OperationHttpMethod {
         Post,
         Patch,
@@ -4864,7 +4864,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 // }
 
 // //todo maybe refactor or remove later
-// #[derive(Debug, Clone, Copy, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
+// #[derive(Debug, Clone, Copy, naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
 // enum TestOperationPrintlnInfo {
 //     Start,
 //     End,

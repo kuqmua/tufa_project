@@ -1096,7 +1096,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         format!("{}::{value}", naming_conventions::PostgresqlCrudSnakeCase)
     //     }
     // }
-    // #[derive(Debug, Clone, Copy, naming_conventions::EnumWithUnitFieldsToUpperCamelCaseStringified, naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
+    // #[derive(Debug, Clone, Copy, naming_conventions::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     // enum Operation {
     //     CreateMany,
     //     CreateOne,
@@ -1164,7 +1164,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         }
     //     }
     // }
-    // #[derive(naming_conventions::EnumWithUnitFieldsToSnakeCaseStringified)]
+    // #[derive(naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     // enum OperationHttpMethod {
     //     Post,
     //     Patch,

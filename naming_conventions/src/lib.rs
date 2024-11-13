@@ -1,6 +1,6 @@
-pub use naming_macros::EnumWithUnitFieldsToUpperCamelCaseStringified;
-pub use naming_macros::EnumWithUnitFieldsToSnakeCaseStringified;
-pub use naming_macros::EnumWithUnitFieldsToScreamingSnakeCaseStringified;
+pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified;
+pub use naming_macros::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified;
+pub use naming_macros::AsRefStrEnumWithUnitFieldsToScreamingSnakeCaseStringified;
 
 pub use naming_conventions_common::AsRefStrToUpperCamelCaseStringified;
 pub use naming_conventions_common::AsRefStrToUpperCamelCaseTokenStream;

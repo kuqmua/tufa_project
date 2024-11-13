@@ -295,15 +295,15 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
 ////////////////////
 /*
 only works if all enum variants without fields like this
-#[derive(macros_assistants::ToUpperCamelCaseStringified)]
+#[derive(macros_assistants::AsRefStrToUpperCamelCaseStringified)]
 enum Operation {
      One,
      Two,
      Three,
 }
 */
-#[proc_macro_derive(EnumWithUnitFieldsToUpperCamelCaseStringified)]
-pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified)]
+pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -342,15 +342,15 @@ pub fn enum_with_unit_fields_to_upper_camel_case_stringified(input: proc_macro::
 
 /*
 only works if all enum variants without fields like this
- #[derive(macros_assistants::ToSnakeCaseStringified)]
+ #[derive(macros_assistants::AsRefStrToSnakeCaseStringified)]
  enum Operation {
      One,
      Two,
      Three,
  }
 */
-#[proc_macro_derive(EnumWithUnitFieldsToSnakeCaseStringified)]
-pub fn enum_with_unit_fields_to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -388,15 +388,15 @@ pub fn enum_with_unit_fields_to_snake_case_stringified(input: proc_macro::TokenS
 }
 /*
 only works if all enum variants without fields like this
- #[derive(macros_assistants::ToScreamingSnakeCaseStringified)]
+ #[derive(macros_assistants::AsRefStrToScreamingSnakeCaseStringified)]
  enum Operation {
      One,
      Two,
      Three,
  }
 */
-#[proc_macro_derive(EnumWithUnitFieldsToScreamingSnakeCaseStringified)]
-pub fn enum_with_unit_fields_to_screaming_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScreamingSnakeCaseStringified)]
+pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
