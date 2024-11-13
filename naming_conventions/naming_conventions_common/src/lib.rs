@@ -1,3 +1,17 @@
+fn to_upper_camel_case_stringified<T: AsRef<str>>(value: &T) -> std::string::String where String: PartialEq<T>  {
+    convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
+}
+fn to_snake_case_stringified<T: AsRef<str>>(value: &T) -> std::string::String where String: PartialEq<T>  {
+    convert_case::Casing::to_case(value, convert_case::Case::Snake)
+}
+fn to_screaming_snake_case_stringified<T: AsRef<str>>(value: &T) -> std::string::String where String: PartialEq<T>  {
+    convert_case::Casing::to_case(value, convert_case::Case::ScreamingSnake)
+}
+fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    value.to_string().parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
 pub trait AsRefStrToUpperCamelCaseStringified {
     fn new(&self) -> std::string::String;
@@ -8,7 +22,7 @@ where
     Self: AsRef<str>,
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(self, convert_case::Case::UpperCamel)
+        to_upper_camel_case_stringified(self)
     }
 }
 
@@ -20,9 +34,7 @@ where
     T: AsRefStrToUpperCamelCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = AsRefStrToUpperCamelCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&AsRefStrToUpperCamelCaseStringified::new(self))
     }
 }
 
@@ -36,7 +48,7 @@ where
     Self: AsRef<str>,
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(self, convert_case::Case::Snake)
+        to_snake_case_stringified(self)
     }
 }
 
@@ -48,9 +60,7 @@ where
     T: AsRefStrToSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = AsRefStrToSnakeCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&AsRefStrToSnakeCaseStringified::new(self))
     }
 }
 
@@ -64,7 +74,7 @@ where
     Self: AsRef<str>,
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(self, convert_case::Case::ScreamingSnake)
+        to_screaming_snake_case_stringified(self)
     }
 }
 
@@ -76,9 +86,7 @@ where
     T: AsRefStrToScreamingSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = AsRefStrToScreamingSnakeCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&AsRefStrToScreamingSnakeCaseStringified::new(self))
     }
 }
 
@@ -91,7 +99,7 @@ impl<T> DisplayToUpperCamelCaseStringified for T
 where T: std::fmt::Display,
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(&self.to_string(), convert_case::Case::UpperCamel)
+        to_upper_camel_case_stringified(&self.to_string())
     }
 }
 
@@ -102,9 +110,7 @@ impl<T> DisplayToUpperCamelCaseTokenStream for T
 where T: DisplayToUpperCamelCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = DisplayToUpperCamelCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&DisplayToUpperCamelCaseStringified::new(self))
     }
 }
 
@@ -116,7 +122,7 @@ impl<T> DisplayToSnakeCaseStringified for T
 where T: std::fmt::Display,
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(&self.to_string(), convert_case::Case::Snake)
+        to_snake_case_stringified(&self.to_string())
     }
 }
 
@@ -127,9 +133,7 @@ impl<T> DisplayToSnakeCaseTokenStream for T
 where T: DisplayToSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = DisplayToSnakeCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&DisplayToSnakeCaseStringified::new(self))
     }
 }
 
@@ -141,7 +145,7 @@ impl<T> DisplayToScreamingSnakeCaseStringified for T
 where T: std::fmt::Display,
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(&self.to_string(), convert_case::Case::ScreamingSnake)
+        to_screaming_snake_case_stringified(&self.to_string())
     }
 }
 
@@ -152,9 +156,7 @@ impl<T> DisplayToScreamingSnakeCaseTokenStream for T
 where T: DisplayToScreamingSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = DisplayToScreamingSnakeCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&DisplayToScreamingSnakeCaseStringified::new(self))
     }
 }
 ////////////
@@ -166,7 +168,7 @@ impl<T> ToTokensToUpperCamelCaseStringified for T
 where T: quote::ToTokens
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(&quote::quote!{#self}.to_string(), convert_case::Case::UpperCamel)
+        to_upper_camel_case_stringified(&quote::quote!{#self}.to_string())
     }
 }
 
@@ -177,9 +179,7 @@ impl<T> ToTokensToUpperCamelCaseTokenStream for T
 where T: ToTokensToUpperCamelCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = ToTokensToUpperCamelCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&ToTokensToUpperCamelCaseStringified::new(self))
     }
 }
 
@@ -191,7 +191,7 @@ impl<T> ToTokensToSnakeCaseStringified for T
 where T: quote::ToTokens
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(&quote::quote!{#self}.to_string(), convert_case::Case::Snake)
+        to_snake_case_stringified(&quote::quote!{#self}.to_string().to_string())
     }
 }
 
@@ -202,9 +202,7 @@ impl<T> ToTokensToSnakeCaseTokenStream for T
 where T: ToTokensToSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = ToTokensToSnakeCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&ToTokensToSnakeCaseStringified::new(self))
     }
 }
 
@@ -216,7 +214,7 @@ impl<T> ToTokensToScreamingSnakeCaseStringified for T
 where T: quote::ToTokens,
 {
     fn new(&self) -> std::string::String {
-        convert_case::Casing::to_case(&quote::quote!{#self}.to_string(), convert_case::Case::ScreamingSnake)
+        to_screaming_snake_case_stringified(&quote::quote!{#self}.to_string())
     }
 }
 
@@ -227,60 +225,6 @@ impl<T> ToTokensToScreamingSnakeCaseTokenStream for T
 where T: ToTokensToScreamingSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = ToTokensToScreamingSnakeCaseStringified::new(self);
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        to_token_stream_or_panic(&ToTokensToScreamingSnakeCaseStringified::new(self))
     }
-}
-
-
-
-pub fn display_to_upper_camel_case_stringified(value: &dyn std::fmt::Display) -> std::string::String {
-    convert_case::Casing::to_case(&value.to_string(), convert_case::Case::UpperCamel)
-}
-pub fn display_to_upper_camel_case_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
-    let value = display_to_upper_camel_case_stringified(value);
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-pub fn display_to_snake_case_stringified(value: &dyn std::fmt::Display) -> std::string::String {
-    convert_case::Casing::to_case(&value.to_string(), convert_case::Case::Snake)
-}
-pub fn display_to_snake_case_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
-    let value = display_to_snake_case_stringified(value);
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-pub fn display_to_screaming_snake_case_stringified(value: &dyn std::fmt::Display) -> std::string::String {
-    convert_case::Casing::to_case(&value.to_string(), convert_case::Case::ScreamingSnake)
-}
-pub fn display_to_screaming_snake_case_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
-    let value = display_to_screaming_snake_case_stringified(value);
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-
-pub fn tokens_to_upper_camel_case_stringified(value: &dyn quote::ToTokens) -> std::string::String {
-    convert_case::Casing::to_case(&quote::quote!{#value}.to_string(), convert_case::Case::UpperCamel)
-}
-pub fn tokens_to_upper_camel_case_token_stream(value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let value = tokens_to_upper_camel_case_stringified(value);
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-pub fn tokens_to_snake_case_stringified(value: &dyn quote::ToTokens) -> std::string::String {
-    convert_case::Casing::to_case(&quote::quote!{#value}.to_string(), convert_case::Case::Snake)
-}
-pub fn tokens_to_snake_case_token_stream(value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let value = tokens_to_snake_case_stringified(value);
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-pub fn tokens_to_screaming_snake_case_stringified(value: &dyn quote::ToTokens) -> std::string::String {
-    convert_case::Casing::to_case(&quote::quote!{#value}.to_string(), convert_case::Case::ScreamingSnake)
-}
-pub fn tokens_to_screaming_snake_case_token_stream(value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let value = tokens_to_screaming_snake_case_stringified(value);
-    value.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
