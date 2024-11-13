@@ -1,8 +1,8 @@
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
-pub trait ToUpperCamelCaseStringified {
+pub trait AsRefStrToUpperCamelCaseStringified {
     fn new(&self) -> std::string::String;
 }
-impl<T: Sized> ToUpperCamelCaseStringified for T
+impl<T: Sized> AsRefStrToUpperCamelCaseStringified for T
 where
     std::string::String: PartialEq<T>,
     Self: AsRef<str>,
@@ -12,25 +12,25 @@ where
     }
 }
 
-pub trait ToUpperCamelCaseTokenStream {
+pub trait AsRefStrToUpperCamelCaseTokenStream {
     fn new_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T: Sized> ToUpperCamelCaseTokenStream for T
+impl<T: Sized> AsRefStrToUpperCamelCaseTokenStream for T
 where
-    T: ToUpperCamelCaseStringified,
+    T: AsRefStrToUpperCamelCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = ToUpperCamelCaseStringified::new(self);
+        let value = AsRefStrToUpperCamelCaseStringified::new(self);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
 
-pub trait ToSnakeCaseStringified {
+pub trait AsRefStrToSnakeCaseStringified {
     fn new(&self) -> std::string::String;
 }
-impl<T: Sized> ToSnakeCaseStringified for T
+impl<T: Sized> AsRefStrToSnakeCaseStringified for T
 where
     std::string::String: PartialEq<T>,
     Self: AsRef<str>,
@@ -40,25 +40,25 @@ where
     }
 }
 
-pub trait ToSnakeCaseTokenStream {
+pub trait AsRefStrToSnakeCaseTokenStream {
     fn new_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T: Sized> ToSnakeCaseTokenStream for T
+impl<T: Sized> AsRefStrToSnakeCaseTokenStream for T
 where
-    T: ToSnakeCaseStringified,
+    T: AsRefStrToSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = ToSnakeCaseStringified::new(self);
+        let value = AsRefStrToSnakeCaseStringified::new(self);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
 
-pub trait ToScreamingSnakeCaseStringified {
+pub trait AsRefStrToScreamingSnakeCaseStringified {
     fn new(&self) -> std::string::String;
 }
-impl<T: Sized> ToScreamingSnakeCaseStringified for T
+impl<T: Sized> AsRefStrToScreamingSnakeCaseStringified for T
 where
     std::string::String: PartialEq<T>,
     Self: AsRef<str>,
@@ -68,15 +68,15 @@ where
     }
 }
 
-pub trait ToScreamingSnakeCaseTokenStream {
+pub trait AsRefStrToScreamingSnakeCaseTokenStream {
     fn new_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T: Sized> ToScreamingSnakeCaseTokenStream for T
+impl<T: Sized> AsRefStrToScreamingSnakeCaseTokenStream for T
 where
-    T: ToScreamingSnakeCaseStringified,
+    T: AsRefStrToScreamingSnakeCaseStringified,
 {
     fn new_or_panic(&self) -> proc_macro2::TokenStream {
-        let value = ToScreamingSnakeCaseStringified::new(self);
+        let value = AsRefStrToScreamingSnakeCaseStringified::new(self);
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }

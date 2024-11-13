@@ -2,12 +2,12 @@ pub use naming_macros::EnumWithUnitFieldsToUpperCamelCaseStringified;
 pub use naming_macros::EnumWithUnitFieldsToSnakeCaseStringified;
 pub use naming_macros::EnumWithUnitFieldsToScreamingSnakeCaseStringified;
 
-pub use naming_conventions_common::ToUpperCamelCaseStringified;
-pub use naming_conventions_common::ToUpperCamelCaseTokenStream;
-pub use naming_conventions_common::ToSnakeCaseStringified;
-pub use naming_conventions_common::ToSnakeCaseTokenStream;
-pub use naming_conventions_common::ToScreamingSnakeCaseStringified;
-pub use naming_conventions_common::ToScreamingSnakeCaseTokenStream;
+pub use naming_conventions_common::AsRefStrToUpperCamelCaseStringified;
+pub use naming_conventions_common::AsRefStrToUpperCamelCaseTokenStream;
+pub use naming_conventions_common::AsRefStrToSnakeCaseStringified;
+pub use naming_conventions_common::AsRefStrToSnakeCaseTokenStream;
+pub use naming_conventions_common::AsRefStrToScreamingSnakeCaseStringified;
+pub use naming_conventions_common::AsRefStrToScreamingSnakeCaseTokenStream;
 
 pub use naming_conventions_common::DisplayToUpperCamelCaseStringified;
 pub use naming_conventions_common::DisplayToUpperCamelCaseTokenStream;
@@ -600,7 +600,7 @@ pub trait SwaggerUrlPathSelfQuotesStringified {
 
 impl<T> SwaggerUrlPathSelfQuotesStringified for T
 where
-    T: naming_conventions_common::ToSnakeCaseStringified,
+    T: naming_conventions_common::AsRefStrToSnakeCaseStringified,
 {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String {
         generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.new(),))
@@ -627,7 +627,7 @@ pub trait UrlHandleSelfSnakeCaseStringified {
 
 impl<T> UrlHandleSelfSnakeCaseStringified for T
 where
-    T: naming_conventions_common::ToSnakeCaseStringified,
+    T: naming_conventions_common::AsRefStrToSnakeCaseStringified,
 {
     fn url_handle_self_snake_case_stringified(&self, table_name_stringified: &str) -> std::string::String {
         format!("\"{{}}/{}/{}\"", table_name_stringified, self.new())
@@ -715,10 +715,10 @@ where
 //         Self(format!("generic_{value}_field_reader"))
 //     }
 //     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&value.to_string()))
+//         Self::wrap(&generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&value.to_string()))
 //     }
 //     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&{
+//         Self::wrap(&generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);
 //             tokens
@@ -834,7 +834,7 @@ where
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
-//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
+//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {
@@ -926,7 +926,7 @@ where
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
-//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::ToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
+//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {

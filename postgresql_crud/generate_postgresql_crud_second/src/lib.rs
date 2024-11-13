@@ -133,7 +133,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let ident_snake_case_stringified = naming_conventions::ToSnakeCaseStringified::new(&ident.to_string());
+    let ident_snake_case_stringified = naming_conventions::AsRefStrToSnakeCaseStringified::new(&ident.to_string());
     // #[derive(Debug, Clone)]
     // struct Generic<'a> {
     //     syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
@@ -228,7 +228,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                 //                         if let Some(value) = value.path.segments.first() {
     //                 //                             Ok(match case {
     //                 //                                 Case::UpperCamel => naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
-    //                 //                                 Case::Snake => naming_conventions::ToSnakeCaseStringified::new(&format!("{}_{postfix}", &value.ident)),
+    //                 //                                 Case::Snake => naming_conventions::AsRefStrToSnakeCaseStringified::new(&format!("{}_{postfix}", &value.ident)),
     //                 //                             })
     //                 //                         } else {
     //                 //                             return Err("value.path.segments.first() is None".to_string());
@@ -745,7 +745,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let ident_column_token_stream = {
             let variants = fields.iter().map(|element| {
                 let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                let field_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident.to_string());
+                let field_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident.to_string());
                 quote::quote! {
                     #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
                     #field_ident_upper_camel_case_token_stream 
@@ -877,7 +877,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //                         segments: {
     //                             let mut handle = syn::punctuated::Punctuated::new();
     //                             handle.push(syn::PathSegment {
-    //                                 ident: proc_macro2::Ident::new(&naming_conventions::ToSnakeCaseStringified::new(*&value), proc_macro2::Span::call_site()),
+    //                                 ident: proc_macro2::Ident::new(&naming_conventions::AsRefStrToSnakeCaseStringified::new(*&value), proc_macro2::Span::call_site()),
     //                                 arguments: syn::PathArguments::None,
     //                             });
     //                             handle
@@ -1753,7 +1753,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         let generics_fiter_checks_token_stream = syn_field_with_additional_info_fields_named
     //             .iter()
     //             .map(|element| {
-    //                 let field_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident.to_string());
+    //                 let field_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident.to_string());
     //                 if element.option_generic.is_some() {
     //                     let empty_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &empty_column_json_reader_syn_variant_wrapper, file!(), line!(), column!());
     //                     let not_unique_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream =

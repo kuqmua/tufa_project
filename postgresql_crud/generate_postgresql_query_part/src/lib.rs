@@ -621,7 +621,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 })
                                 .to_string();
                             let serialize_deserialize_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident_stringified);
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                             let type_path_field_reader_token_stream = naming_conventions::SelfFieldReaderUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                             quote::quote!{
                                 #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_token_stream, deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream))]
@@ -682,7 +682,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .unwrap_or_else(|| {
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 });
-                            let field_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident.to_string());
+                            let field_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident.to_string());
                             quote::quote!{
                                 #enum_ident_token_stream::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
                             }
@@ -1471,7 +1471,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                         });
                         let element_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident.to_string());
-                        let element_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&element_ident.to_string());
+                        let element_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&element_ident.to_string());
                         quote::quote! {
                             #[serde(rename(serialize = #element_ident_double_quotes_token_stream, deserialize = #element_ident_double_quotes_token_stream))]
                             #element_ident_upper_camel_case_token_stream
@@ -1490,7 +1490,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                         });
                         let element_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident.to_string());
-                        let element_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&element_ident.to_string());
+                        let element_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&element_ident.to_string());
                         quote::quote! {
                             Self::#element_ident_upper_camel_case_token_stream => #element_ident_double_quotes_token_stream.to_owned()
                         }
@@ -1514,7 +1514,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             });
                         let type_path_option_to_update_token_stream = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
-                        let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident.to_string());
+                        let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident.to_string());
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         quote::quote!{
                             #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
@@ -1539,7 +1539,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                             let element_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = naming_conventions::SelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                             quote::quote!{
                                 #variant_ident_upper_camel_case_token_stream {
@@ -1568,7 +1568,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 .unwrap_or_else(|| {
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 });
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident.to_string());
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident.to_string());
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#postgresql_crud_path_token_stream Value {
                                     value: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -1833,7 +1833,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
-                        let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                        let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
@@ -1948,7 +1948,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                     });
                                 let field_ident_stringified = field_ident.to_string();
-                                let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                                 let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                                 let not_unique_field_self_upper_camel_case_token_stream = naming_conventions::NotUniqueFieldSelfUpperCamelCase::from_dyn_quote_to_tokens(&field_ident);
                                 quote::quote!{
@@ -2099,7 +2099,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
-                        let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                        let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                         let element_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = naming_conventions::SelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                         quote::quote!{
                             #variant_ident_upper_camel_case_token_stream {
@@ -2128,7 +2128,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
-                        let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                        let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                         //todo maybe reuse?
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
@@ -2183,7 +2183,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                             })
                             .to_string();
-                        let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                        let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                         quote::quote!{
                             #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
@@ -2299,7 +2299,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         })
                         .to_string();
                     generate_acc_push_str_variant_logic_token_stream(
-                        &naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified),
+                        &naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified),
                         &generate_quotes::double_quotes_token_stream(&field_ident_stringified),
                         &if contains_id {
                             value_snake_case_double_quotes_token_stream.clone()
@@ -2806,7 +2806,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                         panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                     })
                                     .to_string();
-                                let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                                 let element_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case_token_stream = naming_conventions::SelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                                 quote::quote!{
                                     #variant_ident_upper_camel_case_token_stream {
@@ -2866,7 +2866,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                             let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                             let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
@@ -2930,7 +2930,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                             let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
@@ -3324,7 +3324,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
                             let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
                             let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
@@ -3447,7 +3447,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToUpperCamelCaseTokenStream::new_or_panic(&field_ident);
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident);
                             let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
                             quote::quote!{
                                 #ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
