@@ -1266,17 +1266,17 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let order_by_upper_camel_case = naming_conventions::OrderByUpperCamelCase;
     // let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     // let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
-    // let allow_methods_token_stream = {
-    //     let http_method_token_stream = quote::quote! {http::Method};
-    //     quote::quote! {
-    //         pub const ALLOW_METHODS: [#http_method_token_stream;4] = [
-    //             #http_method_token_stream::GET,
-    //             #http_method_token_stream::POST,
-    //             #http_method_token_stream::PATCH,
-    //             #http_method_token_stream::DELETE
-    //         ];//todo new axum version does not support it or something - find out
-    //     }
-    // };
+    let allow_methods_token_stream = {
+        let http_method_token_stream = quote::quote! {http::Method};
+        quote::quote! {
+            pub const ALLOW_METHODS: [#http_method_token_stream;4] = [
+                #http_method_token_stream::GET,
+                #http_method_token_stream::POST,
+                #http_method_token_stream::PATCH,
+                #http_method_token_stream::DELETE
+            ];//todo new axum version does not support it or something - find out
+        }
+    };
     // let ident_column_read_permission_token_stream = {
     //     let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
     //     let ident_column_read_permission_name_token_stream = {
@@ -4790,7 +4790,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
 
             // // #from_ident_for_ident_options_to_read_token_stream
             #column_token_stream
-            // #allow_methods_token_stream
+            #allow_methods_token_stream
             // #ident_column_read_permission_token_stream
             // #(#reexport_postgresql_sqlx_column_types_token_stream)*
             // #create_table_if_not_exists_function_token_stream
