@@ -8178,3 +8178,7 @@ pub trait GeneratePostgresqlQueryPartToRead {
     where
         Self: Sized;
 }
+
+pub trait CreateTableQueryPart {
+    fn create_table_query_part() -> impl std::fmt::Display;
+}

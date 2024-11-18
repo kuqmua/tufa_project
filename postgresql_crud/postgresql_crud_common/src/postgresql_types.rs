@@ -579,9 +579,11 @@ impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaul
     }
 }
 
-
-
-
+impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn create_table_query_part() -> impl std::fmt::Display {
+        "BOOL NOT NULL"
+    }
+}
 
 
 
@@ -625,5 +627,11 @@ pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn;
 impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![]
+    }
+}
+
+impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn {
+    fn create_table_query_part() -> impl std::fmt::Display {
+        "BIGSERIAL"
     }
 }

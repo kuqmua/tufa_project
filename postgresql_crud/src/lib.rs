@@ -572,3 +572,5 @@ pub use postgresql_crud_common::generate_postgresql_query_part::PostgresqlJsonTy
 pub use generate_postgresql_crud_second::GeneratePostgresqlCrudSecond;
 
 pub use postgresql_crud_common::postgresql_types;
+
+pub use postgresql_crud_common::CreateTableQueryPart;
