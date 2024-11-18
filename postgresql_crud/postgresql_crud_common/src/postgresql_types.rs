@@ -564,6 +564,36 @@ pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(StdPrimitiveBool);
 impl crate::CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    serde::Serialize,
+    serde::Deserialize,
+    PartialEq,
+)]
+pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullColumn;
+impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNullColumn {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![]
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
@@ -582,4 +612,18 @@ pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(StdPrimitiveI64);
 
 impl crate::CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
+}
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    serde::Serialize,
+    serde::Deserialize,
+    PartialEq,
+)]
+pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn;
+impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![]
+    }
 }

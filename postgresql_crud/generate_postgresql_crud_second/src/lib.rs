@@ -840,7 +840,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream
         }
     };
-    // // println!("{column_token_stream}");
+    // println!("{column_token_stream}");
     // let element_snake_case = naming_conventions::ElementSnakeCase;
     // let acc_snake_case = naming_conventions::AccSnakeCase;
     // let parameters_snake_case = naming_conventions::ParametersSnakeCase;
@@ -4802,7 +4802,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             #ident_options_token_stream
 
             // // #from_ident_for_ident_options_to_read_token_stream
-            #column_token_stream
+            // #column_token_stream
             // #allow_methods_token_stream
             // #ident_column_read_permission_token_stream
             // #(#reexport_postgresql_sqlx_column_types_token_stream)*
