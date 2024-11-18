@@ -1277,27 +1277,23 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             ];//todo new axum version does not support it or something - find out
         }
     };
-    // let ident_column_read_permission_token_stream = {
-    //     let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
-    //     let ident_column_read_permission_name_token_stream = {
-    //         let ident_column_read_permission_name = format!("{ident}{}{}{}", naming_conventions::ColumnUpperCamelCase, naming_conventions::ReadUpperCamelCase, naming_conventions::PermissionUpperCamelCase,);
-    //         ident_column_read_permission_name
-    //             .parse::<proc_macro2::TokenStream>()
-    //             .unwrap_or_else(|_| panic!("{ident_column_read_permission_name} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    //     };
-    //     let fields_permission_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element| {
-    //         let field_ident = &element.field_ident;
-    //         quote::quote! {
-    //             #field_ident: std::primitive::bool
-    //         }
-    //     });
-    //     quote::quote! {
-    //         #derive_debug_clone_copy
-    //         pub struct #ident_column_read_permission_name_token_stream {
-    //             #(#fields_permission_token_stream),*
-    //         }
-    //     }
-    // };
+    let ident_column_read_permission_token_stream = {
+        let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
+        let ident_column_read_permission_upper_camel_case = naming_conventions::SelfColumnReadPermissionUpperCamelCase::from_dyn_std_fmt_display(&ident);
+        let fields_permission_token_stream = fields.iter().map(|element| {
+            let field_ident = &element.field_ident;
+            //todo permissions for json 
+            quote::quote! {
+                #field_ident: std::primitive::bool
+            }
+        });
+        quote::quote! {
+            #derive_debug_clone_copy
+            pub struct #ident_column_read_permission_upper_camel_case {
+                #(#fields_permission_token_stream),*
+            }
+        }
+    };
     // let reexport_postgresql_sqlx_column_types_token_stream = syn_field_with_additional_info_fields_named.iter().map(|element| {
     //     let inner_type_token_stream = &element.inner_type_token_stream;
     //     quote::quote! {pub use #inner_type_token_stream;}
@@ -4791,7 +4787,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             // // #from_ident_for_ident_options_to_read_token_stream
             #column_token_stream
             #allow_methods_token_stream
-            // #ident_column_read_permission_token_stream
+            #ident_column_read_permission_token_stream
             // #(#reexport_postgresql_sqlx_column_types_token_stream)*
             // #create_table_if_not_exists_function_token_stream
 
