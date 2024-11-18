@@ -313,21 +313,3 @@ pub struct Example {
 //     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 // }
 /////////////////////////////////////////
-
-
-pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
-    let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
-    println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
-    let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(pool).await.unwrap();
-    let create_table_if_not_exists_query_stringified = format!(
-        "CREATE TABLE IF NOT EXISTS jsongeneric 
-        (
-            std_primitive_bool_as_postgresql_bool_not_null {},
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key {} PRIMARY KEY,
-        )",
-        <postgresql_crud::postgresql_types::StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn as postgresql_crud::CreateTableQueryPart>::create_table_query_part(),
-        <postgresql_crud::postgresql_types::StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn as postgresql_crud::CreateTableQueryPart>::create_table_query_part(),
-    );
-    println!("{create_table_if_not_exists_query_stringified}");
-    let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(pool).await.unwrap();
-}

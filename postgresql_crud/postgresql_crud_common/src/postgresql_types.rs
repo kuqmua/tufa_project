@@ -630,7 +630,7 @@ impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaul
     }
 }
 
-impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn {
+impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
         "BIGSERIAL"
     }

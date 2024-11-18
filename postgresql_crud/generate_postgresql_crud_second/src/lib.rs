@@ -1302,47 +1302,43 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let derive_debug = token_patterns::DeriveDebug;
     // //todo replace it with postgresql_crud::Value
     let create_table_if_not_exists_function_token_stream = {
-        // let pool_snake_case = naming_conventions::PoolSnakeCase;
-        // let create_table_if_not_exists_double_quotes_token_stream = {
-        //     let acc = {
-        //         let mut acc = fields.iter().fold(std::string::String::default(), |mut acc, element| {
-        //             acc.push_str(&format!("{} {},", &element.field_ident, postgresql_crud_common::PostgresqlTypeWithMetadata::from(&element.rust_sqlx_map_to_postgres_type_variant).postgresql_naming()));
-        //             acc
-        //         });
-        //         fields.iter().for_each(|element| {
-        //             if element.option_generic.is_some() {
-        //                 acc.push_str(&format!(" check (jsonb_matches_schema('{{}}', {})),", &element.field_ident,));
-        //             }
-        //         });
-        //         let _ = acc.pop();
-        //         acc
-        //     };
-        //     generate_quotes::double_quotes_token_stream(&format!("CREATE TABLE IF NOT EXISTS {ident_snake_case_stringified} ({acc})"))
-        // };
-        // let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = fields.iter().fold(vec![], |mut acc, element| {
-        //     if let Some(value) = &element.option_generic {
-        //         let generic_ident_token_stream = {
-        //             let value = &value.upper_camel_case_stringified;
-        //             value
-        //                 .parse::<proc_macro2::TokenStream>()
-        //                 .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //         };
-        //         acc.push(quote::quote! {serde_json::to_string(&schemars::schema_for!(#generic_ident_token_stream)).unwrap()});
-        //     }
-        //     acc
-        // });
+        let pool_snake_case = naming_conventions::PoolSnakeCase;
+        let create_table_if_not_exists_double_quotes_token_stream = {
+            let acc = {
+                let generate_format_handle_stringified = |ident: &syn::Ident, is_primary_key: std::primitive::bool|{
+                    let maybe_primary_key = if is_primary_key {
+                        " PRIMARY KEY"//todo maybe add screaming snake case add reuse PRIMARY KEY naming?
+                    }
+                    else {
+                        ""
+                    };
+                    format!("{} {{}}{maybe_primary_key},", &ident)
+                };
+                let mut acc = generate_format_handle_stringified(&primary_key_field.field_ident, true);
+                fields_without_primary_key.iter().for_each(|element| {
+                    acc.push_str(&generate_format_handle_stringified(&element.field_ident, false));
+                });
+                let _ = acc.pop();
+                acc
+            };
+            generate_quotes::double_quotes_token_stream(&format!("CREATE TABLE IF NOT EXISTS {ident_snake_case_stringified} ({acc})"))
+        };
+        let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = fields.iter().map(|element| {
+            let element_type = &element.syn_field.ty;
+            quote::quote!{<#element_type as postgresql_crud::CreateTableQueryPart>::create_table_query_part()}
+        });
         quote::quote! {
-            // pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
-            //     let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
-            //     println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
-            //     let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await.unwrap();
-            //     let create_table_if_not_exists_query_stringified = format!(
-            //         #create_table_if_not_exists_double_quotes_token_stream,
-            //         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
-            //     );
-            //     println!("{create_table_if_not_exists_query_stringified}");
-            //     let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(#pool_snake_case).await.unwrap();
-            // }
+            pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
+                let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
+                println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
+                let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await.unwrap();
+                let create_table_if_not_exists_query_stringified = format!(
+                    #create_table_if_not_exists_double_quotes_token_stream,
+                    #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
+                );
+                println!("{create_table_if_not_exists_query_stringified}");
+                let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(#pool_snake_case).await.unwrap();
+            }
         }
     };
     // let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
@@ -4778,7 +4774,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // //     }
     // // };
     // // println!("{emulate_crud_api_usage_test_token_stream}");
-    // // println!("{create_table_if_not_exists_function_token_stream}");
+    // println!("{create_table_if_not_exists_function_token_stream}");
     let common_token_stream = {
         quote::quote! {
             #impl_ident_table_name_token_stream
@@ -4789,7 +4785,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             #allow_methods_token_stream
             #ident_column_read_permission_token_stream
             // #(#reexport_postgresql_sqlx_column_types_token_stream)*
-            // #create_table_if_not_exists_function_token_stream
+            #create_table_if_not_exists_function_token_stream
 
             // #[cfg(test)]
             // mod test_try_create_many {
