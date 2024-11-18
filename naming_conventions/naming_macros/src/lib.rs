@@ -366,7 +366,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(input: proc_ma
         .map(|variant| match &variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_snake_case_stringified = <dyn naming_conventions_common::ToTokensToSnakeCaseStringified>::new(&variant_ident);
+                let variant_ident_snake_case_stringified = naming_conventions_common::ToTokensToSnakeCaseStringified::new(&variant_ident);
                 let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
