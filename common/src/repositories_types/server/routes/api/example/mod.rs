@@ -313,34 +313,3 @@ pub struct Example {
 //     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 // }
 /////////////////////////////////////////
-
-
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Clone)]
-pub enum ExampleColumn {
-    #[serde(rename(serialize = "std_primitive_bool_as_postgresql_bool_not_null", deserialize = "std_primitive_bool_as_postgresql_bool_not_null"))]
-    StdPrimitiveBoolAsPostgresqlBoolNotNull(std::vec::Vec<postgresql_crud::postgresql_types::StdPrimitiveBoolAsPostgresqlBoolNotNullColumn>),
-    #[serde(rename(serialize = "std_primitive_i64_as_postgresql_big_serial_not_null", deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null"))]
-    StdPrimitiveI64AsPostgresqlBigSerialNotNull(std::vec::Vec<postgresql_crud::postgresql_types::StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn>),
-}
-impl std::fmt::Display for ExampleColumn {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e| format!("cannot serialize into json: {e:?}")))
-    }
-}
-impl error_occurence_lib::ToStdStringString for ExampleColumn {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
-impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ExampleColumn {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![
-            ExampleColumn::StdPrimitiveBoolAsPostgresqlBoolNotNull(
-                postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-            ),
-            ExampleColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNull(
-                postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-            )
-        ]
-    }
-}
