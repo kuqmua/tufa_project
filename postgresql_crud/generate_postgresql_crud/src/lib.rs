@@ -1885,7 +1885,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         })
     };
     let generate_sqlx_row_try_get_primary_key_token_stream = |ok_token_stream: &dyn quote::ToTokens, err_token_stream: &dyn quote::ToTokens| {
-        let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident.to_string());
+        let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
         quote::quote! {
             match #sqlx_row::try_get::<#primary_key_original_type_token_stream, #ref_std_primitive_str>(&#value_snake_case, #primary_key_field_ident_double_quotes_token_stream) {
                 Ok(#value_snake_case) => #ok_token_stream,

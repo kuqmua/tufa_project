@@ -301,11 +301,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
         generate_quotes::double_quotes_token_stream(
             &value.ident
-                .as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
-                })
-                .to_string()
+            .as_ref()
+            .unwrap_or_else(|| {
+                panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
+            })
         )
     };
     let postgresql_json_type_upper_camel_case = naming_conventions::PostgresqlJsonTypeUpperCamelCase;
@@ -613,15 +612,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         additional_content_token_stream: &dyn quote::ToTokens,
                     |{
                         let variants_token_stream = vec_syn_field.iter().map(|element| {
-                            let field_ident_stringified = element
+                            let field_ident = element
                                 .ident
                                 .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
-                                })
-                                .to_string();
-                            let serialize_deserialize_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident_stringified);
-                            let variant_ident_upper_camel_case_token_stream = naming_conventions::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                });
+                            let serialize_deserialize_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                            let variant_ident_upper_camel_case_token_stream = naming_conventions::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&field_ident);
                             let type_path_field_reader_token_stream = naming_conventions::SelfFieldReaderUpperCamelCase::from_syn_type_path_last_segment(&element.ty);
                             quote::quote!{
                                 #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_token_stream, deserialize = #serialize_deserialize_field_ident_double_quotes_token_stream))]
@@ -945,11 +943,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let index = generate_index(index);
                                 let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                                     &element.ident
-                                        .as_ref()
-                                        .unwrap_or_else(|| {
-                                            panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
-                                        })
-                                        .to_string()
+                                    .as_ref()
+                                    .unwrap_or_else(|| {
+                                        panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
+                                    })
                                 );
                                 generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
                                     &field_name_double_quotes_token_stream,
