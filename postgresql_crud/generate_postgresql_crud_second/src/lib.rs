@@ -1374,7 +1374,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let returning_primary_key_stringified = format!(" {returning_snake_case} {}", &primary_key_field.field_ident);
     // let returning_primary_key_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&returning_primary_key_stringified);
     // let postgresql_crud_snake_case = naming_conventions::PostgresqlCrudSnakeCase;
-    // let std_string_string_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"]);
+    let std_string_string_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"]);
     let checked_add_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming_conventions::CheckedAddUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
@@ -1489,7 +1489,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let in_snake_case = naming_conventions::InSnakeCase;
     // let unnest_snake_case = naming_conventions::UnnestSnakeCase;
     // let response_snake_case = naming_conventions::ResponseSnakeCase;
-    // let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
+    let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
     let body_snake_case = naming_conventions::BodySnakeCase;
     // let limit_and_offset_type_token_stream = {
     //     let value = postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI64.get_inner_type_stringified("");
@@ -1528,71 +1528,71 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&json_ident_column_upper_camel_case_stringified]),
     //     )],
     // );
-    // let serde_json_to_string_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::SerdeJsonToStringUpperCamelCase,
-    //     None,
-    //     vec![(
-    //         macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //         &naming_conventions::SerdeJsonToStringSnakeCase,
-    //         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
-    //     )],
-    // );
-    // let failed_to_get_response_text_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::FailedToGetResponseTextUpperCamelCase,
-    //     Some(macros_helpers::status_code::StatusCode::BadRequest400),
-    //     vec![
-    //         (
-    //             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //             &status_code_snake_case,
-    //             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"]),
-    //         ),
-    //         (
-    //             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //             &naming_conventions::HeadersSnakeCase,
-    //             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
-    //         ),
-    //         (
-    //             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //             &naming_conventions::ReqwestSnakeCase,
-    //             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
-    //         ),
-    //     ],
-    // );
-    // let deserialize_response_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::DeserializeResponseUpperCamelCase,
-    //     None,
-    //     vec![
-    //         (
-    //             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //             &status_code_snake_case,
-    //             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"]),
-    //         ),
-    //         (
-    //             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //             &naming_conventions::HeadersSnakeCase,
-    //             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
-    //         ),
-    //         (
-    //             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-    //             &naming_conventions::ResponseTextSnakeCase,
-    //             std_string_string_syn_punctuated_punctuated.clone(),
-    //         ),
-    //         (
-    //             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //             &naming_conventions::SerdeSnakeCase,
-    //             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
-    //         ),
-    //     ],
-    // );
-    // let reqwest_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::ReqwestUpperCamelCase,
-    //     None,
-    //     vec![(
-    //         macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //         &naming_conventions::ReqwestSnakeCase,
-    //         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
-    //     )],
-    // );
+    let serde_json_to_string_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::SerdeJsonToStringUpperCamelCase,
+        None,
+        vec![(
+            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+            &naming_conventions::SerdeJsonToStringSnakeCase,
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
+        )],
+    );
+    let failed_to_get_response_text_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::FailedToGetResponseTextUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::BadRequest400),
+        vec![
+            (
+                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &status_code_snake_case,
+                macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"]),
+            ),
+            (
+                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::HeadersSnakeCase,
+                macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
+            ),
+            (
+                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::ReqwestSnakeCase,
+                macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
+            ),
+        ],
+    );
+    let deserialize_response_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::DeserializeResponseUpperCamelCase,
+        None,
+        vec![
+            (
+                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &status_code_snake_case,
+                macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"]),
+            ),
+            (
+                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::HeadersSnakeCase,
+                macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
+            ),
+            (
+                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                &naming_conventions::ResponseTextSnakeCase,
+                std_string_string_syn_punctuated_punctuated.clone(),
+            ),
+            (
+                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &naming_conventions::SerdeSnakeCase,
+                macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
+            ),
+        ],
+    );
+    let reqwest_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::ReqwestUpperCamelCase,
+        None,
+        vec![(
+            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+            &naming_conventions::ReqwestSnakeCase,
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
+        )],
+    );
     let check_body_size_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming_conventions::CheckBodySizeUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
@@ -1663,14 +1663,14 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         value
     //     })],
     // );
-    // let common_http_request_syn_variants = {
-    //     vec![
-    //         serde_json_to_string_syn_variant_wrapper.get_syn_variant().clone(),
-    //         failed_to_get_response_text_syn_variant_wrapper.get_syn_variant().clone(),
-    //         deserialize_response_syn_variant_wrapper.get_syn_variant().clone(),
-    //         reqwest_syn_variant_wrapper.get_syn_variant().clone(),
-    //     ]
-    // };
+    let common_http_request_syn_variants = {
+        vec![
+            serde_json_to_string_syn_variant_wrapper.get_syn_variant().clone(),
+            failed_to_get_response_text_syn_variant_wrapper.get_syn_variant().clone(),
+            deserialize_response_syn_variant_wrapper.get_syn_variant().clone(),
+            reqwest_syn_variant_wrapper.get_syn_variant().clone(),
+        ]
+    };
     let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute| -> std::vec::Vec<syn::Variant> {
         let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
         let common_additional_error_variants_attribute_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &generate_postgresql_crud_attribute.generate_path_to_attribute());
@@ -2160,7 +2160,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             #try_operation_route_logic_error_named_token_stream
         }
     };
-    // let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
+    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
     let generate_parameters_pattern_token_stream = |operation: &Operation, payload_token_stream: proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let parameters_token_stream = {
             let operation_parameters_upper_camel_case = naming_conventions::SelfParametersUpperCamelCase::from_dyn_std_fmt_display(operation);
@@ -2220,37 +2220,37 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         }
         type_variants_from_request_response_syn_variants
     };
-    // let generate_try_operation_error_named_token_stream = |operation: &Operation, common_http_request_syn_variants: &std::vec::Vec<syn::Variant>| -> proc_macro2::TokenStream {
-    //     let try_operation_error_named_upper_camel_case = naming_conventions::TrySelfErrorNamedUpperCamelCase::from_dyn_std_fmt_display(operation);
-    //     let syn_variants = {
-    //         let mut value = std::vec::Vec::with_capacity(common_http_request_syn_variants.len() + 1);
-    //         for element in common_http_request_syn_variants {
-    //             value.push(element.clone());
-    //         }
-    //         value.push({
-    //             let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_std_fmt_display(operation);
-    //             new_syn_variant_wrapper(
-    //                 &try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case,
-    //                 None,
-    //                 vec![(
-    //                     macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //                     &naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_dyn_std_fmt_display(operation),
-    //                     macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case.to_string()]),
-    //                 )],
-    //             )
-    //             .get_syn_variant()
-    //             .clone()
-    //         });
-    //         value
-    //     };
-    //     let variants_token_stream = syn_variants.iter().map(generate_error_occurence_variant_token_stream);
-    //     quote::quote! {
-    //         #derive_debug_thiserror_error_occurence
-    //         pub enum #try_operation_error_named_upper_camel_case {
-    //             #(#variants_token_stream),*
-    //         }
-    //     }
-    // };
+    let generate_try_operation_error_named_token_stream = |operation: &Operation, common_http_request_syn_variants: &std::vec::Vec<syn::Variant>| -> proc_macro2::TokenStream {
+        let try_operation_error_named_upper_camel_case = naming_conventions::TrySelfErrorNamedUpperCamelCase::from_dyn_std_fmt_display(operation);
+        let syn_variants = {
+            let mut value = std::vec::Vec::with_capacity(common_http_request_syn_variants.len() + 1);
+            for element in common_http_request_syn_variants {
+                value.push(element.clone());
+            }
+            value.push({
+                let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case = naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCase::from_dyn_std_fmt_display(operation);
+                new_syn_variant_wrapper(
+                    &try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case,
+                    None,
+                    vec![(
+                        macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        &naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_dyn_std_fmt_display(operation),
+                        macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case.to_string()]),
+                    )],
+                )
+                .get_syn_variant()
+                .clone()
+            });
+            value
+        };
+        let variants_token_stream = syn_variants.iter().map(generate_error_occurence_variant_token_stream);
+        quote::quote! {
+            #derive_debug_thiserror_error_occurence
+            pub enum #try_operation_error_named_upper_camel_case {
+                #(#variants_token_stream),*
+            }
+        }
+    };
     let generate_try_operation_route_logic_token_stream = |operation: &Operation,
         common_additional_route_logic_token_stream: &dyn quote::ToTokens,
         parameters_logic_token_stream: &dyn quote::ToTokens,
@@ -3119,56 +3119,56 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             }
         };
         // println!("{try_operation_route_logic_token_stream}");
-        // let (try_operation_token_stream, try_operation_test_token_stream) = {
-        //     let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
-        //     // println!("{try_operation_error_named_token_stream}");
-        //     let try_operation_token_stream = generate_try_operation_token_stream(
-        //         &operation,
-        //         &type_variants_from_request_response_syn_variants,
-        //         &primary_key_inner_type_token_stream,
-        //         &proc_macro2::TokenStream::new(),
-        //         &quote::quote! {#primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case)},
-        //     );
-        //     // let try_operation_test_token_stream = {
-        //     //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-        //     //         let field_ident = &element.field_ident;
-        //     //         let field_type = &element.field.ty;
-        //     //         quote::quote!{
-        //     //             #field_ident: #field_type::default()
-        //     //         }
-        //     //     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        //     //     let test_content_token_stream = quote::quote! {
-        //     //         let #primary_key_token_stream = match #try_operation_snake_case_token_stream(
-        //     //             #reference_api_location_test_token_stream,
-        //     //             #operation_parameters_upper_camel_case_token_stream {
-        //     //                 #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream {
-        //     //                     #(#element_fields_initialization_token_stream),*
-        //     //                 }
-        //     //             },
-        //     //         )
-        //     //         .await
-        //     //         {
-        //     //             Ok(value) => {
-        //     //                 println!("{value:#?}");
-        //     //                 value
-        //     //             },
-        //     //             Err(#error_snake_case) => panic!(
-        //     //                 "{}",
-        //     //                 #error_snake_case
-        //     //             )
-        //     //         };
-        //     //     };
-        //     //     naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
-        //     // };
-        //     (
-        //         quote::quote! {
-        //             #try_operation_error_named_token_stream
-        //             #try_operation_token_stream
-        //         },
-        //         quote::quote! {}, // try_operation_test_token_stream,
-        //     )
-        // };
-        // // println!("{try_operation_token_stream}");
+        let (try_operation_token_stream, try_operation_test_token_stream) = {
+            let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
+            // println!("{try_operation_error_named_token_stream}");
+            // let try_operation_token_stream = generate_try_operation_token_stream(
+            //     &operation,
+            //     &type_variants_from_request_response_syn_variants,
+            //     &primary_key_inner_type_token_stream,
+            //     &proc_macro2::TokenStream::new(),
+            //     &quote::quote! {#primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case)},
+            // );
+            // let try_operation_test_token_stream = {
+            //     let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+            //         let field_ident = &element.field_ident;
+            //         let field_type = &element.field.ty;
+            //         quote::quote!{
+            //             #field_ident: #field_type::default()
+            //         }
+            //     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+            //     let test_content_token_stream = quote::quote! {
+            //         let #primary_key_token_stream = match #try_operation_snake_case_token_stream(
+            //             #reference_api_location_test_token_stream,
+            //             #operation_parameters_upper_camel_case_token_stream {
+            //                 #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream {
+            //                     #(#element_fields_initialization_token_stream),*
+            //                 }
+            //             },
+            //         )
+            //         .await
+            //         {
+            //             Ok(value) => {
+            //                 println!("{value:#?}");
+            //                 value
+            //             },
+            //             Err(#error_snake_case) => panic!(
+            //                 "{}",
+            //                 #error_snake_case
+            //             )
+            //         };
+            //     };
+            //     naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
+            // };
+            (
+                quote::quote! {
+                    #try_operation_error_named_token_stream
+                    // #try_operation_token_stream
+                },
+                quote::quote! {}, // try_operation_test_token_stream,
+            )
+        };
+        // println!("{try_operation_token_stream}");
         // let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream =
         //     wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
         //         &naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(&operation),
@@ -3179,7 +3179,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             quote::quote! {
                 #parameters_token_stream
                 #try_operation_route_logic_token_stream
-                // #try_operation_token_stream
+                #try_operation_token_stream
                 // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
                 // #operation_payload_example_route_logic_token_stream
             },
