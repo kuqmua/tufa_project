@@ -2674,30 +2674,30 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         }
     //     }
     // };
-    // let wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream = |
-    //     for_token_stream: &dyn quote::ToTokens,
-    //     content_token_stream: &dyn quote::ToTokens
-    // | {
-    //     quote::quote! {
-    //         impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #for_token_stream {
-    //             fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-    //                 Self #content_token_stream
-    //             }
-    //         }
-    //     }
-    // };
-    // let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-    //     let value = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
-    //         let field_ident = &element.field.ident;
-    //         quote::quote! {
-    //             #field_ident: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-    //         }
-    //     });
-    //     quote::quote! {#(#value),*}
-    // };
-    // let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream = quote::quote! {
-    //     {#fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
-    // };
+    let wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream = |
+        for_token_stream: &dyn quote::ToTokens,
+        content_token_stream: &dyn quote::ToTokens
+    | {
+        quote::quote! {
+            impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #for_token_stream {
+                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                    Self #content_token_stream
+                }
+            }
+        }
+    };
+    let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+        let value = fields_without_primary_key.iter().map(|element| {
+            let field_ident = &element.field_ident;
+            quote::quote! {
+                #field_ident: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+            }
+        });
+        quote::quote! {#(#value),*}
+    };
+    let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream = quote::quote! {
+        {#fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
+    };
     // // let generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().fold(vec![], |mut acc, element| {
     // //     if let Some(value) = &element.option_generic {
     // //         acc.push(new_syn_variant_wrapper(
@@ -3171,18 +3171,19 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             )
         };
         // println!("{try_operation_token_stream}");
-        // let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream =
-        //     wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
-        //         &naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(&operation),
-        //         &fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream,
-        //     );
+        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream =
+            wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
+                &naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(&operation),
+                &fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream,
+            );
+        // println!("{impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream}");
         // let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         (
             quote::quote! {
                 #parameters_token_stream
                 #try_operation_route_logic_token_stream
                 #try_operation_token_stream
-                // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
+                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
                 // #operation_payload_example_route_logic_token_stream
             },
             // try_operation_test_token_stream,
