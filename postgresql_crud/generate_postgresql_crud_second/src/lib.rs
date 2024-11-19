@@ -1340,10 +1340,16 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             };
             generate_quotes::double_quotes_token_stream(&format!("CREATE TABLE IF NOT EXISTS {ident_snake_case_stringified} ({acc})"))
         };
-        let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = fields.iter().map(|element| {
-            let element_type = &element.syn_field.ty;
-            quote::quote!{<#element_type as postgresql_crud::CreateTableQueryPart>::create_table_query_part()}
-        });
+        let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = {
+            let generate_field_type_as_postgresql_crud_create_table_query_part_create_table_query_part_token_stream = |value: &syn::Type|{
+                quote::quote!{<#value as postgresql_crud::CreateTableQueryPart>::create_table_query_part()}
+            };
+            let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_query_part_create_table_query_part_token_stream(&primary_key_field.syn_field.ty)];
+            fields_without_primary_key.iter().for_each(|element|{
+                acc.push(generate_field_type_as_postgresql_crud_create_table_query_part_create_table_query_part_token_stream(&element.syn_field.ty));
+            });
+            acc
+        };
         quote::quote! {
             pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
                 let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
@@ -4839,7 +4845,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // //     }
     // // };
     // // println!("{emulate_crud_api_usage_test_token_stream}");
-    // println!("{create_table_if_not_exists_function_token_stream}");
     let common_token_stream = {
         quote::quote! {
             #impl_ident_table_name_token_stream
