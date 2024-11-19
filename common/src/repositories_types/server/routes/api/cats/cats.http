@@ -1022,3 +1022,80 @@ GET http://127.0.0.1:8080/middleware_message_example HTTP/1.1
 
 GET http://127.0.0.1:8080/read_middleware_custom_header HTTP/1.1
 commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
+
+
+######################################################
+
+POST http://127.0.0.1:8080/example/create_many HTTP/1.1
+content-type: application/json
+commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
+
+###
+ 
+GET http://127.0.0.1:8080/example/create_many_payload_example HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+### 
+
+POST http://127.0.0.1:8080/example/create_one HTTP/1.1
+content-type: application/json
+commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
+
+{
+  "std_primitive_bool_as_postgresql_bool_not_null": false
+}
+
+###
+ 
+GET http://127.0.0.1:8080/example/create_one_payload_example HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+###
+
+POST http://127.0.0.1:8080/example/read_many HTTP/1.1
+content-type: application/json
+commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
+
+### todo name and color must be  arrays       
+
+POST http://127.0.0.1:8080/example/read_one HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+###
+
+GET http://127.0.0.1:8080/example/read_one_payload_example HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+### fix this  
+ 
+PATCH http://127.0.0.1:8080/example/update_many HTTP/1.1 
+content-type: application/json
+commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
+
+### 
+
+PATCH http://127.0.0.1:8080/example/update_one HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+###
+ 
+GET http://127.0.0.1:8080/example/update_one_payload_example HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+####"^first_test_name_create$"  
+
+DELETE http://127.0.0.1:8080/example/delete_many HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+###
+
+DELETE http://127.0.0.1:8080/example/delete_one HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
