@@ -554,7 +554,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //     }
     //     contains_generic_json
     // };
-    // let postgresql_crud_snake_case_stringified = &naming_conventions::PostgresqlCrudSnakeCase.to_string();
+    let postgresql_crud_snake_case_stringified = &naming_conventions::PostgresqlCrudSnakeCase.to_string();
     // let primary_key_syn_field_with_additional_info = {
     //     let mut primary_key_field_option = None;
     //     for element in &syn_field_with_additional_info_fields_named {
@@ -833,88 +833,88 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let parameters_snake_case = naming_conventions::ParametersSnakeCase;
     let payload_snake_case = naming_conventions::PayloadSnakeCase;
     // let select_snake_case = naming_conventions::SelectSnakeCase;
-    // #[derive(Debug)]
-    // struct SynVariantWrapper {
-    //     variant: syn::Variant,
-    //     status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
-    // }
-    // impl SynVariantWrapper {
-    //     fn get_syn_variant(&self) -> &syn::Variant {
-    //         &self.variant
-    //     }
-    //     fn get_option_status_code(&self) -> &std::option::Option<macros_helpers::status_code::StatusCode> {
-    //         &self.status_code
-    //     }
-    // }
-    // let new_syn_variant_wrapper = |
-    //     variant_name: &dyn std::fmt::Display,
-    //     status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
-    //     fields: std::vec::Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute,&dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>
-    // | -> SynVariantWrapper {
-    //     SynVariantWrapper {
-    //         variant: syn::Variant {
-    //             attrs: match &status_code {
-    //                 Some(value) => vec![syn::Attribute {
-    //                     pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
-    //                     style: syn::AttrStyle::Outer,
-    //                     bracket_token: syn::token::Bracket::default(),
-    //                     meta: syn::Meta::Path(syn::Path {
-    //                         leading_colon: None,
-    //                         segments: {
-    //                             let mut handle = syn::punctuated::Punctuated::new();
-    //                             handle.push(syn::PathSegment {
-    //                                 ident: proc_macro2::Ident::new(&naming_conventions::AsRefStrToSnakeCaseStringified::new(*&value), proc_macro2::Span::call_site()),
-    //                                 arguments: syn::PathArguments::None,
-    //                             });
-    //                             handle
-    //                         },
-    //                     }),
-    //                 }],
-    //                 None => vec![],
-    //             },
-    //             ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
-    //             fields: syn::Fields::Named(syn::FieldsNamed {
-    //                 brace_token: syn::token::Brace::default(),
-    //                 named: {
-    //                     let mut handle = fields.into_iter().fold(syn::punctuated::Punctuated::new(), |mut acc, element| {
-    //                         acc.push_value(syn::Field {
-    //                             attrs: vec![syn::Attribute {
-    //                                 pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
-    //                                 style: syn::AttrStyle::Outer,
-    //                                 bracket_token: syn::token::Bracket::default(),
-    //                                 meta: syn::Meta::Path(syn::Path {
-    //                                     leading_colon: None,
-    //                                     segments: {
-    //                                         let mut handle = syn::punctuated::Punctuated::new();
-    //                                         handle.push(syn::PathSegment {
-    //                                             ident: proc_macro2::Ident::new(macros_helpers::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&element.0), proc_macro2::Span::call_site()),
-    //                                             arguments: syn::PathArguments::None,
-    //                                         });
-    //                                         handle
-    //                                     },
-    //                                 }),
-    //                             }],
-    //                             vis: syn::Visibility::Inherited,
-    //                             mutability: syn::FieldMutability::None,
-    //                             ident: Some(syn::Ident::new(&element.1.to_string(), proc_macro2::Span::call_site())),
-    //                             colon_token: Some(syn::token::Colon { spans: [proc_macro2::Span::call_site()] }),
-    //                             ty: syn::Type::Path(syn::TypePath {
-    //                                 qself: None,
-    //                                 path: syn::Path { leading_colon: None, segments: element.2 },
-    //                             }),
-    //                         });
-    //                         acc.push_punct(syn::token::Comma { spans: [proc_macro2::Span::call_site()] });
-    //                         acc
-    //                     });
-    //                     handle.push_value(macros_helpers::code_occurence_syn_field::code_occurence_syn_field());
-    //                     handle
-    //                 },
-    //             }),
-    //             discriminant: None,
-    //         },
-    //         status_code,
-    //     }
-    // };
+    #[derive(Debug)]
+    struct SynVariantWrapper {
+        variant: syn::Variant,
+        status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
+    }
+    impl SynVariantWrapper {
+        fn get_syn_variant(&self) -> &syn::Variant {
+            &self.variant
+        }
+        fn get_option_status_code(&self) -> &std::option::Option<macros_helpers::status_code::StatusCode> {
+            &self.status_code
+        }
+    }
+    let new_syn_variant_wrapper = |
+        variant_name: &dyn std::fmt::Display,
+        status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
+        fields: std::vec::Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute,&dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>
+    | -> SynVariantWrapper {
+        SynVariantWrapper {
+            variant: syn::Variant {
+                attrs: match &status_code {
+                    Some(value) => vec![syn::Attribute {
+                        pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
+                        style: syn::AttrStyle::Outer,
+                        bracket_token: syn::token::Bracket::default(),
+                        meta: syn::Meta::Path(syn::Path {
+                            leading_colon: None,
+                            segments: {
+                                let mut handle = syn::punctuated::Punctuated::new();
+                                handle.push(syn::PathSegment {
+                                    ident: proc_macro2::Ident::new(&naming_conventions::AsRefStrToSnakeCaseStringified::new(*&value), proc_macro2::Span::call_site()),
+                                    arguments: syn::PathArguments::None,
+                                });
+                                handle
+                            },
+                        }),
+                    }],
+                    None => vec![],
+                },
+                ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
+                fields: syn::Fields::Named(syn::FieldsNamed {
+                    brace_token: syn::token::Brace::default(),
+                    named: {
+                        let mut handle = fields.into_iter().fold(syn::punctuated::Punctuated::new(), |mut acc, element| {
+                            acc.push_value(syn::Field {
+                                attrs: vec![syn::Attribute {
+                                    pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
+                                    style: syn::AttrStyle::Outer,
+                                    bracket_token: syn::token::Bracket::default(),
+                                    meta: syn::Meta::Path(syn::Path {
+                                        leading_colon: None,
+                                        segments: {
+                                            let mut handle = syn::punctuated::Punctuated::new();
+                                            handle.push(syn::PathSegment {
+                                                ident: proc_macro2::Ident::new(macros_helpers::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&element.0), proc_macro2::Span::call_site()),
+                                                arguments: syn::PathArguments::None,
+                                            });
+                                            handle
+                                        },
+                                    }),
+                                }],
+                                vis: syn::Visibility::Inherited,
+                                mutability: syn::FieldMutability::None,
+                                ident: Some(syn::Ident::new(&element.1.to_string(), proc_macro2::Span::call_site())),
+                                colon_token: Some(syn::token::Colon { spans: [proc_macro2::Span::call_site()] }),
+                                ty: syn::Type::Path(syn::TypePath {
+                                    qself: None,
+                                    path: syn::Path { leading_colon: None, segments: element.2 },
+                                }),
+                            });
+                            acc.push_punct(syn::token::Comma { spans: [proc_macro2::Span::call_site()] });
+                            acc
+                        });
+                        handle.push_value(macros_helpers::code_occurence_syn_field::code_occurence_syn_field());
+                        handle
+                    },
+                }),
+                discriminant: None,
+            },
+            status_code,
+        }
+    };
     // let generate_initialization_token_stream = |syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: std::primitive::u32, column: std::primitive::u32| -> proc_macro2::TokenStream {
     //     let variant_ident = &syn_variant_wrapper.variant.ident;
     //     let fields_token_stream = if let syn::Fields::Named(value) = &syn_variant_wrapper.variant.fields {
@@ -1022,12 +1022,12 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         }
     //     }
     // };
-    // let sqlx_error_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
-    // let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::PostgresqlUpperCamelCase,
-    //     Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-    //     vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming_conventions::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
-    // );
+    let sqlx_error_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
+    let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::PostgresqlUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::InternalServerError500),
+        vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming_conventions::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
+    );
     // //todo find out how to declare lifetime on closures
     // //todo refactor as &[&'a SynRust...]
     // let generate_self_fields_token_stream = |fields: &[&syn::Field]| -> std::vec::Vec<syn::Ident> {
@@ -1036,52 +1036,52 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         .map(|field| field.ident.as_ref().unwrap_or_else(|| panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE)).clone())
     //         .collect()
     // };
-    // #[derive(Debug, strum_macros::Display)]
-    // enum GeneratePostgresqlCrudAttribute {
-    //     CreateManyAdditionalErrorVariants,
-    //     CreateOneAdditionalErrorVariants,
-    //     ReadManyAdditionalErrorVariants,
-    //     ReadOneAdditionalErrorVariants,
-    //     UpdateManyAdditionalErrorVariants,
-    //     UpdateOneAdditionalErrorVariants,
-    //     DeleteManyAdditionalErrorVariants,
-    //     DeleteOneAdditionalErrorVariants,
-    //     CommonAdditionalErrorVariants,
-    //     CreateManyAdditionalRouteLogic,
-    //     CreateOneAdditionalRouteLogic,
-    //     ReadManyAdditionalRouteLogic,
-    //     ReadOneAdditionalRouteLogic,
-    //     UpdateManyAdditionalRouteLogic,
-    //     UpdateOneAdditionalRouteLogic,
-    //     DeleteManyAdditionalRouteLogic,
-    //     DeleteOneAdditionalRouteLogic,
-    //     CommonAdditionalRouteLogic,
-    // }
-    // impl GeneratePostgresqlCrudAttribute {
-    //     fn generate_path_to_attribute(self) -> std::string::String {
-    //         let value = match self {
-    //             Self::CreateManyAdditionalErrorVariants => naming_conventions::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::CreateOneAdditionalErrorVariants => naming_conventions::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::ReadManyAdditionalErrorVariants => naming_conventions::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::ReadOneAdditionalErrorVariants => naming_conventions::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::UpdateManyAdditionalErrorVariants => naming_conventions::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::UpdateOneAdditionalErrorVariants => naming_conventions::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::DeleteManyAdditionalErrorVariants => naming_conventions::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::DeleteOneAdditionalErrorVariants => naming_conventions::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::CommonAdditionalErrorVariants => naming_conventions::CommonAdditionalErrorVariantsSnakeCase.to_string(),
-    //             Self::CreateManyAdditionalRouteLogic => naming_conventions::CreateManyAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::CreateOneAdditionalRouteLogic => naming_conventions::CreateOneAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::ReadManyAdditionalRouteLogic => naming_conventions::ReadManyAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::ReadOneAdditionalRouteLogic => naming_conventions::ReadOneAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::UpdateManyAdditionalRouteLogic => naming_conventions::UpdateManyAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::UpdateOneAdditionalRouteLogic => naming_conventions::UpdateOneAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::DeleteManyAdditionalRouteLogic => naming_conventions::DeleteManyAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::DeleteOneAdditionalRouteLogic => naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
-    //             Self::CommonAdditionalRouteLogic => naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
-    //         };
-    //         format!("{}::{value}", naming_conventions::PostgresqlCrudSnakeCase)
-    //     }
-    // }
+    #[derive(Debug, strum_macros::Display)]
+    enum GeneratePostgresqlCrudAttribute {
+        CreateManyAdditionalErrorVariants,
+        CreateOneAdditionalErrorVariants,
+        ReadManyAdditionalErrorVariants,
+        ReadOneAdditionalErrorVariants,
+        UpdateManyAdditionalErrorVariants,
+        UpdateOneAdditionalErrorVariants,
+        DeleteManyAdditionalErrorVariants,
+        DeleteOneAdditionalErrorVariants,
+        CommonAdditionalErrorVariants,
+        CreateManyAdditionalRouteLogic,
+        CreateOneAdditionalRouteLogic,
+        ReadManyAdditionalRouteLogic,
+        ReadOneAdditionalRouteLogic,
+        UpdateManyAdditionalRouteLogic,
+        UpdateOneAdditionalRouteLogic,
+        DeleteManyAdditionalRouteLogic,
+        DeleteOneAdditionalRouteLogic,
+        CommonAdditionalRouteLogic,
+    }
+    impl GeneratePostgresqlCrudAttribute {
+        fn generate_path_to_attribute(self) -> std::string::String {
+            let value = match self {
+                Self::CreateManyAdditionalErrorVariants => naming_conventions::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateOneAdditionalErrorVariants => naming_conventions::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadManyAdditionalErrorVariants => naming_conventions::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadOneAdditionalErrorVariants => naming_conventions::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateManyAdditionalErrorVariants => naming_conventions::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateOneAdditionalErrorVariants => naming_conventions::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteManyAdditionalErrorVariants => naming_conventions::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteOneAdditionalErrorVariants => naming_conventions::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CommonAdditionalErrorVariants => naming_conventions::CommonAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateManyAdditionalRouteLogic => naming_conventions::CreateManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::CreateOneAdditionalRouteLogic => naming_conventions::CreateOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::ReadManyAdditionalRouteLogic => naming_conventions::ReadManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::ReadOneAdditionalRouteLogic => naming_conventions::ReadOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::UpdateManyAdditionalRouteLogic => naming_conventions::UpdateManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::UpdateOneAdditionalRouteLogic => naming_conventions::UpdateOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::DeleteManyAdditionalRouteLogic => naming_conventions::DeleteManyAdditionalRouteLogicSnakeCase.to_string(),
+                Self::DeleteOneAdditionalRouteLogic => naming_conventions::DeleteOneAdditionalRouteLogicSnakeCase.to_string(),
+                Self::CommonAdditionalRouteLogic => naming_conventions::CommonAdditionalRouteLogicSnakeCase.to_string(),
+            };
+            format!("{}::{value}", naming_conventions::PostgresqlCrudSnakeCase)
+        }
+    }
     #[derive(Debug, Clone, Copy, naming_conventions::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     enum Operation {
         CreateMany,
@@ -1093,83 +1093,83 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         DeleteMany,
         DeleteOne,
     }
-    impl std::fmt::Display for Operation {
-        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            match &self {
-                Self::CreateMany => write!(formatter, "CreateMany"),
-                Self::CreateOne => write!(formatter, "CreateOne"),
-                Self::ReadMany => write!(formatter, "ReadMany"),
-                Self::ReadOne => write!(formatter, "ReadOne"),
-                Self::UpdateMany => write!(formatter, "UpdateMany"),
-                Self::UpdateOne => write!(formatter, "UpdateOne"),
-                Self::DeleteMany => write!(formatter, "DeleteMany"),
-                Self::DeleteOne => write!(formatter, "DeleteOne"),
+    // impl std::fmt::Display for Operation {
+    //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    //         match &self {
+    //             Self::CreateMany => write!(formatter, "CreateMany"),
+    //             Self::CreateOne => write!(formatter, "CreateOne"),
+    //             Self::ReadMany => write!(formatter, "ReadMany"),
+    //             Self::ReadOne => write!(formatter, "ReadOne"),
+    //             Self::UpdateMany => write!(formatter, "UpdateMany"),
+    //             Self::UpdateOne => write!(formatter, "UpdateOne"),
+    //             Self::DeleteMany => write!(formatter, "DeleteMany"),
+    //             Self::DeleteOne => write!(formatter, "DeleteOne"),
+    //         }
+    //     }
+    // }
+    impl Operation {
+        const fn http_method(&self) -> OperationHttpMethod {
+            match self {
+                Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => OperationHttpMethod::Post,
+                Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
+                Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
+            }
+        }
+        fn std_vec_vec_self_payload_element_token_stream(&self) -> proc_macro2::TokenStream {
+            let operation_payload_element_upper_camel_case = naming_conventions::SelfPayloadElementUpperCamelCase::from_dyn_std_fmt_display(self);
+            quote::quote! {std::vec::Vec<#operation_payload_element_upper_camel_case>}
+        }
+        const fn desirable_status_code(&self) -> macros_helpers::status_code::StatusCode {
+            match self {
+                Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
+                Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
+            }
+        }
+        fn to_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
+                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
+                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalErrorVariants,
+                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalErrorVariants,
+                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalErrorVariants,
+                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalErrorVariants,
+                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalErrorVariants,
+                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
+            }
+        }
+        fn to_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
+                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
+                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalRouteLogic,
+                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalRouteLogic,
+                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalRouteLogic,
+                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalRouteLogic,
+                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalRouteLogic,
+                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
             }
         }
     }
-    // impl Operation {
-    //     const fn http_method(&self) -> OperationHttpMethod {
-    //         match self {
-    //             Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => OperationHttpMethod::Post,
-    //             Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
-    //             Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
-    //         }
-    //     }
-    //     fn std_vec_vec_self_payload_element_token_stream(&self) -> proc_macro2::TokenStream {
-    //         let operation_payload_element_upper_camel_case = naming_conventions::SelfPayloadElementUpperCamelCase::from_dyn_std_fmt_display(self);
-    //         quote::quote! {std::vec::Vec<#operation_payload_element_upper_camel_case>}
-    //     }
-    //     const fn desirable_status_code(&self) -> macros_helpers::status_code::StatusCode {
-    //         match self {
-    //             Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
-    //             Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
-    //         }
-    //     }
-    //     fn to_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
-    //         match self {
-    //             Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
-    //             Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
-    //             Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalErrorVariants,
-    //             Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalErrorVariants,
-    //             Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalErrorVariants,
-    //             Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalErrorVariants,
-    //             Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalErrorVariants,
-    //             Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
-    //         }
-    //     }
-    //     fn to_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
-    //         match self {
-    //             Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
-    //             Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
-    //             Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalRouteLogic,
-    //             Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalRouteLogic,
-    //             Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalRouteLogic,
-    //             Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalRouteLogic,
-    //             Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalRouteLogic,
-    //             Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
-    //         }
-    //     }
-    // }
-    // impl std::fmt::Display for Operation {
-    //     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-    //         match &self {
-    //             Self::CreateMany => write!(f, "CreateMany"),
-    //             Self::CreateOne => write!(f, "CreateOne"),
-    //             Self::ReadMany => write!(f, "ReadMany"),
-    //             Self::ReadOne => write!(f, "ReadOne"),
-    //             Self::UpdateMany => write!(f, "UpdateMany"),
-    //             Self::UpdateOne => write!(f, "UpdateOne"),
-    //             Self::DeleteMany => write!(f, "DeleteMany"),
-    //             Self::DeleteOne => write!(f, "DeleteOne"),
-    //         }
-    //     }
-    // }
-    // #[derive(naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
-    // enum OperationHttpMethod {
-    //     Post,
-    //     Patch,
-    //     Delete,
-    // }
+    impl std::fmt::Display for Operation {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match &self {
+                Self::CreateMany => write!(f, "CreateMany"),
+                Self::CreateOne => write!(f, "CreateOne"),
+                Self::ReadMany => write!(f, "ReadMany"),
+                Self::ReadOne => write!(f, "ReadOne"),
+                Self::UpdateMany => write!(f, "UpdateMany"),
+                Self::UpdateOne => write!(f, "UpdateOne"),
+                Self::DeleteMany => write!(f, "DeleteMany"),
+                Self::DeleteOne => write!(f, "DeleteOne"),
+            }
+        }
+    }
+    #[derive(naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+    enum OperationHttpMethod {
+        Post,
+        Patch,
+        Delete,
+    }
     // let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     // let generate_options_try_from_sqlx_row_token_stream = |operation: &Operation| {
     //     let declaration_primary_key_token_stream = {
@@ -1357,7 +1357,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     };
     // let query_string_snake_case = naming_conventions::QueryStringSnakeCase;
     // let binded_query_snake_case = naming_conventions::BindedQuerySnakeCase;
-    // let rollback_snake_case = naming_conventions::RollbackSnakeCase;
+    let rollback_snake_case = naming_conventions::RollbackSnakeCase;
     // let query_snake_case = naming_conventions::QuerySnakeCase;
     // let update_snake_case = naming_conventions::UpdateSnakeCase;
     // let set_snake_case = naming_conventions::SetSnakeCase;
@@ -1372,19 +1372,19 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let returning_primary_key_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&returning_primary_key_stringified);
     // let postgresql_crud_snake_case = naming_conventions::PostgresqlCrudSnakeCase;
     // let std_string_string_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"]);
-    // let checked_add_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::CheckedAddUpperCamelCase,
-    //     Some(macros_helpers::status_code::StatusCode::BadRequest400),
-    //     std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
-    // );
-    // let row_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::RowAndRollbackUpperCamelCase,
-    //     Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-    //     vec![
-    //         (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming_conventions::RowSnakeCase, sqlx_error_syn_punctuated_punctuated.clone()),
-    //         (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
-    //     ],
-    // );
+    let checked_add_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::CheckedAddUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::BadRequest400),
+        std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
+    );
+    let row_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::RowAndRollbackUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::InternalServerError500),
+        vec![
+            (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming_conventions::RowSnakeCase, sqlx_error_syn_punctuated_punctuated.clone()),
+            (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
+        ],
+    );
     // let primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated = {
     //     let name = primary_key_rust_sqlx_map_to_postgres_type_variant
     //         .try_convert_into_rust_sqlx_map_to_postgres_primiry_key_type_variant()
@@ -1590,35 +1590,35 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
     //     )],
     // );
-    // let check_body_size_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::CheckBodySizeUpperCamelCase,
-    //     Some(macros_helpers::status_code::StatusCode::BadRequest400),
-    //     vec![(
-    //         macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-    //         &naming_conventions::CheckBodySizeSnakeCase,
-    //         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-    //             &[&postgresql_crud_snake_case.to_string(), "check_body_size", &naming_conventions::CheckBodySizeErrorNamedUpperCamelCase.to_string()]
-    //         ),
-    //     )],
-    // );
-    // let serde_json_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::SerdeJsonUpperCamelCase,
-    //     Some(macros_helpers::status_code::StatusCode::BadRequest400),
-    //     vec![(
-    //         macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-    //         &naming_conventions::SerdeJsonSnakeCase,
-    //         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
-    //     )],
-    // );
-    // let bind_query_syn_variant_wrapper = new_syn_variant_wrapper(
-    //     &naming_conventions::BindQueryUpperCamelCase,
-    //     Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-    //     vec![(
-    //         macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-    //         &naming_conventions::BindQuerySnakeCase,
-    //         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&postgresql_crud_snake_case_stringified, &naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()]),
-    //     )],
-    // );
+    let check_body_size_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::CheckBodySizeUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::BadRequest400),
+        vec![(
+            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            &naming_conventions::CheckBodySizeSnakeCase,
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                &[&postgresql_crud_snake_case.to_string(), "check_body_size", &naming_conventions::CheckBodySizeErrorNamedUpperCamelCase.to_string()]
+            ),
+        )],
+    );
+    let serde_json_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::SerdeJsonUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::BadRequest400),
+        vec![(
+            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+            &naming_conventions::SerdeJsonSnakeCase,
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
+        )],
+    );
+    let bind_query_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming_conventions::BindQueryUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::InternalServerError500),
+        vec![(
+            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            &naming_conventions::BindQuerySnakeCase,
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&postgresql_crud_snake_case_stringified, &naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()]),
+        )],
+    );
     // let not_unique_primary_key_syn_variant_wrapper = new_syn_variant_wrapper(
     //     &naming_conventions::NotUniquePrimaryKeyUpperCamelCase,
     //     Some(macros_helpers::status_code::StatusCode::BadRequest400),
@@ -1668,43 +1668,43 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         reqwest_syn_variant_wrapper.get_syn_variant().clone(),
     //     ]
     // };
-    // let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute| -> std::vec::Vec<syn::Variant> {
-    //     let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
-    //     let common_additional_error_variants_attribute_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &generate_postgresql_crud_attribute.generate_path_to_attribute());
-    //     let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    //     let value_ident_stringified = value.ident.to_string();
-    //     assert!(
-    //         value_ident_stringified == generate_postgresql_crud_attribute_stringified,
-    //         "{value_ident_stringified} is not equal to {generate_postgresql_crud_attribute_stringified}"
-    //     );
-    //     let variants = if let syn::Data::Enum(data_enum) = value.data {
-    //         data_enum.variants
-    //     } else {
-    //         panic!("value.data is not syn::Data::Enum");
-    //     };
-    //     variants.into_iter().collect()
-    // };
-    // let common_additional_error_variants = generate_additional_error_variants(&syn_derive_input, GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants);
-    // let common_route_syn_variants = {
-    //     let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
-    //     let mut value = std::vec::Vec::with_capacity(common_additional_error_variants_vec.len() + common_additional_error_variants_vec.len());
-    //     value.push(check_body_size_syn_variant_wrapper.get_syn_variant());
-    //     value.push(&postgresql_syn_variant_wrapper.get_syn_variant());
-    //     value.push(&serde_json_syn_variant_wrapper.get_syn_variant());
-    //     // value.push(&bind_query_syn_variant);
-    //     for element in common_additional_error_variants_vec {
-    //         value.push(element);
-    //     }
-    //     value
-    // };
-    // let common_route_with_row_and_rollback_syn_variants = {
-    //     let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
-    //     common_route_syn_variants.iter().for_each(|element| {
-    //         value.push(*element);
-    //     });
-    //     value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
-    //     value
-    // };
+    let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute| -> std::vec::Vec<syn::Variant> {
+        let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
+        let common_additional_error_variants_attribute_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &generate_postgresql_crud_attribute.generate_path_to_attribute());
+        let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+        let value_ident_stringified = value.ident.to_string();
+        assert!(
+            value_ident_stringified == generate_postgresql_crud_attribute_stringified,
+            "{value_ident_stringified} is not equal to {generate_postgresql_crud_attribute_stringified}"
+        );
+        let variants = if let syn::Data::Enum(data_enum) = value.data {
+            data_enum.variants
+        } else {
+            panic!("value.data is not syn::Data::Enum");
+        };
+        variants.into_iter().collect()
+    };
+    let common_additional_error_variants = generate_additional_error_variants(&syn_derive_input, GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants);
+    let common_route_syn_variants = {
+        let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
+        let mut value = std::vec::Vec::with_capacity(common_additional_error_variants_vec.len() + common_additional_error_variants_vec.len());
+        value.push(check_body_size_syn_variant_wrapper.get_syn_variant());
+        value.push(&postgresql_syn_variant_wrapper.get_syn_variant());
+        value.push(&serde_json_syn_variant_wrapper.get_syn_variant());
+        // value.push(&bind_query_syn_variant);
+        for element in common_additional_error_variants_vec {
+            value.push(element);
+        }
+        value
+    };
+    let common_route_with_row_and_rollback_syn_variants = {
+        let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+        common_route_syn_variants.iter().for_each(|element| {
+            value.push(*element);
+        });
+        value.push(&row_and_rollback_syn_variant_wrapper.get_syn_variant());
+        value
+    };
     // let common_additional_route_logic_token_stream =
     //     macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute());
     let generate_fields_named_excluding_primary_key_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
@@ -2176,17 +2176,17 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         #operation_payload_token_stream
     //     }
     // };
-    // let generate_type_variants_from_request_response_syn_variants = |syn_variants: &std::vec::Vec<&syn::Variant>, operation: &Operation| -> std::vec::Vec<syn::Variant> {
-    //     let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
-    //     for element in syn_variants {
-    //         type_variants_from_request_response_syn_variants.push((*element).clone());
-    //     }
-    //     let operation_additional_error_variants = generate_additional_error_variants(&syn_derive_input, operation.to_additional_error_variants());
-    //     for element in operation_additional_error_variants {
-    //         type_variants_from_request_response_syn_variants.push(element.clone());
-    //     }
-    //     type_variants_from_request_response_syn_variants
-    // };
+    let generate_type_variants_from_request_response_syn_variants = |syn_variants: &std::vec::Vec<&syn::Variant>, operation: &Operation| -> std::vec::Vec<syn::Variant> {
+        let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
+        for element in syn_variants {
+            type_variants_from_request_response_syn_variants.push((*element).clone());
+        }
+        let operation_additional_error_variants = generate_additional_error_variants(&syn_derive_input, operation.to_additional_error_variants());
+        for element in operation_additional_error_variants {
+            type_variants_from_request_response_syn_variants.push(element.clone());
+        }
+        type_variants_from_request_response_syn_variants
+    };
     // let generate_try_operation_error_named_token_stream = |operation: &Operation, common_http_request_syn_variants: &std::vec::Vec<syn::Variant>| -> proc_macro2::TokenStream {
     //     let try_operation_error_named_upper_camel_case = naming_conventions::TrySelfErrorNamedUpperCamelCase::from_dyn_std_fmt_display(operation);
     //     let syn_variants = {
@@ -2944,18 +2944,18 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // // );
     let (create_one_token_stream, create_one_test_token_stream) = {
         let operation = Operation::CreateOne;
-        // let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
-        //     &{
-        //         let mut value = std::vec::Vec::with_capacity(common_route_with_row_and_rollback_syn_variants.len() + 1);
-        //         common_route_with_row_and_rollback_syn_variants.iter().for_each(|element| {
-        //             value.push(*element);
-        //         });
-        //         value.push(&bind_query_syn_variant_wrapper.get_syn_variant());
-        //         value.push(&checked_add_syn_variant_wrapper.get_syn_variant());
-        //         value
-        //     },
-        //     &operation,
-        // );
+        let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
+            &{
+                let mut value = std::vec::Vec::with_capacity(common_route_with_row_and_rollback_syn_variants.len() + 1);
+                common_route_with_row_and_rollback_syn_variants.iter().for_each(|element| {
+                    value.push(*element);
+                });
+                value.push(&bind_query_syn_variant_wrapper.get_syn_variant());
+                value.push(&checked_add_syn_variant_wrapper.get_syn_variant());
+                value
+            },
+            &operation,
+        );
         let parameters_token_stream = generate_parameters_pattern_token_stream(&operation, generate_operation_payload_token_stream(&operation, &pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream));
         // let try_operation_route_logic_token_stream = {
         //     let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
