@@ -1007,7 +1007,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 quote::quote! {=> #field_ident_string_double_quotes_token_stream.to_string()}
             };
-            quote::quote! {#ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #initialization_token_stream}
+            quote::quote! {#ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(_) #initialization_token_stream}
         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {
             {
@@ -1193,10 +1193,12 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let primary_key_field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
             let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!());
             let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&quote::quote! {
-                #primary_key_inner_type_token_stream(#value_snake_case)
+                // #primary_key_inner_type_token_stream(
+                    #value_snake_case
+                // )
             });
             quote::quote! {
-                #ident_column_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream => match sqlx::Row::try_get::<
+                #ident_column_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
                     #primary_key_original_type_token_stream,
                     #ref_std_primitive_str
                 >(
@@ -1240,11 +1242,13 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 //     },
                 // }
                 quote::quote! {
-                    #inner_type_token_stream(#value_snake_case)
+                    // #inner_type_token_stream(
+                        #value_snake_case
+                    // )
                 }
             });
             quote::quote! {
-                #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream => match sqlx::Row::try_get::<
+                #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream(_) => match sqlx::Row::try_get::<
                     #original_type_with_generic_reader_token_stream,
                     #ref_std_primitive_str
                 >(
