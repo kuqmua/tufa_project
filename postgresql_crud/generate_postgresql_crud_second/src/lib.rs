@@ -547,6 +547,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let fields_len = fields.len();
     let fields_without_primary_key_len = fields_without_primary_key.len();
     let primary_key_field_type_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
+    let primary_key_field_type_to_read_upper_camel_case = naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
     // let contains_generic_json = {
     //     let mut contains_generic_json = false;
     //     for element in &syn_field_with_additional_info_fields_named {
@@ -660,7 +661,10 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
         let field_option_primary_key_token_stream = {
             let primary_key_field_ident = &primary_key_field.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_inner_type_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
+                // &primary_key_inner_type_token_stream
+                &naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty)
+            );
             quote::quote! {
                 #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
                 pub #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
@@ -669,7 +673,10 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let fields_options_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
             let field_vis = &element.syn_field.vis;
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&element.syn_field.ty);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
+                // &element.syn_field.ty
+                &naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&element.syn_field.ty)
+            );
             quote::quote! {
                 #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
                 #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
@@ -1173,7 +1180,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     let generate_options_try_from_sqlx_row_token_stream = |operation: &Operation| {
         let declaration_primary_key_token_stream = {
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_inner_type_token_stream);
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_field_type_to_read_upper_camel_case);
             quote::quote! {
                 let mut #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
             }
@@ -1182,7 +1189,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let field_ident = &element.field_ident;
             let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
                 // &element.inner_type_with_generic_reader_token_stream
-                &element.syn_field.ty
+                // &element.syn_field.ty
+                &naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&element.syn_field.ty)
             );
             quote::quote! {
                 let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
@@ -1197,7 +1205,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     #value_snake_case
                 // )
             });
-            let primary_key_field_type_to_read_upper_camel_case = naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
             quote::quote! {
                 #ident_column_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
                     #primary_key_field_type_to_read_upper_camel_case,
@@ -1248,9 +1255,11 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     // )
                 }
             });
+            let element_field_type_to_read_upper_camel_case_token_stream = &naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&element.syn_field.ty);
             quote::quote! {
                 #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream(_) => match sqlx::Row::try_get::<
-                    #original_type_with_generic_reader_token_stream,
+                    // #original_type_with_generic_reader_token_stream,
+                    #element_field_type_to_read_upper_camel_case_token_stream,
                     #ref_std_primitive_str
                 >(
                     &#value_snake_case,
@@ -3802,7 +3811,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     &postgresql_logic_token_stream,
                 )
             };
-            println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
                 #try_operation_route_logic_token_stream
