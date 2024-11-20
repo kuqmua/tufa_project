@@ -2988,7 +2988,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             (
                 quote::quote! {
                     #try_operation_error_named_token_stream
-                    // #try_operation_token_stream
+                    #try_operation_token_stream
                 },
                 quote::quote! {},
                 // try_operation_test_token_stream,
