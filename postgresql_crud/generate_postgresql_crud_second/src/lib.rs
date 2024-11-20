@@ -1197,9 +1197,10 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     #value_snake_case
                 // )
             });
+            let primary_key_field_type_to_read_upper_camel_case = naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
             quote::quote! {
                 #ident_column_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
-                    #primary_key_original_type_token_stream,
+                    #primary_key_field_type_to_read_upper_camel_case,
                     #ref_std_primitive_str
                 >(
                     &#value_snake_case,
@@ -3801,10 +3802,10 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     &postgresql_logic_token_stream,
                 )
             };
-            // println!("{try_operation_route_logic_token_stream}");
+            println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
-                // #try_operation_route_logic_token_stream
+                #try_operation_route_logic_token_stream
             }
         };
         // // println!("{try_operation_route_logic_token_stream}");
