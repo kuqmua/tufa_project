@@ -831,7 +831,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let acc_snake_case = naming_conventions::AccSnakeCase;
     let parameters_snake_case = naming_conventions::ParametersSnakeCase;
     let payload_snake_case = naming_conventions::PayloadSnakeCase;
-    // let select_snake_case = naming_conventions::SelectSnakeCase;
+    let select_snake_case = naming_conventions::SelectSnakeCase;
     #[derive(Debug)]
     struct SynVariantWrapper {
         variant: syn::Variant,
@@ -1727,27 +1727,27 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_generic_token_stream>>
     //     }
     // });
-    // let generate_pub_handle_token_stream = |is_pub: bool| match is_pub {
-    //     true => quote::quote! {pub},
-    //     false => proc_macro2::TokenStream::new(),
-    // };
-    // let generate_primary_key_inner_type_handle_token_stream = |is_original: bool| match is_original {
-    //     true => &primary_key_inner_type_token_stream,
-    //     false => &primary_key_inner_type_token_stream,
-    // };
+    let generate_pub_handle_token_stream = |is_pub: bool| match is_pub {
+        true => quote::quote! {pub},
+        false => proc_macro2::TokenStream::new(),
+    };
+    let generate_primary_key_inner_type_handle_token_stream = |is_original: bool| match is_original {
+        true => &primary_key_inner_type_token_stream,
+        false => &primary_key_inner_type_token_stream,
+    };
     // let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = {
     //     let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(true);
     //     quote::quote! {pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_handle_token_stream>>}
     // };
-    // let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
-    //     quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case>}
-    // };
-    // let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = {
-    //     let is_pub = true;
-    //     let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
-    //     let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
-    //     quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_inner_type_handle_token_stream}
-    // };
+    let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
+        quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case>}
+    };
+    let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = {
+        let is_pub = true;
+        let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
+        let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
+        quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_inner_type_handle_token_stream}
+    };
     // let generate_filter_not_unique_column_route_logic_token_stream = |operation: &Operation| {
     //     let not_unique_column_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &not_unique_column_syn_variant_wrapper, file!(), line!(), column!());
     //     let generics_generate_postgresql_query_part_from_vec_error_named_syn_variants_wrappers_token_stream = {
@@ -3702,16 +3702,16 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             },
             &operation,
         );
-        // let parameters_token_stream = generate_parameters_pattern_token_stream(
-        //     &operation,
-        //     generate_operation_payload_token_stream(
-        //         &operation,
-        //         &quote::quote! {
-        //             #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
-        //             #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
-        //         },
-        //     ),
-        // );
+        let parameters_token_stream = generate_parameters_pattern_token_stream(
+            &operation,
+            generate_operation_payload_token_stream(
+                &operation,
+                &quote::quote! {
+                    #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
+                    #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
+                },
+            ),
+        );
         // let try_operation_route_logic_token_stream = {
         //     let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
         //         generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
@@ -3911,7 +3911,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         // let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         (
             quote::quote! {
-                // #parameters_token_stream
+                #parameters_token_stream
                 // #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
                 // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
