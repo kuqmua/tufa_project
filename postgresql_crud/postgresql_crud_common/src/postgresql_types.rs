@@ -88,16 +88,16 @@ impl crate::BindQuery<'_> for StdPrimitiveBool {
     }
 }
 #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
-pub struct WhereStdPrimitiveBool {
+pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     value: StdPrimitiveBool,
     conjuctive_operator: crate::ConjunctiveOperator,
 }
-impl std::fmt::Display for WhereStdPrimitiveBool {
+impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
     }
 }
-impl crate::BindQuery<'_> for WhereStdPrimitiveBool {
+impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
             || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
@@ -121,7 +121,7 @@ impl crate::BindQuery<'_> for WhereStdPrimitiveBool {
         query
     }
 }
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereStdPrimitiveBool {
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -218,51 +218,51 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         ))
     }
 }
-#[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
-pub struct WhereStdOptionOptionStdPrimitiveBool {
-    value: StdOptionOptionStdPrimitiveBool,
-    conjuctive_operator: crate::ConjunctiveOperator,
-}
-impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBool {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
-    }
-}
-impl crate::BindQuery<'_> for WhereStdOptionOptionStdPrimitiveBool {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        increment.checked_add(1).map_or_else(
-            || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-            |incr| {
-                *increment = incr;
-                Ok(())
-            },
-        )
-    }
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(format!("${increment}"))
-            }
-            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-        }
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(match self.value.0 {
-            Some(value) => Some(value.0),
-            None => None,
-        });
-        query
-    }
-}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereStdOptionOptionStdPrimitiveBool {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjuctive_operator: crate::ConjunctiveOperator::default(),
-        }
-    }
-}
+// #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
+// pub struct StdOptionOptionStdPrimitiveBoolWhere {
+//     value: StdOptionOptionStdPrimitiveBool,
+//     conjuctive_operator: crate::ConjunctiveOperator,
+// }
+// impl std::fmt::Display for StdOptionOptionStdPrimitiveBoolWhere {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+//     }
+// }
+// impl crate::BindQuery<'_> for StdOptionOptionStdPrimitiveBoolWhere {
+//     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+//         increment.checked_add(1).map_or_else(
+//             || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//             |incr| {
+//                 *increment = incr;
+//                 Ok(())
+//             },
+//         )
+//     }
+//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(format!("${increment}"))
+//             }
+//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//         }
+//     }
+//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(match self.value.0 {
+//             Some(value) => Some(value.0),
+//             None => None,
+//         });
+//         query
+//     }
+// }
+// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdPrimitiveBoolWhere {
+//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self {
+//             value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+//             conjuctive_operator: crate::ConjunctiveOperator::default(),
+//         }
+//     }
+// }
 
 
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBool {
@@ -372,16 +372,16 @@ impl crate::BindQuery<'_> for StdPrimitiveI64 {
     }
 }
 #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
-pub struct WhereStdPrimitiveI64 {
+pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     value: StdPrimitiveI64,
     conjuctive_operator: crate::ConjunctiveOperator,
 }
-impl std::fmt::Display for WhereStdPrimitiveI64 {
+impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
     }
 }
-impl crate::BindQuery<'_> for WhereStdPrimitiveI64 {
+impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
             || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
@@ -405,7 +405,7 @@ impl crate::BindQuery<'_> for WhereStdPrimitiveI64 {
         query
     }
 }
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereStdPrimitiveI64 {
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -502,51 +502,51 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         ))
     }
 }
-#[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
-pub struct WhereStdOptionOptionStdPrimitiveI64 {
-    value: StdOptionOptionStdPrimitiveI64,
-    conjuctive_operator: crate::ConjunctiveOperator,
-}
-impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveI64 {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
-    }
-}
-impl crate::BindQuery<'_> for WhereStdOptionOptionStdPrimitiveI64 {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        increment.checked_add(1).map_or_else(
-            || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-            |incr| {
-                *increment = incr;
-                Ok(())
-            },
-        )
-    }
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(format!("${increment}"))
-            }
-            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-        }
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(match self.value.0 {
-            Some(value) => Some(value.0),
-            None => None,
-        });
-        query
-    }
-}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereStdOptionOptionStdPrimitiveI64 {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjuctive_operator: crate::ConjunctiveOperator::default(),
-        }
-    }
-}
+// #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
+// pub struct StdOptionOptionStdPrimitiveI64Where {
+//     value: StdOptionOptionStdPrimitiveI64,
+//     conjuctive_operator: crate::ConjunctiveOperator,
+// }
+// impl std::fmt::Display for StdOptionOptionStdPrimitiveI64Where {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+//     }
+// }
+// impl crate::BindQuery<'_> for StdOptionOptionStdPrimitiveI64Where {
+//     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+//         increment.checked_add(1).map_or_else(
+//             || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//             |incr| {
+//                 *increment = incr;
+//                 Ok(())
+//             },
+//         )
+//     }
+//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(format!("${increment}"))
+//             }
+//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//         }
+//     }
+//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(match self.value.0 {
+//             Some(value) => Some(value.0),
+//             None => None,
+//         });
+//         query
+//     }
+// }
+// impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdPrimitiveI64Where {
+//     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self {
+//             value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+//             conjuctive_operator: crate::ConjunctiveOperator::default(),
+//         }
+//     }
+// }
 
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64 {
     #[inline]
