@@ -1734,6 +1734,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         true => quote::quote! {pub},
         false => proc_macro2::TokenStream::new(),
     };
+    //tood remove?
     let generate_primary_key_inner_type_handle_token_stream = |is_original: bool| match is_original {
         true => &primary_key_inner_type_token_stream,
         false => &primary_key_inner_type_token_stream,
@@ -1745,11 +1746,11 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
         quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case>}
     };
-    let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = {
+    let generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = |primary_key_type_token_stream: &dyn quote::ToTokens|{
         let is_pub = true;
         let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
-        let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
-        quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_inner_type_handle_token_stream}
+        // let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(is_pub);
+        quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_type_token_stream}
     };
     let generate_filter_not_unique_column_route_logic_token_stream = |operation: &Operation| {
         let not_unique_column_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &not_unique_column_syn_variant_wrapper, file!(), line!(), column!());
@@ -3719,12 +3720,18 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             &operation,
             generate_operation_payload_token_stream(
                 &operation,
-                &quote::quote! {
-                    #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
-                    #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
+                &{
+                    let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(
+                        &naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty)
+                    );
+                    quote::quote! {
+                        #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
+                        #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
+                    }
                 },
             ),
         );
+        // println!("{parameters_token_stream}");
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                 &operation,
@@ -3797,7 +3804,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
-                #try_operation_route_logic_token_stream
+                // #try_operation_route_logic_token_stream
             }
         };
         // // println!("{try_operation_route_logic_token_stream}");
