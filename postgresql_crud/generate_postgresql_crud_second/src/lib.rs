@@ -546,6 +546,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     };
     let fields_len = fields.len();
     let fields_without_primary_key_len = fields_without_primary_key.len();
+    let primary_key_field_type_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
     // let contains_generic_json = {
     //     let mut contains_generic_json = false;
     //     for element in &syn_field_with_additional_info_fields_named {
@@ -1504,6 +1505,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     // };
     let std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream = quote::quote! {std::vec::Vec::<#primary_key_inner_type_token_stream>};
+    let std_vec_vec_primary_key_field_type_t_create_upper_camel_case = quote::quote! {std::vec::Vec::<#primary_key_field_type_to_create_upper_camel_case>};
+
     // let std_vec_vec_struct_options_ident_token_stream = quote::quote! {std::vec::Vec::<#ident_options_upper_camel_case>};
     // //todo rename not_unique_column to something what mean json tree getter too
     // let not_unique_column_syn_variant_wrapper = new_syn_variant_wrapper(
@@ -2662,8 +2665,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let generate_create_update_delete_many_fetch_token_stream = |operation: &Operation| {
         generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
-                &naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty),
-                &quote::quote! {Some(#primary_key_inner_type_token_stream(#value_snake_case))},
+                &primary_key_field_type_to_create_upper_camel_case,
+                // &quote::quote! {Some(#primary_key_inner_type_token_stream(#value_snake_case))},
+                &quote::quote! {Some(#value_snake_case)},
                 &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&operation, file!(), line!(), column!(), file!(), line!(), column!()),
             ),
             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&operation, file!(), line!(), column!(), file!(), line!(), column!()),
@@ -2672,7 +2676,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let generate_create_update_delete_one_fetch_token_stream = |operation: &Operation| {
         generate_fetch_one_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
-                &naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty),
+                &primary_key_field_type_to_create_upper_camel_case,
                 // &quote::quote! {#primary_key_inner_type_token_stream(#value_snake_case)},
                 &value_snake_case,
                 &generate_match_postgres_transaction_rollback_await_token_stream(&operation, file!(), line!(), column!(), file!(), line!(), column!()),
@@ -2778,7 +2782,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
+                    &std_vec_vec_primary_key_field_type_t_create_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
                 );
             // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
@@ -2796,31 +2800,42 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     });
                     let column_increments_token_stream = fields_without_primary_key.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
-                        if element.option_generic.is_some() {
-                            let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
-                            quote::quote! {
-                                match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
-                                    Ok(#value_snake_case) => {
-                                        #acc_snake_case.push_str(&format!("{value},"));
-                                    },
-                                    Err(#error_0_token_stream) => {
-                                        #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                }
-                            }
-                        } else {
-                            let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
-                            quote::quote! {
-                                match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
-                                    &#element_snake_case.#element_field_ident,
-                                    &mut #increment_snake_case,
-                                ) {
-                                    Ok(_) => {
-                                        #acc_snake_case.push_str(&format!("${},", #increment_snake_case));
-                                    }
-                                    Err(_) => {//todo try_increment has own error. is it must be used? or no?
-                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
+                        // if element.option_generic.is_some() {
+                        //     let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
+                        //     quote::quote! {
+                        //         match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                        //             Ok(#value_snake_case) => {
+                        //                 #acc_snake_case.push_str(&format!("{value},"));
+                        //             },
+                        //             Err(#error_0_token_stream) => {
+                        //                 #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        //             }
+                        //         }
+                        //     }
+                        // } else {
+                        //     let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        //     quote::quote! {
+                        //         match #postgresql_crud_bind_query_bind_query_try_increment_token_stream(
+                        //             &#element_snake_case.#element_field_ident,
+                        //             &mut #increment_snake_case,
+                        //         ) {
+                        //             Ok(_) => {
+                        //                 #acc_snake_case.push_str(&format!("${},", #increment_snake_case));
+                        //             }
+                        //             Err(_) => {//todo try_increment has own error. is it must be used? or no?
+                        //                 #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
+                        quote::quote! {
+                            match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                                Ok(#value_snake_case) => {
+                                    #acc_snake_case.push_str(&format!("{value},"));
+                                },
+                                Err(#error_0_token_stream) => {
+                                    #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         }
@@ -2863,9 +2878,20 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 // println!("{binded_query_token_stream}");
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &{
                     let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&operation);
-                    let unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &unexpected_rows_length_syn_variant_wrapper, file!(), line!(), column!());
-                    let unexpected_rows_length_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream =
-                        generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &unexpected_rows_length_and_rollback_syn_variant_wrapper, file!(), line!(), column!());
+                    let unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &unexpected_rows_length_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
+                    let unexpected_rows_length_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &unexpected_rows_length_and_rollback_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
                     quote::quote! {
                         #fetch_token_stream
                         {
@@ -3020,7 +3046,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty),
+                    &primary_key_field_type_to_create_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
                 );
             let try_operation_route_logic_token_stream = {
@@ -3147,7 +3173,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                &naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty),
+                &primary_key_field_type_to_create_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 // &quote::quote! {#primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case)},
                 &value_snake_case
