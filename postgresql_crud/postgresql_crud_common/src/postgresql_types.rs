@@ -87,10 +87,20 @@ impl crate::BindQuery<'_> for StdPrimitiveBool {
         query
     }
 }
-#[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
+impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::postgres::PgHasArrayType for StdPrimitiveBool {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <std::primitive::bool as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
+#[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize)]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
-    value: StdPrimitiveBool,
-    conjuctive_operator: crate::ConjunctiveOperator,
+    pub value: StdPrimitiveBoolAsPostgresqlBoolNotNull,
+    pub conjuctive_operator: crate::ConjunctiveOperator,
 }
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -117,7 +127,7 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
         )
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.value.0);
+        query = query.bind(self.value.0.0);
         query
     }
 }
@@ -371,10 +381,22 @@ impl crate::BindQuery<'_> for StdPrimitiveI64 {
         query
     }
 }
-#[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize, Eq)]
+/////////
+impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64 {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::postgres::PgHasArrayType for StdPrimitiveI64 {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <std::primitive::i64 as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
+////////
+#[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    value: StdPrimitiveI64,
-    conjuctive_operator: crate::ConjunctiveOperator,
+    pub value: StdPrimitiveI64AsPostgresqlBigSerialNotNull,
+    pub conjuctive_operator: crate::ConjunctiveOperator,
 }
 impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -401,7 +423,7 @@ impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
         )
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.value.0);
+        query = query.bind(self.value.0.0);
         query
     }
 }
@@ -569,6 +591,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64 {
 #[derive(
     Debug,
     Clone,
+    PartialEq,
     Copy,
     serde::Serialize,
     serde::Deserialize,
@@ -576,9 +599,31 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64 {
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(StdPrimitiveBool);
 
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+    }
+}
 impl crate::CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+}
+impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveBool as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
+//
+
 #[derive(
     Debug,
     Clone,
@@ -707,6 +752,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     Debug,
     Clone,
     Copy,
+    PartialEq,
     serde::Serialize,
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
@@ -715,9 +761,34 @@ pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(StdPrimitiveI64);
 // #[derive(Debug, Clone, Copy, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 // pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey(pub StdPrimitiveI64);
 
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+    }
+}
+
 impl crate::CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    fn type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveI64 as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+}
+impl sqlx::postgres::PgHasArrayType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveI64 as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
+
+
+
+
 #[derive(
     Debug,
     Clone,
