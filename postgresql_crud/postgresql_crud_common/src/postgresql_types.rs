@@ -599,6 +599,18 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
         "BOOL NOT NULL"
     }
 }
+impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
+    }
+}
+impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+
+
 
 //todo maybe refactor later
 #[derive(
@@ -726,6 +738,19 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
         "BIGSERIAL"
     }
 }
+impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
+    }
+}
+impl error_occurence_lib::ToStdStringString for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+
+
+
 
 //todo maybe refactor later
 #[derive(
