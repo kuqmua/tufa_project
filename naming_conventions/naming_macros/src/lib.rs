@@ -241,7 +241,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                         pub fn from_syn_type_path_last_segment(value: &syn::Type) -> Self {
                             match value {
                                 syn::Type::Path(type_path) => {
-                                    let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::from(""), |mut acc, elem| {
+                                    let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(std::string::String::from(""), |mut acc, elem| {
                                         acc.push_str(&format!("{}::", elem.ident));
                                         acc
                                     });

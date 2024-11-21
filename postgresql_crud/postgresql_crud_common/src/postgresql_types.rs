@@ -744,7 +744,17 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate(StdPrimitiveBool);
-
+impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_increment(&self.0, increment)
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+    }
+    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
 
 
 
@@ -920,3 +930,14 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate(StdPrimitiveI64);
+impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_increment(&self.0, increment)
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+    }
+    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
