@@ -424,7 +424,11 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["try", "from", "std", "env", "var", "ok"],
     ["table", "name"],
     //todo remove "second" later
-    ["generate", "postgresql", "crud", "second", "primary", "key"]
+    ["generate", "postgresql", "crud", "second", "primary", "key"],
+    ["std", "default", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
+    ["default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
+    ["all", "enum", "variants", "array", "std", "default", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
+    ["all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

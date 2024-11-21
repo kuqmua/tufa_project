@@ -593,6 +593,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // };
     // let primary_key_field = &primary_key_syn_field_with_additional_info.field;
     let primary_key_field_ident = &primary_key_field.field_ident;
+    let primary_key_field_ident_upper_camel_case_token_stream = naming_conventions::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&primary_key_field_ident);
     // let primary_key_rust_sqlx_map_to_postgres_type_variant = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant;
     // let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
     let primary_key_original_type_token_stream = &primary_key_field.syn_field.ty;//todo maybe remove it
@@ -744,6 +745,16 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     //         }
     //     }
     // };
+    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming_conventions::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+    let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming_conventions::DefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+    let postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        postgresql_crud::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+    };
+    let all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming_conventions::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+    let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming_conventions::AllEnumVariantsArrayDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+    let postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        postgresql_crud::#all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+    };
     let ident_column_upper_camel_case = naming_conventions::SelfColumnUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let filter_snake_case = naming_conventions::FilterSnakeCase;
     let column_token_stream = {
@@ -813,13 +824,13 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 let field_ident_upper_camel_case_token_stream = naming_conventions::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
                 quote::quote! {
                     #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(
-                        postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                        #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                     )
                 }
             });
             quote::quote! {
-                impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident_column_upper_camel_case {
-                    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+                impl postgresql_crud::#all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case for #ident_column_upper_camel_case {
+                    fn #all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> std::vec::Vec<Self> {
                         vec![#(#elements_token_stream),*]
                     }
                 }
@@ -1196,7 +1207,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             }
         });
         let assignment_variant_primary_key_token_stream = {
-            let primary_key_field_ident_upper_camel_case_token_stream = naming_conventions::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&primary_key_field_ident);
             let primary_key_field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
             let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!());
             let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&quote::quote! {
@@ -1288,6 +1298,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             }
         }
     };
+    let column_snake_case = naming_conventions::ColumnSnakeCase;
+    let order_snake_case = naming_conventions::OrderSnakeCase;
     let order_by_upper_camel_case = naming_conventions::OrderByUpperCamelCase;
     let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
@@ -2769,7 +2781,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
             &{
                 let operation_payload_upper_camel_case = naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(operation);
-                quote::quote! {<#operation_payload_upper_camel_case as postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()}
+                quote::quote! {<#operation_payload_upper_camel_case as postgresql_crud::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case>::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()}
             },
             &quote::quote! {axum::http::StatusCode::OK},
         );
@@ -2784,8 +2796,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         content_token_stream: &dyn quote::ToTokens
     | {
         quote::quote! {
-            impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #for_token_stream {
-                fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+            impl postgresql_crud::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case for #for_token_stream {
+                fn #default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> Self {
                     Self #content_token_stream
                 }
             }
@@ -2795,7 +2807,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let value = fields_without_primary_key.iter().map(|element| {
             let field_ident = &element.field_ident;
             quote::quote! {
-                #field_ident: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                #field_ident: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             }
         });
         quote::quote! {#(#value),*}
@@ -3083,7 +3095,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream =
                 wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
                     &naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(&operation),
-                    &quote::quote! {(vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()])},
+                    &quote::quote! {(vec![
+                        #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    ])},
                 );
             quote::quote! {
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_element_token_stream
@@ -3455,7 +3469,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                         }
                     });
                     let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {{}}"));
-                    let order_snake_case = naming_conventions::OrderSnakeCase;
                     let by_snake_case = naming_conventions::BySnakeCase;
                     let additional_parameters_order_by_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{order_snake_case} {by_snake_case} {{}} {{}}"));
                     let additional_parameters_limit_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{limit_snake_case} {{}}"));
@@ -3471,7 +3484,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                             false => " ",
                         };
                     };
-                    let column_snake_case = naming_conventions::ColumnSnakeCase;
                     let query_vec_column_token_stream = generate_query_vec_column_token_stream(&operation);
                     quote::quote! {
                         {
@@ -3782,22 +3794,33 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             )
         };
         // println!("{try_operation_token_stream}");
-        // let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream = {
-        //     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_element_token_stream =
-        //         wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
-        //             &naming_conventions::SelfPayloadElementUpperCamelCase::from_dyn_std_fmt_display(&operation),
-        //             &fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream,
-        //         );
-        //     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream =
-        //         wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
-        //             &naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(&operation),
-        //             &quote::quote! {(vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()])},
-        //         );
-        //     quote::quote! {
-        //         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_element_token_stream
-        //         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
-        //     }
-        // };
+        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream = wrap_into_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_value_token_stream(
+            &naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(&operation),
+            &{
+                let fields_token_stream = fields.iter().map(|element|{
+                    let field_ident = &element.field_ident;
+                    quote::quote!{
+                        #field_ident: Some(vec![
+                            #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                        ]),
+                    }
+                });
+                quote::quote!{
+                    {
+                        #(#fields_token_stream)*
+                        #select_snake_case: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        #order_by_snake_case: postgresql_crud::OrderBy {
+                            #column_snake_case: #ident_column_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(vec![]),
+                            #order_snake_case: Some(
+                                #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                            ),
+                        },
+                        #limit_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        #offset_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                    }
+                }
+            },
+        );
         // println!("{impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream}");
         let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         // println!("{operation_payload_example_route_logic_token_stream}");
@@ -3806,7 +3829,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 #parameters_token_stream
                 #try_operation_route_logic_token_stream
                 #try_operation_token_stream
-                // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
+                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
                 #operation_payload_example_route_logic_token_stream
             },
             // try_operation_test_token_stream,
@@ -4044,8 +4067,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             &naming_conventions::SelfPayloadUpperCamelCase::from_dyn_std_fmt_display(&operation),
             &quote::quote! {
                 {
-                    #primary_key_field_ident: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    select: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    #primary_key_field_ident: postgresql_crud::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
+                    #select_snake_case: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                 }
             },
         );
