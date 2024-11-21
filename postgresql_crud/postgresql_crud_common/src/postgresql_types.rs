@@ -735,7 +735,15 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    serde::Serialize,
+    serde::Deserialize,
+    // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
+)]
+pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate(StdPrimitiveBool);
 
 
 
@@ -902,3 +910,13 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
+///////////////////
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    serde::Serialize,
+    serde::Deserialize,
+    // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
+)]
+pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate(StdPrimitiveI64);
