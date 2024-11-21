@@ -8166,6 +8166,11 @@ impl Default for Order {
         Self::Asc
     }
 }
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Order {
+    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct OrderBy<ColumnGeneric> {
