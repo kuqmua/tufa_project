@@ -836,11 +836,32 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 }
             }
         };
+        //todo this is temporary impl. maybe should write trait and implement different logic
+        let pick_column_token_stream = {
+            let fields_token_stream = fields.iter().map(|element| {
+                let field_ident_upper_camel_case = naming_conventions::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
+                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                quote::quote!{
+                    Self::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream.to_string()
+                }
+            });
+            quote::quote!{
+                impl #ident_column_upper_camel_case {
+                    fn pick_column(&self) -> std::string::String {
+                        match &self {
+                            #(#fields_token_stream),*
+                        }
+                    }
+                }
+            }
+        };
         quote::quote! {
             #ident_column_token_stream
             #impl_std_fmt_display_for_ident_column_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_column_token_stream
             #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream
+            //todo this is temporary impl. maybe should write trait and implement different logic
+            #pick_column_token_stream
         }
     };
     // println!("{column_token_stream}");
@@ -3505,7 +3526,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                         additional_parameters.push_str(&format!(
                                             #additional_parameters_order_by_handle_token_stream,
                                             #prefix_snake_case,
-                                            #value_snake_case.#column_snake_case,
+                                            #value_snake_case.#column_snake_case.pick_column(),//todo refactor pick_column
                                             #order_snake_case
                                         ));
                                     }
@@ -3622,13 +3643,13 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     &postgresql_logic_token_stream,
                 )
             };
+            // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream
                 #try_operation_route_logic_token_stream
             }
         };
-        // println!(" {try_operation_route_logic_token_stream}");
-
+        // println!("{try_operation_route_logic_token_stream}");
         let (try_operation_token_stream, try_operation_test_token_stream) = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(&operation, &{
                 let mut value = common_http_request_syn_variants.clone();
