@@ -3520,14 +3520,14 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                         #prefix_to_additional_parameters_token_stream
                                         let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
                                         let #order_snake_case = match &#value_snake_case.#order_snake_case {
-                                            Some(#value_snake_case) => #value_snake_case.to_string(),
-                                            None => #postgresql_crud_order_token_stream::default().to_string(),
+                                            Some(#value_snake_case) => #value_snake_case.to_snake_case_stringified(),
+                                            None => #postgresql_crud_order_token_stream::default().to_snake_case_stringified(),
                                         };
                                         additional_parameters.push_str(&format!(
                                             #additional_parameters_order_by_handle_token_stream,
                                             #prefix_snake_case,
                                             #value_snake_case.#column_snake_case.pick_column(),//todo refactor pick_column
-                                            #order_snake_case
+                                            #order_snake_case,
                                         ));
                                     }
                                     {

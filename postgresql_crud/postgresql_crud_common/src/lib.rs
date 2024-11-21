@@ -8151,7 +8151,6 @@ pub enum Order {
     #[serde(rename(serialize = "desc", deserialize = "desc"))]
     Desc,
 }
-
 impl std::fmt::Display for Order {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -8160,7 +8159,6 @@ impl std::fmt::Display for Order {
         }
     }
 }
-
 impl Default for Order {
     fn default() -> Self {
         Self::Asc
@@ -8169,6 +8167,14 @@ impl Default for Order {
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Order {
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
+    }
+}
+impl Order {
+    pub fn to_upper_camel_case_stringified(&self) -> std::string::String {
+        naming_conventions::DisplayToUpperCamelCaseStringified::new(&self)
+    }
+    pub fn to_snake_case_stringified(&self) -> std::string::String {
+        naming_conventions::DisplayToSnakeCaseStringified::new(&self)
     }
 }
 
