@@ -548,6 +548,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let fields_without_primary_key_len = fields_without_primary_key.len();
     let primary_key_field_type_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
     let primary_key_field_type_to_read_upper_camel_case = naming_conventions::SelfToReadUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
+    let primary_key_field_type_to_update_upper_camel_case = naming_conventions::SelfToUpdateUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
+    let primary_key_field_type_to_delete_upper_camel_case = naming_conventions::SelfToDeleteUpperCamelCase::from_syn_type_path_last_segment(&primary_key_field.syn_field.ty);
     // let contains_generic_json = {
     //     let mut contains_generic_json = false;
     //     for element in &syn_field_with_additional_info_fields_named {
@@ -1677,40 +1679,38 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         &naming_conventions::NotUniquePrimaryKeyUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
         vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming_conventions::NotUniquePrimaryKeySnakeCase, {
+            // if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
+            //     if let Some(last_path_segment) = value.path.segments.last() {
+            //         let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+            //         for element in value.path.segments.iter().rev().skip(1).rev() {
+            //             handle.push_value(element.clone());
+            //             handle.push_punct(syn::token::PathSep {
+            //                 spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+            //             });
+            //         }
+            //         handle.push_value(syn::PathSegment {
+            //             ident: proc_macro2::Ident::new(
+            //                 &naming_conventions::SelfToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&last_path_segment.ident).to_string(),
+            //                 proc_macro2::Span::call_site()
+            //             ),
+            //             arguments: syn::PathArguments::None,
+            //         });
+            //         handle
+            //     }
+            //     else {
+            //         panic!("no last path segment");
+            //     }
+            // }
+            // else {
+            //     panic!("primary key syn::Type in not syn::Type::Path");
+            // }
             if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
-                macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &[
-                        //todo 
-                        &postgresql_crud_snake_case_stringified,
-                        "postgresql_types",
-                        &naming_conventions::SelfToUpdateUpperCamelCase::from_syn_type_path_last_segment(&value.path.segments.last().unwrap())
-                    ]
-                )
+                value.path.segments.clone()
+                //here
             }
             else {
                 panic!("primary key syn::Type in not syn::Type::Path");
             }
-            // let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-            // value.push_value(syn::PathSegment {
-            //     ident: proc_macro2::Ident::new(&postgresql_crud_snake_case_stringified.to_string(), proc_macro2::Span::call_site()),
-            //     arguments: syn::PathArguments::None,
-            // });
-            // value.push_punct(syn::token::PathSep {
-            //     spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-            // });
-            // value.push_value(syn::PathSegment {
-            //     ident: proc_macro2::Ident::new(
-            //         // &primary_key_rust_sqlx_map_to_postgres_type_variant.get_inner_type_handle_stringified(""),
-            //         &{
-            //             // let value = &primary_key_field.syn_field.ty;
-            //             // quote::quote!{#value}.to_string()
-            //             "todo"
-            //         },
-            //         proc_macro2::Span::call_site()
-            //     ),
-            //     arguments: syn::PathArguments::None,
-            // });
-            // value
         })],
     );
     let f = &primary_key_field.syn_field.ty;
@@ -1721,29 +1721,56 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         &naming_conventions::NoPayloadFieldsPrimaryKeyUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::InternalServerError500),
         vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming_conventions::NoPayloadFieldsPrimaryKeySnakeCase, {
+            // if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
+            //     value.path.segments.clone()
+            //     //here
+            // }
+            // else {
+            //     panic!("primary key syn::Type in not syn::Type::Path");
+            // }
+            // // let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+            // // value.push_value(syn::PathSegment {
+            // //     ident: proc_macro2::Ident::new(&postgresql_crud_snake_case_stringified.to_string(), proc_macro2::Span::call_site()),
+            // //     arguments: syn::PathArguments::None,
+            // // });
+            // // value.push_punct(syn::token::PathSep {
+            // //     spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+            // // });
+            // // value.push_value(syn::PathSegment {
+            // //     ident: proc_macro2::Ident::new(
+            // //         &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&postgresql_crud_common::SupportedSqlxPostgresType::from(primary_key_rust_sqlx_map_to_postgres_type_variant)).to_string(),
+            // //         proc_macro2::Span::call_site(),
+            // //     ),
+            // //     arguments: syn::PathArguments::None,
+            // // });
+            // // value
+            //
             if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
-                value.path.segments.clone()
-                //here
+                if let Some(last_path_segment) = value.path.segments.last() {
+                    let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                    for element in value.path.segments.iter().rev().skip(1).rev() {
+                        handle.push_value(element.clone());
+                        handle.push_punct(syn::token::PathSep {
+                            spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
+                        });
+                    }
+                    handle.push_value(syn::PathSegment {
+                        ident: proc_macro2::Ident::new(
+                            &naming_conventions::SelfToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&last_path_segment.ident).to_string(),
+                            proc_macro2::Span::call_site()
+                        ),
+                        arguments: syn::PathArguments::None,
+                    });
+                    handle
+                }
+                else {
+                    panic!("no last path segment");
+                }
             }
             else {
                 panic!("primary key syn::Type in not syn::Type::Path");
             }
-            // let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-            // value.push_value(syn::PathSegment {
-            //     ident: proc_macro2::Ident::new(&postgresql_crud_snake_case_stringified.to_string(), proc_macro2::Span::call_site()),
-            //     arguments: syn::PathArguments::None,
-            // });
-            // value.push_punct(syn::token::PathSep {
-            //     spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-            // });
-            // value.push_value(syn::PathSegment {
-            //     ident: proc_macro2::Ident::new(
-            //         &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&postgresql_crud_common::SupportedSqlxPostgresType::from(primary_key_rust_sqlx_map_to_postgres_type_variant)).to_string(),
-            //         proc_macro2::Span::call_site(),
-            //     ),
-            //     arguments: syn::PathArguments::None,
-            // });
-            // value
+            //
         })],
     );
     let common_http_request_syn_variants = {
@@ -2801,7 +2828,12 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let generate_create_update_delete_one_fetch_token_stream = |operation: &Operation| {
         generate_fetch_one_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
-                &primary_key_field_type_to_create_upper_camel_case,
+                &match operation {
+                    Operation::CreateOne => quote::quote!{#primary_key_field_type_to_create_upper_camel_case},
+                    Operation::UpdateOne => quote::quote!{#primary_key_field_type_to_update_upper_camel_case},
+                    Operation::DeleteOne => quote::quote!{#primary_key_field_type_to_delete_upper_camel_case},
+                    _ => panic!("supported only CreateOne, UpdateOne, DeleteOne")
+                },
                 // &quote::quote! {#primary_key_inner_type_token_stream(#value_snake_case)},
                 &value_snake_case,
                 &generate_match_postgres_transaction_rollback_await_token_stream(&operation, file!(), line!(), column!(), file!(), line!(), column!()),
@@ -4456,11 +4488,11 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             &operation,
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(&operation, generate_operation_payload_token_stream(&operation, &update_fields_token_stream));
-         println!("{parameters_token_stream}");
+        //  println!("{parameters_token_stream}");
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                 &operation,
-                &primary_key_inner_type_token_stream,
+                &primary_key_field_type_to_update_upper_camel_case,
                 &type_variants_from_request_response_syn_variants,
             );
             let try_operation_route_logic_token_stream = {
@@ -4567,7 +4599,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 #try_operation_route_logic_token_stream
             }
         };
-        println!("{try_operation_route_logic_token_stream}");
+        // println!("{try_operation_route_logic_token_stream}");
         // let (try_operation_token_stream, try_operation_test_token_stream) = {
         //     let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
         //     // println!("{try_operation_error_named_token_stream}");
@@ -4595,8 +4627,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         // let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         (
             quote::quote! {
-                // #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #parameters_token_stream
+                #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
                 // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
                 // #operation_payload_example_route_logic_token_stream

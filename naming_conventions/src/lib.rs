@@ -488,6 +488,9 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["try", "self", "generated", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
     ["self", "payload", "example", "route", "logic"],
     ["self", "to", "create"],
+    ["self", "to", "read"],
+    ["self", "to", "update"],
+    ["self", "to", "delete"],
     ["self", "options", "to", "read"],
     ["object", "self"],
     ["std", "option", "option", "object", "self"],
@@ -584,9 +587,8 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["is", "self", "update", "exist"],
     ["self", "column"],
     ["self", "column", "read", "permission"],
-    ["self", "to", "read"],
-    ["self", "where"],
-    ["self", "to", "update"]
+    ["self", "where"]
+    
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {

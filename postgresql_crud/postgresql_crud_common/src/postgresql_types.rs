@@ -755,6 +755,29 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
         crate::BindQuery::bind_value_to_query(self.0, query)
     }
 }
+impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
+    }
+}
+impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error)
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
+    fn type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+}
 
 
 
@@ -939,5 +962,28 @@ impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdat
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
+impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
+    }
+}
+impl error_occurence_lib::ToStdStringString for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <StdPrimitiveI64 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error)
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
+    fn type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveI64 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
