@@ -1131,6 +1131,27 @@ PATCH http://127.0.0.1:8080/example/update_many HTTP/1.1
 content-type: application/json
 commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
+[
+  {
+    "std_primitive_i64_as_postgresql_big_serial_not_null": 4,
+    "std_primitive_bool_as_postgresql_bool_not_null": {
+      "value": true
+    }
+  },
+  {
+    "std_primitive_i64_as_postgresql_big_serial_not_null": 5,
+    "std_primitive_bool_as_postgresql_bool_not_null": {
+      "value": true
+    }
+  }
+]
+
+###
+
+GET http://127.0.0.1:8080/example/update_many_payload_example HTTP/1.1
+content-type: application/json
+commit: 7566999599814c9ebc4cacfde468ae840697173c
+
 ### 
 
 PATCH http://127.0.0.1:8080/example/update_one HTTP/1.1
